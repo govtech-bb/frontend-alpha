@@ -1,0 +1,84 @@
+{
+  "id": "register-birth",
+  "title": "Register a birth",
+  "description": "Register your baby's birth within 42 days - this is a legal requirement in Barbados",
+  "category": "Documents and records",
+  "overview": "You must register your baby's birth within 42 days of the birth. This creates an official record and allows you to get a birth certificate, which you'll need for many services including applying for a passport, enrolling in school, and accessing healthcare.",
+  "steps": [
+    {
+      "title": "Gather required documents",
+      "description": "Collect all necessary documentation before visiting the registry office. You'll need proof of the birth, parent identification, and marriage certificate if applicable.",
+      "duration": "Before your appointment",
+      "required": true
+    },
+    {
+      "title": "Visit the Civil Registration Department",
+      "description": "Attend the Civil Registration Department in person with all required documents. Both parents should attend if possible, or the attending parent must have authorization.",
+      "duration": "1-2 hours for appointment",
+      "required": true
+    },
+    {
+      "title": "Complete the birth registration form",
+      "description": "Fill out the official birth registration form with accurate information about the child, parents, and birth details. Staff will verify all information.",
+      "duration": "30 minutes during visit",
+      "required": true
+    },
+    {
+      "title": "Pay registration fees",
+      "description": "Pay the required registration fee. Additional fees apply if you want certified copies of the birth certificate immediately.",
+      "duration": "During your visit",
+      "required": true
+    },
+    {
+      "title": "Receive birth certificate",
+      "description": "Collect your baby's birth certificate. If not available immediately, you'll be told when to return or it may be mailed to you.",
+      "duration": "Same day or within 5 working days",
+      "required": false
+    }
+  ],
+  "requirements": [
+    "Hospital birth notification or medical certificate of birth",
+    "Valid photo identification for both parents",
+    "Marriage certificate (if parents are married)",
+    "Proof of address in Barbados",
+    "Registration fee payment"
+  ],
+  "contacts": [
+    {
+      "name": "Civil Registration Department",
+      "phone": "+1 246 228-8950",
+      "email": "civilregistry@gov.bb"
+    },
+    {
+      "name": "Supreme Court Registry",
+      "phone": "+1 246 427-2966",
+      "email": "registry@supreme.court.bb"
+    }
+  ],
+  "costs": [
+    {
+      "item": "Birth registration",
+      "fee": "Free within 42 days"
+    },
+    {
+      "item": "Late registration (after 42 days)",
+      "fee": "$50 BBD"
+    },
+    {
+      "item": "Certified birth certificate copy",
+      "fee": "$25 BBD"
+    }
+  ],
+  "timeline": {
+    "deadline": "42 days from birth",
+    "processing": "Same day to 5 working days",
+    "urgentProcessing": "Same day (additional fees may apply)"
+  },
+  "importantNotes": [
+    "Registration is free if done within 42 days of birth",
+    "Both parents should attend if possible",
+    "Late registration incurs additional fees and may require additional documentation",
+    "Birth certificates are required for passports, school enrollment, and many other services"
+  ],
+  "lastUpdated": "2025-01-15"
+}

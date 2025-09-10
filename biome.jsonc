@@ -6,6 +6,9 @@
       "performance": {
         "noNamespaceImport": "off"
       },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
       "style": {
         "noNonNullAssertion": "off",
         "noNestedTernary": "off",

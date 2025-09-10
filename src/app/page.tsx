@@ -31,15 +31,9 @@ export default function Home() {
           <div className="flex flex-col gap-2 space-y-4">
             <Link
               className="cursor-pointer font-normal text-[#00267F] text-[20px] leading-[150%] underline"
-              href="#" //TODO: services/having-a-baby
+              href="/entrypoints/pregnancy-and-birth"
             >
               Having a baby
-            </Link>
-            <Link
-              className="cursor-pointer font-normal text-[#00267F] text-[20px] leading-[150%] underline"
-              href="#" //TODO: services/getting-medical-care
-            >
-              Getting medical care
             </Link>
           </div>
         </div>
