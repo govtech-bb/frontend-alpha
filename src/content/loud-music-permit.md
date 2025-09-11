@@ -31,11 +31,11 @@ These groups need a permit regardless of:
 
 - the start and end time of the event  
 
-- whether they are hosting a single or a series of event
+- whether they are hosting a single or a series of events
 
 - the number of attendees
 
-- the event will be held in a rural or residential area
+- whether the event will be held in a rural or residential area
 
 Venues can [apply for an annual permit to play loud music](https://publicentertainment.bra.gov.bb/) with the Barbados Revenue Authority.
 
@@ -52,7 +52,7 @@ The following groups do not need a permit to play loud music:
 
 ## How to apply for a license 
 
-The Commission of Police advise you should apply for a loud music license 4 weeks before your event. However, to be safe, it is a good idea to do it as soon as possible.
+The Commissioner of Police advises you should apply for a loud music license 4 weeks before your event. However, to be safe, it is a good idea to do it as soon as possible.
 
 The application steps are largely the same regardless of whether you are applying as an individual, or on behalf of a business, organisation or venue. 
 
