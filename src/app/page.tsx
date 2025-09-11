@@ -8,6 +8,41 @@ const GOVERNMENT_LINKS = [
   "Digital roadmap",
 ];
 
+const EXISTING_SERVICES = [
+  {
+    title: "Register a marriage",
+    link: "https://www.gov.bb/register-marriage",
+  },
+  {
+    title: "Register a death",
+    link: "https://www.gov.bb/register-death",
+  },
+  {
+    title: "Get a drivers license",
+    link: "https://www.gov.bb/Citizens/driver-licence",
+  },
+  {
+    title: "Apply for a passport",
+    link: "https://www.gov.bb/apply-passport",
+  },
+  {
+    title: "Set up a business",
+    link: "https://www.gov.bb/start-business",
+  },
+  {
+    title: "Get a marriage license",
+    link: "https://www.gov.bb/marriage-licence",
+  },
+  {
+    title: "Paying corporation tax",
+    link: "https://www.gov.bb/tax-information",
+  },
+  {
+    title: "Finding a job",
+    link: "https://www.gov.bb/job-seekers",
+  },
+];
+
 const INFORMATION_SECTIONS = [
   {
     title: "Paying corporation tax",
@@ -60,16 +95,20 @@ export default function Home() {
         <Typography variant="paragraph">
           <span className="underline">Existing</span> services are live on
           gov.bb.
+          <br />
+          They will open in a new window.
         </Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
-          {Array.from({ length: 5 }, (_, index) => (
+          {EXISTING_SERVICES.map((service) => (
             <Link
               className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-              href="#"
-              key={index}
+              href={service.link}
+              key={service.title}
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              Service Name
+              {service.title}
             </Link>
           ))}
         </div>
