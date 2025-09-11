@@ -13,7 +13,7 @@ const typographyVariants = cva(
         h4: "font-semibold text-2xl leading-[115%] tracking-tight",
         h5: "font-medium text-xl leading-[115%] tracking-tight", //20px
         h6: "font-medium text-lg leading-[115%] tracking-tight",
-        subheading: "font-medium text-muted-foreground text-xl leading-[130%]",
+        subheading: "font-medium text-[24px] leading-[130%]",
         paragraph: "font-normal text-[20px] leading-[150%]",
         body: "font-normal text-base leading-[150%]",
         small: "font-normal text-[12px] leading-[125%]",
