@@ -46,15 +46,12 @@ export default function Home() {
         </Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
-          {Array.from({ length: 2 }, (_, index) => (
-            <Link
-              className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-              href="#"
-              key={index}
-            >
-              Service Name
-            </Link>
-          ))}
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/loud-music-permit"
+          >
+            Get a permit to play loud music
+          </Link>
         </div>
       </div>
       <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">

@@ -67,7 +67,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
 
   return (
     <div className="px-4 py-8">
-      <div className="space-y-4">
+      <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
         )}
