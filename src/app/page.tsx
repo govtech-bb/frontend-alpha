@@ -38,7 +38,7 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#30C0C8] border-b-4 bg-[#DEF5F6] px-4 py-8">
-        <Typography variant="h3">Alpha Services</Typography>
+        <Typography variant="h3">Alpha services</Typography>
 
         <Typography variant="paragraph">
           <span className="underline">Alpha</span> services are new and are very
@@ -55,7 +55,7 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">
-        <Typography variant="h3">Existing Services</Typography>
+        <Typography variant="h3">Existing services</Typography>
 
         <Typography variant="paragraph">
           <span className="underline">Existing</span> services are live on
@@ -75,7 +75,7 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8">
-        <Typography variant="h3">Useful Information</Typography>
+        <Typography variant="h3">Useful information</Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
           {INFORMATION_SECTIONS.map((information) => (
