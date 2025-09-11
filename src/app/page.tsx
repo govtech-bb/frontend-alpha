@@ -72,12 +72,18 @@ export default function Home() {
           likely to change.
         </Typography>
 
-        <div className="flex flex-col gap-2 space-y-4">
+        <div className="flex flex-col gap-2">
           <Link
             className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
             href="/loud-music-permit"
           >
             Get a permit to play loud music
+          </Link>
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/register-summer-camp"
+          >
+            Register for a summer camp
           </Link>
         </div>
       </div>
