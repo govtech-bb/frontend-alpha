@@ -8,6 +8,41 @@ const GOVERNMENT_LINKS = [
   "Digital roadmap",
 ];
 
+const EXISTING_SERVICES = [
+  {
+    title: "Register a marriage",
+    link: "https://www.gov.bb/register-marriage",
+  },
+  {
+    title: "Register a death",
+    link: "https://www.gov.bb/register-death",
+  },
+  {
+    title: "Get a drivers license",
+    link: "https://www.gov.bb/Citizens/driver-licence",
+  },
+  {
+    title: "Apply for a passport",
+    link: "https://www.gov.bb/apply-passport",
+  },
+  {
+    title: "Set up a business",
+    link: "https://www.gov.bb/start-business",
+  },
+  {
+    title: "Get a marriage license",
+    link: "https://www.gov.bb/marriage-licence",
+  },
+  {
+    title: "Paying corporation tax",
+    link: "https://www.gov.bb/tax-information",
+  },
+  {
+    title: "Finding a job",
+    link: "https://www.gov.bb/job-seekers",
+  },
+];
+
 const INFORMATION_SECTIONS = [
   {
     title: "Paying corporation tax",
@@ -38,7 +73,7 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#30C0C8] border-b-4 bg-[#DEF5F6] px-4 py-8">
-        <Typography variant="h3">Alpha Services</Typography>
+        <Typography variant="h3">Alpha services</Typography>
 
         <Typography variant="paragraph">
           <span className="underline">Alpha</span> services are new and are very
@@ -46,39 +81,40 @@ export default function Home() {
         </Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
-          {Array.from({ length: 2 }, (_, index) => (
-            <Link
-              className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-              href="#"
-              key={index}
-            >
-              Service Name
-            </Link>
-          ))}
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/loud-music-permit"
+          >
+            Get a permit to play loud music
+          </Link>
         </div>
       </div>
       <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">
-        <Typography variant="h3">Existing Services</Typography>
+        <Typography variant="h3">Existing services</Typography>
 
         <Typography variant="paragraph">
           <span className="underline">Existing</span> services are live on
           gov.bb.
+          <br />
+          They will open in a new window.
         </Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
-          {Array.from({ length: 5 }, (_, index) => (
+          {EXISTING_SERVICES.map((service) => (
             <Link
               className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-              href="#"
-              key={index}
+              href={service.link}
+              key={service.title}
+              rel="noopener noreferrer"
+              target="_blank"
             >
-              Service Name
+              {service.title}
             </Link>
           ))}
         </div>
       </div>
       <div className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8">
-        <Typography variant="h3">Useful Information</Typography>
+        <Typography variant="h3">Useful information</Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
           {INFORMATION_SECTIONS.map((information) => (
