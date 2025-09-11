@@ -135,7 +135,7 @@ export default function Home() {
       <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
         <Typography variant="h3">Make government work for you</Typography>
 
-        <div className="flex flex-col gap-2 space-y-4">
+        <div className="flex flex-col gap-2">
           {GOVERNMENT_LINKS.map((link) => (
             <Link
               className="cursor-pointer font-normal text-[#00267F] text-[20px] leading-[150%] underline"
