@@ -33,26 +33,18 @@ const EXISTING_SERVICES = [
     title: "Get a marriage license",
     link: "https://www.gov.bb/marriage-licence",
   },
-  {
-    title: "Paying corporation tax",
-    link: "https://www.gov.bb/tax-information",
-  },
-  {
-    title: "Finding a job",
-    link: "https://www.gov.bb/job-seekers",
-  },
 ];
 
 const INFORMATION_SECTIONS = [
   {
     title: "Paying corporation tax",
-    link: "",
+    link: "https://www.gov.bb/tax-information",
     description:
       "Find out how company tax is worked out, including what income is taxed and the rates that apply",
   },
   {
     title: "Finding a job",
-    link: "",
+    link: "https://www.gov.bb/job-seekers",
     description:
       "Get help with applying for jobs, preparing for interviews , and exploring public and overseas opportunities",
   },
@@ -99,7 +91,7 @@ export default function Home() {
           They will open in a new window.
         </Typography>
 
-        <div className="flex flex-col gap-2 space-y-4">
+        <div className="flex flex-col gap-2">
           {EXISTING_SERVICES.map((service) => (
             <Link
               className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
@@ -122,6 +114,8 @@ export default function Home() {
               <Link
                 className="text-[#1E787D] text-[20px] underline underline-offset-2"
                 href={information.link}
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 {information.title}
               </Link>
