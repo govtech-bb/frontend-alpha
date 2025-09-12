@@ -46,7 +46,7 @@ const INFORMATION_SECTIONS = [
     title: "Finding a job",
     link: "https://www.gov.bb/job-seekers",
     description:
-      "Get help with applying for jobs, preparing for interviews , and exploring public and overseas opportunities",
+      "Get help with applying for jobs, preparing for interviews, and exploring public and overseas opportunities",
   },
 ];
 
