@@ -33,7 +33,7 @@ When you register for a summer camp, you will be asked about a child's health an
 
 ## Volunteer at a summer camp
 
-If you're 16 years old or over and would like to volunteer as a camp assistant or camp director, you can apply online. 
+If you’re 16 years old or over and would like to volunteer as a camp assistant or camp director. 
 
 You can apply all year round but recruitment usually begins around April, and applicants can expect to hear if they were successful by mid-June. Volunteers need to be free to complete training in June. 
 
@@ -41,5 +41,3 @@ You can apply all year round but recruitment usually begins around April, and ap
 ## How to give feedback or make a complaint
 
 Shortly after the camp, you'll receive a survey online or on paper from your camp. The Research Department uses your anonymous responses to gather information that will help improve future camps.
-
-You can also email camps directly with feedback or a complaint.
