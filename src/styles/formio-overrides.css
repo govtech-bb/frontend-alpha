@@ -1,0 +1,141 @@
+/* Form.io Style Overrides for Government of Barbados Design System */
+
+/* Panel styling for form sections */
+.govbb-form .formio-component-panel {
+  @apply mb-6 border border-gray-200 rounded-lg overflow-hidden;
+}
+
+.govbb-form .formio-component-panel .card-header {
+  @apply bg-blue-50 border-b-2 border-blue-200 text-blue-900 font-semibold text-lg px-6 py-4;
+}
+
+.govbb-form .formio-component-panel .card-body {
+  @apply px-6 py-6 bg-white;
+}
+
+/* Form field labels */
+.govbb-form .formio-component label,
+.govbb-form .control-label {
+  @apply font-medium text-gray-900 mb-2 block text-base;
+}
+
+/* Required field indicators */
+.govbb-form .formio-component.required .control-label::after,
+.govbb-form .formio-component.required label::after {
+  @apply text-red-600 font-semibold ml-1;
+  content: " *";
+}
+
+/* Text inputs */
+.govbb-form .formio-component-textfield input,
+.govbb-form .formio-component-email input,
+.govbb-form .formio-component-phoneNumber input,
+.govbb-form .formio-component-number input {
+  @apply w-full px-3 py-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all;
+}
+
+/* Textarea */
+.govbb-form .formio-component-textarea textarea {
+  @apply w-full px-3 py-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-y;
+}
+
+/* Select dropdowns */
+.govbb-form .formio-component-select select {
+  @apply w-full px-3 py-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all;
+}
+
+/* Checkbox styling */
+.govbb-form .formio-component-checkbox .form-check {
+  @apply flex items-start gap-3 mb-4;
+}
+
+.govbb-form .formio-component-checkbox input[type="checkbox"] {
+  @apply w-4 h-4 mt-1 accent-blue-600 cursor-pointer;
+}
+
+.govbb-form .formio-component-checkbox .form-check-label {
+  @apply text-gray-900 cursor-pointer leading-6;
+}
+
+/* Submit button */
+.govbb-form .formio-component-submit .btn {
+  @apply bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 px-8 rounded-md transition-all transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl text-lg;
+}
+
+/* Date picker inputs */
+.govbb-form .formio-component-datetime input {
+  @apply w-full px-3 py-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all;
+}
+
+/* Address component styling */
+.govbb-form .formio-component-address .form-group {
+  @apply mb-4;
+}
+
+.govbb-form .formio-component-address input {
+  @apply w-full px-3 py-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all;
+}
+
+/* Error message styling */
+.govbb-form .formio-errors {
+  @apply bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md mb-4;
+}
+
+.govbb-form .invalid-feedback {
+  @apply text-red-600 text-sm mt-1;
+}
+
+.govbb-form .is-invalid {
+  @apply border-red-500;
+}
+
+/* Success message styling */
+.govbb-form .alert-success {
+  @apply bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md mb-4;
+}
+
+/* Help text styling */
+.govbb-form .form-text {
+  @apply text-gray-600 text-sm mt-1;
+}
+
+/* Panel color variations for different sections */
+.govbb-form .formio-component-panel:nth-child(1) .card-header {
+  @apply bg-blue-50 border-blue-200;
+}
+
+.govbb-form .formio-component-panel:nth-child(2) .card-header {
+  @apply bg-yellow-50 border-yellow-200 text-yellow-900;
+}
+
+.govbb-form .formio-component-panel:nth-child(3) .card-header {
+  @apply bg-teal-50 border-teal-200 text-teal-900;
+}
+
+.govbb-form .formio-component-panel:nth-child(4) .card-header {
+  @apply bg-green-50 border-green-200 text-green-900;
+}
+
+.govbb-form .formio-component-panel:nth-child(5) .card-header {
+  @apply bg-pink-50 border-pink-200 text-pink-900;
+}
+
+/* Remove Bootstrap form control styling conflicts */
+.govbb-form .form-control {
+  @apply appearance-none;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .govbb-form .formio-component-panel .card-header {
+    @apply px-4 py-3 text-base;
+  }
+
+  .govbb-form .formio-component-panel .card-body {
+    @apply px-4 py-4;
+  }
+
+  .govbb-form .formio-component-submit .btn {
+    @apply w-full py-4;
+  }
+}

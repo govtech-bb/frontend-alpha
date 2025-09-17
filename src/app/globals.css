@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "../styles/formio-overrides.css";
 
 @custom-variant dark (&:is(.dark *));
 
