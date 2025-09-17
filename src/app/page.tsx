@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { Typography } from "@/components/ui/typography";
 
-const GOVERNMENT_LINKS = [
-  "Have your say",
-  "What's changing",
-  "How we choose what to work on first",
-  "Digital roadmap",
-];
+// const GOVERNMENT_LINKS = [
+//   "Have your say",
+//   "What's changing",
+//   "How we choose what to work on first",
+//   "Digital roadmap",
+// ];
 
 const EXISTING_SERVICES = [
   {
@@ -132,7 +132,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
+      {/* <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
         <Typography variant="h3">Make government work for you</Typography>
 
         <div className="flex flex-col gap-2">
@@ -146,7 +146,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
