@@ -18,6 +18,7 @@ If you are organising an event, you may also need to apply for one or more of th
 
 If there is an entry or ticket fee to your event, you may need to [register with the Barbados Revenue Authority](https://bra.gov.bb/).
 
+---
 
 ## Who needs a license to play loud music?
 
@@ -39,6 +40,7 @@ These groups need a permit regardless of:
 
 Venues can [apply for an annual permit to play loud music](https://publicentertainment.bra.gov.bb/) with the Barbados Revenue Authority.
 
+---
 
 ## Who is exempt from needing a permit
 
@@ -48,7 +50,7 @@ The following groups do not need a permit to play loud music:
 
 - religious groups
 
-
+---
 
 ## How to apply for a license 
 
@@ -78,6 +80,7 @@ Write a letter or email to the Police Commissioner’s office at Barbados Police
 
 It may help your application if you include information on how you have considered the environment close to the event location. This might include the potential impact on neighbours, businesses, wildlife and infrastructure in terms of things like noise and traffic.
 
+---
 
 ## After you’ve applied
 
