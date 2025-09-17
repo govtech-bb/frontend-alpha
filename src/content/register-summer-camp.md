@@ -8,7 +8,6 @@ The deadline to register for a place is approximately 2 weeks before the start o
 
 You can see a list of camps and their location. 
 
----
 
 ## Registration opens in May 2026.
 
