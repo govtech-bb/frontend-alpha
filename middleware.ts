@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 // Start in report-only; flip to true later to enforce.
-const ENFORCE_CSP = false;
+const ENFORCE_CSP = true;
 
 export function middleware() {
   const res = NextResponse.next();
