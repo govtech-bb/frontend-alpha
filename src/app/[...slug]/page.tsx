@@ -16,7 +16,7 @@ const components = {
     </Typography>
   ),
   h2: ({ children, ...props }: any) => (
-    <Typography className="mt-6 mb-4" variant="h2" {...props}>
+    <Typography className="mt-8 mb-4" variant="h2" {...props}>
       {children}
     </Typography>
   ),
@@ -40,7 +40,7 @@ const components = {
       {children}
     </li>
   ),
-  hr: (props: any) => <hr className="border-2" {...props} />,
+  hr: (props: any) => <hr className="my-8 border-2" {...props} />,
   a: ({ href, children, ...props }: any) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
@@ -67,7 +67,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
   const { frontmatter, content } = result;
 
   return (
-    <div className="px-4 py-8">
+    <div className="space-y-4 px-4 py-8">
       <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
