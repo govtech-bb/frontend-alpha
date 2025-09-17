@@ -11,19 +11,19 @@ type EntryPointPageProps = {
 // Custom components for react-markdown
 const components = {
   h1: ({ children, ...props }: any) => (
-    <h1 className="mt-8 mb-4 font-bold text-[40px]" {...props}>
+    <Typography className="mt-8 mb-4" variant="h1" {...props}>
       {children}
-    </h1>
+    </Typography>
   ),
   h2: ({ children, ...props }: any) => (
-    <h2 className="mt-6 mb-4 font-semibold text-[20px]" {...props}>
+    <Typography className="mt-6 mb-4" variant="h2" {...props}>
       {children}
-    </h2>
+    </Typography>
   ),
   p: ({ children, ...props }: any) => (
-    <p className="mb-4 text-[20px] leading-relaxed" {...props}>
+    <Typography variant="paragraph" {...props}>
       {children}
-    </p>
+    </Typography>
   ),
   ul: ({ children, ...props }: any) => (
     <ul className="mb-4 list-disc pl-6 text-[20px]" {...props}>
@@ -40,6 +40,7 @@ const components = {
       {children}
     </li>
   ),
+  hr: (props: any) => <hr className="border-2" {...props} />,
   a: ({ href, children, ...props }: any) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
