@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <div className="font-sans">
       <div className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8">
-        <Typography variant="h1">
+        <Typography variant="display">
           How you find and use public services is changing
         </Typography>
         <div className="space-y-4">
@@ -65,11 +65,10 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#30C0C8] border-b-4 bg-[#DEF5F6] px-4 py-8">
-        <Typography variant="h3">Alpha services</Typography>
+        <Typography variant="h2">Alpha services</Typography>
 
         <Typography variant="paragraph">
-          <span className="underline">Alpha</span> services are new and are very
-          likely to change.
+          Alpha services are new and are very likely to change.
         </Typography>
 
         <div className="flex flex-col gap-2">
@@ -88,11 +87,10 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">
-        <Typography variant="h3">Existing services</Typography>
+        <Typography variant="h2">Existing services</Typography>
 
         <Typography variant="paragraph">
-          <span className="underline">Existing</span> services are live on
-          gov.bb.
+          Existing services are live on gov.bb.
           <br />
           They will open in a new window.
         </Typography>
@@ -112,7 +110,7 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8">
-        <Typography variant="h3">Useful information</Typography>
+        <Typography variant="h2">Useful information</Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
           {INFORMATION_SECTIONS.map((information) => (
