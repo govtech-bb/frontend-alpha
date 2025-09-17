@@ -7,12 +7,13 @@ const typographyVariants = cva(
   {
     variants: {
       variant: {
-        h1: "font-bold text-[48px] leading-[115%] tracking-tight", //48px
-        h2: "font-semibold text-4xl leading-[115%] tracking-tight",
-        h3: "font-bold text-[32px] leading-[115%] tracking-tight",
-        h4: "font-semibold text-2xl leading-[115%] tracking-tight",
+        display: "font-bold text-[48px] leading-[115%] tracking-tight",
+        h1: "font-bold text-[40px] leading-[115%] tracking-tight",
+        h2: "font-semibold text-[32px] leading-[115%] tracking-tight",
+        h3: "font-bold text-[28px] leading-[115%] tracking-tight",
+        h4: "font-semibold text-2xl leading-[115%] tracking-tight", //24px
         h5: "font-medium text-xl leading-[115%] tracking-tight", //20px
-        h6: "font-medium text-lg leading-[115%] tracking-tight",
+        h6: "font-medium text-base leading-[115%] tracking-tight", //16px
         subheading: "font-medium text-[24px] leading-[130%]",
         paragraph: "font-normal text-[20px] leading-[150%]",
         body: "font-normal text-base leading-[150%]",
