@@ -68,8 +68,7 @@ export default function Home() {
         <Typography variant="h3">Alpha services</Typography>
 
         <Typography variant="paragraph">
-          <span className="underline">Alpha</span> services are new and are very
-          likely to change.
+          Alpha services are new and are very likely to change.
         </Typography>
 
         <div className="flex flex-col gap-2">
@@ -91,8 +90,7 @@ export default function Home() {
         <Typography variant="h3">Existing services</Typography>
 
         <Typography variant="paragraph">
-          <span className="underline">Existing</span> services are live on
-          gov.bb.
+          Existing services are live on gov.bb.
           <br />
           They will open in a new window.
         </Typography>
