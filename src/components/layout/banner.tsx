@@ -16,9 +16,9 @@ export const Banner = () => {
         </Typography>
       </span>
 
-      <Typography className="text-white underline" variant="small">
+      {/* <Typography className="text-white underline" variant="small">
         Learn More
-      </Typography>
+      </Typography> */}
     </div>
   );
 };

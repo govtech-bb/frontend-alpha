@@ -8,14 +8,15 @@ The deadline to register for a place is approximately 2 weeks before the start o
 
 You can see a list of camps and their location. 
 
-Registration opens in May 2026.
+---
 
+## Registration opens in May 2026.
+
+---
 
 ## How to register
 
 Parents and guardians can register for a summer camp on behalf of a child/ward online.  
-
-[Register for a summer camp](#)
 
 If you do not have access to the internet or a smart device, colleagues at any  community centre can help you register.
 
