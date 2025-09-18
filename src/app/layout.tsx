@@ -37,10 +37,10 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] antialiased`}
+        className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] bg-[#00267F] antialiased`}
       >
         <Header />
-        {children}
+        <main className="font-sans">{children}</main>
         <Footer />
       </body>
     </html>

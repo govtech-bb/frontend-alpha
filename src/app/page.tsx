@@ -52,8 +52,11 @@ const INFORMATION_SECTIONS = [
 
 export default function Home() {
   return (
-    <div className="font-sans">
-      <div className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8">
+    <>
+      <section
+        className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8"
+        id="introduction"
+      >
         <Typography variant="h1">
           How you find and use public services is changing
         </Typography>
@@ -63,8 +66,11 @@ export default function Home() {
             done.
           </Typography>
         </div>
-      </div>
-      <div className="space-y-6 border-[#30C0C8] border-b-4 bg-[#DEF5F6] px-4 py-8">
+      </section>
+      <section
+        className="space-y-6 border-[#30C0C8] border-b-4 bg-[#DEF5F6] px-4 py-8"
+        id="alpha_services"
+      >
         <Typography variant="h3">Alpha services</Typography>
 
         <Typography variant="paragraph">
@@ -86,8 +92,11 @@ export default function Home() {
             Register for a summer camp
           </Link>
         </div>
-      </div>
-      <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">
+      </section>
+      <section
+        className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8"
+        id="existing_services"
+      >
         <Typography variant="h3">Existing services</Typography>
 
         <Typography variant="paragraph">
@@ -110,8 +119,11 @@ export default function Home() {
             </Link>
           ))}
         </div>
-      </div>
-      <div className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8">
+      </section>
+      <section
+        className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8"
+        id="useful_information"
+      >
         <Typography variant="h3">Useful information</Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
@@ -131,8 +143,11 @@ export default function Home() {
             </div>
           ))}
         </div>
-      </div>
-      <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
+      </section>
+      <section
+        className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8"
+        id="make_government_work_for_you"
+      >
         <Typography variant="h3">Make government work for you</Typography>
 
         <div className="flex flex-col gap-2">
@@ -146,7 +161,7 @@ export default function Home() {
             </Link>
           ))}
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }
