@@ -4,10 +4,13 @@ import nodemailer from "nodemailer";
 // Email validation regex at top level for performance
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Default SMTP port for non-secure connections
+const DEFAULT_SMTP_PORT = 587;
+
 // Create reusable transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
-  host: "mail.dharach.com",
-  port: 587,
+  host: process.env.SMTP_HOST || "mail.dharach.com",
+  port: Number(process.env.SMTP_PORT) || DEFAULT_SMTP_PORT,
   secure: false, // true for 465, false for other ports
   auth: {
     user: process.env.SMTP_USERNAME,
