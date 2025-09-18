@@ -6,7 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:visual": "playwright test tests/e2e/visual.spec.ts",
+    "test:update-snapshots": "playwright test --update-snapshots",
+    "test:report": "playwright show-report",
+    "test:install": "playwright install"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
