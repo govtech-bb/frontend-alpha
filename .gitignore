@@ -39,3 +39,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Don't ignore baseline screenshots - these should be committed!
+# /tests/**/*-snapshots/  # DON'T add this line
+
+# Playwright trace files (unless you want to commit them)
+/test-results/
+*.trace.zip
+
+# Playwright videos (usually don't commit these)
+/videos/
+
+# Playwright downloads
+/downloads/
