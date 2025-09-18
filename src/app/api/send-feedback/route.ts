@@ -1,26 +1,22 @@
+import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { type NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { createTransport } from "nodemailer";
 
 // Email validation regex at top level for performance
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Default SMTP port for non-secure connections
-const DEFAULT_SMTP_PORT = 587;
+// Create AWS SES v2 client
+const sesClient = new SESv2Client({
+  region: process.env.AWS_REGION || "us-east-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+  },
+});
 
-// Create reusable transporter object using SMTP transport
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "mail.dharach.com",
-  port: Number(process.env.SMTP_PORT) || DEFAULT_SMTP_PORT,
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_USERNAME,
-    pass: process.env.SMTP_PASSWORD,
-  },
-  // Additional options for better compatibility
-  tls: {
-    ciphers: "SSLv3",
-    rejectUnauthorized: false,
-  },
+// Create reusable transporter object using Amazon SES
+const transporter = createTransport({
+  SES: { sesClient, SendEmailCommand },
 });
 
 export async function POST(request: NextRequest) {
@@ -46,7 +42,7 @@ export async function POST(request: NextRequest) {
 
     // Email content
     const mailOptions = {
-      from: `"Alpha Gov Feedback" <${process.env.SMTP_FROM || "noreply@dharach.com"}>`,
+      from: `"Alpha Gov Feedback" <${process.env.SES_FROM_EMAIL || "noreply@dharach.com"}>`,
       to: "matt@dharach.com",
       subject: `New Feedback from ${name}`,
       text: `
