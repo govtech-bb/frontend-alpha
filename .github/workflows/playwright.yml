@@ -37,23 +37,33 @@ jobs:
     - name: Build Next.js application
       run: npm run build
 
-     # Check if this is the first run (no baselines exist)
-    - name: Check for existing baselines
+    # Check if Linux baselines exist
+    - name: Check for Linux baselines
       id: check-baselines
       run: |
-        if [ -d "tests/visual.spec.ts-snapshots" ]; then
-          echo "baselines_exist=true" >> $GITHUB_OUTPUT
+        if ls tests/**/*-snapshots/*-linux.png 2>/dev/null; then
+          echo "linux_baselines_exist=true" >> $GITHUB_OUTPUT
         else
-          echo "baselines_exist=false" >> $GITHUB_OUTPUT
+          echo "linux_baselines_exist=false" >> $GITHUB_OUTPUT
         fi
     
-    # If no baselines exist, generate them
-    - name: Generate initial baselines
-      if: steps.check-baselines.outputs.baselines_exist == 'false'
+    # Generate Linux baselines if they don't exist
+    - name: Generate Linux baselines
+      if: steps.check-baselines.outputs.linux_baselines_exist == 'false'
       run: |
         npx playwright test --update-snapshots
-        echo "Generated initial baselines - these should be reviewed and committed"
-      
+        echo "Generated Linux baselines"
+    
+    # Commit the new baselines back to the PR branch
+    - name: Commit Linux baselines
+      if: steps.check-baselines.outputs.linux_baselines_exist == 'false'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add tests/**/*-snapshots/
+        git commit -m "Add Linux visual regression baselines" || exit 0
+        git push
+
     # Run normal tests if baselines exist
     - name: Run visual regression tests
       if: steps.check-baselines.outputs.baselines_exist == 'true'
@@ -78,41 +88,3 @@ jobs:
         path: test-results/
         retention-days: 7
 
-  # Separate job for updating visual baselines (manual trigger only)
-  update-screenshots:
-    if: github.event_name == 'workflow_dispatch'
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps chromium
-    
-    - name: Build Next.js application
-      run: npm run build
-    
-    - name: Update screenshots
-      run: npx playwright test --update-snapshots --project=chromium
-    
-    - name: Commit updated screenshots
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add tests/
-        if ! git diff --staged --quiet; then
-          git commit -m "Update visual regression baselines [skip ci]"
-          git push
-        else
-          echo "No changes to commit"
-        fi
