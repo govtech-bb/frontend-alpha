@@ -83,13 +83,15 @@ export default defineConfig({
 
   /* Visual regression testing settings */
   expect: {
-    // Threshold for visual comparisons (0-1, where 0 is identical)
-    threshold: 0.2,
+    // Set the screenshot comparison to be more tolerant on CI
+    toHaveScreenshot: {
+      // biome-ignore lint/style/noMagicNumbers: DISABLED FOR PLAYWRIGHT CONFIG
+      threshold: process.env.CI ? 0.3 : 0.2,
+    },
     // Set the screenshot comparison to be more tolerant on CI
     toMatchSnapshot: {
       // biome-ignore lint/style/noMagicNumbers: DISABLED FOR PLAYWRIGHT CONFIG
       threshold: process.env.CI ? 0.3 : 0.2,
-      mode: "strict",
     },
   },
 });
