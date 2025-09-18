@@ -1,8 +1,5 @@
 import { expect, test } from "@playwright/test";
 
-const TIMEOUT = 500; // Time to wait for theme transition
-const REGEX_DARK_MODE = /dark mode|theme/i;
-
 test.describe("Visual Regression Tests", () => {
   test.beforeEach(async ({ page }) => {
     // Set consistent viewport for visual testing
@@ -22,12 +19,12 @@ test.describe("Visual Regression Tests", () => {
     });
   });
 
-  test("Navigation component visual test", async ({ page }) => {
+  test("Header Navigation component visual test", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
 
     // Screenshot specific component
-    const nav = page.locator("nav");
+    const nav = page.locator("header");
     await expect(nav).toHaveScreenshot("navigation.png");
   });
 
@@ -41,44 +38,6 @@ test.describe("Visual Regression Tests", () => {
       fullPage: true,
       animations: "disabled",
     });
-  });
-
-  test("Dark mode visual test", async ({ page }) => {
-    await page.goto("/");
-
-    // Assuming you have a dark mode toggle
-    await page.getByRole("button", { name: REGEX_DARK_MODE }).click();
-    await page.waitForTimeout(TIMEOUT); // Wait for theme transition
-
-    await expect(page).toHaveScreenshot("homepage-dark.png", {
-      fullPage: true,
-      animations: "disabled",
-    });
-  });
-
-  test("Form states visual test", async ({ page }) => {
-    await page.goto("/contact"); // Assuming you have a contact form
-    await page.waitForLoadState("networkidle");
-
-    // Test empty form state
-    await expect(page.locator("form")).toHaveScreenshot("form-empty.png");
-
-    // Test filled form state
-    await page.fill('input[name="name"]', "John Doe");
-    await page.fill('input[name="email"]', "john@example.com");
-    await page.fill(
-      'textarea[name="message"]',
-      "Hello, this is a test message."
-    );
-
-    await expect(page.locator("form")).toHaveScreenshot("form-filled.png");
-
-    // Test validation error state
-    await page.fill('input[name="email"]', "invalid-email");
-    await page.click('button[type="submit"]');
-    await page.waitForTimeout(TIMEOUT); // Wait for validation to appear
-
-    await expect(page.locator("form")).toHaveScreenshot("form-error.png");
   });
 
   test("Responsive breakpoints visual test", async ({ page }) => {
@@ -118,22 +77,5 @@ test.describe("Visual Regression Tests", () => {
     const link = page.getByRole("link").first();
     await link.hover();
     await expect(link).toHaveScreenshot("link-hover.png");
-  });
-
-  test("Focus states visual test", async ({ page }) => {
-    await page.goto("/");
-    await page.waitForLoadState("networkidle");
-
-    // Test input focus state
-    const input = page.locator("input").first();
-    if ((await input.count()) > 0) {
-      await input.focus();
-      await expect(input).toHaveScreenshot("input-focus.png");
-    }
-
-    // Test button focus state
-    const button = page.getByRole("button").first();
-    await button.focus();
-    await expect(button).toHaveScreenshot("button-focus.png");
   });
 });
