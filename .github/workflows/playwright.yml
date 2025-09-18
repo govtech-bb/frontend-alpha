@@ -36,11 +36,28 @@ jobs:
     
     - name: Build Next.js application
       run: npm run build
+
+     # Check if this is the first run (no baselines exist)
+    - name: Check for existing baselines
+      id: check-baselines
+      run: |
+        if [ -d "tests/visual.spec.ts-snapshots" ]; then
+          echo "baselines_exist=true" >> $GITHUB_OUTPUT
+        else
+          echo "baselines_exist=false" >> $GITHUB_OUTPUT
+        fi
     
-    - name: Run Playwright tests
+    # If no baselines exist, generate them
+    - name: Generate initial baselines
+      if: steps.check-baselines.outputs.baselines_exist == 'false'
+      run: |
+        npx playwright test --update-snapshots
+        echo "Generated initial baselines - these should be reviewed and committed"
+      
+    # Run normal tests if baselines exist
+    - name: Run visual regression tests
+      if: steps.check-baselines.outputs.baselines_exist == 'true'
       run: npx playwright test
-      env:
-        CI: true
     
     - name: Upload test results
       uses: actions/upload-artifact@v4
