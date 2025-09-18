@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+/** biome-ignore-all lint/suspicious/noExplicitAny: Form.io types require any */
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { Typography } from "@/components/ui/typography";
