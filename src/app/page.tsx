@@ -1,13 +1,6 @@
 import Link from "next/link";
 import { Typography } from "@/components/ui/typography";
 
-const GOVERNMENT_LINKS = [
-  "Have your say",
-  "What's changing",
-  "How we choose what to work on first",
-  "Digital roadmap",
-];
-
 const EXISTING_SERVICES = [
   {
     title: "Register a marriage",
@@ -57,7 +50,7 @@ export default function Home() {
         className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8"
         id="introduction"
       >
-        <Typography variant="h1">
+        <Typography variant="display">
           How you find and use public services is changing
         </Typography>
         <div className="space-y-4">
@@ -71,11 +64,10 @@ export default function Home() {
         className="space-y-6 border-[#30C0C8] border-b-4 bg-[#DEF5F6] px-4 py-8"
         id="alpha_services"
       >
-        <Typography variant="h3">Alpha services</Typography>
+        <Typography variant="h2">Alpha services</Typography>
 
         <Typography variant="paragraph">
-          <span className="underline">Alpha</span> services are new and are very
-          likely to change.
+          Alpha services are new and are very likely to change.
         </Typography>
 
         <div className="flex flex-col gap-2">
@@ -97,11 +89,10 @@ export default function Home() {
         className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8"
         id="existing_services"
       >
-        <Typography variant="h3">Existing services</Typography>
+        <Typography variant="h2">Existing services</Typography>
 
         <Typography variant="paragraph">
-          <span className="underline">Existing</span> services are live on
-          gov.bb.
+          Existing services are live on gov.bb.
           <br />
           They will open in a new window.
         </Typography>
@@ -124,7 +115,7 @@ export default function Home() {
         className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8"
         id="useful_information"
       >
-        <Typography variant="h3">Useful information</Typography>
+        <Typography variant="h2">Useful information</Typography>
 
         <div className="flex flex-col gap-2 space-y-4">
           {INFORMATION_SECTIONS.map((information) => (
@@ -141,24 +132,6 @@ export default function Home() {
                 {information.description}
               </Typography>
             </div>
-          ))}
-        </div>
-      </section>
-      <section
-        className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8"
-        id="make_government_work_for_you"
-      >
-        <Typography variant="h3">Make government work for you</Typography>
-
-        <div className="flex flex-col gap-2">
-          {GOVERNMENT_LINKS.map((link) => (
-            <Link
-              className="cursor-pointer font-normal text-[#00267F] text-[20px] leading-[150%] underline"
-              href="#"
-              key={link}
-            >
-              {link}
-            </Link>
           ))}
         </div>
       </section>
