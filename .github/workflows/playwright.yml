@@ -41,7 +41,7 @@ jobs:
     - name: Check for Linux baselines
       id: check-baselines
       run: |
-        if ls tests/**/*-snapshots/*-linux.png 2>/dev/null; then
+        if [ -d "tests/visual.spec.ts-snapshots" ]; then
           echo "linux_baselines_exist=true" >> $GITHUB_OUTPUT
         else
           echo "linux_baselines_exist=false" >> $GITHUB_OUTPUT
