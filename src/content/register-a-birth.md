@@ -6,6 +6,8 @@ It is a legal requirement that all births in Barbados (including stillbirths) ar
 
 When a child’s birth has been registered, a birth certificate can be issued. The certificate is essential for access to citizenship rights including legal identity documents, certain health services and school enrollment.
 
+---
+
 ## Who should attend the registration of a birth?
 
 You cannot register a birth online yet, so you need to do it in person in the district where the child was born. If the parents are:
@@ -23,9 +25,11 @@ If you are unable to register a birth in person, contact the Registration Depart
 Registration Department, Supreme Court Complex, Whitepark Road, St. Michael
 (246) 434-9970
 
-## Late registrations 
+#### Late registrations 
 
 Births must be registered within 28 days of the child being born. The process to register a birth after this time is the same but you will be charged BDS $20.00. 
+
+---
 
 ## What to bring
 
@@ -42,12 +46,16 @@ If you are a mother or a father and you are 18 years old or younger, you must br
 2. Your National ID card.  
 3. A passport-sized photograph of yourself that has been certified by a Justice of the Peace. 
 
+---
+
 ## How to register a birth
 
 1. Take your documents to the registry office in the appropriate location. You cannot book an appointment but you can find out about typically busy times by calling the office.   
 2. A District Registrar or an officer will use your documents to verify your identity.  
 3. You will complete a form to record the baby’s full name, date and place of birth, parents’ details (names, occupations, address)  
 4. When you have reviewed and confirmed the details, the registrar or officer will enter them into the official register and can begin the process of issuing a birth certificate. A certificate can sometimes be issued on the same day but this depends on the registry office. The original costs BDS $5.00 and each additional copy is also BDS $5.00. People aged 60 and over pay a discounted fee of BDS $1.00 per certificate.  
+
+---
 
 ## Where to register
 
