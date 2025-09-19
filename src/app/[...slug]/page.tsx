@@ -20,6 +20,16 @@ const components = {
       {children}
     </Typography>
   ),
+  h3: ({ children, ...props }: any) => (
+    <Typography className="mt-8 mb-4" variant="h3" {...props}>
+      {children}
+    </Typography>
+  ),
+  h4: ({ children, ...props }: any) => (
+    <Typography className="mt-8 mb-4" variant="h4" {...props}>
+      {children}
+    </Typography>
+  ),
   p: ({ children, ...props }: any) => (
     <Typography variant="paragraph" {...props}>
       {children}
