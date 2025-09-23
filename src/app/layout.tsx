@@ -3,6 +3,7 @@ import { figtree } from "@/lib/fonts";
 import "./globals.css";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { HelpfulBox } from "@/components/layout/helpful-box";
 
 export const metadata: Metadata = {
   title: "GovTech Barbados Alpha",
@@ -37,10 +38,11 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] antialiased`}
+        className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto_auto] antialiased`}
       >
         <Header />
         {children}
+        <HelpfulBox />
         <Footer />
       </body>
     </html>

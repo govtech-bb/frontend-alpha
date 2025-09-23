@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { FeedbackForm } from "@/components/forms/feedback-form";
 import { Typography } from "@/components/ui/typography";
 
 // const GOVERNMENT_LINKS = [
@@ -144,8 +143,21 @@ export default function Home() {
         </div>
       </div>
       <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
-        <div className="mx-auto max-w-2xl">
-          <FeedbackForm />
+        <Typography variant="h2">Make government work for you</Typography>
+
+        <div className="flex flex-col gap-2">
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/whats-changing"
+          >
+            What's changing?
+          </Link>
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/feedback"
+          >
+            Have your say in how government works for you
+          </Link>
         </div>
       </div>
     </div>
