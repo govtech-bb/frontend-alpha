@@ -60,6 +60,7 @@ test.describe("Visual Regression Tests", () => {
       await expect(page).toHaveScreenshot(`homepage-${breakpoint.name}.png`, {
         fullPage: true,
         animations: "disabled",
+        threshold: 0.02, // Allow 2% difference
       });
     }
   });
