@@ -90,6 +90,15 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
               {line}
             </Typography>
           ))}
+
+        {frontmatter.stage ? (
+          <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
+            <Typography variant="paragraph">
+              This Page is in{" "}
+              <span className="capitalize underline">{frontmatter.stage}</span>.
+            </Typography>
+          </div>
+        ) : null}
       </div>
 
       <ReactMarkdown components={components}>{content}</ReactMarkdown>
