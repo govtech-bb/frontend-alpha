@@ -2,9 +2,9 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [main, dev]
+    branches: [dev, prod]
   pull_request:
-    branches: [main, dev]
+    branches: [dev, prod]
   workflow_dispatch: # Allow manual trigger
 
 env:
@@ -41,17 +41,21 @@ jobs:
     - name: Check for Linux baselines
       id: check-baselines
       run: |
-        if [ -d "tests/visual.spec.ts-snapshots" ]; then
+        if [ -d "tests/visual.spec.ts-snapshots" ] && [ "$(find tests/visual.spec.ts-snapshots -name '*-chromium-linux.png' | wc -l)" -gt 0 ]; then
           echo "linux_baselines_exist=true" >> $GITHUB_OUTPUT
+          echo "✅ Linux baselines found"
+          find tests/visual.spec.ts-snapshots -name '*-chromium-linux.png' | head -5
         else
           echo "linux_baselines_exist=false" >> $GITHUB_OUTPUT
+          echo "❌ No Linux baselines found"
         fi
     
     # Generate Linux baselines if they don't exist
     - name: Generate Linux baselines
       if: steps.check-baselines.outputs.linux_baselines_exist == 'false'
       run: |
-        npx playwright test --update-snapshots
+        echo "Generating Linux baselines..."
+        npx playwright test visual.spec.ts --update-snapshots
         echo "Generated Linux baselines"
     
     # Commit the new baselines back to the PR branch
@@ -61,30 +65,63 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add tests/**/*-snapshots/
-        git commit -m "Add Linux visual regression baselines" || exit 0
-        git push
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Add Linux visual regression baselines [skip ci]"
+          git push
+        fi
 
-    # Run normal tests if baselines exist
+    # Run visual regression tests (FIXED: using correct variable name)
     - name: Run visual regression tests
-      if: steps.check-baselines.outputs.baselines_exist == 'true'
-      run: npx playwright test
+      if: steps.check-baselines.outputs.linux_baselines_exist == 'true'
+      run: |
+        echo "Running visual regression tests with existing baselines..."
+        npx playwright test visual.spec.ts --reporter=html
+      env:
+        CI: true
     
-    - name: Upload test results
+    # If no baselines existed and we generated them, run a basic smoke test
+    - name: Run smoke test after baseline generation
+      if: steps.check-baselines.outputs.linux_baselines_exist == 'false'
+      run: |
+        echo "Running smoke test after generating baselines..."
+        npx playwright test visual.spec.ts --reporter=html
+      env:
+        CI: true
+    
+    - name: Upload Playwright Report
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: playwright-results
-        path: |
-          playwright-report/
-          test-results/
-          test-results.json
+        name: playwright-report-${{ github.run_id }}
+        path: playwright-report/
         retention-days: 30
     
-    - name: Upload visual diffs
+    - name: Upload test results and visual diffs
       uses: actions/upload-artifact@v4
       if: failure()
       with:
-        name: visual-diffs
+        name: test-results-${{ github.run_id }}
         path: test-results/
         retention-days: 7
 
+    # Add a step to show what actually ran
+    - name: Test execution summary
+      if: always()
+      run: |
+        echo "=== Test Execution Summary ==="
+        echo "Linux baselines existed: ${{ steps.check-baselines.outputs.linux_baselines_exist }}"
+        if [ "${{ steps.check-baselines.outputs.linux_baselines_exist }}" == "true" ]; then
+          echo "✅ Ran visual regression tests with baseline comparison"
+        else
+          echo "ℹ️ Generated new baselines and ran smoke test"
+        fi
+        
+        echo "=== Available snapshots after run ==="
+        if [ -d "tests/visual.spec.ts-snapshots" ]; then
+          find tests/visual.spec.ts-snapshots -name "*.png" | wc -l | xargs echo "Total snapshots:"
+          find tests/visual.spec.ts-snapshots -name "*-chromium-linux.png" | head -10
+        else
+          echo "No snapshots directory found"
+        fi
