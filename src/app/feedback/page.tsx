@@ -17,12 +17,6 @@ export default function FeedbackPage() {
             Help us improve alpha.gov.bb
           </Typography>
 
-          <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
-            <Typography variant="paragraph">
-              This Page is in <strong>Alpha</strong>.
-            </Typography>
-          </div>
-
           <Typography variant="paragraph">
             Your feedback will help us make it clearer, simpler and faster to
             find and use public services.
