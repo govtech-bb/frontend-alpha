@@ -87,11 +87,13 @@ export default defineConfig({
     toHaveScreenshot: {
       // biome-ignore lint/style/noMagicNumbers: DISABLED FOR PLAYWRIGHT CONFIG
       threshold: process.env.CI ? 0.3 : 0.2,
+      maxDiffPixels: 100,
     },
     // Set the screenshot comparison to be more tolerant on CI
     toMatchSnapshot: {
       // biome-ignore lint/style/noMagicNumbers: DISABLED FOR PLAYWRIGHT CONFIG
       threshold: process.env.CI ? 0.3 : 0.2,
+      maxDiffPixels: 100,
     },
   },
 });

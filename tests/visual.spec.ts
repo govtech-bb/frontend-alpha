@@ -26,7 +26,9 @@ test.describe("Visual Regression Tests", () => {
 
     // Screenshot specific component
     const nav = page.locator("header");
-    await expect(nav).toHaveScreenshot("navigation.png");
+    await expect(nav).toHaveScreenshot("navigation.png", {
+      threshold: 0.02,
+    });
   });
 
   test("Mobile homepage visual test", async ({ page }) => {
@@ -38,6 +40,7 @@ test.describe("Visual Regression Tests", () => {
     await expect(page).toHaveScreenshot("homepage-mobile.png", {
       fullPage: true,
       animations: "disabled",
+      threshold: 0.02,
     });
   });
 
@@ -73,6 +76,8 @@ test.describe("Visual Regression Tests", () => {
     // Test link hover state
     const link = page.getByRole("link").first();
     await link.hover();
-    await expect(link).toHaveScreenshot("link-hover.png");
+    await expect(link).toHaveScreenshot("link-hover.png", {
+      threshold: 0.02,
+    });
   });
 });
