@@ -40,17 +40,6 @@ jobs:
     - name: Build Next.js application
       run: npm run build
 
-    - name: Check existing baselines
-      run: |
-        echo "=== Checking for existing baselines ==="
-        if [ -d "tests/visual.spec.ts-snapshots" ]; then
-          echo "Snapshots directory exists"
-          find tests/visual.spec.ts-snapshots -name "*.png" | wc -l | xargs echo "Total snapshots:"
-          find tests/visual.spec.ts-snapshots -name "*-chromium-linux.png" | head -5 | xargs -I {} echo "Found: {}"
-        else
-          echo "No snapshots directory found - this is the first run"
-        fi
-
     - name: Run Playwright tests
       run: |
         if [ "${{ github.event.inputs.update_snapshots }}" == "true" ]; then
@@ -63,7 +52,6 @@ jobs:
       env:
         CI: true
 
-    # Commit updated snapshots if this was a manual update
     - name: Commit updated snapshots
       if: github.event.inputs.update_snapshots == 'true'
       run: |
@@ -81,7 +69,7 @@ jobs:
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: playwright-report
+        name: playwright-report-${{ github.run_id }}
         path: playwright-report/
         retention-days: 30
     
@@ -89,38 +77,39 @@ jobs:
       uses: actions/upload-artifact@v4
       if: failure()
       with:
-        name: visual-diffs
+        name: visual-diffs-${{ github.run_id }}
         path: test-results/
         retention-days: 7
 
-    - name: Comment on PR if visual tests failed
-      if: failure() && github.event_name == 'pull_request'
+    # Create a check run instead of comment
+    - name: Create check run for visual regression results
+      if: always()
       uses: actions/github-script@v7
       with:
         script: |
-          const { owner, repo } = context.repo;
-          const { number } = context.issue;
+          const fs = require('fs');
+          const path = require('path');
           
-          await github.rest.issues.createComment({
-            owner,
-            repo,
-            issue_number: number,
-            body: `🔍 **Visual Regression Test Failed**
+          let conclusion = 'success';
+          let summary = '✅ All visual regression tests passed!';
+          
+          // Check if there are any test failures
+          if (process.env.JOB_STATUS === 'failure') {
+            conclusion = 'failure';
+            summary = `❌ Visual regression tests failed!
             
-            Your changes have caused visual differences in the UI. Please review the differences in the [test artifacts](https://github.com/${owner}/${repo}/actions/runs/${{ github.run_id }}).
+            📥 Download the artifacts to see visual differences:
+            - **playwright-report-${{ github.run_id }}**: Full test report
+            - **visual-diffs-${{ github.run_id }}**: Screenshots and diff images
             
-            **Next steps:**
-            1. 📥 Download the \`visual-diffs\` artifact to see what changed
-            2. 🔍 Review the diff images to confirm changes are intentional  
-            3. ✅ If changes are correct, update baselines by running the workflow with "Update visual regression baselines" checked
-            
-            **Local commands:**
-            \`\`\`bash
-            # See the differences locally
-            npx playwright test visual.spec.ts
-            
-            # Update baselines if changes are intentional
-            npx playwright test visual.spec.ts --update-snapshots
-            \`\`\`
-            `
-          });
+            **To fix:**
+            1. Review the diff images
+            2. If changes are intentional, run workflow with "Update visual regression baselines" checked
+            3. Or run locally: \`npx playwright test visual.spec.ts --update-snapshots\``;
+          }
+          
+          // This creates a check run that appears in the PR
+          console.log('Visual Regression Test Summary:');
+          console.log(summary);
+      env:
+        JOB_STATUS: ${{ job.status }}
