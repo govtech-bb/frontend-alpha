@@ -51,7 +51,7 @@ export default function Home() {
         id="introduction"
       >
         <Typography variant="display">
-          Government Alpha Services v1.0
+          How you find and use public services is changing
         </Typography>
         <div className="space-y-4">
           <Typography variant="subheading">
