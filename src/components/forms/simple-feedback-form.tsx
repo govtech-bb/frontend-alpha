@@ -51,10 +51,16 @@ export function SimpleFeedbackForm() {
 
   return (
     <div className="space-y-6">
+      {submitStatus === "success" && (
+        <div className="rounded-md border border-[#30C0C8] bg-[#DEF5F6] px-4 py-3 text-[#30C0C8]">
+          Thank you for your feedback.
+        </div>
+      )}
+
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
           <label
-            className="mb-2 block font-medium text-gray-900 text-sm"
+            className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
             htmlFor="visitReason"
           >
             Why did you visit alpha.gov.bb?
@@ -71,7 +77,7 @@ export function SimpleFeedbackForm() {
 
         <div>
           <label
-            className="mb-2 block font-medium text-gray-900 text-sm"
+            className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
             htmlFor="whatWentWrong"
           >
             What went wrong?
@@ -85,12 +91,6 @@ export function SimpleFeedbackForm() {
             value={formData.whatWentWrong}
           />
         </div>
-
-        {submitStatus === "success" && (
-          <div className="rounded-md border border-[#30C0C8] bg-[#DEF5F6] px-4 py-3 text-[#30C0C8]">
-            Thank you for your feedback.
-          </div>
-        )}
 
         <button
           className="w-full rounded-md bg-[#1E787D] px-6 py-3 font-semibold text-white transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
