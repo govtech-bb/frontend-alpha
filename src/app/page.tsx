@@ -84,12 +84,18 @@ export default function Home() {
           >
             Register for a summer camp
           </Link>
-          {/* <Link
+          <Link
             className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-            href="/register-a-birth"
+            href="/forms/birth-registration"
           >
-            Register a birth
-          </Link> */}
+            Birth Registration Form
+          </Link>
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/forms/business-license"
+          >
+            Business License Application
+          </Link>
         </div>
       </div>
       <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">
