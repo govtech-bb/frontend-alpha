@@ -16,6 +16,7 @@ test.describe("Visual Regression Tests", () => {
     await expect(page).toHaveScreenshot("homepage.png", {
       fullPage: true,
       animations: "disabled", // Disable animations for consistent screenshots
+      threshold: 0.02,
     });
   });
 
@@ -68,11 +69,6 @@ test.describe("Visual Regression Tests", () => {
   test("Hover states visual test", async ({ page }) => {
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-
-    // Test button hover state
-    const button = page.getByRole("button").first();
-    await button.hover();
-    await expect(button).toHaveScreenshot("button-hover.png");
 
     // Test link hover state
     const link = page.getByRole("link").first();

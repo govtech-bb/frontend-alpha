@@ -10,7 +10,7 @@ on:
       update_snapshots:
         description: 'Update visual regression baselines'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 env:
