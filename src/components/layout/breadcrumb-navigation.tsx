@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type BreadcrumbItem = {
@@ -37,6 +37,7 @@ function createLabel(slug: string): string {
 
 const Breadcrumb = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -82,24 +83,42 @@ const Breadcrumb = () => {
       aria-label="Breadcrumb"
       className="flex items-center space-x-2 p-4 text-sm"
     >
-      {breadcrumbs.map((crumb, index) => (
-        <div className="flex items-center" key={crumb.href}>
-          {index > 0 && (
-            <Image
-              alt="arrow"
-              height="8"
-              src="/images/chevron-left.svg"
-              width="11"
-            />
-          )}
-          <Link
+      {breadcrumbs.length > 1 ? (
+        breadcrumbs.map((crumb, index) => (
+          <div className="flex items-center" key={crumb.href}>
+            {index > 0 && (
+              <Image
+                alt="arrow"
+                height="8"
+                src="/images/chevron-left.svg"
+                width="11"
+              />
+            )}
+            <Link
+              className="text-[#00654A] text-[20px] underline"
+              href={crumb.href}
+            >
+              {crumb.label}
+            </Link>
+          </div>
+        ))
+      ) : (
+        <>
+          <Image
+            alt="arrow"
+            height="8"
+            src="/images/chevron-left.svg"
+            width="11"
+          />
+          <button
             className="text-[#00654A] text-[20px] underline"
-            href={crumb.href}
+            onClick={() => router.back()}
+            type="button"
           >
-            {crumb.label}
-          </Link>
-        </div>
-      ))}
+            Back
+          </button>
+        </>
+      )}
     </nav>
   );
 };
