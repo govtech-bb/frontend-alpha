@@ -136,21 +136,24 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {/* <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
-        <Typography variant="h3">Make government work for you</Typography>
+      <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
+        <Typography variant="h2">Make government work for you</Typography>
 
         <div className="flex flex-col gap-2">
-          {GOVERNMENT_LINKS.map((link) => (
-            <Link
-              className="cursor-pointer font-normal text-[#00267F] text-[20px] leading-[150%] underline"
-              href="#"
-              key={link}
-            >
-              {link}
-            </Link>
-          ))}
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/whats-changing"
+          >
+            What's changing?
+          </Link>
+          <Link
+            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+            href="/feedback"
+          >
+            Have your say in how government works for you
+          </Link>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }

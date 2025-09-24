@@ -1,4 +1,5 @@
 import Breadcrumb from "@/components/layout/breadcrumb-navigation";
+import { HelpfulBox } from "@/components/layout/helpful-box";
 
 export default function DynamicPageLayout({
   children,
@@ -8,7 +9,10 @@ export default function DynamicPageLayout({
   return (
     <div className="bg-[#FFC726]">
       <Breadcrumb />
-      <div className="h-full rounded-t-3xl bg-white">{children}</div>
+      <div className="h-full rounded-t-3xl bg-white">
+        {children}
+        <HelpfulBox />
+      </div>
     </div>
   );
 }
