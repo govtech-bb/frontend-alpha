@@ -50,9 +50,7 @@ export default function Home() {
         className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8"
         id="introduction"
       >
-        <Typography variant="display">
-          How you find and use public services is changing
-        </Typography>
+        <Typography variant="display">Government Alpha Let's Go!!</Typography>
         <div className="space-y-4">
           <Typography variant="subheading">
             It will be clearer, simpler and faster for citizens to get things
