@@ -1,6 +1,5 @@
 ---
 title: "What's Changing?"
-stage: "alpha"
 ---
 
 How you find and use public services is changing
