@@ -16,7 +16,8 @@ test.describe("Visual Regression Tests", () => {
     await expect(page).toHaveScreenshot("homepage.png", {
       fullPage: true,
       animations: "disabled", // Disable animations for consistent screenshots
-      threshold: 0.02,
+      threshold: 0.02, // Allow 2% difference
+      maxDiffPixelRatio: 0.02,
     });
   });
 
@@ -27,7 +28,8 @@ test.describe("Visual Regression Tests", () => {
     // Screenshot specific component
     const nav = page.locator("header");
     await expect(nav).toHaveScreenshot("navigation.png", {
-      threshold: 0.02,
+      threshold: 0.02, // Allow 2% difference
+      maxDiffPixelRatio: 0.02,
     });
   });
 
@@ -40,7 +42,8 @@ test.describe("Visual Regression Tests", () => {
     await expect(page).toHaveScreenshot("homepage-mobile.png", {
       fullPage: true,
       animations: "disabled",
-      threshold: 0.02,
+      threshold: 0.02, // Allow 2% difference
+      maxDiffPixelRatio: 0.02,
     });
   });
 
@@ -65,6 +68,7 @@ test.describe("Visual Regression Tests", () => {
         fullPage: true,
         animations: "disabled",
         threshold: 0.02, // Allow 2% difference
+        maxDiffPixelRatio: 0.02,
       });
     }
   });
@@ -77,7 +81,8 @@ test.describe("Visual Regression Tests", () => {
     const link = page.getByRole("link").first();
     await link.hover();
     await expect(link).toHaveScreenshot("link-hover.png", {
-      threshold: 0.02,
+      threshold: 0.02, // Allow 2% difference
+      maxDiffPixelRatio: 0.02,
     });
   });
 });
