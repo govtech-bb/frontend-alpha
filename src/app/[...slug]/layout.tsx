@@ -7,8 +7,10 @@ export default function DynamicPageLayout({
 }>) {
   return (
     <div className="bg-[#FFC726]">
-      <Breadcrumb />
-      <div className="h-full rounded-t-3xl bg-white">{children}</div>
+      <div className="h-full rounded-t-3xl bg-white">
+        <Breadcrumb />
+        {children}
+      </div>
     </div>
   );
 }
