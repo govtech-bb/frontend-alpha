@@ -81,7 +81,7 @@ const Breadcrumb = () => {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex items-center space-x-2 p-4 text-sm"
+      className="flex items-center space-x-2 px-4 pt-4 text-sm"
     >
       {breadcrumbs.length > 1 ? (
         breadcrumbs.map((crumb, index) => (
