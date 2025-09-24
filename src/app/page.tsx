@@ -47,7 +47,7 @@ export default function Home() {
   return (
     <>
       <section
-        className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8"
+        className="space-y-8 border-[#E5BD39] border-b-4 bg-green-500 px-4 py-8"
         id="introduction"
       >
         <Typography variant="display">Government Alpha Let's Go!!</Typography>
