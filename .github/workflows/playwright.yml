@@ -29,7 +29,21 @@ jobs:
       - name: Install Playwright browsers
         run: npx --yes playwright install --with-deps
 
+      - name: Check for existing snapshots
+        id: check-snapshots
+        run: |
+          if ls tests/e2e/visual.spec.ts-snapshots/*-linux.png 1> /dev/null 2>&1; then
+            echo "snapshots-exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "snapshots-exist=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate baseline snapshots (first run)
+        if: steps.check-snapshots.outputs.snapshots-exist == 'false'
+        run: npx playwright test --update-snapshots
+
       - name: Run Playwright tests
+        if: steps.check-snapshots.outputs.snapshots-exist == 'true'
         run: npx playwright test
 
       - name: Upload Playwright HTML report
