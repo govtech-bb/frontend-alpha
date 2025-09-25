@@ -1,5 +1,5 @@
 ---
-title: "What's Changing?"
+title: "What's changing?"
 ---
 
 How you find and use public services is changing.
