@@ -32,15 +32,28 @@ export default defineConfig({
     trace: "on-first-retry",
     // Enable visual comparisons
     screenshot: "only-on-failure",
-    /* Record video on failure */
-    video: "retain-on-failure",
+    // Consistent settings for visual tests
+    locale: "en-US",
+    timezoneId: "UTC",
+    colorScheme: "light",
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"], // Force consistent rendering
+        deviceScaleFactor: 1,
+        hasTouch: false,
+        // Disable web security for consistent font loading
+        launchOptions: {
+          args: [
+            "--disable-web-security",
+            "--disable-features=VizDisplayCompositor",
+          ],
+        },
+      },
     },
 
     // {
@@ -76,7 +89,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "npm run dev",
+    command: "npm run start",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
   },

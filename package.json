@@ -14,7 +14,15 @@
     "test:visual": "playwright test tests/e2e/visual.spec.ts",
     "test:update-snapshots": "playwright test --update-snapshots",
     "test:report": "playwright show-report",
-    "test:install": "playwright install"
+    "test:install": "playwright install",
+    "visual:test": "playwright test visual.spec.ts",
+    "visual:test-docker": "docker run --rm -v \"$(pwd)\":/workspace -w /workspace --network host --ipc=host --security-opt seccomp=unconfined mcr.microsoft.com/playwright:v1.55.0-noble npx playwright test visual.spec.ts",
+    "visual:update-docker": "docker run --rm -v \"$(pwd)\":/workspace -w /workspace --network host --ipc=host --security-opt seccomp=unconfined mcr.microsoft.com/playwright:v1.55.0-noble npx playwright test visual.spec.ts --update-snapshots",
+    "visual:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && npm run visual:test-docker\"",
+    "visual:prod": "npm run build && concurrently \"npm run start\" \"wait-on http://localhost:3000 && npm run visual:test-docker\"",
+    "visual:update-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && npm run visual:update-docker\"",
+    "visual:update-prod": "npm run build && concurrently \"npm run start\" \"wait-on http://localhost:3000 && npm run visual:update-docker\"",
+    "visual:ui": "playwright test visual.spec.ts --ui"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -30,8 +38,8 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
     "@biomejs/biome": "^2.2.2",
+    "@playwright/test": "^1.55.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

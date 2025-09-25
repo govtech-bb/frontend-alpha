@@ -58,3 +58,7 @@ next-env.d.ts
 
 # Playwright downloads
 /downloads/
+
+# Playwright
+node_modules/
+/playwright/.auth/
