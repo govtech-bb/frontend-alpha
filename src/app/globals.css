@@ -126,9 +126,17 @@
     font-kerning: normal;
     font-variant-ligatures: common-ligatures;
   }
-  
+
   /* Ensure consistent font rendering for text elements */
-  h1, h2, h3, h4, h5, h6, p, span, div {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  span,
+  div {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;

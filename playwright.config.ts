@@ -17,27 +17,27 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      use: { 
+      use: {
         ...devices["Desktop Chrome"],
         // Chrome-specific font rendering optimizations
         launchOptions: {
           args: [
-            '--font-render-hinting=none',
-            '--disable-font-subpixel-positioning',
-            '--disable-skia-runtime-opts',
-            '--run-all-compositor-stages-before-draw',
-            '--disable-new-content-rendering-timeout',
-            '--disable-threaded-animation',
-            '--disable-threaded-scrolling',
-            '--disable-checker-imaging',
-            '--disable-image-animation-resync'
-          ]
-        }
+            "--font-render-hinting=none",
+            "--disable-font-subpixel-positioning",
+            "--disable-skia-runtime-opts",
+            "--run-all-compositor-stages-before-draw",
+            "--disable-new-content-rendering-timeout",
+            "--disable-threaded-animation",
+            "--disable-threaded-scrolling",
+            "--disable-checker-imaging",
+            "--disable-image-animation-resync",
+          ],
+        },
       },
     },
     {
       name: "webkit",
-      use: { 
+      use: {
         ...devices["Desktop Safari"],
         // WebKit relies on CSS font optimizations
       },
