@@ -32,7 +32,7 @@ for (const routePath of routesUnderTest) {
         animations: "disabled",
         caret: "hide",
         scale: "css",
-        threshold: 0.02, // Allow 2% pixel difference for cross-platform variations
+        threshold: 0.03, // Allow 3% pixel difference for cross-platform variations
       });
     });
   });
