@@ -21,6 +21,7 @@ for (const routePath of routesUnderTest) {
         await page.waitForLoadState("networkidle", { timeout: 8000 });
       } catch {
         // Fallback for routes that don't reach networkidle
+        // biome-ignore lint/style/noMagicNumbers: <explanation>
         await page.waitForTimeout(2000);
       }
       // Ensure page is hydrated
