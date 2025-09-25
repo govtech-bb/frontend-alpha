@@ -20,6 +20,16 @@ const components = {
       {children}
     </Typography>
   ),
+  h3: ({ children, ...props }: any) => (
+    <Typography className="mt-8 mb-4" variant="h3" {...props}>
+      {children}
+    </Typography>
+  ),
+  h4: ({ children, ...props }: any) => (
+    <Typography className="mt-8 mb-4" variant="h4" {...props}>
+      {children}
+    </Typography>
+  ),
   p: ({ children, ...props }: any) => (
     <Typography variant="paragraph" {...props}>
       {children}
@@ -67,7 +77,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
   const { frontmatter, content } = result;
 
   return (
-    <div className="space-y-4 px-4 py-8">
+    <div className="space-y-4 px-4 pt-2 pb-8">
       <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
@@ -80,6 +90,15 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
               {line}
             </Typography>
           ))}
+
+        {frontmatter.stage ? (
+          <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
+            <Typography variant="paragraph">
+              This Page is in{" "}
+              <span className="capitalize underline">{frontmatter.stage}</span>.
+            </Typography>
+          </div>
+        ) : null}
       </div>
 
       <ReactMarkdown components={components}>{content}</ReactMarkdown>
