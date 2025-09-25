@@ -2,9 +2,6 @@ import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { type NextRequest, NextResponse } from "next/server";
 import { createTransport } from "nodemailer";
 
-// Email validation regex at top level for performance
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 // Create AWS SES v2 client
 const sesClient = new SESv2Client({
   region: process.env.AWS_REGION || "us-east-1",
@@ -22,43 +19,46 @@ const transporter = createTransport({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, feedback } = body;
+    const { visitReason, whatWentWrong } = body;
 
     // Validate required fields
-    if (!(name && email && feedback)) {
+    if (!(visitReason || whatWentWrong)) {
       return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
-    }
-
-    // Validate email format
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email format" },
+        { error: "At least one feedback field is required" },
         { status: 400 }
       );
     }
 
     // Email content
     const mailOptions = {
-      from: `"Alpha Gov Feedback" <${process.env.SES_FROM_EMAIL || "noreply@dharach.com"}>`,
-      to: "matt@dharach.com",
-      subject: `New Feedback from ${name}`,
+      from: `"Alpha Gov Feedback" <${process.env.FEEDBACK_FROM_EMAIL || "noreply@example.com"}>`,
+      to: `"Alpha Gov Feedback" <${process.env.FEEDBACK_TO_EMAIL || "noreply@example.com"}>`,
+      subject: "New Alpha Gov Feedback",
       text: `
-Name: ${name}
-Email: ${email}
-Feedback:
-${feedback}
+${visitReason ? `Why they visited:\n${visitReason}\n\n` : ""}${whatWentWrong ? `What went wrong:\n${whatWentWrong}` : ""}
       `,
       html: `
-        <h2>New Feedback Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Feedback:</strong></p>
-        <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
-          ${feedback.replace(/\n/g, "<br>")}
-        </div>
+        <h2>New Alpha Government Feedback</h2>
+        ${
+          visitReason
+            ? `
+          <p><strong>Why did you visit alpha.gov.bb?</strong></p>
+          <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
+            ${visitReason.replace(/\n/g, "<br>")}
+          </div>
+        `
+            : ""
+        }
+        ${
+          whatWentWrong
+            ? `
+          <p><strong>What went wrong?</strong></p>
+          <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
+            ${whatWentWrong.replace(/\n/g, "<br>")}
+          </div>
+        `
+            : ""
+        }
         <hr>
         <p style="color: #666; font-size: 12px;">
           Sent from Alpha Government Services Feedback Form

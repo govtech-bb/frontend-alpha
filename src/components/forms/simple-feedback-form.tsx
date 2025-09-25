@@ -25,9 +25,8 @@ export function SimpleFeedbackForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: "Anonymous",
-          email: "anonymous@feedback.local",
-          feedback: `Visit reason: ${formData.visitReason}\n\nWhat went wrong: ${formData.whatWentWrong}`,
+          visitReason: formData.visitReason,
+          whatWentWrong: formData.whatWentWrong,
         }),
       });
 
