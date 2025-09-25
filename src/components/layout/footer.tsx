@@ -3,9 +3,9 @@ import { Typography } from "../ui/typography";
 
 export const Footer = () => {
   return (
-    <footer className="bg-[#00267F] px-4 py-8 text-white">
+    <footer className="bg-[#00267F] px-4 py-8">
       <div className="flex items-end justify-between">
-        <Typography variant="paragraph">
+        <Typography className="text-white" variant="paragraph">
           © 2025 Government of Barbados
         </Typography>
         <Image
