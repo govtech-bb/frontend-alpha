@@ -1,10 +1,13 @@
 import Image from "next/image";
+import { Typography } from "../ui/typography";
 
 export const Footer = () => {
   return (
     <footer className="bg-[#00267F] px-4 py-8 text-white">
       <div className="flex items-end justify-between">
-        <p className="text-base">© 2025 Government of Barbados</p>
+        <Typography variant="paragraph">
+          © 2025 Government of Barbados
+        </Typography>
         <Image
           alt="flag"
           height="100"
