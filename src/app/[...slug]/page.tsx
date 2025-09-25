@@ -77,7 +77,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
   const { frontmatter, content } = result;
 
   return (
-    <div className="space-y-4 px-4 py-8">
+    <div className="space-y-4 px-4 pt-2 pb-8">
       <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
@@ -90,6 +90,15 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
               {line}
             </Typography>
           ))}
+
+        {frontmatter.stage ? (
+          <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
+            <Typography variant="paragraph">
+              This Page is in{" "}
+              <span className="capitalize underline">{frontmatter.stage}</span>.
+            </Typography>
+          </div>
+        ) : null}
       </div>
 
       <ReactMarkdown components={components}>{content}</ReactMarkdown>

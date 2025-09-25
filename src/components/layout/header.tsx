@@ -5,7 +5,7 @@ export const Header = () => {
   return (
     <div className="bg-[#00267F]">
       <Banner />
-      <header className="flex items-center gap-3 rounded-t-3xl bg-[#FFC726] px-4 pt-8">
+      <header className="flex items-center gap-3 rounded-t-3xl bg-[#FFC726] px-4 py-6">
         <Image
           alt="flag"
           height="21"
