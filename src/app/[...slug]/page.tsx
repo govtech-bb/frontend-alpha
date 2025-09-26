@@ -91,7 +91,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
             </Typography>
           ))}
 
-        {frontmatter.stage ? (
+        {frontmatter.stage?.length > 0 ? (
           <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
             <Typography variant="paragraph">
               This Page is in{" "}
