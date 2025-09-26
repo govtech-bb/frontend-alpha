@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { figtree } from "@/lib/fonts";
 import "./globals.css";
+import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
@@ -29,13 +30,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script
-          data-website-id="7b38820e-0363-41c7-8a85-c55ed60ad898"
-          defer
-          src="https://cloud.umami.is/script.js"
-        />
-      </head>
       <body
         className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] antialiased`}
       >
@@ -43,6 +37,7 @@ export default function RootLayout({
         {children}
         <Footer />
       </body>
+      <Analytics />
     </html>
   );
 }
