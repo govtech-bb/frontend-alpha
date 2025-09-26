@@ -15,9 +15,9 @@ const typographyVariants = cva(
         h5: "font-medium text-xl leading-[115%] tracking-tight", //20px
         h6: "font-medium text-base leading-[115%] tracking-tight", //16px
         subheading: "font-medium text-[24px] leading-[130%]",
-        paragraph: "font-normal text-[20px] leading-[150%]",
+        paragraph: "font-normal text-xl leading-[150%]",
         body: "font-normal text-base leading-[150%]",
-        small: "font-normal text-[12px] leading-[125%]",
+        small: "font-normal text-xs leading-[125%]",
         muted: "text-muted-foreground text-sm leading-[150%]",
         link: "cursor-pointer font-normal text-[20px] text-primary leading-[150%] underline-offset-4 transition-colors hover:underline",
         code: "rounded-md bg-muted px-2 py-1 font-mono text-sm",
