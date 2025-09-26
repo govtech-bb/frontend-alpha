@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:e2e": "playwright test",
-    "test:e2e:update": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npm run build && docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npx playwright test --update-snapshots",
+    "test:e2e:update:docker": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npm run build && docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npx playwright test --update-snapshots",
+    "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
