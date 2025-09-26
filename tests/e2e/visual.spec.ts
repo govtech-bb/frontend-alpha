@@ -15,7 +15,7 @@ const routesUnderTest: string[] = [
 for (const routePath of routesUnderTest) {
   test.describe(`visual: ${routePath}`, () => {
     test(`full page snapshot for ${routePath}`, async ({ page }) => {
-      await page.goto(routePath, { waitUntil: "networkidle" });
+      await page.goto(routePath, { waitUntil: "domcontentloaded" });
       // Wait for hydration with graceful fallback
       try {
         await page.waitForLoadState("networkidle", { timeout: 8000 });
