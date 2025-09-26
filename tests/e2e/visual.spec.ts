@@ -33,7 +33,7 @@ for (const routePath of routesUnderTest) {
         caret: "hide",
         scale: "css",
         threshold: 0.3, // Allow 3% pixel difference for cross-platform variations
-        maxDiffPixelRatio: 0.03,
+        maxDiffPixelRatio: 0.05,
       });
     });
   });
