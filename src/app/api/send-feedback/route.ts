@@ -1,20 +1,34 @@
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { type NextRequest, NextResponse } from "next/server";
-import { createTransport } from "nodemailer";
 
-// Create AWS SES v2 client
+// Create AWS SES v2 client using Amplify's SSR compute role
 const sesClient = new SESv2Client({
-  region: process.env.REGION || "us-east-1",
-  credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID || "",
-    secretAccessKey: process.env.SECRET_ACCESS_KEY || "",
-  },
+  region: process.env.SES_REGION || "us-east-1", // no credentials block - use runtime role
 });
 
-// Create reusable transporter object using Amazon SES
-const transporter = createTransport({
-  SES: { sesClient, SendEmailCommand },
-});
+// Send email using SES directly
+async function sendEmail({
+  to,
+  subject,
+  html,
+}: {
+  to: string;
+  subject: string;
+  html: string;
+}) {
+  const from = process.env.MAIL_FROM!; // must be within a verified SES identity
+  const cmd = new SendEmailCommand({
+    FromEmailAddress: from,
+    Destination: { ToAddresses: [to] },
+    Content: {
+      Simple: {
+        Subject: { Data: subject },
+        Body: { Html: { Data: html } },
+      },
+    },
+  });
+  await sesClient.send(cmd);
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,14 +44,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Email content
-    const mailOptions = {
-      from: `"Alpha Gov Feedback" <${process.env.FEEDBACK_FROM_EMAIL || "noreply@example.com"}>`,
-      to: `"Alpha Gov Feedback" <${process.env.FEEDBACK_TO_EMAIL || "noreply@example.com"}>`,
-      subject: "New Alpha Gov Feedback",
-      text: `
-${visitReason ? `Why they visited:\n${visitReason}\n\n` : ""}${whatWentWrong ? `What went wrong:\n${whatWentWrong}` : ""}
-      `,
-      html: `
+    const subject = "New Alpha Gov Feedback";
+    const to = process.env.FEEDBACK_TO_EMAIL || "feedback@govtech.bb";
+    const html = `
         <h2>New Alpha Government Feedback</h2>
         ${
           visitReason
@@ -63,14 +72,13 @@ ${visitReason ? `Why they visited:\n${visitReason}\n\n` : ""}${whatWentWrong ? `
         <p style="color: #666; font-size: 12px;">
           Sent from Alpha Government Services Feedback Form
         </p>
-      `,
-    };
+      `;
 
-    // Send email
-    const info = await transporter.sendMail(mailOptions);
+    // Send email using SES
+    await sendEmail({ to, subject, html });
 
     return NextResponse.json(
-      { message: "Feedback sent successfully", messageId: info.messageId },
+      { message: "Feedback sent successfully" },
       { status: 200 }
     );
   } catch (_error) {
