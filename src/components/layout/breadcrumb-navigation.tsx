@@ -111,7 +111,7 @@ const Breadcrumb = () => {
             width="11"
           />
           <button
-            className="text-[#00654A] text-[20px] underline"
+            className="text-[#00654A] text-xl underline"
             onClick={() => router.back()}
             type="button"
           >
