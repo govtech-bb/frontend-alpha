@@ -57,15 +57,6 @@ export default function Home() {
         <Typography variant="display">
           How you find and use public services is changing
         </Typography>
-        <Typography variant="display">
-          How you find and use public services is changing
-        </Typography>
-        <Typography variant="display">
-          How you find and use public services is changing
-        </Typography>
-        <Typography variant="display">
-          How you find and use public services is changing
-        </Typography>
         <div className="space-y-4">
           <Typography variant="subheading">
             It will be clearer, simpler and faster for citizens to get things
