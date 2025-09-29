@@ -46,6 +46,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
+    console.log("env", process.env);
+
     // Email content
     const subject = "New Alpha Gov Feedback";
     const to = process.env.FEEDBACK_TO_EMAIL || "feedback@govtech.bb";
