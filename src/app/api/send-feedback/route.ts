@@ -17,6 +17,9 @@ async function sendEmail({
   html: string;
 }) {
   const from = process.env.MAIL_FROM!; // must be within a verified SES identity
+  // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
+  console.log("email args", to, from, subject, html);
+
   const cmd = new SendEmailCommand({
     FromEmailAddress: from,
     Destination: { ToAddresses: [to] },
