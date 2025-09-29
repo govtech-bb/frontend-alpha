@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 // Create AWS SES v2 client using Amplify's SSR compute role
 const sesClient = new SESv2Client({
-  region: process.env.SES_REGION || "us-east-1", // no credentials block - use runtime role
+  region: process.env.SES_REGION || process.env.AWS_REGION || "us-east-1", // use AWS_REGION as fallback
 });
 
 // Send email using SES directly
@@ -16,7 +16,7 @@ async function sendEmail({
   subject: string;
   html: string;
 }) {
-  const from = process.env.MAIL_FROM!; // must be within a verified SES identity
+  const from = process.env.MAIL_FROM || "no-reply@notify.dev.alpha.gov.bb"; // must be within a verified SES identity
   // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
   console.log("email args", to, from, subject, html);
 
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
 
     // Email content
     const subject = "New Alpha Gov Feedback";
-    const to = process.env.FEEDBACK_TO_EMAIL || "feedback@govtech.bb";
+    const to = process.env.FEEDBACK_TO_EMAIL || "matt.hamilton@govtech.bb";
     const html = `
         <h2>New Alpha Government Feedback</h2>
         ${
