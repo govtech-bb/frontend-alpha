@@ -47,7 +47,12 @@ export async function POST(request: NextRequest) {
     }
 
     // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-    console.log("env", process.env);
+    console.log("Environment variables:", {
+      SES_REGION: process.env.SES_REGION,
+      MAIL_FROM: process.env.MAIL_FROM,
+      FEEDBACK_TO_EMAIL: process.env.FEEDBACK_TO_EMAIL,
+      NODE_ENV: process.env.NODE_ENV,
+    });
 
     // Email content
     const subject = "New Alpha Gov Feedback";
