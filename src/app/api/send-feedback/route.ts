@@ -54,17 +54,9 @@ export async function POST(request: NextRequest) {
     }
 
     // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-    console.log("Environment variables:", {
-      SES_REGION: process.env.SES_REGION,
-      NEXT_PUBLIC_SES_REGION: process.env.NEXT_PUBLIC_SES_REGION,
-      MAIL_FROM: process.env.MAIL_FROM,
-      NEXT_PUBLIC_MAIL_FROM: process.env.NEXT_PUBLIC_MAIL_FROM,
-      FEEDBACK_TO_EMAIL: process.env.FEEDBACK_TO_EMAIL,
-      NEXT_PUBLIC_FEEDBACK_TO_EMAIL: process.env.NEXT_PUBLIC_FEEDBACK_TO_EMAIL,
-      NODE_ENV: process.env.NODE_ENV,
-      AWS_REGION: process.env.AWS_REGION,
-      totalEnvVars: Object.keys(process.env).length,
-    });
+    console.log("All environment variables:");
+    // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
+    console.log(JSON.stringify(process.env, null, 2));
 
     // Email content
     const subject = "New Alpha Gov Feedback";
