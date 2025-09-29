@@ -3,7 +3,11 @@ import { type NextRequest, NextResponse } from "next/server";
 
 // Create AWS SES v2 client using Amplify's SSR compute role
 const sesClient = new SESv2Client({
-  region: process.env.SES_REGION || process.env.AWS_REGION || "us-east-1", // use AWS_REGION as fallback
+  region:
+    process.env.SES_REGION ||
+    process.env.NEXT_PUBLIC_SES_REGION ||
+    process.env.AWS_REGION ||
+    "us-east-1",
 });
 
 // Send email using SES directly
@@ -16,7 +20,10 @@ async function sendEmail({
   subject: string;
   html: string;
 }) {
-  const from = process.env.MAIL_FROM || "no-reply@notify.dev.alpha.gov.bb"; // must be within a verified SES identity
+  const from =
+    process.env.MAIL_FROM ||
+    process.env.NEXT_PUBLIC_MAIL_FROM ||
+    "no-reply@notify.dev.alpha.gov.bb";
   // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
   console.log("email args", to, from, subject, html);
 
@@ -49,19 +56,22 @@ export async function POST(request: NextRequest) {
     // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
     console.log("Environment variables:", {
       SES_REGION: process.env.SES_REGION,
+      NEXT_PUBLIC_SES_REGION: process.env.NEXT_PUBLIC_SES_REGION,
       MAIL_FROM: process.env.MAIL_FROM,
+      NEXT_PUBLIC_MAIL_FROM: process.env.NEXT_PUBLIC_MAIL_FROM,
       FEEDBACK_TO_EMAIL: process.env.FEEDBACK_TO_EMAIL,
+      NEXT_PUBLIC_FEEDBACK_TO_EMAIL: process.env.NEXT_PUBLIC_FEEDBACK_TO_EMAIL,
       NODE_ENV: process.env.NODE_ENV,
-      // Check if any Amplify vars are available
       AWS_REGION: process.env.AWS_REGION,
-      REGION: process.env.REGION,
-      // Total count of env vars
       totalEnvVars: Object.keys(process.env).length,
     });
 
     // Email content
     const subject = "New Alpha Gov Feedback";
-    const to = process.env.FEEDBACK_TO_EMAIL || "matt.hamilton@govtech.bb";
+    const to =
+      process.env.FEEDBACK_TO_EMAIL ||
+      process.env.NEXT_PUBLIC_FEEDBACK_TO_EMAIL ||
+      "matt.hamilton@govtech.bb";
     const html = `
         <h2>New Alpha Government Feedback</h2>
         ${
