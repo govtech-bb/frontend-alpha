@@ -6,18 +6,14 @@ import { type NextRequest, NextResponse } from "next/server";
 // Get required environment variables with explicit error handling
 const region = process.env.SES_REGION ?? process.env.AWS_REGION ?? "us-east-1";
 
-const mailFrom = process.env.MAIL_FROM ?? "no-reply@notify.dev.alpha.gov.bb";
-const feedbackToEmail =
-  process.env.FEEDBACK_TO_EMAIL ?? "matt.hamilton@govtech.bb";
-
-// Log if we're using fallback values
-if (!process.env.MAIL_FROM) {
-  // biome-ignore lint/suspicious/noConsole: needed for debugging missing env vars
-  console.warn("MAIL_FROM not set, using fallback:", mailFrom);
+const mailFrom = process.env.MAIL_FROM;
+if (!mailFrom) {
+  throw new Error("MAIL_FROM environment variable is required");
 }
-if (!process.env.FEEDBACK_TO_EMAIL) {
-  // biome-ignore lint/suspicious/noConsole: needed for debugging missing env vars
-  console.warn("FEEDBACK_TO_EMAIL not set, using fallback:", feedbackToEmail);
+
+const feedbackToEmail = process.env.FEEDBACK_TO_EMAIL;
+if (!feedbackToEmail) {
+  throw new Error("FEEDBACK_TO_EMAIL environment variable is required");
 }
 
 // Create AWS SES v2 client using Amplify's SSR compute role
