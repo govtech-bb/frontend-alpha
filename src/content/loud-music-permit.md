@@ -1,5 +1,6 @@
 ---
 title: "Get a permit to play loud music"
+featured: true
 ---
 
 If you are organising an event, you may also need to apply for one or more of the following: 

@@ -1,6 +1,7 @@
 ---
 title: "Register a birth"
 stage: "alpha"
+featured: true
 ---
 
 It is a legal requirement that all births in Barbados (including stillbirths) are registered within 28 days. 
