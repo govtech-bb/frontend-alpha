@@ -64,21 +64,45 @@ function buildSecurePath(slugSegments: string | string[]): string {
     }
   });
 
-  // Build path from validated segments
-  const relativePath = path.join(...segments);
+  // AWS Inspector Mitigation: Use path.basename() on each segment to strip any directory components
+
+  // This ensures no path traversal sequences survive even if validation is bypassed
+
+  const sanitizedSegments = segments.map((segment) => path.basename(segment));
+
+  // Additional safety check: Verify basename didn't change the segment (would indicate path traversal attempt)
+
+  segments.forEach((original, index) => {
+    if (original !== sanitizedSegments[index]) {
+      throw new Error(
+        `Path traversal attempt detected in segment: ${original}`
+      );
+    }
+  });
+
+  // Build path from sanitized segments
+
+  const relativePath = path.join(...sanitizedSegments);
 
   // Explicitly append .md extension (prevent extension smuggling)
+
   const filePathWithExtension = `${relativePath}.md`;
 
   // Resolve to absolute path under CONTENT_DIR
+
   const absolutePath = path.resolve(CONTENT_DIR, filePathWithExtension);
 
   // CRITICAL: Verify the resolved path is still within CONTENT_DIR
   const relative = path.relative(CONTENT_DIR, absolutePath);
 
-  // If path escapes (starts with .. or is absolute), reject it
   if (relative.startsWith("..") || path.isAbsolute(relative)) {
     throw new Error("Path traversal attempt detected");
+  }
+
+  if (relative.includes("..")) {
+    // Additional safeguard: Verify no '..' in the final relative path
+
+    throw new Error("Path traversal attempt detected in resolved path");
   }
 
   return absolutePath;
