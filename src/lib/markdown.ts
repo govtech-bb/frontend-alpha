@@ -4,7 +4,7 @@ import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import logger from "@/lib/logger";
+import logger from "@/lib/logger"; // Import your Winston logger
 
 // Fixed base directory - resolve to absolute path at module load
 const CONTENT_DIR = path.resolve(process.cwd(), "src/content");
@@ -136,15 +136,11 @@ export async function getMarkdownContent(slug: string | string[]) {
 
     // Only log non-system path errors (avoid noise from browser requests)
     if (!isSystemPath) {
-      logger.error(
-        {
-          function: "getMarkdownContent",
-          slug,
-          errorMessage:
-            error instanceof Error ? error.message : "Unknown error",
-        },
-        "Error reading markdown content"
-      );
+      logger.error("Error reading markdown content", {
+        function: "getMarkdownContent",
+        slug,
+        errorMessage: error instanceof Error ? error.message : "Unknown error",
+      });
     }
 
     // Return generic error to client
@@ -189,14 +185,11 @@ export async function listMarkdownFiles(subDir?: string): Promise<string[]> {
       .filter((file) => file.endsWith(".md"))
       .map((file) => file.replace(/\.md$/, ""));
   } catch (error) {
-    logger.error(
-      {
-        function: "listMarkdownFiles",
-        subDir,
-        errorMessage: error instanceof Error ? error.message : "Unknown error",
-      },
-      "Error listing markdown files"
-    );
+    logger.error("Error listing markdown files", {
+      function: "listMarkdownFiles",
+      subDir,
+      errorMessage: error instanceof Error ? error.message : "Unknown error",
+    });
 
     return [];
   }
@@ -255,13 +248,10 @@ export async function getAllMarkdownSlugs(
       validateSegment(entry.name);
       await scanDirectory(fullPath, [...basePath, entry.name]);
     } catch (_error) {
-      logger.warn(
-        {
-          function: "getAllMarkdownSlugs",
-          directoryName: entry.name,
-        },
-        "Skipping invalid directory"
-      );
+      logger.warn("Skipping invalid directory", {
+        function: "getAllMarkdownSlugs",
+        directoryName: entry.name,
+      });
     }
   }
 
@@ -273,25 +263,19 @@ export async function getAllMarkdownSlugs(
       validateSegment(slug);
       slugs.push(basePath.length > 0 ? [...basePath, slug] : [slug]);
     } catch (_error) {
-      logger.warn(
-        {
-          function: "getAllMarkdownSlugs",
-          fileName: entry.name,
-        },
-        "Skipping invalid file"
-      );
+      logger.warn("Skipping invalid file", {
+        function: "getAllMarkdownSlugs",
+        fileName: entry.name,
+      });
     }
   }
 
   function logScanError(dir: string, error: unknown): void {
-    logger.error(
-      {
-        function: "getAllMarkdownSlugs",
-        directory: dir,
-        errorMessage: error instanceof Error ? error.message : "Unknown error",
-      },
-      "Error scanning directory"
-    );
+    logger.error("Error scanning directory", {
+      function: "getAllMarkdownSlugs",
+      directory: dir,
+      errorMessage: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 
   // Determine starting directory
@@ -316,13 +300,10 @@ export async function getAllMarkdownSlugs(
         throw new Error("Invalid subdirectory");
       }
     } catch (_error) {
-      logger.error(
-        {
-          function: "getAllMarkdownSlugs",
-          subDir,
-        },
-        "Invalid subdirectory"
-      );
+      logger.error("Invalid subdirectory", {
+        function: "getAllMarkdownSlugs",
+        subDir,
+      });
       return [];
     }
   }
