@@ -4,7 +4,7 @@ import type { Dirent } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import logger from "@/lib/logger"; // Import your Pino logger
+import logger from "@/lib/logger";
 
 // Fixed base directory - resolve to absolute path at module load
 const CONTENT_DIR = path.resolve(process.cwd(), "src/content");
