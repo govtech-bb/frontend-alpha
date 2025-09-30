@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/performance/useTopLevelRegex: <explanation> */
 /** biome-ignore-all lint/suspicious/noConsole: <explanation> */
 
 import type { Dirent } from "node:fs";
@@ -36,7 +37,6 @@ function validateSegment(segment: string): void {
   }
 
   // Allowlist: only alphanumeric, hyphens, and underscores
-  // biome-ignore lint/performance/useTopLevelRegex: <explanation>
   const allowedPattern = /^[A-Za-z0-9_-]+$/;
   if (!allowedPattern.test(segment)) {
     throw new Error("Invalid characters in path segment");
@@ -65,13 +65,10 @@ function buildSecurePath(slugSegments: string | string[]): string {
   });
 
   // AWS Inspector Mitigation: Use path.basename() on each segment to strip any directory components
-
   // This ensures no path traversal sequences survive even if validation is bypassed
-
   const sanitizedSegments = segments.map((segment) => path.basename(segment));
 
   // Additional safety check: Verify basename didn't change the segment (would indicate path traversal attempt)
-
   segments.forEach((original, index) => {
     if (original !== sanitizedSegments[index]) {
       throw new Error(
@@ -81,27 +78,24 @@ function buildSecurePath(slugSegments: string | string[]): string {
   });
 
   // Build path from sanitized segments
-
   const relativePath = path.join(...sanitizedSegments);
 
   // Explicitly append .md extension (prevent extension smuggling)
-
   const filePathWithExtension = `${relativePath}.md`;
 
   // Resolve to absolute path under CONTENT_DIR
-
   const absolutePath = path.resolve(CONTENT_DIR, filePathWithExtension);
 
   // CRITICAL: Verify the resolved path is still within CONTENT_DIR
   const relative = path.relative(CONTENT_DIR, absolutePath);
 
+  // If path escapes (starts with .. or is absolute), reject it
   if (relative.startsWith("..") || path.isAbsolute(relative)) {
     throw new Error("Path traversal attempt detected");
   }
 
+  // Additional safeguard: Verify no '..' in the final relative path
   if (relative.includes("..")) {
-    // Additional safeguard: Verify no '..' in the final relative path
-
     throw new Error("Path traversal attempt detected in resolved path");
   }
 
@@ -166,7 +160,16 @@ export async function listMarkdownFiles(subDir?: string): Promise<string[]> {
     // If subdirectory provided, validate and append
     if (subDir) {
       validateSegment(subDir);
-      targetDir = path.resolve(CONTENT_DIR, subDir);
+
+      // AWS Inspector Mitigation: Use path.basename() before path operations
+      const sanitizedSubDir = path.basename(subDir);
+
+      // Verify basename didn't change the input (indicates path traversal)
+      if (subDir !== sanitizedSubDir) {
+        throw new Error("Path traversal attempt detected in subdirectory");
+      }
+
+      targetDir = path.resolve(CONTENT_DIR, sanitizedSubDir);
 
       // Verify subdirectory is within CONTENT_DIR
       const relative = path.relative(CONTENT_DIR, targetDir);
@@ -178,14 +181,10 @@ export async function listMarkdownFiles(subDir?: string): Promise<string[]> {
     const files = await fs.readdir(targetDir);
 
     // Filter and return only .md files without extension
-    return (
-      files
-        .filter((file) => file.endsWith(".md"))
-        // biome-ignore lint/performance/useTopLevelRegex: <explanation>
-        .map((file) => file.replace(/\.md$/, ""))
-    );
+    return files
+      .filter((file) => file.endsWith(".md"))
+      .map((file) => file.replace(/\.md$/, ""));
   } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: <explanation>
     console.error("[listMarkdownFiles] Error:", {
       subDir,
       error: error instanceof Error ? error.message : "Unknown error",
@@ -279,7 +278,16 @@ export async function getAllMarkdownSlugs(
   if (subDir) {
     try {
       validateSegment(subDir);
-      startDir = path.resolve(CONTENT_DIR, subDir);
+
+      // AWS Inspector Mitigation: Use path.basename() before path operations
+      const sanitizedSubDir = path.basename(subDir);
+
+      // Verify basename didn't change the input (indicates path traversal)
+      if (subDir !== sanitizedSubDir) {
+        throw new Error("Path traversal attempt detected in subdirectory");
+      }
+
+      startDir = path.resolve(CONTENT_DIR, sanitizedSubDir);
 
       // Verify subdirectory is within CONTENT_DIR
       const relative = path.relative(CONTENT_DIR, startDir);
