@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import logger from "@/lib/logger";
 
 // Suspicious patterns that might indicate path traversal attempts
 const SUSPICIOUS_PATTERNS = [
@@ -89,7 +90,7 @@ function logSecurityEvent(
 
   // In production, send to your logging service (CloudWatch, Datadog, etc.)
   // biome-ignore lint/suspicious/noConsole: <explanation>
-  console.warn("[SECURITY]", JSON.stringify(logData));
+  logger.warn("[SECURITY]", JSON.stringify(logData));
 }
 
 export function middleware(request: NextRequest) {
