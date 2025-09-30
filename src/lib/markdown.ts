@@ -19,19 +19,33 @@ function validateSegment(segment: string): void {
     throw new Error("Empty path segment not allowed");
   }
 
-  // Reject segments containing path separators (encoded or not)
-  if (
-    segment.includes("/") ||
-    segment.includes("\\") ||
-    segment.includes("%2f") ||
-    segment.includes("%2F") ||
-    segment.includes("%5c") ||
-    segment.includes("%5C")
-  ) {
-    throw new Error("Path separators not allowed in segments");
+  // EXPLICIT check for path traversal before other validation
+  if (segment.includes("..")) {
+    throw new Error("Path traversal sequence '..' not allowed");
   }
 
-  // Reject relative path components
+  // Reject segments containing path separators (encoded or not)
+  const pathSeparators = [
+    "/",
+    "\\",
+    "%2f",
+    "%2F",
+    "%5c",
+    "%5C",
+    "%2e%2e",
+    "%252e%252e", // encoded ..
+    "\0", // null byte
+  ];
+
+  for (const sep of pathSeparators) {
+    if (segment.includes(sep)) {
+      throw new Error(
+        `Path separator or traversal sequence not allowed: ${sep}`
+      );
+    }
+  }
+
+  // Reject relative path components explicitly
   if (segment === "." || segment === "..") {
     throw new Error("Relative path components not allowed");
   }
@@ -53,6 +67,17 @@ function buildSecurePath(slugSegments: string | string[]): string {
   // Normalize input to array
   const segments = Array.isArray(slugSegments) ? slugSegments : [slugSegments];
 
+  // EXPLICIT check for path traversal sequences BEFORE any processing
+  segments.forEach((segment, index) => {
+    if (
+      segment.includes("..") ||
+      segment.includes("./") ||
+      segment.includes(".\\")
+    ) {
+      throw new Error(`Path traversal sequence detected at index ${index}`);
+    }
+  });
+
   // Validate each segment
   segments.forEach((segment, index) => {
     try {
@@ -64,17 +89,22 @@ function buildSecurePath(slugSegments: string | string[]): string {
     }
   });
 
-  // AWS Inspector Mitigation: Use path.basename() on each segment to strip any directory components
-  // This ensures no path traversal sequences survive even if validation is bypassed
-  const sanitizedSegments = segments.map((segment) => path.basename(segment));
+  // AWS Inspector Mitigation: Use path.basename() on each segment FIRST
+  // This strips any directory components before any path operations
+  const sanitizedSegments = segments.map((segment) => {
+    const basename = path.basename(segment);
 
-  // Additional safety check: Verify basename didn't change the segment (would indicate path traversal attempt)
-  segments.forEach((original, index) => {
-    if (original !== sanitizedSegments[index]) {
-      throw new Error(
-        `Path traversal attempt detected in segment: ${original}`
-      );
+    // Verify basename didn't change the segment (indicates path traversal attempt)
+    if (segment !== basename) {
+      throw new Error(`Path traversal attempt detected in segment: ${segment}`);
     }
+
+    // Additional check: ensure no null bytes
+    if (basename.includes("\0")) {
+      throw new Error("Null byte detected in path segment");
+    }
+
+    return basename;
   });
 
   // Build path from sanitized segments
@@ -86,17 +116,29 @@ function buildSecurePath(slugSegments: string | string[]): string {
   // Resolve to absolute path under CONTENT_DIR
   const absolutePath = path.resolve(CONTENT_DIR, filePathWithExtension);
 
-  // CRITICAL: Verify the resolved path is still within CONTENT_DIR
-  const relative = path.relative(CONTENT_DIR, absolutePath);
+  // CRITICAL: Normalize both paths for comparison (handles symbolic links, etc.)
+  const normalizedBase = path.normalize(CONTENT_DIR);
+  const normalizedTarget = path.normalize(absolutePath);
+
+  // Verify the resolved path is still within CONTENT_DIR
+  if (
+    !normalizedTarget.startsWith(normalizedBase + path.sep) &&
+    normalizedTarget !== normalizedBase
+  ) {
+    throw new Error("Path escapes content directory");
+  }
+
+  // Additional verification using path.relative
+  const relative = path.relative(normalizedBase, normalizedTarget);
 
   // If path escapes (starts with .. or is absolute), reject it
   if (relative.startsWith("..") || path.isAbsolute(relative)) {
-    throw new Error("Path traversal attempt detected");
+    throw new Error("Path traversal detected via relative path check");
   }
 
-  // Additional safeguard: Verify no '..' in the final relative path
+  // Final safeguard: Verify no '..' anywhere in the relative path
   if (relative.includes("..")) {
-    throw new Error("Path traversal attempt detected in resolved path");
+    throw new Error("Path traversal sequence found in resolved path");
   }
 
   return absolutePath;
