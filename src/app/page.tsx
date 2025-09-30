@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { Typography } from "@/components/ui/typography";
+import { getFeaturedServices } from "@/lib/markdown";
 
-// const GOVERNMENT_LINKS = [
-//   "Have your say",
-//   "What's changing",
-//   "How we choose what to work on first",
-//   "Digital roadmap",
-// ];
+const GOVERNMENT_LINKS = [
+  { title: "Have your say", link: "/feedback" },
+  { title: "What's changing", link: "/whats-changing" },
+];
 
 const EXISTING_SERVICES = [
   {
@@ -50,7 +49,8 @@ const INFORMATION_SECTIONS = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const featuredServices = await getFeaturedServices();
   return (
     <div className="font-sans">
       <div className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8">
@@ -72,24 +72,15 @@ export default function Home() {
         </Typography>
 
         <div className="flex flex-col gap-2">
-          <Link
-            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-            href="/loud-music-permit"
-          >
-            Get a permit to play loud music
-          </Link>
-          <Link
-            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-            href="/register-summer-camp"
-          >
-            Register for a summer camp
-          </Link>
-          {/* <Link
-            className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-            href="/register-a-birth"
-          >
-            Register a birth
-          </Link> */}
+          {featuredServices.map((service) => (
+            <Link
+              className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+              href={`/${service.slug}`}
+              key={service.slug}
+            >
+              {service.title}
+            </Link>
+          ))}
         </div>
       </div>
       <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">
@@ -136,21 +127,21 @@ export default function Home() {
           ))}
         </div>
       </div>
-      {/* <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
+      <div className="space-y-6 border-[#FF94D9] border-b-4 bg-[#FFD4F0] px-4 py-8">
         <Typography variant="h3">Make government work for you</Typography>
 
         <div className="flex flex-col gap-2">
           {GOVERNMENT_LINKS.map((link) => (
             <Link
-              className="cursor-pointer font-normal text-[#00267F] text-[20px] leading-[150%] underline"
-              href="#"
-              key={link}
+              className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
+              href={link.link}
+              key={link.title}
             >
-              {link}
+              {link.title}
             </Link>
           ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
