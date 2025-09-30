@@ -1,13 +1,28 @@
+export const runtime = "nodejs";
+
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { type NextRequest, NextResponse } from "next/server";
 
+// Get required environment variables with explicit error handling
+const region = process.env.SES_REGION ?? process.env.AWS_REGION ?? "us-east-1";
+
+const mailFrom = process.env.MAIL_FROM ?? "no-reply@notify.dev.alpha.gov.bb";
+const feedbackToEmail =
+  process.env.FEEDBACK_TO_EMAIL ?? "matt.hamilton@govtech.bb";
+
+// Log if we're using fallback values
+if (!process.env.MAIL_FROM) {
+  // biome-ignore lint/suspicious/noConsole: needed for debugging missing env vars
+  console.warn("MAIL_FROM not set, using fallback:", mailFrom);
+}
+if (!process.env.FEEDBACK_TO_EMAIL) {
+  // biome-ignore lint/suspicious/noConsole: needed for debugging missing env vars
+  console.warn("FEEDBACK_TO_EMAIL not set, using fallback:", feedbackToEmail);
+}
+
 // Create AWS SES v2 client using Amplify's SSR compute role
 const sesClient = new SESv2Client({
-  region:
-    process.env.SES_REGION ||
-    process.env.NEXT_PUBLIC_SES_REGION ||
-    process.env.AWS_REGION ||
-    "us-east-1",
+  region,
 });
 
 // Send email using SES directly
@@ -20,10 +35,7 @@ async function sendEmail({
   subject: string;
   html: string;
 }) {
-  const from =
-    process.env.MAIL_FROM ||
-    process.env.NEXT_PUBLIC_MAIL_FROM ||
-    "no-reply@notify.dev.alpha.gov.bb";
+  const from = mailFrom;
   // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
   console.log("email args", to, from, subject, html);
 
@@ -54,16 +66,15 @@ export async function POST(request: NextRequest) {
     }
 
     // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-    console.log("All environment variables:");
-    // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-    console.log(JSON.stringify(process.env, null, 2));
+    console.log("Email configuration:", {
+      region,
+      from: mailFrom,
+      to: feedbackToEmail,
+    });
 
     // Email content
     const subject = "New Alpha Gov Feedback";
-    const to =
-      process.env.FEEDBACK_TO_EMAIL ||
-      process.env.NEXT_PUBLIC_FEEDBACK_TO_EMAIL ||
-      "matt.hamilton@govtech.bb";
+    const to = feedbackToEmail;
     const html = `
         <h2>New Alpha Government Feedback</h2>
         ${
