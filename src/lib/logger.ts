@@ -1,26 +1,20 @@
-import pino from "pino";
+import winston from "winston";
 
-const logger = pino({
+const logger = winston.createLogger({
   level: process.env.NODE_ENV === "production" ? "info" : "debug",
-
-  // Pretty print in development
-  ...(process.env.NODE_ENV !== "production" && {
-    transport: {
-      target: "pino-pretty",
-      options: {
-        colorize: true,
-      },
-    },
-  }),
-
-  // Production config for AWS/Vercel
-  ...(process.env.NODE_ENV === "production" && {
-    formatters: {
-      level: (label) => {
-        return { level: label.toUpperCase() };
-      },
-    },
-  }),
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      ),
+    }),
+  ],
 });
 
 export default logger;
