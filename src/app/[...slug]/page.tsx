@@ -1,8 +1,13 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { Typography } from "@/components/ui/typography";
-import { getMarkdownContent } from "@/lib/markdown";
+import {
+  getAllMarkdownSlugs,
+  getMarkdownContent,
+  markdownExists,
+} from "@/lib/markdown";
 
 type EntryPointPageProps = {
   params: Promise<{ slug: string[] }>;
@@ -66,65 +71,101 @@ const components = {
   },
 };
 
+export async function generateStaticParams() {
+  const allSlugs = await getAllMarkdownSlugs();
+
+  // Transform to Next.js params format
+  return allSlugs.map((slug) => ({ slug }));
+}
+
+/**
+ * Generate metadata for SEO
+ */
+export async function generateMetadata({
+  params,
+}: EntryPointPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  if (slug.some((s) => s.startsWith("."))) {
+    return { title: "Not Found" };
+  }
+
+  try {
+    const content = await getMarkdownContent(slug);
+
+    return {
+      title: content.frontmatter.title || "GovTech Barbados",
+      description:
+        content.frontmatter.description || "Government services information",
+    };
+  } catch (_error) {
+    return {
+      title: "Content Not Found",
+    };
+  }
+}
+
 export default async function EntryPointPage({ params }: EntryPointPageProps) {
   const { slug } = await params;
-  const result = await getMarkdownContent(slug);
 
-  if (!result) {
+  // Validate slug exists before attempting to read
+  const exists = await markdownExists(slug);
+
+  if (!exists) {
     notFound();
   }
 
-  const { frontmatter, content } = result;
+  try {
+    // Safely get content - path traversal protection is built-in
+    const { frontmatter, content } = await getMarkdownContent(slug);
 
-  return (
-    <div className="space-y-4 px-4 pt-2 pb-8">
-      <div className="space-y-4 pb-4">
-        {frontmatter.title && (
-          <Typography variant="h1">{frontmatter.title}</Typography>
-        )}
+    return (
+      <div className="space-y-4 px-4 pt-2 pb-8">
+        <div className="space-y-4 pb-4">
+          {frontmatter.title && (
+            <Typography variant="h1">{frontmatter.title}</Typography>
+          )}
 
-        {frontmatter.description
-          ?.split("\n")
-          .map((line: string, _index: number) => (
-            <Typography key={_index} variant="paragraph">
-              {line}
-            </Typography>
-          ))}
+          {frontmatter.description
+            ?.split("\n")
+            .map((line: string, _index: number) => (
+              <Typography key={_index} variant="paragraph">
+                {line}
+              </Typography>
+            ))}
 
-        {frontmatter.stage?.length > 0 ? (
-          <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
-            <Typography variant="paragraph">
-              This Page is in{" "}
-              <span className="capitalize underline">{frontmatter.stage}</span>.
-            </Typography>
-          </div>
-        ) : null}
-      </div>
-
-      <ReactMarkdown components={components}>{content}</ReactMarkdown>
-
-      {frontmatter.date && (
-        <div className="border-t pt-4 text-gray-500 text-sm">
-          Last updated: {new Date(frontmatter.date).toLocaleDateString("en-GB")}
+          {frontmatter.stage?.length > 0 ? (
+            <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
+              <Typography variant="paragraph">
+                This Page is in{" "}
+                <span className="capitalize underline">
+                  {frontmatter.stage}
+                </span>
+                .
+              </Typography>
+            </div>
+          ) : null}
         </div>
-      )}
-    </div>
-  );
-}
 
-export async function generateMetadata({ params }: EntryPointPageProps) {
-  const { slug } = await params;
-  const result = await getMarkdownContent(slug);
+        <ReactMarkdown components={components}>{content}</ReactMarkdown>
 
-  if (!result) {
-    return {
-      title: "Page not found",
-    };
+        {frontmatter.date && (
+          <div className="border-t pt-4 text-gray-500 text-sm">
+            Last updated:{" "}
+            {new Date(frontmatter.date).toLocaleDateString("en-GB")}
+          </div>
+        )}
+      </div>
+    );
+  } catch (error) {
+    // Log error server-side (detailed)
+    // biome-ignore lint/suspicious/noConsole: logs are only on server-side
+    console.error("[BlogPostPage] Error rendering:", {
+      slug,
+      error: error instanceof Error ? error.message : "Unknown error",
+      timestamp: new Date().toISOString(),
+    });
+
+    // Show generic 404 to user (no information disclosure)
+    notFound();
   }
-
-  return {
-    title: result.frontmatter.title || "GovTech Barbados",
-    description:
-      result.frontmatter.description || "Government services information",
-  };
 }
