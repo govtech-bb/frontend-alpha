@@ -4,14 +4,14 @@ import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { type NextRequest, NextResponse } from "next/server";
 
 // Get required environment variables with explicit error handling
-const region = process.env.SES_REGION ?? process.env.AWS_REGION ?? "us-east-1";
+const region = process.env.SES_REGION ?? "us-east-1";
 
-const mailFrom = process.env.MAIL_FROM;
+const mailFrom = process.env.MAIL_FROM as string;
 if (!mailFrom) {
   throw new Error("MAIL_FROM environment variable is required");
 }
 
-const feedbackToEmail = process.env.FEEDBACK_TO_EMAIL;
+const feedbackToEmail = process.env.FEEDBACK_TO_EMAIL as string;
 if (!feedbackToEmail) {
   throw new Error("FEEDBACK_TO_EMAIL environment variable is required");
 }
@@ -33,7 +33,7 @@ async function sendEmail({
 }) {
   const from = mailFrom;
   // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-  console.log("email args", to, from, subject, html);
+  // console.log("email args", to, from, subject, html);
 
   const cmd = new SendEmailCommand({
     FromEmailAddress: from,
