@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:e2e": "npx playwright test",
+    "test:e2e:update:docker": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npm run build && docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npx playwright test --update-snapshots",
+    "test:e2e:update": "npx playwright test --update-snapshots",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@aws-sdk/client-sesv2": "^3.891.0",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.2",
+    "@playwright/test": "^1.55.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

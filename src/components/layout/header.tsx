@@ -8,11 +8,10 @@ export const Header = () => {
       <header className="flex items-center gap-3 rounded-t-3xl bg-[#FFC726] px-4 py-6">
         <Image
           alt="flag"
-          height="21"
-          src="/images/trident-vector.svg"
-          width="19"
+          height="27"
+          src="/images/government-of-barbados.svg"
+          width="276"
         />
-        <h1 className="font-bold text-[21px]">Government of Barbados</h1>
       </header>
     </div>
   );
