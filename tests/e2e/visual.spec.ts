@@ -62,6 +62,11 @@ console.log(`Found ${allRoutes.length} routes to test:`, allRoutes);
 
 for (const routePath of allRoutes) {
   test.describe(`visual: ${routePath}`, () => {
+    // Set consistent viewport for visual testing
+    test.beforeEach(async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 1422 });
+    });
+
     test(`full page snapshot for ${routePath}`, async ({ page }) => {
       await page.goto(routePath, { waitUntil: "domcontentloaded" });
       // Wait for hydration with graceful fallback
