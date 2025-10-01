@@ -44,7 +44,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "npm run start", // CI runs build before tests; locally, build first
+    command: "npm run dev", // CI runs build before tests; locally, build first
     port: 3000,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
