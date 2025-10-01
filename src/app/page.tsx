@@ -47,7 +47,7 @@ const INFORMATION_SECTIONS = [
 export default async function Home() {
   const featuredServices = await getFeaturedServices();
   return (
-    <div className="font-sans">
+    <>
       <div className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8">
         <Typography variant="display">
           How you find and use public services is changing
@@ -122,6 +122,6 @@ export default async function Home() {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

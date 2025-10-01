@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 type BreadcrumbItem = {
   label: string;
@@ -35,7 +36,7 @@ function createLabel(slug: string): string {
     .join(" ");
 }
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ className = "" }: { className?: string }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
@@ -81,7 +82,7 @@ const Breadcrumb = () => {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex items-center space-x-2 px-4 pt-4 text-sm"
+      className={cn("flex items-center space-x-2 text-sm", className)}
     >
       {breadcrumbs.length > 1 ? (
         breadcrumbs.map((crumb, index) => (
