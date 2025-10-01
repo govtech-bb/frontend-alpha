@@ -32,8 +32,6 @@ async function sendEmail({
   html: string;
 }) {
   const from = mailFrom;
-  // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-  // console.log("email args", to, from, subject, html);
 
   const cmd = new SendEmailCommand({
     FromEmailAddress: from,
@@ -60,13 +58,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-    console.log("Email configuration:", {
-      region,
-      from: mailFrom,
-      to: feedbackToEmail,
-    });
 
     // Email content
     const subject = "New Alpha Gov Feedback";
