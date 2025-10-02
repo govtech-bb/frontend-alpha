@@ -25,13 +25,13 @@ export default function FeedbackSubmittedPage() {
             Do not include personal information.
           </Typography>
 
-          <div className="rounded-md border border-[#30C0C8] bg-[#DEF5F6] px-4 py-3">
-            <Typography className="font-semibold text-gray-900" variant="h3">
+          <div className="space-y-4 rounded-md border border-[#30C0C8] bg-[#DEF5F6] px-4 py-3">
+            <Typography
+              className="font-semibold text-gray-900"
+              variant="paragraph"
+            >
               Thank you for your feedback.
             </Typography>
-          </div>
-
-          <div className="mt-4">
             <Link
               className="text-[#1E787D] underline underline-offset-2"
               href="/feedback"
