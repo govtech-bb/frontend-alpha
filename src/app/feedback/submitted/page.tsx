@@ -3,7 +3,7 @@ import { Typography } from "@/components/ui/typography";
 
 export default function FeedbackSubmittedPage() {
   return (
-    <div className="mx-auto h-full max-w-4xl space-y-4 rounded-t-3xl bg-white px-4 py-6">
+    <div className="h-full space-y-4 rounded-t-3xl bg-white px-4 py-6">
       <div className="mb-6">
         <Typography className="text-[#1E787D] underline" variant="paragraph">
           <Link href="/">← Back</Link>
@@ -41,9 +41,6 @@ export default function FeedbackSubmittedPage() {
           <Typography variant="paragraph">
             Each week, the GovTech team meets to prioritise our tasks and
             consider how we might respond to feedback.
-          </Typography>
-          <Typography variant="paragraph">
-            Read more about how we choose what to work on.
           </Typography>
         </div>
       </div>
