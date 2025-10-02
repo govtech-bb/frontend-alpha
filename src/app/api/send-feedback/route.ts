@@ -16,6 +16,11 @@ if (!feedbackToEmail) {
   throw new Error("FEEDBACK_TO_EMAIL environment variable is required");
 }
 
+// Optional CloudWatch telemetry configuration
+const configurationSet = process.env.SES_CONFIGURATION_SET;
+const tagKey = process.env.SES_TAG_KEY ?? "ses:configuration-set";
+const tagValue = process.env.SES_TAG_VALUE ?? "prod";
+
 // Create AWS SES v2 client using Amplify's SSR compute role
 const sesClient = new SESv2Client({
   region,
@@ -36,6 +41,15 @@ async function sendEmail({
   const cmd = new SendEmailCommand({
     FromEmailAddress: from,
     Destination: { ToAddresses: [to] },
+    ...(configurationSet && {
+      ConfigurationSetName: configurationSet,
+      EmailTags: [
+        {
+          Name: tagKey,
+          Value: tagValue,
+        },
+      ],
+    }),
     Content: {
       Simple: {
         Subject: { Data: subject },

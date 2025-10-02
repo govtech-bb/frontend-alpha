@@ -1,9 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Typography } from "@/components/ui/typography";
 
 export function SimpleFeedbackForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     visitReason: "",
     whatWentWrong: "",
@@ -31,8 +32,7 @@ export function SimpleFeedbackForm() {
       });
 
       if (response.ok) {
-        setSubmitStatus("success");
-        setFormData({ visitReason: "", whatWentWrong: "" });
+        router.push("/feedback/submitted");
       } else {
         setSubmitStatus("error");
       }
@@ -50,12 +50,6 @@ export function SimpleFeedbackForm() {
 
   return (
     <div className="space-y-6">
-      {submitStatus === "success" && (
-        <div className="rounded-md border border-[#30C0C8] bg-[#DEF5F6] px-4 py-3 text-[#30C0C8]">
-          Thank you for your feedback.
-        </div>
-      )}
-
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div>
           <label
@@ -105,16 +99,6 @@ export function SimpleFeedbackForm() {
           </div>
         )}
       </form>
-
-      <div className="space-y-4 text-gray-700">
-        <Typography variant="paragraph">
-          Each week, the GovTech team meets to prioritise our tasks and consider
-          how we might respond to feedback.
-        </Typography>
-        <Typography variant="paragraph">
-          Read more about how we choose what to work on.
-        </Typography>
-      </div>
     </div>
   );
 }
