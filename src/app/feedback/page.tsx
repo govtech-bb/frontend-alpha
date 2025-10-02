@@ -4,7 +4,7 @@ import { Typography } from "@/components/ui/typography";
 
 export default function FeedbackPage() {
   return (
-    <div className="mx-auto h-full max-w-4xl space-y-4 rounded-t-3xl bg-white px-4 py-6">
+    <div className="h-full space-y-4 rounded-t-3xl bg-white px-4 py-6">
       <Breadcrumb />
 
       <Typography variant="h1">Help us improve alpha.gov.bb</Typography>
