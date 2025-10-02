@@ -92,7 +92,7 @@ export function SimpleFeedbackForm() {
         </div>
 
         <button
-          className="w-full rounded-md bg-[#1E787D] px-6 py-3 font-semibold text-white transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
+          className="w-full rounded bg-[#1E787D] px-6 py-3 font-normal text-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
           disabled={isSubmitting}
           type="submit"
         >

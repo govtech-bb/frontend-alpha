@@ -10,6 +10,11 @@ on:
 jobs:
   test:
     runs-on: macos-latest
+    env:
+      MAIL_FROM: 'no-reply@notify.dev.alpha.gov.bb'
+      SES_REGION: 'region'
+      FEEDBACK_TO_EMAIL: 'no-reply@notify.dev.alpha.gov.bb'
+      FEEDBACK_FROM_EMAIL: 'no-reply@notify.dev.alpha.gov.bb'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
