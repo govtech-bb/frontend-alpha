@@ -4,14 +4,8 @@ import { Typography } from "@/components/ui/typography";
 export default function FeedbackSubmittedPage() {
   return (
     <div className="h-full space-y-4 rounded-t-3xl bg-white px-4 py-6">
-      <div className="mb-6">
-        <Typography className="text-[#1E787D] underline" variant="paragraph">
-          <Link href="/">← Back</Link>
-        </Typography>
-      </div>
-
       <div className="space-y-6">
-        <Typography variant="display">Help us improve alpha.gov.bb</Typography>
+        <Typography variant="h1">Help us improve alpha.gov.bb</Typography>
 
         <Typography variant="paragraph">
           Your feedback will help us make it clearer, simpler and faster to find
