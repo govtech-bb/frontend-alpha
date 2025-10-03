@@ -59,7 +59,7 @@ export function SimpleFeedbackForm() {
             Why did you visit alpha.gov.bb?
           </label>
           <textarea
-            className="w-full resize-y rounded-md border-2 border-[#30C0C8] bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
+            className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
             id="visitReason"
             name="visitReason"
             onChange={handleChange}
@@ -90,7 +90,7 @@ export function SimpleFeedbackForm() {
           disabled={isSubmitting}
           type="submit"
         >
-          {isSubmitting ? "Submitting..." : "[Submit]"}
+          {isSubmitting ? "Submitting..." : "Send Feedback"}
         </button>
 
         {submitStatus === "error" && (
