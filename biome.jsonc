@@ -4,12 +4,14 @@
   "linter": {
     "rules": {
       "performance": {
-        "noNamespaceImport": "off"
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
         "noNestedTernary": "off",
-        "useBlockStatements": "off"
+        "useBlockStatements": "off",
+        "noMagicNumbers": "off"
       },
       "suspicious": {
         "noUnknownAtRules": "off",

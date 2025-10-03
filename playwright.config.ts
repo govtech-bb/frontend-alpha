@@ -6,7 +6,7 @@ export default defineConfig({
   testDir: "./tests",
   /* Keep reports small and deterministic in CI */
   reporter: [["list"], ["html", { open: "never" }]],
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
