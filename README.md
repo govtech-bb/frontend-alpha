@@ -37,7 +37,7 @@ Visual Regression Testing is a process through which we commit snapshots of the 
 Whenever a new PR or commit is made to the `main` or `prod` branches, the Github Action Workflow will run the Playwright tests against the code commit. 
 - Tests automatically run on pushes to `main` and `prod` branches
 - Failures prevent merges if visual changes are detected
-- HTML reports available as GitHub Actions artifacts
+- HTML reports available as [GitHub Actions artifacts](https://github.com/govtech-bb/frontend-alpha/actions)
 
 The Github Action is configured using the `playwright.yml` file as follows:
   - Automatic server startup on port 3000
