@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+/** biome-ignore-all lint/suspicious/noExplicitAny: TODO add strict typing */
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { Typography } from "@/components/ui/typography";
@@ -77,7 +77,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
   const { frontmatter, content } = result;
 
   return (
-    <div className="space-y-4 px-4 pt-2 pb-8">
+    <div className="space-y-4 px-4 pb-8">
       <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
@@ -91,8 +91,8 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
             </Typography>
           ))}
 
-        {frontmatter.stage ? (
-          <div className="border-[#1E787D] border-l-4 bg-[#DEF5F6] px-4 py-3">
+        {frontmatter.stage?.length > 0 ? (
+          <div className="border-[#409CF8] border-r-4 border-l-4 bg-[#B3D9FF]/30 px-4 py-3">
             <Typography variant="paragraph">
               This Page is in{" "}
               <span className="capitalize underline">{frontmatter.stage}</span>.
