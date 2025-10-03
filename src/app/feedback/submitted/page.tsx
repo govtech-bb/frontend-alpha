@@ -1,12 +1,9 @@
 import Link from "next/link";
-import Breadcrumb from "@/components/layout/breadcrumb-navigation";
 import { Typography } from "@/components/ui/typography";
 
 export default function FeedbackSubmittedPage() {
   return (
     <div className="h-full space-y-4 rounded-t-3xl bg-white px-4 py-6">
-      <Breadcrumb />
-
       <div className="space-y-6">
         <Typography variant="h1">Help us improve alpha.gov.bb</Typography>
 
