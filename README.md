@@ -19,6 +19,11 @@ We utilize [trunk-based development](https://trunkbaseddevelopment.com/) whereby
 
 PRs are not merged if the build or tests are failing. 
 
+### Publishing
+
+- Updates to the `main` branch are published to https://dev.alpha.gov.bb
+- Updates to the `prod` branch are published to https://alpha.gov.bb
+
 ### Testing
 
 We use Playwright `@playwright/test@^1.55.1` to run automated end-to-end tests against the codebase. Playwright is currently used to run Visual Regression Tests (`visual.spec.ts`) to detect any visible changes made during a commit so that any unintentional changes may be avoided from being published. 
