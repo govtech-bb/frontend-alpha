@@ -38,7 +38,7 @@ const INFORMATION_SECTIONS = [
   },
   {
     title: "Finding a job",
-    link: "https://www.gov.bb/job-seekers",
+    link: "https://www.govss.bb/job-seekers",
     description:
       "Get help with applying for jobs, preparing for interviews, and exploring public and overseas opportunities",
   },
@@ -49,6 +49,12 @@ export default async function Home() {
   return (
     <>
       <div className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8">
+        <Typography variant="display">
+          How you find and use public services is changing
+        </Typography>
+        <Typography variant="display">
+          How you find and use public services is changing
+        </Typography>
         <Typography variant="display">
           How you find and use public services is changing
         </Typography>
