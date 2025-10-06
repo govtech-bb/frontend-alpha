@@ -1,9 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 
-// Visual comparisons of all available routes to catch unintended text/color changes.
+// Visual comparisons across all routes and device sizes to catch unintended changes.
 // If a change is intentional, run: npm run test:e2e:update
+
+// Device configurations for testing
+const DEVICES = [
+  { name: "desktop", width: 1280, height: 1422 },
+  { name: "tablet", width: 768, height: 1024 },
+  { name: "mobile", width: 375, height: 667 },
+] as const;
 
 // Regex patterns for file processing
 const MARKDOWN_EXTENSION = /\.md$/;
@@ -40,54 +47,99 @@ function discoverContentRoutes(): string[] {
     scanDirectory(contentDir);
   } catch (error) {
     console.warn("Could not scan content directory:", error);
-    // Fallback to known routes if content scanning fails
-    return [
-      "/improving-digital-services",
-      "/improving-digital-services/how-we-build",
-      "/register-a-birth",
-      "/loud-music-permit",
-      "/register-summer-camp",
-      "/whats-changing",
-    ];
+    return [];
   }
 
-  return routes.sort();
+  return routes;
 }
 
-// Discover all available routes
-const contentRoutes = discoverContentRoutes();
-const allRoutes = ["/", ...contentRoutes]; // Include homepage
+/**
+ * Discover all routes by combining content and static routes
+ * This finds routes beyond just markdown content pages
+ */
+function discoverAllRoutes(): string[] {
+  const contentRoutes = discoverContentRoutes();
+
+  // Add known static routes that may not be in content directory
+  const staticRoutes = [
+    "/",
+    // Add any other known routes here (404 pages, dynamic routes, etc.)
+  ];
+
+  // Combine and deduplicate
+  const allRoutes = [...new Set([...staticRoutes, ...contentRoutes])];
+
+  return allRoutes.sort();
+}
+
+/**
+ * Wait for page to be ready for screenshot
+ */
+async function waitForPageReady(page: Page): Promise<void> {
+  await page.goto(page.url(), { waitUntil: "domcontentloaded" });
+
+  // Wait for hydration with graceful fallback
+  try {
+    await page.waitForLoadState("networkidle", { timeout: 8000 });
+  } catch {
+    // Fallback for routes that don't reach networkidle
+    await page.waitForTimeout(2000);
+  }
+
+  // Ensure page is hydrated - check for any title
+  await expect(page).toHaveTitle(/.+/);
+}
+
+// Discover all available routes synchronously
+const allRoutes = discoverAllRoutes();
+
+// Validate we have routes to test
+if (!allRoutes || allRoutes.length === 0) {
+  console.error("No routes discovered! Check content directory structure.");
+  throw new Error("No routes found to test");
+}
 
 console.log(`Found ${allRoutes.length} routes to test:`, allRoutes);
+console.log(
+  `Testing across ${DEVICES.length} device sizes:`,
+  DEVICES.map((d) => d.name).join(", ")
+);
 
+// Generate tests for each route and device combination
 for (const routePath of allRoutes) {
   test.describe(`visual: ${routePath}`, () => {
-    // Set consistent viewport for visual testing
-    test.beforeEach(async ({ page }) => {
-      await page.setViewportSize({ width: 1280, height: 1422 });
-    });
+    for (const device of DEVICES) {
+      test(`${device.name} - full page snapshot`, async ({ page }) => {
+        // Set viewport for current device
+        await page.setViewportSize({
+          width: device.width,
+          height: device.height,
+        });
 
-    test(`full page snapshot for ${routePath}`, async ({ page }) => {
-      await page.goto(routePath, { waitUntil: "domcontentloaded" });
-      // Wait for hydration with graceful fallback
-      try {
-        await page.waitForLoadState("networkidle", { timeout: 8000 });
-      } catch {
-        // Fallback for routes that don't reach networkidle
-        // biome-ignore lint/style/noMagicNumbers: timeout fallback for CI reliability
-        await page.waitForTimeout(2000);
-      }
-      // Ensure page is hydrated
-      // biome-ignore lint/performance/useTopLevelRegex: simple regex for any title check
-      await expect(page).toHaveTitle(/.+/);
-      await expect(page).toHaveScreenshot({
-        fullPage: true,
-        animations: "disabled",
-        caret: "hide",
-        scale: "css",
-        threshold: 0.3, // Allow 3% pixel difference for cross-platform variations
-        maxDiffPixelRatio: 0.05,
+        await page.goto(routePath);
+        await waitForPageReady(page);
+
+        // Create a safe filename from the route path
+        const safeRouteName =
+          routePath
+            .replace(/^\//, "") // Remove leading slash
+            .replace(/\//g, "-") // Replace slashes with dashes
+            .replace(/[^a-zA-Z0-9-]/g, "_") || "home"; // Replace special chars, use 'home' for root
+
+        // Take screenshot with route and device name in filename
+        await expect(page).toHaveScreenshot(
+          `${safeRouteName}-${device.name}.png`,
+          {
+            fullPage: true,
+            animations: "disabled",
+            caret: "hide",
+            scale: "css",
+            // Allow some variance for cross-platform and responsive design differences
+            threshold: 0.3,
+            maxDiffPixelRatio: 0.05,
+          }
+        );
       });
-    });
+    }
   });
 }
