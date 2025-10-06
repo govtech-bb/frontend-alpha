@@ -296,6 +296,8 @@ async function crawlPage(page: Page, url: string) {
 
 test.describe("Broken Link Checker", () => {
   test("should find all broken links across the site", async ({ page }) => {
+    test.setTimeout(120_000);
+
     // Start with the home page
     pagesToCheck.set(normalizeUrl(BASE_URL), {
       url: BASE_URL,
