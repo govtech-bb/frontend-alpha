@@ -69,12 +69,18 @@ export const BackButton = ({
       aria-label="Backbutton"
       className={cn("flex items-center space-x-2 text-sm", className)}
     >
-      <Image alt="arrow" height="8" src="/images/chevron-left.svg" width="11" />
       <button
-        className="text-[#00654A] text-xl underline"
+        className="flex cursor-pointer items-center text-[#00654A] text-xl underline"
         onClick={() => router.back()}
         type="button"
       >
+        <Image
+          alt="arrow"
+          className="mr-2"
+          height="8"
+          src="/images/chevron-left.svg"
+          width="11"
+        />
         Back
       </button>
     </nav>
