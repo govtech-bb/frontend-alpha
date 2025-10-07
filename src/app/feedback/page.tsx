@@ -1,11 +1,11 @@
 import { SimpleFeedbackForm } from "@/components/forms/simple-feedback-form";
-import Breadcrumb from "@/components/layout/breadcrumb-navigation";
+import { BackButton } from "@/components/layout/back-button";
 import { Typography } from "@/components/ui/typography";
 
 export default function FeedbackPage() {
   return (
     <div className="h-full space-y-4 rounded-t-3xl bg-white px-4 py-6">
-      <Breadcrumb />
+      <BackButton />
 
       <Typography variant="h1">Help us improve alpha.gov.bb</Typography>
 

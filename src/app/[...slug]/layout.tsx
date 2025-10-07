@@ -1,4 +1,4 @@
-import Breadcrumb from "@/components/layout/breadcrumb-navigation";
+import { BackButton } from "@/components/layout/back-button";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 
 export default function EntryPointLayout({
@@ -8,7 +8,7 @@ export default function EntryPointLayout({
 }>) {
   return (
     <div className="h-full space-y-4 rounded-t-3xl bg-white">
-      <Breadcrumb className="px-4 pt-6" />
+      <BackButton className="px-4 pt-6" />
       {children}
       <HelpfulBox />
     </div>
