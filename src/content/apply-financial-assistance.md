@@ -34,8 +34,10 @@ You can apply for financial assistance either by:
 
 1. Going to the welfare office in the parish where you live, completing a paper form and giving it to a welfare officer.
 
-2. Visiting the Barbados Welfare Department’s Facebook page and completing the online form which will be automatically submitted to the department.\
-   At the moment, the form does not ask for your contact number but you must include one so an officer can reach you and arrange an interview.
+2. Visiting the Barbados Welfare Department’s Facebook page and completing the online form which will be automatically submitted to the department.
+\
+\
+At the moment, the form does not ask for your contact number but you must include one so an officer can reach you and arrange an interview.
 
 ### Documents and information needed
 
