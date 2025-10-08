@@ -8,14 +8,6 @@ const EXISTING_SERVICES = [
     link: "https://www.gov.bb/register-marriage",
   },
   {
-    title: "Register a death",
-    link: "https://www.gov.bb/register-death",
-  },
-  {
-    title: "Get a drivers license",
-    link: "https://www.gov.bb/Citizens/driver-licence",
-  },
-  {
     title: "Apply for a passport",
     link: "https://www.gov.bb/apply-passport",
   },
@@ -49,6 +41,12 @@ export default async function Home() {
   return (
     <>
       <div className="space-y-8 border-[#E5BD39] border-b-4 bg-[#FFC726] px-4 py-8">
+        <Typography variant="display">
+          How you find and use public services is changing
+        </Typography>
+        <Typography variant="display">
+          How you find and use public services is changing
+        </Typography>
         <Typography variant="display">
           How you find and use public services is changing
         </Typography>
