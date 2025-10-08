@@ -63,7 +63,7 @@ async function sendEmail({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { visitReason, whatWentWrong } = body;
+    const { visitReason, whatWentWrong, referrer } = body;
 
     // Validate required fields
     if (!(visitReason || whatWentWrong)) {
@@ -78,6 +78,13 @@ export async function POST(request: NextRequest) {
     const to = feedbackToEmail;
     const html = `
         <h2>New Alpha Government Feedback</h2>
+        ${
+          referrer
+            ? `
+          <p><strong>Page:</strong> ${referrer}</p>
+        `
+            : ""
+        }
         ${
           visitReason
             ? `

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { FeedbackLink } from "@/components/feedback-link";
 import { Typography } from "@/components/ui/typography";
 
 export const HelpfulBox = () => {
@@ -10,9 +10,7 @@ export const HelpfulBox = () => {
       <Typography className="mb-4" variant="paragraph">
         Give us your feedback about this page.
       </Typography>
-      <Link className="text-xl underline underline-offset-2" href="/feedback">
-        Help us improve alpha.gov.bb
-      </Link>
+      <FeedbackLink>Help us improve alpha.gov.bb</FeedbackLink>
     </div>
   );
 };
