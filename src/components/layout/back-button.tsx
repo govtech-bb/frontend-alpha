@@ -20,6 +20,16 @@ export const BackButton = ({
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      const breadcrumbs = generateBreadcrumbs(pathname);
+      const parentPage = breadcrumbs.at(-1);
+      router.push(parentPage?.href ?? "/");
+    }
+  };
+
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -71,7 +81,7 @@ export const BackButton = ({
     >
       <button
         className="flex cursor-pointer items-center text-[#00654A] text-xl underline"
-        onClick={() => router.back()}
+        onClick={handleBack}
         type="button"
       >
         <Image
