@@ -1,18 +1,27 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function SimpleFeedbackForm() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     visitReason: "",
     whatWentWrong: "",
+    referrer: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+
+  useEffect(() => {
+    // Read the referrer from sessionStorage
+    if (typeof window !== "undefined") {
+      const referrer = sessionStorage.getItem("feedbackReferrer") || "";
+      setFormData((prev) => ({ ...prev, referrer }));
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +37,7 @@ export function SimpleFeedbackForm() {
         body: JSON.stringify({
           visitReason: formData.visitReason,
           whatWentWrong: formData.whatWentWrong,
+          referrer: formData.referrer,
         }),
       });
 
@@ -84,6 +94,8 @@ export function SimpleFeedbackForm() {
             value={formData.whatWentWrong}
           />
         </div>
+
+        <input name="referrer" type="hidden" value={formData.referrer} />
 
         <button
           className="w-full rounded bg-[#1E787D] px-6 py-3 font-normal text-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
