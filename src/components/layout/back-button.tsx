@@ -20,14 +20,11 @@ export const BackButton = ({
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
 
+  const breadcrumbs = generateBreadcrumbs(pathname);
+
   const handleBack = () => {
-    if (window.history.length > 1) {
-      router.back();
-    } else {
-      const breadcrumbs = generateBreadcrumbs(pathname);
-      const parentPage = breadcrumbs.at(-1);
-      router.push(parentPage?.href ?? "/");
-    }
+    const parentPage = breadcrumbs.at(-1);
+    router.push(parentPage?.href ?? "/");
   };
 
   useEffect(() => {
@@ -43,56 +40,47 @@ export const BackButton = ({
   if (pathname === "/") {
     return null;
   }
-  if (mode === "breadcrumbs") {
-    const breadcrumbs = generateBreadcrumbs(pathname);
-    return (
-      <nav
-        aria-label="Breadcrumb"
-        className={cn("flex items-center space-x-2 text-sm", className)}
-      >
-        {breadcrumbs.length > 1
-          ? breadcrumbs.map((crumb, index) => (
-              <div className="flex items-center gap-2" key={crumb.href}>
-                {index > 0 && (
-                  <Image
-                    alt="arrow"
-                    height="8"
-                    src="/images/chevron-left.svg"
-                    width="11"
-                  />
-                )}
-                <Link
-                  className="text-[#00654A] text-[20px] underline"
-                  href={crumb.href}
-                >
-                  {crumb.label}
-                </Link>
-              </div>
-            ))
-          : null}
-      </nav>
-    );
-  }
 
   return (
     <nav
-      aria-label="Backbutton"
+      aria-label={mode === "breadcrumbs" ? "Breadcrumbs" : "Backbutton"}
       className={cn("flex items-center space-x-2 text-sm", className)}
     >
-      <button
-        className="flex cursor-pointer items-center text-[#00654A] text-xl underline"
-        onClick={handleBack}
-        type="button"
-      >
-        <Image
-          alt="arrow"
-          className="mr-2"
-          height="8"
-          src="/images/chevron-left.svg"
-          width="11"
-        />
-        Back
-      </button>
+      {mode === "breadcrumbs" ? (
+        breadcrumbs.map((crumb, index) => (
+          <div className="flex items-center gap-2" key={crumb.href}>
+            {index > 0 && (
+              <Image
+                alt="arrow"
+                height="8"
+                src="/images/chevron-left.svg"
+                width="11"
+              />
+            )}
+            <Link
+              className="text-[#00654A] text-[20px] underline"
+              href={crumb.href}
+            >
+              {crumb.label}
+            </Link>
+          </div>
+        ))
+      ) : (
+        <button
+          className="flex cursor-pointer items-center text-[#00654A] text-xl underline"
+          onClick={handleBack}
+          type="button"
+        >
+          <Image
+            alt="arrow"
+            className="mr-2"
+            height="8"
+            src="/images/chevron-left.svg"
+            width="11"
+          />
+          Back
+        </button>
+      )}
     </nav>
   );
 };
