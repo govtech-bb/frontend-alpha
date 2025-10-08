@@ -17,10 +17,8 @@ export function SimpleFeedbackForm() {
 
   useEffect(() => {
     // Read the referrer from sessionStorage
-    if (typeof window !== "undefined") {
       const referrer = sessionStorage.getItem("feedbackReferrer") || "";
       setFormData((prev) => ({ ...prev, referrer }));
-    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
