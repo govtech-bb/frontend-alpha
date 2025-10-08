@@ -35,13 +35,6 @@ export default defineConfig({
         },
       },
     },
-    {
-      name: "webkit",
-      use: {
-        ...devices["Desktop Safari"],
-        // WebKit relies on CSS font optimizations
-      },
-    },
   ],
   webServer: {
     command: process.env.CI ? "npm run start" : "npm run dev", // CI runs again build; locally run against dev

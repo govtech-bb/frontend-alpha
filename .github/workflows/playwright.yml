@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       MAIL_FROM: 'no-reply@notify.dev.alpha.gov.bb'
       SES_REGION: 'region'
