@@ -14,7 +14,7 @@ const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
 
 // Form.io schema for business license application
 const formSchema = {
-  display: "form",
+  display: "form" as const,
   components: [
     {
       label: "Business Name",
