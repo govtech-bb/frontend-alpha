@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,6 +10,23 @@ type BackButtonProps = {
   className?: string;
   mode?: "back" | "breadcrumbs";
 };
+
+export const ChevronLeftSVG = ({ className = "" }: { className: string }) => (
+  <svg
+    className={className}
+    fill="none"
+    height="8"
+    viewBox="0 0 11 8"
+    width="11"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title>Chevron Right</title>
+    <path
+      d="M6.42116 5C6.50226 5.90417 6.70318 6.82308 6.9988 8C4.80744 5.55882 3.49691e-07 4 3.49691e-07 4C3.49691e-07 4 4.31088 2.76471 7 1.27146e-07C6.70717 1.20568 6.52523 2.15831 6.43953 3L11 3L11 5L6.42116 5Z"
+      fill="#0E5F64"
+    />
+  </svg>
+);
 
 export const BackButton = ({
   className = "",
@@ -49,14 +65,7 @@ export const BackButton = ({
       {mode === "breadcrumbs" ? (
         breadcrumbs.map((crumb, index) => (
           <div className="flex items-center gap-2" key={crumb.href}>
-            {index > 0 && (
-              <Image
-                alt="arrow"
-                height="8"
-                src="/images/chevron-left.svg"
-                width="11"
-              />
-            )}
+            {index > 0 && <ChevronLeftSVG className="mr-2" />}
             <Link
               className="text-[#00654A] text-[20px] underline"
               href={crumb.href}
@@ -71,13 +80,7 @@ export const BackButton = ({
           onClick={handleBack}
           type="button"
         >
-          <Image
-            alt="arrow"
-            className="mr-2"
-            height="8"
-            src="/images/chevron-left.svg"
-            width="11"
-          />
+          <ChevronLeftSVG className="mr-2" />
           Back
         </button>
       )}
