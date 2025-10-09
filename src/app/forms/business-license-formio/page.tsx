@@ -1,8 +1,13 @@
 "use client";
 
-import { Form } from "@formio/react";
+import dynamic from "next/dynamic";
 import { Typography } from "@/components/ui/typography";
 import "formiojs/dist/formio.full.min.css";
+
+// Dynamically import Form.io to avoid SSR issues
+const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
+  ssr: false,
+});
 
 // Form.io schema for business license application
 const formSchema = {
