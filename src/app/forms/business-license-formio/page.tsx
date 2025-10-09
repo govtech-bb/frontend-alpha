@@ -109,6 +109,7 @@ const formSchema = {
     },
     {
       type: "button",
+      key: "submit",
       action: "submit",
       label: "Submit Business License Application",
       theme: "primary",
