@@ -49,14 +49,88 @@
   box-shadow: 0 0 0 2px rgba(48, 192, 200, 0.2);
 }
 
-/* Select dropdown */
-.formio-form select {
+/* Native select dropdown and Choices.js */
+.formio-form select,
+.formio-component-select select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 2.5rem 0.5rem 0.75rem !important;
+  background-color: white !important;
+  border: 2px solid #d1d5db !important;
+  border-radius: 0.375rem !important;
+  font-size: 1rem;
+  color: #111827;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
-  background-position: right 0.5rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") !important;
+  background-position: right 0.5rem center !important;
+  background-repeat: no-repeat !important;
+  background-size: 1.5em 1.5em !important;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+/* Choices.js wrapper - the outer container */
+.formio-form .choices {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* Choices.js inner - the visible select field */
+.formio-form .choices__inner {
+  min-height: 44px;
+  padding: 0.5rem 2.5rem 0.5rem 0.75rem !important;
+  background-color: white !important;
+  border: 2px solid #d1d5db !important;
+  border-radius: 0.375rem !important;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: all 0.15s ease-in-out;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") !important;
+  background-position: right 0.5rem center !important;
+  background-repeat: no-repeat !important;
+  background-size: 1.5em 1.5em !important;
+  cursor: pointer;
+}
+
+/* Remove default Choices.js border radius */
+.formio-form .choices__inner,
+.formio-form .choices[data-type*="select-one"] .choices__inner,
+.formio-form .choices[data-type*="select-multiple"] .choices__inner {
+  border-radius: 0.375rem !important;
+}
+
+/* Force styles on any select-like element in formio-component */
+.formio-component-select .form-control,
+.formio-component-select .choices,
+.formio-component-select .choices__inner {
+  border: 2px solid #d1d5db !important;
+  background-color: white !important;
+}
+
+/* Choices.js specific styling (used by Form.io for selects) */
+.formio-form .choices__list--single {
+  padding: 0;
+}
+
+.formio-form .choices.is-focused .choices__inner,
+.formio-form .choices.is-open .choices__inner {
+  border-color: #30c0c8 !important;
+  box-shadow: 0 0 0 2px rgba(48, 192, 200, 0.2);
+}
+
+.formio-form .choices__list--dropdown {
+  border: 2px solid #d1d5db;
+  border-radius: 0.375rem;
+  margin-top: 0.25rem;
+}
+
+.formio-form .choices__item--selectable {
+  padding: 0.5rem 0.75rem;
+}
+
+.formio-form .choices__item--selectable.is-highlighted {
+  background-color: #30c0c8;
+  color: white;
 }
 
 /* Form groups spacing */
