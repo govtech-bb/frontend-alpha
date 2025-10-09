@@ -113,6 +113,7 @@ const formSchema = {
       label: "Submit Business License Application",
       theme: "primary",
       disableOnInvalid: true,
+      input: true,
     },
   ],
 };
