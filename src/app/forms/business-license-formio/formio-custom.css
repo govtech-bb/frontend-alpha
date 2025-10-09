@@ -30,11 +30,12 @@
 .formio-form select,
 .formio-form textarea {
   width: 100%;
-  border-radius: 0.375rem;
-  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  border: 2px solid #111827;
   background-color: white;
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 1rem;
   color: #111827;
+  font-size: 1rem;
   transition: all 0.15s ease-in-out;
 }
 
@@ -53,18 +54,18 @@
 .formio-form select,
 .formio-component-select select {
   width: 100%;
-  min-height: 44px;
-  padding: 0.5rem 2.5rem 0.5rem 0.75rem !important;
+  min-height: 48px;
+  padding: 0.75rem 2.5rem 0.75rem 1rem !important;
   background-color: white !important;
-  border: 1px solid #d1d5db !important;
-  border-radius: 0.375rem !important;
+  border: 2px solid #111827 !important;
+  border-radius: 0.5rem !important;
   font-size: 1rem;
   color: #111827;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") !important;
-  background-position: right 0.5rem center !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23111827' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") !important;
+  background-position: right 0.75rem center !important;
   background-repeat: no-repeat !important;
-  background-size: 1.5em 1.5em !important;
+  background-size: 1.25em 1.25em !important;
   transition: all 0.15s ease-in-out;
   cursor: pointer;
 }
@@ -77,18 +78,18 @@
 
 /* Choices.js inner - the visible select field */
 .formio-form .choices__inner {
-  min-height: 44px;
-  padding: 0.5rem 2.5rem 0.5rem 0.75rem !important;
+  min-height: 48px;
+  padding: 0.75rem 2.5rem 0.75rem 1rem !important;
   background-color: white !important;
-  border: 1px solid #d1d5db !important;
-  border-radius: 0.375rem !important;
+  border: 2px solid #111827 !important;
+  border-radius: 0.5rem !important;
   font-size: 1rem;
   line-height: 1.5;
   transition: all 0.15s ease-in-out;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") !important;
-  background-position: right 0.5rem center !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23111827' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3E%3C/svg%3E") !important;
+  background-position: right 0.75rem center !important;
   background-repeat: no-repeat !important;
-  background-size: 1.5em 1.5em !important;
+  background-size: 1.25em 1.25em !important;
   cursor: pointer;
 }
 
@@ -96,15 +97,16 @@
 .formio-form .choices__inner,
 .formio-form .choices[data-type*="select-one"] .choices__inner,
 .formio-form .choices[data-type*="select-multiple"] .choices__inner {
-  border-radius: 0.375rem !important;
+  border-radius: 0.5rem !important;
 }
 
 /* Force styles on any select-like element in formio-component */
 .formio-component-select .form-control,
 .formio-component-select .choices,
 .formio-component-select .choices__inner {
-  border: 1px solid #d1d5db !important;
+  border: 2px solid #111827 !important;
   background-color: white !important;
+  border-radius: 0.5rem !important;
 }
 
 /* Choices.js specific styling (used by Form.io for selects) */
@@ -155,20 +157,21 @@
 
 .formio-form .has-error input,
 .formio-form .has-error select,
-.formio-form .has-error textarea {
+.formio-form .has-error textarea,
+.formio-form .has-error .choices__inner {
   border-color: #dc2626;
-  border-width: 1px;
+  border-width: 2px;
 }
 
 /* Submit button */
 .formio-form button[type="submit"],
 .formio-form .btn-primary {
   width: 100%;
-  border-radius: 0.25rem;
-  background-color: #1e787d;
-  padding: 0.75rem 1.5rem;
-  font-weight: 400;
-  font-size: 1.25rem;
+  border-radius: 0.5rem;
+  background-color: #4a7c7e;
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+  font-size: 1.125rem;
   color: white;
   border: none;
   cursor: pointer;
@@ -205,9 +208,10 @@
   margin-top: 0.25rem;
 }
 
-/* Textarea resize */
+/* Textarea specific styles */
 .formio-form textarea {
   resize: vertical;
+  min-height: 120px;
 }
 
 /* Remove bootstrap default focus glow */
