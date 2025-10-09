@@ -204,6 +204,7 @@ export default function BusinessLicenseFormioPage() {
               </div>
             )}
 
+            {/* @ts-expect-error The @formio/react types incorrectly require 'src' even when 'form' is provided */}
             <Form form={formSchema} onSubmit={handleSubmit} />
           </div>
         </div>
