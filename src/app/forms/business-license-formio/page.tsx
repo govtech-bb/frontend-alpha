@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { Typography } from "@/components/ui/typography";
 import "formiojs/dist/formio.full.min.css";
+import "./formio-custom.css";
 
 // Dynamically import Form.io to avoid SSR issues
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {

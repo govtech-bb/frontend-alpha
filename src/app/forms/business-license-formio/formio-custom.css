@@ -1,0 +1,141 @@
+/* Custom styling for Form.io to match government form design */
+
+/* Override Form.io default styles */
+.formio-form {
+  font-family: inherit;
+}
+
+/* Labels */
+.formio-form .form-group label,
+.formio-form .formio-component-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 150%;
+  color: #111827;
+}
+
+/* Required asterisk */
+.formio-form .field-required::after {
+  content: " *";
+  color: #dc2626;
+}
+
+/* Text inputs and textareas */
+.formio-form input[type="text"],
+.formio-form input[type="email"],
+.formio-form input[type="tel"],
+.formio-form input[type="number"],
+.formio-form select,
+.formio-form textarea {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 2px solid #d1d5db;
+  background-color: white;
+  padding: 0.5rem 0.75rem;
+  color: #111827;
+  transition: all 0.15s ease-in-out;
+}
+
+.formio-form input[type="text"]:focus,
+.formio-form input[type="email"]:focus,
+.formio-form input[type="tel"]:focus,
+.formio-form input[type="number"]:focus,
+.formio-form select:focus,
+.formio-form textarea:focus {
+  outline: none;
+  border-color: #30c0c8;
+  box-shadow: 0 0 0 2px rgba(48, 192, 200, 0.2);
+}
+
+/* Select dropdown */
+.formio-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Form groups spacing */
+.formio-form .form-group,
+.formio-form .formio-component {
+  margin-bottom: 1.5rem;
+}
+
+/* Error messages and help text */
+.formio-form .has-error .help-block {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #dc2626;
+}
+
+.formio-form .formio-errors,
+.formio-form .error {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #dc2626;
+}
+
+.formio-form .has-error input,
+.formio-form .has-error select,
+.formio-form .has-error textarea {
+  border-color: #dc2626;
+}
+
+/* Submit button */
+.formio-form button[type="submit"],
+.formio-form .btn-primary {
+  width: 100%;
+  border-radius: 0.25rem;
+  background-color: #1e787d;
+  padding: 0.75rem 1.5rem;
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.formio-form button[type="submit"]:hover:not(:disabled),
+.formio-form .btn-primary:hover:not(:disabled) {
+  background-color: rgba(30, 120, 125, 0.9);
+}
+
+.formio-form button[type="submit"]:disabled,
+.formio-form .btn-primary:disabled {
+  cursor: not-allowed;
+  background-color: #9ca3af;
+}
+
+/* Remove default Form.io margins */
+.formio-form .form-control {
+  margin-bottom: 0;
+}
+
+/* Help text (non-error) */
+.formio-form .form-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Default help block styling (will be overridden by .has-error .help-block above) */
+.formio-form .help-block:not(.has-error *) {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* Textarea resize */
+.formio-form textarea {
+  resize: vertical;
+}
+
+/* Remove bootstrap default focus glow */
+.formio-form .form-control:focus {
+  box-shadow: 0 0 0 2px rgba(48, 192, 200, 0.2);
+}
