@@ -1,0 +1,10 @@
+# Content Migration Script Dependencies
+
+# Google Generative AI SDK (Gemini API)
+google-genai==1.43.0
+
+# HTTP library for fetching web content
+requests==2.32.5
+
+# Environment variable management
+python-dotenv==1.1.1
