@@ -42,10 +42,10 @@ If you do not have an original birth certificate, you may apply for one at the R
 
 The fees for Passports are as follows.  The fees for passports issued by our diplomatic missions overseas vary from mission to mission. You should, therefore, check with the respective mission regarding the fee schedule.
 
-|  |
-| --- |
-| New Passport Fees Effective December 01, 2010 |
-| Passport Types | BARBADOS  (BDS) |
+
+| New Passport Fees Effective December 01, 2010 ||
+| --- |--- |
+| **Passport Types** | **BARBADOS  (BDS)** |
 | Adult's Passport | $150 |
 | Minor's Passport (under 16) | $100 |
 | Businessman's Passport | $225 |
@@ -53,5 +53,3 @@ The fees for Passports are as follows.  The fees for passports issued by our di
 | Replacement of Lost Passport | $300 |
 | Urgent Passport (required in 1 day) | $300 |
 | Urgent Passport (required in 2-5 days) | $225 |
-
-Contact Us
