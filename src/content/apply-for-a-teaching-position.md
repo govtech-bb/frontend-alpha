@@ -1,5 +1,5 @@
 ---
-title: "Apply to become a teacher"
+title: "Apply for a teaching position"
 stage: "alpha"
 ---
 
