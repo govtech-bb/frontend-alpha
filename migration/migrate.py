@@ -119,7 +119,7 @@ def add_extraction_date(markdown: str, extraction_date: str) -> str:
     # Find the end of the frontmatter (second ---)
     parts = markdown.split('---', 2)
     if len(parts) >= 3:
-        frontmatter = parts[1]
+        frontmatter = parts[1].rstrip()  # Remove trailing whitespace
         content = parts[2]
 
         # Add extraction_date to frontmatter
@@ -156,11 +156,11 @@ def add_section_to_frontmatter(markdown: str, section: str) -> str:
     # Find the end of the frontmatter (second ---)
     parts = markdown.split('---', 2)
     if len(parts) >= 3:
-        frontmatter = parts[1]
+        frontmatter = parts[1].rstrip()  # Remove trailing whitespace
         content = parts[2]
 
         # Add section to frontmatter
-        frontmatter += f'section: "{section}"\n'
+        frontmatter += f'\nsection: "{section}"\n'
 
         return f"---{frontmatter}---{content}"
     else:
