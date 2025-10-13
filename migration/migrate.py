@@ -8,6 +8,7 @@ to extract main content as markdown with frontmatter.
 
 import argparse
 import csv
+import json
 import logging
 import os
 import re
@@ -147,6 +148,56 @@ def update_title_in_frontmatter(markdown: str, csv_title: str) -> str:
     return updated
 
 
+def add_section_to_frontmatter(markdown: str, section: str) -> str:
+    """Add section field to the frontmatter."""
+    if not section:
+        return markdown
+
+    # Find the end of the frontmatter (second ---)
+    parts = markdown.split('---', 2)
+    if len(parts) >= 3:
+        frontmatter = parts[1]
+        content = parts[2]
+
+        # Add section to frontmatter
+        frontmatter += f'section: "{section}"\n'
+
+        return f"---{frontmatter}---{content}"
+    else:
+        logger.warning("Could not parse frontmatter for section")
+        return markdown
+
+
+def extract_description_from_markdown(markdown: str) -> str:
+    """Extract description from frontmatter."""
+    desc_match = re.search(r'^description:\s*["\']?(.+?)["\']?\s*$', markdown, re.MULTILINE)
+    return desc_match.group(1) if desc_match else ""
+
+
+def generate_ia_json(pages_metadata: list[dict], output_file: Path):
+    """Generate hierarchical IA JSON file grouped by sections."""
+    # Group pages by section
+    ia = {}
+    for page in pages_metadata:
+        section = page.get("section", "Uncategorized")
+        if section not in ia:
+            ia[section] = []
+        ia[section].append({
+            "title": page["title"],
+            "filename": page["filename"],
+            "slug": page["slug"],
+            "source_url": page["source_url"],
+            "description": page.get("description", ""),
+            "extraction_date": page["extraction_date"]
+        })
+
+    # Write JSON file
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(ia, f, indent=2, ensure_ascii=False)
+
+    logger.info(f"Generated IA JSON: {output_file}")
+
+
 def save_markdown(markdown: str, filename: str):
     """Save markdown content to a file."""
     output_path = OUTPUT_DIR / filename
@@ -157,18 +208,19 @@ def save_markdown(markdown: str, filename: str):
     logger.info(f"Saved: {output_path}")
 
 
-def process_page(row: dict, prompt_template: str, extraction_date: str) -> bool:
+def process_page(row: dict, prompt_template: str, extraction_date: str) -> tuple[bool, dict | None]:
     """
     Process a single page from the CSV.
-    Returns True if successful, False otherwise.
+    Returns (success, page_metadata) where page_metadata contains info for IA JSON.
     """
     page_name = row.get('Page names', '').strip()
+    section = row.get('Section', '').strip()
     old_url = row.get('Old URL', '').strip()
 
     # Skip if no URL
     if not old_url:
         logger.debug(f"Skipping '{page_name}' - no URL")
-        return False
+        return False, None
 
     logger.info(f"\n{'=' * 80}")
     logger.info(f"Processing: {page_name or old_url}")
@@ -184,6 +236,10 @@ def process_page(row: dict, prompt_template: str, extraction_date: str) -> bool:
         # Add extraction date
         markdown = add_extraction_date(markdown, extraction_date)
 
+        # Add section if available
+        if section:
+            markdown = add_section_to_frontmatter(markdown, section)
+
         # Update title if CSV has one
         if page_name:
             markdown = update_title_in_frontmatter(markdown, page_name)
@@ -191,24 +247,39 @@ def process_page(row: dict, prompt_template: str, extraction_date: str) -> bool:
         # Parse to get title for filename
         title, markdown = parse_markdown_response(markdown)
 
+        # Extract description for metadata
+        description = extract_description_from_markdown(markdown)
+
         # Generate filename
         filename = f"{slugify(title)}.md"
+        slug = slugify(title)
+
+        # Build metadata for IA JSON
+        metadata = {
+            "title": title,
+            "filename": filename,
+            "slug": slug,
+            "section": section if section else "Uncategorized",
+            "source_url": old_url,
+            "description": description,
+            "extraction_date": extraction_date
+        }
 
         # Check if file already exists
         output_path = OUTPUT_DIR / filename
         if output_path.exists():
             logger.info(f"File already exists, skipping: {filename}")
-            return True
+            return True, metadata
 
         # Save markdown
         save_markdown(markdown, filename)
 
         logger.info(f"✓ Successfully processed: {title}")
-        return True
+        return True, metadata
 
     except Exception as e:
         logger.error(f"✗ Failed to process '{page_name or old_url}': {e}")
-        return False
+        return False, None
 
 
 def main():
@@ -271,20 +342,27 @@ def main():
     # Process each page
     success_count = 0
     failure_count = 0
+    pages_metadata = []
 
     for i, row in enumerate(rows_with_urls, 1):
         logger.info(f"\n[{i}/{len(rows_with_urls)}]")
 
-        success = process_page(row, prompt_template, extraction_date)
+        success, metadata = process_page(row, prompt_template, extraction_date)
 
-        if success:
+        if success and metadata:
             success_count += 1
+            pages_metadata.append(metadata)
         else:
             failure_count += 1
 
         # Rate limiting - small delay between requests
         if i < len(rows_with_urls):
             time.sleep(2)  # 2 second delay between pages
+
+    # Generate IA JSON file
+    if pages_metadata:
+        ia_file = OUTPUT_DIR / "content-ia.json"
+        generate_ia_json(pages_metadata, ia_file)
 
     # Summary
     logger.info(f"\n{'=' * 80}")
@@ -294,6 +372,8 @@ def main():
     logger.info(f"Total: {success_count + failure_count}")
     logger.info(f"Output directory: {OUTPUT_DIR}")
     logger.info(f"Log file: {LOG_FILE}")
+    if pages_metadata:
+        logger.info(f"IA JSON file: {OUTPUT_DIR / 'content-ia.json'}")
 
     return 0 if failure_count == 0 else 1
 

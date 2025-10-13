@@ -3,6 +3,7 @@ venv/
 
 # Migration output files
 output/*.md
+output/*.json
 
 # Log files
 *.log
