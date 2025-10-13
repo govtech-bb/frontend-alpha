@@ -68,15 +68,12 @@ export function SimpleFeedbackForm() {
   return (
     <div className="space-y-6">
       {submitStatus === "success" ? (
-        <div className="space-y-2 bg-[#DEF5F6] p-6 gap-2">
-          <Typography
-            className="font-bold text-black"
-            variant="paragraph"
-          >
+        <div className="gap-2 space-y-2 bg-[#DEF5F6] p-6">
+          <Typography className="font-bold text-black" variant="paragraph">
             Thank you for your feedback.
           </Typography>
           <button
-            className="text-black font-normal text-[20px] leading-[150%] underline underline-offset-[1px] decoration-[#00267F] cursor-pointer"
+            className="cursor-pointer font-normal text-[20px] text-black leading-[150%] underline decoration-[#00267F] underline-offset-[1px]"
             onClick={resetForm}
             type="button"
           >
