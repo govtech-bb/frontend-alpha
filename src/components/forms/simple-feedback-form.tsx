@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Typography } from "../ui/typography";
 
 export function SimpleFeedbackForm() {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     visitReason: "",
     whatWentWrong: "",
@@ -17,8 +16,8 @@ export function SimpleFeedbackForm() {
 
   useEffect(() => {
     // Read the referrer from sessionStorage
-      const referrer = sessionStorage.getItem("feedbackReferrer") || "";
-      setFormData((prev) => ({ ...prev, referrer }));
+    const referrer = sessionStorage.getItem("feedbackReferrer") || "";
+    setFormData((prev) => ({ ...prev, referrer }));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,7 +39,12 @@ export function SimpleFeedbackForm() {
       });
 
       if (response.ok) {
-        router.push("/feedback/submitted");
+        setSubmitStatus("success");
+        setFormData({
+          visitReason: "",
+          whatWentWrong: "",
+          referrer: formData.referrer,
+        });
       } else {
         setSubmitStatus("error");
       }
@@ -56,59 +60,82 @@ export function SimpleFeedbackForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const resetForm = () => {
+    setSubmitStatus("idle");
+    setFormData((prev) => ({ ...prev, visitReason: "", whatWentWrong: "" }));
+  };
+
   return (
     <div className="space-y-6">
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label
-            className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
-            htmlFor="visitReason"
+      {submitStatus === "success" ? (
+        <div className="space-y-2 bg-[#DEF5F6] p-6 gap-2">
+          <Typography
+            className="font-bold text-black"
+            variant="paragraph"
           >
-            Why did you visit alpha.gov.bb?
-          </label>
-          <textarea
-            className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
-            id="visitReason"
-            name="visitReason"
-            onChange={handleChange}
-            rows={3}
-            value={formData.visitReason}
-          />
-        </div>
-
-        <div>
-          <label
-            className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
-            htmlFor="whatWentWrong"
+            Thank you for your feedback.
+          </Typography>
+          <button
+            className="text-black font-normal text-[20px] leading-[150%] underline underline-offset-[1px] decoration-[#00267F] cursor-pointer"
+            onClick={resetForm}
+            type="button"
           >
-            What went wrong?
-          </label>
-          <textarea
-            className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
-            id="whatWentWrong"
-            name="whatWentWrong"
-            onChange={handleChange}
-            rows={4}
-            value={formData.whatWentWrong}
-          />
+            Tell us something else
+          </button>
         </div>
-
-        <input name="referrer" type="hidden" value={formData.referrer} />
-
-        <button
-          className="w-full rounded bg-[#1E787D] px-6 py-3 font-normal text-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
-          disabled={isSubmitting}
-          type="submit"
-        >
-          {isSubmitting ? "Submitting..." : "Send Feedback"}
-        </button>
-
-        {submitStatus === "error" && (
-          <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-800">
-            Sorry, there was an error sending your feedback. Please try again.
+      ) : (
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <div>
+            <label
+              className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
+              htmlFor="visitReason"
+            >
+              Why did you visit alpha.gov.bb?
+            </label>
+            <textarea
+              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
+              id="visitReason"
+              name="visitReason"
+              onChange={handleChange}
+              rows={3}
+              value={formData.visitReason}
+            />
           </div>
-        )}
-      </form>
+
+          <div>
+            <label
+              className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
+              htmlFor="whatWentWrong"
+            >
+              What went wrong?
+            </label>
+            <textarea
+              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
+              id="whatWentWrong"
+              name="whatWentWrong"
+              onChange={handleChange}
+              rows={4}
+              value={formData.whatWentWrong}
+            />
+          </div>
+
+          <input name="referrer" type="hidden" value={formData.referrer} />
+
+          <button
+            className="w-full rounded bg-[#1E787D] px-6 py-3 font-normal text-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
+            disabled={isSubmitting}
+            type="submit"
+          >
+            {isSubmitting ? "Submitting..." : "Send Feedback"}
+          </button>
+
+          {submitStatus === "error" && (
+            <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-800">
+              Sorry, there was an error sending your feedback. Please try again.
+            </div>
+          )}
+        </form>
+      )}
     </div>
   );
 }
