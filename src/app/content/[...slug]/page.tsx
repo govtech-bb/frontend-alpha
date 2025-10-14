@@ -171,6 +171,31 @@ export default async function Page({ params }: ContentPageProps) {
           {frontmatter.title && (
             <Typography variant="h1">{frontmatter.title}</Typography>
           )}
+
+          {frontmatter.extraction_date ? (
+            <div className="space-y-4 border-[#FF94D9] border-r-4 border-l-4 bg-[#FFF4FB] px-4 py-3">
+              <Typography variant="paragraph">
+                This Page was originally published on{" "}
+                <Link
+                  className="underline"
+                  href="https://www.gov.bb"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  gov.bb
+                </Link>
+                . It may be out of date or shown differently here.
+              </Typography>
+              <Link
+                className="text-xl underline"
+                href={frontmatter.source_url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                View the original source
+              </Link>
+            </div>
+          ) : null}
         </div>
         <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
           {content}
