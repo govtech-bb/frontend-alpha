@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Typography } from "@/components/ui/typography";
-import { INFORMATION_SECTIONS, SERVICE_CATEGORIES } from "@/constants/data";
+import { SERVICE_CATEGORIES } from "@/constants/data";
 import { getFeaturedServices } from "@/lib/markdown";
 
 export default async function Home() {
@@ -53,27 +53,6 @@ export default async function Home() {
                 {service.title}
               </Link>
               <Typography variant="paragraph">{service.description}</Typography>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8">
-        <Typography variant="h2">Useful information</Typography>
-
-        <div className="flex flex-col gap-2 space-y-4">
-          {INFORMATION_SECTIONS.map((information) => (
-            <div key={information.title}>
-              <Link
-                className="text-[#1E787D] text-[20px] underline underline-offset-2"
-                href={information.link}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {information.title}
-              </Link>
-              <Typography variant="paragraph">
-                {information.description}
-              </Typography>
             </div>
           ))}
         </div>
