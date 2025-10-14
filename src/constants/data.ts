@@ -1,28 +1,14 @@
-type PageType = {
-  title: string;
-  filename: string;
-  slug: string;
-  source_url: string;
-  description: string;
-  extraction_date: string; // date when content was extracted from source_url
-  last_updated_date?: string; // updated when content changes
-};
-
-type ServiceCategoryType = {
-  title: string;
-  description?: string;
-  pages: PageType[];
-};
+import type { ServiceCategoryType } from "@/types/content";
 
 export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
   {
     title: "Family, birth and relationships",
+    slug: "family-birth-relationships",
     description:
       "Managing key life events and family responsibilities, from registering a birth to caring for others",
     pages: [
       {
         title: "Register a birth",
-        filename: "register-a-birth.md",
         slug: "register-a-birth",
         source_url: "https://www.gov.bb/Citizens/register-birth",
         description:
@@ -31,7 +17,6 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       },
       {
         title: "Marriage licences",
-        filename: "marriage-licences.md",
         slug: "marriage-licences",
         source_url: "https://www.gov.bb/Citizens/marriage-licence",
         description:
@@ -42,6 +27,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
   },
   {
     title: "Work and employment",
+    slug: "work-employment",
     description: "Find a job, develop skills, or manage employment changes",
     pages: [
       {
@@ -66,16 +52,19 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
   },
   {
     title: "Money and financial support",
+    slug: "money-financial-support",
     description: "Get help with money, benefits, taxes or government payments",
     pages: [],
   },
   {
     title: "Education, youth and learning",
+    slug: "education-youth-learning",
     description: "Apply for or manage education and youth opportunities",
     pages: [],
   },
   {
     title: "Travel, ID and Citizenship",
+    slug: "travel-id-citizenship",
     description: "Travel, drive or prove your identity and status",
     pages: [
       {
@@ -155,6 +144,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
   },
   {
     title: "Community, culure and leisure",
+    slug: "community-culture-leisure",
     description:
       "Take part in local and national life including volunteering, sport and culture",
     pages: [],
