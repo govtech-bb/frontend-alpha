@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/constants/data";
 import { getMarkdownContent } from "@/lib/markdown";
@@ -171,7 +172,9 @@ export default async function Page({ params }: ContentPageProps) {
             <Typography variant="h1">{frontmatter.title}</Typography>
           )}
         </div>
-        <ReactMarkdown components={components}>{content}</ReactMarkdown>
+        <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
+          {content}
+        </ReactMarkdown>
       </div>
     );
 

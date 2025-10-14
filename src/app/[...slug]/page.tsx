@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: TODO add strict typing */
 import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownContent } from "@/lib/markdown";
 
@@ -128,7 +129,9 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
         ) : null}
       </div>
 
-      <ReactMarkdown components={components}>{content}</ReactMarkdown>
+      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
+        {content}
+      </ReactMarkdown>
 
       {frontmatter.date && (
         <div className="border-t pt-4 text-gray-500 text-sm">
