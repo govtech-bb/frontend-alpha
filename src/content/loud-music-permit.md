@@ -79,6 +79,8 @@ Write a letter or email to the Police Commissioner’s office at Barbados Police
 
 - a brief explanation of the type of event you are planning
 
+- an estimate of the number of people you expect to attend
+
 It may help your application if you include information on how you have considered the environment close to the event location. This might include the potential impact on neighbours, businesses, wildlife and infrastructure in terms of things like noise and traffic.
 
 ---
