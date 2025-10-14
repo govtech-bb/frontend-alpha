@@ -68,11 +68,13 @@ const components: Components = {
     );
   },
   table: ({ node, ...props }) => (
-    <div className="my-6 overflow-x-auto">
-      <table
-        className="min-w-full divide-y divide-gray-300 border border-gray-300"
-        {...props}
-      />
+    <div className="mx-4 my-6 overflow-x-auto sm:mx-0">
+      <div className="inline-block min-w-full align-middle">
+        <table
+          className="min-w-full divide-y divide-gray-300 border border-gray-300"
+          {...props}
+        />
+      </div>
     </div>
   ),
   thead: ({ node, ...props }) => <thead className="bg-gray-50" {...props} />,
@@ -84,13 +86,13 @@ const components: Components = {
   ),
   th: ({ node, ...props }) => (
     <th
-      className="px-6 py-3 text-left font-semibold text-gray-900 text-sm"
+      className="px-3 py-3 text-left font-semibold text-gray-900 text-xs sm:px-6 sm:text-sm"
       {...props}
     />
   ),
   td: ({ node, ...props }) => (
     <td
-      className="whitespace-nowrap px-6 py-4 text-gray-700 text-sm"
+      className="px-3 py-4 text-gray-700 text-xs sm:px-6 sm:text-sm"
       {...props}
     />
   ),
