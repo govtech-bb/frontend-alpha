@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: TODO add strict typing */
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { type Components } from "react-markdown";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownContent } from "@/lib/markdown";
 
@@ -9,7 +9,7 @@ type EntryPointPageProps = {
 };
 
 // Custom components for react-markdown
-const components = {
+const components: Components = {
   h1: ({ children, ...props }: any) => (
     <Typography className="mt-8 mb-4" variant="h1" {...props}>
       {children}
@@ -64,6 +64,33 @@ const components = {
       </a>
     );
   },
+  table: ({ node, ...props }) => (
+    <div className="my-6 overflow-x-auto">
+      <table
+        className="min-w-full divide-y divide-gray-300 border border-gray-300"
+        {...props}
+      />
+    </div>
+  ),
+  thead: ({ node, ...props }) => <thead className="bg-gray-50" {...props} />,
+  tbody: ({ node, ...props }) => (
+    <tbody className="divide-y divide-gray-200 bg-white" {...props} />
+  ),
+  tr: ({ node, ...props }) => (
+    <tr className="transition-colors hover:bg-gray-50" {...props} />
+  ),
+  th: ({ node, ...props }) => (
+    <th
+      className="px-6 py-3 text-left font-semibold text-gray-900 text-sm"
+      {...props}
+    />
+  ),
+  td: ({ node, ...props }) => (
+    <td
+      className="whitespace-nowrap px-6 py-4 text-gray-700 text-sm"
+      {...props}
+    />
+  ),
 };
 
 export default async function EntryPointPage({ params }: EntryPointPageProps) {

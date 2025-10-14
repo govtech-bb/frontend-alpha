@@ -48,7 +48,7 @@ export default async function Home() {
             >
               <Link
                 className="cursor-pointer font-normal text-[#1E787D] text-[20px] leading-[150%] underline underline-offset-2"
-                href={"/family-birth-relationships"} // TODO update link when pages are ready
+                href={`/content/${service.slug}`} // TODO update link when pages are ready
               >
                 {service.title}
               </Link>
