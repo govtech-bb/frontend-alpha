@@ -1,10 +1,12 @@
 ---
 title: "Government requirements"
-description: "Information on the government requirements for businesses operating in Barbados, particularly International Financial Services Companies (IFSCs)."
+description: "A guide to the process of applying for and maintaining a license for international financial services in Barbados, including annual requirements."
 source_url: https://www.gov.bb/Business/government-requirements
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Business and Trade"
 ---
+
+![Business Requirements](https://www.gov.bb/media_files/business-requirements.jpg)
 
 A prospective applicant must submit a preliminary application to the Central Bank of Barbados for approval.
 
@@ -14,9 +16,7 @@ After the submission is appraised, consent is obtained from the Minister of Fina
 
 The company must also have a minimum assigned capital of US$2,000,000 if the bank is authorised to accept third party deposits or a minimum assigned capital of US$500,000 if the bank does not accept third party deposits. The minister may at his discretion alter the above sums.
 
-![business-requirements.jpg](https://www.gov.bb/media_files/business-requirements.jpg)
-
-## What are the annual requirements of an IFSC?
+## What are the Annual Requirements of an IFSC?
 
 *   A licence must be renewed annually by January 1, of each year
 *   An annual audit is required

@@ -1,14 +1,14 @@
 ---
 title: "History"
-description: "A summary of Barbados' archaeological history, indicating prior inhabitation by Arawaks and Caribs before English settlement and the subsequent shift to sugar production and the use of enslaved labor."
+description: "An overview of Barbados' history, detailing early inhabitants, the shift to sugar cultivation, and its long-term social and economic impacts."
 source_url: https://www.gov.bb/Visit-Barbados/history
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
 ## Archaeological History
 
-![barbados-history.jpg](https://www.gov.bb/media_files/barbados-history.jpg)
+![Barbados History](https://www.gov.bb/media_files/barbados-history.jpg)
 
 Archaeological evidence indicates that prior to 1625 the island had been inhabited by the Arawaks and Caribs but there was apparently no sign of them when the English arrived. However, later research has indicated that Caribs from neighbouring islands settled in small colonies in St. Phillip and St. Lucy. The early settlers, in order to survive, needed a cash crop and they selected tobacco, with cotton in second place. Poor economic returns convinced them that they had to find an alternative and this time sugar cane was selected.
 

@@ -1,14 +1,14 @@
 ---
 title: "Coat of arms"
-description: "The Barbados Coat of Arms, granted in 1966, features national symbols like the Pride of Barbados flowers and the Bearded Fig Tree, embodying the motto 'Pride and Industry'."
+description: "An overview of the Coat of Arms of Barbados, detailing its symbolism, origin, and designer, Neville C. Connell."
 source_url: https://www.gov.bb/Visit-Barbados/coat-of-arms
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-Coat of Arms
+## Coat of Arms
 
-![barbados-1386184_640](https://www.gov.bb/media_files/barbados-1386184_640.png)
+![Coat of Arms of Barbados](https://www.gov.bb/media_files/barbados-1386184_640.png)
 
 The grant of arms conveyed by royal warrant was presented by Her Majesty the Queen to the President of the Senate of the island on February 14, 1966, on the occasion of the Royal Visit to Barbados.
 

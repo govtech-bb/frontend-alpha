@@ -1,14 +1,14 @@
 ---
 title: "Business policies and law"
-description: "Information on Labour Laws and Regulations in Barbados, including the Ministry of Labour's role in promoting decent work and workforce development."
+description: "An overview of the Ministry of Labour's role in Barbados, focusing on promoting decent work, social benefits, and a skilled workforce for local and international markets."
 source_url: https://www.gov.bb/Business/policies-laws
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Business and Trade"
 ---
 
-### Labour Laws and Regulations
+## Labour Laws and Regulations
 
-![hammer](https://www.gov.bb/media_files/hammer.jpg)
+![Hammer image](https://www.gov.bb/media_files/hammer.jpg)
 
 The Ministry of Labour assists the Government and its Social Partners in promoting opportunities for the provision of decent and productive work, in conditions of freedom of association, equity, security and human dignity and to provide quality social and economic benefits for Barbadians.
 

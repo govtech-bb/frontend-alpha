@@ -1,16 +1,12 @@
 ---
 title: "Political system"
-description: "Overview of Barbados' democratic government, key figures, economy, and currency."
+description: "An overview of Barbados' political system, including its independence date, current Governor General and Prime Minister, and key economic drivers."
 source_url: https://www.gov.bb/Visit-Barbados/political-system
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-Political System
-
-Barbados has a stable and democratic system of government.
-
-![_AAA0666 edit.jpg](https://www.gov.bb/media_files/_AAA0666 edit.jpg)
+![Government of Barbados Building](https://www.gov.bb/media_files/_AAA0666%20edit.jpg)
 
 *   Barbados has a stable and democratic system of government.
 *   It became an independent Nation on November 30, 1966.

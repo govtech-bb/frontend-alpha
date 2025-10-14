@@ -1,28 +1,28 @@
 ---
 title: "Department of Archives"
-description: "Information about the Department of Archives in Barbados, including its role, contact information, and address."
+description: "The Department of Archives identifies, collects, processes, and preserves public and private records of Barbados, making information available to support understanding of Barbadian life."
 source_url: https://www.gov.bb/Departments/archives
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-Department of Archives
+# Department of Archives
 
 The Department of Archives role is to ensure organizational efficiency and accountability, identify, collect, process and preserve, public and private records of Barbados that are of permanent and enduring legal, cultural and historical value and to make information from them available within legal limits and so support the understanding of Barbadian life.
 
-Ms. Ingrid Thompson 
-Chief Archivist Ag.
-Phone: 1(246) 535-0050
+Ms. Ingrid Thompson  
+Chief Archivist Ag.  
+Phone: 1(246) 535-0050  
 Email: ingrid.cumberbatch@barbados.gov.bb
 
-Black Rock
-St. James
+Black Rock  
+St. James  
 Barbados, W.I.
 
-PBX: 1(246) 535-0090
-Phone: 1 (246) 424-1270
-Phone: 1 (246) 425-5150
-Fax: 1 (246) 425-5911
-Email: bda@caribsurf.com
+PBX: 1(246) 535-0090  
+Phone: 1 (246) 424-1270  
+Phone: 1 (246) 425-5150  
+Fax: 1 (246) 425-5911  
+Email: bda@caribsurf.com  
 Email: archives@sunbeach.net
 ```

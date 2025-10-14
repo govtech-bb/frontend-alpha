@@ -1,32 +1,35 @@
 ---
 title: "Register a death"
-description: "Information on how to register a death and obtain a death certificate in Barbados."
+description: "This article provides information on how to apply for and obtain a death certificate in Barbados, including fees and contact details."
 source_url: https://www.gov.bb/Citizens/register-death
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Family, Birth and Relationships"
 ---
 
-Registering for a Death Certificate
+## Registering for a Death Certificate
 
-![death.jpg](https://www.gov.bb/media_files/death.jpg)
+![Death Certificate Application](https://www.gov.bb/media_files/death.jpg)
 
 Applications for death certificates are made at the Registration Department, New Supreme Court Complex White Park Road, St. Michael.
 
-Applications are processed for a fee of **BDS$5.00.** Completed application forms may also be mailed to the Registration Department and should be accompanied by a Money Order in the amount of BDS$5.00 and should be made out to the Registrar of the Supreme Court. Persons opting for this method of application should also enclose a self-addressed envelope with sufficient return postage.
+Applications are processed for a fee of **BDS$5.00**. Completed application forms may also be mailed to the Registration Department and should be accompanied by a Money Order in the amount of BDS$5.00 and should be made out to the Registrar of the Supreme Court. Persons opting for this method of application should also enclose a self-addressed envelope with sufficient return postage.
 
-**\*Registration for a Death Certificate is free of cost.\***
-**\*A fee of $5.00 (per copy) is charged for the certificate.\***
-**\*A fee of $10.00 (per copy) is charged for the "Cause of Death" certificate\***
+## Fees
 
-Applications must be completed in full and should be mailed to: 
+*   Registration for a Death Certificate is free of cost.
+*   A fee of $5.00 (per copy) is charged for the certificate.
+*   A fee of $10.00 (per copy) is charged for the "Cause of Death" certificate.
 
-The Registrar of the Supreme Court
-Registration Department
-New Supreme Court Complex
-White Park Road
-St. Michael
+Applications must be completed in full and should be mailed to: 
+
+The Registrar of the Supreme Court  
+Registration Department  
+New Supreme Court Complex  
+White Park Road  
+St. Michael  
 BARBADOS
 
 For further information contact the Registration Department at:
 
 (Tel.) 1 (246) 535-9700
+```

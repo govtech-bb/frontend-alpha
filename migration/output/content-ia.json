@@ -1,388 +1,1556 @@
-{
-  "Family, Birth and Relationships": [
-    {
-      "title": "Register a birth",
-      "filename": "register-a-birth.md",
-      "slug": "register-a-birth",
-      "source_url": "https://www.gov.bb/Citizens/register-birth",
-      "description": "Information on how to register a birth in Barbados, including who can register, the required documents, and any associated fees.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Marriage licences",
-      "filename": "marriage-licences.md",
-      "slug": "marriage-licences",
-      "source_url": "https://www.gov.bb/Citizens/marriage-licence",
-      "description": "Information on the requirements and procedures for obtaining a marriage license in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Register a death",
-      "filename": "register-a-death.md",
-      "slug": "register-a-death",
-      "source_url": "https://www.gov.bb/Citizens/register-death",
-      "description": "Information on how to register a death and obtain a death certificate in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Register a marriage",
-      "filename": "register-a-marriage.md",
-      "slug": "register-a-marriage",
-      "source_url": "https://www.gov.bb/Citizens/register-marriage",
-      "description": "Information on how to register a marriage certificate in Barbados, including required documents and contact details for the Registration Department.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Apply for a child to enter state daycare",
-      "filename": "apply-for-a-child-to-enter-state-daycare.md",
-      "slug": "apply-for-a-child-to-enter-state-daycare",
-      "source_url": "https://www.gov.bb/Visit-Barbados/ports-of-entry",
-      "description": "Information on the various ports of entry into Barbados, including the Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles.",
-      "extraction_date": "2025-10-13"
-    }
-  ],
-  "Work and Employment": [
-    {
-      "title": "Jobseekers",
-      "filename": "jobseekers.md",
-      "slug": "jobseekers",
-      "source_url": "https://www.gov.bb/Citizens/job-seekers",
-      "description": "Information on overseas and public sector employment opportunities in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "EZPay",
-      "filename": "ezpay.md",
-      "slug": "ezpay",
-      "source_url": "https://www.gov.bb/Citizens/ezpay",
-      "description": "EZpay+ is the Government of Barbados' payments platform for various government services, offering multiple payment options.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Tax online",
-      "filename": "tax-online.md",
-      "slug": "tax-online",
-      "source_url": "https://www.gov.bb/Citizens/tax-online",
-      "description": "TAMIS is an electronic platform that allows you to manage your taxes online, with features for viewing account information, filing returns, viewing statements, making online payments, and submitting inquiries.",
-      "extraction_date": "2025-10-13"
-    }
-  ],
-  "Travel, ID and Citizenship": [
-    {
-      "title": "Apply for a passport",
-      "filename": "apply-for-a-passport.md",
-      "slug": "apply-for-a-passport",
-      "source_url": "https://www.gov.bb/Citizens/apply-passport",
-      "description": "Information on how to apply for a passport in Barbados, including forms, fees, and the collection process.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Visa information",
-      "filename": "visa-information.md",
-      "slug": "visa-information",
-      "source_url": "https://www.gov.bb/Visit-Barbados/visa-information",
-      "description": "Information on visa requirements for visiting Barbados, including contact details for the Immigration Department.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Visitor permit application",
-      "filename": "visitor-permit-application.md",
-      "slug": "visitor-permit-application",
-      "source_url": "https://www.gov.bb/Visit-Barbados/visitorpermitapplication",
-      "description": "Apply for a visitor's permit online to drive on the roads of Barbados, with options for under or over 2 months stay.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Medical requirements",
-      "filename": "medical-requirements.md",
-      "slug": "medical-requirements",
-      "source_url": "https://www.gov.bb/Visit-Barbados/medical-requirements",
-      "description": "Information on the medical requirements for visiting or immigrating to Barbados, including details on mandatory medical examinations.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Apply for a driver’s license",
-      "filename": "apply-for-a-drivers-license.md",
-      "slug": "apply-for-a-drivers-license",
-      "source_url": "https://www.gov.bb/Citizens/driver-licence",
-      "description": "Information on how to obtain a driver's license in Barbados, including learner's permits, regulations tests, driving tests, and international licenses.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "National registration",
-      "filename": "national-registration.md",
-      "slug": "national-registration",
-      "source_url": "https://www.gov.bb/Citizens/national-registration",
-      "description": "Information on how to register as a citizen of Barbados or a non-citizen resident, and obtain a Barbados Identification (ID) card.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Getting around Barbados",
-      "filename": "getting-around-barbados.md",
-      "slug": "getting-around-barbados",
-      "source_url": "https://www.gov.bb/Visit-Barbados/getting-around-barbados",
-      "description": "Information on transportation options and obtaining a driver's permit for visitors in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Local information",
-      "filename": "local-information.md",
-      "slug": "local-information",
-      "source_url": "https://www.gov.bb/Visit-Barbados/local-information",
-      "description": "General information for visitors to Barbados, including its rank as a top Caribbean travel destination.",
-      "extraction_date": "2025-10-13"
-    }
-  ],
-  "Business and Trade": [
-    {
-      "title": "Start a business",
-      "filename": "start-a-business.md",
-      "slug": "start-a-business",
-      "source_url": "https://www.gov.bb/Business/start-business",
-      "description": "Information from Invest Barbados to facilitate starting or expanding business operations in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Registering a business name",
-      "filename": "registering-a-business-name.md",
-      "slug": "registering-a-business-name",
-      "source_url": "https://www.gov.bb/Business/registering-business-name",
-      "description": "Information on registering a business name in Barbados, including requirements and procedures, with a link to the CAIPO website for more details.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Business policies and law",
-      "filename": "business-policies-and-law.md",
-      "slug": "business-policies-and-law",
-      "source_url": "https://www.gov.bb/Business/policies-laws",
-      "description": "Information on Labour Laws and Regulations in Barbados, including the Ministry of Labour's role in promoting decent work and workforce development.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Government requirements",
-      "filename": "government-requirements.md",
-      "slug": "government-requirements",
-      "source_url": "https://www.gov.bb/Business/government-requirements",
-      "description": "Information on the government requirements for businesses operating in Barbados, particularly International Financial Services Companies (IFSCs).",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Information about business tax",
-      "filename": "information-about-business-tax.md",
-      "slug": "information-about-business-tax",
-      "source_url": "https://www.gov.bb/tax-information",
-      "description": "Information on corporation tax in Barbados, including rates, allowances, and loss considerations.",
-      "extraction_date": "2025-10-13"
-    }
-  ],
-  "Government, Democracy and Civic Life": [
-    {
-      "title": "President",
-      "filename": "president.md",
-      "slug": "president",
-      "source_url": "https://www.gov.bb/Visit-Barbados/president",
-      "description": "Information about the President of Barbados, including a biography of Her Excellency The Most Honourable Dame Sandra Prunella Mason.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Prime minister",
-      "filename": "prime-minister.md",
-      "slug": "prime-minister",
-      "source_url": "https://www.gov.bb/Government/prime-minister",
-      "description": "Profile of the Prime Minister of Barbados, the Honourable Mia Amor Mottley, including her roles and career highlights.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Cabinet",
-      "filename": "cabinet.md",
-      "slug": "cabinet",
-      "source_url": "https://www.gov.bb/cabinet.php",
-      "description": "Profiles of the Cabinet members of the Government of Barbados, including their names, titles, and responsibilities.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "House of Assembly",
-      "filename": "house-of-assembly.md",
-      "slug": "house-of-assembly",
-      "source_url": "https://www.gov.bb/Government/house-of-assembly",
-      "description": "Information about the House of Assembly in Barbados, including its composition, highlights, and historical aspects.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Parliament",
-      "filename": "parliament.md",
-      "slug": "parliament",
-      "source_url": "https://www.gov.bb/Government/parliament",
-      "description": "Information on the Parliament of Barbados, its structure, functions, and procedures based on the Westminster system.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Senators",
-      "filename": "senators.md",
-      "slug": "senators",
-      "source_url": "https://www.gov.bb/Government/senators",
-      "description": "Information about the Senate of Barbados, including its composition, appointment process, and historical highlights.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Permanent secretaries and related",
-      "filename": "permanent-secretaries-and-related.md",
-      "slug": "permanent-secretaries-and-related",
-      "source_url": "https://www.gov.bb/Government/ps-related-grades",
-      "description": "A list of Permanent Secretaries and related grades within the Government of Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Political system",
-      "filename": "political-system.md",
-      "slug": "political-system",
-      "source_url": "https://www.gov.bb/Visit-Barbados/political-system",
-      "description": "Overview of Barbados' democratic government, key figures, economy, and currency.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "National pledge",
-      "filename": "national-pledge.md",
-      "slug": "national-pledge",
-      "source_url": "https://www.gov.bb/Visit-Barbados/national-pledge",
-      "description": "The National Pledge of Barbados is a solemn promise of allegiance to the country and its flag, written by Mr. Lester Vaughan.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Coat of arms",
-      "filename": "coat-of-arms.md",
-      "slug": "coat-of-arms",
-      "source_url": "https://www.gov.bb/Visit-Barbados/coat-of-arms",
-      "description": "The Barbados Coat of Arms, granted in 1966, features national symbols like the Pride of Barbados flowers and the Bearded Fig Tree, embodying the motto 'Pride and Industry'.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Demographics",
-      "filename": "demographics.md",
-      "slug": "demographics",
-      "source_url": "https://www.gov.bb/Visit-Barbados/demographics",
-      "description": "Information about the population, ethnic groups, languages, and religions of Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "History",
-      "filename": "history.md",
-      "slug": "history",
-      "source_url": "https://www.gov.bb/Visit-Barbados/history",
-      "description": "A summary of Barbados' archaeological history, indicating prior inhabitation by Arawaks and Caribs before English settlement and the subsequent shift to sugar production and the use of enslaved labor.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Ministry",
-      "filename": "ministry.md",
-      "slug": "ministry",
-      "source_url": "https://www.gov.bb/ministries",
-      "description": "A listing of all Government Ministries in Barbados with a search function.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Department",
-      "filename": "department.md",
-      "slug": "department",
-      "source_url": "https://www.gov.bb/departments",
-      "description": "A listing of all government departments in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Air Navigation Services Department",
-      "filename": "air-navigation-services-department.md",
-      "slug": "air-navigation-services-department",
-      "source_url": "https://www.gov.bb/Departments/air-navigation",
-      "description": "Contact information for the Air Navigation Services Department in Barbados, including phone numbers for various sections and offices.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Analytical Services",
-      "filename": "analytical-services.md",
-      "slug": "analytical-services",
-      "source_url": "https://www.gov.bb/Departments/analytical-services",
-      "description": "The Analytical Services department provides a timely and reliable analytical service committed to quality.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Department of Archives",
-      "filename": "department-of-archives.md",
-      "slug": "department-of-archives",
-      "source_url": "https://www.gov.bb/Departments/archives",
-      "description": "Information about the Department of Archives in Barbados, including its role, contact information, and address.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Office of the Auditor General",
-      "filename": "office-of-the-auditor-general.md",
-      "slug": "office-of-the-auditor-general",
-      "source_url": "https://www.gov.bb/Departments/auditor-general",
-      "description": "Contact information and website link for the Office of the Auditor General in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Barbados Building Standards Authority",
-      "filename": "barbados-building-standards-authority.md",
-      "slug": "barbados-building-standards-authority",
-      "source_url": "https://www.gov.bb/Departments/building-standards",
-      "description": "Information about the Barbados Building Standards Authority and its role in enforcing the Barbados National Building Code and the Building Act to facilitate cost-effective building construction.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Central Purchasing Department",
-      "filename": "central-purchasing-department.md",
-      "slug": "central-purchasing-department",
-      "source_url": "https://www.gov.bb/Departments/central-purchasing",
-      "description": "The Central Purchasing Department provides quality goods from reliable sources at economical prices to government ministries and departments in Barbados.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Children's Development Centre",
-      "filename": "childrens-development-centre.md",
-      "slug": "childrens-development-centre",
-      "source_url": "https://www.gov.bb/Departments/childrens-development",
-      "description": "The Children's Development Centre in Barbados protects the rights and enhances the quality of life for persons with physical and mental challenges.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "GOV.BB - Page Not Found",
-      "filename": "govbb-page-not-found.md",
-      "slug": "govbb-page-not-found",
-      "source_url": "https://www.gov.bb/Departments/civil-aviation",
-      "description": "A 404 error page indicating that the requested page was not found on the GOV.BB website.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Coastal Zone Management Unit",
-      "filename": "coastal-zone-management-unit.md",
-      "slug": "coastal-zone-management-unit",
-      "source_url": "https://www.gov.bb/Departments/coastal-zone",
-      "description": "The Coastal Zone Management Unit performs various coastal management functions including monitoring, consultation, and public education.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Department of Commerce and Consumer Affairs",
-      "filename": "department-of-commerce-and-consumer-affairs.md",
-      "slug": "department-of-commerce-and-consumer-affairs",
-      "source_url": "https://www.gov.bb/Departments/commerce",
-      "description": "The Department of Commerce and Consumer Affairs facilitates the development of commerce, enforces trading standards and protects consumers.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Consular and Diaspora Division",
-      "filename": "consular-and-diaspora-division.md",
-      "slug": "consular-and-diaspora-division",
-      "source_url": "https://www.gov.bb/Departments/consular-diaspora",
-      "description": "Information on the Consular and Diaspora Division, its core responsibilities, and the services it provides to Barbadian nationals and the diaspora community.",
-      "extraction_date": "2025-10-13"
-    },
-    {
-      "title": "Co-operatives Department",
-      "filename": "co-operatives-department.md",
-      "slug": "co-operatives-department",
-      "source_url": "https://www.gov.bb/Departments/cooperatives",
-      "description": "Information on the Co-operatives Department, including its mission, contact details, and registrar information.",
-      "extraction_date": "2025-10-13"
-    }
-  ]
-}
+[
+  {
+    "title": "Family, Birth and Relationships",
+    "slug": "family-birth-and-relationships",
+    "description": "Managing key life events and family responsibilities, from registering a birth to caring for others",
+    "pages": [
+      {
+        "title": "Register a birth",
+        "slug": "register-a-birth",
+        "source_url": "https://www.gov.bb/Citizens/register-birth",
+        "description": "A guide on how to register a birth in Barbados, including who can register, required documents, fees, and contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Marriage licences",
+        "slug": "marriage-licences",
+        "source_url": "https://www.gov.bb/Citizens/marriage-licence",
+        "description": "This article outlines the requirements, procedures, and fees for obtaining a marriage licence in Barbados, including details for nationals and non-nationals, minors, and special arrangements.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Register a death",
+        "slug": "register-a-death",
+        "source_url": "https://www.gov.bb/Citizens/register-death",
+        "description": "This article provides information on how to apply for and obtain a death certificate in Barbados, including fees and contact details.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Register a marriage",
+        "slug": "register-a-marriage",
+        "source_url": "https://www.gov.bb/Citizens/register-marriage",
+        "description": "Learn how to register a marriage in Barbados, including required documents, information needed for the marriage record, and applicable fees for certificates.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Apply for a child to enter state daycare",
+        "slug": "apply-for-a-child-to-enter-state-daycare",
+        "source_url": "https://www.gov.bb/Visit-Barbados/ports-of-entry",
+        "description": "An overview of Barbados' main ports of entry: Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles marina.",
+        "extraction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "title": "Work and Employment",
+    "slug": "work-and-employment",
+    "description": "Employment services, tax information, and workplace resources",
+    "pages": [
+      {
+        "title": "Jobseekers",
+        "slug": "jobseekers",
+        "source_url": "https://www.gov.bb/Citizens/job-seekers",
+        "description": "Learn about various employment opportunities in Barbados, including overseas programs, guidance for job seekers, and public sector positions, provided by the Ministry of Labour and Social Partnership Relations.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "EZPay",
+        "slug": "ezpay",
+        "source_url": "https://www.gov.bb/Citizens/ezpay",
+        "description": "An overview of the Government of Barbados' EZpay+ payments platform, detailing its purpose, registration requirements, and available payment methods for various government services.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Tax online",
+        "slug": "tax-online",
+        "source_url": "https://www.gov.bb/Citizens/tax-online",
+        "description": "Learn about TAMIS, an electronic platform provided by the Government of Barbados for managing and filing your income tax online, including viewing accounts, submitting returns, and making payments.",
+        "extraction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "title": "Travel, ID and Citizenship",
+    "slug": "travel-id-and-citizenship",
+    "description": "Passports, visas, identification, and travel information for citizens and visitors",
+    "pages": [
+      {
+        "title": "Apply for a passport",
+        "slug": "apply-for-a-passport",
+        "source_url": "https://www.gov.bb/Citizens/apply-passport",
+        "description": "This article provides detailed instructions for citizens of Barbados on how to apply for a passport, including requirements, application forms, collection procedures, and fee schedules.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Visa information",
+        "slug": "visa-information",
+        "source_url": "https://www.gov.bb/Visit-Barbados/visa-information",
+        "description": "Details on how to apply for a visa, including required forms, passport photos, and contact information for Barbados Immigration Department offices.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Visitor permit application",
+        "slug": "visitor-permit-application",
+        "source_url": "https://www.gov.bb/Visit-Barbados/visitorpermitapplication",
+        "description": "This article explains how to apply online for a Visitor's Permit to drive in Barbados, outlining requirements, fees, and the application process.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Medical requirements",
+        "slug": "medical-requirements",
+        "source_url": "https://www.gov.bb/Visit-Barbados/medical-requirements",
+        "description": "Information for applicants for U.S. immigrant visas regarding mandatory medical examinations in Barbados at The Diagnostic Clinic, including location, contact, and scheduling details.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Apply for a driver’s license",
+        "slug": "apply-for-a-drivers-license",
+        "source_url": "https://www.gov.bb/Citizens/driver-licence",
+        "description": "This article provides information on how to obtain a driver's licence in Barbados, covering learner's permits, regulations and driving tests, international permits, and associated fees.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National registration",
+        "slug": "national-registration",
+        "source_url": "https://www.gov.bb/Citizens/national-registration",
+        "description": "An overview of national registration in Barbados, outlining eligibility, required documents, photo guidelines, fees, and contact information for the Electoral and Boundaries Commission.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Getting around Barbados",
+        "slug": "getting-around-barbados",
+        "source_url": "https://www.gov.bb/Visit-Barbados/getting-around-barbados",
+        "description": "Information for visitors and temporary residents on obtaining a driver's permit and various transportation options in Barbados, including buses, minibuses, route taxis, and regular taxis.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Local information",
+        "slug": "local-information",
+        "source_url": "https://www.gov.bb/Visit-Barbados/local-information",
+        "description": "Barbados is a highly-ranked Caribbean travel destination known for its natural beauty, attracting visitors seeking relaxation or vibrant experiences, leading to significant international interest and media coverage.",
+        "extraction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "title": "Business and Trade",
+    "slug": "business-and-trade",
+    "description": "Starting and operating a business, including registration, policies, and tax information",
+    "pages": [
+      {
+        "title": "Start a business",
+        "slug": "start-a-business",
+        "source_url": "https://www.gov.bb/Business/start-business",
+        "description": "Learn how Invest Barbados facilitates starting or expanding business operations in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Registering a business name",
+        "slug": "registering-a-business-name",
+        "source_url": "https://www.gov.bb/Business/registering-business-name",
+        "description": "An overview of the simple requirements and procedures for registering a business name in Barbados, with a link to the CAIPO website for more information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Business policies and law",
+        "slug": "business-policies-and-law",
+        "source_url": "https://www.gov.bb/Business/policies-laws",
+        "description": "An overview of the Ministry of Labour's role in Barbados, focusing on promoting decent work, social benefits, and a skilled workforce for local and international markets.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Financial services for businesses",
+        "slug": "financial-services-for-businesses",
+        "source_url": "https://www.gov.bb/State-Bodies/financial-services-commission",
+        "description": "The Financial Services Commission supervises and regulates non-bank financial institutions in Barbados under various Acts of Parliament, providing contact information and a link to their official website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Government requirements",
+        "slug": "government-requirements",
+        "source_url": "https://www.gov.bb/Business/government-requirements",
+        "description": "A guide to the process of applying for and maintaining a license for international financial services in Barbados, including annual requirements.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Information about business tax",
+        "slug": "information-about-business-tax",
+        "source_url": "https://www.gov.bb/tax-information",
+        "description": "An overview of Barbados' corporation tax laws, including residency rules, income determination, capital allowances, loss carry-forwards, group relief provisions, and applicable tax rates for various business types.",
+        "extraction_date": "2025-10-14"
+      }
+    ]
+  },
+  {
+    "title": "Government, Democracy and Civic Life",
+    "slug": "government-democracy-and-civic-life",
+    "description": "Information about Barbados' government structure, officials, departments, and national symbols",
+    "pages": [
+      {
+        "title": "President",
+        "slug": "president",
+        "source_url": "https://www.gov.bb/Visit-Barbados/president",
+        "description": "A biography of Her Excellency The Most Honourable Dame Sandra Prunella Mason, the first President of Barbados, detailing her education, career, and achievements.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Prime minister",
+        "slug": "prime-minister",
+        "source_url": "https://www.gov.bb/Government/prime-minister",
+        "description": "An article providing a biographical overview of The Honourable Mia Amor Mottley, S.C., M.P., Barbados' eighth and first female Prime Minister, detailing her political career and roles.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Cabinet",
+        "slug": "cabinet",
+        "source_url": "https://www.gov.bb/cabinet.php",
+        "description": "A directory of the current Government of Barbados Cabinet members, including their photos, names, and ministerial portfolios.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "House of Assembly",
+        "slug": "house-of-assembly",
+        "source_url": "https://www.gov.bb/Government/house-of-assembly",
+        "description": "An overview of the Barbados House of Assembly, detailing its composition, Speaker, meeting schedule, historical elements, and the significance of its hallway features.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Parliament",
+        "slug": "parliament",
+        "source_url": "https://www.gov.bb/Government/parliament",
+        "description": "An overview of the Parliament of Barbados, its bicameral structure, composition, and functions, following the Westminster system.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Senators",
+        "slug": "senators",
+        "source_url": "https://www.gov.bb/Government/senators",
+        "description": "The Senate of Barbados comprises 21 members appointed by the Prime Minister, Governor-General, and Leader of the Opposition, and is referred to as the Upper House.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Permanent secretaries and related",
+        "slug": "permanent-secretaries-and-related",
+        "source_url": "https://www.gov.bb/Government/ps-related-grades",
+        "description": "A directory providing details on Permanent Secretaries and other related high-level officials within the Government of Barbados, including their roles and ministries.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Political system",
+        "slug": "political-system",
+        "source_url": "https://www.gov.bb/Visit-Barbados/political-system",
+        "description": "An overview of Barbados' political system, including its independence date, current Governor General and Prime Minister, and key economic drivers.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National pledge",
+        "slug": "national-pledge",
+        "source_url": "https://www.gov.bb/Visit-Barbados/national-pledge",
+        "description": "Details the National Pledge of Barbados, including its full text and a biography of its author, Mr. Lester Vaughan, a former teacher and education officer.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Coat of arms",
+        "slug": "coat-of-arms",
+        "source_url": "https://www.gov.bb/Visit-Barbados/coat-of-arms",
+        "description": "An overview of the Coat of Arms of Barbados, detailing its symbolism, origin, and designer, Neville C. Connell.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Demographics",
+        "slug": "demographics",
+        "source_url": "https://www.gov.bb/Visit-Barbados/demographics",
+        "description": "An overview of Barbados' demographics, covering population, ethnic groups, languages, and religions based on the 2010 census.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "History",
+        "slug": "history",
+        "source_url": "https://www.gov.bb/Visit-Barbados/history",
+        "description": "An overview of Barbados' history, detailing early inhabitants, the shift to sugar cultivation, and its long-term social and economic impacts.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Ministry",
+        "slug": "ministry",
+        "source_url": "https://www.gov.bb/ministries",
+        "description": "A listing of all government ministries in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Department",
+        "slug": "department",
+        "source_url": "https://www.gov.bb/departments",
+        "description": "A comprehensive listing of all government departments in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Air Navigation Services Department",
+        "slug": "air-navigation-services-department",
+        "source_url": "https://www.gov.bb/Departments/air-navigation",
+        "description": "Provides contact information for various sections and personnel within the Air Navigation Services Department.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Analytical Services",
+        "slug": "analytical-services",
+        "source_url": "https://www.gov.bb/Departments/analytical-services",
+        "description": "Provides timely and reliable analytical services, including contact information for the director and assistant director.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Department of Archives",
+        "slug": "department-of-archives",
+        "source_url": "https://www.gov.bb/Departments/archives",
+        "description": "The Department of Archives identifies, collects, processes, and preserves public and private records of Barbados, making information available to support understanding of Barbadian life.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Office of the Auditor General",
+        "slug": "office-of-the-auditor-general",
+        "source_url": "https://www.gov.bb/Departments/auditor-general",
+        "description": "Provides contact information and an official website link for the Office of the Auditor General in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Building Standards Authority",
+        "slug": "barbados-building-standards-authority",
+        "source_url": "https://www.gov.bb/Departments/building-standards",
+        "description": "Outlines the mission of the Barbados Building Standards Authority to enforce the National Building Code and facilitate cost-effective construction.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Central Purchasing Department",
+        "slug": "central-purchasing-department",
+        "source_url": "https://www.gov.bb/Departments/central-purchasing",
+        "description": "Outlines the mission, contact information, and acting Chief Supply Officer for the Government of Barbados' Central Purchasing Department.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Children's Development Centre",
+        "slug": "childrens-development-centre",
+        "source_url": "https://www.gov.bb/Departments/childrens-development",
+        "description": "Outlines the mission, coordinator, address, and contact information for the Children's Development Centre in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Oops! You're Lost.",
+        "slug": "oops-youre-lost",
+        "source_url": "https://www.gov.bb/Departments/civil-aviation",
+        "description": "An error page from GOV.BB indicating that the requested content could not be found.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Coastal Zone Management Unit",
+        "slug": "coastal-zone-management-unit",
+        "source_url": "https://www.gov.bb/Departments/coastal-zone",
+        "description": "The Coastal Zone Management Unit performs various coastal management functions, including coral reef monitoring, coastal development consultations, beach erosion control, and public education.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Department of Commerce and Consumer Affairs",
+        "slug": "department-of-commerce-and-consumer-affairs",
+        "source_url": "https://www.gov.bb/Departments/commerce",
+        "description": "The Department of Commerce and Consumer Affairs in Barbados facilitates commerce development, enforces trading standards, and protects consumers by administering relevant acts.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Community Development Department",
+        "slug": "community-development-department",
+        "source_url": "https://www.gov.bb/Departments/community-development",
+        "description": "Provides professional social work and community development services to achieve strong, cohesive, and sustainable communities in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Department of Constituency Empowerment",
+        "slug": "department-of-constituency-empowerment",
+        "source_url": "https://www.gov.bb/Departments/constituency",
+        "description": "The Department of Constituency Empowerment aims to improve and sustain the quality of life of Barbadians by building capacity and providing mechanisms for meaningful change.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Consular and Diaspora Division",
+        "slug": "consular-and-diaspora-division",
+        "source_url": "https://www.gov.bb/Departments/consular-diaspora",
+        "description": "An overview of the Consular and Diaspora Division of the Government of Barbados, detailing its historical function, core responsibilities, and services offered, including protection for citizens abroad and engagement with the Barbadian diaspora.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Co-operatives Department",
+        "slug": "co-operatives-department",
+        "source_url": "https://www.gov.bb/Departments/cooperatives",
+        "description": "An overview of the Co-operatives Department, part of the Ministry of Commerce and Trade, including contact information and location.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Corporate Affairs and Intellectual Property Office",
+        "slug": "corporate-affairs-and-intellectual-property-office",
+        "source_url": "https://www.gov.bb/Departments/corporate-affairs",
+        "description": "The Corporate Affairs and Intellectual Property Office (CAIPO) provides a reliable system of public records and registry services supporting Barbados' commercial and trade activities.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Corporate Affairs and Intellectual Property Office",
+        "slug": "corporate-affairs-and-intellectual-property-office",
+        "source_url": "https://www.gov.bb/Departments/corporate-affairs-intellectual-property",
+        "description": "The Corporate Affairs and Intellectual Property Office provides and maintains a reliable system of public records and an efficient registry service supporting commercial activities and trade in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Criminal Justice Research and Planning Unit",
+        "slug": "criminal-justice-research-and-planning-unit",
+        "source_url": "https://www.gov.bb/Departments/criminal-justice",
+        "description": "Details the vision, mission, and goals of the Criminal Justice Research and Planning Unit, along with its contact information and website link.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Customs and Excise Department",
+        "slug": "customs-and-excise-department",
+        "source_url": "https://www.gov.bb/Departments/customs",
+        "description": "Contact information for the Customs and Excise Department, including personnel, address, and website link.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Data Processing Department",
+        "slug": "data-processing-department",
+        "source_url": "https://www.gov.bb/Departments/data-processing",
+        "description": "The Data Processing Department serves as the primary source for ICT solutions for the Government of Barbados, coordinating technology use and ICT activities across agencies.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Disabilities Unit",
+        "slug": "national-disabilities-unit",
+        "source_url": "https://www.gov.bb/Departments/disabilities-unit",
+        "description": "An overview of the National Disabilities Unit, outlining its mission, contact information, and director details.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Drug Service",
+        "slug": "barbados-drug-service",
+        "source_url": "https://www.gov.bb/Departments/drug-service",
+        "description": "The Barbados Drug Service aims to provide affordable, quality pharmaceuticals to residents and lists its director and contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Electoral & Boundaries Commission",
+        "slug": "electoral-boundaries-commission",
+        "source_url": "https://www.gov.bb/Departments/electoral",
+        "description": "An overview of the Electoral & Boundaries Commission, including its mission, office location, contact details, and chief officer.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Government Electrical Engineering Department",
+        "slug": "government-electrical-engineering-department",
+        "source_url": "https://www.gov.bb/Departments/electrical-engineering",
+        "description": "Contact information for the Government Electrical Engineering Department, including key personnel, physical address, and contact numbers.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Department of Emergency Management",
+        "slug": "department-of-emergency-management",
+        "source_url": "https://www.gov.bb/Departments/emergency-management",
+        "description": "The Department of Emergency Management (DEM) aims to develop a comprehensive national disaster management program, educate citizens, and provides contact details for its director and office.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Environmental Protection Department",
+        "slug": "environmental-protection-department",
+        "source_url": "https://www.gov.bb/Departments/environmental-protection",
+        "description": "To protect and improve Barbados' quality of life and its natural and built environment, through the promotion of sustainable practices, education, partnerships and the enforcement of legislation.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Fire Service Department",
+        "slug": "fire-service-department",
+        "source_url": "https://www.gov.bb/Departments/fire-service",
+        "description": "An overview of the Government of Barbados Fire Service Department, including its mission, contact information for headquarters, general office, various fire stations, and key personnel.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Fisheries Division",
+        "slug": "fisheries-division",
+        "source_url": "https://www.gov.bb/Departments/fisheries",
+        "description": "The Fisheries Division aims to ensure the optimal utilization of Barbados' fisheries resources through management and development.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Forensic Sciences Centre",
+        "slug": "forensic-sciences-centre",
+        "source_url": "https://www.gov.bb/Departments/forensic-sciences",
+        "description": "The Forensic Sciences Centre in Barbados aims to enhance the judicial system by promoting the use of forensic science in legal proceedings, assisting Barbados and other Caribbean nations.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Bureau of Gender Affairs",
+        "slug": "bureau-of-gender-affairs",
+        "source_url": "https://www.gov.bb/Departments/gender-affairs",
+        "description": "The official page for the Bureau of Gender Affairs in Barbados, outlining its mission to integrate gender in national development plans and providing full contact information and address.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Government Information Service",
+        "slug": "barbados-government-information-service",
+        "source_url": "https://www.gov.bb/Departments/gov-information-service",
+        "description": "An overview of the Barbados Government Information Service (BGIS), its role as the official communications arm of the government, and its contact details.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National HIV/AIDS Commission",
+        "slug": "national-hivaids-commission",
+        "source_url": "https://www.gov.bb/Departments/hiv-aids-commission",
+        "description": "Outlines the mission, contact information, and key personnel of the National HIV/AIDS Commission in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Immigration Department",
+        "slug": "immigration-department",
+        "source_url": "https://www.gov.bb/Departments/immigration",
+        "description": "The Immigration Department of Barbados is committed to protecting national interests through enforcement of immigration and citizenship laws, providing professional service, and supporting national security and development.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Government Industrial School",
+        "slug": "government-industrial-school",
+        "source_url": "https://www.gov.bb/Departments/industrial-school",
+        "description": "Describes the mission of the Government Industrial School (GIS/SRF) to rehabilitate children in a safe environment and lists contact information for its leadership.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "International Business & Financial Services Unit",
+        "slug": "international-business-financial-services-unit",
+        "source_url": "https://www.gov.bb/Departments/international-business-financial-services",
+        "description": "Provides contact information for the International Business & Financial Services Unit in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Labour Department",
+        "slug": "labour-department",
+        "source_url": "https://www.gov.bb/Departments/labour",
+        "description": "The Labour Department promotes and maintains a stable and harmonious industrial relations climate and provides employment services to the community in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Land Registration Department",
+        "slug": "land-registration-department",
+        "source_url": "https://www.gov.bb/Departments/land-registry",
+        "description": "Contact information and office details for the Land Registration Department in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Lands and Surveys Department",
+        "slug": "lands-and-surveys-department",
+        "source_url": "https://www.gov.bb/Departments/land-surveys",
+        "description": "The Lands and Surveys Department provides up-to-date mapping, GIS, and surveying services, led by Chief Surveyor Mr. David McCollin, and offers various contact options for its personnel.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Library Service",
+        "slug": "national-library-service",
+        "source_url": "https://www.gov.bb/Departments/library-service",
+        "description": "The National Library Service aims to be a dynamic source of information and services, satisfying the educational, recreational, and informational needs of the Barbados community.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Licensing Authority",
+        "slug": "licensing-authority",
+        "source_url": "https://www.gov.bb/Departments/licensing-authority",
+        "description": "Contact information for the Government of Barbados Licensing Authority, including key personnel, office address, and departmental phone numbers.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Media Resource Department",
+        "slug": "media-resource-department",
+        "source_url": "https://www.gov.bb/Departments/media-resource",
+        "description": "Outlines the mission of the Media Resource Department to support educational standards through media resources, and provides key contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Meteorological Office",
+        "slug": "meteorological-office",
+        "source_url": "https://www.gov.bb/Departments/meteorological-department",
+        "description": "Overview of the Meteorological Office in Barbados, detailing its mission, contact information, and physical address.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Insurance Department",
+        "slug": "national-insurance-department",
+        "source_url": "https://www.gov.bb/Departments/national-insurance",
+        "description": "Provides timely social security services through efficient fund management and motivated, customer-oriented staff.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Nutrition Centre",
+        "slug": "national-nutrition-centre",
+        "source_url": "https://www.gov.bb/Departments/national-nutrition",
+        "description": "The National Nutrition Centre in Barbados aims to promote and maintain good nutrition through education and research.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Natural Heritage Department",
+        "slug": "natural-heritage-department",
+        "source_url": "https://www.gov.bb/Departments/natural-heritage",
+        "description": "The Natural Heritage Department promotes the conservation and effective management of Barbados' terrestrial and marine protected areas for sustainable development and public enjoyment.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Office of the Ombudsman",
+        "slug": "office-of-the-ombudsman",
+        "source_url": "https://www.gov.bb/Departments/ombudsman",
+        "description": "The Office of the Ombudsman in Barbados investigates complaints against government bodies to protect individual rights and ensure fair administration, providing impartial, timely, and expeditious service.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Police Department",
+        "slug": "the-police-department",
+        "source_url": "https://www.gov.bb/Departments/police-department",
+        "description": "An overview of the Barbados Police Service (BPS), including its establishment, divisions, history, and organisational structure, modelled after London's Metropolitan Police Service.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Post Office",
+        "slug": "post-office",
+        "source_url": "https://www.gov.bb/Departments/post-office",
+        "description": "This page outlines the mission, contact information, and acting Postmaster General for the Post Office in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Government Printing Department",
+        "slug": "government-printing-department",
+        "source_url": "https://www.gov.bb/Departments/printing-dept",
+        "description": "Provides printing and related services for government ministries, departments, and statutory agencies in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Prison Service",
+        "slug": "barbados-prison-service",
+        "source_url": "https://www.gov.bb/Departments/prison",
+        "description": "Outlines the mission, contact details, and key personnel phone numbers for the Barbados Prison Service.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Probation Department",
+        "slug": "probation-department",
+        "source_url": "https://www.gov.bb/Departments/probation",
+        "description": "The Probation Department provides social advice to the Justice System, rehabilitates offenders, and educates the community through programs to reduce delinquency and crime.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Psychiatric Hospital",
+        "slug": "psychiatric-hospital",
+        "source_url": "https://www.gov.bb/Departments/psychiatric-hospital",
+        "description": "The Psychiatric Hospital in Barbados aims to provide high-quality community-based mental health services and lists contact numbers for its various sections.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Public Markets",
+        "slug": "the-public-markets",
+        "source_url": "https://www.gov.bb/Departments/public-markets",
+        "description": "An overview of the Government of Barbados' Public Markets, outlining their purpose, office address, various contact phone numbers, email, and manager details.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Efficiency Unit (formerly Office of Public Sector Reform)",
+        "slug": "efficiency-unit-formerly-office-of-public-sector-reform",
+        "source_url": "https://www.gov.bb/Departments/public-sector-reform",
+        "description": "The Efficiency Unit facilitates transformational change across the public service, assisting Ministries, Departments, and Agencies in improving performance and aligning with strategic priorities and best practices.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Registration Department",
+        "slug": "registration-department",
+        "source_url": "https://www.gov.bb/Departments/registration",
+        "description": "The Registration Department in Barbados is responsible for ensuring efficient administration of justice, recording vital island occurrences, and providing essential services as required by law.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Samuel Jackman Prescod Institute of Technology",
+        "slug": "the-samuel-jackman-prescod-institute-of-technology",
+        "source_url": "https://www.gov.bb/Departments/samuel-jackson-prescod-polytechnic",
+        "description": "The Samuel Jackman Prescod Institute of Technology aims to lead in workforce development by offering quality competency-based technical and vocational training to meet future employment and lifelong needs of its students.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The School Meals Department",
+        "slug": "the-school-meals-department",
+        "source_url": "https://www.gov.bb/Departments/school-meals",
+        "description": "The School Meals Department provides high-nutritional, low-cost lunches to school children, ensuring a good work environment and high health standards.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The National Sports Council",
+        "slug": "the-national-sports-council",
+        "source_url": "https://www.gov.bb/Departments/sports-council",
+        "description": "An overview of the National Sports Council of Barbados, detailing its mission for sports development and providing contact information for the National Sports Complex.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Statistical Services Department",
+        "slug": "statistical-services-department",
+        "source_url": "https://www.gov.bb/Departments/statistical-services",
+        "description": "The Barbados Statistical Service provides reliable and timely economic and social statistics needed by decision-makers and other users.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Telecommunications Service",
+        "slug": "telecommunications-service",
+        "source_url": "https://www.gov.bb/Departments/telecommunications",
+        "description": "Overview of the Telecommunications Unit's mission, forms for licenses and domain registration, and contact information for the Chief Telecommunication Officer in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Treasury Department",
+        "slug": "treasury-department",
+        "source_url": "https://www.gov.bb/Departments/treasury",
+        "description": "An overview of the Government of Barbados Treasury Department, including its mission, key personnel, and contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Welfare Department",
+        "slug": "welfare-department",
+        "source_url": "https://www.gov.bb/Departments/welfare",
+        "description": "Details the mission, acting chief welfare officer, and contact information for the Welfare Department of Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Division of Youth Affairs",
+        "slug": "division-of-youth-affairs",
+        "source_url": "https://www.gov.bb/Departments/youth-affairs",
+        "description": "Contact information for the Division of Youth, Sports and Community Empowerment, including address, phone, and email.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Government",
+        "slug": "government",
+        "source_url": "https://www.gov.bb/Government",
+        "description": "A comprehensive listing of various government entities, officials, and related resources in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Ms. Alies Jordan",
+        "slug": "ms-alies-jordan",
+        "source_url": "https://www.gov.bb/Government/alies-jordan",
+        "description": "A profile of Ms. Alies Jordan, Acting Permanent Secretary in the Prime Minister's Office, detailing her nearly three decades of dedicated public service and commitment to excellence.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mr. Andrew Gittens, Permanent Secretary",
+        "slug": "mr-andrew-gittens-permanent-secretary",
+        "source_url": "https://www.gov.bb/Government/andrew-gittens",
+        "description": "Mr. Andrew Gittens is the Permanent Secretary (Special Assignment) in the Ministry of Energy and Water Resources, responsible for the Barbados National Energy Policy 2019-2030.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mrs. Annette Weekes",
+        "slug": "mrs-annette-weekes",
+        "source_url": "https://www.gov.bb/Government/annette-weekes",
+        "description": "Mrs. Annette Weekes is the acting Permanent Secretary for Economic Affairs in the Ministry of Finance, Economic Affairs and Investment, with nearly 30 years of public sector experience and a strong academic background.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Constitution of Barbados",
+        "slug": "constitution-of-barbados",
+        "source_url": "https://www.gov.bb/Government/barbados-constitution",
+        "description": "The Constitution of Barbados is the supreme law of the nation, outlining the vesting of executive and legislative power, and providing for protection from deprivation of property without compensation.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mrs. Barbara Cooke-Alleyne, QC",
+        "slug": "mrs-barbara-cooke-alleyne-qc",
+        "source_url": "https://www.gov.bb/Government/barbara-cooke-alleyne",
+        "description": "A profile of Mrs. Barbara Cooke-Alleyne, QC, the Registrar of the Supreme Court of Barbados, detailing her educational background and public service career.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Page Not Found (404 Error)",
+        "slug": "page-not-found-404-error",
+        "source_url": "https://www.gov.bb/Government/cabinet",
+        "description": "This page indicates a 404 Not Found error, informing users that the requested content cannot be found and suggesting they return to the homepage or use the search bar.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Permanent Secretary",
+        "slug": "permanent-secretary",
+        "source_url": "https://www.gov.bb/Government/charley-browne",
+        "description": "A biography of Mr. Charley Browne, Permanent Secretary in the Ministry of Innovation, Science and Smart Technology, detailing his extensive career in the Public Service.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Ms. Cheryl Bennett-Inniss",
+        "slug": "ms-cheryl-bennett-inniss",
+        "source_url": "https://www.gov.bb/Government/cheryl-bennett-inniss",
+        "description": "Biography of Ms. Cheryl Bennett-Inniss, Chief Technical Officer at the Ministry of Transport, Works and Maintenance, detailing her education, career, and public service.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Page Not Found - GOV.BB",
+        "slug": "page-not-found-govbb",
+        "source_url": "https://www.gov.bb/Government/chief-justice",
+        "description": "The requested page for the Chief Justice was not found on the GOV.BB website, displaying a 404 error.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mrs. Donna C. B. Babb-Agard, QC",
+        "slug": "mrs-donna-c-b-babb-agard-qc",
+        "source_url": "https://www.gov.bb/Government/donna-babb-agard",
+        "description": "A profile of Mrs. Donna C. B. Babb-Agard, QC, the first female Director of Public Prosecutions in Barbados, outlining her extensive career in criminal law and her key appointments.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mrs. Donna Cadogan",
+        "slug": "mrs-donna-cadogan",
+        "source_url": "https://www.gov.bb/Government/donna-cadogan",
+        "description": "A biographical profile of Mrs. Donna Cadogan, Permanent Secretary in the Ministry of Tourism and International Transport, detailing her career and responsibilities.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Forms",
+        "slug": "forms",
+        "source_url": "https://www.gov.bb/Government/forms",
+        "description": "A comprehensive list of downloadable government forms from various ministries in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Ms. Gabrielle Anthea Springer",
+        "slug": "ms-gabrielle-anthea-springer",
+        "source_url": "https://www.gov.bb/Government/gabrielle-springer",
+        "description": "A biography of Ms. Gabrielle Anthea Springer, a career public servant and Permanent Secretary in the Ministry of People Empowerment and Elder Affairs in the Government of Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Ms. Gail Atkins",
+        "slug": "ms-gail-atkins",
+        "source_url": "https://www.gov.bb/Government/gail-atkins",
+        "description": "A biography of Ms. Gail Atkins, Director General, Human Resources at the Ministry of the Public Service, detailing her role and career.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Staff List",
+        "slug": "staff-list",
+        "source_url": "https://www.gov.bb/Government/hide",
+        "description": "A comprehensive listing of government departments, ministries, and agencies in Barbados, with links to their respective staff lists (PDFs).",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "House of Assembly",
+        "slug": "house-of-assembly",
+        "source_url": "https://www.gov.bb/Government/house-of-assembly",
+        "description": "An overview of the Barbados House of Assembly, including its composition, presiding officers, historical highlights, and notable features.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Jobs",
+        "slug": "jobs",
+        "source_url": "https://www.gov.bb/Government/jobs",
+        "description": "Provides information about job opportunities, specifically the Barbados Human Resource Development Programme, and notes requirements for Adobe Acrobat for forms.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Ms. June P. Chandler",
+        "slug": "ms-june-p-chandler",
+        "source_url": "https://www.gov.bb/Government/june-chandler",
+        "description": "A biography of Ms. June P. Chandler, Permanent Secretary at the Ministry of International Business and Industry, highlighting her career and educational background.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Dr. Karen Best",
+        "slug": "dr-karen-best",
+        "source_url": "https://www.gov.bb/Government/karen-best",
+        "description": "A biographical profile of Dr. Karen Best, Permanent Secretary in the Ministry of Labour and Social Partnership Relations, detailing her extensive career in education and public service, including her roles in trade unionism and cooperative credit union development.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mr. Leigh Trotman",
+        "slug": "mr-leigh-trotman",
+        "source_url": "https://www.gov.bb/Government/leigh-trotman",
+        "description": "A Certified Professional Accountant, Mr. Leigh Trotman has served as the Auditor General of Barbados for fourteen years, overseeing financial, operational, and compliance audits and working with Parliament's Public Accounts Committee.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Dr. Louis Woodroffe",
+        "slug": "dr-louis-woodroffe",
+        "source_url": "https://www.gov.bb/Government/louis-woodroffe",
+        "description": "Dr. Louis Woodroffe is the Head of the Public Service and Director-General of Foreign Trade in the Ministry of Foreign Affairs and Foreign Trade. His distinguished career in the Barbados Public Service spans over forty years.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mr. Mark Cummins",
+        "slug": "mr-mark-cummins",
+        "source_url": "https://www.gov.bb/Government/mark-cummins",
+        "description": "A biographical overview of Mr. Mark Cummins, Permanent Secretary for the Ministry of Transport, Works and Water Resources, detailing his public service career, education, and professional interests in sustainable development and cultural heritage.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Parliament",
+        "slug": "parliament",
+        "source_url": "https://www.gov.bb/Government/parliament",
+        "description": "An overview of the Parliament of Barbados, detailing its bicameral structure, composition, and sitting procedures, modeled after the Westminster system.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Prime Minister of Barbados",
+        "slug": "prime-minister-of-barbados",
+        "source_url": "https://www.gov.bb/Government/prime-minister",
+        "description": "An overview of the career and appointment of The Honourable Mia Amor Mottley, Barbados' first female Prime Minister.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Permanent Secretaries and Related Grades",
+        "slug": "permanent-secretaries-and-related-grades",
+        "source_url": "https://www.gov.bb/Government/ps-related-grades",
+        "description": "A comprehensive list of Permanent Secretaries and other key officials within the Government of Barbados, detailing their roles and ministries.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Senators",
+        "slug": "senators",
+        "source_url": "https://www.gov.bb/Government/senators",
+        "description": "An overview of the Senate of Barbados, including its composition, appointment process for members, functions, and a list of its historical presidents.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Ms. Sonia C. Foster",
+        "slug": "ms-sonia-c-foster",
+        "source_url": "https://www.gov.bb/Government/sonia-foster",
+        "description": "A biography of Ms. Sonia C. Foster, Acting Permanent Secretary in the Ministry of Maritime Affairs and the Blue Economy, detailing her educational background and extensive career in public service.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Staff List",
+        "slug": "staff-list",
+        "source_url": "https://www.gov.bb/Government/staff-list",
+        "description": "Provides a search function for the staff list of the Government of Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Tenders",
+        "slug": "tenders",
+        "source_url": "https://www.gov.bb/Government/tenders",
+        "description": "A list of current tenders from various Barbados Government ministries, including pre-qualification invitations and supply requests.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mr. Terry Bascombe",
+        "slug": "mr-terry-bascombe",
+        "source_url": "https://www.gov.bb/Government/terry-bascombe",
+        "description": "A profile of Mr. Terry Bascombe, Permanent Secretary for the Ministry of Agriculture and Food Security, detailing his career in the Barbados public service.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Mrs. Yolande Howard",
+        "slug": "mrs-yolande-howard",
+        "source_url": "https://www.gov.bb/Government/yolande-howard",
+        "description": "Mrs. Yolande Howard serves as Permanent Secretary in the Ministry of Youth and Community Empowerment, bringing over 30 years of public sector experience in research, project management, and administration, alongside qualifications including an MBA and a Harvard Kennedy School Senior Executive Fellowship.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "State Bodies",
+        "slug": "state-bodies",
+        "source_url": "https://www.gov.bb/State-Bodies",
+        "description": "Listing of all State Bodies on the official Government of Barbados website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Accreditation Council",
+        "slug": "barbados-accreditation-council",
+        "source_url": "https://www.gov.bb/State-Bodies/accreditation-council",
+        "description": "Provides contact information and a link to the official website for the Barbados Accreditation Council.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Barbados Agricultural Credit Trust Limited",
+        "slug": "the-barbados-agricultural-credit-trust-limited",
+        "source_url": "https://www.gov.bb/State-Bodies/agricultural-credit-trust",
+        "description": "Provides contact information for The Barbados Agricultural Credit Trust Limited, including its address, telephone, and fax numbers.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Barbados Agricultural Development and Marketing Corporation (BADMC)",
+        "slug": "the-barbados-agricultural-development-and-marketing-corporation-badmc",
+        "source_url": "https://www.gov.bb/State-Bodies/agricultural-development-marketing",
+        "description": "The Barbados Agricultural Development and Marketing Corporation (BADMC) aims to develop agriculture through innovative technological applications, technical and marketing research, and investment opportunities to foster food security and prosperity.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Barbados Agricultural Management Company",
+        "slug": "the-barbados-agricultural-management-company",
+        "source_url": "https://www.gov.bb/State-Bodies/agricultural-management",
+        "description": "The Barbados Agricultural Management Company (BIDC) offers comprehensive services to small and medium enterprises (SMEs) and larger companies, supporting their establishment, expansion, and international market penetration to drive foreign exchange.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Port Inc.",
+        "slug": "barbados-port-inc",
+        "source_url": "https://www.gov.bb/State-Bodies/barbados-port",
+        "description": "Details about Barbados Port Inc., its role as a major port of entry, contact information, and a link to its official website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Youth Advance Corps.",
+        "slug": "barbados-youth-advance-corps",
+        "source_url": "https://www.gov.bb/State-Bodies/barbados-youth-advance-corps",
+        "description": "Provides contact details for the Barbados Youth Advance Corps, including director, address, phone numbers, fax, and email.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Youth Business Trust",
+        "slug": "barbados-youth-business-trust",
+        "source_url": "https://www.gov.bb/State-Bodies/barbados-youth-business-trust",
+        "description": "Contact information for the Barbados Youth Business Trust, including address, phone, fax, email, and website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Tourism Marketing Inc.",
+        "slug": "barbados-tourism-marketing-inc",
+        "source_url": "https://www.gov.bb/State-Bodies/btmi",
+        "description": "An overview of the Barbados Tourism Marketing Inc. (BTMI), detailing its mandate to promote tourism, develop marketing strategies, ensure transport services, and conduct market intelligence.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Building Standards Authority",
+        "slug": "barbados-building-standards-authority",
+        "source_url": "https://www.gov.bb/State-Bodies/building-standards",
+        "description": "This article outlines the mandate of the Barbados Building Standards Authority to enforce the National Building Code and Building Act, ensuring cost-effective construction.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Cane Industry Corporation",
+        "slug": "barbados-cane-industry-corporation",
+        "source_url": "https://www.gov.bb/State-Bodies/cane-industry",
+        "description": "Contact information for the Barbados Cane Industry Corporation, including their address and phone details.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Caribbean Broadcasting Corporation",
+        "slug": "caribbean-broadcasting-corporation",
+        "source_url": "https://www.gov.bb/State-Bodies/caribbean-broadcasting-corporation",
+        "description": "Contact information for the Caribbean Broadcasting Corporation, including address, phone, fax, email, and website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Caribbean Examination Council",
+        "slug": "caribbean-examination-council",
+        "source_url": "https://www.gov.bb/State-Bodies/caribbean-examination-council",
+        "description": "The Caribbean Examination Council (CXC) provides high-quality syllabuses, valid examinations, and certificates, while also offering services for educational institutions in syllabus and examination development.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Caves of Barbados Limited",
+        "slug": "caves-of-barbados-limited",
+        "source_url": "https://www.gov.bb/State-Bodies/caves-of-barbados",
+        "description": "Discover Harrison's Cave, a breathtaking crystallized limestone cavern in Barbados, offering flowing streams, deep pools, and stunning speleothems for an unforgettable adventure.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Central Bank of Barbados",
+        "slug": "central-bank-of-barbados",
+        "source_url": "https://www.gov.bb/State-Bodies/central-bank",
+        "description": "Contact information for the Central Bank of Barbados, including physical address, telephone numbers for various departments, and email addresses for general, human resource, and regulatory concerns.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Child Care Board",
+        "slug": "the-child-care-board",
+        "source_url": "https://www.gov.bb/State-Bodies/child-care-board",
+        "description": "The Child Care Board in Barbados is responsible for the care and protection of children under 18 years of age.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Coalition of Service Industries",
+        "slug": "barbados-coalition-of-service-industries",
+        "source_url": "https://www.gov.bb/State-Bodies/coalition-services",
+        "description": "Contact information for the Barbados Coalition of Service Industries, including address, phone, fax, and email.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Community College",
+        "slug": "barbados-community-college",
+        "source_url": "https://www.gov.bb/State-Bodies/community-college",
+        "description": "The Barbados Community College is a dynamic learning center providing diverse courses and programs of study to meet the changing education and development needs of society.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Conference Services Limited",
+        "slug": "barbados-conference-services-limited",
+        "source_url": "https://www.gov.bb/State-Bodies/conference-services",
+        "description": "The Barbados Conference Services Limited (BCSL) operates the Lloyd Erskine Sandiford Centre, offering conference and event services in St. Michael, Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Consular Affairs",
+        "slug": "consular-affairs",
+        "source_url": "https://www.gov.bb/State-Bodies/consular-affairs",
+        "description": "Provides contact information including address, telephone, and fax for the Consular Affairs office in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Corporate Affairs and Intellectual Property Office",
+        "slug": "corporate-affairs-and-intellectual-property-office",
+        "source_url": "https://www.gov.bb/State-Bodies/corporate-affairs",
+        "description": "The Corporate Affairs and Intellectual Property Office maintains public records and provides efficient registry services to support Barbados' commercial activities and trade.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Corporate Affairs and Intellectual Property Office",
+        "slug": "corporate-affairs-and-intellectual-property-office",
+        "source_url": "https://www.gov.bb/State-Bodies/corporate-affairs-intellectual-property",
+        "description": "An overview of the Corporate Affairs and Intellectual Property Office (CAIPO) in Barbados, outlining its role, contact information, and key personnel.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Council on Substance Abuse",
+        "slug": "national-council-on-substance-abuse",
+        "source_url": "https://www.gov.bb/State-Bodies/council-substance-abuse",
+        "description": "Details about the National Council on Substance Abuse (NCSA) in Barbados, including its mandate, structure, and contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Defence Force",
+        "slug": "barbados-defence-force",
+        "source_url": "https://www.gov.bb/State-Bodies/defence-force",
+        "description": "The Barbados Defence Force (BDF) is the combined armed forces responsible for the territorial defense and internal security of Barbados, established on August 15, 1979.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Directorate, Human Resource Policy and Staffing",
+        "slug": "directorate-human-resource-policy-and-staffing",
+        "source_url": "https://www.gov.bb/State-Bodies/directorate-human-resource",
+        "description": "The Directorate, Human Resource Policy and Staffing (HRPS) is responsible for organisational design, career planning, manpower planning, employee/industrial relations, leave and pensions policy, and wages/compensation management within the Government of Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Directorate, Learning and Development",
+        "slug": "directorate-learning-and-development",
+        "source_url": "https://www.gov.bb/State-Bodies/directorate-learning-development",
+        "description": "The Directorate, Learning and Development is responsible for learning, performance, competency, career and talent management, and administration of training, study leave, and training loans.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Directorate, People Resourcing and Compliance",
+        "slug": "directorate-people-resourcing-and-compliance",
+        "source_url": "https://www.gov.bb/State-Bodies/directorate-people-resourcing-and-compliance",
+        "description": "An overview of the Directorate, People Resourcing and Compliance, outlining its responsibilities and contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Economic and Social Planning Development",
+        "slug": "economic-and-social-planning-development",
+        "source_url": "https://www.gov.bb/State-Bodies/economic-social-planning",
+        "description": "An overview of Economic and Social Planning Development as presented on the Government of Barbados official website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Erdiston Teachers' Training College",
+        "slug": "erdiston-teachers-training-college",
+        "source_url": "https://www.gov.bb/State-Bodies/erdiston-teacher-training",
+        "description": "Erdiston Teachers' Training College, founded in 1948, provides exemplary teacher education programs from its campus in St. Michael, Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Fair Trading Commission",
+        "slug": "fair-trading-commission",
+        "source_url": "https://www.gov.bb/State-Bodies/fair-trading-commission",
+        "description": "The Fair Trading Commission (FTC) in Barbados, evolved from the Public Utilities Board (1955-2001), serves as a regulatory body for consumer protection, fair competition, and utility services.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Financial Services Commission",
+        "slug": "financial-services-commission",
+        "source_url": "https://www.gov.bb/State-Bodies/financial-services-commission",
+        "description": "The Financial Services Commission supervises and regulates non-bank financial institutions in Barbados under various Acts of Parliament.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Foreign Trade",
+        "slug": "foreign-trade",
+        "source_url": "https://www.gov.bb/State-Bodies/foreign-trade",
+        "description": "The Ministry of Foreign Trade coordinates Barbados' foreign relations and fosters trade opportunities through agreements and treaties.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Grantley Adams International Airport",
+        "slug": "grantley-adams-international-airport",
+        "source_url": "https://www.gov.bb/State-Bodies/grantley-adams-international",
+        "description": "Grantley Adams International Airport (GAIA) is Barbados's sole airport and the Eastern Caribbean's aviation hub, facilitating daily international and regional flights, and is operated by a private company owned by the Government of Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Health Promotion Unit",
+        "slug": "health-promotion-unit",
+        "source_url": "https://www.gov.bb/State-Bodies/health-promotion-unit",
+        "description": "The Health Promotion Unit provides comprehensive health services to all Barbadians, with the Ministry of Health responsible for planning, regulation, and evaluation across public, private, and NGO sectors.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Higher Education Development Unit",
+        "slug": "higher-education-development-unit",
+        "source_url": "https://www.gov.bb/State-Bodies/higher-education-development-unit",
+        "description": "The Higher Education Development Unit (HEDU) facilitates institutional strengthening initiatives for educational bodies in Barbados and provides essential contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "HIV/AIDS Programme Office",
+        "slug": "hivaids-programme-office",
+        "source_url": "https://www.gov.bb/State-Bodies/hiv-aids-programme",
+        "description": "The Barbados National HIV/AIDS Commission, established in 2001, works to strengthen partnerships for an expanded national response to HIV, recognizing it as a key national development issue.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "International Business & Financial Services Unit",
+        "slug": "international-business-financial-services-unit",
+        "source_url": "https://www.gov.bb/State-Bodies/international-business-financial-services",
+        "description": "Contact information for the International Business & Financial Services Unit in Barbados, including physical address, phone, fax, and website link.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Invest Barbados",
+        "slug": "invest-barbados",
+        "source_url": "https://www.gov.bb/State-Bodies/invest-barbados",
+        "description": "Invest Barbados, formerly the Barbados International Business Promotion Corporation (BIBPC), was established on November 10, 2005, becoming operational in October 2006 to promote international business in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Investment & Development Corporation (Export Barbados)",
+        "slug": "barbados-investment-development-corporation-export-barbados",
+        "source_url": "https://www.gov.bb/State-Bodies/investment-development-corp",
+        "description": "Export Barbados (formerly BIDC) is a solutions-oriented organization focused on amplifying innovative enterprises, contributing to the economy's diversification and growth through new investment, increased exports, and employment creation.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Judiciary - Judges",
+        "slug": "judiciary-judges",
+        "source_url": "https://www.gov.bb/State-Bodies/judiciary-judges",
+        "description": "Details the establishment and composition of the Judicial Council and provides contact information for the Supreme Court in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Kensington Oval Management Inc.",
+        "slug": "kensington-oval-management-inc",
+        "source_url": "https://www.gov.bb/State-Bodies/kensington-oval",
+        "description": "Details for Kensington Oval Management Inc., providing contact information and a link to their official website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Medicinal Cannabis Licencing Authority",
+        "slug": "barbados-medicinal-cannabis-licencing-authority",
+        "source_url": "https://www.gov.bb/State-Bodies/medicinal-cannabis",
+        "description": "This article outlines the vision and mission of the Barbados Medicinal Cannabis Licencing Authority (BMCLA) and provides contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Meteorology",
+        "slug": "meteorology",
+        "source_url": "https://www.gov.bb/State-Bodies/meteorology",
+        "description": "Contact information for the Meteorology department in Barbados, including location, telephone, fax, and website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Museum & Historical Society Council",
+        "slug": "barbados-museum-historical-society-council",
+        "source_url": "https://www.gov.bb/State-Bodies/museum-historical-society",
+        "description": "The Barbados Museum and Historical Society is a non-profit, non-governmental organization with a council responsible for its policies and operations, including elected members and government appointees.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The National Assistance Board",
+        "slug": "the-national-assistance-board",
+        "source_url": "https://www.gov.bb/State-Bodies/national-assistance",
+        "description": "Provides an overview of the National Assistance Board, its history, main office contact information, and details for associated facilities like the Vauxhall Senior Citizens Village, Jorris Dunner Elderly Day Care Centre, St. Philip Branch, and Speightstown Seniors Recreational Activities Programme.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Conservation Commission",
+        "slug": "national-conservation-commission",
+        "source_url": "https://www.gov.bb/State-Bodies/national-conservation-commission",
+        "description": "Learn about the National Conservation Commission (NCC) in Barbados, which issues licenses for selling goods and services in public parks, gardens, and beaches, and provides contact information for its various departments.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Page Not Found: Oops! You're Lost.",
+        "slug": "page-not-found-oops-youre-lost",
+        "source_url": "https://www.gov.bb/State-Bodies/national-conservation-unit",
+        "description": "This page indicates that the requested content was not found on the Government of Barbados website (GOV.BB).",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Cultural Foundation",
+        "slug": "national-cultural-foundation",
+        "source_url": "https://www.gov.bb/State-Bodies/national-cultural-foundation",
+        "description": "Details the National Cultural Foundation's dual role in fostering national development through culture and promoting cultural festivals.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Housing Corporation",
+        "slug": "national-housing-corporation",
+        "source_url": "https://www.gov.bb/State-Bodies/national-housing-corporation",
+        "description": "The National Housing Corporation is committed to finding acceptable housing solutions for Barbadians at affordable prices, focusing on efficient land use and diverse housing units.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados National Oil Company",
+        "slug": "barbados-national-oil-company",
+        "source_url": "https://www.gov.bb/State-Bodies/national-oil-company",
+        "description": "The Barbados National Oil Company Limited (BNOCL) was incorporated in February 1983 and focuses on the economic exploration and production of Barbados' hydrocarbon potential, while also ensuring a sustainable, efficient, and reliable supply of energy products to the country.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "National Petroleum Corporation",
+        "slug": "national-petroleum-corporation",
+        "source_url": "https://www.gov.bb/State-Bodies/national-petroleum",
+        "description": "The National Petroleum Corporation (NPC) is a statutory body responsible for natural gas distribution in Barbados, working with Barbados National Oil Company (BNOCL) for oil, gas, and LPG production.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados National Standards Institution",
+        "slug": "barbados-national-standards-institution",
+        "source_url": "https://www.gov.bb/State-Bodies/national-standards",
+        "description": "The Barbados National Standards Institution (BNSI) is a joint undertaking between the Government of Barbados and the private sector, established in 1973 as a non-profit benevolent organization.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados National Terminal Co. Ltd.",
+        "slug": "barbados-national-terminal-co-ltd",
+        "source_url": "https://www.gov.bb/State-Bodies/national-terminal-co",
+        "description": "Contact information for the Barbados National Terminal Co. Ltd., including their address and phone numbers.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Natural Resources Unit",
+        "slug": "natural-resources-unit",
+        "source_url": "https://www.gov.bb/State-Bodies/natural-resources-division",
+        "description": "Contact information for the Natural Resources Unit, located at Trinity Business Centre Inc. in St. Michael, Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Commission for Pan-African Affairs",
+        "slug": "commission-for-pan-african-affairs",
+        "source_url": "https://www.gov.bb/State-Bodies/pan-african-affairs",
+        "description": "An overview of the Government of Barbados's Commission for Pan-African Affairs.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Personnel Administration",
+        "slug": "personnel-administration",
+        "source_url": "https://www.gov.bb/State-Bodies/personnel-administration",
+        "description": "An overview of personnel administration policies and procedures within the Government of Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Poverty Alleviation Bureau",
+        "slug": "poverty-alleviation-bureau",
+        "source_url": "https://www.gov.bb/State-Bodies/poverty-alleviation",
+        "description": "Contact information for the Poverty Alleviation Bureau in Barbados, including its address, phone numbers, and website link.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Process Serving",
+        "slug": "process-serving",
+        "source_url": "https://www.gov.bb/State-Bodies/process-serving",
+        "description": "An overview of process serving in Barbados, detailing how legal documents are delivered.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "The Productivity Council",
+        "slug": "the-productivity-council",
+        "source_url": "https://www.gov.bb/State-Bodies/productivity-council",
+        "description": "The Productivity Council (formerly the National Productivity Board) was established in 1993 by an Act of Parliament to further the objectives of the Protocol for the Implementation of a Prices and Incomes Policy.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Office of Public Counsel",
+        "slug": "office-of-public-counsel",
+        "source_url": "https://www.gov.bb/State-Bodies/public-counsel",
+        "description": "Contact information for the Office of Public Counsel, including addresses, phone numbers, and a link to their official website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Public Investment Unit",
+        "slug": "public-investment-unit",
+        "source_url": "https://www.gov.bb/State-Bodies/public-investment-unit",
+        "description": "Contact information for the Public Investment Unit under the Ministry of Finance and Economic Affairs in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Efficiency Unit (formerly Office of Public Sector Reform)",
+        "slug": "efficiency-unit-formerly-office-of-public-sector-reform",
+        "source_url": "https://www.gov.bb/State-Bodies/public-sector-reform",
+        "description": "The Efficiency Unit facilitates transformational change across the public service by helping Ministries, Departments, and Agencies improve performance and align with government strategic priorities.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Queen Elizabeth Hospital",
+        "slug": "queen-elizabeth-hospital",
+        "source_url": "https://www.gov.bb/State-Bodies/queen-elizabeth-hospital",
+        "description": "The Queen Elizabeth Hospital (QEH) is Barbados' primary acute care medical facility and an accredited teaching hospital.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Revenue Authority",
+        "slug": "barbados-revenue-authority",
+        "source_url": "https://www.gov.bb/State-Bodies/revenue-authority",
+        "description": "An introduction to the Barbados Revenue Authority (BRA) and its commitment to taxpayer services, including contact information for the Revenue Commissioner and a link to their website.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Rural Development Commission",
+        "slug": "rural-development-commission",
+        "source_url": "https://www.gov.bb/State-Bodies/rural-development",
+        "description": "Provides contact information for the Government of Barbados' Rural Development Commission, including its address, phone numbers, and email.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Oops! You're lost.",
+        "slug": "oops-youre-lost",
+        "source_url": "https://www.gov.bb/State-Bodies/sanitation-service",
+        "description": "An error page indicating that the requested content could not be found on GOV.BB, suggesting a return to the homepage or using the search bar.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Sanitation Service Authority",
+        "slug": "sanitation-service-authority",
+        "source_url": "https://www.gov.bb/State-Bodies/sanitation-services",
+        "description": "Sanitation Service Authority oversees excreta, wastewater, solid waste, and storm water management systems in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Scotland District Development",
+        "slug": "scotland-district-development",
+        "source_url": "https://www.gov.bb/State-Bodies/scotland-district-development",
+        "description": "This page on the Government of Barbados website currently provides no detailed information regarding Scotland District Development.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Small Business Development Unit",
+        "slug": "small-business-development-unit",
+        "source_url": "https://www.gov.bb/State-Bodies/small-business-dev-unit",
+        "description": "An overview of Barbados' Small Business Development Unit, outlining its purpose, the 1999-23 Act, categories of businesses, incentives, and contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Bureau of Social Policy, Research and Planning",
+        "slug": "bureau-of-social-policy-research-and-planning",
+        "source_url": "https://www.gov.bb/State-Bodies/social-policy-research-planning",
+        "description": "Contact information for the Bureau of Social Policy, Research and Planning in Barbados, including address, phone, and fax numbers.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Soil Conservation",
+        "slug": "soil-conservation",
+        "source_url": "https://www.gov.bb/State-Bodies/soil-conservation",
+        "description": "Contact information and a website link for the Soil Conservation Unit in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Southern Meats Inc.",
+        "slug": "southern-meats-inc",
+        "source_url": "https://www.gov.bb/State-Bodies/southern-meats",
+        "description": "Contact information for Southern Meats Inc., including their address, telephone, and fax numbers.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Special Projects - Financial",
+        "slug": "special-projects-financial",
+        "source_url": "https://www.gov.bb/State-Bodies/special-projects",
+        "description": "This page provides an overview of Special Projects related to financial matters, but currently contains no detailed information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Sir Garfield Sobers Sports Complex Gymnasium Ltd.",
+        "slug": "sir-garfield-sobers-sports-complex-gymnasium-ltd",
+        "source_url": "https://www.gov.bb/State-Bodies/sports-gymnasium",
+        "description": "The Sir Garfield Sobers Sports Complex in Wildey, St. Michael, opened in November 1992 as a sporting facility and was part of a strategic initiative by the Government of Barbados to promote sports tourism.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Office of Supervisor of Insolvency",
+        "slug": "office-of-supervisor-of-insolvency",
+        "source_url": "https://www.gov.bb/State-Bodies/supervisor-insolvency",
+        "description": "Provides contact information and location for the Office of the Supervisor of Insolvency in Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Supreme Court",
+        "slug": "supreme-court",
+        "source_url": "https://www.gov.bb/State-Bodies/supreme-court",
+        "description": "An overview of the Barbadian judicial system, detailing the four-level court structure including the Caribbean Court of Justice, Court of Appeal, High Court, and Magistrate's Courts, along with contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Technical & Vocational Education and Training Council",
+        "slug": "technical-vocational-education-and-training-council",
+        "source_url": "https://www.gov.bb/State-Bodies/technical-vocational-education",
+        "description": "The TVET Council is a statutory organization in Barbados that plans, coordinates, and sets standards for technical and vocational education to develop a competitive workforce.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Oops! You're lost.",
+        "slug": "oops-youre-lost",
+        "source_url": "https://www.gov.bb/State-Bodies/telecommunications-unit",
+        "description": "This page cannot be found. Return home or use the search bar.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Tourism Investment Incorporated",
+        "slug": "barbados-tourism-investment-incorporated",
+        "source_url": "https://www.gov.bb/State-Bodies/tourism-investment",
+        "description": "An overview of Barbados Tourism Investment Incorporated, outlining the growth of the tourism industry and providing contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Town and Country Planning Department",
+        "slug": "town-and-country-planning-department",
+        "source_url": "https://www.gov.bb/State-Bodies/town-country-planning",
+        "description": "The Town and Country Planning Department provides efficient and timely planning services to ensure the best physical environment for Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Transport Board",
+        "slug": "transport-board",
+        "source_url": "https://www.gov.bb/State-Bodies/transport-board",
+        "description": "The Transport Board of Barbados was formed in August 1955 by an Act of Parliament, following draft legislation approved in June 1955, and provides public transport services.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Urban Development Commission",
+        "slug": "urban-development-commission",
+        "source_url": "https://www.gov.bb/State-Bodies/urban-development",
+        "description": "The Urban Development Commission is a social development agency that provides high-quality services to improve the living standards and quality of life for vulnerable, poor, and disadvantaged communities in Urban Barbados.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "University of the West Indies",
+        "slug": "university-of-the-west-indies",
+        "source_url": "https://www.gov.bb/State-Bodies/uwi",
+        "description": "An overview of the University of the West Indies, Cave Hill Campus, detailing its academic offerings, accreditation, and contact information.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Veterinary Services",
+        "slug": "veterinary-services",
+        "source_url": "https://www.gov.bb/State-Bodies/veterinary-services",
+        "description": "Provides contact information for the Government of Barbados Veterinary Services department.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Vocational Training Board",
+        "slug": "barbados-vocational-training-board",
+        "source_url": "https://www.gov.bb/State-Bodies/vocational-training-board",
+        "description": "The Barbados Vocational Training Board is a premier agency of social development that designs and delivers industry-focused training to empower participants and fulfill the Government's Human Resource Development Policy.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Barbados Water Authority",
+        "slug": "barbados-water-authority",
+        "source_url": "https://www.gov.bb/State-Bodies/water-authority",
+        "description": "The Barbados Water Authority (BWA) is a Statutory Body established in 1980 to replace the Waterworks Department of Government.",
+        "extraction_date": "2025-10-14"
+      },
+      {
+        "title": "Youth Entrepreneurship Scheme",
+        "slug": "youth-entrepreneurship-scheme",
+        "source_url": "https://www.gov.bb/State-Bodies/youth-entrepreneurship-scheme",
+        "description": "Contact information for the Youth Entrepreneurship Scheme in Barbados, including staff, address, and telephone numbers.",
+        "extraction_date": "2025-10-14"
+      }
+    ]
+  }
+]

@@ -47,6 +47,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Category descriptions for IA JSON
+CATEGORY_DESCRIPTIONS = {
+    "Family, Birth and Relationships": "Managing key life events and family responsibilities, from registering a birth to caring for others",
+    "Work and Employment": "Employment services, tax information, and workplace resources",
+    "Travel, ID and Citizenship": "Passports, visas, identification, and travel information for citizens and visitors",
+    "Business and Trade": "Starting and operating a business, including registration, policies, and tax information",
+    "Government, Democracy and Civic Life": "Information about Barbados' government structure, officials, departments, and national symbols",
+}
+
 
 def slugify(text: str) -> str:
     """Convert text to a URL-friendly slug."""
@@ -75,31 +84,125 @@ def fetch_html(url: str) -> str:
         raise
 
 
-def extract_content_with_gemini(html: str, url: str, prompt_template: str) -> str:
-    """Use Google Gemini to extract main content as markdown."""
+def sanitize_urls_in_markdown(markdown: str) -> str:
+    """
+    Sanitize URLs in markdown by encoding spaces and other special characters.
+    Handles both inline links [text](url) and images ![alt](url).
+    """
+    def encode_url(match):
+        """Encode spaces and special characters in URL."""
+        prefix = match.group(1)  # '](' or '![]('
+        url = match.group(2)
+
+        # Only encode if URL contains spaces or unencoded characters
+        if ' ' in url or any(char in url for char in ['[', ']', '(', ')']):
+            # Replace spaces with %20
+            url = url.replace(' ', '%20')
+            # Could add more encoding here if needed
+
+        return f"{prefix}{url})"
+
+    # Pattern to match markdown links and images
+    # Matches: [text](url) or ![alt](url)
+    pattern = r'(!?\]\()([^)]+)\)'
+
+    sanitized = re.sub(pattern, encode_url, markdown)
+    return sanitized
+
+
+def detect_html_tags(markdown: str) -> list[str]:
+    """
+    Detect HTML tags in the markdown content.
+    Returns a list of unique HTML tags found (e.g., ['div', 'p', 'span']).
+    """
+    # Pattern to match HTML tags like <tag> or </tag> or <tag attr="value">
+    # Excludes code blocks (lines starting with 4 spaces or inside ```)
+    html_tag_pattern = r'</?([a-zA-Z][a-zA-Z0-9]*)[^>]*>'
+
+    # Split by code blocks to avoid matching tags in code examples
+    lines = markdown.split('\n')
+    tags_found = []
+    in_code_block = False
+
+    for line in lines:
+        # Track code blocks
+        if line.strip().startswith('```'):
+            in_code_block = not in_code_block
+            continue
+
+        # Skip lines in code blocks or indented code
+        if in_code_block or line.startswith('    '):
+            continue
+
+        # Find HTML tags in this line
+        matches = re.findall(html_tag_pattern, line)
+        tags_found.extend(matches)
+
+    # Return unique tags, case-insensitive
+    unique_tags = list(set(tag.lower() for tag in tags_found))
+    return unique_tags
+
+
+def extract_content_with_gemini(html: str, url: str, prompt_template: str, max_retries: int = 2) -> str:
+    """
+    Use Google Gemini to extract main content as markdown.
+    Retries if HTML tags are detected in the output.
+    """
+    # Initialize Gemini client
+    client = genai.Client(api_key=GOOGLE_API_KEY)
+
     # Replace the example URL in the prompt with the actual URL
-    prompt = prompt_template.replace(
+    base_prompt = prompt_template.replace(
         "https://www.gov.bb/Citizens/apply-passport",
         url
     )
 
-    # Combine prompt and HTML
-    full_prompt = f"{prompt}\n\n{html}"
+    attempt = 0
+    while attempt <= max_retries:
+        # Build the full prompt
+        if attempt == 0:
+            full_prompt = f"{base_prompt}\n\n{html}"
+        else:
+            # Add feedback about HTML tags found in previous attempt
+            feedback = f"\n\n**CRITICAL CORRECTION REQUIRED:**\nYour previous output contained HTML tags: {', '.join(f'<{tag}>' for tag in html_tags_found)}\n\nYou MUST convert ALL HTML to pure Markdown. Do NOT include any HTML tags in your output.\n\nPlease re-process the content and ensure your output contains ONLY Markdown formatting.\n\n"
+            full_prompt = f"{base_prompt}{feedback}\n\n{html}"
 
-    # Initialize Gemini client
-    client = genai.Client(api_key=GOOGLE_API_KEY)
+        logger.info(f"Calling Gemini API for content extraction (attempt {attempt + 1}/{max_retries + 1})...")
+        try:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=full_prompt
+            )
 
-    logger.info("Calling Gemini API for content extraction...")
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.0-flash-exp",
-            contents=full_prompt
-        )
+            markdown_output = response.text
 
-        return response.text
-    except Exception as e:
-        logger.error(f"Gemini API error: {e}")
-        raise
+            # Sanitize URLs (encode spaces to %20)
+            markdown_output = sanitize_urls_in_markdown(markdown_output)
+
+            # Check for HTML tags in the output
+            html_tags_found = detect_html_tags(markdown_output)
+
+            if html_tags_found:
+                logger.warning(f"HTML tags detected in output: {', '.join(html_tags_found)}")
+                if attempt < max_retries:
+                    logger.info(f"Retrying extraction to remove HTML tags...")
+                    attempt += 1
+                    time.sleep(1)  # Brief delay before retry
+                    continue
+                else:
+                    logger.error(f"Max retries reached. Output still contains HTML tags: {', '.join(html_tags_found)}")
+                    # Return anyway but log the issue
+                    return markdown_output
+            else:
+                if attempt > 0:
+                    logger.info(f"✓ Successfully removed HTML tags on retry {attempt}")
+                return markdown_output
+
+        except Exception as e:
+            logger.error(f"Gemini API error: {e}")
+            raise
+
+    return markdown_output
 
 
 def parse_markdown_response(markdown: str) -> tuple[str, str]:
@@ -177,19 +280,37 @@ def extract_description_from_markdown(markdown: str) -> str:
 def generate_ia_json(pages_metadata: list[dict], output_file: Path):
     """Generate hierarchical IA JSON file grouped by sections."""
     # Group pages by section
-    ia = {}
+    sections_dict = {}
     for page in pages_metadata:
         section = page.get("section", "Uncategorized")
-        if section not in ia:
-            ia[section] = []
-        ia[section].append({
+        if section not in sections_dict:
+            sections_dict[section] = []
+
+        # Build page object without filename
+        page_obj = {
             "title": page["title"],
-            "filename": page["filename"],
             "slug": page["slug"],
             "source_url": page["source_url"],
             "description": page.get("description", ""),
             "extraction_date": page["extraction_date"]
-        })
+        }
+
+        # Add last_updated_date if present
+        if page.get("last_updated_date"):
+            page_obj["last_updated_date"] = page["last_updated_date"]
+
+        sections_dict[section].append(page_obj)
+
+    # Build array of ServiceCategoryType objects
+    ia = []
+    for section_title, pages in sections_dict.items():
+        category = {
+            "title": section_title,
+            "slug": slugify(section_title),
+            "description": CATEGORY_DESCRIPTIONS.get(section_title, ""),
+            "pages": pages
+        }
+        ia.append(category)
 
     # Write JSON file
     with open(output_file, 'w', encoding='utf-8') as f:
@@ -257,7 +378,6 @@ def process_page(row: dict, prompt_template: str, extraction_date: str) -> tuple
         # Build metadata for IA JSON
         metadata = {
             "title": title,
-            "filename": filename,
             "slug": slug,
             "section": section if section else "Uncategorized",
             "source_url": old_url,
