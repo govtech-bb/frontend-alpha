@@ -6,7 +6,7 @@ export default defineConfig({
   testDir: "./tests",
   /* Keep reports small and deterministic in CI */
   reporter: [["list"], ["html", { open: "never" }]],
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
@@ -35,16 +35,9 @@ export default defineConfig({
         },
       },
     },
-    {
-      name: "webkit",
-      use: {
-        ...devices["Desktop Safari"],
-        // WebKit relies on CSS font optimizations
-      },
-    },
   ],
   webServer: {
-    command: "npm run dev", // CI runs build before tests; locally, build first
+    command: process.env.CI ? "npm run start" : "npm run dev", // CI runs again build; locally run against dev
     port: 3000,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

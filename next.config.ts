@@ -9,10 +9,12 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+
+  devIndicators: false,
   // removes: x-powered-by: Next.js
   poweredByHeader: false,
 
-  async headers() {
+  headers() {
     return [
       { source: '/:path*', headers: securityHeaders },
       { source: '/_next/static/:path*', headers: securityHeaders },
