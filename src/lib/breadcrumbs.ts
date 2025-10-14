@@ -38,13 +38,13 @@ export const generateBreadcrumbs = (pathname: string): BreadcrumbItem[] => {
   pathSegments.forEach((segment, index) => {
     currentPath += `/${segment}`;
 
-    // Don't add the current page as a link (last segment)
-    if (index < pathSegments.length - 1) {
+    // Don't add the current page as a link (last segment) and skip content segment
+    if (index < pathSegments.length - 1 && segment !== "content") {
       breadcrumbs.push({
         label: createLabel(segment),
         href: currentPath,
       });
-    }
+    } // Skip "content" segments
   });
 
   return breadcrumbs;
