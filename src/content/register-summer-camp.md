@@ -1,5 +1,6 @@
 ---
 title: "Register for a summer camp"
+stage: "alpha"
 featured: true
 ---
 

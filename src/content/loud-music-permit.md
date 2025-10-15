@@ -1,5 +1,6 @@
 ---
 title: "Get a permit to play loud music"
+stage: "alpha"
 featured: true
 ---
 
