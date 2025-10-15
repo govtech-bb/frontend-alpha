@@ -8,8 +8,6 @@ section: "Family, Birth and Relationships"
 
 ## Getting Married in Barbados
 
-![love-marriage](https://www.gov.bb/media_files/love-marriage.jpg)
-
 ## Requirements for Obtaining a Marriage Licence in Barbados
 
 Application for a marriage licence must be made by **both** (male and female) persons at the Ministry of Home Affairs and Information office. The marriage licence is valid for three (3) months **only**; therefore, couples can get married within three (3) months from the time they receive their marriage licence.
