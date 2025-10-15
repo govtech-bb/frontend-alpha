@@ -1,5 +1,6 @@
 ---
 title: "Terms & Conditions"
+source_url: https://www.gov.bb/terms-conditions
 ---
 
 ### Ownership of Website Content

@@ -188,8 +188,6 @@ export default async function Page({ params }: ContentPageProps) {
         </ReactMarkdown>
       </div>
     );
-
-    // return notFound();
   }
 
   return notFound();
