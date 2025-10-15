@@ -2,6 +2,7 @@
 import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { MigrationBanner } from "@/components/migration-banner";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownContent } from "@/lib/markdown";
 
@@ -132,6 +133,10 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
               <span className="capitalize underline">{frontmatter.stage}</span>.
             </Typography>
           </div>
+        ) : null}
+
+        {frontmatter.source_url.length > 0 ? (
+          <MigrationBanner pageURL={frontmatter.source_url} />
         ) : null}
       </div>
 
