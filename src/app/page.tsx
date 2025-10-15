@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MigrationBanner } from "@/components/migration-banner";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
@@ -39,6 +40,8 @@ export default async function Home() {
       </div>
       <div className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8">
         <Typography variant="h2">Find government services</Typography>
+
+        <MigrationBanner />
 
         <div className="flex flex-col">
           {SERVICE_CATEGORIES.map((service) => (

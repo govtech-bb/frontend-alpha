@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { MigrationBanner } from "@/components/migration-banner";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
@@ -120,6 +121,7 @@ export default async function Page({ params }: ContentPageProps) {
     return (
       <div className="space-y-4 px-4 pb-8">
         <div className="space-y-4 pb-4">
+          <MigrationBanner />
           <Typography variant="h1">{category.title}</Typography>
 
           {category.description
@@ -179,31 +181,7 @@ export default async function Page({ params }: ContentPageProps) {
           {frontmatter.title && (
             <Typography variant="h1">{frontmatter.title}</Typography>
           )}
-
-          {frontmatter.extraction_date ? (
-            <div className="space-y-4 border-[#FF94D9] border-r-4 border-l-4 bg-[#FFF4FB] px-4 py-3">
-              <Typography variant="paragraph">
-                This page was originally published on{" "}
-                <Link
-                  className="underline"
-                  href="https://www.gov.bb"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  gov.bb
-                </Link>
-                . It may be out of date or shown differently here.
-              </Typography>
-              <Link
-                className="text-xl underline"
-                href={frontmatter.source_url}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                View the original source
-              </Link>
-            </div>
-          ) : null}
+          <MigrationBanner sourceURL={frontmatter.source_url} />
         </div>
         <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
           {content}
