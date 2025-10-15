@@ -1,48 +1,8 @@
 import Link from "next/link";
+import { MigrationBanner } from "@/components/migration-banner";
 import { Typography } from "@/components/ui/typography";
+import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
-
-const EXISTING_SERVICES = [
-  {
-    title: "Register a marriage",
-    link: "https://www.gov.bb/register-marriage",
-  },
-  {
-    title: "Register a death",
-    link: "https://www.gov.bb/register-death",
-  },
-  {
-    title: "Get a drivers license",
-    link: "https://www.gov.bb/Citizens/driver-licence",
-  },
-  {
-    title: "Apply for a passport",
-    link: "https://www.gov.bb/apply-passport",
-  },
-  {
-    title: "Set up a business",
-    link: "https://www.gov.bb/start-business",
-  },
-  {
-    title: "Get a marriage license",
-    link: "https://www.gov.bb/marriage-licence",
-  },
-];
-
-const INFORMATION_SECTIONS = [
-  {
-    title: "Paying corporation tax",
-    link: "https://www.gov.bb/tax-information",
-    description:
-      "Find out how company tax is worked out, including what income is taxed and the rates that apply",
-  },
-  {
-    title: "Finding a job",
-    link: "https://www.gov.bb/job-seekers",
-    description:
-      "Get help with applying for jobs, preparing for interviews, and exploring public and overseas opportunities",
-  },
-];
 
 export default async function Home() {
   const featuredServices = await getFeaturedServices();
@@ -78,46 +38,24 @@ export default async function Home() {
           ))}
         </div>
       </div>
-      <div className="space-y-6 border-[#1FBF84] border-b-4 bg-[#A8E6CF] px-4 py-8">
-        <Typography variant="h2">Existing services</Typography>
-
-        <Typography variant="paragraph">
-          Existing services are live on gov.bb.
-          <br />
-          They will open in a new window.
-        </Typography>
-
-        <div className="flex flex-col gap-2">
-          {EXISTING_SERVICES.map((service) => (
-            <Link
-              className="cursor-pointer font-normal text-[20px] leading-[150%] underline"
-              href={service.link}
-              key={service.title}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              {service.title}
-            </Link>
-          ))}
-        </div>
-      </div>
       <div className="space-y-6 border-[#E0E4E9] border-b-4 bg-white px-4 py-8">
-        <Typography variant="h2">Useful information</Typography>
+        <Typography variant="h2">Find government services</Typography>
 
-        <div className="flex flex-col gap-2 space-y-4">
-          {INFORMATION_SECTIONS.map((information) => (
-            <div key={information.title}>
+        <MigrationBanner />
+
+        <div className="flex flex-col">
+          {SERVICE_CATEGORIES.map((service) => (
+            <div
+              className="my-2 border-gray-200 border-b-2 pb-4 last:border-0"
+              key={service.title}
+            >
               <Link
-                className="text-[#1E787D] text-[20px] underline underline-offset-2"
-                href={information.link}
-                rel="noopener noreferrer"
-                target="_blank"
+                className="cursor-pointer font-normal text-[#1E787D] text-[20px] leading-[150%] underline underline-offset-2"
+                href={`/content/${service.slug}`} // TODO update link when pages are ready
               >
-                {information.title}
+                {service.title}
               </Link>
-              <Typography variant="paragraph">
-                {information.description}
-              </Typography>
+              <Typography variant="paragraph">{service.description}</Typography>
             </div>
           ))}
         </div>

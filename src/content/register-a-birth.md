@@ -1,88 +1,57 @@
 ---
 title: "Register a birth"
-stage: "alpha"
-featured: false
+description: "A guide on how to register a birth in Barbados, including who can register, required documents, fees, and contact information."
+source_url: https://www.gov.bb/Citizens/register-birth
+extraction_date: 2025-10-14
+section: "Family, Birth and Relationships"
 ---
 
-It is a legal requirement that all births in Barbados (including stillbirths) are registered within 28 days. 
+## Who Can Register a Birth?
 
-When a child’s birth has been registered, a birth certificate can be issued. The certificate is essential for access to citizenship rights including legal identity documents, certain health services and school enrollment.
+The parents of a child are responsible for having the child's birth registered.
+If the parents are married to each other, the father registers the birth.
+If the parents are not married to each other, the mother registers the birth.
+If the parents are not married to each other and the father acknowledges paternity and is desirous of having his name entered on the birth record, both parents must be present at the registration of the birth.
 
----
+**A birth must be registered within twenty-eight (28) days after birth.**
 
-## Who should attend the registration of a birth?
+**Persons seeking to register a Live Birth must visit the Registration Department, Records Branch, located on Coleridge Street, Bridgetown between the hours of 8:30 am and 3:30 pm Monday to Friday.**
 
-You cannot register a birth online yet, so you need to do it in person in the district where the child was born. If the parents are:
+## Required Documents
 
-* not married to each other, only the mother can go to register the birth  
-* married to each other, the father can go too  
-* not married to each other but the father wants his name on the birth record, both parents must attend together
+The following documents must be presented to the Records Branch during this visit:
 
-The newborn does not need to be there.
+*   The Personal Child Health Record given by the hospital which records particulars on the baby's birth
+*   A Marriage Certificate: Where the parents are married
+*   The applicant's Barbados Identification Card or other valid forms of identification
+*   If the applicant is a Non-National, the Passport should be presented
 
-#### If you cannot attend in person
+## For Minor Parents
 
-If you are unable to register a birth in person, contact the Registration Department in Bridgetown as soon as possible after the child is born. 
+Where the parent is a Minor, documents to be presented are:
 
-Registration Department, Supreme Court Complex, Whitepark Road, St. Michael
-(246) 434-9970
+*   The Minor's Identification Card
+*   A Passport Size Picture certified by a Justice of the Peace
+*   A Birth Certificate OR a Passport
 
-#### Late registrations 
+## Live Birth Registration Details
 
-Births must be registered within 28 days of the child being born. The process to register a birth after this time is the same but you will be charged BDS $20.00. 
+*   Registration for a Live Birth is free of cost.
+*   A fee of $5.00 is required for the Birth Certificate. For persons over 60 it's $1.00.
+*   A fee of $20.00 is charged for late registrations.
+*   Expired documents will not be accepted for registrations.
 
----
+**The names of the child must be spelt correctly.**
+**All questions asked by the registrar must be answered.**
+**The applicant must carefully check and ensure that all the information given is accurate and correct before signing.**
 
-## What to bring
+## For Further Information
 
-You need to show:
+For further information contact/visit the Registration Department at:
 
-1. Your child’s Personal Child Health Record from the hospital (sometimes called the immunisation book or birth notification).
-2. A valid form of photo identification for each parent who is present. For Barbadian citizens, your Barbados National ID card, passport or other government-issued ID is acceptable. Non-Barbadian nationals must show their passport.
-3. Your marriage certificate if you are married to the child’s other parent.
+Supreme Court Complex  
+White Park Road  
+St. Michael
 
-#### Parents who are minors
-
-If you are a mother or a father and you are 18 years old or younger, you must bring:
-1. Your own birth certificate or passport.  
-2. Your National ID card.  
-3. A passport-sized photograph of yourself that has been certified by a Justice of the Peace. 
-
----
-
-## How to register a birth
-
-1. Take your documents to the registry office in the appropriate location. You cannot book an appointment but you can find out about typically busy times by calling the office.   
-2. A District Registrar or an officer will use your documents to verify your identity.  
-3. You will complete a form to record the baby’s full name, date and place of birth, parents’ details (names, occupations, address)  
-4. When you have reviewed and confirmed the details, the registrar or officer will enter them into the official register and can begin the process of issuing a birth certificate. A certificate can sometimes be issued on the same day but this depends on the registry office. The original costs BDS $5.00 and each additional copy is also BDS $5.00. People aged 60 and over pay a discounted fee of BDS $1.00 per certificate.  
-
----
-
-## Where to register
-
-You cannot register a birth online yet, so you need to do it in person in the district where the child was born. If you are not sure which district your child was born in, contact the Registration Department in the Supreme Court Complex on (246) 434-9970
-
-#### Born in St. Michael (Bridgetown)
-
-Go to the Registration Department (Records Branch), in the Supreme Court Complex, Whitepark Road, St. Michael
-
-#### Born in Christ Church or St. George
-
-Go to the District B Magistrate’s Court, Workmans, Saint George
-
-#### Born in St. Philip or St. John
-
-Go to the District C Magistrate’s Court
-
-#### Born in St. Thomas
-
-Go to the District D Magistrate’s Court, Bridgefield, Saint Thomas
-
-#### Born in St. Peter, St. James, or St. Lucy
-
-Go to the District E Magistrate’s Court
-
-#### Born in St. Joseph or St. Andrew
-
-Go to the District F Magistrate’s Court, Bowling Alley Hill, Saint Joseph
+(Tel.) 1 (246) 535-9700
+```
