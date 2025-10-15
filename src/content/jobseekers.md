@@ -1,25 +1,24 @@
 ---
 title: "Jobseekers"
-description: "Information on overseas and public sector employment opportunities in Barbados."
+description: "Learn about various employment opportunities in Barbados, including overseas programs, guidance for job seekers, and public sector positions, provided by the Ministry of Labour and Social Partnership Relations."
 source_url: https://www.gov.bb/Citizens/job-seekers
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Work and Employment"
 ---
 
-Employment Opportunities
+![Illustration of jobs and employment](https://www.gov.bb/media_files/tie-jobs.jpg)
 
-![tie-jobs](https://www.gov.bb/media_files/tie-jobs.jpg)
+## Overseas Employment Opportunities
 
-**Overseas Employment Opportunities**
+The Ministry of Labour and Social Partnership Relations is committed to helping you find the right job. Under the Employment Relations section, learn more about the following:
 
-The Ministry of Labour and Social Partnership Relations is committed to helping you find the right job.  Under the Employment Relations section, learn more about the following:
-
-[**One Stop Resource Centre**](https://labour.gov.bb/employment-services/one-stop-resource-centre/)&nbsp;under the National Employment Bureau and the services provided for job seekers like you.
-
-*   [**Overseas Employment Opportunities**](https://labour.gov.bb/employment-services/overseas-employment-programmes/)
+*   [**One Stop Resource Centre**](https://labour.gov.bb/employment-services/one-stop-resource-centre/) under the National Employment Bureau and the services provided for job seekers like you.
+*   [**Overseas Employment Programmes**](https://labour.gov.bb/employment-services/overseas-employment-programmes/)
 *   **Applying for Jobs Online (Coming Soon)**
 
-**The Ministry of Labour and Social Partnership Relations also wants to help you throughout the job search process. Check out&nbsp;Guidance and Counseling&nbsp;for great tips on:**
+## Guidance and Counseling
+
+The Ministry of Labour and Social Partnership Relations also wants to help you throughout the job search process. Check out Guidance and Counseling for great tips on:
 
 *   Preparing a great resume
 *   Writing an effective cover letter
@@ -28,10 +27,13 @@ The Ministry of Labour and Social Partnership Relations is committed to helping 
 *   Preparing for the job interview
 *   Getting ready for that first day on the job
 
-**You may also be interested in learning more about Education and Training services within the Ministry of Labour and Social Partnership Relations.**
+## Education and Training Services
 
-**Public Sector Employment Opportunities**
+You may also be interested in learning more about Education and Training services within the Ministry of Labour and Social Partnership Relations.
 
-The provisions of the First Schedule –&nbsp;**Recruitment and Employment Code of the Public Service Act, CAP 29**&nbsp;require, that all job opportunities or offices vacant for periods in excess of twelve months must be circularized or advertised and should be filled on merit, but where the nature of the work so requires, consideration shall be given to seniority and experience.
+## Public Sector Employment Opportunities
 
-Visit the Ministry of the Public Service at [https://mps.gov.bb/People_Resourcing/](https://mps.gov.bb/People_Resourcing/)&nbsp;for more information.
+The provisions of the First Schedule – **Recruitment and Employment Code of the Public Service Act, CAP 29** require, that all job opportunities or offices vacant for periods in excess of twelve months must be circularized or advertised and should be filled on merit, but where the nature of the work so requires, consideration shall be given to seniority and experience.
+
+Visit the Ministry of the Public Service at [https://mps.gov.bb/People_Resourcing/](https://mps.gov.bb/People_Resourcing/) for more information.
+```

@@ -1,23 +1,23 @@
 ---
 title: "National pledge"
-description: "The National Pledge of Barbados is a solemn promise of allegiance to the country and its flag, written by Mr. Lester Vaughan."
+description: "Details the National Pledge of Barbados, including its full text and a biography of its author, Mr. Lester Vaughan, a former teacher and education officer."
 source_url: https://www.gov.bb/Visit-Barbados/national-pledge
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-National Pledge
+## National Pledge
 
-![barbados-flag_0.jpg](https://www.gov.bb/media_files/barbados-flag_0.jpg)
+![Barbados Flag](https://www.gov.bb/media_files/barbados-flag_0.jpg)
 
-**THE NATIONAL PLEDGE**
+### The National Pledge
 
-I pledge allegiance to my country Barbados and to my flag,
-To uphold and defend their honour,
-And by my living to do credit
+I pledge allegiance to my country Barbados and to my flag,  
+To uphold and defend their honour,  
+And by my living to do credit  
 to my nation wherever I go.
 
-The National Pledge was written by Mr. Lester Vaughan a former Teacher and Education Officer of Primary Schools. Mr. Vaughan was born in 1910 at St. Simon's in the Parish of St. Andrew.
+The National Pledge was written by Mr. Lester Vaughan, a former Teacher and Education Officer of Primary Schools. Mr. Vaughan was born in 1910 at St. Simon's in the Parish of St. Andrew.
 
 He started his career as a Pupil Teacher and between 1928 and 1944 he taught at a number of Primary Schools in the Parish of St. Andrew. He was trained at the Rawle Training Institute, the forerunner of Erdiston College 1933-1935.
 

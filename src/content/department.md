@@ -1,65 +1,67 @@
 ---
 title: "Department"
-description: "A listing of all government departments in Barbados."
+description: "A comprehensive listing of all government departments in Barbados."
 source_url: https://www.gov.bb/departments
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-<br><br>
-		<div class="container">
-			<div class="row" style="text-align:center;">
-
-				<div class="col-md-3"></div>
-
-				<div class="col-md-6">
-					<div class="input-group c-square">
-				      <input type="text" id="filter" onkeyup="filterlist();" class="form-control  c-square c-theme" placeholder="Search for...">
-				      <span class="input-group-btn">
-				        <button class="btn c-bg-green c-font-white" type="button">Go!</button>
-				      </span>
-				    </div><!-- /input-group -->
-			  	</div>
-
-		
-		</div>
-		
-<br><br>
-		  	<div class="row">
-
-
-				<div class="c-body">
-
-
-				<div class="c-content-ver-nav">
-					<div class="row" style="padding:40px;">
-						  <div class="col-md-4">
-							<div class="c-content-ver-nav">
-								<ul class="c-menu c-arrow-dot c-square c-theme c-font-uppercase">
-
-									<li class='category'><a href="Departments/air-navigation">Air Navigation Services Department</a></li><li class='category'><a href="Departments/analytical-services">Analytical Services</a></li><li class='category'><a href="Departments/building-standards">Barbados Building Standards Authority</a></li><li class='category'><a href="Departments/drug-service">Barbados Drug Service</a></li><li class='category'><a href="Departments/gov-information-service">Barbados Government Information Service</a></li><li class='category'><a href="Departments/prison">Barbados Prison Service</a></li><li class='category'><a href="Departments/gender-affairs">Bureau of Gender Affairs</a></li><li class='category'><a href="Departments/central-purchasing">Central Purchasing Department</a></li><li class='category'><a href="Departments/childrens-development">Children's Development Centre</a></li><li class='category'><a href="Departments/cooperatives">Co-operatives Department</a></li><li class='category'><a href="Departments/coastal-zone">Coastal Zone Management Unit</a></li><li class='category'><a href="Departments/community-development">Community Development Department</a></li><li class='category'><a href="Departments/consular-diaspora">Consular and Diaspora Division</a></li><li class='category'><a href="Departments/corporate-affairs-intellectual-property">Corporate Affairs and Intellectual Property Office</a></li><li class='category'><a href="Departments/criminal-justice">Criminal Justice Research and Planning Unit</a></li><li class='category'><a href="Departments/customs">Customs and Excise Department</a></li><li class='category'><a href="Departments/archives">Department of Archives</a></li><li class='category'><a href="Departments/commerce">Department of Commerce and Consumer Affairs</a></li><li class='category'><a href="Departments/constituency">Department of Constituency Empowerment</a></li><li class='category'><a href="Departments/emergency-management">Department of Emergency Management</a></li>									
-								</ul>
-							</div>
-						</div>
-
-						 <div class="col-md-4">
-							<div class="c-content-ver-nav">
-								<ul class="c-menu c-arrow-dot c-square c-theme c-font-uppercase">
-									<li class='category'><a href="Departments/youth-affairs">Division of Youth Affairs</a></li><li class='category'><a href="Departments/electoral">Electoral & Boundaries Commission</a></li><li class='category'><a href="Departments/environmental-protection">Environmental Protection Department</a></li><li class='category'><a href="Departments/fire-service">Fire Service Department</a></li><li class='category'><a href="Departments/fisheries">Fisheries Division</a></li><li class='category'><a href="Departments/forensic-sciences">Forensic Sciences Centre</a></li><li class='category'><a href="Departments/electrical-engineering">Government Electrical Engineering Department</a></li><li class='category'><a href="Departments/industrial-school">Government Industrial School</a></li><li class='category'><a href="Departments/printing-dept">Government Printing Department</a></li><li class='category'><a href="Departments/immigration">Immigration Department</a></li><li class='category'><a href="Departments/international-business-financial-services">International Business & Financial Services Unit</a></li><li class='category'><a href="Departments/labour">Labour Department</a></li><li class='category'><a href="Departments/land-registry">Land Registration Department</a></li><li class='category'><a href="Departments/land-surveys">Lands and Surveys Department</a></li><li class='category'><a href="Departments/licensing-authority">Licensing Authority</a></li><li class='category'><a href="Departments/media-resource">Media Resource Department</a></li><li class='category'><a href="Departments/meteorological-department">Meteorological Office</a></li><li class='category'><a href="Departments/disabilities-unit">National Disabilities Unit</a></li><li class='category'><a href="Departments/hiv-aids-commission">National HIV/AIDS Commission</a></li>								</ul>
-							</div>
-						</div>
-						
-						<div class="col-md-4">
-							<div class="c-content-ver-nav">
-								<ul class="c-menu c-arrow-dot c-square c-theme c-font-uppercase">
-									<li class='category'><a href="Departments/national-insurance">National Insurance Department</a></li><li class='category'><a href="Departments/library-service">National Library Service</a></li><li class='category'><a href="Departments/national-nutrition">National Nutrition Centre</a></li><li class='category'><a href="Departments/natural-heritage">Natural Heritage Department</a></li><li class='category'><a href="Departments/public-sector-reform">Office of Public Sector Reform</a></li><li class='category'><a href="Departments/auditor-general">Office of the Auditor General</a></li><li class='category'><a href="Departments/ombudsman">Office of the Ombudsman</a></li><li class='category'><a href="Departments/post-office">Post Office</a></li><li class='category'><a href="Departments/probation">Probation Department</a></li><li class='category'><a href="Departments/psychiatric-hospital">Psychiatric Hospital</a></li><li class='category'><a href="Departments/registration">Registration Department</a></li><li class='category'><a href="Departments/statistical-services">Statistical Services Department</a></li><li class='category'><a href="Departments/sports-council">The National Sports Council</a></li><li class='category'><a href="Departments/police-department">The Police Department</a></li><li class='category'><a href="Departments/public-markets">The Public Markets</a></li><li class='category'><a href="Departments/samuel-jackson-prescod-polytechnic">The Samuel Jackman Prescod Institute of Technology</a></li><li class='category'><a href="Departments/school-meals">The School Meals Department</a></li><li class='category'><a href="Departments/treasury">Treasury Department</a></li><li class='category'><a href="Departments/welfare">Welfare Department</a></li>								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			</div>
-
-		</div> 
+- [Air Navigation Services Department](https://www.gov.bb/Departments/air-navigation)
+- [Analytical Services](https://www.gov.bb/Departments/analytical-services)
+- [Barbados Building Standards Authority](https://www.gov.bb/Departments/building-standards)
+- [Barbados Drug Service](https://www.gov.bb/Departments/drug-service)
+- [Barbados Government Information Service](https://www.gov.bb/Departments/gov-information-service)
+- [Barbados Prison Service](https://www.gov.bb/Departments/prison)
+- [Bureau of Gender Affairs](https://www.gov.bb/Departments/gender-affairs)
+- [Central Purchasing Department](https://www.gov.bb/Departments/central-purchasing)
+- [Children's Development Centre](https://www.gov.bb/Departments/childrens-development)
+- [Co-operatives Department](https://www.gov.bb/Departments/cooperatives)
+- [Coastal Zone Management Unit](https://www.gov.bb/Departments/coastal-zone)
+- [Community Development Department](https://www.gov.bb/Departments/community-development)
+- [Consular and Diaspora Division](https://www.gov.bb/Departments/consular-diaspora)
+- [Corporate Affairs and Intellectual Property Office](https://www.gov.bb/Departments/corporate-affairs-intellectual-property)
+- [Criminal Justice Research and Planning Unit](https://www.gov.bb/Departments/criminal-justice)
+- [Customs and Excise Department](https://www.gov.bb/Departments/customs)
+- [Department of Archives](https://www.gov.bb/Departments/archives)
+- [Department of Commerce and Consumer Affairs](https://www.gov.bb/Departments/commerce)
+- [Department of Constituency Empowerment](https://www.gov.bb/Departments/constituency)
+- [Department of Emergency Management](https://www.gov.bb/Departments/emergency-management)
+- [Division of Youth Affairs](https://www.gov.bb/Departments/youth-affairs)
+- [Electoral & Boundaries Commission](https://www.gov.bb/Departments/electoral)
+- [Environmental Protection Department](https://www.gov.bb/Departments/environmental-protection)
+- [Fire Service Department](https://www.gov.bb/Departments/fire-service)
+- [Fisheries Division](https://www.gov.bb/Departments/fisheries)
+- [Forensic Sciences Centre](https://www.gov.bb/Departments/forensic-sciences)
+- [Government Electrical Engineering Department](https://www.gov.bb/Departments/electrical-engineering)
+- [Government Industrial School](https://www.gov.bb/Departments/industrial-school)
+- [Government Printing Department](https://www.gov.bb/Departments/printing-dept)
+- [Immigration Department](https://www.gov.bb/Departments/immigration)
+- [International Business & Financial Services Unit](https://www.gov.bb/Departments/international-business-financial-services)
+- [Labour Department](https://www.gov.bb/Departments/labour)
+- [Land Registration Department](https://www.gov.bb/Departments/land-registry)
+- [Lands and Surveys Department](https://www.gov.bb/Departments/land-surveys)
+- [Licensing Authority](https://www.gov.bb/Departments/licensing-authority)
+- [Media Resource Department](https://www.gov.bb/Departments/media-resource)
+- [Meteorological Office](https://www.gov.bb/Departments/meteorological-department)
+- [National Disabilities Unit](https://www.gov.bb/Departments/disabilities-unit)
+- [National HIV/AIDS Commission](https://www.gov.bb/Departments/hiv-aids-commission)
+- [National Insurance Department](https://www.gov.bb/Departments/national-insurance)
+- [National Library Service](https://www.gov.bb/Departments/library-service)
+- [National Nutrition Centre](https://www.gov.bb/Departments/national-nutrition)
+- [Natural Heritage Department](https://www.gov.bb/Departments/natural-heritage)
+- [Office of Public Sector Reform](https://www.gov.bb/Departments/public-sector-reform)
+- [Office of the Auditor General](https://www.gov.bb/Departments/auditor-general)
+- [Office of the Ombudsman](https://www.gov.bb/Departments/ombudsman)
+- [Post Office](https://www.gov.bb/Departments/post-office)
+- [Probation Department](https://www.gov.bb/Departments/probation)
+- [Psychiatric Hospital](https://www.gov.bb/Departments/psychiatric-hospital)
+- [Registration Department](https://www.gov.bb/Departments/registration)
+- [Statistical Services Department](https://www.gov.bb/Departments/statistical-services)
+- [The National Sports Council](https://www.gov.bb/Departments/sports-council)
+- [The Police Department](https://www.gov.bb/Departments/police-department)
+- [The Public Markets](https://www.gov.bb/Departments/public-markets)
+- [The Samuel Jackman Prescod Institute of Technology](https://www.gov.bb/Departments/samuel-jackson-prescod-polytechnic)
+- [The School Meals Department](https://www.gov.bb/Departments/school-meals)
+- [Treasury Department](https://www.gov.bb/Departments/treasury)
+- [Welfare Department](https://www.gov.bb/Departments/welfare)
 ```

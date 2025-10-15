@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Typography } from "@/components/ui/typography";
-import { SERVICE_CATEGORIES } from "@/constants/data";
+import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
 
 export default async function Home() {

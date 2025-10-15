@@ -60,7 +60,13 @@ const components: Components = {
       : "text-[#00654A] underline text-[20px]";
 
     return (
-      <a className={linkClass} href={href} {...props}>
+      <a
+        className={linkClass}
+        href={href}
+        {...props}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         {children}
       </a>
     );

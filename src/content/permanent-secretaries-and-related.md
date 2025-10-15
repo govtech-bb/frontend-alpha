@@ -1,14 +1,170 @@
 ---
 title: "Permanent secretaries and related"
-description: "A list of Permanent Secretaries and related grades within the Government of Barbados."
+description: "A directory providing details on Permanent Secretaries and other related high-level officials within the Government of Barbados, including their roles and ministries."
 source_url: https://www.gov.bb/Government/ps-related-grades
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-Permanent Secretaries and Related Grades Biography
+## Permanent Secretaries and Related Grades Biography
 
-<table class="" align="center"><tbody><tr><td align="center"><p><a href="https://www.gov.bb/Government/donna-cadogan" target=""><img src="https://www.gov.bb/media_files/Donna Cadogan.jpg" alt="" title="" style="" role=""></a></p><p>**MRS. DONNA CADOGAN**<br>HEAD OF THE PUBLIC SERVICE&nbsp;<br><br></p></td></tr></tbody></table>
-<table class="table table-bordered" bordercolor="" cellspacing="" align="center"><tbody><tr><td cellpadding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/louis-woodroffe" target=""><img src="https://www.gov.bb/media_files/Dr Louis Woodroffe_6.jpg" alt="" title="" style="" role=""></a><br></p><p>**DR. LOUIS WOODROFFE**<br>DIRECTOR GENERAL&nbsp;<br>(PRODUCTIVE SECTORS)<br></p></td><td cellpadding="" 15px=""></td><td cellpadding="" 15px=""><p></p><p><img src=""><a href="https://www.gov.bb/Government/gail-atkins" target=""><img src="https://www.gov.bb/media_files/Gail Atkins_2.jpg" alt="" title="" style="" role=""></a><br></p><p>**MS. GAIL ATKINS**<br>DIRECTOR GENERAL&nbsp;<br>(GOVERNANCE)<br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_14.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/charley-browne"></a><br></p><p>**MS. PENELOPE LINTON**<br>DIRECTOR GENERAL&nbsp; &nbsp;<br>(HUMAN RESOURCES) (AG)<br></p></td></tr><tr><td cellspacing="" padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_8.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/terry-bascombe"></a><br></p><p>**MR. IAN CARRINGTON**<br>DIRECTOR GENERAL, FINANCE AND ECONOMIC AFFAIRS&nbsp;<br>MINISTRY OF FINANCE, ECONOMIC AFFAIRS&nbsp; AND INVESTMENT<br></p></td><td padding:="" 15px=""></td><td cellspacing="" padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_3.jpg"><a href="https://www.gov.bb/Government/andrew-gittens"></a><br></p><p>**MRS. NANCY HEADLEY**<br>PERMANENT SECRETARY (FINANCE)&nbsp;<br>MINISTRY OF FINANCE, ECONOMIC AFFAIRS AND INVESTMENT<br></p></td><td cellspacing="" padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/jennifer-hunte" target=""><img src="https://www.gov.bb/media_files/Jennifer Hunte_4.jpg" alt="" title="" style="" role=""></a><a href="https://www.gov.bb/Government/charley-browne"></a><br></p><p>**MRS. JENNIFER HUNTE**<br>PERMANENT SECRETARY (ECONOMIC AFFAIRS AND INVESTMENT)&nbsp;(AG)<br>MINISTRY OF FINANCE, ECONOMIC AFFAIRS AND INVESTMENT&nbsp;<br></p></td></tr><tr><td padding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/alies-jordan" target=""><img src="https://www.gov.bb/media_files/alies-jordan.jpg" alt="" title="" style="" role=""></a><a href="https://www.gov.bb/Government/terry-bascombe"></a><br></p><p>**MS. ALIES JORDAN**<br>PERMANENT SECRETARY<br>PRIME MINISTER'S OFFICE<br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_10.jpg" style="background-color: transparent;"></p>**MS. SANDRA PHILLIPS**<br>PERMANENT SECRETARY (SPECIAL ASSIGNMENT)&nbsp;<br>PRIME MINISTER'S OFFICE, COMMITMENT FOR RESULTS</td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/gabrielle-springer" target=""></a><a href="https://www.gov.bb/Government/gabrielle-springer" target=""><img src="https://www.gov.bb/media_files/Gabrielle Springer_3.jpg" alt="" title="" style="" role=""></a><a href="https://www.gov.bb/Government/charley-browne"></a><br></p><p>**MS. GABRIELLE SPRINGER**<br>DIRECTOR GENERAL, INFRASTRUCTURE</p></td></tr><tr></tr><tr><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_9.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/annette-weekes"></a><br></p><p>**MR. TIMOTHY MAYNARD**<br>PERMANENT SECRETARY<br>OFFICE OF THE ATTORNEY GENERAL AND LEGAL AFFAIRS</p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/terry-bascombe" target=""><img src="https://www.gov.bb/media_files/Terry Bascombe_2.jpg" alt="" title="" style="" role=""></a><a href="https://www.gov.bb/Government/annette-weekes"></a><br></p><p>**MR. TERRY BASCOMBE**<br>PERMANENT SECRETARY<br>MINISTRY OF AGRICULTURE, FOOD AND NUTRITIONAL SECURITY<br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_2.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/charley-browne"></a><br></p><p>**MS. DONNA FORDE**<br>PERMANENT SECRETARY<br>MINISTRY OF HOME AFFAIRS AND INFORMATION</p></td></tr><tr><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_0.jpg"><a href="https://www.gov.bb/Government/terry-bascombe"></a><br></p><p>**MRS. WENDY ODLE**<br>PERMANENT SECRETARY (AG)<br>MINISTRY OF HOME AFFAIRS AND INFORMATION<br><br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_9.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/andrew-gittens"></a><br></p><p>**MR. KEVIN HUNTE**<br>PERMANENT SECRETARY<br>MINISTRY OF ENERGY AND BUSINESS<br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_9.jpg" alt="" title="" style="" role=""><br></p><p>**MR. DANE COPPIN**<br>PERMANENT SECRETARY (SPECIAL ASSIGNMENT)<br>MINISTRY OF FINANCE, ECONOMIC AFFAIRS AND INVESTMENT</p></td></tr><tr><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_15.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/terry-bascombe"></a><br></p><p>**MS.&nbsp; KAY SEALY**<br>PERMANENT SECRETARY<br>MINISTRY OF INNOVATION, INDUSTRY, SCIENCE AND TECHNOLOGY</p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/yolande-howard" target=""><img src="https://www.gov.bb/media_files/Yolande Howard_4.jpg" alt="" title="" style="" role=""></a><br></p><p>**MS.&nbsp;**YOLANDE HOWARD<br>PERMANENT SECRETARY&nbsp;<br>MINISTRY OF ENVIRONMENT AND NATIONAL BEAUTIFICATION, BLUE AND GREEN ECONOMY<br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_15.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/june-chandler"></a><br></p><p>**MS.&nbsp; JOY-ANN SKINNER**<br>PERMANENT SECRETARY (AG)<br>MINISTRY OF FOREIGN AFFAIRS AND FOREIGN TRADE<br></p></td></tr><tr><td><p></p><p><img src="https://www.gov.bb/media_files/wayne pic4.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/karen-best"></a><br></p><p>**MR. WAYNE MARSHALL**<br>PERMANENT SECRETARY</br>MINISTRY OF HEALTH AND WELLNESS</br></p></td><td></td><td><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_17.jpg"><a href="https://www.gov.bb/Government/sonia-foster"></a><br></p><p>**MS. KIM BELLE**<br>PERMANENT SECRETARY (AG)</br>MINISTRY OF EDUCATIONAL TRANSFORMATION</p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_9.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/gabrielle-springer"></a><br></p><p>**MR. HERMAN SMITH**<br>PERMANENT SECRETARY&nbsp;</br>MINISTRY OF HOUSING, LANDS AND MAINTENANCE</br></p></td></tr><tr><td><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_2.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/donna-cadogan"></a><br></p><p>**MRS. CLAUDETTE HOPE-GREENIDGE**<br>PERMANENT SECRETARY&nbsp;(AG)</br>MINISTRY OF INNOVATION, INDUSTRY, SCIENCE AND TECHNOLOGY&nbsp;</p></td><td></td><td><p></p><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_2.jpg" alt="" title="" style="" role=""><br></p><p>**MS. MARVA HOWELL**<br>PERMANENT SECRETARY</br>MINISTRY OF LABOUR, SOCIAL SECURITY AND THE THIRD SECTOR</br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_12.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/yolande-howard"></a><br></p><p>**MR. JEHU WILTSHIRE**<br>PERMANENT SECRETARY</br>MINISTRY OF PEOPLE EMPOWERMENT AND ELDER AFFAIRS</br><br></p></td></tr><tr><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_18.jpg" alt="" title="" style="" role=""><a href="https://www.gov.bb/Government/terry-bascombe"></a><br></p><p>**MRS. FRANCINE BLACKMAN**<br>PERMANENT SECRETARY (TOURISM) (AG)</br>MINISTRY OF TOURISM AND INTERNATIONAL TRANSPORT</p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/andrew-gittens" target=""><img src="https://www.gov.bb/media_files/Andrew Gittens_6.jpg" alt="" title="" style="" role=""></a><a href="https://www.gov.bb/Government/alies-jordan"></a><br></p><p>**MR. ANDREW GITTENS**<br>PERMANENT SECRETARY&nbsp;</br>MINISTRY OF TRANSPORT AND WORKS&nbsp;</br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p><a href="https://www.gov.bb/Government/charley-browne" target=""><img src="https://www.gov.bb/media_files/Charley Browne_8.jpg" alt="" title="" style="" role=""></a><a href="https://www.gov.bb/Government/june-chandler"></a><br></p><p>**MR. CHARLEY BROWNE**<br>PERMANENT SECRETARY (INTERNATIONAL TRANSPORT) (AG)</br>MINISTRY OF TOURISM AND INTERNATIONAL TRANSPORT</br></p></td></tr><tr><td padding:="" 15px=""><p></p><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_18.jpg" alt="" title="" style="" role=""><br></p><p>**MS.&nbsp;SELMA GREEN**<br>PERMANENT SECRETARY&nbsp;(CABINET SECRETARY)</br>CABINET OFFICE&nbsp;</p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p></p><p><img src="https://www.gov.bb/media_files/Female Placeholder_18.jpg" alt="" title="" style="" role=""><br></p><p>**MRS.&nbsp;JOY ADAMSON**<br>PERMANENT SECRETARY&nbsp;</br>MINISTRY OF YOUTH, SPORTS AND COMMUNITY EMPOWERMENT</p></td><td padding:="" 15px=""><p><br></p><p><br></p></td><td padding:="" 15px=""><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_12.jpg" alt="" title="" style="" role=""><br></p><p>**AMBASSADOR FRANCOIS JACKMAN**<br>PERMANENT SECRETARY&nbsp;</br>MINISTRY OF EDUCATIONAL TRANSFORMATION</p></td></tr><tr><td padding:="" 15px=""><p></p><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_16.jpg"><br></p><p>**MR.&nbsp;PATRICK MCCASKIE**<br>PERMANENT SECRETARY (AG)</br>MINISTRY OF TRAINING AND TERTIARY EDUCATION</p><p><br></p></td><td padding:="" 15px=""></td><td padding:="" 15px=""><p></p><p></p><p><img src="https://www.gov.bb/media_files/Male Placeholder2_17.jpg"></p><p>**MR.&nbsp;MARK FRANKLIN**<br>PERMANENT SECRETARY (AG)</br>MINISTRY OF PEOPLE EMPOWERMENT AND ELDER AFFAIRS</p><p><br></p></td><td padding:="" 15px=""><p><br></p><p><br></p></td><td padding:="" 15px=""><p></p><p><br></p><p><br></p></td></tr></tbody></table>
+**MRS. DONNA CADOGAN**
+[![Donna Cadogan](https://www.gov.bb/media_files/Donna%20Cadogan.jpg)](https://www.gov.bb/Government/donna-cadogan)
+HEAD OF THE PUBLIC SERVICE
 
+**DR. LOUIS WOODROFFE**
+[![Dr. Louis Woodroffe](https://www.gov.bb/media_files/Dr%20Louis%20Woodroffe_6.jpg)](https://www.gov.bb/Government/louis-woodroffe)
+DIRECTOR GENERAL (PRODUCTIVE SECTORS)
+
+**MS. GAIL ATKINS**
+[![Gail Atkins](https://www.gov.bb/media_files/Gail%20Atkins_2.jpg)](https://www.gov.bb/Government/gail-atkins)
+DIRECTOR GENERAL (GOVERNANCE)
+
+**MS. PENELOPE LINTON**
+![Penelope Linton](https://www.gov.bb/media_files/Female%20Placeholder_14.jpg)
+DIRECTOR GENERAL (HUMAN RESOURCES) (AG)
+
+**MR. IAN CARRINGTON**
+![Ian Carrington](https://www.gov.bb/media_files/Male%20Placeholder2_8.jpg)
+DIRECTOR GENERAL, FINANCE AND ECONOMIC AFFAIRS  
+MINISTRY OF FINANCE, ECONOMIC AFFAIRS AND INVESTMENT
+
+**MRS. NANCY HEADLEY**
+![Nancy Headley](https://www.gov.bb/media_files/Female%20Placeholder_3.jpg)
+PERMANENT SECRETARY (FINANCE)  
+MINISTRY OF FINANCE, ECONOMIC AFFAIRS AND INVESTMENT
+
+**MRS. JENNIFER HUNTE**
+[![Jennifer Hunte](https://www.gov.bb/media_files/Jennifer%20Hunte_4.jpg)](https://www.gov.bb/Government/jennifer-hunte)
+PERMANENT SECRETARY (ECONOMIC AFFAIRS AND INVESTMENT) (AG)  
+MINISTRY OF FINANCE, ECONOMIC AFFAIRS AND INVESTMENT
+
+**MS. ALIES JORDAN**
+[![Alies Jordan](https://www.gov.bb/media_files/alies-jordan.jpg)](https://www.gov.bb/Government/alies-jordan)
+PERMANENT SECRETARY  
+PRIME MINISTER'S OFFICE
+
+**MS. SANDRA PHILLIPS**
+![Sandra Phillips](https://www.gov.bb/media_files/Female%20Placeholder_10.jpg)
+PERMANENT SECRETARY (SPECIAL ASSIGNMENT)  
+PRIME MINISTER'S OFFICE, COMMITMENT FOR RESULTS
+
+**MS. GABRIELLE SPRINGER**
+[![Gabrielle Springer](https://www.gov.bb/media_files/Gabrielle%20Springer_3.jpg)](https://www.gov.bb/Government/gabrielle-springer)
+DIRECTOR GENERAL, INFRASTRUCTURE
+
+**MR. TIMOTHY MAYNARD**
+![Timothy Maynard](https://www.gov.bb/media_files/Male%20Placeholder2_9.jpg)
+PERMANENT SECRETARY  
+OFFICE OF THE ATTORNEY GENERAL AND LEGAL AFFAIRS
+
+**MR. TERRY BASCOMBE**
+[![Terry Bascombe](https://www.gov.bb/media_files/Terry%20Bascombe_2.jpg)](https://www.gov.bb/Government/terry-bascombe)
+PERMANENT SECRETARY  
+MINISTRY OF AGRICULTURE, FOOD AND NUTRITIONAL SECURITY
+
+**MS. DONNA FORDE**
+![Donna Forde](https://www.gov.bb/media_files/Female%20Placeholder_2.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF HOME AFFAIRS AND INFORMATION
+
+**MRS. WENDY ODLE**
+![Wendy Odle](https://www.gov.bb/media_files/Female%20Placeholder_0.jpg)
+PERMANENT SECRETARY (AG)  
+MINISTRY OF HOME AFFAIRS AND INFORMATION
+
+**MR. KEVIN HUNTE**
+![Kevin Hunte](https://www.gov.bb/media_files/Male%20Placeholder2_9.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF ENERGY AND BUSINESS
+
+**MR. DANE COPPIN**
+![Dane Coppin](https://www.gov.bb/media_files/Male%20Placeholder2_9.jpg)
+PERMANENT SECRETARY (SPECIAL ASSIGNMENT)  
+MINISTRY OF FINANCE, ECONOMIC AFFAIRS AND INVESTMENT
+
+**MS. KAY SEALY**
+![Kay Sealy](https://www.gov.bb/media_files/Female%20Placeholder_15.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF INNOVATION, INDUSTRY, SCIENCE AND TECHNOLOGY
+
+**MS. YOLANDE HOWARD**
+[![Yolande Howard](https://www.gov.bb/media_files/Yolande%20Howard_4.jpg)](https://www.gov.bb/Government/yolande-howard)
+PERMANENT SECRETARY  
+MINISTRY OF ENVIRONMENT AND NATIONAL BEAUTIFICATION, BLUE AND GREEN ECONOMY
+
+**MS. JOY-ANN SKINNER**
+![Joy-Ann Skinner](https://www.gov.bb/media_files/Female%20Placeholder_15.jpg)
+PERMANENT SECRETARY (AG)  
+MINISTRY OF FOREIGN AFFAIRS AND FOREIGN TRADE
+
+**MR. WAYNE MARSHALL**
+![Wayne Marshall](https://www.gov.bb/media_files/wayne%20pic4.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF HEALTH AND WELLNESS
+
+**MS. KIM BELLE**
+![Kim Belle](https://www.gov.bb/media_files/Female%20Placeholder_17.jpg)
+PERMANENT SECRETARY (AG)  
+MINISTRY OF EDUCATIONAL TRANSFORMATION
+
+**MR. HERMAN SMITH**
+![Herman Smith](https://www.gov.bb/media_files/Male%20Placeholder2_9.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF HOUSING, LANDS AND MAINTENANCE
+
+**MRS. CLAUDETTE HOPE-GREENIDGE**
+![Claudette Hope-Greenidge](https://www.gov.bb/media_files/Female%20Placeholder_2.jpg)
+PERMANENT SECRETARY (AG)  
+MINISTRY OF INNOVATION, INDUSTRY, SCIENCE AND TECHNOLOGY
+
+**MS. MARVA HOWELL**
+![Marva Howell](https://www.gov.bb/media_files/Female%20Placeholder_2.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF LABOUR, SOCIAL SECURITY AND THE THIRD SECTOR
+
+**MR. JEHU WILTSHIRE**
+![Jehu Wiltshire](https://www.gov.bb/media_files/Male%20Placeholder2_12.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF PEOPLE EMPOWERMENT AND ELDER AFFAIRS
+
+**MRS. FRANCINE BLACKMAN**
+![Francine Blackman](https://www.gov.bb/media_files/Female%20Placeholder_18.jpg)
+PERMANENT SECRETARY (TOURISM) (AG)  
+MINISTRY OF TOURISM AND INTERNATIONAL TRANSPORT
+
+**MR. ANDREW GITTENS**
+[![Andrew Gittens](https://www.gov.bb/media_files/Andrew%20Gittens_6.jpg)](https://www.gov.bb/Government/andrew-gittens)
+PERMANENT SECRETARY  
+MINISTRY OF TRANSPORT AND WORKS
+
+**MR. CHARLEY BROWNE**
+[![Charley Browne](https://www.gov.bb/media_files/Charley%20Browne_8.jpg)](https://www.gov.bb/Government/charley-browne)
+PERMANENT SECRETARY (INTERNATIONAL TRANSPORT) (AG)  
+MINISTRY OF TOURISM AND INTERNATIONAL TRANSPORT
+
+**MS. SELMA GREEN**
+![Selma Green](https://www.gov.bb/media_files/Female%20Placeholder_18.jpg)
+PERMANENT SECRETARY (CABINET SECRETARY)  
+CABINET OFFICE
+
+**MRS. JOY ADAMSON**
+![Joy Adamson](https://www.gov.bb/media_files/Female%20Placeholder_18.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF YOUTH, SPORTS AND COMMUNITY EMPOWERMENT
+
+**AMBASSADOR FRANCOIS JACKMAN**
+![Ambassador Francois Jackman](https://www.gov.bb/media_files/Male%20Placeholder2_12.jpg)
+PERMANENT SECRETARY  
+MINISTRY OF EDUCATIONAL TRANSFORMATION
+
+**MR. PATRICK MCCASKIE**
+![Patrick McCaskie](https://www.gov.bb/media_files/Male%20Placeholder2_16.jpg)
+PERMANENT SECRETARY (AG)  
+MINISTRY OF TRAINING AND TERTIARY EDUCATION
+
+**MR. MARK FRANKLIN**
+![Mark Franklin](https://www.gov.bb/media_files/Male%20Placeholder2_17.jpg)
+PERMANENT SECRETARY (AG)  
+MINISTRY OF PEOPLE EMPOWERMENT AND ELDER AFFAIRS
 ```

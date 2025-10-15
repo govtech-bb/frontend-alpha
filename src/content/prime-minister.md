@@ -1,19 +1,19 @@
 ---
 title: "Prime minister"
-description: "Profile of the Prime Minister of Barbados, the Honourable Mia Amor Mottley, including her roles and career highlights."
+description: "An article providing a biographical overview of The Honourable Mia Amor Mottley, S.C., M.P., Barbados' eighth and first female Prime Minister, detailing her political career and roles."
 source_url: https://www.gov.bb/Government/prime-minister
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-Prime Minister of Barbados
+## Prime Minister of Barbados
 
-The Honourable Mia Amor Mottley, S.C., M.P.
-**Prime Minister
-Minister of Finance, Economic Affairs and Investment
-Minister of National Security and the Public Service**
+![The Honourable Mia Amor Mottley](https://www.gov.bb/media_files/MIA-2017-300x300_0.jpg)
 
-![The Honourable Mia Amor Mottley, S.C., M.P.](https://www.gov.bb/media_files/MIA-2017-300x300_0.jpg)
+The Honourable Mia Amor Mottley, S.C., M.P.  
+**Prime Minister**  
+**Minister of Finance, Economic Affairs and Investment**  
+**Minister of National Security and the Public Service**
 
 The Honourable Mia Amor Mottley, S.C., M.P., became Barbados' eighth and first female Prime Minister on May 25, 2018.
 
@@ -26,3 +26,4 @@ She later served as Attorney General and Deputy Prime Minister of Barbados from 
 Ms. Mottley is an Attorney-at-law with a degree from the London School of Economics, specialising in advocacy. She is also a Barrister of the Bar of England and Wales.
 
 In 2002, she became a member of the Local Privy Council. She was also admitted to the Inner Bar, becoming the youngest ever Queens Counsel in Barbados.
+```

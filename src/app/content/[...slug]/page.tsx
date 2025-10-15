@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
-import { SERVICE_CATEGORIES } from "@/constants/data";
+import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
 
 type ContentPageProps = {
@@ -62,7 +62,13 @@ const components: Components = {
       : "text-[#00654A] underline text-[20px]";
 
     return (
-      <a className={linkClass} href={href} {...props}>
+      <a
+        className={linkClass}
+        href={href}
+        {...props}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         {children}
       </a>
     );
@@ -177,7 +183,7 @@ export default async function Page({ params }: ContentPageProps) {
           {frontmatter.extraction_date ? (
             <div className="space-y-4 border-[#FF94D9] border-r-4 border-l-4 bg-[#FFF4FB] px-4 py-3">
               <Typography variant="paragraph">
-                This Page was originally published on{" "}
+                This page was originally published on{" "}
                 <Link
                   className="underline"
                   href="https://www.gov.bb"

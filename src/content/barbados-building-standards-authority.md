@@ -1,11 +1,10 @@
 ---
 title: "Barbados Building Standards Authority"
-description: "Information about the Barbados Building Standards Authority and its role in enforcing the Barbados National Building Code and the Building Act to facilitate cost-effective building construction."
+description: "Outlines the mission of the Barbados Building Standards Authority to enforce the National Building Code and facilitate cost-effective construction."
 source_url: https://www.gov.bb/Departments/building-standards
-extraction_date: 2025-10-13
+extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
 ---
 
-# Barbados Building Standards Authority
-
-To enforce the provision of the Barbados National Building Code and the Building Act so as to facilitate the \*cost-effective construction of buildings.
+To enforce the provision of the Barbados National Building Code and the Building Act so as to facilitate the *cost-effective* construction of buildings.
+```
