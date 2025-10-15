@@ -6,8 +6,6 @@ extraction_date: 2025-10-14
 section: "Work and Employment"
 ---
 
-![EZpay+ banner](https://www.gov.bb/media_files/b-biz-ezpay.jpg)
-
 ## What is the EZpay+ Payments Platform?
 
 The Government of Barbados has created a payments platform where citizens can pay for various government services using multiple payment options such as Credit Cards, Visa Debit Cards, Direct Debit, Payce Digital and the Barbados Post Office.

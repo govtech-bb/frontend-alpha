@@ -6,8 +6,6 @@ extraction_date: 2025-10-14
 section: "Travel, ID and Citizenship"
 ---
 
-![Image of medical staff](https://www.gov.bb/media_files/medical.jpg)
-
 ## Medical Examinations
 
 ### Where and when will the immigrant visa medical examination take place?

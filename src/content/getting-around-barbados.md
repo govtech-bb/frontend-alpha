@@ -6,8 +6,6 @@ extraction_date: 2025-10-14
 section: "Travel, ID and Citizenship"
 ---
 
-![Image of a car on a road](https://www.gov.bb/media_files/bmw-2531949_1280.jpg)
-
 ## Obtaining a Drivers Permit - Visitors and Temporary Residents
 
 A visitor or temporary resident of Barbados may obtain a temporary driving permit by applying to The Licensing Authority offices at The Pine, St. Michael, Oistins in Christ Church and Holetown in St. James at any approved hired car agency.

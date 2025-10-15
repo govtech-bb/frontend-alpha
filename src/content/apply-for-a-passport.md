@@ -8,8 +8,6 @@ section: "Travel, ID and Citizenship"
 
 ## How to Apply for a Passport
 
-![Apply for a Passport](https://www.gov.bb/media_files/apply%20passport.jpg)
-
 If you are a citizen of Barbados, you may apply for a passport from the Immigration Department in Barbados, or at one of Barbados' diplomatic and consular missions abroad.
 
 To schedule an appointment online, [click here](http://www.immigration.gov.bb/).

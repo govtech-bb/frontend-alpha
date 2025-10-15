@@ -5,7 +5,6 @@ source_url: https://www.gov.bb/Visit-Barbados/visa-information
 extraction_date: 2025-10-14
 section: "Travel, ID and Citizenship"
 ---
-![Visa](https://www.gov.bb/media_files/visa.jpg)
 
 The requisite application form should be completed in duplicate and must be accompanied by two (2) passport-size photographs.
 

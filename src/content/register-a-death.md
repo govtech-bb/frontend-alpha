@@ -6,10 +6,6 @@ extraction_date: 2025-10-14
 section: "Family, Birth and Relationships"
 ---
 
-## Registering for a Death Certificate
-
-![Death Certificate Application](https://www.gov.bb/media_files/death.jpg)
-
 Applications for death certificates are made at the Registration Department, New Supreme Court Complex White Park Road, St. Michael.
 
 Applications are processed for a fee of **BDS$5.00**. Completed application forms may also be mailed to the Registration Department and should be accompanied by a Money Order in the amount of BDS$5.00 and should be made out to the Registrar of the Supreme Court. Persons opting for this method of application should also enclose a self-addressed envelope with sufficient return postage.

@@ -6,8 +6,6 @@ extraction_date: 2025-10-14
 section: "Travel, ID and Citizenship"
 ---
 
-![Image of driver licence](https://www.gov.bb/media_files/driver%20licence%20min.jpg)
-
 ## What is a Driving Licence and Why is it Necessary?
 
 A Driving License is an official document certifying that the holder is suitably qualified to drive a motor vehicle or vehicles. Under the provisions of the Motor Vehicles Act, 1988, no person can drive a motor vehicle in any public place unless he holds a valid Driving License issued to him, authorizing him to drive a vehicle of that particular category.

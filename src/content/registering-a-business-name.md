@@ -8,8 +8,6 @@ section: "Business and Trade"
 
 ## Registering a Business Name
 
-![Offshore Business](https://www.gov.bb/media_files/offshore-business.jpg)
-
 Barbados has simple establishment requirements and procedures which combine due diligence with ease of doing business.
 
 For more information please visit [CAIPO WEBSITE](https://caipo.gov.bb/)

@@ -6,10 +6,6 @@ extraction_date: 2025-10-14
 section: "Family, Birth and Relationships"
 ---
 
-## Registering a Birth
-
-![Baby Birth](https://www.gov.bb/media_files/baby-birth.jpg)
-
 ## Who Can Register a Birth?
 
 The parents of a child are responsible for having the child's birth registered.

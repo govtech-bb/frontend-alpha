@@ -8,8 +8,6 @@ section: "Travel, ID and Citizenship"
 
 ## National Registration
 
-![Trident logo](https://www.gov.bb/media_files/trident%20logo_0.jpg)
-
 A person is qualified to be registered if they are a citizen of Barbados or a citizen of another country who has been granted permission by the Chief Immigration Officer to remain in Barbados for a period of not less than six months. Upon completion of registration, the applicant is issued a Barbados Identification (ID) card.
 
 When applying for your National Registration Number you must produce original documents or certified copies. For certified copies, the person signing the documents must write his/her name and position in block letters. Official stamps may also be used to authenticate documents.

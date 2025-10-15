@@ -6,8 +6,6 @@ extraction_date: 2025-10-14
 section: "Family, Birth and Relationships"
 ---
 
-![Airplane on runway](https://www.gov.bb/media_files/plane-2899226_640_0.jpg)
-
 ## The Bridgetown Port
 
 From the moment they arrive at the Bridgetown Port, cruise passengers can expect a warm welcome from the people of Barbados. The cheerful ambience is complemented by musical performers, organized by the BTA, who entertain arriving passengers from the quayside. They include a steel band, dancers, singer and other entertainers.

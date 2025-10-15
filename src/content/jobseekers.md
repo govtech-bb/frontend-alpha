@@ -6,8 +6,6 @@ extraction_date: 2025-10-14
 section: "Work and Employment"
 ---
 
-![Illustration of jobs and employment](https://www.gov.bb/media_files/tie-jobs.jpg)
-
 ## Overseas Employment Opportunities
 
 The Ministry of Labour and Social Partnership Relations is committed to helping you find the right job. Under the Employment Relations section, learn more about the following:

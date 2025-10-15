@@ -6,10 +6,6 @@ extraction_date: 2025-10-14
 section: "Family, Birth and Relationships"
 ---
 
-## Get a Marriage License
-
-![Documents for business or legal registration](https://www.gov.bb/media_files/business-3249933_1920_0.jpg)
-
 ## Registration for a Marriage Certificate
 
 To register the marriages you must visit the Registration Department, Coleridge Street, Bridgetown. It is the responsibility of the Marriage Officer or the Magistrate who performs the marriage to register that marriage.

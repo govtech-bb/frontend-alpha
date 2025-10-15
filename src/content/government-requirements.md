@@ -6,8 +6,6 @@ extraction_date: 2025-10-14
 section: "Business and Trade"
 ---
 
-![Business Requirements](https://www.gov.bb/media_files/business-requirements.jpg)
-
 A prospective applicant must submit a preliminary application to the Central Bank of Barbados for approval.
 
 The application for a licence must include a brief description of the nature of the international financial service to be provided from Barbados, financial projections, the names and addresses of the directors, names and addresses of the shareholders and the number of shares to be held, together with other due diligence information.
