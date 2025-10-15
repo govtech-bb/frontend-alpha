@@ -181,7 +181,7 @@ export default async function Page({ params }: ContentPageProps) {
           {frontmatter.title && (
             <Typography variant="h1">{frontmatter.title}</Typography>
           )}
-          <MigrationBanner sourceURL={frontmatter.source_url} />
+          <MigrationBanner pageURL={frontmatter.source_url} />
         </div>
         <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
           {content}
