@@ -56,5 +56,4 @@ New Passport Fees Effective December 01, 2010
 | Urgent Passport (required in 1 day)   | $300           |
 | Urgent Passport (required in 2-5 days)| $225           |
 
-Contact Us
 ```
