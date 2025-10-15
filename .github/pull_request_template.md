@@ -22,13 +22,12 @@
 - [ ] Validate markdown formatting renders properly
 - [ ] Test navigation and breadcrumbs
 
-## Related Issues
+## Related Github Issue(s)/Trello Ticket(s)
 <!-- Link any related issues: Fixes #123 -->
-N/A
+
 
 ## Checklist
 - [x] Code follows project style guidelines
 - [x] Self-review completed
 - [x] Tests added/updated (visual regression snapshots)
 - [ ] Documentation updated
-- [ ] Content review with domestic violence support organizations recommended
