@@ -27,7 +27,7 @@
 
 
 ## Checklist
-- [x] Code follows project style guidelines
-- [x] Self-review completed
-- [x] Tests added/updated (visual regression snapshots)
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Tests added/updated (visual regression snapshots)
 - [ ] Documentation updated
