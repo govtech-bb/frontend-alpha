@@ -42,7 +42,7 @@ Submit your form and supporting information to the Registration Department to th
 
 A certificate is usually ready in 2 to 3 working days. You will need to show your receipt and collect your certification from the Registration Department. 
 
-### Get a death certificate if you live overseas  
+## Get a death certificate if you live overseas  
 
 Contact the Registration Department and they will send you an Application for a death certificate form.
 
