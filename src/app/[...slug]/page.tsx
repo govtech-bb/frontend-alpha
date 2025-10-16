@@ -135,7 +135,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
           </div>
         ) : null}
 
-        {frontmatter.source_url.length > 0 ? (
+        {frontmatter.source_url?.length > 0 ? (
           <MigrationBanner pageURL={frontmatter.source_url} />
         ) : null}
       </div>
