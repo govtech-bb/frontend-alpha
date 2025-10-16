@@ -121,9 +121,8 @@ export default async function Page({ params }: ContentPageProps) {
     return (
       <div className="space-y-4 px-4 pb-8">
         <div className="space-y-4 pb-4">
-          <MigrationBanner />
           <Typography variant="h1">{category.title}</Typography>
-
+          <MigrationBanner />
           {category.description
             ?.split("\n")
             .map((line: string, _index: number) => (

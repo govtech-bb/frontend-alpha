@@ -1,9 +1,9 @@
 ---
-title: "Apply for a child to enter state daycare"
-description: "An overview of Barbados' main ports of entry: Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles marina."
+title: "Ports of Entry"
+description: "Information on the various ports of entry into Barbados, including the Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles."
 source_url: https://www.gov.bb/Visit-Barbados/ports-of-entry
 extraction_date: 2025-10-14
-section: "Family, Birth and Relationships"
+section: "Travel, ID and Citizenship"
 ---
 
 ## The Bridgetown Port

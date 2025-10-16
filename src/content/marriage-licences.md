@@ -29,14 +29,22 @@ Application for a marriage licence must be made by **both** (male and female) pe
 **\*A Notary Public is a person authorized to perform certain legal formalities, especially to draw up or certify contracts, deeds, and other documents for use in other jurisdictions.**
 
 *   The letter from the Marriage Officer should be addressed to:
-
-**The Permanent Secretary, Home Affairs**␣␣
-**Ministry of Home Affairs and Information**␣␣
-**Jones Building**␣␣
-**Webster's Business Park**␣␣
-**Wildey**␣␣
-**St. Michael**␣␣
-**BARBADOS**
+    \
+    \
+    **The Permanent Secretary, Home Affairs** 
+    \
+    **Ministry of Home Affairs and Information**
+    \
+    **Jones Building**
+    \
+    **Webster's Business Park**
+    \
+    **Wildey**
+    \
+    **St. Michael**
+    \
+    **BARBADOS**
+    
 
 *   It should be dated and include the following:
 
@@ -101,19 +109,28 @@ In such instances, an **additional fee** of BDS $100.00 or USD $50.00 is require
 
 A marriage certificate or a copy can **only** be obtained from the Registration Department. The address is:
 
-**The Registrar of the Supreme Court**␣␣
-**Registration Department**␣␣
-**Judicial Centre**␣␣
-**White Park Road**␣␣
-**St. Michael**␣␣
+**The Registrar of the Supreme Court**
+\
+**Registration Department**
+\
+**Judicial Centre**
+\
+**White Park Road**
+\
+**St. Michael**
+\
 **BARBADOS**
 
-Telephone No.: (246) 535-9700␣␣
+Telephone No.: (246) 535-9700
+\
 Fax No.: (246) 426-2405
 
 Telephone No.: (246) 536-3507 / 3504 / 3631
 
-E-Mail Address: [registrar@lawcourt.gov.bb](mailto:registrar@lawcourt.gov.bb)␣␣
+E-Mail Address: 
+\
+[registrar@lawcourt.gov.bb](mailto:registrar@lawcourt.gov.bb)
+\
 [correspondenceregistration@live.com](mailto:correspondenceregistration@live.com)
 
 ## Registration Department's Office Hours

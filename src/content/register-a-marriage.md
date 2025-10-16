@@ -11,7 +11,9 @@ section: "Family, Birth and Relationships"
 To register the marriages you must visit the Registration Department, Coleridge Street, Bridgetown. It is the responsibility of the Marriage Officer or the Magistrate who performs the marriage to register that marriage.
 
 **Registration for a Marriage Certificate is free of cost.**
+\
 **A fee of $10.00 (per copy) is charged to (Nationals) for the certificate.**
+\
 **A fee of $20.00 (per copy) is charged to (Non-Nationals) for the certificate.**
 
 ## Document to be Produced
