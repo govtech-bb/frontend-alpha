@@ -1,0 +1,26 @@
+---
+title: "Environmental Protection Department"
+description: "To protect and improve Barbados' quality of life and its natural and built environment, through the promotion of sustainable practices, education, partnerships and the enforcement of legislation."
+source_url: https://www.gov.bb/Departments/environmental-protection
+extraction_date: 2025-10-14
+section: "Government, Democracy and Civic Life"
+---
+
+To protect and improve Barbados' quality of life and its natural and built environment, through the promotion of sustainable practices, education, partnerships and the enforcement of legislation.
+
+## Contact Information
+
+Mr. Anthony Headley  
+Director
+
+L.V. Harcourt Lewis Building  
+Dalkeith  
+St. Michael  
+Barbados, W.I.
+
+PBX: (246) 535-4600  
+Director: 535-4601  
+Deputy Director: 535-4602  
+Chief Buildings Development Officer: 535-4604  
+Email: epd.secretary@epd.gov.bb
+```
