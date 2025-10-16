@@ -39,14 +39,6 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to register a marriage certificate in Barbados, including required documents and contact details for the Registration Department.",
         extraction_date: "2025-10-13",
       },
-      {
-        title: "Apply for a child to enter state daycare",
-        slug: "apply-for-a-child-to-enter-state-daycare",
-        source_url: "https://www.gov.bb/Visit-Barbados/ports-of-entry",
-        description:
-          "Information on the various ports of entry into Barbados, including the Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles.",
-        extraction_date: "2025-10-13",
-      },
     ],
   },
   {
@@ -62,6 +54,13 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on overseas and public sector employment opportunities in Barbados.",
         extraction_date: "2025-10-13",
       },
+    ],
+  },
+  {
+    title: "Money and financial support",
+    slug: "money-financial-support",
+    description: "Get help with money, benefits, taxes or government payments",
+    pages: [
       {
         title: "EZPay",
         slug: "ezpay",
@@ -80,12 +79,6 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       },
     ],
   },
-  // {
-  //   title: "Money and financial support",
-  //   slug: "money-financial-support",
-  //   description: "Get help with money, benefits, taxes or government payments",
-  //   pages: [],
-  // },
   // {
   //   title: "Education, youth and learning",
   //   slug: "education-youth-learning",
@@ -160,6 +153,14 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         source_url: "https://www.gov.bb/Visit-Barbados/local-information",
         description:
           "General information for visitors to Barbados, including its rank as a top Caribbean travel destination.",
+        extraction_date: "2025-10-13",
+      },
+      {
+        title: "Ports of Entry",
+        slug: "ports-of-entry",
+        source_url: "https://www.gov.bb/Visit-Barbados/ports-of-entry",
+        description:
+          "Information on the various ports of entry into Barbados, including the Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles.",
         extraction_date: "2025-10-13",
       },
     ],

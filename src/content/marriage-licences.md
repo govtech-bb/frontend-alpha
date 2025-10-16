@@ -29,14 +29,22 @@ Application for a marriage licence must be made by **both** (male and female) pe
 **\*A Notary Public is a person authorized to perform certain legal formalities, especially to draw up or certify contracts, deeds, and other documents for use in other jurisdictions.**
 
 *   The letter from the Marriage Officer should be addressed to:
-
-**The Permanent Secretary, Home Affairs**␣␣
-**Ministry of Home Affairs and Information**␣␣
-**Jones Building**␣␣
-**Webster's Business Park**␣␣
-**Wildey**␣␣
-**St. Michael**␣␣
-**BARBADOS**
+    \
+    \
+    **The Permanent Secretary, Home Affairs** 
+    \
+    **Ministry of Home Affairs and Information**
+    \
+    **Jones Building**
+    \
+    **Webster's Business Park**
+    \
+    **Wildey**
+    \
+    **St. Michael**
+    \
+    **BARBADOS**
+    
 
 *   It should be dated and include the following:
 
