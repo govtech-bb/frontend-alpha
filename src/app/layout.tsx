@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
 export const metadata: Metadata = {
-  title: "GovTech Barbados Alpha",
+  title: "The Government of Barbados - Official Website",
   description: "A project by the GovTech Barbados team",
   robots: {
     index: false,
