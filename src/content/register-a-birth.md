@@ -24,7 +24,7 @@ Before a birth certificate can be issued, the birth must be registered. The cert
 
 ## Who should register a birth?
 
-You cannot register a birth online yet, so you need to do it in person in the district where the child was born.
+You cannot register a birth online yet, so you need to do it in person in the district where the child was born. 
 
 If the parents are:
 
@@ -32,7 +32,7 @@ If the parents are:
 
 - not married to each other, the mother must register the birth but it is not necessary for the father to attend
 
-- not married to each other but the father wants to be named on the birth record, both parents must register the birth together 
+- not married to each other but the father wants to be named on the birth record, both parents must register the birth together
 
 You do not need to take the baby.
 
@@ -51,7 +51,7 @@ For Barbadian citizens, your Barbados National ID card, valid passport or other 
 
 #### Parents who are minors
 
-If you are a mother or a father and you are under 16 years old, you are considered a minor. 
+If you are a mother or a father and you are under 16 years old, you are considered a minor.
 
 If you have a valid passport, you must bring:
 
@@ -61,7 +61,8 @@ If you have a valid passport, you must bring:
 
 - the child’s medical book (green book)
 
-- You must be accompanied by your parent(s) or guardian(s).
+You must be accompanied by your parent(s) or guardian(s).
+
 
 If you do not have a valid passport, you must bring:
 
@@ -93,7 +94,7 @@ St. Michael
 
 ## Late registrations
 
-Births must be registered within 28 days of the child being born. There is a grace period of 1 year but after this point, the parent or guardian must engage a legal assistant from the Registrations Department to help with the late registration process. You will need to pay a late registration fee of BDS $20.00. 
+Births must be registered within 28 days of the child being born. There is a grace period of 1 year but after this point, the parent or guardian must engage a legal assistant from the Registrations Department to help with the late registration process. You will need to pay a late registration fee of BDS $20.00.
 
 ---
 
@@ -101,26 +102,28 @@ Births must be registered within 28 days of the child being born. There is a gra
 
 You cannot register a birth online yet, so you need to do it in person in the district where the child was born. Even if this is not the closest magistrate’s court to where you live.
 
-#### Born in St. Michael (Bridgetown)
+#### Born in St. Michael (District A)
 
 Go to the Registration Department (Records Branch), in the Supreme Court Complex, Whitepark Road, St. Michael
 
 #### Born in Christ Church or St. George
 
-Go to the District B Magistrate’s Court, Saint George
+Go to the District B Magistrate’s Court, currently located at the Eric Holder Municipal Complex, Blackmans, St. Joseph 
 
 #### Born in St. Philip or St. John
 
-Go to the District C Magistrate’s Court
+Normally located at the District C Magistrate’s Court, St. Matthias, Christ Church, currently located at the Registration Department, in the Supreme Court Complex, Whitepark Road, St. Michael
 
 #### Born in St. Thomas
 
-Go to the District D Magistrate’s Court, Bridgefield, Saint Thomas
+Go to the District D Magistrate’s Court, Cane Carden St. Thomas
 
 #### Born in St. Peter, St. James, or St. Lucy
 
-Go to the District E Magistrate’s Court
+Go to the District E Magistrate’s Court, Holetown, St. James
 
 #### Born in St. Joseph or St. Andrew
 
-Go to the District F Magistrate’s Court, Bowling Alley Hill, Saint Joseph
+Go to the District F Magistrate’s Court, Eric Holder Municipal Complex, Blackmans, Saint Joseph
+
+If you are unsure of your district please contact the Registration Department at the Supreme Court.
