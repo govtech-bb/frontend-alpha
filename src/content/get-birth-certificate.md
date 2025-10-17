@@ -1,51 +1,52 @@
 ---
 title: "Get a Birth Certificate"
 stage: "alpha"
+featured: true
 ---
 
-Parents and guardians can use this service to get a birth certificate, or a copy of a birth certificate, for their child if their child’s birth was registered in Barbados. Authorised representatives are also eligible to use this service.
+Parents and guardians can use this service to get a birth certificate for their child if their child’s birth was registered in Barbados.
 
-Most birth certificates and copies are requested at the same time a birth is registered, because a certificate is essential for access to certain public services. However, certificates and copies can be requested at any point.
+Most birth certificates are requested at the same time a birth is registered because a certificate is essential for access to certain public services. Certificates for Barbadian citizens can be requested at any point.
 
 ## How to get a certificate
 
-You cannot request a certificate online yet, so you need to get an Application for birth certificate form from the Registration Department in person, and complete it by hand.
+You cannot request a certificate online yet, so you need to collect an Application for birth certificate form from the Registration Department, and complete it by hand.
+
+Registration Department  
+Supreme Court Complex  
+Whitepark Road  
+St. Michael  
+(246) 535-9700  
+Open Monday to Friday: 8:30am and 3:15pm  
 
 ### Complete the form
 
-The form asks for the name and date of birth of the person whose birth certificate is requested, as well as the name of their parent(s).
+The form asks for:
 
-### Gather your supporting information
-
-You will need to share:
-
-- a photocopy \[photo/scan?] of your ID. For example, \[xxx]
-
-- proof you have been authorised to apply on behalf of another person. For example, \[xxx]
+- the child’s full name
+- the child’s date of birth
+- the child’s place of birth
+- the parents’ full names 
+- the mother’s maiden name 
 
 ### Pay the fee
 
-You can pay in cash or by card at the Registration Department. You will need to keep your receipt for collection.\
-The original certificate costs BDS $5.00. Additional copies are available for BDS $5.00 each. People aged 60 and over pay a discounted fee of BDS $1.00 per certificate. 
+Each certified copy costs BDS $5.00. People aged 60 and over pay BDS $1.00 per certificate. You can pay in cash or by card at the Registration Department. You will need to keep your receipt for collection. 
 
 ### Submit your request
 
-Submit your form and supporting documents to the Registration Department to the certificate clerk. 
-
+Submit your form and receipt to the Applications Desk.  
 
 ## After your request is processed
 
 A certificate is usually ready in 2 to 3 working days. You will need to show your receipt and collect your certification from the Registration Department.
 
-A certificate can sometimes be issued on the same day but this depends on the registry office. 
+A certificate can sometimes be issued on the same day but this depends on the registry office.
 
+## Get a birth certificate if you live overseas 
 
-### Get a birth certificate if you live overseas 
+Contact the Registration Department.
 
-Contact the Registration Department and they will send you an Application for a birth certificate form.
-
-Complete the form.
-
-Send a money order for BDS $ \[xx] to cover the cost of the certificate and the processing fee. There will be an additional cost depending on the return postage fee. Money orders should be made out to the Registrar of the Supreme Court.
-
-Include your return address.
+registrarsupremecourt@barbados.gov.bb  
+(246) 535-9700  
++1 (246) 535-9751 (if you are calling from overseas)  
