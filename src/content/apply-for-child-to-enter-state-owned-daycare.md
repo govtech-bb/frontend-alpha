@@ -1,54 +1,69 @@
 ---
 title: "Apply for child to enter state owned daycare"
 stage: "alpha"
+featured: true
 ---
 
-Parents and guardians of children under the age of 5 can apply for them to go to a government-run daycare nursery.
-
-Children from families with a lower income are prioritised.
+Parents and guardians of children under the age of 5 can apply for them to go to a government-run day nursery. Nursery places are decided on a case-by-case basis. It is a good idea to apply for at least 3 nurseries.
 
 ## When to apply
 
+You can apply for a place as soon as a child is born. However, if your application is successful, the child cannot start attending the nursery until they are 3 months old. 
+
+Applications are open all year round. 
+
 ## How to apply
 
-#### Get an application form
+### Get an application form
 
-You cannot apply online yet so you need to collect an application form from the Child Care Board (Fred Edghill Building, Cheapside, St. Michael) or ministry office. The form asks:
+This service is not available online yet so you must go to each nursery you want to apply to. (Three is recommended). A supervisor completes an application form for you, and will ask:
 
-- \[which nursery you want your child to go to?]
-- \[Xx]
-- \[xx]
+- your name 
 
-#### Gather your supporting documents
+- your address
 
-You will need to share:
+- your contact number
 
-1. A photocopy of the child’s birth certificate.
-2. Proof of \[your/the child’s?] address, for example, \[xxx]
-3. A photocopy of your ID, for example, \[xxx]
-4. Proof of your income or employment, for example, \[xxx].  
-   (Children from working families will be prioritised).
+- the child’s name
 
-#### Submit your application
+- the child’s date of birth
 
-You can submit your application form and supporting information:
+- the child’s sex
 
-1. In person – take it to the Child Care Board or ministry office.
-2. By post – send it to \[xxx].
+- if the child has allergies and/or medical conditions 
+
+- your relationship to the child
+
+### What to take
+
+You will need to take your child’s Green Book which has their medical background recorded.
+
+### Before you leave the nursery
+
+The supervisor will give you a copy of the completed form. You should refer to the application number on the form if you need to contact the nursery again.
 
 ## After you’ve applied
 
-\[who] will check your eligibility and whether there’s space for your child in the nursery you’ve applied to.
+The supervisor and a senior officer for the daycare programme will check your eligibility and whether there’s space for your child in the nursery you’ve applied to.
 
-You can expect to get a \[call/email/letter?] [from who?] within [how long?] to let you know if your application was successful.
+### If your application is successful
 
-If your child is eligible and a place is available, they will be enrolled in daycare at the start of the new term.
+If your child is eligible and a place is available, they will be enrolled at the nursery immediately, or, at the start of the new term in September.
 
-If your child is eligible and a place is not currently available, they will be put on a waiting list and you will be contacted if a place becomes available.
+Before your child begins daycare, you will be invited to an orientation session so you can get to know the nursery, sign the acceptance document, and recap on your child’s allergies and medical conditions
 
-If your child is ineligible, \[who] will let you know.
+### What to bring to the orientation
+
+You will need to share:
+
+1. A photocopy of the child’s birth certificate to confirm their mother’s, father’s name if included and the child’s date of birth.
+
+2. Passport-sized photo of child for identification and their file
+
+### If your application is unsuccessful
+
+If your child is eligible but a place is not currently available, they will be put on a reserve list.
 
 ## Accessibility
 
-If you need help with your application form, visit the Child Care Board.  
-If you cannot collect an application form in person \[do what?]
+If you cannot attend the nursery to complete an application form, you can send a representative. However, a parent or guardian must attend the orientation session.
