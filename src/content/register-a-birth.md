@@ -1,10 +1,10 @@
 ---
 title: "Register a birth"
 stage: "alpha"
-featured: false
+featured: true
 ---
 
-It is a legal requirement that all births in Barbados (including stillbirths) are registered within 28 days.
+It is a legal requirement that all births in Barbados (including stillbirths) are registered within 28 days. However, there is a grace period of 1 year. After this point, you will pay a late registration fee.
 
 Before a birth certificate can be issued, the birth must be registered. The certificate is essential for access to public services including school enrollment and certain health services.
 
@@ -18,7 +18,7 @@ Before a birth certificate can be issued, the birth must be registered. The cert
 
 3. When you have reviewed and confirmed the details, the registration clerk will ask you to sign the official register.
 
-4. The clerk will begin the process of issuing a birth certificate. A certificate can sometimes be issued on the same day but this depends on the registry office. The original certificate costs BDS $5.00. Additional copies are available for BDS $5.00 each. People aged 60 and over pay a discounted fee of BDS $1.00 per certificate.  
+4. The clerk will begin the process of issuing a birth certificate which will be ready to collect in 2 to 3 days. Each certified copy costs BDS $5.00.
 
 ---
 
@@ -42,36 +42,58 @@ You do not need to take the baby.
 
 You need to show:
 
-1. Your child’s Personal Child Health Record from the hospital or medical professional (sometimes called the immunisation book or birth notification).
+1. Your child’s Personal Child Health Record from the hospital or birthing centre (sometimes called the immunisation book or birth notification).
 
-2. A valid form of photo identification for each parent who will be named on the birth record.For Barbadian citizens, your Barbados National ID card, passport or other government-issued ID is acceptable. Non-Barbadian nationals must show their passport.
+2. A valid form of photo identification for each parent who will be named on the birth record.  
+For Barbadian citizens, your Barbados National ID card, valid passport or other government-issued ID is acceptable. Non-Barbadian nationals must show their valid passport.
 
-3. Your marriage certificate if you are married to the child’s other parent.
+3. Your original marriage certificate if you are married to the child’s other parent.
 
 #### Parents who are minors
 
-If you are a mother or a father and you are 18 years old or younger, you must bring:
+If you are a mother or a father and you are under 16 years old, you are considered a minor. 
 
-1. Your own birth certificate or passport.
+If you have a valid passport, you must bring:
 
-2. The minor's identification card.
+- your valid passport
 
-3. A passport-sized photograph of yourself that has been certified by a Justice of the Peace. 
+- your original birth certificate
+
+- the child’s medical book (green book)
+
+- You must be accompanied by your parent(s) or guardian(s).
+
+If you do not have a valid passport, you must bring:
+
+- your minor’s identification card
+
+- your original birth certificate
+
+- the child’s medical book (green book)
+
+- an identification letter signed by a Justice of the Peace
+
+You must be accompanied by your parent(s) or guardian(s). 
+
+If you don’t meet these criteria, contact the Registrations Department.
 
 ---
 
 ## If you are unable to register the birth in person
 
-If you are unable to attend in person, contact the Registration Department in Bridgetown as soon as possible after the child is born. 
+If you are unable to attend in person, contact the Registration Department in Bridgetown as soon as possible after the child is born.
 
-Registration Department, Supreme Court Complex, Whitepark Road, St. Michael
-(246) 434-9970
+Registration Department  
+Supreme Court Complex  
+Whitepark Road  
+St. Michael  
+(246) 535-9700  
 
 ---
 
 ## Late registrations
 
-Births must be registered within 28 days of the child being born. The process to register a birth after this time is the same but you will be charged BDS $20.00. 
+Births must be registered within 28 days of the child being born. There is a grace period of 1 year but after this point, the parent or guardian must engage a legal assistant from the Registrations Department to help with the late registration process. You will need to pay a late registration fee of BDS $20.00. 
 
 ---
 
@@ -85,7 +107,7 @@ Go to the Registration Department (Records Branch), in the Supreme Court Complex
 
 #### Born in Christ Church or St. George
 
-Go to the District B Magistrate’s Court, Workmans, Saint George
+Go to the District B Magistrate’s Court, Saint George
 
 #### Born in St. Philip or St. John
 
@@ -102,5 +124,3 @@ Go to the District E Magistrate’s Court
 #### Born in St. Joseph or St. Andrew
 
 Go to the District F Magistrate’s Court, Bowling Alley Hill, Saint Joseph
-
-If you are not sure which district your child was born in, contact the Registration Department in the Supreme Court Complex on (246) 434-9970
