@@ -66,9 +66,9 @@ export function SimpleFeedbackForm() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="mb-6 space-y-6">
       {submitStatus === "success" ? (
-        <div className="gap-2 space-y-2 bg-[#DEF5F6] p-6">
+        <div className="gap-2 space-y-2 border-4 border-teal-bright bg-teal-light p-6">
           <Typography className="font-bold text-black" variant="paragraph">
             Thank you for your feedback.
           </Typography>
@@ -84,13 +84,13 @@ export function SimpleFeedbackForm() {
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
-              className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
+              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
               htmlFor="visitReason"
             >
               Why did you visit alpha.gov.bb?
             </label>
             <textarea
-              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
+              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-teal-bright focus:ring-2 focus:ring-teal-bright/20"
               id="visitReason"
               name="visitReason"
               onChange={handleChange}
@@ -101,13 +101,13 @@ export function SimpleFeedbackForm() {
 
           <div>
             <label
-              className="mb-2 block font-bold text-[20px] text-gray-900 leading-[150%]"
+              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
               htmlFor="whatWentWrong"
             >
               What went wrong?
             </label>
             <textarea
-              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-[#30C0C8] focus:ring-2 focus:ring-[#30C0C8]/20"
+              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-teal-bright focus:ring-2 focus:ring-teal-bright/20"
               id="whatWentWrong"
               name="whatWentWrong"
               onChange={handleChange}
@@ -119,7 +119,7 @@ export function SimpleFeedbackForm() {
           <input name="referrer" type="hidden" value={formData.referrer} />
 
           <button
-            className="w-full rounded bg-[#1E787D] px-6 py-3 font-normal text-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
+            className="w-full rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
             disabled={isSubmitting}
             type="submit"
           >

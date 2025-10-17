@@ -59,8 +59,8 @@ const components: Components = {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
-      ? "underline text-[20px]"
-      : "text-[#00654A] underline text-[20px]";
+      ? "underline"
+      : "text-teal-dark underline leading-[150%]";
 
     return (
       <a
@@ -119,33 +119,32 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     return (
-      <div className="space-y-4 px-4 pb-8">
-        <div className="space-y-4 pb-4">
-          <Typography variant="h1">{category.title}</Typography>
-          <MigrationBanner />
-          {category.description
-            ?.split("\n")
-            .map((line: string, _index: number) => (
-              <Typography key={_index} variant="paragraph">
-                {line}
-              </Typography>
-            ))}
+      <div className="space-y-4 lg:space-y-8">
+        <Typography variant="display">{category.title}</Typography>
+        <MigrationBanner />
 
-          <div className="flex flex-col">
-            {category.pages.map((service) => (
-              <div
-                className="my-2 border-gray-200 border-b-2 pb-4 last:border-0"
-                key={service.title}
+        {category.description
+          ?.split("\n")
+          .map((line: string, _index: number) => (
+            <Typography key={_index} variant="body">
+              {line}
+            </Typography>
+          ))}
+
+        <div className="flex flex-col divide-y-2 divide-neutral-grey lg:last:border-neutral-grey lg:last:border-b-2">
+          {category.pages.map((service) => (
+            <div
+              className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
+              key={service.title}
+            >
+              <Link
+                className="cursor-pointer font-bold text-[20px] text-teal-dark leading-[150%] underline underline-offset-2 lg:text-3xl"
+                href={`/content/${categorySlug}/${service.slug}`}
               >
-                <Link
-                  className="cursor-pointer font-normal text-[#1E787D] text-[20px] leading-[150%] underline underline-offset-2"
-                  href={`/content/${categorySlug}/${service.slug}`} // TODO update link when pages are ready
-                >
-                  {service.title}
-                </Link>
-              </div>
-            ))}
-          </div>
+                {service.title}
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -175,7 +174,7 @@ export default async function Page({ params }: ContentPageProps) {
     const { frontmatter, content } = markdownContent;
 
     return (
-      <div className="space-y-4 px-4 pb-8">
+      <div className="space-y-4 pb-8">
         <div className="space-y-4 pb-4">
           {frontmatter.title && (
             <Typography variant="h1">{frontmatter.title}</Typography>
