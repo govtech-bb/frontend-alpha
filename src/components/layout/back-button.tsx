@@ -5,28 +5,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { generateBreadcrumbs } from "@/lib/breadcrumbs";
 import { cn } from "@/lib/utils";
+import { ChevronLeftSVG } from "../icons/chevron-left";
 
 type BackButtonProps = {
   className?: string;
   mode?: "back" | "breadcrumbs";
 };
-
-export const ChevronLeftSVG = ({ className = "" }: { className: string }) => (
-  <svg
-    className={className}
-    fill="none"
-    height="8"
-    viewBox="0 0 11 8"
-    width="11"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <title>Chevron Left</title>
-    <path
-      d="M6.42116 5C6.50226 5.90417 6.70318 6.82308 6.9988 8C4.80744 5.55882 3.49691e-07 4 3.49691e-07 4C3.49691e-07 4 4.31088 2.76471 7 1.27146e-07C6.70717 1.20568 6.52523 2.15831 6.43953 3L11 3L11 5L6.42116 5Z"
-      fill="#0E5F64"
-    />
-  </svg>
-);
 
 export const BackButton = ({
   className = "",
@@ -61,7 +45,7 @@ export const BackButton = ({
           <div className="flex items-center gap-2" key={crumb.href}>
             {index > 0 && <ChevronLeftSVG className="mr-2" />}
             <Link
-              className="text-[#00654A] text-[20px] underline"
+              className="text-[20px] text-teal-dark underline"
               href={crumb.href}
             >
               {crumb.label}
@@ -70,7 +54,7 @@ export const BackButton = ({
         ))
       ) : (
         <Link
-          className="flex cursor-pointer items-center text-[#00654A] text-xl underline"
+          className="lg-[170%] flex cursor-pointer items-center text-teal-dark text-xl leading-[150%] underline"
           href={breadcrumbs.at(-1)?.href || "/"}
           type="button"
         >
