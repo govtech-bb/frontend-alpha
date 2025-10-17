@@ -20,7 +20,10 @@ export function FeedbackLink({ children, className }: FeedbackLinkProps) {
 
   return (
     <Link
-      className={className ?? "text-xl underline underline-offset-2"}
+      className={
+        className ??
+        "text-xl leading-[150%] underline underline-offset-2 lg:text-[1.5rem] lg:leading-[170%]"
+      }
       href="/feedback"
       onClick={handleClick}
     >

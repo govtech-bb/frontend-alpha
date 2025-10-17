@@ -57,8 +57,8 @@ const components: Components = {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
-      ? "underline text-[20px]"
-      : "text-[#00654A] underline text-[20px]";
+      ? "underline"
+      : "text-teal-dark underline leading-[150%]";
 
     return (
       <a
@@ -112,7 +112,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
   const { frontmatter, content } = result;
 
   return (
-    <div className="space-y-4 px-4 pb-8">
+    <div className="space-y-4 pb-8">
       <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
@@ -127,7 +127,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
           ))}
 
         {frontmatter.stage?.length > 0 ? (
-          <div className="border-[#409CF8] border-r-4 border-l-4 bg-[#B3D9FF]/30 px-4 py-3">
+          <div className="border-blue-bright border-r-4 border-l-4 bg-blue-light/30 px-4 py-3">
             <Typography variant="paragraph">
               This Page is in{" "}
               <span className="capitalize underline">{frontmatter.stage}</span>.

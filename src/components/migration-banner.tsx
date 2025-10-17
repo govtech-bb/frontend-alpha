@@ -10,7 +10,7 @@ export const MigrationBanner = ({
   pageURL,
   url = "https://www.gov.bb",
 }: MigrationBannerProps) => (
-  <div className="space-y-4 border-[#FF94D9] border-r-4 border-l-4 bg-[#FFF4FB] px-4 py-3">
+  <div className="space-y-4 border-pink-bright border-r-4 border-l-4 bg-exp-pink-10 px-4 py-3">
     <Typography variant="paragraph">
       This {pageURL ? "page" : "content"} was originally published on{" "}
       <Link
@@ -25,7 +25,7 @@ export const MigrationBanner = ({
     </Typography>
     {pageURL ? (
       <Link
-        className="text-xl underline"
+        className="text-xl underline lg:text-[1.5rem] lg:leading-[170%]"
         href={pageURL}
         rel="noopener noreferrer"
         target="_blank"
