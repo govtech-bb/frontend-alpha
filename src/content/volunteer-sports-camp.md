@@ -1,28 +1,34 @@
 ---
 title: "Apply to volunteer at a sports camp"
 stage: "alpha"
+featured: true
 ---
 
-Adults and young people aged 16 and over are eligible to apply to volunteer at a sports camp. Sports camps take place over the summer and are part of the wider, government-run summer camp programme.
-
+Adults and young people aged 19 and over are eligible to apply to volunteer at a sports camp. Sports camps take place over the summer, but you can apply all year round. Recruitment usually begins around April.
 
 ## How to apply 
 
-### How to get a form
+### Get an application form
 
-Currently, applications are paper-based. You can find the application form:
+You can collect an application form from:
 
-- online \[where?], and you will need to print it and complete it
+National Sports Council office  
+My Lords Hill  
+Bridgetown  
+St Michael
 
-- in public offices such as \[??] 
+Wildey Gymnasium  
+Garfield Sobers Complex  
+Wildey  
+St. Michael
 
-If you would like to apply but cannot access an application form, \[what should they do?]
-
-### What you will be asked about
+### Complete it
 
 As well as your contact details, the application form asks about your:
 
-- qualifications, skills and interest in sports
+- qualifications and skills in sports
+
+- which sports you have a particular interest in
 
 - previous experience at camps
 
@@ -32,33 +38,26 @@ As well as your contact details, the application form asks about your:
 
 - health
 
-### Information you need to share
+### Gather your supporting information
 
-The application form also asks you to:  
+The application form also asks you to:
 
-1. Share a photocopy of your National Registration card.
+1. Share your National Registration number.
 
-2. Give the names and contact details of 3 references.
+2. Give the names and contact details of 2 references.
 
-3. Share a photocopy of your health certificate.
+3. Get a passport-sized photo for your camp identification.
+
+## If your application is successful 
+
+You can apply to volunteer at a sports camp all year round but recruitment usually begins around April. Applicants can expect to hear if they were successful by mid-June. If you are offered a place as a volunteer, you need to be free to complete training in June.
 
 ### Information you might need to share
 
 If your application is successful, further background checks will be carried out as part of the safeguarding process for children and young people. At a later date, you may also be asked to:
 
-1. Share a Police Certificate of Character – you can [apply for one here](https://forms.gov.bb/CertificateOfCharacter).  
+1. Share a Police Certificate of Character – you can [apply for one here](https://forms.gov.bb/CertificateOfCharacter).
 
-2. Attend an interview.
+2. Attend training (this includes safeguarding training).
 
-### Submit your application
-
-When you have completed the form and gathered your documents you should:
-
-- send them to \[xx]
-
-- take them to \[xx this might be a different place to above?]
-
-
-### If your application is successful 
-
-You can apply to volunteer at a sports camp all year round but recruitment usually begins around April. Applicants can expect to hear if they were successful by mid-June. If you are offered a place as a volunteer, you need to be free to complete training in June. 
+3. Attend an interview.
