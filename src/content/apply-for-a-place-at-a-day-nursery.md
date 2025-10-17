@@ -1,5 +1,5 @@
 ---
-title: "Apply for child to enter state owned daycare"
+title: "Apply for a place at a day nursery"
 stage: "alpha"
 featured: true
 ---
