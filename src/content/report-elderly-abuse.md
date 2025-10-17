@@ -1,50 +1,53 @@
 ---
 title: "Report elderly abuse"
 stage: "alpha"
+featured: true
 ---
 
-If you are concerned about the welfare of an elderly person, you should use this service to report it to the authorities so they can investigate and intervene. Friends and family, members of the public, caregivers or professionals can report suspected abuse, neglect or mistreatment. The victim can also file a report themself.
+If you are concerned about the welfare of an elderly person, you should use this service to report it to the authorities so they can investigate and intervene. 
+
+Friends and family, members of the public, caregivers or professionals can report suspected abuse, neglect or mistreatment. The victim can also file a report themself.
 
 ## What abuse, neglect and mistreatment mean
 
-If you are unsure whether what you suspect or have witnessed is abuse, neglect or mistreatment, here are the definitions.
+If you are unsure whether what you suspect or have witnessed is abuse, neglect or mistreatment, here is The World Health Organisation’s definition: 
 
-**Abuse** – treating someone cruelly or violently, once or multiple times.
-
-**Neglect** – continuously failing to meet someone’s basic needs such as food, shelter, clothing, emotional support, and medical care.
-
-**Mistreatment** – threatening, humiliating or belittling behaviour that disrespects someone’s dignity.
-
-## Where to report a concern 
-
-You cannot report your concern online yet, so you need to do it in person. If you are concerned about:
-
-- Abuse – go to your local police station to file a report
-
-- Neglect and/or mistreatment – go to \[social care or welfare department] to file a report.
-
-In an emergency, call the police on \[number]
+A single or repeated act, or lack of appropriate action, occurring within any relationship where there is an expectation of trust, which causes harm or distress to an older person. This type of violence constitutes a violation of human rights and includes physical, sexual, psychological and emotional abuse; financial and material abuse; abandonment; neglect; and serious loss of dignity and respect.
 
 ## How to report a concern
 
-At the police station or the social care or welfare department, \[you will be given a form to complete / a government official will ask you questions so they can complete a report on your behalf]
+### Visit, call or email
 
-The \[form asks about/the official] will ask you for:
+You cannot report your concern online yet, so you need to either:
+
+1. Go to a police station, or call on 211. You will be directed to the relevant station. 
+
+2. Go to, call or email the National Assistance Board. You will be put in touch with a welfare officer.
+
+Country Rd  
+National Assistance Board  
+Bridgetown  
+Saint Michael  
+(246) 535-3131  
+nab.department@barbados.gov.bb  
+
+### Speak to a welfare officer
+
+A welfare officer will ask you:
+
 
 1. The name, age and address of the elderly person.
 
 2. The nature of your concern.
 
-3. Evidence if it is available. For example, medical reports and/or photographs of injury. They will also ask the name of any witnesses so they can ask them for a statement.
+3. If there is any evidence available. For example, medical reports and/or photographs of injury.
 
-4. Information about the person or people who you suspect – or know to be – responsible.
+4. The name of any witnesses so they can ask them for a statement.
 
-5. Your contact information. You can also remain anonymous.
+5. Information about the person or people who you suspect – or know to be – responsible.
+
+6. Your contact information. But you can choose to remain anonymous. 
 
 ## After you report a concern
 
-The relevant authority will open a case as soon as possible and begin its investigation into whether the elderly person is in danger and if intervention is needed. For example, it may put a protection order in place, or arrange for the victim to move to a safe place.
-
-## If you cannot report a concern in person
-
-If you have difficulty reporting a concern in person, you can contact the Ministry or Social Empowerment Agency for help.
+The police or the National Assistance Board will do an assessment as soon as possible and investigate whether an intervention is needed. If it is, the welfare officer and a police person may help arrange for the victim to move to a safe place until conflict is resolved. This might mean that the elderly person stays with family or friends.  
