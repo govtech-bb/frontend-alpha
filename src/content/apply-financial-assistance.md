@@ -32,7 +32,7 @@ You can apply for assistance for a range of reasons, including if you:
 
 ## How to apply for financial assitance
 
-### Apply in person
+### Apply online or in person
 
 You can apply for financial assistance either by:
 
@@ -52,9 +52,14 @@ Country Road
 Bridgetown  
 St. Michael
 
+2. Completing the online form: [Application for National Assistance](https://forms.office.com/Pages/ResponsePage.aspx?id=web15Rec90GA3HzH5NzlKVed1WgQV8FEk5jHDILeRuRUNTIzQ0QyODA2OEpTOUkyVzNVVEFWS1RJMi4u)  
+   It will automatically be submitted to the department.
+
 ### What to bring
 
-You will need to bring:
+If you use the online form to apply, an officer will contact you and let you know how to share your supporting information.
+
+If you apply in person, you will need to bring:
 
 1. Your completed National Assistance application form.
 
@@ -63,14 +68,15 @@ You will need to bring:
 3. Bank or credit union details so financial support could be sent if you are eligible. (The electronic transfer of funds is not available yet but details are being taken in preparation).
 
 4. Certificates or documents that are relevant to the assistance you are applying for.
+   For example, proof of your income or unemployment, details of dependents, a medical form completed by your doctor, proof of your expenditure, for example, your utility bills.
 
-5. For example, proof of your income or unemployment, details of dependents, a medical form completed by your doctor, proof of your expenditure, for example, your utility bills.
-
-6. If you are applying for health-related financial assistance, the welfare officer assigned to your case will issue you a medical form to take to your doctor to be completed.
+If you are applying for health-related financial assistance, the welfare officer assigned to your case will issue you a medical form to take to your doctor to be completed.
 
 ### After you have applied
 
 A welfare officer aims to complete their assessment within 6 weeks of receiving your application.
+
+If you applied through the online form, they will let you know which supporting information they need, and where to send it.
 
 The officer may ask you to take part in a phone or online interview, office interview or arrange a time for them to visit you at your home.
 
@@ -86,7 +92,7 @@ Assistance is usually granted for 3 to 6 months. You can expect to have a review
 
 ## Get help with your application
 
-If you want to apply but you cannot visit your local welfare office, contact:
+If you want to apply but you cannot visit your local welfare office, and you cannot complete the form online either, contact:
 
 Welfare Department  
 Weymouth Corporate Centre  
