@@ -1,4 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+
+import { format } from "date-fns";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
@@ -179,6 +181,12 @@ export default async function Page({ params }: ContentPageProps) {
             <Typography variant="h1">{frontmatter.title}</Typography>
           )}
           <MigrationBanner pageURL={frontmatter.source_url} />
+          {frontmatter.extraction_date && (
+            <div className="border-gray-200 border-b-4 pb-4 text-gray-500">
+              Content migrated on{" "}
+              {format(new Date(frontmatter.extraction_date), "PPP")}
+            </div>
+          )}
         </div>
         <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
           {content}
