@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { MigrationBanner } from "@/components/migration-banner";
+import { StageBanner } from "@/components/stage-banner";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownContent } from "@/lib/markdown";
 
@@ -127,12 +128,7 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
           ))}
 
         {frontmatter.stage?.length > 0 ? (
-          <div className="border-blue-bright border-r-4 border-l-4 bg-blue-light/30 px-4 py-3">
-            <Typography variant="paragraph">
-              This Page is in{" "}
-              <span className="capitalize underline">{frontmatter.stage}</span>.
-            </Typography>
-          </div>
+          <StageBanner stage={frontmatter.stage} />
         ) : null}
 
         {frontmatter.source_url?.length > 0 ? (
