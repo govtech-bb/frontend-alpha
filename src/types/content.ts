@@ -1,6 +1,7 @@
 export type PageType = {
   title: string;
   filename?: string;
+  stage?: string;
   slug: string;
   source_url: string;
   description: string;
