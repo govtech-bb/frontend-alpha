@@ -121,7 +121,6 @@ export default async function Page({ params }: ContentPageProps) {
     return (
       <div className="space-y-4 lg:space-y-8">
         <Typography variant="display">{category.title}</Typography>
-        <MigrationBanner />
 
         {category.description
           ?.split("\n")
