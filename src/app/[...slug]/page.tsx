@@ -22,8 +22,8 @@ export default async function Page({ params }: ContentPageProps) {
     );
     // If category is not found
     if (!category) {
-      // Check if page is found based on slug
       const markdownContent = await getMarkdownContent([categorySlug]);
+      // If markdown content is not found
       if (!markdownContent) {
         notFound();
       }
