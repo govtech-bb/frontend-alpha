@@ -50,6 +50,8 @@ export async function getFeaturedServices() {
 
     return services;
   } catch (_error) {
+    // biome-ignore lint/suspicious/noConsole: <explanation>
+    console.log("error fetching markdown", _error);
     return [];
   }
 }
