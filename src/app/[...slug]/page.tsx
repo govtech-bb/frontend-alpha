@@ -87,3 +87,20 @@ export default async function Page({ params }: ContentPageProps) {
 
   return notFound();
 }
+
+export async function generateMetadata({ params }: ContentPageProps) {
+  const { slug } = await params;
+  const result = await getMarkdownContent(slug);
+
+  if (!result) {
+    return {
+      title: "Page not found",
+    };
+  }
+
+  return {
+    title: result.frontmatter.title || "GovTech Barbados",
+    description:
+      result.frontmatter.description || "Government services information",
+  };
+}
