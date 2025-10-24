@@ -41,7 +41,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Featured services from homepage
   const featuredServices = await getFeaturedServices();
   for (const service of featuredServices) {
-    const lastMod = new Date();
+    const lastMod = service.extraction_date
+      ? new Date(service.extraction_date)
+      : new Date();
     routes.push({
       url: `${baseUrl}/${service.slug}`,
       lastModified: lastMod,

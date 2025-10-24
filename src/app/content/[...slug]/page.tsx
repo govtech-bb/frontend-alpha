@@ -255,7 +255,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
         siteName: "Government of Barbados",
       },
       twitter: {
-        card: "summary_large_image",
+        card: "summary",
         title: `${category.title} - Government of Barbados`,
         description: category.description,
       },
@@ -300,7 +300,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
         siteName: "Government of Barbados",
       },
       twitter: {
-        card: "summary_large_image",
+        card: "summary",
         title: `${title} - Government of Barbados`,
         description: page.description,
       },

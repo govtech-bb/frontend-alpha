@@ -1,4 +1,9 @@
-import type { GovernmentService, Organization, WithContext } from "schema-dts";
+import type {
+  BreadcrumbList,
+  GovernmentService,
+  Organization,
+  WithContext,
+} from "schema-dts";
 
 export function OrganizationSchema() {
   const schema: WithContext<Organization> = {
@@ -78,7 +83,7 @@ type BreadcrumbSchemaProps = {
 };
 
 export function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
-  const schema = {
+  const schema: WithContext<BreadcrumbList> = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, index) => ({
