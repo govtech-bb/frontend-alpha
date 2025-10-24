@@ -69,7 +69,7 @@ export default async function Home() {
                 >
                   <Link
                     className="cursor-pointer font-bold text-[20px] text-teal-dark capitalize leading-[150%] underline underline-offset-2 lg:text-3xl"
-                    href={`/content/${service.slug}`} // TODO update link when pages are ready
+                    href={service.slug}
                   >
                     {service.title.toLowerCase()}
                   </Link>
