@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { MigrationBanner } from "@/components/migration-banner";
+import { GovernmentServiceSchema } from "@/components/structured-data";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownContent } from "@/lib/markdown";
 
@@ -110,9 +111,18 @@ export default async function EntryPointPage({ params }: EntryPointPageProps) {
   }
 
   const { frontmatter, content } = result;
+  const fullUrl = `https://alpha.gov.bb/${slug.join("/")}`;
 
   return (
     <div className="space-y-4 pb-8">
+      <GovernmentServiceSchema
+        category={frontmatter.section}
+        description={
+          frontmatter.description || "Official government service information"
+        }
+        name={frontmatter.title || "Government Service"}
+        url={fullUrl}
+      />
       <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
@@ -163,9 +173,30 @@ export async function generateMetadata({ params }: EntryPointPageProps) {
     };
   }
 
+  const title = result.frontmatter.title
+    ? `${result.frontmatter.title} - Government of Barbados`
+    : "Government of Barbados";
+  const description =
+    result.frontmatter.description || "Government services information";
+  const url = `https://alpha.gov.bb/${slug.join("/")}`;
+
   return {
-    title: result.frontmatter.title || "GovTech Barbados",
-    description:
-      result.frontmatter.description || "Government services information",
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: "Government of Barbados",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }

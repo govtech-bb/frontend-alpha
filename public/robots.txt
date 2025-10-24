@@ -1,2 +1,4 @@
+# Search engine indexing is now ENABLED for production
 User-agent: *
-Disallow: /
+Allow: /
+Sitemap: https://alpha.gov.bb/sitemap.xml
