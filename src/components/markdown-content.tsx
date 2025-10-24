@@ -116,13 +116,28 @@ export const MarkdownContent = ({
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
         )}
+        {frontmatter.description
+          ?.split("\n")
+          .map((line: string, _index: number) => (
+            <Typography key={_index} variant="paragraph">
+              {line}
+            </Typography>
+          ))}
+
+        {frontmatter.stage?.length > 0 ? (
+          <div className="border-blue-bright border-r-4 border-l-4 bg-blue-light/30 px-4 py-3">
+            <Typography variant="paragraph">
+              This Page is in{" "}
+              <span className="capitalize underline">{frontmatter.stage}</span>.
+            </Typography>
+          </div>
+        ) : null}
         {frontmatter.source_url ? (
           <MigrationBanner pageURL={frontmatter.source_url} />
         ) : null}
         {frontmatter.publish_date && (
           <div className="border-gray-200 border-b-4 pb-4 text-gray-500">
-            Content migrated on{" "}
-            {format(new Date(frontmatter.publish_date), "PPP")}
+            Last updated on {format(new Date(frontmatter.publish_date), "PPP")}
           </div>
         )}
       </div>
