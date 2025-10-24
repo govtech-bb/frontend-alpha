@@ -1,9 +1,13 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+/** biome-ignore-all lint/suspicious/noExplicitAny: Dynamic params from Next.js require any type */
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { MigrationBanner } from "@/components/migration-banner";
+import {
+  BreadcrumbSchema,
+  GovernmentServiceSchema,
+} from "@/components/structured-data";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
@@ -118,8 +122,17 @@ export default async function Page({ params }: ContentPageProps) {
       return notFound();
     }
 
+    const breadcrumbs = [
+      { name: "Home", url: "https://alpha.gov.bb" },
+      {
+        name: category.title,
+        url: `https://alpha.gov.bb/content/${categorySlug}`,
+      },
+    ];
+
     return (
       <div className="space-y-4 lg:space-y-8">
+        <BreadcrumbSchema items={breadcrumbs} />
         <Typography variant="display">{category.title}</Typography>
         <MigrationBanner />
 
@@ -173,8 +186,27 @@ export default async function Page({ params }: ContentPageProps) {
 
     const { frontmatter, content } = markdownContent;
 
+    const breadcrumbs = [
+      { name: "Home", url: "https://alpha.gov.bb" },
+      {
+        name: category.title,
+        url: `https://alpha.gov.bb/content/${categorySlug}`,
+      },
+      {
+        name: page.title,
+        url: `https://alpha.gov.bb/content/${categorySlug}/${pageSlug}`,
+      },
+    ];
+
     return (
       <div className="space-y-4 pb-8">
+        <BreadcrumbSchema items={breadcrumbs} />
+        <GovernmentServiceSchema
+          category={category.title}
+          description={page.description}
+          name={frontmatter.title || page.title}
+          url={`https://alpha.gov.bb/content/${categorySlug}/${pageSlug}`}
+        />
         <div className="space-y-4 pb-4">
           {frontmatter.title && (
             <Typography variant="h1">{frontmatter.title}</Typography>
@@ -189,4 +221,93 @@ export default async function Page({ params }: ContentPageProps) {
   }
 
   return notFound();
+}
+
+export async function generateMetadata({ params }: ContentPageProps) {
+  const { slug } = await params;
+
+  // Category landing page
+  if (slug.length === 1) {
+    const [categorySlug] = slug;
+    const category = SERVICE_CATEGORIES.find(
+      (cat) => cat.slug === categorySlug
+    );
+
+    if (!category) {
+      return {
+        title: "Page not found",
+      };
+    }
+
+    const url = `https://alpha.gov.bb/content/${categorySlug}`;
+
+    return {
+      title: `${category.title} - Government of Barbados`,
+      description: category.description,
+      alternates: {
+        canonical: url,
+      },
+      openGraph: {
+        title: `${category.title} - Government of Barbados`,
+        description: category.description,
+        url,
+        type: "website",
+        siteName: "Government of Barbados",
+      },
+      twitter: {
+        card: "summary",
+        title: `${category.title} - Government of Barbados`,
+        description: category.description,
+      },
+    };
+  }
+
+  // Individual service page
+  if (slug.length > 1) {
+    const [categorySlug, pageSlug] = slug;
+
+    const category = SERVICE_CATEGORIES.find(
+      (cat) => cat.slug === categorySlug
+    );
+    if (!category) {
+      return {
+        title: "Page not found",
+      };
+    }
+
+    const page = category.pages.find((p) => p.slug === pageSlug);
+    if (!page) {
+      return {
+        title: "Page not found",
+      };
+    }
+
+    const markdownContent = await getMarkdownContent([pageSlug]);
+    const title = markdownContent?.frontmatter.title || page.title;
+    const url = `https://alpha.gov.bb/content/${categorySlug}/${pageSlug}`;
+
+    return {
+      title: `${title} - Government of Barbados`,
+      description: page.description,
+      alternates: {
+        canonical: url,
+      },
+      openGraph: {
+        title: `${title} - Government of Barbados`,
+        description: page.description,
+        url,
+        type: "website",
+        siteName: "Government of Barbados",
+      },
+      twitter: {
+        card: "summary",
+        title: `${title} - Government of Barbados`,
+        description: page.description,
+      },
+    };
+  }
+
+  return {
+    title: "Government of Barbados",
+  };
 }
