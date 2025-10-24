@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
   // removes: x-powered-by: Next.js
   poweredByHeader: false,
 
-  // biome-ignore lint/suspicious/useAwait: <explanation>
+  // biome-ignore lint/suspicious/useAwait: Required for Next.js headers configuration
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

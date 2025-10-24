@@ -4,22 +4,32 @@ import "./globals.css";
 import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { OrganizationSchema } from "@/components/structured-data";
 
 export const metadata: Metadata = {
   title: "The Government of Barbados",
   description: "The best place to access official government services",
+  metadataBase: new URL("https://alpha.gov.bb"),
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "none",
-      "max-snippet": -1,
+      index: true,
+      follow: true,
     },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_BB",
+    url: "https://alpha.gov.bb",
+    siteName: "Government of Barbados",
+    title: "The Government of Barbados",
+    description: "The best place to access official government services",
+  },
+  twitter: {
+    card: "summary",
+    title: "The Government of Barbados",
+    description: "The best place to access official government services",
   },
 };
 
@@ -30,6 +40,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <OrganizationSchema />
+      </head>
       <body
         className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] bg-yellow-bright font-sans antialiased`}
       >

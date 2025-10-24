@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/markdown-content";
+import { GovernmentServiceSchema } from "@/components/structured-data";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
@@ -28,7 +29,20 @@ export default async function Page({ params }: ContentPageProps) {
         notFound();
       }
 
-      return <MarkdownContent markdown={markdownContent} />;
+      return (
+        <>
+          <GovernmentServiceSchema
+            category={markdownContent.frontmatter.section}
+            description={
+              markdownContent.frontmatter.description ||
+              "Official government service information"
+            }
+            name={markdownContent.frontmatter.title || "Government Service"}
+            url={`https://alpha.gov.bb/${categorySlug}`}
+          />
+          <MarkdownContent markdown={markdownContent} />
+        </>
+      );
     }
 
     return (
@@ -82,7 +96,17 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    return <MarkdownContent markdown={markdownContent} />;
+    return (
+      <>
+        <GovernmentServiceSchema
+          category={category.title}
+          description={page.description}
+          name={markdownContent.frontmatter.title || page.title}
+          url={`https://alpha.gov.bb/${categorySlug}/${pageSlug}`}
+        />
+        <MarkdownContent markdown={markdownContent} />
+      </>
+    );
   }
 
   return notFound();
@@ -98,9 +122,30 @@ export async function generateMetadata({ params }: ContentPageProps) {
     };
   }
 
+  const title = result.frontmatter.title
+    ? `${result.frontmatter.title} - Government of Barbados`
+    : "Government of Barbados";
+  const description =
+    result.frontmatter.description || "Government services information";
+  const url = `https://alpha.gov.bb/${slug.join("/")}`;
+
   return {
-    title: result.frontmatter.title || "GovTech Barbados",
-    description:
-      result.frontmatter.description || "Government services information",
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: "Government of Barbados",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
