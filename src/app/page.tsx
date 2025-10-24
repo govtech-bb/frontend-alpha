@@ -1,7 +1,7 @@
 import Link from "next/link";
+
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
-import { MigrationBanner } from "@/components/migration-banner";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
@@ -61,8 +61,6 @@ export default async function Home() {
         <div className="container">
           <div className="space-y-6 py-8 lg:pt-16 lg:pb-6">
             <Typography variant="h2">Find government services</Typography>
-
-            <MigrationBanner />
 
             <div className="flex flex-col">
               {SERVICE_CATEGORIES.map((service) => (
