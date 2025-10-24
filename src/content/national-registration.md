@@ -2,7 +2,7 @@
 title: "National registration"
 description: "An overview of national registration in Barbados, outlining eligibility, required documents, photo guidelines, fees, and contact information for the Electoral and Boundaries Commission."
 source_url: https://www.gov.bb/Citizens/national-registration
-extraction_date: 2025-10-14
+publish_date: 2025-10-15
 section: "Travel, ID and Citizenship"
 ---
 

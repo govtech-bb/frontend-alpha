@@ -2,9 +2,8 @@
 title: "Apply for financial assistance"
 stage: "alpha"
 featured: true
+publish_date: 2025-10-15
 ---
-
-## Apply for financial assistance
 
 If you live in Barbados and need financial help you can apply for financial assistance.
 

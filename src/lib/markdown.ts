@@ -50,6 +50,8 @@ export async function getFeaturedServices() {
 
     return services;
   } catch (_error) {
+    // biome-ignore lint/suspicious/noConsole: This is for debugging malformed markdown frontmatter data
+    console.log("error fetching markdown", _error);
     return [];
   }
 }

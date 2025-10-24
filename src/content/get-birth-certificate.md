@@ -2,6 +2,7 @@
 title: "Get a birth certificate"
 stage: "alpha"
 featured: true
+publish_date: 2025-10-17
 ---
 
 Parents and guardians can use this service to get a birth certificate for their child if their child’s birth was registered in Barbados.
