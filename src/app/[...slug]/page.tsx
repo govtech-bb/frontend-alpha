@@ -1,4 +1,5 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/markdown-content";
@@ -28,19 +29,7 @@ export default async function Page({ params }: ContentPageProps) {
         notFound();
       }
 
-      const { frontmatter, content } = markdownContent;
-
-      return (
-        <div className="space-y-4 pb-8">
-          <div className="space-y-4 pb-4">
-            {frontmatter.title && (
-              <Typography variant="h1">{frontmatter.title}</Typography>
-            )}
-            <MigrationBanner pageURL={frontmatter.source_url} />
-          </div>
-          <MarkdownContent content={content} />
-        </div>
-      );
+      return <MarkdownContent markdown={markdownContent} />;
     }
 
     return (
@@ -95,19 +84,7 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    const { frontmatter, content } = markdownContent;
-
-    return (
-      <div className="space-y-4 pb-8">
-        <div className="space-y-4 pb-4">
-          {frontmatter.title && (
-            <Typography variant="h1">{frontmatter.title}</Typography>
-          )}
-          <MigrationBanner pageURL={frontmatter.source_url} />
-        </div>
-        <MarkdownContent content={content} />
-      </div>
-    );
+    return <MarkdownContent markdown={markdownContent} />;
   }
 
   return notFound();

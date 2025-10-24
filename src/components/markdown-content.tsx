@@ -1,7 +1,10 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+
+import { format } from "date-fns";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
+import { MigrationBanner } from "./migration-banner";
 
 // Custom components for react-markdown
 const components: Components = {
@@ -96,8 +99,34 @@ const components: Components = {
   ),
 };
 
-export const MarkdownContent = ({ content }: { content: string }) => (
-  <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
-    {content}
-  </ReactMarkdown>
-);
+export const MarkdownContent = ({
+  markdown,
+}: {
+  markdown: {
+    frontmatter: {
+      [key: string]: any;
+    };
+    content: string;
+  };
+}) => {
+  const { frontmatter, content } = markdown;
+  return (
+    <div className="space-y-4 pb-8">
+      <div className="space-y-4 pb-4">
+        {frontmatter.title && (
+          <Typography variant="h1">{frontmatter.title}</Typography>
+        )}
+        <MigrationBanner pageURL={frontmatter.source_url} />
+        {frontmatter.publish_date && (
+          <div className="border-gray-200 border-b-4 pb-4 text-gray-500">
+            Content migrated on{" "}
+            {format(new Date(frontmatter.publish_date), "PPP")}
+          </div>
+        )}
+      </div>
+      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
+        {content}
+      </ReactMarkdown>
+    </div>
+  );
+};

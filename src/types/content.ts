@@ -3,10 +3,9 @@ export type PageType = {
   filename?: string;
   stage?: string;
   slug: string;
-  source_url: string;
+  source_url?: string;
   description: string;
-  extraction_date: string; // date when content was extracted from source_url
-  last_updated_date?: string; // updated when content changes
+  publish_date: string; // date when content was published, updated or migrated
 };
 
 export type ServiceCategoryType = {
