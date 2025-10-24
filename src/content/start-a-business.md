@@ -2,7 +2,7 @@
 title: "Start a business"
 description: "Learn how Invest Barbados facilitates starting or expanding business operations in Barbados."
 source_url: https://www.gov.bb/Business/start-business
-extraction_date: 2025-10-14
+publish_date: 2025-10-15
 section: "Business and Trade"
 ---
 
