@@ -4,8 +4,6 @@ stage: "alpha"
 featured: true
 ---
 
-## Apply for financial assistance
-
 If you live in Barbados and need financial help you can apply for financial assistance.
 
 If you need help with things like food, clothing, burials, assistive devices (for example, dentures, hearing aids and spectacles), as well as payment of utility bills and house rent, you can apply for assistance in-kind.
