@@ -29,8 +29,12 @@ export async function getFeaturedServices() {
 
     const markdownFiles = files.filter((file) => file.endsWith(".md"));
 
-    const services: Array<{ title: string; slug: string; featured?: boolean }> =
-      [];
+    const services: Array<{
+      title: string;
+      slug: string;
+      featured?: boolean;
+      extraction_date?: string;
+    }> = [];
 
     for (const file of markdownFiles) {
       const filePath = path.join(contentDir, file);
@@ -44,6 +48,7 @@ export async function getFeaturedServices() {
           title: data.title || slug,
           slug,
           featured: data.featured,
+          extraction_date: data.extraction_date,
         });
       }
     }
