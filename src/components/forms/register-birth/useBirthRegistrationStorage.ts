@@ -61,7 +61,7 @@ export function useBirthRegistrationStorage() {
 
         if (now > expiresAt) {
           // Data has expired, remove it
-          clearFormData();
+          localStorage.removeItem(STORAGE_KEY);
           return null;
         }
 
@@ -69,10 +69,7 @@ export function useBirthRegistrationStorage() {
       } catch (_error) {
         return null;
       }
-    }, [
-      // Data has expired, remove it
-      clearFormData,
-    ]);
+    }, []);
 
   /**
    * Clear saved form data from localStorage
