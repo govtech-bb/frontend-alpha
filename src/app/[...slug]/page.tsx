@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/markdown-content";
-import { MigrationBanner } from "@/components/migration-banner";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
@@ -35,7 +34,6 @@ export default async function Page({ params }: ContentPageProps) {
     return (
       <div className="space-y-4 lg:space-y-8">
         <Typography variant="display">{category.title}</Typography>
-        <MigrationBanner />
 
         {category.description
           ?.split("\n")

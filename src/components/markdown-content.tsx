@@ -116,7 +116,9 @@ export const MarkdownContent = ({
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
         )}
-        <MigrationBanner pageURL={frontmatter.source_url} />
+        {frontmatter.source_url ? (
+          <MigrationBanner pageURL={frontmatter.source_url} />
+        ) : null}
         {frontmatter.publish_date && (
           <div className="border-gray-200 border-b-4 pb-4 text-gray-500">
             Content migrated on{" "}
