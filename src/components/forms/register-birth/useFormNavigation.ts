@@ -65,9 +65,15 @@ export function useFormNavigation(formData: PartialBirthRegistrationFormData) {
       ];
     }
 
-    // Default: Only show marriage-status until user makes a choice
+    // Default: Intermediate states during form filling
+    // When married status is "no" but include-father not yet answered
+    if (marriageStatus === "no") {
+      return ["marriage-status", "include-father"];
+    }
+
+    // Initial state: Only show marriage-status until user makes a choice
     return ["marriage-status"];
-  }, [formData.marriageStatus, formData.includeFatherDetails, formData]);
+  }, [formData.marriageStatus, formData.includeFatherDetails]);
 
   // Current step name based on index
   const currentStep = steps[currentStepIndex];
