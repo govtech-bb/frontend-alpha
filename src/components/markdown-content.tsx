@@ -117,13 +117,16 @@ export const MarkdownContent = ({
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
         )}
-        {frontmatter.description
+
+        {/*
+          TODO: Should we remove description entirely?
+         {frontmatter.description
           ?.split("\n")
           .map((line: string, _index: number) => (
             <Typography key={_index} variant="paragraph">
               {line}
             </Typography>
-          ))}
+          ))} */}
 
         {frontmatter.stage?.length > 0 ? (
           <StageBanner stage={frontmatter.stage} />
