@@ -24,6 +24,7 @@ import type { PartialBirthRegistrationFormData } from "./types";
 export function useRegisterBirthSteps(
   formData: PartialBirthRegistrationFormData
 ): FormStep[] {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Performance optimization - only recalculate when marriageStatus or includeFatherDetails change, not when any formData field changes (e.g., typing in name fields)
   return useMemo<FormStep[]>(() => {
     const { marriageStatus, includeFatherDetails } = formData;
 
@@ -81,5 +82,5 @@ export function useRegisterBirthSteps(
 
     // Initial state: Only show marriage-status until user makes a choice
     return [{ id: "marriage-status", title: "Marriage status" }];
-  }, [formData.marriageStatus, formData.includeFatherDetails, formData]);
+  }, [formData.marriageStatus, formData.includeFatherDetails]);
 }
