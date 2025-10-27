@@ -202,8 +202,11 @@ export function RegisterBirthForm() {
         {currentStep.id === "father-details" && (
           <FathersDetails
             onBack={goBack}
-            onChange={(value) =>
-              form.setFieldValue("father", value as Partial<PersonDetails>)
+            onChange={(update) =>
+              form.setFieldValue("father", {
+                ...(formValues.father || {}),
+                ...update,
+              })
             }
             onNext={goNext}
             stepNumber={currentStepIndex + 1}
@@ -215,8 +218,11 @@ export function RegisterBirthForm() {
         {currentStep.id === "mother-details" && (
           <MothersDetails
             onBack={goBack}
-            onChange={(value) =>
-              form.setFieldValue("mother", value as Partial<PersonDetails>)
+            onChange={(update) =>
+              form.setFieldValue("mother", {
+                ...(formValues.mother || {}),
+                ...update,
+              })
             }
             onNext={goNext}
             stepNumber={currentStepIndex + 1}

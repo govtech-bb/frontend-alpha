@@ -44,11 +44,12 @@ export function ChildDetails({
   );
 
   // Pre-fill lastName with surname if not already set
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Need value for spread operator, but tracking value.lastName specifically to prevent unnecessary runs when other fields change
   useEffect(() => {
     if (prefillSurname && !value.lastName) {
       onChange({ ...value, lastName: prefillSurname });
     }
-  }, [prefillSurname, value, onChange]);
+  }, [prefillSurname, value.lastName, onChange, value]);
 
   const handleChange = (field: keyof ChildDetailsType, fieldValue: string) => {
     onChange({ ...value, [field]: fieldValue });
