@@ -31,7 +31,12 @@ export function ContactInfo({
   stepNumber,
   totalSteps,
 }: ContactInfoProps) {
-  const titleRef = useStepFocus("Contact information", stepNumber, totalSteps);
+  const titleRef = useStepFocus(
+    "Contact information",
+    "Register a Birth",
+    stepNumber,
+    totalSteps
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

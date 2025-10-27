@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
-import { useStepFocus } from "../useStepFocus";
+import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type ConfirmationProps = {
   numberOfCertificates: number;
@@ -19,8 +19,7 @@ export function Confirmation({
 }: ConfirmationProps) {
   const titleRef = useStepFocus(
     "Registration request sent",
-    undefined,
-    undefined
+    "Register a Birth"
   );
 
   const totalCost = numberOfCertificates * 5.0;

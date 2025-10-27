@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
-import { useStepFocus } from "../useStepFocus";
+import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type CertificatesProps = {
   value: number;
@@ -29,6 +29,7 @@ export function Certificates({
 }: CertificatesProps) {
   const titleRef = useStepFocus(
     "Order birth certificates",
+    "Register a Birth",
     stepNumber,
     totalSteps
   );

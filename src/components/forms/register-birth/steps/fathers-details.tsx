@@ -25,7 +25,12 @@ export function FathersDetails({
   stepNumber,
   totalSteps,
 }: FathersDetailsProps) {
-  const titleRef = useStepFocus("Father's details", stepNumber, totalSteps);
+  const titleRef = useStepFocus(
+    "Father's details",
+    "Register a Birth",
+    stepNumber,
+    totalSteps
+  );
 
   const handleChange = (field: keyof PersonDetails, fieldValue: string) => {
     onChange({ ...value, [field]: fieldValue });

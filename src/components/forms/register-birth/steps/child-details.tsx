@@ -36,7 +36,12 @@ export function ChildDetails({
   variant,
   prefillSurname,
 }: ChildDetailsProps) {
-  const titleRef = useStepFocus("Child's details", stepNumber, totalSteps);
+  const titleRef = useStepFocus(
+    "Child's details",
+    "Register a Birth",
+    stepNumber,
+    totalSteps
+  );
 
   // Pre-fill lastName with surname if not already set
   useEffect(() => {

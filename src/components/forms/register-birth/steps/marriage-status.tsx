@@ -28,7 +28,12 @@ export function MarriageStatus({
   stepNumber,
   totalSteps,
 }: MarriageStatusProps) {
-  const titleRef = useStepFocus("Marriage status", stepNumber, totalSteps);
+  const titleRef = useStepFocus(
+    "Marriage status",
+    "Register a Birth",
+    stepNumber,
+    totalSteps
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

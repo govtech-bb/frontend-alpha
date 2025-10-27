@@ -31,6 +31,7 @@ export function IncludeFatherDetails({
 }: IncludeFatherDetailsProps) {
   const titleRef = useStepFocus(
     "Include father's details",
+    "Register a Birth",
     stepNumber,
     totalSteps
   );

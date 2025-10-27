@@ -33,7 +33,12 @@ export function MothersDetails({
   totalSteps,
   variant,
 }: MothersDetailsProps) {
-  const titleRef = useStepFocus("Mother's details", stepNumber, totalSteps);
+  const titleRef = useStepFocus(
+    "Mother's details",
+    "Register a Birth",
+    stepNumber,
+    totalSteps
+  );
 
   const handleChange = (
     field: keyof (PersonDetails | SimplifiedMotherDetails),

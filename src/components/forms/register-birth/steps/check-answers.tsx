@@ -26,7 +26,12 @@ export function CheckAnswers({
   stepNumber,
   totalSteps,
 }: CheckAnswersProps) {
-  const titleRef = useStepFocus("Check your answers", stepNumber, totalSteps);
+  const titleRef = useStepFocus(
+    "Check your answers",
+    "Register a Birth",
+    stepNumber,
+    totalSteps
+  );
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

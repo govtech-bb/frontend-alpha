@@ -1,5 +1,7 @@
 "use client";
 
+import { useForm } from "@tanstack/react-form";
+import { useStore } from "@tanstack/react-store";
 import { useEffect, useState } from "react";
 import { FormAutoSaveBanner } from "../common/components/form-auto-save-banner";
 import { FormProgressIndicator } from "../common/components/form-progress-indicator";
@@ -23,7 +25,7 @@ import { useRegisterBirthSteps } from "./use-register-birth-steps";
  * Main orchestrator for the Register a Birth multi-step form
  *
  * Features:
- * - Manages form state across all steps
+ * - Manages form state with TanStack Form
  * - Auto-saves to localStorage with debouncing
  * - Handles conditional navigation (3 different paths)
  * - Accessibility-compliant focus management
@@ -31,15 +33,6 @@ import { useRegisterBirthSteps } from "./use-register-birth-steps";
  */
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main form orchestrator needs to handle all step rendering. Will be refactored when extracting step rendering logic.
 export function RegisterBirthForm() {
-  const [formData, setFormData] = useState<PartialBirthRegistrationFormData>({
-    marriageStatus: "",
-    includeFatherDetails: "",
-    numberOfCertificates: 0,
-    email: "",
-    wantContact: "",
-    phoneNumber: "",
-  });
-
   // Storage with versioning and Zod validation
   const { saveFormData, loadFormData, clearFormData, getSavedDate } =
     useFormStorage({
@@ -49,8 +42,32 @@ export function RegisterBirthForm() {
       expiryDays: 7,
     });
 
+  const [showRestoredBanner, setShowRestoredBanner] = useState(false);
+  const [savedDate, setSavedDate] = useState<Date | null>(null);
+
+  // Initialize TanStack Form
+  const form = useForm({
+    defaultValues: {
+      marriageStatus: "",
+      includeFatherDetails: "",
+      numberOfCertificates: 0,
+      email: "",
+      wantContact: "",
+      phoneNumber: "",
+    } as PartialBirthRegistrationFormData,
+    onSubmit: async () => {
+      // For now, just go to confirmation
+      // In future: POST to /api/register-birth with form values
+      goNext();
+      clearFormData();
+    },
+  });
+
+  // Get current form values for step calculation
+  const formValues = useStore(form.store, (state) => state.values);
+
   // Calculate steps based on form state (business logic)
-  const steps = useRegisterBirthSteps(formData);
+  const steps = useRegisterBirthSteps(formValues);
 
   // Generic navigation (no business logic)
   const {
@@ -62,37 +79,42 @@ export function RegisterBirthForm() {
     goToStep,
   } = useFormNavigation(steps);
 
-  const [showRestoredBanner, setShowRestoredBanner] = useState(false);
-  const [savedDate, setSavedDate] = useState<Date | null>(null);
-
   // Load saved form data on mount
   useEffect(() => {
     const loaded = loadFormData();
     if (loaded) {
-      setFormData(loaded);
+      // Set all form values from loaded data
+      for (const [key, value] of Object.entries(loaded)) {
+        form.setFieldValue(
+          key as keyof PartialBirthRegistrationFormData,
+          value
+        );
+      }
       setShowRestoredBanner(true);
       setSavedDate(getSavedDate());
     }
-  }, [loadFormData, getSavedDate]);
+  }, [loadFormData, getSavedDate, form]);
 
   // Auto-save form data when it changes (debounced)
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (formData.marriageStatus) {
-        // Only save if form has been started
-        saveFormData(formData);
-      }
-    }, 1000); // 1 second debounce
+    let timer: NodeJS.Timeout;
 
-    return () => clearTimeout(timer);
-  }, [formData, saveFormData]);
+    const unsubscribe = form.store.subscribe(() => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const values = form.store.state.values;
+        if (values.marriageStatus) {
+          // Only save if form has been started
+          saveFormData(values);
+        }
+      }, 1000); // 1 second debounce
+    });
 
-  // Update form data
-  const updateFormData = (
-    updates: Partial<PartialBirthRegistrationFormData>
-  ) => {
-    setFormData((prev) => ({ ...prev, ...updates }));
-  };
+    return () => {
+      clearTimeout(timer);
+      unsubscribe();
+    };
+  }, [form.store, saveFormData]);
 
   const handleClearSavedData = () => {
     if (
@@ -100,42 +122,33 @@ export function RegisterBirthForm() {
       confirm("Are you sure you want to clear your saved data and start over?")
     ) {
       clearFormData();
-      setFormData({
-        marriageStatus: "",
-        includeFatherDetails: "",
-        numberOfCertificates: 0,
-        email: "",
-        wantContact: "",
-        phoneNumber: "",
-      });
+      // Reset all form fields
+      form.reset();
       setShowRestoredBanner(false);
     }
   };
 
   const handleSubmit = () => {
-    // For now, just go to confirmation
-    // In future: POST to /api/register-birth
-    goNext();
-
-    // Clear saved data after successful submission
-    clearFormData();
+    // Trigger form submission which calls onSubmit
+    form.handleSubmit();
   };
 
   // Determine variant for mother/child details
   const detailsVariant =
-    formData.marriageStatus === "yes" || formData.includeFatherDetails === "yes"
+    formValues.marriageStatus === "yes" ||
+    formValues.includeFatherDetails === "yes"
       ? "with-father"
       : "without-father";
 
   // Pre-fill child's surname
   const childSurnamePrefill =
     detailsVariant === "with-father"
-      ? formData.father?.lastName
-      : formData.mother?.lastName;
+      ? formValues.father?.lastName
+      : formValues.mother?.lastName;
 
   const hasFatherDetails =
-    formData.marriageStatus === "yes" ||
-    formData.includeFatherDetails === "yes";
+    formValues.marriageStatus === "yes" ||
+    formValues.includeFatherDetails === "yes";
 
   return (
     <div className="min-h-screen bg-neutral-white">
@@ -165,11 +178,11 @@ export function RegisterBirthForm() {
         {currentStep.id === "marriage-status" && (
           <MarriageStatus
             onBack={goBack}
-            onChange={(value) => updateFormData({ marriageStatus: value })}
+            onChange={(value) => form.setFieldValue("marriageStatus", value)}
             onNext={goNext}
             stepNumber={currentStepIndex + 1}
             totalSteps={totalSteps}
-            value={formData.marriageStatus || ""}
+            value={formValues.marriageStatus || ""}
           />
         )}
 
@@ -177,12 +190,12 @@ export function RegisterBirthForm() {
           <IncludeFatherDetails
             onBack={goBack}
             onChange={(value) =>
-              updateFormData({ includeFatherDetails: value })
+              form.setFieldValue("includeFatherDetails", value)
             }
             onNext={goNext}
             stepNumber={currentStepIndex + 1}
             totalSteps={totalSteps}
-            value={formData.includeFatherDetails || ""}
+            value={formValues.includeFatherDetails || ""}
           />
         )}
 
@@ -190,12 +203,12 @@ export function RegisterBirthForm() {
           <FathersDetails
             onBack={goBack}
             onChange={(value) =>
-              updateFormData({ father: value as Partial<PersonDetails> })
+              form.setFieldValue("father", value as Partial<PersonDetails>)
             }
             onNext={goNext}
             stepNumber={currentStepIndex + 1}
             totalSteps={totalSteps}
-            value={formData.father || {}}
+            value={formValues.father || {}}
           />
         )}
 
@@ -203,14 +216,12 @@ export function RegisterBirthForm() {
           <MothersDetails
             onBack={goBack}
             onChange={(value) =>
-              updateFormData({
-                mother: value as Partial<PersonDetails>,
-              })
+              form.setFieldValue("mother", value as Partial<PersonDetails>)
             }
             onNext={goNext}
             stepNumber={currentStepIndex + 1}
             totalSteps={totalSteps}
-            value={formData.mother || {}}
+            value={formValues.mother || {}}
             variant={detailsVariant}
           />
         )}
@@ -218,12 +229,12 @@ export function RegisterBirthForm() {
         {currentStep.id === "child-details" && (
           <ChildDetails
             onBack={goBack}
-            onChange={(value) => updateFormData({ child: value })}
+            onChange={(value) => form.setFieldValue("child", value)}
             onNext={goNext}
             prefillSurname={childSurnamePrefill}
             stepNumber={currentStepIndex + 1}
             totalSteps={totalSteps}
-            value={formData.child || {}}
+            value={formValues.child || {}}
             variant={detailsVariant}
           />
         )}
@@ -232,31 +243,36 @@ export function RegisterBirthForm() {
           <Certificates
             onBack={goBack}
             onChange={(value) =>
-              updateFormData({ numberOfCertificates: value })
+              form.setFieldValue("numberOfCertificates", value)
             }
             onNext={goNext}
             stepNumber={currentStepIndex + 1}
             totalSteps={totalSteps}
-            value={formData.numberOfCertificates || 0}
+            value={formValues.numberOfCertificates || 0}
           />
         )}
 
         {currentStep.id === "contact-info" && (
           <ContactInfo
-            email={formData.email || ""}
+            email={formValues.email || ""}
             onBack={goBack}
-            onChange={(field, value) => updateFormData({ [field]: value })}
+            onChange={(field, value) =>
+              form.setFieldValue(
+                field as keyof PartialBirthRegistrationFormData,
+                value
+              )
+            }
             onNext={goNext}
-            phoneNumber={formData.phoneNumber || ""}
+            phoneNumber={formValues.phoneNumber || ""}
             stepNumber={currentStepIndex + 1}
             totalSteps={totalSteps}
-            wantContact={formData.wantContact || ""}
+            wantContact={formValues.wantContact || ""}
           />
         )}
 
         {currentStep.id === "check-answers" && (
           <CheckAnswers
-            formData={formData}
+            formData={formValues}
             onBack={goBack}
             onEdit={goToStep}
             onSubmit={handleSubmit}
@@ -268,7 +284,7 @@ export function RegisterBirthForm() {
         {currentStep.id === "confirmation" && (
           <Confirmation
             hasFatherDetails={hasFatherDetails}
-            numberOfCertificates={formData.numberOfCertificates || 0}
+            numberOfCertificates={formValues.numberOfCertificates || 0}
           />
         )}
       </div>
