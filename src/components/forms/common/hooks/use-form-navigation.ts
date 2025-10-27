@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import type { FormStep } from "../types";
+import type { FormStep } from "@/types/forms";
 
 /**
  * Generic hook for managing navigation through a multi-step form

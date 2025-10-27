@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Typography } from "@/components/ui/typography";
-import type { FormError } from "../types";
+import type { FormError } from "@/types/forms";
 
 type ErrorSummaryProps = {
   errors: FormError[];

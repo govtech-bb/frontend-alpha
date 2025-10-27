@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import type { z } from "zod";
-import type { VersionedFormData } from "../types";
+import type { VersionedFormData } from "@/types/forms";
 
 /**
  * Configuration for form storage

@@ -158,11 +158,3 @@ export type StoredFormData = {
   savedAt: string;
   expiresAt: string;
 };
-
-/**
- * Error structure for validation
- */
-export type FormError = {
-  field: string;
-  message: string;
-};

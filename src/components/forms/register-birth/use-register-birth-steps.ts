@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { FormStep } from "../common/types";
+import type { FormStep } from "@/types/forms";
 import type { PartialBirthRegistrationFormData } from "./types";
 
 /**
