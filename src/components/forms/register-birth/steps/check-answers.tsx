@@ -114,9 +114,26 @@ export function CheckAnswers({
               {formData.mother?.lastName}
             </dd>
           </div>
+          {formData.mother?.hadOtherSurname === "yes" &&
+            formData.mother?.otherSurname && (
+              <div className="flex">
+                <dt className="w-1/3 font-bold">Previous surname</dt>
+                <dd className="w-2/3">{formData.mother.otherSurname}</dd>
+              </div>
+            )}
           <div className="flex">
             <dt className="w-1/3 font-bold">Date of birth</dt>
             <dd className="w-2/3">{formData.mother?.dateOfBirth}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3 font-bold">National registration number</dt>
+            <dd className="w-2/3">
+              {formData.mother?.nationalRegistrationNumber}
+            </dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3 font-bold">Occupation</dt>
+            <dd className="w-2/3">{formData.mother?.occupation}</dd>
           </div>
           <div className="flex">
             <dt className="w-1/3 font-bold">Address</dt>
@@ -149,9 +166,26 @@ export function CheckAnswers({
                 {formData.father.lastName}
               </dd>
             </div>
+            {formData.father.hadOtherSurname === "yes" &&
+              formData.father.otherSurname && (
+                <div className="flex">
+                  <dt className="w-1/3 font-bold">Previous surname</dt>
+                  <dd className="w-2/3">{formData.father.otherSurname}</dd>
+                </div>
+              )}
             <div className="flex">
               <dt className="w-1/3 font-bold">Date of birth</dt>
               <dd className="w-2/3">{formData.father.dateOfBirth}</dd>
+            </div>
+            <div className="flex">
+              <dt className="w-1/3 font-bold">National registration number</dt>
+              <dd className="w-2/3">
+                {formData.father.nationalRegistrationNumber}
+              </dd>
+            </div>
+            <div className="flex">
+              <dt className="w-1/3 font-bold">Occupation</dt>
+              <dd className="w-2/3">{formData.father.occupation}</dd>
             </div>
             <div className="flex">
               <dt className="w-1/3 font-bold">Address</dt>
