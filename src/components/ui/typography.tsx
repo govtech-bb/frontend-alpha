@@ -50,50 +50,55 @@ export interface TypographyProps
   children: React.ReactNode;
 }
 
-const Typography = React.forwardRef<HTMLElement, TypographyProps>(
-  ({ className, variant, as, children, ...props }, ref) => {
-    // Determine the appropriate HTML element based on variant or explicit 'as' prop
-    const getElement = () => {
-      if (as) return as;
+const Typography = ({
+  className,
+  variant,
+  as,
+  children,
+  ref,
+  ...props
+}: TypographyProps & { ref?: React.RefObject<HTMLElement | null> }) => {
+  // Determine the appropriate HTML element based on variant or explicit 'as' prop
+  const getElement = () => {
+    if (as) return as;
 
-      switch (variant) {
-        case "h1":
-          return "h1";
-        case "h2":
-          return "h2";
-        case "h3":
-          return "h3";
-        case "h4":
-          return "h4";
-        case "h5":
-          return "h5";
-        case "h6":
-          return "h6";
-        case "link":
-          return "a";
-        case "code":
-          return "code";
-        case "small":
-        case "muted":
-          return "span";
-        default:
-          return "p";
-      }
-    };
+    switch (variant) {
+      case "h1":
+        return "h1";
+      case "h2":
+        return "h2";
+      case "h3":
+        return "h3";
+      case "h4":
+        return "h4";
+      case "h5":
+        return "h5";
+      case "h6":
+        return "h6";
+      case "link":
+        return "a";
+      case "code":
+        return "code";
+      case "small":
+      case "muted":
+        return "span";
+      default:
+        return "p";
+    }
+  };
 
-    const Element = getElement() as keyof JSX.IntrinsicElements;
+  const Element = getElement() as keyof JSX.IntrinsicElements;
 
-    return React.createElement(
-      Element,
-      {
-        className: cn(typographyVariants({ variant }), className),
-        ref,
-        ...props,
-      },
-      children
-    );
-  }
-);
+  return React.createElement(
+    Element,
+    {
+      className: cn(typographyVariants({ variant }), className),
+      ref,
+      ...props,
+    },
+    children
+  );
+};
 
 Typography.displayName = "Typography";
 

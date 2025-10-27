@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { Typography } from "@/components/ui/typography";
