@@ -5,6 +5,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
 import { MigrationBanner } from "./migration-banner";
+import { StageBanner } from "./stage-banner";
 
 // Custom components for react-markdown
 const components: Components = {
@@ -125,12 +126,7 @@ export const MarkdownContent = ({
           ))}
 
         {frontmatter.stage?.length > 0 ? (
-          <div className="border-blue-bright border-r-4 border-l-4 bg-blue-light/30 px-4 py-3">
-            <Typography variant="paragraph">
-              This Page is in{" "}
-              <span className="capitalize underline">{frontmatter.stage}</span>.
-            </Typography>
-          </div>
+          <StageBanner stage={frontmatter.stage} />
         ) : null}
         {frontmatter.source_url ? (
           <MigrationBanner pageURL={frontmatter.source_url} />
