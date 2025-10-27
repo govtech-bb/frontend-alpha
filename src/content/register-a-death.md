@@ -2,7 +2,7 @@
 title: "Register a death"
 description: "This article provides information on how to apply for and obtain a death certificate in Barbados, including fees and contact details."
 source_url: https://www.gov.bb/Citizens/register-death
-extraction_date: 2025-10-14
+publish_date: 2025-10-15
 section: "Family, Birth and Relationships"
 ---
 

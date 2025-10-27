@@ -164,7 +164,4 @@
   @variant xl {
     max-width: var(--layout-xl);
   }
-  @variant 2xl {
-    max-width: var(--layout-2xl);
-  }
 }

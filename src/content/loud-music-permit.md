@@ -2,6 +2,7 @@
 title: "Get a permit to play loud music"
 stage: "alpha"
 featured: true
+publish_date: 2025-10-15
 ---
 
 If you are organising an event, you may also need to apply for one or more of the following: 

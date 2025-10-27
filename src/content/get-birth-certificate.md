@@ -1,7 +1,8 @@
 ---
-title: "Get a Birth Certificate"
+title: "Get a birth certificate"
 stage: "alpha"
 featured: true
+publish_date: 2025-10-17
 ---
 
 Parents and guardians can use this service to get a birth certificate for their child if their child’s birth was registered in Barbados.
@@ -39,9 +40,9 @@ Submit your form and receipt to the Applications Desk.  
 
 ## After your request is processed
 
-A certificate is usually ready in 2 to 3 working days. You will need to show your receipt and collect your certification from the Registration Department.
+A certificate is usually ready in 2 to 3 working days. You will need to show your receipt and collect your certificate from the Registration Department.
 
-A certificate can sometimes be issued on the same day but this depends on the registry office.
+A certificate can sometimes be issued on the same day, in the case of a medical or travel emergency. You will need to show proof of the emergency.
 
 ## Get a birth certificate if you live overseas 
 

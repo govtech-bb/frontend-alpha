@@ -2,7 +2,7 @@
 title: "Apply for a driver’s license"
 description: "This article provides information on how to obtain a driver's licence in Barbados, covering learner's permits, regulations and driving tests, international permits, and associated fees."
 source_url: https://www.gov.bb/Citizens/driver-licence
-extraction_date: 2025-10-14
+publish_date: 2025-10-15
 section: "Travel, ID and Citizenship"
 ---
 

@@ -2,7 +2,7 @@
 title: "Government requirements"
 description: "A guide to the process of applying for and maintaining a license for international financial services in Barbados, including annual requirements."
 source_url: https://www.gov.bb/Business/government-requirements
-extraction_date: 2025-10-14
+publish_date: 2025-10-15
 section: "Business and Trade"
 ---
 

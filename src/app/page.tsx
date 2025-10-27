@@ -1,7 +1,7 @@
 import Link from "next/link";
+
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
-import { MigrationBanner } from "@/components/migration-banner";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
@@ -44,11 +44,11 @@ export default async function Home() {
                 >
                   <ChevronLeftSVG className="hidden shrink-0 rotate-180 lg:inline-block" />
                   <Link
-                    className="inline-flex cursor-pointer items-center font-normal text-[20px] leading-[150%] underline lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                    className="inline-flex cursor-pointer items-center font-normal text-[20px] capitalize leading-[150%] underline lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
                     href={`/${service.slug}`}
                     key={service.slug}
                   >
-                    {service.title}
+                    {service.title.toLowerCase()}
                   </Link>
                 </div>
               ))}
@@ -62,8 +62,6 @@ export default async function Home() {
           <div className="space-y-6 py-8 lg:pt-16 lg:pb-6">
             <Typography variant="h2">Find government services</Typography>
 
-            <MigrationBanner />
-
             <div className="flex flex-col">
               {SERVICE_CATEGORIES.map((service) => (
                 <div
@@ -71,10 +69,10 @@ export default async function Home() {
                   key={service.title}
                 >
                   <Link
-                    className="cursor-pointer font-bold text-[20px] text-teal-dark leading-[150%] underline underline-offset-2 lg:text-3xl"
-                    href={`/content/${service.slug}`} // TODO update link when pages are ready
+                    className="cursor-pointer font-bold text-[20px] text-teal-dark capitalize leading-[150%] underline underline-offset-2 lg:text-3xl"
+                    href={service.slug}
                   >
-                    {service.title}
+                    {service.title.toLowerCase()}
                   </Link>
                   <Typography variant="paragraph">
                     {service.description}

@@ -2,6 +2,7 @@
 title: "Apply for a place at a day nursery"
 stage: "alpha"
 featured: true
+publish_date: 2025-10-17
 ---
 
 Parents and guardians of children under the age of 5 can apply for them to go to a government-run day nursery. Nursery places are decided on a case-by-case basis. It is a good idea to apply for at least 3 nurseries.

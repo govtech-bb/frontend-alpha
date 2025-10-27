@@ -2,6 +2,7 @@
 title: "Apply to volunteer at a sports camp"
 stage: "alpha"
 featured: true
+publish_date: 2025-10-17
 ---
 
 Adults and young people aged 19 and over are eligible to apply to volunteer at a sports camp. Sports camps take place over the summer, but you can apply all year round. Recruitment usually begins around April.
