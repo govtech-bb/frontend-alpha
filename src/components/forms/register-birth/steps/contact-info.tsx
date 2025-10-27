@@ -1,6 +1,6 @@
 "use client";
 
-import { useStepFocus } from "../useStepFocus";
+import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type ContactInfoProps = {
   email: string;

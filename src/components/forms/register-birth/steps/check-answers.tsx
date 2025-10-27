@@ -1,8 +1,8 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
+import { useStepFocus } from "../../common/hooks/use-step-focus";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
-import { useStepFocus } from "../useStepFocus";
 
 type CheckAnswersProps = {
   formData: PartialBirthRegistrationFormData;

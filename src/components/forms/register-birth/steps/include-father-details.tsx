@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
-import { useStepFocus } from "../useStepFocus";
+import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type IncludeFatherDetailsProps = {
   value: "yes" | "no" | "";

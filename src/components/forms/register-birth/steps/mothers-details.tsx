@@ -1,11 +1,11 @@
 "use client";
 
+import { useStepFocus } from "../../common/hooks/use-step-focus";
 import type {
   DetailsVariant,
   PersonDetails,
   SimplifiedMotherDetails,
 } from "../types";
-import { useStepFocus } from "../useStepFocus";
 
 type MothersDetailsProps = {
   value: Partial<PersonDetails | SimplifiedMotherDetails>;

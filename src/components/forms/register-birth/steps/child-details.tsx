@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import { useStepFocus } from "../../common/hooks/use-step-focus";
 import type {
   ChildDetails as ChildDetailsType,
   DetailsVariant,
 } from "../types";
-import { useStepFocus } from "../useStepFocus";
 
 type ChildDetailsProps = {
   value: Partial<ChildDetailsType>;
