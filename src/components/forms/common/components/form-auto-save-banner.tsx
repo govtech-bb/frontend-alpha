@@ -1,9 +1,9 @@
 import { Typography } from "@/components/ui/typography";
 
-export interface FormAutoSaveBannerProps {
+export type FormAutoSaveBannerProps = {
   /** Callback when user clicks "Clear saved data" */
   onClear: () => void;
-}
+};
 
 /**
  * Banner informing users that their progress is automatically saved

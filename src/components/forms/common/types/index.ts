@@ -13,12 +13,12 @@
  *   title: 'Father's details'
  * }
  */
-export interface FormStep {
+export type FormStep = {
   /** Stable identifier used for routing and logic */
   id: string;
   /** User-friendly display title */
   title: string;
-}
+};
 
 /**
  * Versioned wrapper for form data stored in localStorage
@@ -26,7 +26,7 @@ export interface FormStep {
  *
  * @template T - The form data type
  */
-export interface VersionedFormData<T> {
+export type VersionedFormData<T> = {
   /** Version identifier (e.g., 'birth-v1.0.0') */
   version: string;
   /** Unix timestamp when data was saved */
@@ -35,15 +35,15 @@ export interface VersionedFormData<T> {
   expiresAt: number;
   /** The actual form data */
   data: T;
-}
+};
 
 /**
  * Represents a single form validation error
  * Used by ErrorSummary component to display validation issues
  */
-export interface FormError {
+export type FormError = {
   /** The field identifier (used for linking to the input) */
   field: string;
   /** Human-readable error message */
   message: string;
-}
+};

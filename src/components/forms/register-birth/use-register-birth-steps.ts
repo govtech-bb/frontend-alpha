@@ -81,5 +81,5 @@ export function useRegisterBirthSteps(
 
     // Initial state: Only show marriage-status until user makes a choice
     return [{ id: "marriage-status", title: "Marriage status" }];
-  }, [formData.marriageStatus, formData.includeFatherDetails]);
+  }, [formData.marriageStatus, formData.includeFatherDetails, formData]);
 }

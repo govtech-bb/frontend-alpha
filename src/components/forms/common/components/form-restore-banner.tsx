@@ -1,11 +1,11 @@
 import { Typography } from "@/components/ui/typography";
 
-export interface FormRestoreBannerProps {
+export type FormRestoreBannerProps = {
   /** The date when the form was last saved */
   savedDate: Date;
   /** Callback when user clicks "Start over" */
   onClear: () => void;
-}
+};
 
 /**
  * Banner shown when restoring saved form data from localStorage

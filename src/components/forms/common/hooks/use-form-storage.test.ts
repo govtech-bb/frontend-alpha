@@ -1,5 +1,5 @@
-import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { act, renderHook } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 import { useFormStorage } from "./use-form-storage";
 
@@ -261,7 +261,8 @@ describe("useFormStorage", () => {
     expect(item).not.toBeNull();
 
     const stored = JSON.parse(item!);
-    const expectedExpiry = stored.timestamp + customExpiryDays * 24 * 60 * 60 * 1000;
+    const expectedExpiry =
+      stored.timestamp + customExpiryDays * 24 * 60 * 60 * 1000;
 
     expect(stored.expiresAt).toBe(expectedExpiry);
   });

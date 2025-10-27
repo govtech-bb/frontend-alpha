@@ -60,6 +60,4 @@ export const birthRegistrationSchema = z.object({
  * Type inferred from schema - ensures type safety
  * This should match PartialBirthRegistrationFormData from types.ts
  */
-export type BirthRegistrationFormData = z.infer<
-  typeof birthRegistrationSchema
->;
+export type BirthRegistrationFormData = z.infer<typeof birthRegistrationSchema>;

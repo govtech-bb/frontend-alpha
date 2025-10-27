@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { RegisterBirthForm } from "@/components/forms/register-birth/RegisterBirthForm";
+import { RegisterBirthForm } from "@/components/forms/register-birth/register-birth-form";
 import { BackButton } from "@/components/layout/back-button";
 import { Typography } from "@/components/ui/typography";
 

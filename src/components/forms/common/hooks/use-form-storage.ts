@@ -7,7 +7,7 @@ import type { VersionedFormData } from "../types";
  *
  * @template T - The form data type
  */
-export interface UseFormStorageConfig<T> {
+export type UseFormStorageConfig<T> = {
   /** Unique key for localStorage (e.g., 'govbb_birth_registration_draft') */
   storageKey: string;
   /** Version identifier for data structure (e.g., 'birth-v1.0.0') */
@@ -16,7 +16,7 @@ export interface UseFormStorageConfig<T> {
   schema: z.ZodSchema<T>;
   /** Number of days before saved data expires (default: 7) */
   expiryDays?: number;
-}
+};
 
 /**
  * Generic hook for persisting form data to localStorage with versioning and validation

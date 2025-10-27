@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
-import { useRegisterBirthSteps } from "./use-register-birth-steps";
+import { describe, expect, it } from "vitest";
 import type { PartialBirthRegistrationFormData } from "./types";
+import { useRegisterBirthSteps } from "./use-register-birth-steps";
 
 describe("useRegisterBirthSteps", () => {
   describe("Path A: Married parents", () => {
@@ -154,14 +154,14 @@ describe("useRegisterBirthSteps", () => {
 
       const { result } = renderHook(() => useRegisterBirthSteps(formData));
 
-      result.current.forEach((step) => {
+      for (const step of result.current) {
         expect(step).toHaveProperty("id");
         expect(step).toHaveProperty("title");
         expect(typeof step.id).toBe("string");
         expect(typeof step.title).toBe("string");
         expect(step.id.length).toBeGreaterThan(0);
         expect(step.title.length).toBeGreaterThan(0);
-      });
+      }
     });
   });
 
@@ -170,7 +170,9 @@ describe("useRegisterBirthSteps", () => {
       const { result, rerender } = renderHook(
         (props) => useRegisterBirthSteps(props),
         {
-          initialProps: { marriageStatus: "" } as PartialBirthRegistrationFormData,
+          initialProps: {
+            marriageStatus: "",
+          } as PartialBirthRegistrationFormData,
         }
       );
 

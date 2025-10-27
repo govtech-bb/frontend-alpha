@@ -1,11 +1,11 @@
 import { Typography } from "@/components/ui/typography";
 
-export interface FormProgressIndicatorProps {
+export type FormProgressIndicatorProps = {
   /** Current step number (1-indexed) */
   currentStep: number;
   /** Total number of steps */
   totalSteps: number;
-}
+};
 
 /**
  * Progress indicator showing "Step X of Y"
