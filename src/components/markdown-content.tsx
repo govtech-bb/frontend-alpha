@@ -49,7 +49,7 @@ const components: Components = {
       {children}
     </li>
   ),
-  hr: (props: any) => <hr className="my-8 border-2" {...props} />,
+  hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
   a: ({ href, children, ...props }: any) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
