@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
@@ -5,6 +6,28 @@ import { HelpfulBox } from "@/components/layout/helpful-box";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
+
+export const metadata: Metadata = {
+  title: "Government of Barbados - Official Government Services",
+  description:
+    "Access official government services in Barbados. Find information on family services, employment, financial support, travel, citizenship, and business services.",
+  alternates: {
+    canonical: "https://alpha.gov.bb",
+  },
+  openGraph: {
+    title: "Government of Barbados - Official Government Services",
+    description:
+      "Access official government services in Barbados. Find information on family services, employment, financial support, travel, citizenship, and business services.",
+    url: "https://alpha.gov.bb",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Government of Barbados - Official Government Services",
+    description:
+      "Access official government services in Barbados. Find information on family services, employment, financial support, travel, citizenship, and business services.",
+  },
+};
 
 export default async function Home() {
   const featuredServices = await getFeaturedServices();
