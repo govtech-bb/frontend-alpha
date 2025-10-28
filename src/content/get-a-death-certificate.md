@@ -2,11 +2,13 @@
 title: "Get a death certificate"
 featured: true
 stage: "alpha"
+publish_date: 2025-10-10publish_date: 2025-10-10
 ---
 
 When someone dies and their death is registered in Barbados, their next of kin (the deceased’s closest living relative or relatives) can use this service to get a death certificate. 
 
 Certificates for Barbadian citizens can be requested at any point. However, the Registration Department does not issue certificates for deaths which were registered before 1925.
+
 
 Most death certificates are requested at the same time a death is registered because a certificate is essential for things like closing the deceased’s bank accounts and getting a funeral grant.
 
