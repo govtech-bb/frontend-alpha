@@ -90,7 +90,9 @@ describe("CheckAnswers", () => {
         />
       );
 
-      const addresses = screen.getAllByText(/123 Main St.*Bridgetown.*Barbados/s);
+      const addresses = screen.getAllByText(
+        /123 Main St.*Bridgetown.*Barbados/s
+      );
       expect(addresses.length).toBeGreaterThan(0);
     });
 

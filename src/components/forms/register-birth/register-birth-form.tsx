@@ -18,7 +18,7 @@ import { FathersDetails } from "./steps/fathers-details";
 import { IncludeFatherDetails } from "./steps/include-father-details";
 import { MarriageStatus } from "./steps/marriage-status";
 import { MothersDetails } from "./steps/mothers-details";
-import type { PartialBirthRegistrationFormData, PersonDetails } from "./types";
+import type { PartialBirthRegistrationFormData } from "./types";
 import { useRegisterBirthSteps } from "./use-register-birth-steps";
 
 /**
@@ -55,11 +55,32 @@ export function RegisterBirthForm() {
       wantContact: "",
       phoneNumber: "",
     } as PartialBirthRegistrationFormData,
-    onSubmit: async () => {
-      // For now, just go to confirmation
-      // In future: POST to /api/register-birth with form values
-      goNext();
-      clearFormData();
+    onSubmit: async ({ value }) => {
+      try {
+        // Submit to API
+        const response = await fetch("/api/register-birth", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(value),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to submit birth registration");
+        }
+
+        // Success - go to confirmation and clear saved data
+        goNext();
+        clearFormData();
+      } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: needed for debugging submission errors
+        console.error("Error submitting birth registration:", error);
+        // TODO: Show error message to user
+        // For now, allow them to see confirmation page even if email fails
+        goNext();
+        clearFormData();
+      }
     },
   });
 

@@ -27,7 +27,6 @@ export function useRegisterBirthSteps(
   const { marriageStatus, includeFatherDetails } = formData;
 
   return useMemo<FormStep[]>(() => {
-
     // Path A: Married parents
     if (marriageStatus === "yes") {
       return [
