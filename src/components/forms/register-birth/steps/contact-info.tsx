@@ -32,7 +32,7 @@ export function ContactInfo({
   totalSteps,
 }: ContactInfoProps) {
   const titleRef = useStepFocus(
-    "Contact information",
+    "Contact details",
     "Register a Birth",
     stepNumber,
     totalSteps
@@ -56,10 +56,13 @@ export function ContactInfo({
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
-        Email and phone pls
+        Contact details
       </h1>
 
-      <p className="text-base text-gray-600">Words that do a help</p>
+      <p className="mb-4 text-base">
+        We ask for this information so we can send you confirmation and let you
+        know what to do next.
+      </p>
 
       {/* Email address */}
       <div>
@@ -82,8 +85,7 @@ export function ContactInfo({
       {/* Want contact */}
       <fieldset>
         <legend className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]">
-          Do you want us to get in touch if we need to ask more questions or
-          summink
+          Do you want us to get in touch if we need to ask more questions
         </legend>
 
         <div className="space-y-3">
