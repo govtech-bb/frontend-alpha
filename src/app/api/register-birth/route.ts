@@ -299,7 +299,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Send user receipt email if they provided an email address
-    if (formData.email && formData.email.trim()) {
+    if (formData.email?.trim()) {
       const userSubject =
         "Birth Registration Received - Government of Barbados";
       const userHtml = createUserReceiptEmail(formData);
