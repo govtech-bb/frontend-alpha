@@ -8,8 +8,6 @@ type FathersDetailsProps = {
   onChange: (value: Partial<PersonDetails>) => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber?: number;
-  totalSteps?: number;
 };
 
 /**
@@ -22,14 +20,10 @@ export function FathersDetails({
   onChange,
   onNext,
   onBack,
-  stepNumber,
-  totalSteps,
 }: FathersDetailsProps) {
   const titleRef = useStepFocus(
     "Tell us about the child's father",
-    "Register a Birth",
-    stepNumber,
-    totalSteps
+    "Register a Birth"
   );
 
   const handleChange = (field: keyof PersonDetails, fieldValue: string) => {

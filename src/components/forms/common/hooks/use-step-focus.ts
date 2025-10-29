@@ -14,25 +14,16 @@ import { useEffect, useRef } from "react";
  *
  * @param stepTitle - The title of the current step (e.g., "Father's details")
  * @param formName - The name of the form (e.g., "Register a Birth")
- * @param stepNumber - Optional current step number (e.g., 2)
- * @param totalSteps - Optional total number of steps (e.g., 8)
  * @returns Ref to attach to the h1 element
  *
  * @example
  * const titleRef = useStepFocus(
  *   "Father's details",
- *   "Register a Birth",
- *   2,
- *   8
+ *   "Register a Birth"
  * );
  * <h1 ref={titleRef} tabIndex={-1}>Father's details</h1>
  */
-export function useStepFocus(
-  stepTitle: string,
-  formName: string,
-  stepNumber?: number,
-  totalSteps?: number
-) {
+export function useStepFocus(stepTitle: string, formName: string) {
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -43,11 +34,8 @@ export function useStepFocus(
     }
 
     // Update document title for browser tabs and screen readers
-    // Format: "Step 2 of 8: Father's details - Register a Birth - Government of Barbados"
-    const stepInfo =
-      stepNumber && totalSteps ? `Step ${stepNumber} of ${totalSteps}: ` : "";
-    document.title = `${stepInfo}${stepTitle} - ${formName} - Government of Barbados`;
-  }, [stepTitle, formName, stepNumber, totalSteps]);
+    document.title = `${stepTitle} - ${formName} - Government of Barbados`;
+  }, [stepTitle, formName]);
 
   return titleRef;
 }

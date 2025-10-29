@@ -1,5 +1,6 @@
 "use client";
 
+import { Typography } from "@/components/ui/typography";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type ContactInfoProps = {
@@ -12,8 +13,6 @@ type ContactInfoProps = {
   ) => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber?: number;
-  totalSteps?: number;
 };
 
 /**
@@ -28,15 +27,8 @@ export function ContactInfo({
   onChange,
   onNext,
   onBack,
-  stepNumber,
-  totalSteps,
 }: ContactInfoProps) {
-  const titleRef = useStepFocus(
-    "Contact details",
-    "Register a Birth",
-    stepNumber,
-    totalSteps
-  );
+  const titleRef = useStepFocus("Contact details", "Register a Birth");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,10 +51,10 @@ export function ContactInfo({
         Contact details
       </h1>
 
-      <p className="mb-4 text-base">
+      <Typography className="mb-4" variant="paragraph">
         We ask for this information so we can send you confirmation and let you
         know what to do next.
-      </p>
+      </Typography>
 
       {/* Email address */}
       <div>

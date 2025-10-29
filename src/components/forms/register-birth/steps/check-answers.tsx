@@ -1,5 +1,6 @@
 "use client";
 
+import { Typography } from "@/components/ui/typography";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
 
@@ -8,8 +9,6 @@ type CheckAnswersProps = {
   onSubmit: () => void;
   onBack: () => void;
   onEdit: (step: StepName) => void;
-  stepNumber?: number;
-  totalSteps?: number;
 };
 
 /**
@@ -22,15 +21,8 @@ export function CheckAnswers({
   onSubmit,
   onBack,
   onEdit,
-  stepNumber,
-  totalSteps,
 }: CheckAnswersProps) {
-  const titleRef = useStepFocus(
-    "Check your answers",
-    "Register a Birth",
-    stepNumber,
-    totalSteps
-  );
+  const titleRef = useStepFocus("Check your answers", "Register a Birth");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,13 +41,13 @@ export function CheckAnswers({
         Check your answers
       </h1>
 
-      <p className="mb-4 text-base">
+      <Typography className="mb-4" variant="paragraph">
         Review the answers you've given carefully.
-      </p>
+      </Typography>
 
-      <p className="mb-6 text-base">
+      <Typography className="mb-6" variant="paragraph">
         Incorrect information may be difficult to change after registration.
-      </p>
+      </Typography>
 
       {/* Father's details (if included) */}
       {hasFather && formData.father && (

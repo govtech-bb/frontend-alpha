@@ -8,8 +8,6 @@ type MarriageStatusProps = {
   onChange: (value: "yes" | "no") => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber?: number;
-  totalSteps?: number;
 };
 
 /**
@@ -25,15 +23,8 @@ export function MarriageStatus({
   onChange,
   onNext,
   onBack,
-  stepNumber,
-  totalSteps,
 }: MarriageStatusProps) {
-  const titleRef = useStepFocus(
-    "Marriage status",
-    "Register a Birth",
-    stepNumber,
-    totalSteps
-  );
+  const titleRef = useStepFocus("Marriage status", "Register a Birth");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

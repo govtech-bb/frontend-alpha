@@ -1,5 +1,6 @@
 "use client";
 
+import { Typography } from "@/components/ui/typography";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type CertificatesProps = {
@@ -7,8 +8,6 @@ type CertificatesProps = {
   onChange: (value: number) => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber?: number;
-  totalSteps?: number;
 };
 
 /**
@@ -21,14 +20,10 @@ export function Certificates({
   onChange,
   onNext,
   onBack,
-  stepNumber,
-  totalSteps,
 }: CertificatesProps) {
   const titleRef = useStepFocus(
     "Order a birth certificate",
-    "Register a Birth",
-    stepNumber,
-    totalSteps
+    "Register a Birth"
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -42,18 +37,18 @@ export function Certificates({
         Order a birth certificate
       </h1>
 
-      <p className="mb-4 text-base">
+      <Typography className="mb-4" variant="paragraph">
         A birth certificate is essential for access to some public services. You
         wil need to pay BDD$5.00 for each certificate when you collect them.
-      </p>
+      </Typography>
 
-      <p className="mb-4 text-base">
+      <Typography className="mb-4" variant="paragraph">
         We keep the original so you can order a certified copy at any point.
-      </p>
+      </Typography>
 
-      <p className="mb-4 text-base">
+      <Typography className="mb-4" variant="paragraph">
         The birth registration is free of charge.
-      </p>
+      </Typography>
 
       <div>
         <label

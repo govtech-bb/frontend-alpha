@@ -9,8 +9,6 @@ type ChildDetailsProps = {
   onChange: (value: Partial<ChildDetailsType>) => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber?: number;
-  totalSteps?: number;
   prefillSurname?: string;
 };
 
@@ -25,16 +23,9 @@ export function ChildDetails({
   onChange,
   onNext,
   onBack,
-  stepNumber,
-  totalSteps,
   prefillSurname,
 }: ChildDetailsProps) {
-  const titleRef = useStepFocus(
-    "Tell us about the child",
-    "Register a Birth",
-    stepNumber,
-    totalSteps
-  );
+  const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
 
   // Pre-fill lastName with surname if not already set
   // biome-ignore lint/correctness/useExhaustiveDependencies: Need value for spread operator, but tracking value.lastName specifically to prevent unnecessary runs when other fields change

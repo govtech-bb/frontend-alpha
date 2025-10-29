@@ -8,8 +8,6 @@ type IncludeFatherDetailsProps = {
   onChange: (value: "yes" | "no") => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber?: number;
-  totalSteps?: number;
 };
 
 /**
@@ -26,15 +24,8 @@ export function IncludeFatherDetails({
   onChange,
   onNext,
   onBack,
-  stepNumber,
-  totalSteps,
 }: IncludeFatherDetailsProps) {
-  const titleRef = useStepFocus(
-    "Include father's details",
-    "Register a Birth",
-    stepNumber,
-    totalSteps
-  );
+  const titleRef = useStepFocus("Include father's details", "Register a Birth");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,12 +43,12 @@ export function IncludeFatherDetails({
 
         <div className="mb-6 space-y-4">
           <Typography variant="paragraph">
-            If you choose ‘Yes’, both parents must go to the Registration
+            If you choose 'Yes', both parents must go to the Registration
             Department and sign the official register together.
           </Typography>
 
           <Typography variant="paragraph">
-            If you choose ‘No’, the mother must go to the Registration
+            If you choose 'No', the mother must go to the Registration
             Department but it is not necessary for the father to attend.
           </Typography>
         </div>
