@@ -1,6 +1,5 @@
 "use client";
 
-import { Typography } from "@/components/ui/typography";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
 
@@ -47,108 +46,24 @@ export function CheckAnswers({
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
-        Check your information before you continue
+        Check your answers
       </h1>
 
-      <div className="mb-6 rounded-md border-4 border-yellow-400 bg-yellow-50 p-4">
-        <Typography className="text-yellow-900" variant="paragraph">
-          Please review all the details carefully. Any errors may be difficult
-          to correct after registration is complete.
-        </Typography>
-      </div>
+      <p className="mb-4 text-base">
+        Review the answers you've given carefully.
+      </p>
 
-      {/* Child's details */}
-      <div className="border-gray-300 border-b pb-6">
-        <div className="mb-4 flex items-start justify-between">
-          <h2 className="font-bold text-2xl">Child's details</h2>
-          <button
-            className="text-[#1E787D] underline hover:text-[#1E787D]/80"
-            onClick={() => onEdit("child-details")}
-            type="button"
-          >
-            Change
-          </button>
-        </div>
-
-        <dl className="space-y-2">
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Full name</dt>
-            <dd className="w-2/3">
-              {formData.child?.firstNames} {formData.child?.middleNames}{" "}
-              {formData.child?.lastName}
-            </dd>
-          </div>
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Date of birth</dt>
-            <dd className="w-2/3">{formData.child?.dateOfBirth}</dd>
-          </div>
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Sex at birth</dt>
-            <dd className="w-2/3">{formData.child?.sexAtBirth}</dd>
-          </div>
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Parish of birth</dt>
-            <dd className="w-2/3">{formData.child?.parishOfBirth}</dd>
-          </div>
-        </dl>
-      </div>
-
-      {/* Mother's details */}
-      <div className="border-gray-300 border-b pb-6">
-        <div className="mb-4 flex items-start justify-between">
-          <h2 className="font-bold text-2xl">Mother's details</h2>
-          <button
-            className="text-[#1E787D] underline hover:text-[#1E787D]/80"
-            onClick={() => onEdit("mother-details")}
-            type="button"
-          >
-            Change
-          </button>
-        </div>
-
-        <dl className="space-y-2">
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Full name</dt>
-            <dd className="w-2/3">
-              {formData.mother?.firstName} {formData.mother?.middleName}{" "}
-              {formData.mother?.lastName}
-            </dd>
-          </div>
-          {formData.mother?.hadOtherSurname === "yes" &&
-            formData.mother?.otherSurname && (
-              <div className="flex">
-                <dt className="w-1/3 font-bold">Previous surname</dt>
-                <dd className="w-2/3">{formData.mother.otherSurname}</dd>
-              </div>
-            )}
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Date of birth</dt>
-            <dd className="w-2/3">{formData.mother?.dateOfBirth}</dd>
-          </div>
-          <div className="flex">
-            <dt className="w-1/3 font-bold">National registration number</dt>
-            <dd className="w-2/3">
-              {formData.mother?.nationalRegistrationNumber}
-            </dd>
-          </div>
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Occupation</dt>
-            <dd className="w-2/3">{formData.mother?.occupation}</dd>
-          </div>
-          <div className="flex">
-            <dt className="w-1/3 font-bold">Address</dt>
-            <dd className="w-2/3 whitespace-pre-line">
-              {formData.mother?.address}
-            </dd>
-          </div>
-        </dl>
-      </div>
+      <p className="mb-6 text-base">
+        Incorrect information may be difficult to change after registration.
+      </p>
 
       {/* Father's details (if included) */}
       {hasFather && formData.father && (
         <div className="border-gray-300 border-b pb-6">
           <div className="mb-4 flex items-start justify-between">
-            <h2 className="font-bold text-2xl">Father's details</h2>
+            <h2 className="font-bold text-2xl">
+              Tell us about the child's father
+            </h2>
             <button
               className="text-[#1E787D] underline hover:text-[#1E787D]/80"
               onClick={() => onEdit("father-details")}
@@ -160,42 +75,131 @@ export function CheckAnswers({
 
           <dl className="space-y-2">
             <div className="flex">
-              <dt className="w-1/3 font-bold">Full name</dt>
-              <dd className="w-2/3">
-                {formData.father.firstName} {formData.father.middleName}{" "}
-                {formData.father.lastName}
+              <dt className="w-1/3">First name</dt>
+              <dd className="w-2/3">{formData.father.firstName}</dd>
+            </div>
+            <div className="flex">
+              <dt className="w-1/3">Middle name(s)</dt>
+              <dd className="w-2/3">{formData.father.middleName}</dd>
+            </div>
+            <div className="flex">
+              <dt className="w-1/3">Last name</dt>
+              <dd className="w-2/3">{formData.father.lastName}</dd>
+            </div>
+            <div className="flex">
+              <dt className="w-1/3">Current address</dt>
+              <dd className="w-2/3 whitespace-pre-line">
+                {formData.father.address}
               </dd>
             </div>
-            {formData.father.hadOtherSurname === "yes" &&
-              formData.father.otherSurname && (
-                <div className="flex">
-                  <dt className="w-1/3 font-bold">Previous surname</dt>
-                  <dd className="w-2/3">{formData.father.otherSurname}</dd>
-                </div>
-              )}
             <div className="flex">
-              <dt className="w-1/3 font-bold">Date of birth</dt>
-              <dd className="w-2/3">{formData.father.dateOfBirth}</dd>
-            </div>
-            <div className="flex">
-              <dt className="w-1/3 font-bold">National registration number</dt>
+              <dt className="w-1/3">National registration number</dt>
               <dd className="w-2/3">
                 {formData.father.nationalRegistrationNumber}
               </dd>
             </div>
             <div className="flex">
-              <dt className="w-1/3 font-bold">Occupation</dt>
+              <dt className="w-1/3">Occupation</dt>
               <dd className="w-2/3">{formData.father.occupation}</dd>
-            </div>
-            <div className="flex">
-              <dt className="w-1/3 font-bold">Address</dt>
-              <dd className="w-2/3 whitespace-pre-line">
-                {formData.father.address}
-              </dd>
             </div>
           </dl>
         </div>
       )}
+
+      {/* Mother's details */}
+      <div className="border-gray-300 border-b pb-6">
+        <div className="mb-4 flex items-start justify-between">
+          <h2 className="font-bold text-2xl">
+            Tell us about the child's mother
+          </h2>
+          <button
+            className="text-[#1E787D] underline hover:text-[#1E787D]/80"
+            onClick={() => onEdit("mother-details")}
+            type="button"
+          >
+            Change
+          </button>
+        </div>
+
+        <dl className="space-y-2">
+          <div className="flex">
+            <dt className="w-1/3">First name</dt>
+            <dd className="w-2/3">{formData.mother?.firstName}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Middle name(s)</dt>
+            <dd className="w-2/3">{formData.mother?.middleName}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Last name</dt>
+            <dd className="w-2/3">{formData.mother?.lastName}</dd>
+          </div>
+          {formData.mother?.hadOtherSurname === "yes" &&
+            formData.mother?.otherSurname && (
+              <div className="flex">
+                <dt className="w-1/3">Previous last name</dt>
+                <dd className="w-2/3">{formData.mother.otherSurname}</dd>
+              </div>
+            )}
+          <div className="flex">
+            <dt className="w-1/3">Current address</dt>
+            <dd className="w-2/3 whitespace-pre-line">
+              {formData.mother?.address}
+            </dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">National registration number</dt>
+            <dd className="w-2/3">
+              {formData.mother?.nationalRegistrationNumber}
+            </dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Occupation</dt>
+            <dd className="w-2/3">{formData.mother?.occupation}</dd>
+          </div>
+        </dl>
+      </div>
+
+      {/* Child's details */}
+      <div className="border-gray-300 border-b pb-6">
+        <div className="mb-4 flex items-start justify-between">
+          <h2 className="font-bold text-2xl">Tell us about the child</h2>
+          <button
+            className="text-[#1E787D] underline hover:text-[#1E787D]/80"
+            onClick={() => onEdit("child-details")}
+            type="button"
+          >
+            Change
+          </button>
+        </div>
+
+        <dl className="space-y-2">
+          <div className="flex">
+            <dt className="w-1/3">First name</dt>
+            <dd className="w-2/3">{formData.child?.firstNames}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Middle name(s)</dt>
+            <dd className="w-2/3">{formData.child?.middleNames}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Last name</dt>
+            <dd className="w-2/3">{formData.child?.lastName}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Date of birth</dt>
+            <dd className="w-2/3">{formData.child?.dateOfBirth}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Sex at birth</dt>
+            <dd className="w-2/3">{formData.child?.sexAtBirth}</dd>
+          </div>
+          <div className="flex">
+            <dt className="w-1/3">Place of birth</dt>
+            <dd className="w-2/3">{formData.child?.parishOfBirth}</dd>
+          </div>
+        </dl>
+      </div>
 
       {/* Certificates */}
       <div className="border-gray-300 border-b pb-6">
@@ -212,11 +216,11 @@ export function CheckAnswers({
 
         <dl className="space-y-2">
           <div className="flex">
-            <dt className="w-1/3 font-bold">Number ordered</dt>
+            <dt className="w-1/3">Number ordered</dt>
             <dd className="w-2/3">{formData.numberOfCertificates || 0}</dd>
           </div>
           <div className="flex">
-            <dt className="w-1/3 font-bold">Total cost</dt>
+            <dt className="w-1/3">Total cost</dt>
             <dd className="w-2/3">BBD${totalCost.toFixed(2)}</dd>
           </div>
         </dl>
@@ -237,12 +241,12 @@ export function CheckAnswers({
 
         <dl className="space-y-2">
           <div className="flex">
-            <dt className="w-1/3 font-bold">Email address</dt>
+            <dt className="w-1/3">Email address</dt>
             <dd className="w-2/3">{formData.email}</dd>
           </div>
           {formData.wantContact === "yes" && formData.phoneNumber && (
             <div className="flex">
-              <dt className="w-1/3 font-bold">Phone number</dt>
+              <dt className="w-1/3">Phone number</dt>
               <dd className="w-2/3">{formData.phoneNumber}</dd>
             </div>
           )}
