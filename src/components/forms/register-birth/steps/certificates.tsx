@@ -1,6 +1,5 @@
 "use client";
 
-import { Typography } from "@/components/ui/typography";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type CertificatesProps = {
@@ -11,8 +10,6 @@ type CertificatesProps = {
   stepNumber?: number;
   totalSteps?: number;
 };
-
-const CERTIFICATE_COST = 5.0; // BBD$5.00 per certificate
 
 /**
  * Step: Order Birth Certificates
@@ -28,7 +25,7 @@ export function Certificates({
   totalSteps,
 }: CertificatesProps) {
   const titleRef = useStepFocus(
-    "Order birth certificates",
+    "Order a birth certificate",
     "Register a Birth",
     stepNumber,
     totalSteps
@@ -39,22 +36,24 @@ export function Certificates({
     onNext();
   };
 
-  const totalCost = value * CERTIFICATE_COST;
-
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
-        Order birth certificates
+        Order a birth certificate
       </h1>
 
-      <Typography variant="paragraph">
-        The initial registration of the birth is free of charge.
-      </Typography>
+      <p className="mb-4 text-base">
+        A birth certificate is essential for access to some public services. You
+        wil need to pay BDD$5.00 for each certificate when you collect them.
+      </p>
 
-      <Typography variant="paragraph">
-        You can order certified copies of the birth certificate for official
-        use. Each copy costs BBD$5.00.
-      </Typography>
+      <p className="mb-4 text-base">
+        We keep the original so you can order a certified copy at any point.
+      </p>
+
+      <p className="mb-4 text-base">
+        The birth registration is free of charge.
+      </p>
 
       <div>
         <label
@@ -63,6 +62,7 @@ export function Certificates({
         >
           Number of certificates required
         </label>
+        <p className="mb-2 text-base text-gray-600">You can order up to x</p>
         <input
           className="w-full max-w-md rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="numberOfCertificates"
@@ -73,14 +73,6 @@ export function Certificates({
           value={value || 0}
         />
       </div>
-
-      {value > 0 && (
-        <div className="rounded-md border-2 border-gray-300 bg-gray-50 p-4">
-          <Typography className="font-bold" variant="paragraph">
-            Total cost: BBD${totalCost.toFixed(2)}
-          </Typography>
-        </div>
-      )}
 
       <div className="flex gap-4">
         <button
