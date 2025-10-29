@@ -8,8 +8,8 @@ type CertificatesProps = {
   onChange: (value: number) => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber: number;
-  totalSteps: number;
+  stepNumber?: number;
+  totalSteps?: number;
 };
 
 const CERTIFICATE_COST = 5.0; // BBD$5.00 per certificate

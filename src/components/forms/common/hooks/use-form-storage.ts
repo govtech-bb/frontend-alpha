@@ -8,7 +8,7 @@ import type { VersionedFormData } from "@/types/forms";
  * @template T - The form data type
  */
 export type UseFormStorageConfig<T> = {
-  /** Unique key for localStorage (e.g., 'govbb_birth_registration_draft') */
+  /** Unique key for sessionStorage (e.g., 'govbb_birth_registration_draft') */
   storageKey: string;
   /** Version identifier for data structure (e.g., 'birth-v1.0.0') */
   version: string;
@@ -19,14 +19,14 @@ export type UseFormStorageConfig<T> = {
 };
 
 /**
- * Generic hook for persisting form data to localStorage with versioning and validation
+ * Generic hook for persisting form data to sessionStorage with versioning and validation
  *
  * Features:
- * - Auto-save form data to localStorage
+ * - Auto-save form data to sessionStorage (cleared on tab/browser close)
  * - Configurable expiration (default 7 days)
  * - Version checking to handle data structure changes
  * - Zod runtime validation for type safety
- * - Graceful error handling (localStorage quota, disabled storage, etc.)
+ * - Graceful error handling (sessionStorage quota, disabled storage, etc.)
  *
  * @template T - The form data type
  * @param config - Storage configuration
@@ -44,7 +44,7 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
   const { storageKey, version, schema, expiryDays = 7 } = config;
 
   /**
-   * Save form data to localStorage with timestamp, version, and expiration
+   * Save form data to sessionStorage with timestamp, version, and expiration
    *
    * @param formData - Form data to save
    */
@@ -59,9 +59,9 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
           data: formData,
         };
 
-        localStorage.setItem(storageKey, JSON.stringify(storedData));
+        sessionStorage.setItem(storageKey, JSON.stringify(storedData));
       } catch (_error) {
-        // Silently fail - localStorage might be full, disabled, or in private mode
+        // Silently fail - sessionStorage might be full, disabled, or in private mode
         // This is acceptable for progressive enhancement
       }
     },
@@ -69,7 +69,7 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
   );
 
   /**
-   * Load form data from localStorage with version checking and validation
+   * Load form data from sessionStorage with version checking and validation
    *
    * Automatically removes data that:
    * - Has expired
@@ -80,7 +80,7 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
    */
   const loadFormData = useCallback((): T | null => {
     try {
-      const item = localStorage.getItem(storageKey);
+      const item = sessionStorage.getItem(storageKey);
       if (!item) {
         return null;
       }
@@ -92,7 +92,7 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
       const now = Date.now();
       if (now > stored.expiresAt) {
         // Data has expired, remove it
-        localStorage.removeItem(storageKey);
+        sessionStorage.removeItem(storageKey);
         return null;
       }
 
@@ -100,7 +100,7 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
       if (stored.version !== version) {
         // Version mismatch - data structure may have changed
         // Discard old data to prevent errors
-        localStorage.removeItem(storageKey);
+        sessionStorage.removeItem(storageKey);
         return null;
       }
 
@@ -109,16 +109,16 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
       if (!result.success) {
         // Data doesn't match expected schema - may be corrupted
         // Discard to prevent runtime errors
-        localStorage.removeItem(storageKey);
+        sessionStorage.removeItem(storageKey);
         return null;
       }
 
       return result.data;
     } catch (_error) {
-      // Parsing failed or localStorage unavailable
+      // Parsing failed or sessionStorage unavailable
       // Return null and optionally clean up corrupted data
       try {
-        localStorage.removeItem(storageKey);
+        sessionStorage.removeItem(storageKey);
       } catch {
         // Even cleanup failed - that's OK
       }
@@ -127,12 +127,12 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
   }, [storageKey, version, schema]);
 
   /**
-   * Clear saved form data from localStorage
-   * Used when user clicks "Clear saved data" or "Start over"
+   * Clear saved form data from sessionStorage
+   * Used when form is submitted or user starts over
    */
   const clearFormData = useCallback(() => {
     try {
-      localStorage.removeItem(storageKey);
+      sessionStorage.removeItem(storageKey);
     } catch (_error) {
       // Silently fail
     }
@@ -146,7 +146,7 @@ export function useFormStorage<T>(config: UseFormStorageConfig<T>) {
    */
   const getSavedDate = useCallback((): Date | null => {
     try {
-      const item = localStorage.getItem(storageKey);
+      const item = sessionStorage.getItem(storageKey);
       if (!item) {
         return null;
       }

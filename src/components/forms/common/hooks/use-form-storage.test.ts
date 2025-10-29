@@ -17,12 +17,12 @@ describe("useFormStorage", () => {
   const version = "test-v1.0.0";
 
   beforeEach(() => {
-    localStorage.clear();
+    sessionStorage.clear();
     vi.clearAllTimers();
   });
 
   afterEach(() => {
-    localStorage.clear();
+    sessionStorage.clear();
   });
 
   it("should save and load form data", () => {
@@ -137,11 +137,11 @@ describe("useFormStorage", () => {
     });
 
     // Manually set expiry to the past
-    const item = localStorage.getItem(storageKey);
+    const item = sessionStorage.getItem(storageKey);
     if (item) {
       const stored = JSON.parse(item);
       stored.expiresAt = Date.now() - 1000; // Expired 1 second ago
-      localStorage.setItem(storageKey, JSON.stringify(stored));
+      sessionStorage.setItem(storageKey, JSON.stringify(stored));
     }
 
     // Try to load expired data
@@ -149,7 +149,7 @@ describe("useFormStorage", () => {
     expect(loaded).toBeNull();
 
     // Should have been removed from storage
-    expect(localStorage.getItem(storageKey)).toBeNull();
+    expect(sessionStorage.getItem(storageKey)).toBeNull();
   });
 
   it("should discard data with version mismatch", () => {
@@ -184,7 +184,7 @@ describe("useFormStorage", () => {
     expect(loaded).toBeNull();
 
     // Should have been removed from storage
-    expect(localStorage.getItem(storageKey)).toBeNull();
+    expect(sessionStorage.getItem(storageKey)).toBeNull();
   });
 
   it("should discard data that fails schema validation", () => {
@@ -207,14 +207,14 @@ describe("useFormStorage", () => {
       },
     };
 
-    localStorage.setItem(storageKey, JSON.stringify(invalidData));
+    sessionStorage.setItem(storageKey, JSON.stringify(invalidData));
 
     // Try to load invalid data
     const loaded = result.current.loadFormData();
     expect(loaded).toBeNull();
 
     // Should have been removed from storage
-    expect(localStorage.getItem(storageKey)).toBeNull();
+    expect(sessionStorage.getItem(storageKey)).toBeNull();
   });
 
   it("should handle corrupted JSON gracefully", () => {
@@ -227,14 +227,14 @@ describe("useFormStorage", () => {
     );
 
     // Manually save corrupted JSON
-    localStorage.setItem(storageKey, "{ invalid json }");
+    sessionStorage.setItem(storageKey, "{ invalid json }");
 
     // Should return null without throwing
     const loaded = result.current.loadFormData();
     expect(loaded).toBeNull();
 
     // Should have been cleaned up
-    expect(localStorage.getItem(storageKey)).toBeNull();
+    expect(sessionStorage.getItem(storageKey)).toBeNull();
   });
 
   it("should use custom expiry days", () => {
@@ -257,7 +257,7 @@ describe("useFormStorage", () => {
       result.current.saveFormData(testData);
     });
 
-    const item = localStorage.getItem(storageKey);
+    const item = sessionStorage.getItem(storageKey);
     expect(item).not.toBeNull();
 
     const stored = JSON.parse(item!);
@@ -267,10 +267,10 @@ describe("useFormStorage", () => {
     expect(stored.expiresAt).toBe(expectedExpiry);
   });
 
-  it("should handle localStorage being disabled/unavailable", () => {
-    // Mock localStorage.setItem to throw (simulates private mode or quota exceeded)
-    const originalSetItem = localStorage.setItem;
-    localStorage.setItem = vi.fn(() => {
+  it("should handle sessionStorage being disabled/unavailable", () => {
+    // Mock sessionStorage.setItem to throw (simulates private mode or quota exceeded)
+    const originalSetItem = sessionStorage.setItem;
+    sessionStorage.setItem = vi.fn(() => {
       throw new Error("QuotaExceededError");
     });
 
@@ -295,13 +295,13 @@ describe("useFormStorage", () => {
     }).not.toThrow();
 
     // Restore
-    localStorage.setItem = originalSetItem;
+    sessionStorage.setItem = originalSetItem;
   });
 
-  it("should handle localStorage.getItem throwing", () => {
-    // Mock localStorage.getItem to throw
-    const originalGetItem = localStorage.getItem;
-    localStorage.getItem = vi.fn(() => {
+  it("should handle sessionStorage.getItem throwing", () => {
+    // Mock sessionStorage.getItem to throw
+    const originalGetItem = sessionStorage.getItem;
+    sessionStorage.getItem = vi.fn(() => {
       throw new Error("SecurityError");
     });
 
@@ -320,7 +320,7 @@ describe("useFormStorage", () => {
     }).not.toThrow();
 
     // Restore
-    localStorage.getItem = originalGetItem;
+    sessionStorage.getItem = originalGetItem;
   });
 
   it("should validate data structure with optional fields", () => {

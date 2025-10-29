@@ -27,20 +27,6 @@ export default function RegisterBirthPage() {
           Use this service to register the birth of a child born in Barbados.
         </Typography>
 
-        <div className="border-gray-400 border-l-4 bg-gray-100 p-4">
-          <Typography className="font-bold" variant="paragraph">
-            Before you start
-          </Typography>
-          <Typography variant="paragraph">
-            You'll need to know the child's date and place of birth, and have
-            details for both parents (if applicable).
-          </Typography>
-          <Typography variant="paragraph">
-            After completing this form, you must visit the Registration
-            Department in person to sign the birth register.
-          </Typography>
-        </div>
-
         <RegisterBirthForm />
       </div>
     </div>

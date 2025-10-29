@@ -8,8 +8,8 @@ type FathersDetailsProps = {
   onChange: (value: Partial<PersonDetails>) => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber: number;
-  totalSteps: number;
+  stepNumber?: number;
+  totalSteps?: number;
 };
 
 /**

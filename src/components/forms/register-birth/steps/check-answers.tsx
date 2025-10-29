@@ -9,8 +9,8 @@ type CheckAnswersProps = {
   onSubmit: () => void;
   onBack: () => void;
   onEdit: (step: StepName) => void;
-  stepNumber: number;
-  totalSteps: number;
+  stepNumber?: number;
+  totalSteps?: number;
 };
 
 /**

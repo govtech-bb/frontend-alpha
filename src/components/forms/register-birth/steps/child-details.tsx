@@ -12,8 +12,8 @@ type ChildDetailsProps = {
   onChange: (value: Partial<ChildDetailsType>) => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber: number;
-  totalSteps: number;
+  stepNumber?: number;
+  totalSteps?: number;
   variant: DetailsVariant;
   prefillSurname?: string;
 };

@@ -8,8 +8,8 @@ type MarriageStatusProps = {
   onChange: (value: "yes" | "no") => void;
   onNext: () => void;
   onBack: () => void;
-  stepNumber: number;
-  totalSteps: number;
+  stepNumber?: number;
+  totalSteps?: number;
 };
 
 /**
