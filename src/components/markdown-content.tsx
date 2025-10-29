@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
 
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
@@ -49,7 +49,7 @@ const components: Components = {
       {children}
     </li>
   ),
-  hr: (props: any) => <hr className="my-8 border-2" {...props} />,
+  hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
   a: ({ href, children, ...props }: any) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
@@ -136,7 +136,11 @@ export const MarkdownContent = ({
         ) : null}
         {frontmatter.publish_date && (
           <div className="border-gray-200 border-b-4 pb-4 text-gray-500">
-            Last updated on {format(new Date(frontmatter.publish_date), "PPP")}
+            Last updated on{" "}
+            {format(
+              parseISO(frontmatter.publish_date.toISOString().split("T")[0]),
+              "PPP"
+            )}
           </div>
         )}
       </div>
