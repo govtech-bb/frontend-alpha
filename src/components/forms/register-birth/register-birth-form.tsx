@@ -126,22 +126,14 @@ export function RegisterBirthForm() {
     form.handleSubmit();
   };
 
-  // Determine variant for mother/child details
-  const detailsVariant =
-    formValues.marriageStatus === "yes" ||
-    formValues.includeFatherDetails === "yes"
-      ? "with-father"
-      : "without-father";
-
-  // Pre-fill child's surname
-  const childSurnamePrefill =
-    detailsVariant === "with-father"
-      ? formValues.father?.lastName
-      : formValues.mother?.lastName;
-
   const hasFatherDetails =
     formValues.marriageStatus === "yes" ||
     formValues.includeFatherDetails === "yes";
+
+  // Pre-fill child's surname
+  const childSurnamePrefill = hasFatherDetails
+    ? formValues.father?.lastName
+    : formValues.mother?.lastName;
 
   return (
     <div className="min-h-screen bg-neutral-white">
