@@ -26,7 +26,7 @@ export function FathersDetails({
   totalSteps,
 }: FathersDetailsProps) {
   const titleRef = useStepFocus(
-    "Father's details",
+    "Tell us about the child's father",
     "Register a Birth",
     stepNumber,
     totalSteps
@@ -60,10 +60,8 @@ export function FathersDetails({
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
-        Father's details
+        Tell us about the child's father
       </h1>
-
-      <p className="mb-6 font-bold text-2xl">What is the father's:</p>
 
       {/* First name */}
       <div>
@@ -89,7 +87,7 @@ export function FathersDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="father-middleName"
         >
-          Middle name
+          Middle name(s)
         </label>
         <p className="mb-2 text-base text-gray-600">
           If they have more than one, add them in order
@@ -121,68 +119,6 @@ export function FathersDetails({
         />
       </div>
 
-      {/* Had other surname */}
-      <fieldset>
-        <legend className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]">
-          Has the father had any other surname?
-        </legend>
-        <div className="space-y-3">
-          <div className="flex items-start">
-            <input
-              checked={value.hadOtherSurname === "yes"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="father-hadOtherSurname-yes"
-              name="father-hadOtherSurname"
-              onChange={() => handleChange("hadOtherSurname", "yes")}
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="father-hadOtherSurname-yes"
-            >
-              Yes
-            </label>
-          </div>
-
-          <div className="flex items-start">
-            <input
-              checked={value.hadOtherSurname === "no"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="father-hadOtherSurname-no"
-              name="father-hadOtherSurname"
-              onChange={() => handleChange("hadOtherSurname", "no")}
-              type="radio"
-              value="no"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="father-hadOtherSurname-no"
-            >
-              No
-            </label>
-          </div>
-        </div>
-
-        {value.hadOtherSurname === "yes" && (
-          <div className="mt-4">
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="father-otherSurname"
-            >
-              What was it
-            </label>
-            <input
-              className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
-              id="father-otherSurname"
-              onChange={(e) => handleChange("otherSurname", e.target.value)}
-              type="text"
-              value={value.otherSurname || ""}
-            />
-          </div>
-        )}
-      </fieldset>
-
       {/* Date of birth */}
       <div>
         <label
@@ -211,7 +147,7 @@ export function FathersDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="father-address"
         >
-          Address
+          Current address
         </label>
         <textarea
           className="w-full max-w-md resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
@@ -231,7 +167,6 @@ export function FathersDetails({
         >
           National registration number
         </label>
-        <p className="mb-2 text-base text-gray-600">We ask this because xx??</p>
         <input
           className="w-full max-w-md rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="father-nationalRegistrationNumber"
@@ -253,7 +188,10 @@ export function FathersDetails({
           Occupation{" "}
           <span className="font-normal text-gray-600">(optional)</span>
         </label>
-        <p className="mb-2 text-base text-gray-600">We ask this because xx??</p>
+        <p className="mb-2 text-base text-gray-600">
+          This will be included on the child’s birth certificate and in official
+          records.
+        </p>
         <input
           className="w-full max-w-md rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="father-occupation"
