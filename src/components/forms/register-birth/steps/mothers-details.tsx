@@ -1,11 +1,7 @@
 "use client";
 
 import { useStepFocus } from "../../common/hooks/use-step-focus";
-import type {
-  DetailsVariant,
-  PersonDetails,
-  SimplifiedMotherDetails,
-} from "../types";
+import type { PersonDetails, SimplifiedMotherDetails } from "../types";
 
 type MothersDetailsProps = {
   value: Partial<PersonDetails | SimplifiedMotherDetails>;
@@ -14,15 +10,11 @@ type MothersDetailsProps = {
   onBack: () => void;
   stepNumber?: number;
   totalSteps?: number;
-  variant: DetailsVariant;
 };
 
 /**
  * Step: Mother's Details
  * Collects information about the mother
- * Based on PDF pages 3 (with father) and 13 (without father)
- *
- * @param variant - 'with-father' or 'without-father' determines field labels
  */
 export function MothersDetails({
   value,
@@ -31,10 +23,9 @@ export function MothersDetails({
   onBack,
   stepNumber,
   totalSteps,
-  variant,
 }: MothersDetailsProps) {
   const titleRef = useStepFocus(
-    "Mother's details",
+    "Tell us about the child's mother",
     "Register a Birth",
     stepNumber,
     totalSteps
@@ -68,20 +59,11 @@ export function MothersDetails({
     value.address &&
     value.nationalRegistrationNumber;
 
-  // Labels change based on variant
-  const firstNameLabel =
-    variant === "with-father" ? "First name(s)" : "Christian name(s)";
-  const middleNameLabel =
-    variant === "with-father" ? "Middle name(s)" : "Middle name(s)";
-  const lastNameLabel = variant === "with-father" ? "Last name" : "Surname";
-
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
-        Mother's details
+        Tell us about the child's mother
       </h1>
-
-      <p className="mb-6 font-bold text-2xl">What is the mother's:</p>
 
       {/* First name */}
       <div>
@@ -89,7 +71,7 @@ export function MothersDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="mother-firstName"
         >
-          {firstNameLabel}
+          First name
         </label>
         <input
           className="w-full max-w-md rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
@@ -107,7 +89,7 @@ export function MothersDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="mother-middleName"
         >
-          {middleNameLabel}
+          Middle name(s)
         </label>
         <p className="mb-2 text-base text-gray-600">
           If they have more than one, add them in order
@@ -127,7 +109,7 @@ export function MothersDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="mother-lastName"
         >
-          {lastNameLabel}
+          Last name
         </label>
         <input
           className="w-full max-w-md rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
@@ -142,13 +124,11 @@ export function MothersDetails({
       {/* Had other surname */}
       <fieldset>
         <legend className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]">
-          Has the mother had any other surname?
+          Has the mother had any other last name?
         </legend>
-        {variant === "with-father" && (
-          <p className="mb-2 text-base text-gray-600">
-            For example, a maiden name
-          </p>
-        )}
+        <p className="mb-2 text-base text-gray-600">
+          For example, a maiden name
+        </p>
         <div className="space-y-3">
           <div className="flex items-start">
             <input
@@ -234,7 +214,7 @@ export function MothersDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="mother-address"
         >
-          Address
+          Current address
         </label>
         <textarea
           className="w-full max-w-md resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
@@ -254,7 +234,6 @@ export function MothersDetails({
         >
           National registration number
         </label>
-        <p className="mb-2 text-base text-gray-600">We ask this because xx??</p>
         <input
           className="w-full max-w-md rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="mother-nationalRegistrationNumber"
@@ -276,7 +255,10 @@ export function MothersDetails({
           Occupation{" "}
           <span className="font-normal text-gray-600">(optional)</span>
         </label>
-        <p className="mb-2 text-base text-gray-600">We ask this because xx??</p>
+        <p className="mb-2 text-base text-gray-600">
+          This will be included on the child's birth certificate and in official
+          records.
+        </p>
         <input
           className="w-full max-w-md rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="mother-occupation"

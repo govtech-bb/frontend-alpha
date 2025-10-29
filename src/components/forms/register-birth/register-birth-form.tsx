@@ -192,7 +192,6 @@ export function RegisterBirthForm() {
             }
             onNext={goNext}
             value={formValues.mother || {}}
-            variant={detailsVariant}
           />
         )}
 
