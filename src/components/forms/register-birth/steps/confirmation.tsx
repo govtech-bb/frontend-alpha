@@ -1,5 +1,6 @@
 "use client";
 
+import { Typography } from "@/components/ui/typography";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type ConfirmationProps = {
@@ -25,35 +26,39 @@ export function Confirmation({
 
   return (
     <div className="space-y-6">
-      <div className="mb-6">
-        <h1 className="mb-4 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
-          Pre-registration complete
-        </h1>
+      <div className="-mx-[50vw] relative right-1/2 left-1/2 mb-6 w-screen bg-[#D4F1F4] px-4 py-6 sm:px-6">
+        <div className="container mx-auto max-w-3xl">
+          <h1 className="mb-4 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+            Pre-registration complete
+          </h1>
 
-        <p className="text-base">
-          Your information has been sent to the Registration Department.
-        </p>
+          <Typography variant="paragraph">
+            Your information has been sent to the Registration Department.
+          </Typography>
+        </div>
       </div>
 
       <div className="space-y-4">
         <h2 className="font-bold text-2xl">What you must do next</h2>
 
-        <p className="text-base">
+        <Typography variant="paragraph">
           You must now visit the Registration Department in person to sign the
           birth register. This makes the registration official.
-        </p>
+        </Typography>
 
-        <p className="text-base">You do not need an appointment.</p>
+        <Typography variant="paragraph">
+          You do not need an appointment.
+        </Typography>
       </div>
 
       <div className="space-y-4">
         <h3 className="font-bold text-xl">Who must attend the appointment</h3>
 
-        <p className="text-base">
+        <Typography variant="paragraph">
           {hasFatherDetails
             ? "Both the mother and father of the child must attend the appointment."
             : "The mother must attend the appointment."}
-        </p>
+        </Typography>
 
         <button
           className="text-[#1E787D] underline hover:text-[#1E787D]/80"
@@ -77,15 +82,15 @@ export function Confirmation({
         </p>
       </div>
 
-      <p className="text-base">
+      <Typography variant="paragraph">
         The total cost for your requested certificates is BDD$
         {totalCost.toFixed(2)}. Remember to bring payment with you.
-      </p>
+      </Typography>
 
-      <p className="text-base">
+      <Typography variant="paragraph">
         You should also bring valid photo identification for the parent(s)
         attending.
-      </p>
+      </Typography>
     </div>
   );
 }
