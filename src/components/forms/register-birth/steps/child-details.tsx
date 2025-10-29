@@ -2,10 +2,7 @@
 
 import { useEffect } from "react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
-import type {
-  ChildDetails as ChildDetailsType,
-  DetailsVariant,
-} from "../types";
+import type { ChildDetails as ChildDetailsType } from "../types";
 
 type ChildDetailsProps = {
   value: Partial<ChildDetailsType>;
@@ -14,16 +11,13 @@ type ChildDetailsProps = {
   onBack: () => void;
   stepNumber?: number;
   totalSteps?: number;
-  variant: DetailsVariant;
   prefillSurname?: string;
 };
 
 /**
  * Step: Child's Details
  * Collects information about the child being registered
- * Based on PDF pages 4 (with father) and 16 (without father)
  *
- * @param variant - 'with-father' or 'without-father' determines field labels
  * @param prefillSurname - Pre-filled from father or mother's surname
  */
 export function ChildDetails({
@@ -33,11 +27,10 @@ export function ChildDetails({
   onBack,
   stepNumber,
   totalSteps,
-  variant,
   prefillSurname,
 }: ChildDetailsProps) {
   const titleRef = useStepFocus(
-    "Child's details",
+    "Tell us about the child",
     "Register a Birth",
     stepNumber,
     totalSteps
@@ -76,19 +69,10 @@ export function ChildDetails({
     value.sexAtBirth &&
     value.parishOfBirth;
 
-  // Labels change based on variant
-  const firstNameLabel =
-    variant === "with-father" ? "First name(s)" : "Christian name(s)";
-  const middleNameLabel =
-    variant === "with-father" ? "Middle name(s)" : "Middle name(s)";
-  const lastNameLabel = variant === "with-father" ? "Last name" : "Surname";
-  const surnameHint =
-    variant === "with-father" ? "Father's surname" : "Mother's surname";
-
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
-        Child's details
+        Tell us about the child
       </h1>
 
       {/* First name(s) */}
@@ -97,7 +81,7 @@ export function ChildDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="child-firstNames"
         >
-          {firstNameLabel}
+          First name
         </label>
         <input
           className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
@@ -115,7 +99,7 @@ export function ChildDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="child-middleNames"
         >
-          {middleNameLabel}
+          Middle name(s)
         </label>
         <p className="mb-2 text-base text-gray-600">
           If they have more than one, add them in order
@@ -135,13 +119,12 @@ export function ChildDetails({
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="child-lastName"
         >
-          {lastNameLabel}
+          Last name
         </label>
         <input
-          className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-gray-100 px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:bg-white focus:ring-2 focus:ring-[#1E787D]/20"
+          className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="child-lastName"
           onChange={(e) => handleChange("lastName", e.target.value)}
-          placeholder={surnameHint}
           required
           type="text"
           value={value.lastName || prefillSurname || ""}
@@ -156,11 +139,11 @@ export function ChildDetails({
         >
           Date of birth
         </label>
+        <p className="mb-2 text-base text-gray-600">For example, 2025-10-22</p>
         <input
           className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="child-dateOfBirth"
           onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-          placeholder="DD/MM/YYYY"
           required
           type="text"
           value={value.dateOfBirth || ""}
@@ -176,7 +159,7 @@ export function ChildDetails({
           Sex at birth
         </label>
         <p className="mb-2 text-base text-gray-600">
-          Do we need to say why we need to ask?
+          We ask this so that we can monitor population trends.
         </p>
         <input
           className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
@@ -188,14 +171,23 @@ export function ChildDetails({
         />
       </div>
 
-      {/* Parish of birth */}
+      {/* Place of birth */}
       <div>
         <label
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="child-parishOfBirth"
         >
-          Parish of birth
+          Place of birth
         </label>
+        <p className="mb-2 text-base text-gray-600">
+          Include the town and parish in your answer.
+        </p>
+        <p className="mb-2 text-base text-gray-600">
+          For example, Queen Elizabeth Hospital, Bridgetown, St. Michael.
+        </p>
+        <p className="mb-2 text-base text-gray-600">
+          Or a home address if they were born at home.
+        </p>
         <input
           className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="child-parishOfBirth"

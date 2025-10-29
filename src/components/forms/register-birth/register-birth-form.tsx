@@ -202,7 +202,6 @@ export function RegisterBirthForm() {
             onNext={goNext}
             prefillSurname={childSurnamePrefill}
             value={formValues.child || {}}
-            variant={detailsVariant}
           />
         )}
 
