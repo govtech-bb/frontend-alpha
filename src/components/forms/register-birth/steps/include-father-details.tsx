@@ -52,11 +52,13 @@ export function IncludeFatherDetails({
 
         <div className="mb-6 space-y-4">
           <Typography variant="paragraph">
-            If you choose ‘Yes’, both parents must go to the Registration Department and sign the official register together.
+            If you choose ‘Yes’, both parents must go to the Registration
+            Department and sign the official register together.
           </Typography>
 
           <Typography variant="paragraph">
-            If you choose ‘No’, the mother must go to the Registration Department but it is not necessary for the father to attend.
+            If you choose ‘No’, the mother must go to the Registration
+            Department but it is not necessary for the father to attend.
           </Typography>
         </div>
       </div>
