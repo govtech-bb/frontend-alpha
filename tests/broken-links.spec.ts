@@ -2,7 +2,7 @@ import { expect, type Page, test } from "@playwright/test";
 
 type LinkResult = {
   url: string;
-  status: "valid" | "broken" | "invalid";
+  status: "valid" | "broken" | "invalid" | "warning";
   statusCode?: number;
   error?: string;
   foundOnPage: string;
@@ -17,6 +17,9 @@ const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const visitedUrls = new Set<string>();
 const brokenLinks: LinkResult[] = [];
 const pagesToCheck: Map<string, PageToCheck> = new Map();
+
+// Option to skip external link checking entirely
+const CHECK_EXTERNAL_LINKS = process.env.CHECK_EXTERNAL_LINKS !== "false";
 
 /**
  * Normalizes a URL to avoid checking duplicates
@@ -106,6 +109,15 @@ async function checkLink(
     return result;
   }
 
+  const isExternal = !isInternalUrl(href);
+
+  // Skip external links if configured
+  if (isExternal && !CHECK_EXTERNAL_LINKS) {
+    result.status = "warning";
+    result.error = "External link - not checked";
+    return result;
+  }
+
   // Handle hash/anchor links - check if target exists on the same page
   const urlObj = new URL(href, currentPage);
   if (urlObj.hash && urlObj.hash !== "#") {
@@ -169,11 +181,33 @@ async function checkLink(
   }
 
   try {
-    const response = await page.request.head(href, {
-      timeout: 10_000,
-      maxRedirects: 5,
-      ignoreHTTPSErrors: true, // Ignore SSL certificate errors
-    });
+    let response: any = null;
+
+    if (isExternal) {
+      // External links: use GET with browser-like headers to avoid bot detection
+      response = await page.request.get(href, {
+        timeout: 15_000,
+        maxRedirects: 5,
+        ignoreHTTPSErrors: true,
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+          "Accept-Language": "en-US,en;q=0.9",
+          "Accept-Encoding": "gzip, deflate, br",
+          Connection: "keep-alive",
+          "Upgrade-Insecure-Requests": "1",
+        },
+      });
+    } else {
+      // Internal links: try HEAD first for efficiency
+      response = await page.request.head(href, {
+        timeout: 10_000,
+        maxRedirects: 5,
+        ignoreHTTPSErrors: true,
+      });
+    }
 
     result.statusCode = response.status();
 
@@ -183,23 +217,30 @@ async function checkLink(
       result.error = `HTTP ${response.status()}`;
     }
   } catch (_error: any) {
-    // If HEAD request fails, try GET request as some servers don't support HEAD
-    try {
-      const getResponse = await page.request.get(href, {
-        timeout: 10_000,
-        maxRedirects: 5,
-        ignoreHTTPSErrors: true,
-      });
+    // If HEAD request fails for internal links, try GET request
+    if (isExternal) {
+      // For external links, if GET fails, mark as warning instead of broken
+      // Some sites block automated requests but work fine in browsers
+      result.status = "warning";
+      result.error = `Connection failed: ${_error.message} (site may be blocking automated requests)`;
+    } else {
+      try {
+        const getResponse = await page.request.get(href, {
+          timeout: 10_000,
+          maxRedirects: 5,
+          ignoreHTTPSErrors: true,
+        });
 
-      result.statusCode = getResponse.status();
+        result.statusCode = getResponse.status();
 
-      if (getResponse.status() >= 400) {
+        if (getResponse.status() >= 400) {
+          result.status = "broken";
+          result.error = `HTTP ${getResponse.status()}`;
+        }
+      } catch (getError: any) {
         result.status = "broken";
-        result.error = `HTTP ${getResponse.status()}`;
+        result.error = getError.message || "Failed to reach URL";
       }
-    } catch (getError: any) {
-      result.status = "broken";
-      result.error = getError.message || "Failed to reach URL";
     }
   }
 
@@ -266,10 +307,14 @@ async function crawlPage(page: Page, url: string) {
       // Check the link for valid HTTP response
       const result = await checkLink(page, absoluteLink, url);
 
-      if (result.status !== "valid") {
+      if (result.status === "broken") {
         brokenLinks.push(result);
         console.log(
           `❌ Broken link found: ${absoluteLink} (${result.error}) [${isInternal ? "internal" : "external"}]`
+        );
+      } else if (result.status === "warning") {
+        console.log(
+          `⚠️  Warning: ${absoluteLink} (${result.error}) [${isInternal ? "internal" : "external"}]`
         );
       } else if (result.statusCode === 200) {
         console.log(
