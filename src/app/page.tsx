@@ -44,11 +44,11 @@ export default async function Home() {
                 >
                   <ChevronLeftSVG className="hidden shrink-0 rotate-180 lg:inline-block" />
                   <Link
-                    className="inline-flex cursor-pointer items-center font-normal text-[20px] capitalize leading-[150%] underline lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                    className="inline-flex cursor-pointer items-center font-normal text-[20px] leading-[150%] underline lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
                     href={`/${service.slug}`}
                     key={service.slug}
                   >
-                    {service.title.toLowerCase()}
+                    {service.title}
                   </Link>
                 </div>
               ))}
@@ -69,10 +69,10 @@ export default async function Home() {
                   key={service.title}
                 >
                   <Link
-                    className="cursor-pointer font-bold text-[20px] text-teal-dark capitalize leading-[150%] underline underline-offset-2 lg:text-3xl"
+                    className="cursor-pointer font-bold text-[20px] text-teal-dark leading-[150%] underline underline-offset-2 lg:text-3xl"
                     href={service.slug}
                   >
-                    {service.title.toLowerCase()}
+                    {service.title}
                   </Link>
                   <Typography variant="paragraph">
                     {service.description}
