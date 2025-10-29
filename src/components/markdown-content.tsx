@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
+/** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
 import { format, parseISO } from "date-fns";
 import ReactMarkdown, { type Components } from "react-markdown";
