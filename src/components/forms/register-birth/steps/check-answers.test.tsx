@@ -55,8 +55,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -70,8 +68,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -85,8 +81,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -103,8 +97,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -118,8 +110,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -133,8 +123,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -157,8 +145,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -175,8 +161,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -190,8 +174,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -205,8 +187,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -224,8 +204,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -239,8 +217,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -256,8 +232,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -276,8 +250,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -294,8 +266,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -315,8 +285,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -333,8 +301,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -354,8 +320,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
@@ -376,8 +340,6 @@ describe("CheckAnswers", () => {
           onBack={mockOnBack}
           onEdit={mockOnEdit}
           onSubmit={mockOnSubmit}
-          stepNumber={7}
-          totalSteps={8}
         />
       );
 
