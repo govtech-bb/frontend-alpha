@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ErrorSummary, type ValidationError } from "../../common/error-summary";
+import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { childDetailsValidation } from "../schema";
 import type { ChildDetails as ChildDetailsType } from "../types";
 
 type ChildDetailsProps = {
@@ -18,6 +21,7 @@ type ChildDetailsProps = {
  *
  * @param prefillSurname - Pre-filled from father or mother's surname
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Error handling logic requires validation state management
 export function ChildDetails({
   value,
   onChange,
@@ -26,6 +30,10 @@ export function ChildDetails({
   prefillSurname,
 }: ChildDetailsProps) {
   const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
+
+  const [errors, setErrors] = useState<ValidationError[]>([]);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   // Pre-fill lastName with surname if not already set
   // biome-ignore lint/correctness/useExhaustiveDependencies: Need value for spread operator, but tracking value.lastName specifically to prevent unnecessary runs when other fields change
@@ -37,34 +45,92 @@ export function ChildDetails({
 
   const handleChange = (field: keyof ChildDetailsType, fieldValue: string) => {
     onChange({ ...value, [field]: fieldValue });
+
+    // Clear error for this field when user starts typing (after first submit)
+    if (hasSubmitted) {
+      validateField(field, fieldValue);
+    }
+  };
+
+  const validateField = (field: keyof ChildDetailsType, fieldValue: string) => {
+    const testValue = { ...value, [field]: fieldValue };
+    const result = childDetailsValidation.safeParse(testValue);
+
+    if (result.success) {
+      // Clear error for this field
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+      setErrors((prev) => prev.filter((e) => e.field !== `child-${field}`));
+    } else {
+      // Set error for this field
+      const fieldError = result.error.issues.find((e) => e.path[0] === field);
+      if (fieldError) {
+        setFieldErrors((prev) => ({ ...prev, [field]: fieldError.message }));
+        setErrors((prev) => {
+          const filtered = prev.filter((e) => e.field !== `child-${field}`);
+          return [
+            ...filtered,
+            { field: `child-${field}`, message: fieldError.message },
+          ];
+        });
+      }
+    }
+  };
+
+  const handleBlur = (field: keyof ChildDetailsType) => {
+    if (hasSubmitted) {
+      validateField(field, value[field] || "");
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Basic validation
-    if (
-      value.firstNames &&
-      value.lastName &&
-      value.dateOfBirth &&
-      value.sexAtBirth &&
-      value.parishOfBirth
-    ) {
+    setHasSubmitted(true);
+
+    const result = childDetailsValidation.safeParse(value);
+
+    if (result.success) {
+      setErrors([]);
+      setFieldErrors({});
       onNext();
+    } else {
+      // Build error list for summary and field errors
+      const validationErrors: ValidationError[] = [];
+      const newFieldErrors: Record<string, string> = {};
+
+      for (const error of result.error.issues) {
+        const field = error.path[0] as string;
+        validationErrors.push({
+          field: `child-${field}`,
+          message: error.message,
+        });
+        newFieldErrors[field] = error.message;
+      }
+
+      setErrors(validationErrors);
+      setFieldErrors(newFieldErrors);
     }
   };
 
-  const isValid =
-    value.firstNames &&
-    value.lastName &&
-    value.dateOfBirth &&
-    value.sexAtBirth &&
-    value.parishOfBirth;
+  const getFieldClassName = (field: keyof ChildDetailsType) => {
+    const baseClass =
+      "w-full max-w-lg rounded-md border-2 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20";
+    const errorClass = fieldErrors[field]
+      ? "border-red-600"
+      : "border-gray-300";
+    return `${baseClass} ${errorClass}`;
+  };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
         Tell us about the child
       </h1>
+
+      <ErrorSummary errors={errors} />
 
       {/* First name(s) */}
       <div>
@@ -75,12 +141,20 @@ export function ChildDetails({
           First name
         </label>
         <input
-          className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
+          aria-describedby={
+            fieldErrors.firstNames ? "child-firstNames-error" : undefined
+          }
+          aria-invalid={fieldErrors.firstNames ? true : undefined}
+          className={getFieldClassName("firstNames")}
           id="child-firstNames"
+          onBlur={() => handleBlur("firstNames")}
           onChange={(e) => handleChange("firstNames", e.target.value)}
-          required
           type="text"
           value={value.firstNames || ""}
+        />
+        <FormFieldError
+          id="child-firstNames"
+          message={fieldErrors.firstNames}
         />
       </div>
 
@@ -96,7 +170,7 @@ export function ChildDetails({
           If they have more than one, add them in order
         </p>
         <input
-          className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
+          className={getFieldClassName("middleNames")}
           id="child-middleNames"
           onChange={(e) => handleChange("middleNames", e.target.value)}
           type="text"
@@ -113,13 +187,18 @@ export function ChildDetails({
           Last name
         </label>
         <input
-          className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
+          aria-describedby={
+            fieldErrors.lastName ? "child-lastName-error" : undefined
+          }
+          aria-invalid={fieldErrors.lastName ? true : undefined}
+          className={getFieldClassName("lastName")}
           id="child-lastName"
+          onBlur={() => handleBlur("lastName")}
           onChange={(e) => handleChange("lastName", e.target.value)}
-          required
           type="text"
           value={value.lastName || prefillSurname || ""}
         />
+        <FormFieldError id="child-lastName" message={fieldErrors.lastName} />
       </div>
 
       {/* Date of birth */}
@@ -132,12 +211,20 @@ export function ChildDetails({
         </label>
         <p className="mb-2 text-base text-gray-600">For example, 2025-10-22</p>
         <input
+          aria-describedby={
+            fieldErrors.dateOfBirth ? "child-dateOfBirth-error" : undefined
+          }
+          aria-invalid={fieldErrors.dateOfBirth ? true : undefined}
           className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="child-dateOfBirth"
+          onBlur={() => handleBlur("dateOfBirth")}
           onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-          required
           type="text"
           value={value.dateOfBirth || ""}
+        />
+        <FormFieldError
+          id="child-dateOfBirth"
+          message={fieldErrors.dateOfBirth}
         />
       </div>
 
@@ -153,12 +240,20 @@ export function ChildDetails({
           We ask this so that we can monitor population trends.
         </p>
         <input
-          className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
+          aria-describedby={
+            fieldErrors.sexAtBirth ? "child-sexAtBirth-error" : undefined
+          }
+          aria-invalid={fieldErrors.sexAtBirth ? true : undefined}
+          className={getFieldClassName("sexAtBirth")}
           id="child-sexAtBirth"
+          onBlur={() => handleBlur("sexAtBirth")}
           onChange={(e) => handleChange("sexAtBirth", e.target.value)}
-          required
           type="text"
           value={value.sexAtBirth || ""}
+        />
+        <FormFieldError
+          id="child-sexAtBirth"
+          message={fieldErrors.sexAtBirth}
         />
       </div>
 
@@ -180,12 +275,20 @@ export function ChildDetails({
           Or a home address if they were born at home.
         </p>
         <input
-          className="w-full max-w-lg rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
+          aria-describedby={
+            fieldErrors.parishOfBirth ? "child-parishOfBirth-error" : undefined
+          }
+          aria-invalid={fieldErrors.parishOfBirth ? true : undefined}
+          className={getFieldClassName("parishOfBirth")}
           id="child-parishOfBirth"
+          onBlur={() => handleBlur("parishOfBirth")}
           onChange={(e) => handleChange("parishOfBirth", e.target.value)}
-          required
           type="text"
           value={value.parishOfBirth || ""}
+        />
+        <FormFieldError
+          id="child-parishOfBirth"
+          message={fieldErrors.parishOfBirth}
         />
       </div>
 
@@ -199,11 +302,10 @@ export function ChildDetails({
         </button>
 
         <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:cursor-not-allowed disabled:bg-gray-400"
-          disabled={!isValid}
+          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
           type="submit"
         >
-          Continue
+          Next
         </button>
       </div>
     </form>

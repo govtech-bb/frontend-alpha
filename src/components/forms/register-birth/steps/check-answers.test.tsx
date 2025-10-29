@@ -48,7 +48,7 @@ describe("CheckAnswers", () => {
   };
 
   describe("Mother's details display", () => {
-    it("should display mother's full name", () => {
+    it("should display mother's name fields", () => {
       render(
         <CheckAnswers
           formData={completeFormData}
@@ -58,7 +58,11 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText(/Jane Marie Smith/)).toBeInTheDocument();
+      expect(screen.getByText("Jane")).toBeInTheDocument();
+      expect(screen.getByText("Marie")).toBeInTheDocument();
+      // Smith appears multiple times (child and parents), so we can't use getByText
+      const smithElements = screen.getAllByText("Smith");
+      expect(smithElements.length).toBeGreaterThan(0);
     });
 
     it("should display mother's date of birth", () => {
@@ -154,7 +158,7 @@ describe("CheckAnswers", () => {
   });
 
   describe("Father's details display", () => {
-    it("should display father's full name", () => {
+    it("should display father's name fields", () => {
       render(
         <CheckAnswers
           formData={completeFormData}
@@ -164,7 +168,11 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText(/Robert James Smith/)).toBeInTheDocument();
+      expect(screen.getByText("Robert")).toBeInTheDocument();
+      expect(screen.getByText("James")).toBeInTheDocument();
+      // Smith appears multiple times (child and parents), so we use getAllByText
+      const smithElements = screen.getAllByText("Smith");
+      expect(smithElements.length).toBeGreaterThan(0);
     });
 
     it("should display father's date of birth", () => {
@@ -235,7 +243,11 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText(/John Michael Smith/)).toBeInTheDocument();
+      expect(screen.getByText("John")).toBeInTheDocument();
+      expect(screen.getByText("Michael")).toBeInTheDocument();
+      // Smith appears multiple times (child and parents), so we use getAllByText
+      const smithElements = screen.getAllByText("Smith");
+      expect(smithElements.length).toBeGreaterThan(0);
       expect(screen.getByText("01/01/2024")).toBeInTheDocument();
       expect(screen.getByText("Male")).toBeInTheDocument();
       expect(screen.getByText("St. Michael")).toBeInTheDocument();
@@ -304,7 +316,9 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("Father's details")).toBeInTheDocument();
+      expect(
+        screen.getByText("Tell us about the child's father")
+      ).toBeInTheDocument();
     });
 
     it("should show father section when includeFatherDetails is yes", () => {
@@ -323,7 +337,9 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("Father's details")).toBeInTheDocument();
+      expect(
+        screen.getByText("Tell us about the child's father")
+      ).toBeInTheDocument();
     });
 
     it("should not show father section when includeFatherDetails is no", () => {

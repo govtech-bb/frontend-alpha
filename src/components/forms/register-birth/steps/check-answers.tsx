@@ -79,6 +79,10 @@ export function CheckAnswers({
               <dd className="w-2/3">{formData.father.lastName}</dd>
             </div>
             <div className="flex">
+              <dt className="w-1/3">Date of birth</dt>
+              <dd className="w-2/3">{formData.father.dateOfBirth}</dd>
+            </div>
+            <div className="flex">
               <dt className="w-1/3">Current address</dt>
               <dd className="w-2/3 whitespace-pre-line">
                 {formData.father.address}
@@ -133,6 +137,10 @@ export function CheckAnswers({
                 <dd className="w-2/3">{formData.mother.otherSurname}</dd>
               </div>
             )}
+          <div className="flex">
+            <dt className="w-1/3">Date of birth</dt>
+            <dd className="w-2/3">{formData.mother?.dateOfBirth}</dd>
+          </div>
           <div className="flex">
             <dt className="w-1/3">Current address</dt>
             <dd className="w-2/3 whitespace-pre-line">

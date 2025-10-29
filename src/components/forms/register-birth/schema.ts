@@ -61,3 +61,75 @@ export const birthRegistrationSchema = z.object({
  * This should match PartialBirthRegistrationFormData from types.ts
  */
 export type BirthRegistrationFormData = z.infer<typeof birthRegistrationSchema>;
+
+/**
+ * Per-step validation schemas
+ * These enforce required fields for each form step
+ */
+
+// Father's details validation
+export const fatherDetailsValidation = z.object({
+  firstName: z.string().min(1, "Enter the father's first name"),
+  middleName: z.string().optional(),
+  lastName: z.string().min(1, "Enter the father's last name"),
+  hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
+  otherSurname: z.string().optional(),
+  dateOfBirth: z.string().min(1, "Enter the father's date of birth"),
+  address: z.string().min(1, "Enter the father's current address"),
+  nationalRegistrationNumber: z
+    .string()
+    .min(1, "Enter the father's national registration number"),
+  occupation: z.string().optional(),
+});
+
+// Mother's details validation
+export const motherDetailsValidation = z.object({
+  firstName: z.string().min(1, "Enter the mother's first name"),
+  middleName: z.string().optional(),
+  lastName: z.string().min(1, "Enter the mother's last name"),
+  hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
+  otherSurname: z.string().optional(),
+  dateOfBirth: z.string().min(1, "Enter the mother's date of birth"),
+  address: z.string().min(1, "Enter the mother's current address"),
+  nationalRegistrationNumber: z
+    .string()
+    .min(1, "Enter the mother's national registration number"),
+  occupation: z.string().optional(),
+});
+
+// Child's details validation
+export const childDetailsValidation = z.object({
+  firstNames: z.string().min(1, "Enter the child's first name"),
+  middleNames: z.string().optional(),
+  lastName: z.string().min(1, "Enter the child's last name"),
+  dateOfBirth: z.string().min(1, "Enter the child's date of birth"),
+  sexAtBirth: z.string().min(1, "Enter the child's sex at birth"),
+  parishOfBirth: z.string().min(1, "Enter the child's place of birth"),
+});
+
+// Certificates validation
+export const certificatesValidation = z.object({
+  numberOfCertificates: z
+    .number()
+    .min(0, "Number of certificates must be at least 0")
+    .max(20, "Number of certificates must be 20 or less"),
+});
+
+// Contact info validation
+export const contactInfoValidation = z.object({
+  email: z.string().email("Enter a valid email address"),
+  wantContact: z
+    .enum(["yes", "no"])
+    .or(z.literal(""))
+    .refine((val) => val === "yes" || val === "no", {
+      message: "Select whether you want to be contacted",
+    }),
+  phoneNumber: z.string().optional(),
+});
+
+// Contact info with conditional phone validation
+export const contactInfoValidationWithPhone = z.object({
+  email: z.string().email("Enter a valid email address"),
+  wantContact: z.literal("yes"),
+  phoneNumber: z.string().min(1, "Enter a phone number"),
+});

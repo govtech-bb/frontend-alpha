@@ -110,7 +110,7 @@ export function IncludeFatherDetails({
           disabled={!value}
           type="submit"
         >
-          Continue
+          Next
         </button>
       </div>
     </form>
