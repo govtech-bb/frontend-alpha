@@ -1,5 +1,5 @@
 ---
-title: "Apply to the Barbados YouthADVANCE Corps"
+title: "Apply to the Barbados YouthADVANCE Corps (BYAC)"
 stage: "alpha"
 featured: true
 publish_date: 2025-10-17

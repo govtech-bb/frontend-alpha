@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
-
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/markdown-content";

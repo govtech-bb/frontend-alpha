@@ -1,5 +1,5 @@
 ---
-title: "Apply to be a Project Protege mentor"
+title: "Apply to be a Project Protégé mentor"
 stage: "alpha"
 featured: true
 publish_date: 2025-10-17
