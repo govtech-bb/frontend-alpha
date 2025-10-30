@@ -29,7 +29,7 @@ describe("CheckAnswers", () => {
       lastName: "Smith",
       hadOtherSurname: "yes",
       otherSurname: "Johnson",
-      dateOfBirth: "15/03/1990",
+      dateOfBirth: "03/15/1990",
       address: "123 Main St\nBridgetown\nBarbados",
       nationalRegistrationNumber: "123456-78-9012",
       occupation: "Teacher",
@@ -40,7 +40,7 @@ describe("CheckAnswers", () => {
       lastName: "Smith",
       hadOtherSurname: "no",
       otherSurname: "",
-      dateOfBirth: "20/05/1988",
+      dateOfBirth: "05/20/1988",
       address: "123 Main St\nBridgetown\nBarbados",
       nationalRegistrationNumber: "987654-32-1098",
       occupation: "Engineer",
@@ -75,7 +75,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("15/03/1990")).toBeInTheDocument();
+      expect(screen.getByText("03/15/1990")).toBeInTheDocument();
     });
 
     it("should display mother's address", () => {
@@ -185,7 +185,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("20/05/1988")).toBeInTheDocument();
+      expect(screen.getByText("05/20/1988")).toBeInTheDocument();
     });
 
     it("should display father's address", () => {

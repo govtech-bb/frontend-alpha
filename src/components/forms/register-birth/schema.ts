@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidBirthDate, isValidChildBirthDate } from "@/lib/date-validation";
 
 /**
  * Zod schema for birth registration form data validation
@@ -74,7 +75,13 @@ export const fatherDetailsValidation = z.object({
   lastName: z.string().min(1, "Enter the father's last name"),
   hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
   otherSurname: z.string().optional(),
-  dateOfBirth: z.string().min(1, "Enter the father's date of birth"),
+  dateOfBirth: z
+    .string()
+    .min(1, "Enter the father's date of birth")
+    .refine((val) => isValidBirthDate(val), {
+      message:
+        "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
+    }),
   address: z.string().min(1, "Enter the father's current address"),
   nationalRegistrationNumber: z
     .string()
@@ -89,7 +96,13 @@ export const motherDetailsValidation = z.object({
   lastName: z.string().min(1, "Enter the mother's last name"),
   hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
   otherSurname: z.string().optional(),
-  dateOfBirth: z.string().min(1, "Enter the mother's date of birth"),
+  dateOfBirth: z
+    .string()
+    .min(1, "Enter the mother's date of birth")
+    .refine((val) => isValidBirthDate(val), {
+      message:
+        "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
+    }),
   address: z.string().min(1, "Enter the mother's current address"),
   nationalRegistrationNumber: z
     .string()
@@ -102,7 +115,13 @@ export const childDetailsValidation = z.object({
   firstNames: z.string().min(1, "Enter the child's first name"),
   middleNames: z.string().optional(),
   lastName: z.string().min(1, "Enter the child's last name"),
-  dateOfBirth: z.string().min(1, "Enter the child's date of birth"),
+  dateOfBirth: z
+    .string()
+    .min(1, "Enter the child's date of birth")
+    .refine((val) => isValidChildBirthDate(val), {
+      message:
+        "Enter a valid date in MM/DD/YYYY format (for example, 10/22/2025). Date cannot be in the future",
+    }),
   sexAtBirth: z.enum(["Male", "Female", "Intersex"], {
     message: "Select the child's sex at birth",
   }),

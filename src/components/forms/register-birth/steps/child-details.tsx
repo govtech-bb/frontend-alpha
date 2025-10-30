@@ -209,7 +209,7 @@ export function ChildDetails({
         >
           Date of birth
         </label>
-        <p className="mb-2 text-base text-gray-600">For example, 2025-10-22</p>
+        <p className="mb-2 text-base text-gray-600">For example, 10/22/2025</p>
         <input
           aria-describedby={
             fieldErrors.dateOfBirth ? "child-dateOfBirth-error" : undefined
@@ -219,6 +219,7 @@ export function ChildDetails({
           id="child-dateOfBirth"
           onBlur={() => handleBlur("dateOfBirth")}
           onChange={(e) => handleChange("dateOfBirth", e.target.value)}
+          placeholder="MM/DD/YYYY"
           type="text"
           value={value.dateOfBirth || ""}
         />
