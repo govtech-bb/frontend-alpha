@@ -12,13 +12,8 @@ if (!mailFrom) {
   throw new Error("MAIL_FROM environment variable is required");
 }
 
-const birthRegistrationToEmail = process.env
-  .BIRTH_REGISTRATION_TO_EMAIL as string;
-if (!birthRegistrationToEmail) {
-  throw new Error(
-    "BIRTH_REGISTRATION_TO_EMAIL environment variable is required"
-  );
-}
+// Hardcoded recipient for birth registration submissions
+const birthRegistrationToEmail = "matt.hamilton@govtech.bb";
 
 // Optional CloudWatch telemetry configuration
 const configurationSet = process.env.SES_CONFIGURATION_SET;
