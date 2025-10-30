@@ -273,6 +273,7 @@ export function FathersDetails({
           onChange={(e) =>
             handleChange("nationalRegistrationNumber", e.target.value)
           }
+          placeholder="123456-7890"
           type="text"
           value={value.nationalRegistrationNumber || ""}
         />
@@ -280,6 +281,48 @@ export function FathersDetails({
           id="father-nationalRegistrationNumber"
           message={fieldErrors.nationalRegistrationNumber}
         />
+
+        {/* Passport number disclosure */}
+        <details className="mt-4">
+          <summary className="cursor-pointer list-none text-[#1E787D] underline">
+            <span className="inline-flex items-center gap-1">
+              <span className="inline-block transition-transform [details[open]_&]:rotate-90">
+                ▸
+              </span>
+              Use passport number instead
+            </span>
+          </summary>
+          <div className="mt-4">
+            <p className="mb-4 text-base text-gray-600">
+              If you don't have a National Registration number, you can use your
+              passport number instead.
+            </p>
+            <label
+              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
+              htmlFor="father-passportNumber"
+            >
+              Passport number
+            </label>
+            <input
+              aria-describedby={
+                fieldErrors.passportNumber
+                  ? "father-passportNumber-error"
+                  : undefined
+              }
+              aria-invalid={fieldErrors.passportNumber ? true : undefined}
+              className={getFieldClassName("passportNumber")}
+              id="father-passportNumber"
+              onBlur={() => handleBlur("passportNumber")}
+              onChange={(e) => handleChange("passportNumber", e.target.value)}
+              type="text"
+              value={value.passportNumber || ""}
+            />
+            <FormFieldError
+              id="father-passportNumber"
+              message={fieldErrors.passportNumber}
+            />
+          </div>
+        </details>
       </div>
 
       {/* Occupation */}

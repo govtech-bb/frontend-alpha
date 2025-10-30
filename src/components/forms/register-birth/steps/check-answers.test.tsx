@@ -31,7 +31,8 @@ describe("CheckAnswers", () => {
       otherSurname: "Johnson",
       dateOfBirth: "03/15/1990",
       address: "123 Main St\nBridgetown\nBarbados",
-      nationalRegistrationNumber: "123456-78-9012",
+      nationalRegistrationNumber: "123456-7890",
+      passportNumber: "",
       occupation: "Teacher",
     },
     father: {
@@ -42,7 +43,8 @@ describe("CheckAnswers", () => {
       otherSurname: "",
       dateOfBirth: "05/20/1988",
       address: "123 Main St\nBridgetown\nBarbados",
-      nationalRegistrationNumber: "987654-32-1098",
+      nationalRegistrationNumber: "987654-3210",
+      passportNumber: "",
       occupation: "Engineer",
     },
   };
@@ -117,7 +119,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("123456-78-9012")).toBeInTheDocument();
+      expect(screen.getByText("123456-7890")).toBeInTheDocument();
     });
 
     it("should display mother's occupation", () => {
@@ -215,7 +217,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("987654-32-1098")).toBeInTheDocument();
+      expect(screen.getByText("987654-3210")).toBeInTheDocument();
     });
 
     it("should display father's occupation", () => {

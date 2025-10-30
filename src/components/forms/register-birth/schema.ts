@@ -19,6 +19,7 @@ const personDetailsSchema = z.object({
   dateOfBirth: z.string().optional(),
   address: z.string().optional(),
   nationalRegistrationNumber: z.string().optional(),
+  passportNumber: z.string().optional(),
   occupation: z.string().optional(),
 });
 
@@ -69,46 +70,112 @@ export type BirthRegistrationFormData = z.infer<typeof birthRegistrationSchema>;
  */
 
 // Father's details validation
-export const fatherDetailsValidation = z.object({
-  firstName: z.string().min(1, "Enter the father's first name"),
-  middleName: z.string().optional(),
-  lastName: z.string().min(1, "Enter the father's last name"),
-  hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
-  otherSurname: z.string().optional(),
-  dateOfBirth: z
-    .string()
-    .min(1, "Enter the father's date of birth")
-    .refine((val) => isValidBirthDate(val), {
+export const fatherDetailsValidation = z
+  .object({
+    firstName: z.string().min(1, "Enter the father's first name"),
+    middleName: z.string().optional(),
+    lastName: z.string().min(1, "Enter the father's last name"),
+    hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
+    otherSurname: z.string().optional(),
+    dateOfBirth: z
+      .string()
+      .min(1, "Enter the father's date of birth")
+      .refine((val) => isValidBirthDate(val), {
+        message:
+          "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
+      }),
+    address: z.string().min(1, "Enter the father's current address"),
+    nationalRegistrationNumber: z.string().optional(),
+    passportNumber: z.string().optional(),
+    occupation: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // At least one identifier must be provided
+      const hasNationalReg =
+        data.nationalRegistrationNumber &&
+        data.nationalRegistrationNumber.trim().length > 0;
+      const hasPassport =
+        data.passportNumber && data.passportNumber.trim().length > 0;
+      return hasNationalReg || hasPassport;
+    },
+    {
       message:
-        "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
-    }),
-  address: z.string().min(1, "Enter the father's current address"),
-  nationalRegistrationNumber: z
-    .string()
-    .min(1, "Enter the father's national registration number"),
-  occupation: z.string().optional(),
-});
+        "Enter either a National Registration Number or a Passport Number",
+      path: ["nationalRegistrationNumber"],
+    }
+  )
+  .refine(
+    (data) => {
+      // Validate national registration format if provided
+      if (
+        data.nationalRegistrationNumber &&
+        data.nationalRegistrationNumber.trim().length > 0
+      ) {
+        return /^\d{6}-\d{4}$/.test(data.nationalRegistrationNumber);
+      }
+      return true;
+    },
+    {
+      message:
+        "Enter the National Registration Number in the format XXXXXX-XXXX (for example, 123456-7890)",
+      path: ["nationalRegistrationNumber"],
+    }
+  );
 
 // Mother's details validation
-export const motherDetailsValidation = z.object({
-  firstName: z.string().min(1, "Enter the mother's first name"),
-  middleName: z.string().optional(),
-  lastName: z.string().min(1, "Enter the mother's last name"),
-  hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
-  otherSurname: z.string().optional(),
-  dateOfBirth: z
-    .string()
-    .min(1, "Enter the mother's date of birth")
-    .refine((val) => isValidBirthDate(val), {
+export const motherDetailsValidation = z
+  .object({
+    firstName: z.string().min(1, "Enter the mother's first name"),
+    middleName: z.string().optional(),
+    lastName: z.string().min(1, "Enter the mother's last name"),
+    hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
+    otherSurname: z.string().optional(),
+    dateOfBirth: z
+      .string()
+      .min(1, "Enter the mother's date of birth")
+      .refine((val) => isValidBirthDate(val), {
+        message:
+          "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
+      }),
+    address: z.string().min(1, "Enter the mother's current address"),
+    nationalRegistrationNumber: z.string().optional(),
+    passportNumber: z.string().optional(),
+    occupation: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // At least one identifier must be provided
+      const hasNationalReg =
+        data.nationalRegistrationNumber &&
+        data.nationalRegistrationNumber.trim().length > 0;
+      const hasPassport =
+        data.passportNumber && data.passportNumber.trim().length > 0;
+      return hasNationalReg || hasPassport;
+    },
+    {
       message:
-        "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
-    }),
-  address: z.string().min(1, "Enter the mother's current address"),
-  nationalRegistrationNumber: z
-    .string()
-    .min(1, "Enter the mother's national registration number"),
-  occupation: z.string().optional(),
-});
+        "Enter either a National Registration Number or a Passport Number",
+      path: ["nationalRegistrationNumber"],
+    }
+  )
+  .refine(
+    (data) => {
+      // Validate national registration format if provided
+      if (
+        data.nationalRegistrationNumber &&
+        data.nationalRegistrationNumber.trim().length > 0
+      ) {
+        return /^\d{6}-\d{4}$/.test(data.nationalRegistrationNumber);
+      }
+      return true;
+    },
+    {
+      message:
+        "Enter the National Registration Number in the format XXXXXX-XXXX (for example, 123456-7890)",
+      path: ["nationalRegistrationNumber"],
+    }
+  );
 
 // Child's details validation
 export const childDetailsValidation = z.object({

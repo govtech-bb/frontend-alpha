@@ -37,6 +37,7 @@ function formatPersonDetails(
         dateOfBirth: string;
         address: string;
         nationalRegistrationNumber: string;
+        passportNumber: string;
         occupation: string;
       }>
     | undefined,
@@ -54,6 +55,7 @@ function formatPersonDetails(
       ${person.dateOfBirth ? `<tr><td style="padding: 5px 10px; background-color: #f5f5f5;"><strong>Date of birth:</strong></td><td style="padding: 5px 10px;">${person.dateOfBirth}</td></tr>` : ""}
       ${person.address ? `<tr><td style="padding: 5px 10px; background-color: #f5f5f5;"><strong>Address:</strong></td><td style="padding: 5px 10px;">${person.address}</td></tr>` : ""}
       ${person.nationalRegistrationNumber ? `<tr><td style="padding: 5px 10px; background-color: #f5f5f5;"><strong>National registration number:</strong></td><td style="padding: 5px 10px;">${person.nationalRegistrationNumber}</td></tr>` : ""}
+      ${person.passportNumber ? `<tr><td style="padding: 5px 10px; background-color: #f5f5f5;"><strong>Passport number:</strong></td><td style="padding: 5px 10px;">${person.passportNumber}</td></tr>` : ""}
       ${person.occupation ? `<tr><td style="padding: 5px 10px; background-color: #f5f5f5;"><strong>Occupation:</strong></td><td style="padding: 5px 10px;">${person.occupation}</td></tr>` : ""}
     </table>
   `;

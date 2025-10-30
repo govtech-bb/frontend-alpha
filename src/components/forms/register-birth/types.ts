@@ -30,6 +30,7 @@ export type PersonDetails = {
   dateOfBirth: string;
   address: string;
   nationalRegistrationNumber: string;
+  passportNumber: string;
   occupation: string;
 };
 
@@ -45,6 +46,7 @@ export type SimplifiedMotherDetails = {
   dateOfBirth: string;
   address: string;
   nationalRegistrationNumber: string;
+  passportNumber: string;
   occupation: string;
 };
 

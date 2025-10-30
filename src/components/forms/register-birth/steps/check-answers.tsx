@@ -88,12 +88,20 @@ export function CheckAnswers({
                 {formData.father.address}
               </dd>
             </div>
-            <div className="flex">
-              <dt className="w-1/3">National registration number</dt>
-              <dd className="w-2/3">
-                {formData.father.nationalRegistrationNumber}
-              </dd>
-            </div>
+            {formData.father.nationalRegistrationNumber && (
+              <div className="flex">
+                <dt className="w-1/3">National registration number</dt>
+                <dd className="w-2/3">
+                  {formData.father.nationalRegistrationNumber}
+                </dd>
+              </div>
+            )}
+            {formData.father.passportNumber && (
+              <div className="flex">
+                <dt className="w-1/3">Passport number</dt>
+                <dd className="w-2/3">{formData.father.passportNumber}</dd>
+              </div>
+            )}
             <div className="flex">
               <dt className="w-1/3">Occupation</dt>
               <dd className="w-2/3">{formData.father.occupation}</dd>
@@ -147,12 +155,20 @@ export function CheckAnswers({
               {formData.mother?.address}
             </dd>
           </div>
-          <div className="flex">
-            <dt className="w-1/3">National registration number</dt>
-            <dd className="w-2/3">
-              {formData.mother?.nationalRegistrationNumber}
-            </dd>
-          </div>
+          {formData.mother?.nationalRegistrationNumber && (
+            <div className="flex">
+              <dt className="w-1/3">National registration number</dt>
+              <dd className="w-2/3">
+                {formData.mother.nationalRegistrationNumber}
+              </dd>
+            </div>
+          )}
+          {formData.mother?.passportNumber && (
+            <div className="flex">
+              <dt className="w-1/3">Passport number</dt>
+              <dd className="w-2/3">{formData.mother.passportNumber}</dd>
+            </div>
+          )}
           <div className="flex">
             <dt className="w-1/3">Occupation</dt>
             <dd className="w-2/3">{formData.mother?.occupation}</dd>
