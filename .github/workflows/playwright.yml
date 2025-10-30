@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.55.1-jammy
     env:
       MAIL_FROM: 'no-reply@notify.dev.alpha.gov.bb'
       SES_REGION: 'region'
@@ -31,11 +33,8 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Install Playwright browsers
-        run: npx --yes playwright install --with-deps
-
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test visual
 
       - name: Upload Playwright HTML report
         if: always()
@@ -44,5 +43,3 @@ jobs:
           name: playwright-report
           path: playwright-report
           retention-days: 7
-
-

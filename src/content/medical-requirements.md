@@ -17,5 +17,5 @@ Beckles Road, St Michael
 Barbados, W.I.  
 (246) 426-5051
 
-[VIEW NOW](https://bb.usembassy.gov/u-s-citizen-services/local-resources-of-u-s-citizens/doctors/?_ga=2.259745866.1945393172.1598568283-1733798738.1598568283)
+
 ```

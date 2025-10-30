@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <explanation> */
-
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/markdown-content";
@@ -90,17 +88,33 @@ export default async function Page({ params }: ContentPageProps) {
 
 export async function generateMetadata({ params }: ContentPageProps) {
   const { slug } = await params;
-  const result = await getMarkdownContent(slug);
 
-  if (!result) {
+  // Determine which slug to use for content lookup
+  const contentSlug = slug.length > 1 ? [slug[1]] : slug;
+  const result = await getMarkdownContent(contentSlug);
+
+  if (result) {
     return {
-      title: "Page not found",
+      title: result.frontmatter.title || "The Government of Barbados",
+      description:
+        result.frontmatter.description ||
+        "The best place to access official government services",
     };
   }
 
+  if (slug.length === 1) {
+    // Handle category fallback (only for single-slug case)
+    const category = SERVICE_CATEGORIES.find((cat) => cat.slug === slug[0]);
+    if (category) {
+      return {
+        title: category.title,
+        description: category.description || "",
+      };
+    }
+  }
+
+  // Default fallback
   return {
-    title: result.frontmatter.title || "GovTech Barbados",
-    description:
-      result.frontmatter.description || "Government services information",
+    title: "Page not found",
   };
 }
