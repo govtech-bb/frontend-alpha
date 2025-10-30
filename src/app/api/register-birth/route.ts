@@ -107,45 +107,38 @@ export async function POST(request: NextRequest) {
     // Get formatted submission datetime
     const submittedAt = getBarbadosDateTime();
 
-    // Send emails with proper error handling
-    try {
-      // Send department notification email
-      const departmentSubject =
-        `New Birth Registration: ${formData.child?.firstNames || ""} ${formData.child?.lastName || ""}`.trim();
-      const departmentHtml = await render(
-        DepartmentNotificationEmail({
+    // Send emails - errors will propagate to outer catch
+    // Send department notification email
+    const departmentSubject =
+      `New Birth Registration: ${formData.child?.firstNames || ""} ${formData.child?.lastName || ""}`.trim();
+    const departmentHtml = await render(
+      DepartmentNotificationEmail({
+        formData,
+        submittedAt,
+      })
+    );
+    await sendEmail({
+      to: birthRegistrationToEmail,
+      subject: departmentSubject,
+      html: departmentHtml,
+    });
+
+    // Send user receipt email if they provided an email address
+    if (formData.email?.trim()) {
+      const userSubject =
+        "Birth Registration Received - Government of Barbados";
+      const userHtml = await render(
+        UserReceiptEmail({
           formData,
           submittedAt,
+          departmentEmail: birthRegistrationToEmail,
         })
       );
       await sendEmail({
-        to: birthRegistrationToEmail,
-        subject: departmentSubject,
-        html: departmentHtml,
+        to: formData.email.trim(),
+        subject: userSubject,
+        html: userHtml,
       });
-
-      // Send user receipt email if they provided an email address
-      if (formData.email?.trim()) {
-        const userSubject =
-          "Birth Registration Received - Government of Barbados";
-        const userHtml = await render(
-          UserReceiptEmail({
-            formData,
-            submittedAt,
-            departmentEmail: birthRegistrationToEmail,
-          })
-        );
-        await sendEmail({
-          to: formData.email.trim(),
-          subject: userSubject,
-          html: userHtml,
-        });
-      }
-    } catch (emailError) {
-      // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-      console.error("Error rendering or sending email:", emailError);
-      // Note: We still return success to the user as the core data validation passed
-      // The submission can be recovered from logs if needed
     }
 
     return NextResponse.json(
@@ -156,7 +149,7 @@ export async function POST(request: NextRequest) {
     // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
     console.error("Error submitting birth registration:", error);
     return NextResponse.json(
-      { error: "Failed to submit birth registration" },
+      { message: "Failed to submit birth registration" },
       { status: 500 }
     );
   }

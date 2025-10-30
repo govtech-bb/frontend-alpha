@@ -364,4 +364,146 @@ describe("CheckAnswers", () => {
       expect(screen.queryByText("Father's details")).not.toBeInTheDocument();
     });
   });
+
+  describe("Submission error handling", () => {
+    it("should display submission error when submissionError prop is set", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+          submissionError="Failed to send confirmation emails"
+        />
+      );
+
+      expect(screen.getByText("Submission failed")).toBeInTheDocument();
+      expect(
+        screen.getByText("Failed to send confirmation emails")
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          /Please try again or contact support if the problem persists/
+        )
+      ).toBeInTheDocument();
+    });
+
+    it("should not display error section when submissionError is null", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+          submissionError={null}
+        />
+      );
+
+      expect(screen.queryByText("Submission failed")).not.toBeInTheDocument();
+    });
+
+    it("should not display error section when submissionError is undefined", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      expect(screen.queryByText("Submission failed")).not.toBeInTheDocument();
+    });
+
+    it("should display error in a visually prominent red box", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+          submissionError="Test error message"
+        />
+      );
+
+      const errorContainer = screen
+        .getByText("Submission failed")
+        .closest("div");
+      expect(errorContainer).toHaveClass("border-4", "border-red-600", "p-4");
+    });
+  });
+
+  describe("Submission state handling", () => {
+    it("should disable buttons when isSubmitting is true", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          isSubmitting={true}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      const backButton = screen.getByRole("button", { name: /back/i });
+      const submitButton = screen.getByRole("button", {
+        name: /submitting/i,
+      });
+
+      expect(backButton).toBeDisabled();
+      expect(submitButton).toBeDisabled();
+    });
+
+    it("should change submit button text to 'Submitting...' when isSubmitting is true", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          isSubmitting={true}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      expect(
+        screen.getByRole("button", { name: /submitting\.\.\./i })
+      ).toBeInTheDocument();
+    });
+
+    it("should show 'Confirm and send' button text when not submitting", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          isSubmitting={false}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      expect(
+        screen.getByRole("button", { name: /confirm and send/i })
+      ).toBeInTheDocument();
+    });
+
+    it("should not disable buttons when isSubmitting is false", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          isSubmitting={false}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      const backButton = screen.getByRole("button", { name: /back/i });
+      const submitButton = screen.getByRole("button", {
+        name: /confirm and send/i,
+      });
+
+      expect(backButton).not.toBeDisabled();
+      expect(submitButton).not.toBeDisabled();
+    });
+  });
 });
