@@ -27,7 +27,7 @@ const childDetailsSchema = z.object({
   middleNames: z.string().optional(),
   lastName: z.string().optional(),
   dateOfBirth: z.string().optional(),
-  sexAtBirth: z.string().optional(),
+  sexAtBirth: z.enum(["Male", "Female", "Intersex"]).optional(),
   parishOfBirth: z.string().optional(),
 });
 
@@ -103,7 +103,9 @@ export const childDetailsValidation = z.object({
   middleNames: z.string().optional(),
   lastName: z.string().min(1, "Enter the child's last name"),
   dateOfBirth: z.string().min(1, "Enter the child's date of birth"),
-  sexAtBirth: z.string().min(1, "Enter the child's sex at birth"),
+  sexAtBirth: z.enum(["Male", "Female", "Intersex"], {
+    message: "Select the child's sex at birth",
+  }),
   parishOfBirth: z.string().min(1, "Enter the child's place of birth"),
 });
 

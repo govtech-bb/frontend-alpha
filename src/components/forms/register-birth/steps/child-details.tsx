@@ -239,7 +239,7 @@ export function ChildDetails({
         <p className="mb-2 text-base text-gray-600">
           We ask this so that we can monitor population trends.
         </p>
-        <input
+        <select
           aria-describedby={
             fieldErrors.sexAtBirth ? "child-sexAtBirth-error" : undefined
           }
@@ -248,9 +248,13 @@ export function ChildDetails({
           id="child-sexAtBirth"
           onBlur={() => handleBlur("sexAtBirth")}
           onChange={(e) => handleChange("sexAtBirth", e.target.value)}
-          type="text"
           value={value.sexAtBirth || ""}
-        />
+        >
+          <option value="">Select an option</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Intersex">Intersex</option>
+        </select>
         <FormFieldError
           id="child-sexAtBirth"
           message={fieldErrors.sexAtBirth}

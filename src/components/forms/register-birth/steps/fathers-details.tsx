@@ -284,14 +284,13 @@ export function FathersDetails({
         />
       </div>
 
-      {/* Occupation (optional) */}
+      {/* Occupation */}
       <div>
         <label
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="father-occupation"
         >
           Occupation{" "}
-          <span className="font-normal text-gray-600">(optional)</span>
         </label>
         <p className="mb-2 text-base text-gray-600">
           This will be included on the child's birth certificate and in official

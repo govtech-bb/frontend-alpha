@@ -118,7 +118,6 @@ export function Certificates({
         >
           Number of certificates required
         </label>
-        <p className="mb-2 text-base text-gray-600">You can order up to x</p>
         <input
           aria-describedby={
             fieldError ? "numberOfCertificates-error" : undefined
