@@ -5,10 +5,7 @@ import { Typography } from "@/components/ui/typography";
 import { ErrorSummary, type ValidationError } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
-import {
-  contactInfoValidation,
-  contactInfoValidationWithPhone,
-} from "../schema";
+import { contactInfoValidation } from "../schema";
 
 type ContactInfoProps = {
   email: string;
@@ -29,7 +26,7 @@ type ContactInfoProps = {
  */
 export function ContactInfo({
   email,
-  wantContact,
+  wantContact: _wantContact,
   phoneNumber,
   onChange,
   onNext,
@@ -41,10 +38,7 @@ export function ContactInfo({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const handleChange = (
-    field: "email" | "wantContact" | "phoneNumber",
-    value: string
-  ) => {
+  const handleChange = (field: "email" | "phoneNumber", value: string) => {
     onChange(field, value);
 
     // Clear error for this field when user starts typing (after first submit)
@@ -53,23 +47,13 @@ export function ContactInfo({
     }
   };
 
-  const validateField = (
-    field: "email" | "wantContact" | "phoneNumber",
-    value: string
-  ) => {
+  const validateField = (field: "email" | "phoneNumber", value: string) => {
     const testValue = {
       email: field === "email" ? value : email,
-      wantContact: field === "wantContact" ? value : wantContact,
       phoneNumber: field === "phoneNumber" ? value : phoneNumber,
     };
 
-    // Use conditional schema based on wantContact
-    const schema =
-      testValue.wantContact === "yes"
-        ? contactInfoValidationWithPhone
-        : contactInfoValidation;
-
-    const result = schema.safeParse(testValue);
+    const result = contactInfoValidation.safeParse(testValue);
 
     if (result.success) {
       // Clear error for this field
@@ -92,16 +76,9 @@ export function ContactInfo({
     }
   };
 
-  const handleBlur = (field: "email" | "wantContact" | "phoneNumber") => {
+  const handleBlur = (field: "email" | "phoneNumber") => {
     if (hasSubmitted) {
-      validateField(
-        field,
-        field === "email"
-          ? email
-          : field === "phoneNumber"
-            ? phoneNumber
-            : wantContact
-      );
+      validateField(field, field === "email" ? email : phoneNumber);
     }
   };
 
@@ -109,19 +86,15 @@ export function ContactInfo({
     e.preventDefault();
     setHasSubmitted(true);
 
-    const formData = { email, wantContact, phoneNumber };
+    const formData = { email, phoneNumber };
 
-    // Use conditional schema
-    const schema =
-      wantContact === "yes"
-        ? contactInfoValidationWithPhone
-        : contactInfoValidation;
-
-    const result = schema.safeParse(formData);
+    const result = contactInfoValidation.safeParse(formData);
 
     if (result.success) {
       setErrors([]);
       setFieldErrors({});
+      // Set wantContact to "yes" since user is providing phone number
+      onChange("wantContact", "yes");
       onNext();
     } else {
       // Build error list for summary and field errors
@@ -185,76 +158,28 @@ export function ContactInfo({
         <FormFieldError id="email" message={fieldErrors.email} />
       </div>
 
-      {/* Want contact */}
-      <fieldset>
-        <legend className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]">
-          Do you want us to get in touch if we need to ask more questions
-        </legend>
-
-        <div className="space-y-3">
-          <div className="flex items-start">
-            <input
-              checked={wantContact === "yes"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="wantContact-yes"
-              name="wantContact"
-              onChange={() => handleChange("wantContact", "yes")}
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="wantContact-yes"
-            >
-              Yes
-            </label>
-          </div>
-
-          <div className="flex items-start">
-            <input
-              checked={wantContact === "no"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="wantContact-no"
-              name="wantContact"
-              onChange={() => handleChange("wantContact", "no")}
-              type="radio"
-              value="no"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="wantContact-no"
-            >
-              No
-            </label>
-          </div>
-        </div>
-        <FormFieldError id="wantContact" message={fieldErrors.wantContact} />
-      </fieldset>
-
-      {/* Phone number (conditional) */}
-      {wantContact === "yes" && (
-        <div>
-          <label
-            className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-            htmlFor="phoneNumber"
-          >
-            Phone number
-          </label>
-          <input
-            aria-describedby={
-              fieldErrors.phoneNumber ? "phoneNumber-error" : undefined
-            }
-            aria-invalid={fieldErrors.phoneNumber ? true : undefined}
-            className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
-            id="phoneNumber"
-            onBlur={() => handleBlur("phoneNumber")}
-            onChange={(e) => handleChange("phoneNumber", e.target.value)}
-            type="tel"
-            value={phoneNumber || ""}
-          />
-          <FormFieldError id="phoneNumber" message={fieldErrors.phoneNumber} />
-        </div>
-      )}
+      {/* Phone number */}
+      <div>
+        <label
+          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
+          htmlFor="phoneNumber"
+        >
+          Phone number
+        </label>
+        <input
+          aria-describedby={
+            fieldErrors.phoneNumber ? "phoneNumber-error" : undefined
+          }
+          aria-invalid={fieldErrors.phoneNumber ? true : undefined}
+          className={getFieldClassName("phoneNumber")}
+          id="phoneNumber"
+          onBlur={() => handleBlur("phoneNumber")}
+          onChange={(e) => handleChange("phoneNumber", e.target.value)}
+          type="tel"
+          value={phoneNumber || ""}
+        />
+        <FormFieldError id="phoneNumber" message={fieldErrors.phoneNumber} />
+      </div>
 
       <div className="flex gap-4">
         <button
@@ -269,7 +194,7 @@ export function ContactInfo({
           className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
           type="submit"
         >
-          Next
+          Continue
         </button>
       </div>
     </form>

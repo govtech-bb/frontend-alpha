@@ -117,21 +117,8 @@ export const certificatesValidation = z.object({
     .max(20, "Number of certificates must be 20 or less"),
 });
 
-// Contact info validation
+// Contact info validation - simplified to always require both email and phone
 export const contactInfoValidation = z.object({
   email: z.string().email("Enter a valid email address"),
-  wantContact: z
-    .enum(["yes", "no"])
-    .or(z.literal(""))
-    .refine((val) => val === "yes" || val === "no", {
-      message: "Select whether you want to be contacted",
-    }),
-  phoneNumber: z.string().optional(),
-});
-
-// Contact info with conditional phone validation
-export const contactInfoValidationWithPhone = z.object({
-  email: z.string().email("Enter a valid email address"),
-  wantContact: z.literal("yes"),
   phoneNumber: z.string().min(1, "Enter a phone number"),
 });
