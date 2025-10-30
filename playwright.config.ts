@@ -6,10 +6,15 @@ export default defineConfig({
   testDir: "./tests",
   /* Keep reports small and deterministic in CI */
   reporter: [["list"], ["html", { open: "never" }]],
-  fullyParallel: false,
+
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  // retries: process.env.CI ? 2 : 0,
+  // fullyParallel: false,
+  // workers: process.env.CI ? 2 : undefined,
+  workers: process.env.CI ? 2 : undefined, // Use 2 workers in CI, auto-detect locally
+  fullyParallel: true,
+  retries: process.env.CI ? 2 : 0, // Retry flaky tests in CI
+
   use: {
     baseURL: "http://localhost:3000",
     trace: "on-first-retry",
