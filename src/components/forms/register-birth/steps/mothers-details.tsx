@@ -5,11 +5,11 @@ import { ErrorSummary, type ValidationError } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { motherDetailsValidation } from "../schema";
-import type { PersonDetails, SimplifiedMotherDetails } from "../types";
+import type { PersonDetails } from "../types";
 
 type MothersDetailsProps = {
-  value: Partial<PersonDetails | SimplifiedMotherDetails>;
-  onChange: (value: Partial<PersonDetails | SimplifiedMotherDetails>) => void;
+  value: Partial<PersonDetails>;
+  onChange: (value: Partial<PersonDetails>) => void;
   onNext: () => void;
   onBack: () => void;
 };
@@ -34,10 +34,7 @@ export function MothersDetails({
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
-  const handleChange = (
-    field: keyof (PersonDetails | SimplifiedMotherDetails),
-    fieldValue: string
-  ) => {
+  const handleChange = (field: keyof PersonDetails, fieldValue: string) => {
     onChange({ ...value, [field]: fieldValue });
 
     // Clear error for this field when user starts typing (after first submit)
@@ -46,10 +43,7 @@ export function MothersDetails({
     }
   };
 
-  const validateField = (
-    field: keyof (PersonDetails | SimplifiedMotherDetails),
-    fieldValue: string
-  ) => {
+  const validateField = (field: keyof PersonDetails, fieldValue: string) => {
     const testValue = { ...value, [field]: fieldValue };
     const result = motherDetailsValidation.safeParse(testValue);
 
@@ -77,9 +71,7 @@ export function MothersDetails({
     }
   };
 
-  const handleBlur = (
-    field: keyof (PersonDetails | SimplifiedMotherDetails)
-  ) => {
+  const handleBlur = (field: keyof PersonDetails) => {
     if (hasSubmitted) {
       validateField(field, value[field] || "");
     }
@@ -114,9 +106,7 @@ export function MothersDetails({
     }
   };
 
-  const getFieldClassName = (
-    field: keyof (PersonDetails | SimplifiedMotherDetails)
-  ) => {
+  const getFieldClassName = (field: keyof PersonDetails) => {
     const baseClass =
       "w-full max-w-md rounded-md border-2 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20";
     const errorClass = fieldErrors[field]
@@ -125,9 +115,7 @@ export function MothersDetails({
     return `${baseClass} ${errorClass}`;
   };
 
-  const getTextareaClassName = (
-    field: keyof (PersonDetails | SimplifiedMotherDetails)
-  ) => {
+  const getTextareaClassName = (field: keyof PersonDetails) => {
     const baseClass =
       "w-full max-w-md resize-y rounded-md border-2 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20";
     const errorClass = fieldErrors[field]

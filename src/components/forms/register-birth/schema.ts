@@ -9,6 +9,9 @@ import { isValidBirthDate, isValidChildBirthDate } from "@/lib/date-validation";
  * Runtime validation prevents corrupted or incompatible data from breaking the app.
  */
 
+// National Registration Number format: XXXXXX-XXXX (6 digits, dash, 4 digits)
+const NRN_REGEX = /^\d{6}-\d{4}$/;
+
 // Person details schema (father and mother when father is included)
 const personDetailsSchema = z.object({
   firstName: z.string().optional(),
@@ -69,9 +72,58 @@ export type BirthRegistrationFormData = z.infer<typeof birthRegistrationSchema>;
  * These enforce required fields for each form step
  */
 
+/**
+ * Type for person identifier fields used in validation
+ */
+type PersonIdentifierData = {
+  nationalRegistrationNumber?: string;
+  passportNumber?: string;
+};
+
+/**
+ * Shared validation function for person identifiers
+ * Applies refinements to ensure at least one identifier is provided and validates format
+ */
+function applyIdentifierValidation<T extends z.ZodTypeAny>(schema: T) {
+  return schema
+    .refine(
+      (data: PersonIdentifierData) => {
+        // At least one identifier must be provided
+        const hasNationalReg =
+          data.nationalRegistrationNumber &&
+          data.nationalRegistrationNumber.trim().length > 0;
+        const hasPassport =
+          data.passportNumber && data.passportNumber.trim().length > 0;
+        return hasNationalReg || hasPassport;
+      },
+      {
+        message:
+          "Enter either a National Registration Number or a Passport Number",
+        path: ["nationalRegistrationNumber"],
+      }
+    )
+    .refine(
+      (data: PersonIdentifierData) => {
+        // Validate national registration format if provided
+        if (
+          data.nationalRegistrationNumber &&
+          data.nationalRegistrationNumber.trim().length > 0
+        ) {
+          return NRN_REGEX.test(data.nationalRegistrationNumber);
+        }
+        return true;
+      },
+      {
+        message:
+          "Enter the National Registration Number in the format XXXXXX-XXXX (for example, 123456-7890)",
+        path: ["nationalRegistrationNumber"],
+      }
+    );
+}
+
 // Father's details validation
-export const fatherDetailsValidation = z
-  .object({
+export const fatherDetailsValidation = applyIdentifierValidation(
+  z.object({
     firstName: z.string().min(1, "Enter the father's first name"),
     middleName: z.string().optional(),
     lastName: z.string().min(1, "Enter the father's last name"),
@@ -89,43 +141,11 @@ export const fatherDetailsValidation = z
     passportNumber: z.string().optional(),
     occupation: z.string().optional(),
   })
-  .refine(
-    (data) => {
-      // At least one identifier must be provided
-      const hasNationalReg =
-        data.nationalRegistrationNumber &&
-        data.nationalRegistrationNumber.trim().length > 0;
-      const hasPassport =
-        data.passportNumber && data.passportNumber.trim().length > 0;
-      return hasNationalReg || hasPassport;
-    },
-    {
-      message:
-        "Enter either a National Registration Number or a Passport Number",
-      path: ["nationalRegistrationNumber"],
-    }
-  )
-  .refine(
-    (data) => {
-      // Validate national registration format if provided
-      if (
-        data.nationalRegistrationNumber &&
-        data.nationalRegistrationNumber.trim().length > 0
-      ) {
-        return /^\d{6}-\d{4}$/.test(data.nationalRegistrationNumber);
-      }
-      return true;
-    },
-    {
-      message:
-        "Enter the National Registration Number in the format XXXXXX-XXXX (for example, 123456-7890)",
-      path: ["nationalRegistrationNumber"],
-    }
-  );
+);
 
 // Mother's details validation
-export const motherDetailsValidation = z
-  .object({
+export const motherDetailsValidation = applyIdentifierValidation(
+  z.object({
     firstName: z.string().min(1, "Enter the mother's first name"),
     middleName: z.string().optional(),
     lastName: z.string().min(1, "Enter the mother's last name"),
@@ -143,39 +163,7 @@ export const motherDetailsValidation = z
     passportNumber: z.string().optional(),
     occupation: z.string().optional(),
   })
-  .refine(
-    (data) => {
-      // At least one identifier must be provided
-      const hasNationalReg =
-        data.nationalRegistrationNumber &&
-        data.nationalRegistrationNumber.trim().length > 0;
-      const hasPassport =
-        data.passportNumber && data.passportNumber.trim().length > 0;
-      return hasNationalReg || hasPassport;
-    },
-    {
-      message:
-        "Enter either a National Registration Number or a Passport Number",
-      path: ["nationalRegistrationNumber"],
-    }
-  )
-  .refine(
-    (data) => {
-      // Validate national registration format if provided
-      if (
-        data.nationalRegistrationNumber &&
-        data.nationalRegistrationNumber.trim().length > 0
-      ) {
-        return /^\d{6}-\d{4}$/.test(data.nationalRegistrationNumber);
-      }
-      return true;
-    },
-    {
-      message:
-        "Enter the National Registration Number in the format XXXXXX-XXXX (for example, 123456-7890)",
-      path: ["nationalRegistrationNumber"],
-    }
-  );
+);
 
 // Child's details validation
 export const childDetailsValidation = z.object({

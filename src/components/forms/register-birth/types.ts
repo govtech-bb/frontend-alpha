@@ -19,25 +19,9 @@ type BaseFields = {
 };
 
 /**
- * Complete person details (for father and mother when father is included)
+ * Person details (for father, mother, or simplified mother)
  */
 export type PersonDetails = {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  hadOtherSurname: "yes" | "no" | "";
-  otherSurname: string;
-  dateOfBirth: string;
-  address: string;
-  nationalRegistrationNumber: string;
-  passportNumber: string;
-  occupation: string;
-};
-
-/**
- * Simplified mother details (when father is not included)
- */
-export type SimplifiedMotherDetails = {
   firstName: string;
   middleName: string;
   lastName: string;
@@ -98,14 +82,14 @@ export interface UnmarriedWithFatherFlow extends BaseFields {
  * - Marriage status: No
  * - Include father: No
  * - No father details collected
- * - Simplified mother details
+ * - Mother details (same structure as when father is included)
  * - Child's surname prefilled from mother
  */
 export interface UnmarriedWithoutFatherFlow extends BaseFields {
   marriageStatus: "no";
   includeFatherDetails: "no";
   father: undefined; // Father is not included
-  mother: SimplifiedMotherDetails;
+  mother: PersonDetails;
   child: ChildDetails;
 }
 
@@ -129,7 +113,7 @@ export type PartialBirthRegistrationFormData = {
   wantContact?: "yes" | "no" | "";
   phoneNumber?: string;
   father?: Partial<PersonDetails>;
-  mother?: Partial<PersonDetails> | Partial<SimplifiedMotherDetails>;
+  mother?: Partial<PersonDetails>;
   child?: Partial<ChildDetails>;
 };
 
