@@ -7,7 +7,7 @@ import {
   getTextareaClassName,
 } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
-import { usePersonDetailsValidation } from "../hooks/use-person-details-validation";
+import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
 import type { PersonDetails } from "../types";
 
@@ -35,11 +35,11 @@ export function MothersDetails({
   );
 
   const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
-    usePersonDetailsValidation({
+    useStepValidation({
+      schema: motherDetailsValidation,
       value,
       onChange,
       onNext,
-      validationSchema: motherDetailsValidation,
       fieldPrefix: "mother-",
     });
 

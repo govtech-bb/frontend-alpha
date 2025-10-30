@@ -2,6 +2,7 @@
 
 import { Typography } from "@/components/ui/typography";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { finalSubmissionSchema } from "../schema";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
 
 type CheckAnswersProps = {
@@ -9,6 +10,8 @@ type CheckAnswersProps = {
   onSubmit: () => void;
   onBack: () => void;
   onEdit: (step: StepName) => void;
+  submissionError?: string | null;
+  isSubmitting?: boolean;
 };
 
 /**
@@ -21,11 +24,26 @@ export function CheckAnswers({
   onSubmit,
   onBack,
   onEdit,
+  submissionError,
+  isSubmitting = false,
 }: CheckAnswersProps) {
   const titleRef = useStepFocus("Check your answers", "Register a Birth");
 
+  // Validate form data against final submission schema
+  const validationResult = finalSubmissionSchema.safeParse(formData);
+  const hasMissingData = !validationResult.success;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate again on submit
+    const result = finalSubmissionSchema.safeParse(formData);
+    if (!result.success) {
+      // Navigate back if validation fails
+      onBack();
+      return;
+    }
+
     onSubmit();
   };
 
@@ -35,9 +53,57 @@ export function CheckAnswers({
 
   const totalCost = (formData.numberOfCertificates || 0) * 5.0;
 
+  // Show error if required data is missing (e.g., user navigated here incorrectly)
+  if (hasMissingData) {
+    return (
+      <div className="space-y-6">
+        <h1
+          className="mb-6 font-bold text-5xl leading-tight"
+          ref={titleRef}
+          tabIndex={-1}
+        >
+          Check your answers
+        </h1>
+
+        <div className="border-4 border-red-600 p-4">
+          <h2 className="mb-2 font-bold text-red-600 text-xl">
+            Missing or invalid information
+          </h2>
+          <Typography variant="paragraph">
+            Some required information is missing or invalid. Please go back and
+            complete all steps correctly.
+          </Typography>
+
+          {/* Show specific validation errors */}
+          {validationResult.error && (
+            <ul className="mt-4 list-disc space-y-1 pl-5">
+              {validationResult.error.issues.slice(0, 5).map((issue, index) => (
+                <li className="text-red-600" key={index}>
+                  {issue.path.join(".")}: {issue.message}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <button
+          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
+          onClick={onBack}
+          type="button"
+        >
+          Back
+        </button>
+      </div>
+    );
+  }
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+      <h1
+        className="mb-6 font-bold text-5xl leading-tight"
+        ref={titleRef}
+        tabIndex={-1}
+      >
         Check your answers
       </h1>
 
@@ -269,9 +335,23 @@ export function CheckAnswers({
         </dl>
       </div>
 
+      {/* Submission error display */}
+      {submissionError && (
+        <div className="border-4 border-red-600 p-4">
+          <h2 className="mb-2 font-bold text-red-600 text-xl">
+            Submission failed
+          </h2>
+          <Typography variant="paragraph">{submissionError}</Typography>
+          <Typography className="mt-2" variant="paragraph">
+            Please try again or contact support if the problem persists.
+          </Typography>
+        </div>
+      )}
+
       <div className="flex gap-4">
         <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
+          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={isSubmitting}
           onClick={onBack}
           type="button"
         >
@@ -279,10 +359,11 @@ export function CheckAnswers({
         </button>
 
         <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
+          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={isSubmitting}
           type="submit"
         >
-          Confirm and send
+          {isSubmitting ? "Submitting..." : "Confirm and send"}
         </button>
       </div>
     </form>

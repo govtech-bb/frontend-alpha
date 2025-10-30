@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Typography } from "@/components/ui/typography";
-import { ErrorSummary, type ValidationError } from "../../common/error-summary";
+import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
+import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { certificatesValidation } from "../schema";
 
 type CertificatesProps = {
@@ -30,64 +31,26 @@ export function Certificates({
     "Register a Birth"
   );
 
-  const [errors, setErrors] = useState<ValidationError[]>([]);
-  const [fieldError, setFieldError] = useState<string>("");
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  // Use generic validation hook with object wrapper
+  const {
+    errors,
+    fieldErrors,
+    handleChange: handleChangeInternal,
+    handleBlur: handleBlurInternal,
+    handleSubmit,
+  } = useStepValidation({
+    schema: certificatesValidation,
+    value: { numberOfCertificates: value },
+    onChange: (val) => onChange(val.numberOfCertificates || 0),
+    onNext,
+  });
 
   const handleChange = (newValue: number) => {
-    onChange(newValue);
-
-    // Clear error when user starts typing (after first submit)
-    if (hasSubmitted) {
-      validateField(newValue);
-    }
-  };
-
-  const validateField = (fieldValue: number) => {
-    const result = certificatesValidation.safeParse({
-      numberOfCertificates: fieldValue,
-    });
-
-    if (result.success) {
-      setFieldError("");
-      setErrors([]);
-    } else {
-      const error = result.error.issues[0];
-      setFieldError(error.message);
-      setErrors([{ field: "numberOfCertificates", message: error.message }]);
-    }
+    handleChangeInternal("numberOfCertificates", newValue);
   };
 
   const handleBlur = () => {
-    if (hasSubmitted) {
-      validateField(value);
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setHasSubmitted(true);
-
-    const result = certificatesValidation.safeParse({
-      numberOfCertificates: value,
-    });
-
-    if (result.success) {
-      setErrors([]);
-      setFieldError("");
-      onNext();
-    } else {
-      const error = result.error.issues[0];
-      setFieldError(error.message);
-      setErrors([{ field: "numberOfCertificates", message: error.message }]);
-    }
-  };
-
-  const getFieldClassName = () => {
-    const baseClass =
-      "w-full max-w-md rounded-md border-2 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20";
-    const errorClass = fieldError ? "border-red-600" : "border-gray-300";
-    return `${baseClass} ${errorClass}`;
+    handleBlurInternal("numberOfCertificates");
   };
 
   return (
@@ -104,7 +67,7 @@ export function Certificates({
 
       <Typography className="mb-4 leading-tight" variant="paragraph">
         A birth certificate is essential for access to some public services. You
-        wil need to pay BDD$5.00 for each certificate when you collect them.
+        will need to pay BDD$5.00 for each certificate when you collect them.
       </Typography>
 
       <Typography className="mb-4 leading-tight" variant="paragraph">
@@ -124,10 +87,12 @@ export function Certificates({
         </label>
         <input
           aria-describedby={
-            fieldError ? "numberOfCertificates-error" : undefined
+            fieldErrors.numberOfCertificates
+              ? "numberOfCertificates-error"
+              : undefined
           }
-          aria-invalid={fieldError ? true : undefined}
-          className={getFieldClassName()}
+          aria-invalid={fieldErrors.numberOfCertificates ? true : undefined}
+          className={getFieldClassName("numberOfCertificates", fieldErrors)}
           id="numberOfCertificates"
           max="20"
           min="0"
@@ -138,7 +103,10 @@ export function Certificates({
           type="number"
           value={value || 0}
         />
-        <FormFieldError id="numberOfCertificates" message={fieldError} />
+        <FormFieldError
+          id="numberOfCertificates"
+          message={fieldErrors.numberOfCertificates}
+        />
       </div>
 
       <div className="flex gap-4">

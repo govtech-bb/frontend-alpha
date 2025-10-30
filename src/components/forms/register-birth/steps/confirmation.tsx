@@ -28,7 +28,11 @@ export function Confirmation({
     <div className="space-y-6">
       <div className="-mx-[50vw] relative right-1/2 left-1/2 mb-6 w-screen bg-[#D4F1F4] px-4 py-6 sm:px-6">
         <div className="container mx-auto max-w-3xl">
-          <h1 className="mb-4 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+          <h1
+            className="mb-4 font-bold text-5xl leading-tight"
+            ref={titleRef}
+            tabIndex={-1}
+          >
             Pre-registration complete
           </h1>
 

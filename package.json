@@ -15,6 +15,8 @@
   "dependencies": {
     "@aws-sdk/client-sesv2": "^3.891.0",
     "@hookform/resolvers": "^5.2.1",
+    "@react-email/components": "^0.5.7",
+    "@react-email/render": "^1.4.0",
     "@tanstack/react-form": "^1.23.8",
     "@tanstack/react-store": "^0.8.0",
     "class-variance-authority": "^0.7.1",
@@ -25,6 +27,7 @@
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-email": "^4.3.2",
     "react-hook-form": "^7.62.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",

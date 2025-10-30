@@ -62,14 +62,15 @@ export function ErrorSummary({
       </h2>
       <ul className="list-disc space-y-1 pl-5">
         {errors.map((error) => (
-          <a
-            className="text-red-600 underline hover:text-red-800"
-            href={`#${error.field}`}
-            key={error.field}
-            onClick={(e) => handleErrorClick(e, error.field)}
-          >
-            <li>{error.message}</li>
-          </a>
+          <li key={error.field}>
+            <a
+              className="text-red-600 underline hover:text-red-800"
+              href={`#${error.field}`}
+              onClick={(e) => handleErrorClick(e, error.field)}
+            >
+              {error.message}
+            </a>
+          </li>
         ))}
       </ul>
     </div>

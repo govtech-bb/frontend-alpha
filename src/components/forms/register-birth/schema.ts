@@ -115,49 +115,41 @@ function applyIdentifierValidation<T extends z.ZodTypeAny>(schema: T) {
     );
 }
 
+/**
+ * Factory function to create person details validation schema
+ * Eliminates duplication between father and mother schemas
+ *
+ * @param personType - Type of person ("father" or "mother")
+ * @returns Zod schema with person-specific error messages
+ */
+function createPersonDetailsSchema(personType: "father" | "mother") {
+  return applyIdentifierValidation(
+    z.object({
+      firstName: z.string().min(1, `Enter the ${personType}'s first name`),
+      middleName: z.string().optional(),
+      lastName: z.string().min(1, `Enter the ${personType}'s last name`),
+      hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
+      otherSurname: z.string().optional(),
+      dateOfBirth: z
+        .string()
+        .min(1, `Enter the ${personType}'s date of birth`)
+        .refine((val) => isValidBirthDate(val), {
+          message:
+            "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
+        }),
+      address: z.string().min(1, `Enter the ${personType}'s current address`),
+      nationalRegistrationNumber: z.string().optional(),
+      passportNumber: z.string().optional(),
+      occupation: z.string().optional(),
+    })
+  );
+}
+
 // Father's details validation
-export const fatherDetailsValidation = applyIdentifierValidation(
-  z.object({
-    firstName: z.string().min(1, "Enter the father's first name"),
-    middleName: z.string().optional(),
-    lastName: z.string().min(1, "Enter the father's last name"),
-    hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
-    otherSurname: z.string().optional(),
-    dateOfBirth: z
-      .string()
-      .min(1, "Enter the father's date of birth")
-      .refine((val) => isValidBirthDate(val), {
-        message:
-          "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
-      }),
-    address: z.string().min(1, "Enter the father's current address"),
-    nationalRegistrationNumber: z.string().optional(),
-    passportNumber: z.string().optional(),
-    occupation: z.string().optional(),
-  })
-);
+export const fatherDetailsValidation = createPersonDetailsSchema("father");
 
 // Mother's details validation
-export const motherDetailsValidation = applyIdentifierValidation(
-  z.object({
-    firstName: z.string().min(1, "Enter the mother's first name"),
-    middleName: z.string().optional(),
-    lastName: z.string().min(1, "Enter the mother's last name"),
-    hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
-    otherSurname: z.string().optional(),
-    dateOfBirth: z
-      .string()
-      .min(1, "Enter the mother's date of birth")
-      .refine((val) => isValidBirthDate(val), {
-        message:
-          "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
-      }),
-    address: z.string().min(1, "Enter the mother's current address"),
-    nationalRegistrationNumber: z.string().optional(),
-    passportNumber: z.string().optional(),
-    occupation: z.string().optional(),
-  })
-);
+export const motherDetailsValidation = createPersonDetailsSchema("mother");
 
 // Child's details validation
 export const childDetailsValidation = z.object({
@@ -189,4 +181,33 @@ export const certificatesValidation = z.object({
 export const contactInfoValidation = z.object({
   email: z.string().email("Enter a valid email address"),
   phoneNumber: z.string().min(1, "Enter a phone number"),
+});
+
+/**
+ * Final submission schema for check-answers validation
+ * Ensures all required data is present and valid before allowing submission
+ */
+export const finalSubmissionSchema = z.object({
+  // Required: Mother's details
+  mother: motherDetailsValidation,
+
+  // Required: Child's details
+  child: childDetailsValidation,
+
+  // Required: Email for confirmation
+  email: z.string().email("Enter a valid email address"),
+
+  // Optional: Father's details (depends on marriage status or includeFatherDetails)
+  father: fatherDetailsValidation.optional(),
+
+  // Optional: Marriage and father inclusion status
+  marriageStatus: z.enum(["yes", "no", ""]).optional(),
+  includeFatherDetails: z.enum(["yes", "no", ""]).optional(),
+
+  // Optional: Number of certificates (defaults to 0)
+  numberOfCertificates: z.number().min(0).max(20).optional(),
+
+  // Optional: Phone contact
+  phoneNumber: z.string().optional(),
+  wantContact: z.enum(["yes", "no", ""]).optional(),
 });

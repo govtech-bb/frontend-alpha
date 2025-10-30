@@ -23,15 +23,15 @@ type BaseFields = {
  */
 export type PersonDetails = {
   firstName: string;
-  middleName: string;
+  middleName?: string;
   lastName: string;
-  hadOtherSurname: "yes" | "no" | "";
-  otherSurname: string;
+  hadOtherSurname?: "yes" | "no" | "";
+  otherSurname?: string;
   dateOfBirth: string;
   address: string;
-  nationalRegistrationNumber: string;
-  passportNumber: string;
-  occupation: string;
+  nationalRegistrationNumber?: string;
+  passportNumber?: string;
+  occupation?: string;
 };
 
 /**
@@ -39,7 +39,7 @@ export type PersonDetails = {
  */
 export type ChildDetails = {
   firstNames: string;
-  middleNames: string;
+  middleNames?: string;
   lastName: string;
   dateOfBirth: string;
   sexAtBirth: "Male" | "Female" | "Intersex";

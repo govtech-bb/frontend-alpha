@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ErrorSummary, type ValidationError } from "../../common/error-summary";
+import { useEffect } from "react";
+import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
+import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { childDetailsValidation } from "../schema";
 import type { ChildDetails as ChildDetailsType } from "../types";
 
@@ -31,98 +33,22 @@ export function ChildDetails({
 }: ChildDetailsProps) {
   const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
 
-  const [errors, setErrors] = useState<ValidationError[]>([]);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [hasSubmitted, setHasSubmitted] = useState(false);
+  // Use generic validation hook
+  const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
+    useStepValidation({
+      schema: childDetailsValidation,
+      value,
+      onChange,
+      onNext,
+      fieldPrefix: "child-",
+    });
 
   // Pre-fill lastName with surname if not already set
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Need value for spread operator, but tracking value.lastName specifically to prevent unnecessary runs when other fields change
   useEffect(() => {
     if (prefillSurname && !value.lastName) {
       onChange({ ...value, lastName: prefillSurname });
     }
   }, [prefillSurname, value.lastName, onChange, value]);
-
-  const handleChange = (field: keyof ChildDetailsType, fieldValue: string) => {
-    onChange({ ...value, [field]: fieldValue });
-
-    // Clear error for this field when user starts typing (after first submit)
-    if (hasSubmitted) {
-      validateField(field, fieldValue);
-    }
-  };
-
-  const validateField = (field: keyof ChildDetailsType, fieldValue: string) => {
-    const testValue = { ...value, [field]: fieldValue };
-    const result = childDetailsValidation.safeParse(testValue);
-
-    if (result.success) {
-      // Clear error for this field
-      setFieldErrors((prev) => {
-        const next = { ...prev };
-        delete next[field];
-        return next;
-      });
-      setErrors((prev) => prev.filter((e) => e.field !== `child-${field}`));
-    } else {
-      // Set error for this field
-      const fieldError = result.error.issues.find((e) => e.path[0] === field);
-      if (fieldError) {
-        setFieldErrors((prev) => ({ ...prev, [field]: fieldError.message }));
-        setErrors((prev) => {
-          const filtered = prev.filter((e) => e.field !== `child-${field}`);
-          return [
-            ...filtered,
-            { field: `child-${field}`, message: fieldError.message },
-          ];
-        });
-      }
-    }
-  };
-
-  const handleBlur = (field: keyof ChildDetailsType) => {
-    if (hasSubmitted) {
-      validateField(field, value[field] || "");
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setHasSubmitted(true);
-
-    const result = childDetailsValidation.safeParse(value);
-
-    if (result.success) {
-      setErrors([]);
-      setFieldErrors({});
-      onNext();
-    } else {
-      // Build error list for summary and field errors
-      const validationErrors: ValidationError[] = [];
-      const newFieldErrors: Record<string, string> = {};
-
-      for (const error of result.error.issues) {
-        const field = error.path[0] as string;
-        validationErrors.push({
-          field: `child-${field}`,
-          message: error.message,
-        });
-        newFieldErrors[field] = error.message;
-      }
-
-      setErrors(validationErrors);
-      setFieldErrors(newFieldErrors);
-    }
-  };
-
-  const getFieldClassName = (field: keyof ChildDetailsType) => {
-    const baseClass =
-      "w-full max-w-lg rounded-md border-2 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20";
-    const errorClass = fieldErrors[field]
-      ? "border-red-600"
-      : "border-gray-300";
-    return `${baseClass} ${errorClass}`;
-  };
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -149,7 +75,7 @@ export function ChildDetails({
             fieldErrors.firstNames ? "child-firstNames-error" : undefined
           }
           aria-invalid={fieldErrors.firstNames ? true : undefined}
-          className={getFieldClassName("firstNames")}
+          className={getFieldClassName("firstNames", fieldErrors)}
           id="child-firstNames"
           onBlur={() => handleBlur("firstNames")}
           onChange={(e) => handleChange("firstNames", e.target.value)}
@@ -174,7 +100,7 @@ export function ChildDetails({
           If they have more than one, add them in order
         </p>
         <input
-          className={getFieldClassName("middleNames")}
+          className={getFieldClassName("middleNames", fieldErrors)}
           id="child-middleNames"
           onChange={(e) => handleChange("middleNames", e.target.value)}
           type="text"
@@ -195,7 +121,7 @@ export function ChildDetails({
             fieldErrors.lastName ? "child-lastName-error" : undefined
           }
           aria-invalid={fieldErrors.lastName ? true : undefined}
-          className={getFieldClassName("lastName")}
+          className={getFieldClassName("lastName", fieldErrors)}
           id="child-lastName"
           onBlur={() => handleBlur("lastName")}
           onChange={(e) => handleChange("lastName", e.target.value)}
@@ -249,7 +175,7 @@ export function ChildDetails({
             fieldErrors.sexAtBirth ? "child-sexAtBirth-error" : undefined
           }
           aria-invalid={fieldErrors.sexAtBirth ? true : undefined}
-          className={getFieldClassName("sexAtBirth")}
+          className={getFieldClassName("sexAtBirth", fieldErrors)}
           id="child-sexAtBirth"
           onBlur={() => handleBlur("sexAtBirth")}
           onChange={(e) => handleChange("sexAtBirth", e.target.value)}
@@ -288,7 +214,7 @@ export function ChildDetails({
             fieldErrors.parishOfBirth ? "child-parishOfBirth-error" : undefined
           }
           aria-invalid={fieldErrors.parishOfBirth ? true : undefined}
-          className={getFieldClassName("parishOfBirth")}
+          className={getFieldClassName("parishOfBirth", fieldErrors)}
           id="child-parishOfBirth"
           onBlur={() => handleBlur("parishOfBirth")}
           onChange={(e) => handleChange("parishOfBirth", e.target.value)}

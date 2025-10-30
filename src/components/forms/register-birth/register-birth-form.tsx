@@ -2,7 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormNavigation } from "../common/hooks/use-form-navigation";
 import { useFormStorage } from "../common/hooks/use-form-storage";
 import { birthRegistrationSchema } from "./schema";
@@ -38,6 +38,10 @@ export function RegisterBirthForm() {
     expiryDays: 7,
   });
 
+  // Track submission errors
+  const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // Initialize TanStack Form
   const form = useForm({
     defaultValues: {
@@ -49,6 +53,9 @@ export function RegisterBirthForm() {
       phoneNumber: "",
     } as PartialBirthRegistrationFormData,
     onSubmit: async ({ value }) => {
+      setIsSubmitting(true);
+      setSubmissionError(null);
+
       try {
         // Submit to API
         const response = await fetch("/api/register-birth", {
@@ -60,7 +67,10 @@ export function RegisterBirthForm() {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to submit birth registration");
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(
+            errorData.message || "Failed to submit birth registration"
+          );
         }
 
         // Success - go to confirmation and clear saved data
@@ -69,10 +79,17 @@ export function RegisterBirthForm() {
       } catch (error) {
         // biome-ignore lint/suspicious/noConsole: needed for debugging submission errors
         console.error("Error submitting birth registration:", error);
-        // TODO: Show error message to user
-        // For now, allow them to see confirmation page even if email fails
-        goNext();
-        clearFormData();
+
+        // Set error message for user
+        setSubmissionError(
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred. Please try again."
+        );
+
+        // DO NOT navigate to confirmation or clear form data on error
+      } finally {
+        setIsSubmitting(false);
       }
     },
   });
@@ -227,9 +244,11 @@ export function RegisterBirthForm() {
         {currentStep.id === "check-answers" && (
           <CheckAnswers
             formData={formValues}
+            isSubmitting={isSubmitting}
             onBack={goBack}
             onEdit={goToStep}
             onSubmit={handleSubmit}
+            submissionError={submissionError}
           />
         )}
 
