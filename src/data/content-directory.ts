@@ -118,8 +118,8 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on the medical requirements for visiting or immigrating to Barbados, including details on mandatory medical examinations.",
       },
       {
-        title: "Apply for a driver’s license",
-        slug: "apply-for-a-drivers-license",
+        title: "Apply for a driver’s licence",
+        slug: "apply-for-a-drivers-licence",
         source_url: "https://www.gov.bb/Citizens/driver-licence",
         description:
           "Information on how to obtain a driver's license in Barbados, including learner's permits, regulations tests, driving tests, and international licenses.",
