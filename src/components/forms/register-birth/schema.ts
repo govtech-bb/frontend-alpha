@@ -73,21 +73,14 @@ export type BirthRegistrationFormData = z.infer<typeof birthRegistrationSchema>;
  */
 
 /**
- * Type for person identifier fields used in validation
- */
-type PersonIdentifierData = {
-  nationalRegistrationNumber?: string;
-  passportNumber?: string;
-};
-
-/**
  * Shared validation function for person identifiers
  * Applies refinements to ensure at least one identifier is provided and validates format
  */
 function applyIdentifierValidation<T extends z.ZodTypeAny>(schema: T) {
   return schema
     .refine(
-      (data: PersonIdentifierData) => {
+      // biome-ignore lint/suspicious/noExplicitAny: Zod refine callbacks require any for generic schemas
+      (data: any) => {
         // At least one identifier must be provided
         const hasNationalReg =
           data.nationalRegistrationNumber &&
@@ -103,7 +96,8 @@ function applyIdentifierValidation<T extends z.ZodTypeAny>(schema: T) {
       }
     )
     .refine(
-      (data: PersonIdentifierData) => {
+      // biome-ignore lint/suspicious/noExplicitAny: Zod refine callbacks require any for generic schemas
+      (data: any) => {
         // Validate national registration format if provided
         if (
           data.nationalRegistrationNumber &&

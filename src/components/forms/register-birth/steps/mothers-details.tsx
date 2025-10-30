@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { ErrorSummary, type ValidationError } from "../../common/error-summary";
+import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
+import {
+  getFieldClassName,
+  getTextareaClassName,
+} from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { usePersonDetailsValidation } from "../hooks/use-person-details-validation";
 import { motherDetailsValidation } from "../schema";
 import type { PersonDetails } from "../types";
 
@@ -18,7 +22,7 @@ type MothersDetailsProps = {
  * Step: Mother's Details
  * Collects information about the mother
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Error handling logic requires validation state management
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function MothersDetails({
   value,
   onChange,
@@ -30,99 +34,14 @@ export function MothersDetails({
     "Register a Birth"
   );
 
-  const [errors, setErrors] = useState<ValidationError[]>([]);
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-
-  const handleChange = (field: keyof PersonDetails, fieldValue: string) => {
-    onChange({ ...value, [field]: fieldValue });
-
-    // Clear error for this field when user starts typing (after first submit)
-    if (hasSubmitted) {
-      validateField(field, fieldValue);
-    }
-  };
-
-  const validateField = (field: keyof PersonDetails, fieldValue: string) => {
-    const testValue = { ...value, [field]: fieldValue };
-    const result = motherDetailsValidation.safeParse(testValue);
-
-    if (result.success) {
-      // Clear error for this field
-      setFieldErrors((prev) => {
-        const next = { ...prev };
-        delete next[field];
-        return next;
-      });
-      setErrors((prev) => prev.filter((e) => e.field !== `mother-${field}`));
-    } else {
-      // Set error for this field
-      const fieldError = result.error.issues.find((e) => e.path[0] === field);
-      if (fieldError) {
-        setFieldErrors((prev) => ({ ...prev, [field]: fieldError.message }));
-        setErrors((prev) => {
-          const filtered = prev.filter((e) => e.field !== `mother-${field}`);
-          return [
-            ...filtered,
-            { field: `mother-${field}`, message: fieldError.message },
-          ];
-        });
-      }
-    }
-  };
-
-  const handleBlur = (field: keyof PersonDetails) => {
-    if (hasSubmitted) {
-      validateField(field, value[field] || "");
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setHasSubmitted(true);
-
-    const result = motherDetailsValidation.safeParse(value);
-
-    if (result.success) {
-      setErrors([]);
-      setFieldErrors({});
-      onNext();
-    } else {
-      // Build error list for summary and field errors
-      const validationErrors: ValidationError[] = [];
-      const newFieldErrors: Record<string, string> = {};
-
-      for (const error of result.error.issues) {
-        const field = error.path[0] as string;
-        validationErrors.push({
-          field: `mother-${field}`,
-          message: error.message,
-        });
-        newFieldErrors[field] = error.message;
-      }
-
-      setErrors(validationErrors);
-      setFieldErrors(newFieldErrors);
-    }
-  };
-
-  const getFieldClassName = (field: keyof PersonDetails) => {
-    const baseClass =
-      "w-full max-w-md rounded-md border-2 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20";
-    const errorClass = fieldErrors[field]
-      ? "border-red-600"
-      : "border-gray-300";
-    return `${baseClass} ${errorClass}`;
-  };
-
-  const getTextareaClassName = (field: keyof PersonDetails) => {
-    const baseClass =
-      "w-full max-w-md resize-y rounded-md border-2 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20";
-    const errorClass = fieldErrors[field]
-      ? "border-red-600"
-      : "border-gray-300";
-    return `${baseClass} ${errorClass}`;
-  };
+  const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
+    usePersonDetailsValidation({
+      value,
+      onChange,
+      onNext,
+      validationSchema: motherDetailsValidation,
+      fieldPrefix: "mother-",
+    });
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -145,7 +64,7 @@ export function MothersDetails({
             fieldErrors.firstName ? "mother-firstName-error" : undefined
           }
           aria-invalid={fieldErrors.firstName ? true : undefined}
-          className={getFieldClassName("firstName")}
+          className={getFieldClassName("firstName", fieldErrors)}
           id="mother-firstName"
           onBlur={() => handleBlur("firstName")}
           onChange={(e) => handleChange("firstName", e.target.value)}
@@ -167,7 +86,7 @@ export function MothersDetails({
           If they have more than one, add them in order
         </p>
         <input
-          className={getFieldClassName("middleName")}
+          className={getFieldClassName("middleName", fieldErrors)}
           id="mother-middleName"
           onChange={(e) => handleChange("middleName", e.target.value)}
           type="text"
@@ -188,7 +107,7 @@ export function MothersDetails({
             fieldErrors.lastName ? "mother-lastName-error" : undefined
           }
           aria-invalid={fieldErrors.lastName ? true : undefined}
-          className={getFieldClassName("lastName")}
+          className={getFieldClassName("lastName", fieldErrors)}
           id="mother-lastName"
           onBlur={() => handleBlur("lastName")}
           onChange={(e) => handleChange("lastName", e.target.value)}
@@ -304,7 +223,7 @@ export function MothersDetails({
             fieldErrors.address ? "mother-address-error" : undefined
           }
           aria-invalid={fieldErrors.address ? true : undefined}
-          className={getTextareaClassName("address")}
+          className={getTextareaClassName("address", fieldErrors)}
           id="mother-address"
           onBlur={() => handleBlur("address")}
           onChange={(e) => handleChange("address", e.target.value)}
@@ -331,7 +250,10 @@ export function MothersDetails({
           aria-invalid={
             fieldErrors.nationalRegistrationNumber ? true : undefined
           }
-          className={getFieldClassName("nationalRegistrationNumber")}
+          className={getFieldClassName(
+            "nationalRegistrationNumber",
+            fieldErrors
+          )}
           id="mother-nationalRegistrationNumber"
           onBlur={() => handleBlur("nationalRegistrationNumber")}
           onChange={(e) =>
@@ -374,7 +296,7 @@ export function MothersDetails({
                   : undefined
               }
               aria-invalid={fieldErrors.passportNumber ? true : undefined}
-              className={getFieldClassName("passportNumber")}
+              className={getFieldClassName("passportNumber", fieldErrors)}
               id="mother-passportNumber"
               onBlur={() => handleBlur("passportNumber")}
               onChange={(e) => handleChange("passportNumber", e.target.value)}
@@ -403,7 +325,7 @@ export function MothersDetails({
           records.
         </p>
         <input
-          className={getFieldClassName("occupation")}
+          className={getFieldClassName("occupation", fieldErrors)}
           id="mother-occupation"
           onChange={(e) => handleChange("occupation", e.target.value)}
           type="text"
