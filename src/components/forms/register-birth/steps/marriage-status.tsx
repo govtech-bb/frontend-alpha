@@ -36,12 +36,16 @@ export function MarriageStatus({
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <div>
-        <h1 className="mb-4 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+        <h1
+          className="mb-4 font-bold text-5xl leading-tight"
+          ref={titleRef}
+          tabIndex={-1}
+        >
           When the child was born, were the mother and father married to each
           other?
         </h1>
 
-        <Typography className="mb-4" variant="paragraph">
+        <Typography className="mb-4 leading-tight" variant="paragraph">
           We ask this because your answer determines:
         </Typography>
 

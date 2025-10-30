@@ -126,13 +126,17 @@ export function ContactInfo({
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+      <h1
+        className="mb-6 font-bold text-5xl leading-tight"
+        ref={titleRef}
+        tabIndex={-1}
+      >
         Contact details
       </h1>
 
       <ErrorSummary errors={errors} />
 
-      <Typography className="mb-4" variant="paragraph">
+      <Typography className="mb-4 leading-tight" variant="paragraph">
         We ask for this information so we can send you confirmation and let you
         know what to do next.
       </Typography>

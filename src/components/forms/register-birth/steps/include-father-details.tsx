@@ -37,17 +37,21 @@ export function IncludeFatherDetails({
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <div>
-        <h1 className="mb-4 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+        <h1
+          className="mb-4 font-bold text-5xl leading-tight"
+          ref={titleRef}
+          tabIndex={-1}
+        >
           Do you want to include the father's details on the birth record?
         </h1>
 
         <div className="mb-6 space-y-4">
-          <Typography variant="paragraph">
+          <Typography className="leading-tight" variant="paragraph">
             If you choose 'Yes', both parents must go to the Registration
             Department and sign the official register together.
           </Typography>
 
-          <Typography variant="paragraph">
+          <Typography className="leading-tight" variant="paragraph">
             If you choose 'No', the mother must go to the Registration
             Department but it is not necessary for the father to attend.
           </Typography>

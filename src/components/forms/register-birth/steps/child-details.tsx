@@ -126,7 +126,11 @@ export function ChildDetails({
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+      <h1
+        className="mb-6 font-bold text-5xl leading-tight"
+        ref={titleRef}
+        tabIndex={-1}
+      >
         Tell us about the child
       </h1>
 

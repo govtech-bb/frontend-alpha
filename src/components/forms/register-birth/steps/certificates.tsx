@@ -92,22 +92,26 @@ export function Certificates({
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <h1 className="mb-6 font-bold text-3xl" ref={titleRef} tabIndex={-1}>
+      <h1
+        className="mb-6 font-bold text-5xl leading-tight"
+        ref={titleRef}
+        tabIndex={-1}
+      >
         Order a birth certificate
       </h1>
 
       <ErrorSummary errors={errors} />
 
-      <Typography className="mb-4" variant="paragraph">
+      <Typography className="mb-4 leading-tight" variant="paragraph">
         A birth certificate is essential for access to some public services. You
         wil need to pay BDD$5.00 for each certificate when you collect them.
       </Typography>
 
-      <Typography className="mb-4" variant="paragraph">
+      <Typography className="mb-4 leading-tight" variant="paragraph">
         We keep the original so you can order a certified copy at any point.
       </Typography>
 
-      <Typography className="mb-4" variant="paragraph">
+      <Typography className="mb-4 leading-tight" variant="paragraph">
         The birth registration is free of charge.
       </Typography>
 
