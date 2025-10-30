@@ -7,8 +7,8 @@ import { expect, type Page, test } from "@playwright/test";
 
 // Device configurations for testing
 const DEVICES = [
-  // { name: "desktop", width: 1280, height: 1422 },
-  // { name: "tablet", width: 768, height: 1024 },
+  { name: "desktop", width: 1280, height: 1422 },
+  { name: "tablet", width: 768, height: 1024 },
   { name: "mobile", width: 375, height: 667 },
 ] as const;
 
