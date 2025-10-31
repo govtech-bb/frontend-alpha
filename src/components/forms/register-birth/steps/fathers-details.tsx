@@ -135,7 +135,7 @@ export function FathersDetails({
           Date of birth
         </label>
         <p className="mb-2 text-base text-gray-600">
-          Use the calendar picker or enter in MM/DD/YYYY format
+          Use the calendar picker or enter the date
         </p>
         <input
           aria-describedby={
