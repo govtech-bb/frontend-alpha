@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { IncludeFatherDetails } from "./include-father-details";
+import { IncludeFatherDetails } from "../include-father-details";
 
 describe("IncludeFatherDetails", () => {
   const defaultProps = {

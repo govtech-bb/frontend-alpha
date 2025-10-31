@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import type { FormStep } from "@/types/forms";
-import { useFormNavigation } from "./use-form-navigation";
+import { useFormNavigation } from "../use-form-navigation";
 
 describe("useFormNavigation", () => {
   const mockSteps: FormStep[] = [

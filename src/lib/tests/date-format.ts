@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { convertFromInputFormat, convertToInputFormat } from "./date-format";
+import { convertFromInputFormat, convertToInputFormat } from "../date-format";
 
 describe("convertToInputFormat", () => {
   describe("valid conversions", () => {

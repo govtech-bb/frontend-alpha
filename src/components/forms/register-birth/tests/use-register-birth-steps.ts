@@ -1,7 +1,7 @@
 import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import type { PartialBirthRegistrationFormData } from "./types";
-import { useRegisterBirthSteps } from "./use-register-birth-steps";
+import type { PartialBirthRegistrationFormData } from "../types";
+import { useRegisterBirthSteps } from "../use-register-birth-steps";
 
 describe("useRegisterBirthSteps", () => {
   describe("Path A: Married parents", () => {

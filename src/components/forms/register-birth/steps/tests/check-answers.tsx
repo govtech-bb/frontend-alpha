@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { CheckAnswers } from "../check-answers";
 import type { PartialBirthRegistrationFormData } from "../types";
-import { CheckAnswers } from "./check-answers";
 
 describe("CheckAnswers", () => {
   const mockOnSubmit = vi.fn();

@@ -4,7 +4,7 @@ import {
   contactInfoValidation,
   fatherDetailsValidation,
   motherDetailsValidation,
-} from "./schema";
+} from "../schema";
 
 describe("fatherDetailsValidation", () => {
   const validBaseData = {

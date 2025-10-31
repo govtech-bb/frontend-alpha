@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ChildDetails } from "./child-details";
+import { ChildDetails } from "../child-details";
 
 describe("ChildDetails", () => {
   const defaultProps = {
