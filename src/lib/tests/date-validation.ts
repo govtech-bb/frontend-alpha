@@ -3,7 +3,7 @@ import {
   isValidBirthDate,
   isValidChildBirthDate,
   isValidDate,
-} from "./date-validation";
+} from "../date-validation";
 
 describe("isValidDate", () => {
   it("should accept valid MM/DD/YYYY dates", () => {

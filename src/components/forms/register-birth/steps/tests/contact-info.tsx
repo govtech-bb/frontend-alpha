@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ContactInfo } from "./contact-info";
+import { ContactInfo } from "../contact-info";
 
 describe("ContactInfo", () => {
   const defaultProps = {

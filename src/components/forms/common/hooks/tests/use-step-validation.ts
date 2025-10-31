@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { z } from "zod";
-import { useStepValidation } from "./use-step-validation";
+import { useStepValidation } from "../use-step-validation";
 
 describe("useStepValidation", () => {
   const testSchema = z.object({

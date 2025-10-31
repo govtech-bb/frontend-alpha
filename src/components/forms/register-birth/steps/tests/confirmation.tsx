@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { Confirmation } from "./confirmation";
+import { Confirmation } from "../confirmation";
 
 describe("Confirmation", () => {
   it("should render the title", () => {
