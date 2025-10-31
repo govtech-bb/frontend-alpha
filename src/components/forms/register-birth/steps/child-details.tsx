@@ -153,6 +153,7 @@ export function ChildDetails({
           aria-invalid={fieldErrors.dateOfBirth ? true : undefined}
           className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="child-dateOfBirth"
+          lang="en-US"
           onBlur={() => handleBlur("dateOfBirth")}
           onChange={(e) =>
             handleChange("dateOfBirth", convertFromInputFormat(e.target.value))
