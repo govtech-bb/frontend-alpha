@@ -77,7 +77,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("03/15/1990")).toBeInTheDocument();
+      expect(screen.getByText("Mar 15, 1990")).toBeInTheDocument();
     });
 
     it("should display mother's address", () => {
@@ -187,7 +187,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("05/20/1988")).toBeInTheDocument();
+      expect(screen.getByText("May 20, 1988")).toBeInTheDocument();
     });
 
     it("should display father's address", () => {
@@ -250,7 +250,7 @@ describe("CheckAnswers", () => {
       // Smith appears multiple times (child and parents), so we use getAllByText
       const smithElements = screen.getAllByText("Smith");
       expect(smithElements.length).toBeGreaterThan(0);
-      expect(screen.getByText("01/01/2024")).toBeInTheDocument();
+      expect(screen.getByText("Jan 1, 2024")).toBeInTheDocument();
       expect(screen.getByText("Male")).toBeInTheDocument();
       expect(screen.getByText("St. Michael")).toBeInTheDocument();
     });

@@ -9,6 +9,7 @@ import {
   Text,
 } from "@react-email/components";
 import type { PartialBirthRegistrationFormData } from "@/components/forms/register-birth/types";
+import { formatDateForDisplay } from "@/lib/date-display";
 
 type UserReceiptEmailProps = {
   formData: PartialBirthRegistrationFormData;
@@ -81,7 +82,7 @@ export function UserReceiptEmail({
             {formData.child?.dateOfBirth && (
               <Text>
                 <strong>Child's date of birth:</strong>{" "}
-                {formData.child.dateOfBirth}
+                {formatDateForDisplay(formData.child.dateOfBirth)}
               </Text>
             )}
             <Text>

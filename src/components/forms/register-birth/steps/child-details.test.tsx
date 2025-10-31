@@ -39,9 +39,7 @@ describe("ChildDetails", () => {
     render(<ChildDetails {...defaultProps} />);
 
     expect(
-      screen.getByText(
-        /Use the calendar picker or enter in MM\/DD\/YYYY format/
-      )
+      screen.getByText(/Use the calendar picker or enter the date/)
     ).toBeInTheDocument();
   });
 
