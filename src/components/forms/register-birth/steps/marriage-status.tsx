@@ -56,7 +56,7 @@ export function MarriageStatus({
 
       <div>
         <h1
-          className="mb-4 font-bold text-5xl leading-tight"
+          className="mb-4 font-bold text-5xl leading-tight focus:outline-none"
           ref={titleRef}
           tabIndex={-1}
         >
