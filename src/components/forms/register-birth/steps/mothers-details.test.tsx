@@ -58,7 +58,11 @@ describe("MothersDetails", () => {
   it("should display date format hint", () => {
     render(<MothersDetails {...defaultProps} />);
 
-    expect(screen.getByText(/For example, 07\/30\/1986/)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Use the calendar picker or enter in MM\/DD\/YYYY format/
+      )
+    ).toBeInTheDocument();
   });
 
   it("should display occupation explanation", () => {
@@ -100,7 +104,7 @@ describe("MothersDetails", () => {
     );
     expect(
       (screen.getByLabelText("Date of birth") as HTMLInputElement).value
-    ).toBe("07/30/1986");
+    ).toBe("1986-07-30");
     expect(
       (screen.getByLabelText("Current address") as HTMLTextAreaElement).value
     ).toBe("123 Main St");
@@ -413,13 +417,6 @@ describe("MothersDetails", () => {
 
     const input = screen.getByLabelText("National registration number");
     expect(input).toHaveAttribute("placeholder", "123456-7890");
-  });
-
-  it("should display placeholder for date input", () => {
-    render(<MothersDetails {...defaultProps} />);
-
-    const dateInput = screen.getByLabelText("Date of birth");
-    expect(dateInput).toHaveAttribute("placeholder", "MM/DD/YYYY");
   });
 
   it("should render address as textarea with 3 rows", () => {
