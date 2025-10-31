@@ -56,7 +56,7 @@ export function Certificates({
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1
-        className="mb-6 font-bold text-5xl leading-tight"
+        className="mb-6 font-bold text-5xl leading-tight focus:outline-none"
         ref={titleRef}
         tabIndex={-1}
       >

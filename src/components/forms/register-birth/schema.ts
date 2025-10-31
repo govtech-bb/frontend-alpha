@@ -169,6 +169,14 @@ export const childDetailsValidation = z.object({
   parishOfBirth: z.string().min(1, "Enter the child's place of birth"),
 });
 
+// Marriage status validation
+export const marriageStatusValidation = z.object({
+  marriageStatus: z.enum(["yes", "no"], {
+    message:
+      "Select yes if the mother and father were married when the child was born",
+  }),
+});
+
 // Certificates validation
 export const certificatesValidation = z.object({
   numberOfCertificates: z

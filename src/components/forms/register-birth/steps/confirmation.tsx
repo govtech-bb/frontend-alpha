@@ -29,7 +29,7 @@ export function Confirmation({
       <div className="-mx-[50vw] relative right-1/2 left-1/2 mb-6 w-screen bg-[#D4F1F4] px-4 py-6 sm:px-6">
         <div className="container mx-auto max-w-3xl">
           <h1
-            className="mb-4 font-bold text-5xl leading-tight"
+            className="mb-4 font-bold text-5xl leading-tight focus:outline-none"
             ref={titleRef}
             tabIndex={-1}
           >

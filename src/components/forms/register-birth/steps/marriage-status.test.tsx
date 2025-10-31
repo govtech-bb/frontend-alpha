@@ -7,7 +7,7 @@ describe("MarriageStatus", () => {
     value: "" as "" | "yes" | "no",
     onChange: vi.fn(),
     onNext: vi.fn(),
-    onBack: vi.fn(),
+    onBack: vi.fn(), // Still in props interface but not used
   };
 
   it("should render the title and question", () => {
@@ -62,24 +62,16 @@ describe("MarriageStatus", () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it("should disable Next button when no selection is made", () => {
-    render(<MarriageStatus {...defaultProps} value="" />);
-
-    const nextButton = screen.getByRole("button", { name: /next/i });
-    expect(nextButton).toBeDisabled();
-  });
-
-  it("should enable Next button when Yes is selected", () => {
-    render(<MarriageStatus {...defaultProps} value="yes" />);
+  it("should have Next button always enabled", () => {
+    const { rerender } = render(<MarriageStatus {...defaultProps} value="" />);
 
     const nextButton = screen.getByRole("button", { name: /next/i });
     expect(nextButton).not.toBeDisabled();
-  });
 
-  it("should enable Next button when No is selected", () => {
-    render(<MarriageStatus {...defaultProps} value="no" />);
+    rerender(<MarriageStatus {...defaultProps} value="yes" />);
+    expect(nextButton).not.toBeDisabled();
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    rerender(<MarriageStatus {...defaultProps} value="no" />);
     expect(nextButton).not.toBeDisabled();
   });
 
@@ -100,14 +92,11 @@ describe("MarriageStatus", () => {
     expect(noRadio.checked).toBe(true);
   });
 
-  it("should call onBack when Back button is clicked", () => {
-    const onBack = vi.fn();
-    render(<MarriageStatus {...defaultProps} onBack={onBack} />);
+  it("should not render Back button as this is the first step", () => {
+    render(<MarriageStatus {...defaultProps} />);
 
-    const backButton = screen.getByRole("button", { name: /back/i });
-    fireEvent.click(backButton);
-
-    expect(onBack).toHaveBeenCalledTimes(1);
+    const backButton = screen.queryByRole("button", { name: /back/i });
+    expect(backButton).not.toBeInTheDocument();
   });
 
   it("should call onNext when Next button is clicked with valid selection", () => {
@@ -120,15 +109,46 @@ describe("MarriageStatus", () => {
     expect(onNext).toHaveBeenCalledTimes(1);
   });
 
-  it("should prevent form submission when Next button is clicked without selection", () => {
+  it("should show validation error when Next is clicked without selection", () => {
     const onNext = vi.fn();
     render(<MarriageStatus {...defaultProps} onNext={onNext} value="" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
-    fireEvent.click(nextButton);
+    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    fireEvent.submit(form!);
 
-    // Button is disabled, so click should not trigger onNext
+    // Should show error and not proceed
+    expect(screen.getByRole("alert")).toBeInTheDocument();
     expect(onNext).not.toHaveBeenCalled();
+  });
+
+  it("should mark radio buttons as invalid when validation fails", () => {
+    render(<MarriageStatus {...defaultProps} value="" />);
+
+    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    fireEvent.submit(form!);
+
+    const yesRadio = screen.getByLabelText("Yes");
+    const noRadio = screen.getByLabelText("No");
+
+    expect(yesRadio).toHaveAttribute("aria-invalid", "true");
+    expect(noRadio).toHaveAttribute("aria-invalid", "true");
+  });
+
+  it("should clear errors when a selection is made after validation failure", () => {
+    const onChange = vi.fn();
+    render(<MarriageStatus {...defaultProps} onChange={onChange} value="" />);
+
+    // First trigger validation error
+    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    fireEvent.submit(form!);
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+
+    // Then select an option
+    const yesRadio = screen.getByLabelText("Yes");
+    fireEvent.click(yesRadio);
+
+    // Error should be cleared
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
   });
 
   it("should have accessible form structure", () => {
