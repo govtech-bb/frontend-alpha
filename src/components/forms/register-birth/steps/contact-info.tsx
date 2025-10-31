@@ -1,5 +1,6 @@
 "use client";
 
+import { Button, Input } from "@govtech-bb/react";
 import { Typography } from "@/components/ui/typography";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
@@ -85,64 +86,34 @@ export function ContactInfo({
       </Typography>
 
       {/* Email address */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="email"
-        >
-          Email address
-        </label>
-        <input
-          aria-describedby={fieldErrors.email ? "email-error" : undefined}
-          aria-invalid={fieldErrors.email ? true : undefined}
-          className={getFieldClassName("email", fieldErrors)}
-          id="email"
-          onBlur={() => handleBlur("email")}
-          onChange={(e) => handleChange("email", e.target.value)}
-          type="email"
-          value={email || ""}
-        />
-        <FormFieldError id="email" message={fieldErrors.email} />
-      </div>
+      <Input
+        error={fieldErrors.email}
+        id="email"
+        label="Email address"
+        onBlur={() => handleBlur("email")}
+        onChange={(e) => handleChange("email", e.target.value)}
+        type="email"
+        value={email || ""}
+      />
 
       {/* Phone number */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="phoneNumber"
-        >
-          Phone number
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.phoneNumber ? "phoneNumber-error" : undefined
-          }
-          aria-invalid={fieldErrors.phoneNumber ? true : undefined}
-          className={getFieldClassName("phoneNumber", fieldErrors)}
-          id="phoneNumber"
-          onBlur={() => handleBlur("phoneNumber")}
-          onChange={(e) => handleChange("phoneNumber", e.target.value)}
-          type="tel"
-          value={phoneNumber || ""}
-        />
-        <FormFieldError id="phoneNumber" message={fieldErrors.phoneNumber} />
-      </div>
+      <Input
+        error={fieldErrors.phoneNumber}
+        id="phoneNumber"
+        label="Phone number"
+        onBlur={() => handleBlur("phoneNumber")}
+        onChange={(e) => handleChange("phoneNumber", e.target.value)}
+        type="tel"
+        value={phoneNumber || ""}
+      />
 
       <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
+        <Button onClick={onBack} variant="secondary" type="button">
           Back
-        </button>
-
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
-          type="submit"
-        >
+        </Button>
+        <Button type="submit">
           Continue
-        </button>
+        </Button>
       </div>
     </form>
   );
