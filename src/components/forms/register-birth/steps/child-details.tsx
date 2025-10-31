@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect } from "react";
+import {
+  convertFromInputFormat,
+  convertToInputFormat,
+} from "@/lib/date-format";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import { getFieldClassName } from "../../common/form-utils";
@@ -139,7 +143,9 @@ export function ChildDetails({
         >
           Date of birth
         </label>
-        <p className="mb-2 text-base text-gray-600">For example, 10/22/2025</p>
+        <p className="mb-2 text-base text-gray-600">
+          Use the calendar picker or enter in MM/DD/YYYY format
+        </p>
         <input
           aria-describedby={
             fieldErrors.dateOfBirth ? "child-dateOfBirth-error" : undefined
@@ -148,10 +154,11 @@ export function ChildDetails({
           className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="child-dateOfBirth"
           onBlur={() => handleBlur("dateOfBirth")}
-          onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-          placeholder="MM/DD/YYYY"
-          type="text"
-          value={value.dateOfBirth || ""}
+          onChange={(e) =>
+            handleChange("dateOfBirth", convertFromInputFormat(e.target.value))
+          }
+          type="date"
+          value={convertToInputFormat(value.dateOfBirth || "")}
         />
         <FormFieldError
           id="child-dateOfBirth"

@@ -38,7 +38,11 @@ describe("ChildDetails", () => {
   it("should display date format hint", () => {
     render(<ChildDetails {...defaultProps} />);
 
-    expect(screen.getByText(/For example, 10\/22\/2025/)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Use the calendar picker or enter in MM\/DD\/YYYY format/
+      )
+    ).toBeInTheDocument();
   });
 
   it("should display sex at birth explanation", () => {
@@ -86,7 +90,7 @@ describe("ChildDetails", () => {
     );
     expect(
       (screen.getByLabelText("Date of birth") as HTMLInputElement).value
-    ).toBe("10/22/2025");
+    ).toBe("2025-10-22");
     expect(
       (screen.getByLabelText("Sex at birth") as HTMLSelectElement).value
     ).toBe("Male");
@@ -310,12 +314,5 @@ describe("ChildDetails", () => {
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalled();
-  });
-
-  it("should display placeholder for date input", () => {
-    render(<ChildDetails {...defaultProps} />);
-
-    const dateInput = screen.getByLabelText("Date of birth");
-    expect(dateInput).toHaveAttribute("placeholder", "MM/DD/YYYY");
   });
 });

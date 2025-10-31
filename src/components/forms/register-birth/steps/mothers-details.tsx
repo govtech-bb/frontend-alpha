@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  convertFromInputFormat,
+  convertToInputFormat,
+} from "@/lib/date-format";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import {
@@ -194,7 +198,9 @@ export function MothersDetails({
         >
           Date of birth
         </label>
-        <p className="mb-2 text-base text-gray-600">For example, 07/30/1986</p>
+        <p className="mb-2 text-base text-gray-600">
+          Use the calendar picker or enter in MM/DD/YYYY format
+        </p>
         <input
           aria-describedby={
             fieldErrors.dateOfBirth ? "mother-dateOfBirth-error" : undefined
@@ -203,10 +209,11 @@ export function MothersDetails({
           className="w-full max-w-xs rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
           id="mother-dateOfBirth"
           onBlur={() => handleBlur("dateOfBirth")}
-          onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-          placeholder="MM/DD/YYYY"
-          type="text"
-          value={value.dateOfBirth || ""}
+          onChange={(e) =>
+            handleChange("dateOfBirth", convertFromInputFormat(e.target.value))
+          }
+          type="date"
+          value={convertToInputFormat(value.dateOfBirth || "")}
         />
         <FormFieldError
           id="mother-dateOfBirth"
