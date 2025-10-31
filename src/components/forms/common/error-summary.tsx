@@ -61,8 +61,8 @@ export function ErrorSummary({
         {title}
       </h2>
       <ul className="list-disc space-y-1 pl-5">
-        {errors.map((error) => (
-          <li key={error.field}>
+        {errors.map((error, index) => (
+          <li key={`${error.field}-${index}`}>
             <a
               className="text-red-600 underline hover:text-red-800"
               href={`#${error.field}`}
