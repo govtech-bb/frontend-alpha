@@ -1,7 +1,11 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
+import { ErrorSummary } from "../../common/error-summary";
+import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { useStepValidation } from "../../common/hooks/use-step-validation";
+import { marriageStatusValidation } from "../schema";
 
 type MarriageStatusProps = {
   value: "yes" | "no" | "";
@@ -22,19 +26,34 @@ export function MarriageStatus({
   value,
   onChange,
   onNext,
-  onBack,
 }: MarriageStatusProps) {
   const titleRef = useStepFocus("Marriage status", "Register a Birth");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (value) {
-      onNext();
+  // Wrap value in object for validation hook, converting empty string to undefined
+  const formValue = { marriageStatus: value === "" ? undefined : value };
+
+  // Wrap onChange to extract marriageStatus from object
+  const handleFormChange = (newValue: { marriageStatus?: "yes" | "no" }) => {
+    // Only call onChange if value is defined (user made a selection)
+    if (newValue.marriageStatus) {
+      onChange(newValue.marriageStatus);
     }
   };
 
+  const { errors, fieldErrors, handleChange, handleSubmit } = useStepValidation(
+    {
+      schema: marriageStatusValidation,
+      value: formValue,
+      onChange: handleFormChange,
+      onNext,
+      fieldPrefix: "marriageStatus-",
+    }
+  );
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
+      <ErrorSummary errors={errors} />
+
       <div>
         <h1
           className="mb-4 font-bold text-5xl leading-tight"
@@ -61,11 +80,17 @@ export function MarriageStatus({
         <div className="space-y-3">
           <div className="flex items-start">
             <input
+              aria-describedby={
+                fieldErrors.marriageStatus
+                  ? "marriageStatus-marriageStatus-error"
+                  : undefined
+              }
+              aria-invalid={fieldErrors.marriageStatus ? "true" : "false"}
               checked={value === "yes"}
               className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
               id="married-yes"
               name="marriageStatus"
-              onChange={() => onChange("yes")}
+              onChange={() => handleChange("marriageStatus", "yes")}
               type="radio"
               value="yes"
             />
@@ -79,11 +104,17 @@ export function MarriageStatus({
 
           <div className="flex items-start">
             <input
+              aria-describedby={
+                fieldErrors.marriageStatus
+                  ? "marriageStatus-marriageStatus-error"
+                  : undefined
+              }
+              aria-invalid={fieldErrors.marriageStatus ? "true" : "false"}
               checked={value === "no"}
               className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
               id="married-no"
               name="marriageStatus"
-              onChange={() => onChange("no")}
+              onChange={() => handleChange("marriageStatus", "no")}
               type="radio"
               value="no"
             />
@@ -95,25 +126,19 @@ export function MarriageStatus({
             </label>
           </div>
         </div>
+
+        <FormFieldError
+          id="marriageStatus-marriageStatus"
+          message={fieldErrors.marriageStatus}
+        />
       </fieldset>
 
-      <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
-          Back
-        </button>
-
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:cursor-not-allowed disabled:bg-gray-400"
-          disabled={!value}
-          type="submit"
-        >
-          Next
-        </button>
-      </div>
+      <button
+        className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
+        type="submit"
+      >
+        Next
+      </button>
     </form>
   );
 }
