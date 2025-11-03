@@ -16,7 +16,7 @@ if (!mailFrom) {
 }
 
 // Hardcoded recipient for birth registration submissions
-const birthRegistrationToEmail = "matt.hamilton@govtech.bb";
+const birthRegistrationToEmail = "testing@govtech.bb";
 
 // Optional CloudWatch telemetry configuration
 const configurationSet = process.env.SES_CONFIGURATION_SET;
@@ -135,7 +135,9 @@ export async function POST(request: NextRequest) {
         })
       );
       await sendEmail({
-        to: formData.email.trim(),
+        // TEMPORARY OVERRIDE FOR TESTING: Sending to testing@govtech.bb instead of user's email
+        to: "testing@govtech.bb",
+        // to: formData.email.trim(), // Original - commented out for testing
         subject: userSubject,
         html: userHtml,
       });
