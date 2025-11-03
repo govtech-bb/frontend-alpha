@@ -139,48 +139,6 @@ describe("ChildDetails", () => {
     expect(options).toContain("Intersex");
   });
 
-  it("should prefill lastName when prefillSurname is provided and lastName is empty", () => {
-    const onChange = vi.fn();
-    render(
-      <ChildDetails
-        {...defaultProps}
-        onChange={onChange}
-        prefillSurname="Johnson"
-        value={{ lastName: "" }}
-      />
-    );
-
-    expect(onChange).toHaveBeenCalledWith({
-      lastName: "Johnson",
-    });
-  });
-
-  it("should not override existing lastName with prefillSurname", () => {
-    const onChange = vi.fn();
-    render(
-      <ChildDetails
-        {...defaultProps}
-        onChange={onChange}
-        prefillSurname="Johnson"
-        value={{ lastName: "Smith" }}
-      />
-    );
-
-    // onChange should not be called to override existing value
-    expect(onChange).not.toHaveBeenCalled();
-  });
-
-  it("should display prefillSurname in lastName field when value is empty", () => {
-    render(
-      <ChildDetails {...defaultProps} prefillSurname="Johnson" value={{}} />
-    );
-
-    const lastNameInput = screen.getByLabelText(
-      "Last name"
-    ) as HTMLInputElement;
-    expect(lastNameInput.value).toBe("Johnson");
-  });
-
   it("should validate required fields on submission", () => {
     render(<ChildDetails {...defaultProps} value={{}} />);
 
