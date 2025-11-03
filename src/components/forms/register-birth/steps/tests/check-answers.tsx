@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import type { PartialBirthRegistrationFormData } from "../../types";
 import { CheckAnswers } from "../check-answers";
-import type { PartialBirthRegistrationFormData } from "../types";
 
 describe("CheckAnswers", () => {
   const mockOnSubmit = vi.fn();
@@ -91,7 +91,7 @@ describe("CheckAnswers", () => {
       );
 
       const addresses = screen.getAllByText(
-        /123 Main St.*Bridgetown.*Barbados/s
+        /123 Main St[\s\S]*Bridgetown[\s\S]*Barbados/
       );
       expect(addresses.length).toBeGreaterThan(0);
     });
@@ -202,7 +202,7 @@ describe("CheckAnswers", () => {
 
       // Father's address should appear (same as mother's in this test data)
       const addresses = screen.getAllByText(
-        /123 Main St.*Bridgetown.*Barbados/s
+        /123 Main St[\s\S]*Bridgetown[\s\S]*Barbados/
       );
       expect(addresses.length).toBeGreaterThan(0);
     });

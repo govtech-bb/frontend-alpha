@@ -1,14 +1,15 @@
 /**
  * Formats a date from MM/DD/YYYY to spelled-out format like "Jul 30, 2011"
  *
- * @param mmddyyyy - Date string in MM/DD/YYYY format
+ * @param mmddyyyy - Date string in MM/DD/YYYY format or undefined
  * @returns Formatted date string like "Jul 30, 2011" or empty string if invalid
  *
  * @example
  * formatDateForDisplay("07/30/2011") // Returns "Jul 30, 2011"
  * formatDateForDisplay("invalid") // Returns ""
+ * formatDateForDisplay(undefined) // Returns ""
  */
-export function formatDateForDisplay(mmddyyyy: string): string {
+export function formatDateForDisplay(mmddyyyy: string | undefined): string {
   // Return empty string for empty or whitespace-only input
   if (!mmddyyyy || mmddyyyy.trim() === "") {
     return "";
