@@ -2,6 +2,7 @@
 
 import { format, parseISO } from "date-fns";
 import ReactMarkdown, { type Components } from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
 import { MigrationBanner } from "./migration-banner";
@@ -50,7 +51,7 @@ const components: Components = {
     </li>
   ),
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
-  a: ({ href, children, ...props }: any) => {
+  a: ({ href, children, target, ...props }: any) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
@@ -63,12 +64,18 @@ const components: Components = {
         href={href}
         {...props}
         rel="noopener noreferrer"
-        target="_blank"
+        target={target || "_blank"}
       >
         {children}
       </a>
     );
   },
+  blockquote: (props: any) => (
+    <blockquote
+      className="ml-[0.075em] border-gray-300 border-l-3 pl-4 text-gray-700 dark:border-zinc-400 dark:text-zinc-400"
+      {...props}
+    />
+  ),
   table: ({ node, ...props }) => (
     <div className="mx-4 my-6 overflow-x-auto sm:mx-0">
       <div className="inline-block min-w-full align-middle">
@@ -144,7 +151,11 @@ export const MarkdownContent = ({
           </div>
         )}
       </div>
-      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
+      <ReactMarkdown
+        components={components}
+        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[remarkGfm]}
+      >
         {content}
       </ReactMarkdown>
     </div>
