@@ -271,6 +271,25 @@ describe("CheckAnswers", () => {
       // 2 certificates: 1st free + 1 additional at $5 = $5.00
       expect(screen.getByText("BBD$5.00")).toBeInTheDocument();
     });
+
+    it("should display 'Free' for 1 certificate", () => {
+      const formDataWithOneCert = {
+        ...completeFormData,
+        numberOfCertificates: 1,
+      };
+
+      render(
+        <CheckAnswers
+          formData={formDataWithOneCert}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      expect(screen.getByText("1")).toBeInTheDocument();
+      expect(screen.getByText("Free")).toBeInTheDocument();
+    });
   });
 
   describe("Contact information display", () => {

@@ -317,7 +317,9 @@ export function CheckAnswers({
           </div>
           <div className="flex">
             <dt className="w-1/3">Total cost</dt>
-            <dd className="w-2/3">BBD${totalCost.toFixed(2)}</dd>
+            <dd className="w-2/3">
+              {totalCost === 0 ? "Free" : `BBD$${totalCost.toFixed(2)}`}
+            </dd>
           </div>
         </dl>
       </div>
