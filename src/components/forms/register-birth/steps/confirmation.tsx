@@ -22,9 +22,8 @@ export function Confirmation({
     "Register a Birth"
   );
 
-  // First certificate is free, additional certificates are $5 each
-  const totalCost =
-    numberOfCertificates > 0 ? (numberOfCertificates - 1) * 5.0 : 0;
+  // Each certificate costs $5 BBD
+  const totalCost = numberOfCertificates * 5.0;
 
   return (
     <div className="space-y-6">
