@@ -12,7 +12,6 @@ export default function RegisterBirthPage() {
     <div className="bg-yellow-bright">
       <div className="overflow-hidden rounded-t-3xl bg-neutral-white">
         <div className="container space-y-4">
-          <BackButton className="py-6 lg:pb-0" />
           <RegisterBirthForm />
         </div>
       </div>
