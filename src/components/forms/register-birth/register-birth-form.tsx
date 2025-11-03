@@ -147,11 +147,6 @@ export function RegisterBirthForm() {
     formValues.marriageStatus === "yes" ||
     formValues.includeFatherDetails === "yes";
 
-  // Pre-fill child's surname
-  const childSurnamePrefill = hasFatherDetails
-    ? formValues.father?.lastName
-    : formValues.mother?.lastName;
-
   return (
     <div className="min-h-screen bg-neutral-white">
       <div className="py-8">
@@ -209,7 +204,6 @@ export function RegisterBirthForm() {
             onBack={goBack}
             onChange={(value) => form.setFieldValue("child", value)}
             onNext={goNext}
-            prefillSurname={childSurnamePrefill}
             value={formValues.child || {}}
           />
         )}

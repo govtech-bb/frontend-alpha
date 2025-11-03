@@ -152,7 +152,10 @@ function createPersonDetailsSchema(personType: "father" | "mother") {
       ),
       nationalRegistrationNumber: z.string().optional(),
       passportNumber: z.string().optional(),
-      occupation: z.string().optional(),
+      occupation: z.preprocess(
+        (val) => val ?? "",
+        z.string().min(1, `Enter the ${personType}'s occupation`)
+      ),
     })
   );
 }

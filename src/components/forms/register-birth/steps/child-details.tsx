@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import {
   convertFromInputFormat,
   convertToInputFormat,
@@ -18,14 +17,11 @@ type ChildDetailsProps = {
   onChange: (value: Partial<ChildDetailsType>) => void;
   onNext: () => void;
   onBack: () => void;
-  prefillSurname?: string;
 };
 
 /**
  * Step: Child's Details
  * Collects information about the child being registered
- *
- * @param prefillSurname - Pre-filled from father or mother's surname
  */
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Error handling logic requires validation state management
 export function ChildDetails({
@@ -33,7 +29,6 @@ export function ChildDetails({
   onChange,
   onNext,
   onBack,
-  prefillSurname,
 }: ChildDetailsProps) {
   const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
 
@@ -46,13 +41,6 @@ export function ChildDetails({
       onNext,
       fieldPrefix: "child-",
     });
-
-  // Pre-fill lastName with surname if not already set
-  useEffect(() => {
-    if (prefillSurname && !value.lastName) {
-      onChange({ ...value, lastName: prefillSurname });
-    }
-  }, [prefillSurname, value.lastName, onChange, value]);
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -130,7 +118,7 @@ export function ChildDetails({
           onBlur={() => handleBlur("lastName")}
           onChange={(e) => handleChange("lastName", e.target.value)}
           type="text"
-          value={value.lastName || prefillSurname || ""}
+          value={value.lastName || ""}
         />
         <FormFieldError id="child-lastName" message={fieldErrors.lastName} />
       </div>

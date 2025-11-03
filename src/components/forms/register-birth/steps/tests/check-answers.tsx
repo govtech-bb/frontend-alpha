@@ -268,11 +268,11 @@ describe("CheckAnswers", () => {
       );
 
       expect(screen.getByText("2")).toBeInTheDocument();
-      // 2 certificates: 1st free + 1 additional at $5 = $5.00
-      expect(screen.getByText("BBD$5.00")).toBeInTheDocument();
+      // 2 certificates at $5 each = $10.00
+      expect(screen.getByText("BBD$10.00")).toBeInTheDocument();
     });
 
-    it("should display 'Free' for 1 certificate", () => {
+    it("should display cost for 1 certificate", () => {
       const formDataWithOneCert = {
         ...completeFormData,
         numberOfCertificates: 1,
@@ -288,7 +288,8 @@ describe("CheckAnswers", () => {
       );
 
       expect(screen.getByText("1")).toBeInTheDocument();
-      expect(screen.getByText("Free")).toBeInTheDocument();
+      // 1 certificate at $5 = $5.00
+      expect(screen.getByText("BBD$5.00")).toBeInTheDocument();
     });
   });
 

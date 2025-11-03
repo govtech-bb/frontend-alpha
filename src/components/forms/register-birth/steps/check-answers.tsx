@@ -53,11 +53,8 @@ export function CheckAnswers({
     formData.marriageStatus === "yes" ||
     formData.includeFatherDetails === "yes";
 
-  // First certificate is free, additional certificates are $5 each
-  const totalCost =
-    (formData.numberOfCertificates || 0) > 0
-      ? ((formData.numberOfCertificates || 0) - 1) * 5.0
-      : 0;
+  // Each certificate costs $5 BBD
+  const totalCost = (formData.numberOfCertificates || 0) * 5.0;
 
   // Show error if required data is missing (e.g., user navigated here incorrectly)
   if (hasMissingData) {

@@ -190,6 +190,7 @@ describe("FathersDetails", () => {
           dateOfBirth: "07/30/1986",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
+          occupation: "Engineer",
         }}
       />
     );
@@ -284,7 +285,7 @@ describe("FathersDetails", () => {
     expect(dateInput).toHaveAttribute("aria-invalid", "true");
   });
 
-  it("should accept middle name and occupation as optional", () => {
+  it("should accept middle name as optional", () => {
     const onNext = vi.fn();
     render(
       <FathersDetails
@@ -296,6 +297,7 @@ describe("FathersDetails", () => {
           dateOfBirth: "07/30/1986",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
+          occupation: "Engineer",
         }}
       />
     );
@@ -304,6 +306,64 @@ describe("FathersDetails", () => {
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalled();
+  });
+
+  it("should show error when occupation is missing", () => {
+    const onNext = vi.fn();
+    render(
+      <FathersDetails
+        {...defaultProps}
+        onNext={onNext}
+        value={{
+          firstName: "John",
+          lastName: "Smith",
+          dateOfBirth: "07/30/1986",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          // occupation is missing
+        }}
+      />
+    );
+
+    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    fireEvent.submit(form!);
+
+    // Should not proceed to next step
+    expect(onNext).not.toHaveBeenCalled();
+
+    // Should display error message (appears in both summary and field)
+    expect(
+      screen.getAllByText("Enter the father's occupation").length
+    ).toBeGreaterThan(0);
+  });
+
+  it("should show error when occupation is empty string", () => {
+    const onNext = vi.fn();
+    render(
+      <FathersDetails
+        {...defaultProps}
+        onNext={onNext}
+        value={{
+          firstName: "John",
+          lastName: "Smith",
+          dateOfBirth: "07/30/1986",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          occupation: "",
+        }}
+      />
+    );
+
+    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    fireEvent.submit(form!);
+
+    // Should not proceed to next step
+    expect(onNext).not.toHaveBeenCalled();
+
+    // Should display error message (appears in both summary and field)
+    expect(
+      screen.getAllByText("Enter the father's occupation").length
+    ).toBeGreaterThan(0);
   });
 
   it("should display placeholder for national registration number", () => {
