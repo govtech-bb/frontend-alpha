@@ -22,7 +22,9 @@ export function Confirmation({
     "Register a Birth"
   );
 
-  const totalCost = numberOfCertificates * 5.0;
+  // First certificate is free, additional certificates are $5 each
+  const totalCost =
+    numberOfCertificates > 0 ? (numberOfCertificates - 1) * 5.0 : 0;
 
   return (
     <div className="space-y-6">
@@ -87,8 +89,9 @@ export function Confirmation({
       </div>
 
       <Typography variant="paragraph">
-        The total cost for your requested certificates is BDD$
-        {totalCost.toFixed(2)}. Remember to bring payment with you.
+        The total cost for your requested certificates is{" "}
+        {totalCost === 0 ? "free" : `BDD$${totalCost.toFixed(2)}`}.
+        {totalCost > 0 && " Remember to bring payment with you."}
       </Typography>
 
       <Typography variant="paragraph">

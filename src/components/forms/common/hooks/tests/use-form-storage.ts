@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
-import { useFormStorage } from "./use-form-storage";
+import { useFormStorage } from "../use-form-storage";
 
 // Test schema for a simple form
 const testFormSchema = z.object({

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import type { PartialBirthRegistrationFormData } from "../types";
-import { CheckAnswers } from "./check-answers";
+import type { PartialBirthRegistrationFormData } from "../../types";
+import { CheckAnswers } from "../check-answers";
 
 describe("CheckAnswers", () => {
   const mockOnSubmit = vi.fn();
@@ -77,7 +77,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("03/15/1990")).toBeInTheDocument();
+      expect(screen.getByText("Mar 15, 1990")).toBeInTheDocument();
     });
 
     it("should display mother's address", () => {
@@ -91,7 +91,7 @@ describe("CheckAnswers", () => {
       );
 
       const addresses = screen.getAllByText(
-        /123 Main St.*Bridgetown.*Barbados/s
+        /123 Main St[\s\S]*Bridgetown[\s\S]*Barbados/
       );
       expect(addresses.length).toBeGreaterThan(0);
     });
@@ -187,7 +187,7 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("05/20/1988")).toBeInTheDocument();
+      expect(screen.getByText("May 20, 1988")).toBeInTheDocument();
     });
 
     it("should display father's address", () => {
@@ -202,7 +202,7 @@ describe("CheckAnswers", () => {
 
       // Father's address should appear (same as mother's in this test data)
       const addresses = screen.getAllByText(
-        /123 Main St.*Bridgetown.*Barbados/s
+        /123 Main St[\s\S]*Bridgetown[\s\S]*Barbados/
       );
       expect(addresses.length).toBeGreaterThan(0);
     });
@@ -250,7 +250,7 @@ describe("CheckAnswers", () => {
       // Smith appears multiple times (child and parents), so we use getAllByText
       const smithElements = screen.getAllByText("Smith");
       expect(smithElements.length).toBeGreaterThan(0);
-      expect(screen.getByText("01/01/2024")).toBeInTheDocument();
+      expect(screen.getByText("Jan 1, 2024")).toBeInTheDocument();
       expect(screen.getByText("Male")).toBeInTheDocument();
       expect(screen.getByText("St. Michael")).toBeInTheDocument();
     });
@@ -268,7 +268,27 @@ describe("CheckAnswers", () => {
       );
 
       expect(screen.getByText("2")).toBeInTheDocument();
-      expect(screen.getByText("BBD$10.00")).toBeInTheDocument();
+      // 2 certificates: 1st free + 1 additional at $5 = $5.00
+      expect(screen.getByText("BBD$5.00")).toBeInTheDocument();
+    });
+
+    it("should display 'Free' for 1 certificate", () => {
+      const formDataWithOneCert = {
+        ...completeFormData,
+        numberOfCertificates: 1,
+      };
+
+      render(
+        <CheckAnswers
+          formData={formDataWithOneCert}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      expect(screen.getByText("1")).toBeInTheDocument();
+      expect(screen.getByText("Free")).toBeInTheDocument();
     });
   });
 

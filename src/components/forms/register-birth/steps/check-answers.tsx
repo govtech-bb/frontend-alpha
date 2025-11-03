@@ -1,6 +1,7 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
+import { formatDateForDisplay } from "@/lib/date-display";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { finalSubmissionSchema } from "../schema";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
@@ -19,6 +20,7 @@ type CheckAnswersProps = {
  * Summary page showing all entered data with edit links
  * Based on PDF pages 8 and 18
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex form rendering logic is necessary for this component
 export function CheckAnswers({
   formData,
   onSubmit,
@@ -51,7 +53,11 @@ export function CheckAnswers({
     formData.marriageStatus === "yes" ||
     formData.includeFatherDetails === "yes";
 
-  const totalCost = (formData.numberOfCertificates || 0) * 5.0;
+  // First certificate is free, additional certificates are $5 each
+  const totalCost =
+    (formData.numberOfCertificates || 0) > 0
+      ? ((formData.numberOfCertificates || 0) - 1) * 5.0
+      : 0;
 
   // Show error if required data is missing (e.g., user navigated here incorrectly)
   if (hasMissingData) {
@@ -146,7 +152,9 @@ export function CheckAnswers({
             </div>
             <div className="flex">
               <dt className="w-1/3">Date of birth</dt>
-              <dd className="w-2/3">{formData.father.dateOfBirth}</dd>
+              <dd className="w-2/3">
+                {formatDateForDisplay(formData.father.dateOfBirth)}
+              </dd>
             </div>
             <div className="flex">
               <dt className="w-1/3">Current address</dt>
@@ -213,7 +221,10 @@ export function CheckAnswers({
             )}
           <div className="flex">
             <dt className="w-1/3">Date of birth</dt>
-            <dd className="w-2/3">{formData.mother?.dateOfBirth}</dd>
+            <dd className="w-2/3">
+              {formData.mother?.dateOfBirth &&
+                formatDateForDisplay(formData.mother.dateOfBirth)}
+            </dd>
           </div>
           <div className="flex">
             <dt className="w-1/3">Current address</dt>
@@ -270,7 +281,10 @@ export function CheckAnswers({
           </div>
           <div className="flex">
             <dt className="w-1/3">Date of birth</dt>
-            <dd className="w-2/3">{formData.child?.dateOfBirth}</dd>
+            <dd className="w-2/3">
+              {formData.child?.dateOfBirth &&
+                formatDateForDisplay(formData.child.dateOfBirth)}
+            </dd>
           </div>
           <div className="flex">
             <dt className="w-1/3">Sex at birth</dt>
@@ -303,7 +317,9 @@ export function CheckAnswers({
           </div>
           <div className="flex">
             <dt className="w-1/3">Total cost</dt>
-            <dd className="w-2/3">BBD${totalCost.toFixed(2)}</dd>
+            <dd className="w-2/3">
+              {totalCost === 0 ? "Free" : `BBD$${totalCost.toFixed(2)}`}
+            </dd>
           </div>
         </dl>
       </div>
