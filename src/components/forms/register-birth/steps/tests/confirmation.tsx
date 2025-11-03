@@ -57,7 +57,10 @@ describe("Confirmation", () => {
   it("should calculate certificate cost correctly for 1 certificate (free)", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
-    expect(screen.getByText(/BDD\$0\.00/)).toBeInTheDocument();
+    expect(screen.getByText(/is free/)).toBeInTheDocument();
+    expect(
+      screen.queryByText(/Remember to bring payment/)
+    ).not.toBeInTheDocument();
   });
 
   it("should calculate certificate cost correctly for multiple certificates", () => {
@@ -65,12 +68,16 @@ describe("Confirmation", () => {
 
     // 1st certificate free, 2 additional at $5 each = $10.00
     expect(screen.getByText(/BDD\$10\.00/)).toBeInTheDocument();
+    expect(screen.getByText(/Remember to bring payment/)).toBeInTheDocument();
   });
 
   it("should calculate certificate cost correctly for zero certificates", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={0} />);
 
-    expect(screen.getByText(/BDD\$0\.00/)).toBeInTheDocument();
+    expect(screen.getByText(/is free/)).toBeInTheDocument();
+    expect(
+      screen.queryByText(/Remember to bring payment/)
+    ).not.toBeInTheDocument();
   });
 
   it("should render location information", () => {

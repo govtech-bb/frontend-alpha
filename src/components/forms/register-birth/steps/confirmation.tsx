@@ -89,8 +89,9 @@ export function Confirmation({
       </div>
 
       <Typography variant="paragraph">
-        The total cost for your requested certificates is BDD$
-        {totalCost.toFixed(2)}. Remember to bring payment with you.
+        The total cost for your requested certificates is{" "}
+        {totalCost === 0 ? "free" : `BDD$${totalCost.toFixed(2)}`}.
+        {totalCost > 0 && " Remember to bring payment with you."}
       </Typography>
 
       <Typography variant="paragraph">
