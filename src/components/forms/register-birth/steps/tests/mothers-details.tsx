@@ -40,11 +40,11 @@ describe("MothersDetails", () => {
     expect(screen.getByText(/For example, a maiden name/)).toBeInTheDocument();
   });
 
-  it("should render occupation field with optional label", () => {
+  it("should render occupation field as required", () => {
     render(<MothersDetails {...defaultProps} />);
 
     expect(screen.getByText(/Occupation/)).toBeInTheDocument();
-    expect(screen.getByText("(optional)")).toBeInTheDocument();
+    expect(screen.queryByText("(optional)")).not.toBeInTheDocument();
   });
 
   it("should display helper text for middle names", () => {
@@ -114,7 +114,7 @@ describe("MothersDetails", () => {
       ).value
     ).toBe("123456-7890");
 
-    // Occupation label includes "(optional)" text
+    // Occupation field
     const occupationInput = screen.getByLabelText(/Occupation/);
     expect((occupationInput as HTMLInputElement).value).toBe("Teacher");
   });
@@ -271,6 +271,7 @@ describe("MothersDetails", () => {
           dateOfBirth: "07/30/1986",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
+          occupation: "Teacher",
         }}
       />
     );
@@ -365,7 +366,7 @@ describe("MothersDetails", () => {
     expect(dateInput).toHaveAttribute("aria-invalid", "true");
   });
 
-  it("should accept middle name and occupation as optional", () => {
+  it("should accept middle name as optional", () => {
     const onNext = vi.fn();
     render(
       <MothersDetails
@@ -377,6 +378,7 @@ describe("MothersDetails", () => {
           dateOfBirth: "07/30/1986",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
+          occupation: "Teacher",
         }}
       />
     );
@@ -385,6 +387,64 @@ describe("MothersDetails", () => {
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalled();
+  });
+
+  it("should show error when occupation is missing", () => {
+    const onNext = vi.fn();
+    render(
+      <MothersDetails
+        {...defaultProps}
+        onNext={onNext}
+        value={{
+          firstName: "Jane",
+          lastName: "Smith",
+          dateOfBirth: "07/30/1986",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          // occupation is missing
+        }}
+      />
+    );
+
+    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    fireEvent.submit(form!);
+
+    // Should not proceed to next step
+    expect(onNext).not.toHaveBeenCalled();
+
+    // Should display error message (appears in both summary and field)
+    expect(
+      screen.getAllByText("Enter the mother's occupation").length
+    ).toBeGreaterThan(0);
+  });
+
+  it("should show error when occupation is empty string", () => {
+    const onNext = vi.fn();
+    render(
+      <MothersDetails
+        {...defaultProps}
+        onNext={onNext}
+        value={{
+          firstName: "Jane",
+          lastName: "Smith",
+          dateOfBirth: "07/30/1986",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          occupation: "",
+        }}
+      />
+    );
+
+    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    fireEvent.submit(form!);
+
+    // Should not proceed to next step
+    expect(onNext).not.toHaveBeenCalled();
+
+    // Should display error message (appears in both summary and field)
+    expect(
+      screen.getAllByText("Enter the mother's occupation").length
+    ).toBeGreaterThan(0);
   });
 
   it("should check the correct hadOtherSurname radio based on value", () => {
@@ -435,6 +495,7 @@ describe("MothersDetails", () => {
           dateOfBirth: "07/30/1986",
           address: "123 Main St",
           nationalRegistrationNumber: "abc",
+          occupation: "Teacher",
         }}
       />
     );

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { RegisterBirthForm } from "@/components/forms/register-birth/register-birth-form";
-import { BackButton } from "@/components/layout/back-button";
 
 export const metadata: Metadata = {
   title: "Register a Birth - GOV.BB",
