@@ -9,7 +9,7 @@ export default function EntryPointLayout({
   return (
     <div className="bg-yellow-bright">
       <div className="rounded-t-3xl bg-white">
-        <div className="container lg:space-y-16">
+        <div className="container py-4 lg:space-y-16">
           <BackButton className="py-6" />
           {children}
           <HelpfulBox />

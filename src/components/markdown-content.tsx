@@ -112,7 +112,7 @@ export const MarkdownContent = ({
 }) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="space-y-4 bg-white pb-8">
+    <div className="space-y-4 overflow-hidden bg-white pb-8">
       <div className="space-y-4 pb-4">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
