@@ -54,16 +54,17 @@ describe("Confirmation", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("should calculate certificate cost correctly for 1 certificate", () => {
+  it("should calculate certificate cost correctly for 1 certificate (free)", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
-    expect(screen.getByText(/BDD\$5\.00/)).toBeInTheDocument();
+    expect(screen.getByText(/BDD\$0\.00/)).toBeInTheDocument();
   });
 
   it("should calculate certificate cost correctly for multiple certificates", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={3} />);
 
-    expect(screen.getByText(/BDD\$15\.00/)).toBeInTheDocument();
+    // 1st certificate free, 2 additional at $5 each = $10.00
+    expect(screen.getByText(/BDD\$10\.00/)).toBeInTheDocument();
   });
 
   it("should calculate certificate cost correctly for zero certificates", () => {
@@ -144,8 +145,8 @@ describe("Confirmation", () => {
   it("should format currency with two decimal places", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={5} />);
 
-    // 5 certificates * $5.00 = $25.00
-    expect(screen.getByText(/BDD\$25\.00/)).toBeInTheDocument();
+    // 5 certificates: 1st free + 4 additional at $5 each = $20.00
+    expect(screen.getByText(/BDD\$20\.00/)).toBeInTheDocument();
   });
 
   it("should render all key information sections", () => {

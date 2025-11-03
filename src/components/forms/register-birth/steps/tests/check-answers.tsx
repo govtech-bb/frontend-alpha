@@ -268,7 +268,8 @@ describe("CheckAnswers", () => {
       );
 
       expect(screen.getByText("2")).toBeInTheDocument();
-      expect(screen.getByText("BBD$10.00")).toBeInTheDocument();
+      // 2 certificates: 1st free + 1 additional at $5 = $5.00
+      expect(screen.getByText("BBD$5.00")).toBeInTheDocument();
     });
   });
 
