@@ -66,9 +66,8 @@ export function Certificates({
       <ErrorSummary errors={errors} />
 
       <Typography className="mb-4 leading-tight" variant="paragraph">
-        A birth certificate is essential for access to some public services. The
-        first certificate is free. Additional certificates cost BDD$5.00 each
-        when you collect them.
+        A birth certificate is essential for access to some public services.
+        Each certificate costs BDD$5.00 when you collect them.
       </Typography>
 
       <Typography className="mb-4 leading-tight" variant="paragraph">

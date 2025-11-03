@@ -25,7 +25,9 @@ describe("Certificates", () => {
       )
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/You will need to pay BDD\$5\.00 for each certificate/)
+      screen.getByText(
+        /Each certificate costs BDD\$5\.00 when you collect them/
+      )
     ).toBeInTheDocument();
   });
 
