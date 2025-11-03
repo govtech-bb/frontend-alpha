@@ -323,25 +323,33 @@ export function MothersDetails({
         </details>
       </div>
 
-      {/* Occupation (optional) */}
+      {/* Occupation */}
       <div>
         <label
           className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
           htmlFor="mother-occupation"
         >
-          Occupation{" "}
-          <span className="font-normal text-gray-600">(optional)</span>
+          Occupation
         </label>
         <p className="mb-2 text-base text-gray-600">
           This will be included on the child's birth certificate and in official
           records.
         </p>
         <input
+          aria-describedby={
+            fieldErrors.occupation ? "mother-occupation-error" : undefined
+          }
+          aria-invalid={fieldErrors.occupation ? true : undefined}
           className={getFieldClassName("occupation", fieldErrors)}
           id="mother-occupation"
+          onBlur={() => handleBlur("occupation")}
           onChange={(e) => handleChange("occupation", e.target.value)}
           type="text"
           value={value.occupation || ""}
+        />
+        <FormFieldError
+          id="mother-occupation"
+          message={fieldErrors.occupation}
         />
       </div>
 

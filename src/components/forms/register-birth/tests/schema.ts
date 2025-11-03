@@ -348,6 +348,46 @@ describe("motherDetailsValidation", () => {
         expect(addressError?.message).not.toContain("undefined");
       }
     });
+
+    it("should require occupation field", () => {
+      const data = {
+        firstName: "Jane",
+        middleName: "",
+        lastName: "Smith",
+        dateOfBirth: "03/15/1990",
+        address: "123 Main St",
+        nationalRegistrationNumber: "123456-7890",
+        // occupation is missing
+      };
+      const result = motherDetailsValidation.safeParse(data);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const occupationError = result.error.issues.find(
+          (e) => e.path[0] === "occupation"
+        );
+        expect(occupationError?.message).toBe("Enter the mother's occupation");
+      }
+    });
+
+    it("should reject empty occupation string", () => {
+      const data = {
+        firstName: "Jane",
+        middleName: "",
+        lastName: "Smith",
+        dateOfBirth: "03/15/1990",
+        address: "123 Main St",
+        nationalRegistrationNumber: "123456-7890",
+        occupation: "",
+      };
+      const result = motherDetailsValidation.safeParse(data);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const occupationError = result.error.issues.find(
+          (e) => e.path[0] === "occupation"
+        );
+        expect(occupationError?.message).toBe("Enter the mother's occupation");
+      }
+    });
   });
 });
 
@@ -540,6 +580,46 @@ describe("fatherDetailsValidation - undefined field handling", () => {
         expect(error.message).not.toContain("expected string");
         expect(error.message).not.toContain("received undefined");
       }
+    }
+  });
+
+  it("should require occupation field", () => {
+    const data = {
+      firstName: "John",
+      middleName: "Michael",
+      lastName: "Smith",
+      dateOfBirth: "07/30/1986",
+      address: "123 Main St",
+      nationalRegistrationNumber: "123456-7890",
+      // occupation is missing
+    };
+    const result = fatherDetailsValidation.safeParse(data);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      const occupationError = result.error.issues.find(
+        (e) => e.path[0] === "occupation"
+      );
+      expect(occupationError?.message).toBe("Enter the father's occupation");
+    }
+  });
+
+  it("should reject empty occupation string", () => {
+    const data = {
+      firstName: "John",
+      middleName: "Michael",
+      lastName: "Smith",
+      dateOfBirth: "07/30/1986",
+      address: "123 Main St",
+      nationalRegistrationNumber: "123456-7890",
+      occupation: "",
+    };
+    const result = fatherDetailsValidation.safeParse(data);
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      const occupationError = result.error.issues.find(
+        (e) => e.path[0] === "occupation"
+      );
+      expect(occupationError?.message).toBe("Enter the father's occupation");
     }
   });
 });
