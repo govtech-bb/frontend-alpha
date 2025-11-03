@@ -154,7 +154,7 @@ export function RegisterBirthForm() {
 
   return (
     <div className="min-h-screen bg-neutral-white">
-      <div className="container max-w-3xl py-8">
+      <div className="py-8">
         {/* Render current step */}
         {currentStep.id === "marriage-status" && (
           <MarriageStatus
