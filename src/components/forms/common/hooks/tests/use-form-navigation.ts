@@ -502,5 +502,174 @@ describe("useFormNavigation", () => {
       expect(result.current.currentStepIndex).toBe(1);
       expect(mockReplace).not.toHaveBeenCalled();
     });
+
+    it("should handle missing URL param as navigation to first step", () => {
+      const params = new URLSearchParams();
+      params.set("step", "step-3");
+      mockSearchParams.mockReturnValue(params);
+
+      const { result, rerender } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      // Initially at step 3
+      expect(result.current.currentStepIndex).toBe(2);
+
+      // Simulate browser back removing query param
+      mockSearchParams.mockReturnValue(new URLSearchParams());
+
+      rerender();
+
+      // Should navigate to first step
+      expect(result.current.currentStepIndex).toBe(0);
+      expect(result.current.currentStep).toEqual(mockSteps[0]);
+    });
+
+    it("should navigate to first step when going back from step 2 removes param", () => {
+      const params = new URLSearchParams();
+      params.set("step", "step-2");
+      mockSearchParams.mockReturnValue(params);
+
+      const { result, rerender } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      expect(result.current.currentStepIndex).toBe(1);
+
+      // Simulate browser back button removing query param (back to initial page load)
+      mockSearchParams.mockReturnValue(new URLSearchParams());
+
+      rerender();
+
+      expect(result.current.currentStepIndex).toBe(0);
+      expect(result.current.currentStep).toEqual(mockSteps[0]);
+    });
+
+    it("should not create navigation loop when goNext triggers URL change", () => {
+      const { result } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      // Clear any initialization calls
+      mockPush.mockClear();
+
+      // Navigate forward
+      act(() => {
+        result.current.goNext();
+      });
+
+      // Should only push URL once (not trigger loop)
+      expect(mockPush).toHaveBeenCalledTimes(1);
+      expect(result.current.currentStepIndex).toBe(1);
+    });
+
+    it("should not create navigation loop when goBack triggers URL change", () => {
+      const params = new URLSearchParams();
+      params.set("step", "step-3");
+      mockSearchParams.mockReturnValue(params);
+
+      const { result } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      expect(result.current.currentStepIndex).toBe(2);
+
+      mockPush.mockClear();
+
+      // Navigate backward
+      act(() => {
+        result.current.goBack();
+      });
+
+      // Should only push URL once (not trigger loop)
+      expect(mockPush).toHaveBeenCalledTimes(1);
+      expect(result.current.currentStepIndex).toBe(1);
+    });
+
+    it("should handle rapid navigation without race conditions", () => {
+      const { result } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      mockPush.mockClear();
+
+      // Rapidly navigate multiple times
+      // Start: 0, +1=1, +1=2, +1=3, -1=2, -1=1, +1=2
+      act(() => {
+        result.current.goNext();
+        result.current.goNext();
+        result.current.goNext();
+        result.current.goBack();
+        result.current.goBack();
+        result.current.goNext();
+      });
+
+      // Should end at step 3 (index 2) without loops
+      expect(result.current.currentStepIndex).toBe(2);
+      // Each navigation should trigger exactly one push (total 6)
+      expect(mockPush).toHaveBeenCalledTimes(6);
+    });
+
+    it("should distinguish programmatic navigation from browser navigation", () => {
+      const params = new URLSearchParams();
+      params.set("step", "step-2");
+      mockSearchParams.mockReturnValue(params);
+
+      const { result, rerender } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      expect(result.current.currentStepIndex).toBe(1);
+
+      mockPush.mockClear();
+
+      // Programmatic navigation
+      act(() => {
+        result.current.goNext();
+      });
+
+      // Should update URL
+      expect(mockPush).toHaveBeenCalledTimes(1);
+      expect(result.current.currentStepIndex).toBe(2);
+
+      // Simulate the URL change that goNext triggered
+      const newParams = new URLSearchParams();
+      newParams.set("step", "step-3");
+      mockSearchParams.mockReturnValue(newParams);
+
+      mockPush.mockClear();
+
+      // Rerender should NOT cause another state update (no loop)
+      rerender();
+
+      expect(mockPush).not.toHaveBeenCalled();
+      expect(result.current.currentStepIndex).toBe(2);
+    });
+
+    it("should handle page refresh on first step with no URL param", () => {
+      mockSearchParams.mockReturnValue(new URLSearchParams());
+
+      const { result } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      // Should initialize to first step
+      expect(result.current.currentStepIndex).toBe(0);
+      expect(result.current.currentStep).toEqual(mockSteps[0]);
+    });
+
+    it("should handle direct URL access to middle step", () => {
+      const params = new URLSearchParams();
+      params.set("step", "step-3");
+      mockSearchParams.mockReturnValue(params);
+
+      const { result } = renderHook(() =>
+        useFormNavigation(mockSteps, { syncWithUrl: true })
+      );
+
+      // Should initialize to the specified step
+      expect(result.current.currentStepIndex).toBe(2);
+      expect(result.current.currentStep).toEqual(mockSteps[2]);
+    });
   });
 });

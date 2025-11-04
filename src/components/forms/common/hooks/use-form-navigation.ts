@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { FormStep } from "@/types/forms";
 
 /**
@@ -74,6 +74,10 @@ export function useFormNavigation(
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  // Track whether we initiated a URL change (to prevent race conditions)
+  // When true, the sync useEffect will ignore the URL change
+  const isNavigatingRef = useRef(false);
+
   // Initialize step index from URL if sync is enabled
   const getInitialStepIndex = (): number => {
     if (syncWithUrl) {
@@ -96,22 +100,39 @@ export function useFormNavigation(
   const totalSteps = steps.length;
 
   // Sync with URL when searchParams change (browser back/forward navigation)
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex logic needed to handle all URL sync cases (missing params, invalid steps, race conditions)
   useEffect(() => {
     if (syncWithUrl) {
       const stepFromUrl = searchParams.get(urlParamName);
-      if (stepFromUrl) {
-        const index = steps.findIndex((step) => step.id === stepFromUrl);
-        if (index !== -1 && index !== currentStepIndex) {
-          // Update internal state to match URL
+
+      // Handle missing URL param as navigation to first step
+      // This fixes browser back button when going back to first step (no param)
+      const targetStepId = stepFromUrl || steps[0]?.id;
+
+      if (!targetStepId) {
+        // No steps available, nothing to do
+        return;
+      }
+
+      const index = steps.findIndex((step) => step.id === targetStepId);
+
+      if (index !== -1) {
+        // Valid step found
+        if (!isNavigatingRef.current && index !== currentStepIndex) {
+          // Only update if this was browser navigation (not our own URL change)
           setCurrentStepIndex(index);
-        } else if (index === -1) {
-          // Invalid step in URL - redirect to first step
-          const path = basePath || pathname || "";
-          const params = new URLSearchParams(searchParams);
-          params.set(urlParamName, steps[0].id);
-          router.replace(`${path}?${params}`, { scroll: false });
-          setCurrentStepIndex(0);
         }
+        // Clear flag after processing (handles both programmatic and browser nav)
+        isNavigatingRef.current = false;
+      } else if (stepFromUrl) {
+        // Invalid step in URL - redirect to first step
+        // Set flag because we're initiating this URL change
+        isNavigatingRef.current = true;
+        const path = basePath || pathname || "";
+        const params = new URLSearchParams(searchParams);
+        params.set(urlParamName, steps[0].id);
+        router.replace(`${path}?${params}`, { scroll: false });
+        setCurrentStepIndex(0);
       }
     }
   }, [
@@ -129,6 +150,10 @@ export function useFormNavigation(
   const updateUrl = useCallback(
     (newStepIndex: number, useReplace = false) => {
       if (syncWithUrl) {
+        // Set flag to indicate we initiated this URL change
+        // This prevents the sync useEffect from treating it as browser navigation
+        isNavigatingRef.current = true;
+
         const path = basePath || pathname || "";
         const params = new URLSearchParams(searchParams);
         params.set(urlParamName, steps[newStepIndex].id);
