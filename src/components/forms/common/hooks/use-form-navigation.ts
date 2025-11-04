@@ -1,5 +1,11 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  startTransition,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import type { FormStep } from "@/types/forms";
 
 /**
@@ -21,6 +27,13 @@ export type FormNavigationOptions = {
    * @default current pathname
    */
   basePath?: string;
+  /**
+   * Indicates whether the form is ready for navigation
+   * When false, prevents redirects for "invalid" URL steps during data loading
+   * Useful for SSR/hydration scenarios where form data loads asynchronously
+   * @default true
+   */
+  isReady?: boolean;
 };
 
 /**
@@ -66,6 +79,7 @@ export function useFormNavigation(
     syncWithUrl = false,
     urlParamName = "step",
     basePath,
+    isReady = true,
   } = options || {};
 
   // Next.js hooks for URL management (must be called unconditionally per React rules)
@@ -99,6 +113,30 @@ export function useFormNavigation(
   // Total number of steps
   const totalSteps = steps.length;
 
+  // Helper function to update URL (deferred to avoid React warning)
+  const updateUrl = useCallback(
+    (stepIndex: number, useReplace = false) => {
+      if (syncWithUrl) {
+        // Use startTransition to defer URL update to after state commit
+        // This avoids "Cannot update component during render" error
+        // and properly integrates with React's rendering model
+        startTransition(() => {
+          const path = basePath || pathname || "";
+          const params = new URLSearchParams(searchParams);
+          params.set(urlParamName, steps[stepIndex].id);
+          const url = `${path}?${params}`;
+
+          if (useReplace) {
+            router.replace(url, { scroll: false });
+          } else {
+            router.push(url, { scroll: false });
+          }
+        });
+      }
+    },
+    [syncWithUrl, basePath, pathname, searchParams, urlParamName, steps, router]
+  );
+
   // Sync with URL when searchParams change (browser back/forward navigation)
   // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex logic needed to handle all URL sync cases (missing params, invalid steps, race conditions)
   useEffect(() => {
@@ -124,14 +162,11 @@ export function useFormNavigation(
         }
         // Clear flag after processing (handles both programmatic and browser nav)
         isNavigatingRef.current = false;
-      } else if (stepFromUrl) {
+      } else if (stepFromUrl && isReady) {
         // Invalid step in URL - redirect to first step
-        // Set flag because we're initiating this URL change
-        isNavigatingRef.current = true;
-        const path = basePath || pathname || "";
-        const params = new URLSearchParams(searchParams);
-        params.set(urlParamName, steps[0].id);
-        router.replace(`${path}?${params}`, { scroll: false });
+        // Only redirect if form is ready (data has loaded)
+        // This prevents premature redirects during SSR/hydration when data loads async
+        updateUrl(0, true); // Use replace for invalid steps
         setCurrentStepIndex(0);
       }
     }
@@ -140,44 +175,22 @@ export function useFormNavigation(
     searchParams,
     urlParamName,
     steps,
+    isReady,
     currentStepIndex,
-    basePath,
-    pathname,
-    router,
+    updateUrl,
   ]);
-
-  // Helper function to update URL
-  const updateUrl = useCallback(
-    (newStepIndex: number, useReplace = false) => {
-      if (syncWithUrl) {
-        // Set flag to indicate we initiated this URL change
-        // This prevents the sync useEffect from treating it as browser navigation
-        isNavigatingRef.current = true;
-
-        const path = basePath || pathname || "";
-        const params = new URLSearchParams(searchParams);
-        params.set(urlParamName, steps[newStepIndex].id);
-        const url = `${path}?${params}`;
-
-        if (useReplace) {
-          router.replace(url, { scroll: false });
-        } else {
-          router.push(url, { scroll: false });
-        }
-      }
-    },
-    [syncWithUrl, router, searchParams, basePath, pathname, urlParamName, steps]
-  );
 
   /**
    * Navigate to the next step
    * Prevents going beyond the last step
-   * Updates URL if sync is enabled
+   * Updates URL if sync is enabled (deferred to avoid React warning)
    */
   const goNext = useCallback(() => {
     setCurrentStepIndex((prev) => {
       const nextIndex = Math.min(prev + 1, steps.length - 1);
       if (nextIndex !== prev) {
+        // Set flag to indicate we initiated this navigation
+        isNavigatingRef.current = true;
         updateUrl(nextIndex);
       }
       return nextIndex;
@@ -187,12 +200,14 @@ export function useFormNavigation(
   /**
    * Navigate to the previous step
    * Prevents going before the first step
-   * Updates URL if sync is enabled
+   * Updates URL if sync is enabled (deferred to avoid React warning)
    */
   const goBack = useCallback(() => {
     setCurrentStepIndex((prev) => {
       const prevIndex = Math.max(prev - 1, 0);
       if (prevIndex !== prev) {
+        // Set flag to indicate we initiated this navigation
+        isNavigatingRef.current = true;
         updateUrl(prevIndex);
       }
       return prevIndex;
@@ -205,15 +220,17 @@ export function useFormNavigation(
    *
    * Only navigates if the step exists in the current path.
    * This allows forms to support "Edit" links on review pages.
-   * Updates URL if sync is enabled
+   * Updates URL if sync is enabled (deferred to avoid React warning)
    *
    * @param stepId - The ID of the step to navigate to
-   * @param useReplace - If true, replaces history entry instead of pushing (useful for fixing stale forward history)
+   * @param useReplace - If true, use replace instead of push (for URL redirects)
    */
   const goToStep = useCallback(
     (stepId: string, useReplace = false) => {
       const index = steps.findIndex((step) => step.id === stepId);
       if (index !== -1) {
+        // Set flag to indicate we initiated this navigation
+        isNavigatingRef.current = true;
         setCurrentStepIndex(index);
         updateUrl(index, useReplace);
       }
