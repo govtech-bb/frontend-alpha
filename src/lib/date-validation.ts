@@ -10,6 +10,7 @@ export const DATE_REGEX = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
 /**
  * Validates both format and actual date validity
  * Handles leap years and month-specific day counts
+ * Uses UTC to ensure consistent validation across timezones
  *
  * @param dateString - Date string in MM/DD/YYYY format
  * @returns true if the date is valid, false otherwise
@@ -20,30 +21,31 @@ export function isValidDate(dateString: string): boolean {
     return false;
   }
 
-  // Parse and validate actual date
+  // Parse and validate actual date using UTC to avoid timezone issues
   const [month, day, year] = dateString.split("/").map(Number);
-  const date = new Date(year, month - 1, day);
+  const date = new Date(Date.UTC(year, month - 1, day));
 
   // Verify the date components match (catches invalid dates like 02/30)
   return (
-    date.getFullYear() === year &&
-    date.getMonth() === month - 1 &&
-    date.getDate() === day
+    date.getUTCFullYear() === year &&
+    date.getUTCMonth() === month - 1 &&
+    date.getUTCDate() === day
   );
 }
 
 /**
  * Validates date is in reasonable range for birth dates (1900 to current year)
+ * Uses UTC to ensure consistent validation across timezones
  *
  * @param dateString - Date string in MM/DD/YYYY format
  * @param minYear - Minimum valid year (default: 1900)
- * @param maxYear - Maximum valid year (default: current year)
+ * @param maxYear - Maximum valid year (default: current UTC year)
  * @returns true if the date is valid and within range, false otherwise
  */
 export function isValidBirthDate(
   dateString: string,
   minYear = 1900,
-  maxYear = new Date().getFullYear()
+  maxYear = new Date().getUTCFullYear()
 ): boolean {
   if (!isValidDate(dateString)) {
     return false;
@@ -55,6 +57,7 @@ export function isValidBirthDate(
 
 /**
  * Validates child's birth date is not in the future and within reasonable range
+ * Uses UTC to ensure consistent validation across timezones
  *
  * @param dateString - Date string in MM/DD/YYYY format
  * @returns true if the date is valid and not in future, false otherwise
@@ -65,13 +68,16 @@ export function isValidChildBirthDate(dateString: string): boolean {
   }
 
   const [month, day, year] = dateString.split("/").map(Number);
-  const birthDate = new Date(year, month - 1, day);
-  const today = new Date();
 
-  // Set time to start of day for accurate comparison
-  today.setHours(0, 0, 0, 0);
-  birthDate.setHours(0, 0, 0, 0);
+  // Use UTC timestamps for timezone-independent comparison
+  const birthTimestamp = Date.UTC(year, month - 1, day);
+  const today = new Date();
+  const todayTimestamp = Date.UTC(
+    today.getUTCFullYear(),
+    today.getUTCMonth(),
+    today.getUTCDate()
+  );
 
   // Check date is not in future and is after 1900
-  return birthDate <= today && year >= 1900;
+  return birthTimestamp <= todayTimestamp && year >= 1900;
 }
