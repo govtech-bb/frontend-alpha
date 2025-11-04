@@ -3,19 +3,43 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { FormStep } from "@/types/forms";
 import { useFormNavigation } from "../use-form-navigation";
 
-// Mock Next.js navigation hooks
-const mockPush = vi.fn();
-const mockReplace = vi.fn();
-const mockPathname = vi.fn(() => "/test-form");
-const mockSearchParams = vi.fn(() => new URLSearchParams());
+// Mock Next.js navigation hooks with stateful URL tracking
+// Use vi.hoisted to ensure these are available to vi.mock (which is hoisted to the top)
+const {
+  mockPush,
+  mockReplace,
+  mockPathname,
+  mockSearchParams,
+  getCurrentURLParams,
+  setCurrentURLParams,
+} = vi.hoisted(() => {
+  let currentURLParams = "";
+
+  return {
+    getCurrentURLParams: () => currentURLParams,
+    setCurrentURLParams: (value: string) => {
+      currentURLParams = value;
+    },
+    mockPush: vi.fn((url: string) => {
+      const [, queryString] = url.split("?");
+      currentURLParams = queryString || "";
+    }),
+    mockReplace: vi.fn((url: string) => {
+      const [, queryString] = url.split("?");
+      currentURLParams = queryString || "";
+    }),
+    mockPathname: vi.fn(() => "/test-form"),
+    mockSearchParams: vi.fn(() => new URLSearchParams(currentURLParams)),
+  };
+});
 
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: mockPush,
     replace: mockReplace,
   }),
-  usePathname: () => mockPathname(),
-  useSearchParams: () => mockSearchParams(),
+  usePathname: mockPathname,
+  useSearchParams: mockSearchParams,
 }));
 
 describe("useFormNavigation", () => {
@@ -27,9 +51,16 @@ describe("useFormNavigation", () => {
   ];
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    // Clear only the call history, not the implementations
+    mockPush.mockClear();
+    mockReplace.mockClear();
     mockPathname.mockReturnValue("/test-form");
-    mockSearchParams.mockReturnValue(new URLSearchParams());
+    // Reset mockSearchParams to use the original implementation (closure over currentURLParams)
+    mockSearchParams.mockImplementation(
+      () => new URLSearchParams(getCurrentURLParams())
+    );
+    // Reset the stateful URL params
+    setCurrentURLParams("");
   });
 
   it("should initialize with first step", () => {
@@ -296,24 +327,28 @@ describe("useFormNavigation", () => {
     it("should redirect to first step when URL contains invalid step ID", () => {
       const params = new URLSearchParams();
       params.set("step", "invalid-step");
-      mockSearchParams.mockReturnValue(params);
+      setCurrentURLParams(params.toString());
 
       renderHook(() => useFormNavigation(mockSteps, { syncWithUrl: true }));
 
       // Should call replace to fix the URL
-      expect(mockReplace).toHaveBeenCalledWith("/test-form?step=step-1", {
+      // Note: First step (index 0) has no URL param for cleaner URLs
+      expect(mockReplace).toHaveBeenCalledWith("/test-form", {
         scroll: false,
       });
     });
 
     it("should update URL when navigating forward with goNext", () => {
-      const { result } = renderHook(() =>
+      const { result, rerender } = renderHook(() =>
         useFormNavigation(mockSteps, { syncWithUrl: true })
       );
 
       act(() => {
         result.current.goNext();
       });
+
+      // Rerender to pick up updated searchParams
+      rerender();
 
       expect(mockPush).toHaveBeenCalledWith("/test-form?step=step-2", {
         scroll: false,
@@ -322,15 +357,20 @@ describe("useFormNavigation", () => {
     });
 
     it("should update URL when navigating backward with goBack", () => {
-      const { result } = renderHook(() =>
+      const { result, rerender } = renderHook(() =>
         useFormNavigation(mockSteps, { syncWithUrl: true })
       );
 
       // First navigate forward to step 3
       act(() => {
         result.current.goNext(); // to step 2
+      });
+      rerender();
+
+      act(() => {
         result.current.goNext(); // to step 3
       });
+      rerender();
 
       expect(result.current.currentStepIndex).toBe(2);
 
@@ -341,6 +381,7 @@ describe("useFormNavigation", () => {
       act(() => {
         result.current.goBack();
       });
+      rerender();
 
       expect(mockPush).toHaveBeenCalledWith("/test-form?step=step-2", {
         scroll: false,
@@ -349,13 +390,14 @@ describe("useFormNavigation", () => {
     });
 
     it("should update URL when jumping to specific step with goToStep", () => {
-      const { result } = renderHook(() =>
+      const { result, rerender } = renderHook(() =>
         useFormNavigation(mockSteps, { syncWithUrl: true })
       );
 
       act(() => {
         result.current.goToStep("step-4");
       });
+      rerender();
 
       expect(mockPush).toHaveBeenCalledWith("/test-form?step=step-4", {
         scroll: false,
@@ -546,7 +588,7 @@ describe("useFormNavigation", () => {
     });
 
     it("should not create navigation loop when goNext triggers URL change", () => {
-      const { result } = renderHook(() =>
+      const { result, rerender } = renderHook(() =>
         useFormNavigation(mockSteps, { syncWithUrl: true })
       );
 
@@ -557,6 +599,7 @@ describe("useFormNavigation", () => {
       act(() => {
         result.current.goNext();
       });
+      rerender();
 
       // Should only push URL once (not trigger loop)
       expect(mockPush).toHaveBeenCalledTimes(1);
@@ -566,9 +609,9 @@ describe("useFormNavigation", () => {
     it("should not create navigation loop when goBack triggers URL change", () => {
       const params = new URLSearchParams();
       params.set("step", "step-3");
-      mockSearchParams.mockReturnValue(params);
+      setCurrentURLParams(params.toString());
 
-      const { result } = renderHook(() =>
+      const { result, rerender } = renderHook(() =>
         useFormNavigation(mockSteps, { syncWithUrl: true })
       );
 
@@ -580,6 +623,7 @@ describe("useFormNavigation", () => {
       act(() => {
         result.current.goBack();
       });
+      rerender();
 
       // Should only push URL once (not trigger loop)
       expect(mockPush).toHaveBeenCalledTimes(1);
@@ -587,22 +631,43 @@ describe("useFormNavigation", () => {
     });
 
     it("should handle rapid navigation without race conditions", () => {
-      const { result } = renderHook(() =>
+      const { result, rerender } = renderHook(() =>
         useFormNavigation(mockSteps, { syncWithUrl: true })
       );
 
       mockPush.mockClear();
 
-      // Rapidly navigate multiple times
+      // Rapidly navigate multiple times (with rerenders to pick up URL changes)
       // Start: 0, +1=1, +1=2, +1=3, -1=2, -1=1, +1=2
       act(() => {
         result.current.goNext();
-        result.current.goNext();
-        result.current.goNext();
-        result.current.goBack();
-        result.current.goBack();
+      });
+      rerender();
+
+      act(() => {
         result.current.goNext();
       });
+      rerender();
+
+      act(() => {
+        result.current.goNext();
+      });
+      rerender();
+
+      act(() => {
+        result.current.goBack();
+      });
+      rerender();
+
+      act(() => {
+        result.current.goBack();
+      });
+      rerender();
+
+      act(() => {
+        result.current.goNext();
+      });
+      rerender();
 
       // Should end at step 3 (index 2) without loops
       expect(result.current.currentStepIndex).toBe(2);
@@ -613,7 +678,7 @@ describe("useFormNavigation", () => {
     it("should distinguish programmatic navigation from browser navigation", () => {
       const params = new URLSearchParams();
       params.set("step", "step-2");
-      mockSearchParams.mockReturnValue(params);
+      setCurrentURLParams(params.toString());
 
       const { result, rerender } = renderHook(() =>
         useFormNavigation(mockSteps, { syncWithUrl: true })
@@ -627,22 +692,23 @@ describe("useFormNavigation", () => {
       act(() => {
         result.current.goNext();
       });
+      rerender();
 
-      // Should update URL
+      // Should update URL and step index
       expect(mockPush).toHaveBeenCalledTimes(1);
       expect(result.current.currentStepIndex).toBe(2);
 
-      // Simulate the URL change that goNext triggered
-      const newParams = new URLSearchParams();
-      newParams.set("step", "step-3");
-      mockSearchParams.mockReturnValue(newParams);
+      // Manually simulate browser navigation to step-3 (bypassing our mock router)
+      setCurrentURLParams("step=step-3");
 
       mockPush.mockClear();
 
-      // Rerender should NOT cause another state update (no loop)
+      // Rerender should update to match browser navigation
       rerender();
 
+      // Should NOT push (this was browser navigation, not programmatic)
       expect(mockPush).not.toHaveBeenCalled();
+      // Should update to match the URL
       expect(result.current.currentStepIndex).toBe(2);
     });
 

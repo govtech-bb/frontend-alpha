@@ -1,11 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-  startTransition,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { FormStep } from "@/types/forms";
 
 /**
@@ -82,160 +76,156 @@ export function useFormNavigation(
     isReady = true,
   } = options || {};
 
-  // Next.js hooks for URL management (must be called unconditionally per React rules)
-  // Values are only used if syncWithUrl is true
+  // Next.js hooks for URL management
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Track whether we initiated a URL change (to prevent race conditions)
-  // When true, the sync useEffect will ignore the URL change
-  const isNavigatingRef = useRef(false);
+  // --- Dual Mode Support ---
+  // Mode 1: Without URL sync - use internal useState
+  // Mode 2: With URL sync - derive from URL (source of truth)
 
-  // Initialize step index from URL if sync is enabled
-  const getInitialStepIndex = (): number => {
-    if (syncWithUrl) {
-      const stepFromUrl = searchParams.get(urlParamName);
-      if (stepFromUrl) {
-        const index = steps.findIndex((step) => step.id === stepFromUrl);
-        // Return valid index or default to 0
-        return index !== -1 ? index : 0;
-      }
+  // Internal state for non-URL-synced mode
+  const [internalStepIndex, setInternalStepIndex] = useState(0);
+
+  // URL-derived state for URL-synced mode
+  const urlStepIndex = useMemo(() => {
+    if (steps.length === 0) {
+      return 0;
     }
-    return 0;
-  };
+    const stepFromUrl = searchParams.get(urlParamName);
 
-  const [currentStepIndex, setCurrentStepIndex] = useState(getInitialStepIndex);
+    // The first step (index 0) is represented by the absence of the URL param for a cleaner entry URL.
+    if (!stepFromUrl) {
+      return 0;
+    }
 
-  // Current step based on index
+    const index = steps.findIndex((step) => step.id === stepFromUrl);
+
+    // If the step ID from the URL is invalid, default to the first step.
+    // A separate useEffect will handle correcting the URL.
+    return index !== -1 ? index : 0;
+  }, [searchParams, urlParamName, steps]);
+
+  // Use URL-derived index if syncing, otherwise use internal state
+  const currentStepIndex = syncWithUrl ? urlStepIndex : internalStepIndex;
+
+  // Current step based on derived index
   const currentStep = steps[currentStepIndex];
-
   // Total number of steps
   const totalSteps = steps.length;
 
-  // Helper function to update URL (deferred to avoid React warning)
-  const updateUrl = useCallback(
-    (stepIndex: number, useReplace = false) => {
-      if (syncWithUrl) {
-        // Use startTransition to defer URL update to after state commit
-        // This avoids "Cannot update component during render" error
-        // and properly integrates with React's rendering model
-        startTransition(() => {
-          const path = basePath || pathname || "";
-          const params = new URLSearchParams(searchParams);
-          params.set(urlParamName, steps[stepIndex].id);
-          const url = `${path}?${params}`;
-
-          if (useReplace) {
-            router.replace(url, { scroll: false });
-          } else {
-            router.push(url, { scroll: false });
-          }
-        });
-      }
-    },
-    [syncWithUrl, basePath, pathname, searchParams, urlParamName, steps, router]
-  );
-
-  // Sync with URL when searchParams change (browser back/forward navigation)
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex logic needed to handle all URL sync cases (missing params, invalid steps, race conditions)
+  // Effect to handle invalid step IDs in the URL.
+  // If the URL contains a step that doesn't exist, this corrects the URL
+  // by redirecting to the first step, ensuring URL and state are always valid.
   useEffect(() => {
-    if (syncWithUrl) {
+    if (syncWithUrl && isReady && steps.length > 0) {
       const stepFromUrl = searchParams.get(urlParamName);
+      const isValidStep = stepFromUrl
+        ? steps.some((s) => s.id === stepFromUrl)
+        : true; // No param is valid (it means we are on the first step)
 
-      // Handle missing URL param as navigation to first step
-      // This fixes browser back button when going back to first step (no param)
-      const targetStepId = stepFromUrl || steps[0]?.id;
-
-      if (!targetStepId) {
-        // No steps available, nothing to do
-        return;
-      }
-
-      const index = steps.findIndex((step) => step.id === targetStepId);
-
-      if (index !== -1) {
-        // Valid step found
-        if (!isNavigatingRef.current && index !== currentStepIndex) {
-          // Only update if this was browser navigation (not our own URL change)
-          setCurrentStepIndex(index);
-        }
-        // Clear flag after processing (handles both programmatic and browser nav)
-        isNavigatingRef.current = false;
-      } else if (stepFromUrl && isReady) {
-        // Invalid step in URL - redirect to first step
-        // Only redirect if form is ready (data has loaded)
-        // This prevents premature redirects during SSR/hydration when data loads async
-        updateUrl(0, true); // Use replace for invalid steps
-        setCurrentStepIndex(0);
+      if (!isValidStep) {
+        const path = basePath || pathname || "";
+        const params = new URLSearchParams(searchParams);
+        // Correct the invalid step by removing the param, which corresponds to step 0.
+        params.delete(urlParamName);
+        const queryString = params.toString();
+        const url = queryString ? `${path}?${queryString}` : path;
+        router.replace(url, { scroll: false });
       }
     }
   }, [
     syncWithUrl,
+    isReady,
+    steps,
     searchParams,
     urlParamName,
-    steps,
-    isReady,
-    currentStepIndex,
-    updateUrl,
+    basePath,
+    pathname,
+    router,
   ]);
+
+  const navigate = useCallback(
+    (targetIndex: number, useReplace = false) => {
+      if (targetIndex === currentStepIndex) {
+        // Already on target step, no need to navigate
+        return;
+      }
+
+      if (!syncWithUrl) {
+        // Non-URL-synced mode: Update internal state directly
+        setInternalStepIndex(targetIndex);
+        return;
+      }
+
+      // URL-synced mode: Update the URL (component will re-render with new URL-derived state)
+      const path = basePath || pathname || "";
+      const params = new URLSearchParams(searchParams);
+
+      // Rule: index 0 has no URL param. All other steps have one.
+      if (targetIndex === 0) {
+        params.delete(urlParamName);
+      } else {
+        params.set(urlParamName, steps[targetIndex].id);
+      }
+
+      const queryString = params.toString();
+      const url = queryString ? `${path}?${queryString}` : path;
+      const navMethod = useReplace ? router.replace : router.push;
+      navMethod(url, { scroll: false });
+    },
+    [
+      syncWithUrl,
+      currentStepIndex,
+      basePath,
+      pathname,
+      searchParams,
+      urlParamName,
+      steps,
+      router,
+    ]
+  );
 
   /**
    * Navigate to the next step
-   * Prevents going beyond the last step
-   * Updates URL if sync is enabled (deferred to avoid React warning)
    */
   const goNext = useCallback(() => {
-    setCurrentStepIndex((prev) => {
-      const nextIndex = Math.min(prev + 1, steps.length - 1);
-      if (nextIndex !== prev) {
-        // Set flag to indicate we initiated this navigation
-        isNavigatingRef.current = true;
-        updateUrl(nextIndex);
-      }
-      return nextIndex;
-    });
-  }, [steps.length, updateUrl]);
+    if (syncWithUrl) {
+      // URL-synced: calculate and navigate
+      const nextIndex = Math.min(currentStepIndex + 1, totalSteps - 1);
+      navigate(nextIndex);
+    } else {
+      // Non-URL-synced: use updater function to handle rapid calls
+      setInternalStepIndex((prev) => Math.min(prev + 1, totalSteps - 1));
+    }
+  }, [syncWithUrl, currentStepIndex, totalSteps, navigate]);
 
   /**
    * Navigate to the previous step
-   * Prevents going before the first step
-   * Updates URL if sync is enabled (deferred to avoid React warning)
    */
   const goBack = useCallback(() => {
-    setCurrentStepIndex((prev) => {
-      const prevIndex = Math.max(prev - 1, 0);
-      if (prevIndex !== prev) {
-        // Set flag to indicate we initiated this navigation
-        isNavigatingRef.current = true;
-        updateUrl(prevIndex);
-      }
-      return prevIndex;
-    });
-  }, [updateUrl]);
+    if (syncWithUrl) {
+      // URL-synced: calculate and navigate
+      const prevIndex = Math.max(currentStepIndex - 1, 0);
+      navigate(prevIndex);
+    } else {
+      // Non-URL-synced: use updater function to handle rapid calls
+      setInternalStepIndex((prev) => Math.max(prev - 1, 0));
+    }
+  }, [syncWithUrl, currentStepIndex, navigate]);
 
   /**
    * Jump to a specific step by ID
-   * Enables non-linear navigation (e.g., from a review page)
-   *
-   * Only navigates if the step exists in the current path.
-   * This allows forms to support "Edit" links on review pages.
-   * Updates URL if sync is enabled (deferred to avoid React warning)
-   *
-   * @param stepId - The ID of the step to navigate to
-   * @param useReplace - If true, use replace instead of push (for URL redirects)
    */
   const goToStep = useCallback(
     (stepId: string, useReplace = false) => {
       const index = steps.findIndex((step) => step.id === stepId);
       if (index !== -1) {
-        // Set flag to indicate we initiated this navigation
-        isNavigatingRef.current = true;
-        setCurrentStepIndex(index);
-        updateUrl(index, useReplace);
+        navigate(index, useReplace);
       }
     },
-    [steps, updateUrl]
+    [steps, navigate]
   );
 
   return {
