@@ -101,7 +101,11 @@ export function RegisterBirthForm() {
   const steps = useRegisterBirthSteps(formValues);
 
   // Generic navigation (no business logic)
-  const { currentStep, goNext, goBack, goToStep } = useFormNavigation(steps);
+  // Enable URL sync for browser back/forward button support
+  const { currentStep, goNext, goBack, goToStep } = useFormNavigation(steps, {
+    syncWithUrl: true,
+    urlParamName: "step",
+  });
 
   // Load saved form data on mount (silently)
   useEffect(() => {
