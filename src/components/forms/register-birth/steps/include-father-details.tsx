@@ -1,7 +1,11 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
+import { ErrorSummary } from "../../common/error-summary";
+import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { useStepValidation } from "../../common/hooks/use-step-validation";
+import { includeFatherDetailsValidation } from "../schema";
 
 type IncludeFatherDetailsProps = {
   value: "yes" | "no" | "";
@@ -27,15 +31,33 @@ export function IncludeFatherDetails({
 }: IncludeFatherDetailsProps) {
   const titleRef = useStepFocus("Include father's details", "Register a Birth");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (value) {
-      onNext();
+  // Wrap value in object for validation hook, converting empty string to undefined
+  const formValue = { includeFatherDetails: value === "" ? undefined : value };
+
+  // Wrap onChange to extract includeFatherDetails from object
+  const handleFormChange = (newValue: {
+    includeFatherDetails?: "yes" | "no";
+  }) => {
+    // Only call onChange if value is defined (user made a selection)
+    if (newValue.includeFatherDetails) {
+      onChange(newValue.includeFatherDetails);
     }
   };
 
+  const { errors, fieldErrors, handleChange, handleSubmit } = useStepValidation(
+    {
+      schema: includeFatherDetailsValidation,
+      value: formValue,
+      onChange: handleFormChange,
+      onNext,
+      fieldPrefix: "includeFatherDetails-",
+    }
+  );
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
+      <ErrorSummary errors={errors} />
+
       <div>
         <h1
           className="mb-4 font-bold text-5xl leading-tight focus:outline-none"
@@ -64,11 +86,17 @@ export function IncludeFatherDetails({
         <div className="space-y-3">
           <div className="flex items-start">
             <input
+              aria-describedby={
+                fieldErrors.includeFatherDetails
+                  ? "includeFatherDetails-includeFatherDetails-error"
+                  : undefined
+              }
+              aria-invalid={fieldErrors.includeFatherDetails ? "true" : "false"}
               checked={value === "yes"}
               className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
               id="include-father-yes"
               name="includeFatherDetails"
-              onChange={() => onChange("yes")}
+              onChange={() => handleChange("includeFatherDetails", "yes")}
               type="radio"
               value="yes"
             />
@@ -82,11 +110,17 @@ export function IncludeFatherDetails({
 
           <div className="flex items-start">
             <input
+              aria-describedby={
+                fieldErrors.includeFatherDetails
+                  ? "includeFatherDetails-includeFatherDetails-error"
+                  : undefined
+              }
+              aria-invalid={fieldErrors.includeFatherDetails ? "true" : "false"}
               checked={value === "no"}
               className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
               id="include-father-no"
               name="includeFatherDetails"
-              onChange={() => onChange("no")}
+              onChange={() => handleChange("includeFatherDetails", "no")}
               type="radio"
               value="no"
             />
@@ -98,6 +132,11 @@ export function IncludeFatherDetails({
             </label>
           </div>
         </div>
+
+        <FormFieldError
+          id="includeFatherDetails-includeFatherDetails"
+          message={fieldErrors.includeFatherDetails}
+        />
       </fieldset>
 
       <div className="flex gap-4">
@@ -110,8 +149,7 @@ export function IncludeFatherDetails({
         </button>
 
         <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:cursor-not-allowed disabled:bg-gray-400"
-          disabled={!value}
+          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
           type="submit"
         >
           Next

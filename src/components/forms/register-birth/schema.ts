@@ -204,6 +204,13 @@ export const marriageStatusValidation = z.object({
   }),
 });
 
+// Include father details validation
+export const includeFatherDetailsValidation = z.object({
+  includeFatherDetails: z.enum(["yes", "no"], {
+    message: "Select yes if you want to include the father's details",
+  }),
+});
+
 // Certificates validation
 export const certificatesValidation = z.object({
   numberOfCertificates: z
