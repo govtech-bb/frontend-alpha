@@ -42,7 +42,11 @@ export function RegisterBirthForm() {
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Initialize TanStack Form
+  // Track whether we've completed hydration and data loading
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  // Initialize TanStack Form with empty defaults
+  // We'll load saved data after hydration to avoid mismatch
   const form = useForm({
     defaultValues: {
       marriageStatus: "",
@@ -101,9 +105,15 @@ export function RegisterBirthForm() {
   const steps = useRegisterBirthSteps(formValues);
 
   // Generic navigation (no business logic)
-  const { currentStep, goNext, goBack, goToStep } = useFormNavigation(steps);
+  // Enable URL sync for browser back/forward button support
+  // Only enable navigation after data is loaded to prevent premature redirects
+  const { currentStep, goNext, goBack, goToStep } = useFormNavigation(steps, {
+    syncWithUrl: true,
+    urlParamName: "step",
+    isReady: isDataLoaded,
+  });
 
-  // Load saved form data on mount (silently)
+  // Load data after first client-side render to avoid hydration mismatch
   useEffect(() => {
     const loaded = loadFormData();
     if (loaded) {
@@ -115,6 +125,9 @@ export function RegisterBirthForm() {
         );
       }
     }
+
+    // Mark data as loaded (whether we found saved data or not)
+    setIsDataLoaded(true);
   }, [loadFormData, form]);
 
   // Auto-save form data when it changes (debounced)
@@ -146,6 +159,23 @@ export function RegisterBirthForm() {
   const hasFatherDetails =
     formValues.marriageStatus === "yes" ||
     formValues.includeFatherDetails === "yes";
+
+  // Show skeleton loader until hydration completes and data is loaded
+  // This prevents hydration mismatch and ensures correct step is shown
+  if (!isDataLoaded) {
+    return (
+      <div className="min-h-screen bg-neutral-white">
+        <div className="py-8">
+          <div className="container mx-auto max-w-2xl animate-pulse">
+            <div className="mb-6 h-12 w-3/4 rounded bg-gray-200" />
+            <div className="mb-4 h-32 w-full rounded bg-gray-200" />
+            <div className="mb-4 h-12 w-full rounded bg-gray-200" />
+            <div className="h-12 w-1/3 rounded bg-gray-200" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-neutral-white">
