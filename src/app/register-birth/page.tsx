@@ -9,9 +9,11 @@ export const metadata: Metadata = {
 
 export default function RegisterBirthPage() {
   return (
-    <div className="overflow-hidden bg-neutral-white lg:rounded-t-3xl">
-      <div className="container space-y-4">
-        <RegisterBirthForm />
+    <div className="bg-yellow-bright">
+      <div className="overflow-hidden rounded-t-3xl bg-neutral-white">
+        <div className="container space-y-4">
+          <RegisterBirthForm />
+        </div>
       </div>
     </div>
   );
