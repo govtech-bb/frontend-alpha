@@ -1,10 +1,6 @@
 /**
  * Formats a date from MM/DD/YYYY to spelled-out format like "Jul 30, 2011"
  *
- * Uses UTC to ensure calendar dates display consistently without timezone shifts.
- * Birth dates are calendar dates (day-month-year), not timestamps, so they should
- * display as the exact date entered regardless of viewer's timezone.
- *
  * @param mmddyyyy - Date string in MM/DD/YYYY format or undefined
  * @returns Formatted date string like "Jul 30, 2011" or empty string if invalid
  *
@@ -42,27 +38,24 @@ export function formatDateForDisplay(mmddyyyy: string | undefined): string {
     return "";
   }
 
-  // Create the date object in UTC (month is 0-indexed)
-  // Using UTC ensures consistent validation across all timezones
-  const date = new Date(Date.UTC(yearNum, monthNum - 1, dayNum));
+  // Create the date object (month is 0-indexed)
+  const date = new Date(yearNum, monthNum - 1, dayNum);
 
-  // Verify the date is valid by checking if the UTC components match
+  // Verify the date is valid by checking if the components match
   // This catches invalid dates like Feb 30, April 31, etc.
   if (
-    date.getUTCFullYear() !== yearNum ||
-    date.getUTCMonth() !== monthNum - 1 ||
-    date.getUTCDate() !== dayNum
+    date.getFullYear() !== yearNum ||
+    date.getMonth() !== monthNum - 1 ||
+    date.getDate() !== dayNum
   ) {
     return "";
   }
 
-  // Format the date using toLocaleDateString with en-US locale and UTC timezone
-  // Using UTC ensures calendar dates don't shift (e.g., "07/30/2011" always shows as "Jul 30, 2011")
-  // This is correct for birth dates which are calendar dates, not timestamps
+  // Format the date using toLocaleDateString with en-US locale
+  // This ensures consistent formatting as "Jul 30, 2011"
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
-    timeZone: "UTC",
   });
 }

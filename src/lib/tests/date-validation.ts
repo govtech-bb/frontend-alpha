@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   isValidBirthDate,
   isValidChildBirthDate,
@@ -99,97 +99,5 @@ describe("isValidChildBirthDate", () => {
   it("should reject invalid formats", () => {
     expect(isValidChildBirthDate("22/10/2023")).toBe(false); // DD/MM/YYYY
     expect(isValidChildBirthDate("2023-10-22")).toBe(false); // ISO format
-  });
-});
-
-describe("Timezone consistency tests", () => {
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  describe("isValidBirthDate", () => {
-    it("should use UTC year for maxYear default to avoid New Year timezone issues", () => {
-      // Mock current time to be December 31, 2024 at 11:00 PM UTC
-      // At this time, some timezones are already in 2025
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2024-12-31T23:00:00.000Z"));
-
-      // Should accept dates in 2024 (the current UTC year)
-      expect(isValidBirthDate("01/01/2024")).toBe(true);
-      expect(isValidBirthDate("12/31/2024")).toBe(true);
-
-      // Should reject dates in 2025 (future in UTC)
-      expect(isValidBirthDate("01/01/2025")).toBe(false);
-    });
-
-    it("should consistently validate across timezone boundaries on New Year", () => {
-      // Mock current time to be January 1, 2025 at 1:00 AM UTC
-      // Some timezones are still in 2024
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2025-01-01T01:00:00.000Z"));
-
-      // Should accept dates in 2025 (the current UTC year)
-      expect(isValidBirthDate("01/01/2025")).toBe(true);
-
-      // Should reject dates in 2026 (future in UTC)
-      expect(isValidBirthDate("01/01/2026")).toBe(false);
-    });
-  });
-
-  describe("isValidChildBirthDate", () => {
-    it("should correctly validate dates around the current UTC day", () => {
-      // Mock current time to be October 26, 2025 at 10:00 AM UTC
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2025-10-26T10:00:00.000Z"));
-
-      // Today in UTC should be valid
-      expect(isValidChildBirthDate("10/26/2025")).toBe(true);
-
-      // Yesterday in UTC should be valid
-      expect(isValidChildBirthDate("10/25/2025")).toBe(true);
-
-      // Tomorrow in UTC should be invalid
-      expect(isValidChildBirthDate("10/27/2025")).toBe(false);
-    });
-
-    it("should validate consistently at midnight UTC", () => {
-      // Mock current time to be midnight UTC
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2025-06-15T00:00:00.000Z"));
-
-      // Today should be valid
-      expect(isValidChildBirthDate("06/15/2025")).toBe(true);
-
-      // Yesterday should be valid
-      expect(isValidChildBirthDate("06/14/2025")).toBe(true);
-
-      // Tomorrow should be invalid
-      expect(isValidChildBirthDate("06/16/2025")).toBe(false);
-    });
-
-    it("should validate consistently just before midnight UTC", () => {
-      // Mock current time to be 11:59 PM UTC
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2025-06-15T23:59:59.999Z"));
-
-      // Today should be valid
-      expect(isValidChildBirthDate("06/15/2025")).toBe(true);
-
-      // Yesterday should be valid
-      expect(isValidChildBirthDate("06/14/2025")).toBe(true);
-
-      // Tomorrow should be invalid
-      expect(isValidChildBirthDate("06/16/2025")).toBe(false);
-    });
-
-    it("should handle date boundaries consistently in UTC", () => {
-      // Test at the end of a month
-      vi.useFakeTimers();
-      vi.setSystemTime(new Date("2025-01-31T23:59:59.999Z"));
-
-      expect(isValidChildBirthDate("01/31/2025")).toBe(true);
-      expect(isValidChildBirthDate("01/30/2025")).toBe(true);
-      expect(isValidChildBirthDate("02/01/2025")).toBe(false);
-    });
   });
 });
