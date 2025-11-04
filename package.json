@@ -12,7 +12,7 @@
     "test:unit:run": "vitest run",
     "test:e2e": "npx playwright test",
     "docker:build-and-test": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy sh -c 'npm ci --platform=linux --arch=x64 && npm run build && npx playwright test visual --update-snapshots'",
-    "test:e2e:update:linux": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npm run build && docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npx playwright test --update-snapshots",
+    "test:e2e:update:linux": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npm run build && docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npx playwright test visual --update-snapshots",
     "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:report": "playwright show-report"
   },
@@ -34,6 +34,7 @@
     "react-email": "^4.3.2",
     "react-hook-form": "^7.62.0",
     "react-markdown": "^10.1.0",
+    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.3.1",
     "zod": "^4.1.12"
