@@ -34,7 +34,7 @@ export function useStepValidation<T extends Record<string, unknown>>({
   /**
    * Validate a single field
    */
-  const validateField = (field: keyof T, fieldValue: unknown) => {
+  const _validateField = (field: keyof T, fieldValue: unknown) => {
     const testValue = { ...value, [field]: fieldValue };
     const result = schema.safeParse(testValue);
 
@@ -95,12 +95,11 @@ export function useStepValidation<T extends Record<string, unknown>>({
 
   /**
    * Handle field blur events
-   * Validates field if form has been submitted at least once
+   * No validation on blur - validation only happens on form submit
    */
-  const handleBlur = (field: keyof T) => {
-    if (hasSubmitted) {
-      validateField(field, value[field]);
-    }
+  const handleBlur = (_field: keyof T) => {
+    // Intentionally empty - validation only on submit, not on blur
+    // This prevents validation from interrupting user's workflow
   };
 
   /**
