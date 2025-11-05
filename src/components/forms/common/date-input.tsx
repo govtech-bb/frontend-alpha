@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { combineToMMDDYYYY, parseMMDDYYYY } from "@/lib/date-format";
 
 export type DateInputProps = {
@@ -12,7 +11,6 @@ export type DateInputProps = {
   onBlur?: () => void;
   error?: string;
   required?: boolean;
-  maxDate?: Date; // For preventing future dates
 };
 
 /**
@@ -45,46 +43,23 @@ export function DateInput({
   error,
   required = false,
 }: DateInputProps) {
-  // Parse the MM/DD/YYYY value into separate fields
-  const parsed = parseMMDDYYYY(value);
-  const [day, setDay] = useState(parsed.day);
-  const [month, setMonth] = useState(parsed.month);
-  const [year, setYear] = useState(parsed.year);
+  // Derive values directly from props (fully controlled component)
+  const { day, month, year } = parseMMDDYYYY(value);
 
-  // Update internal state when external value changes
-  useEffect(() => {
-    const parsedValue = parseMMDDYYYY(value);
-    setDay(parsedValue.day);
-    setMonth(parsedValue.month);
-    setYear(parsedValue.year);
-  }, [value]);
-
-  // Update the parent when any field changes
-  const handleFieldChange = (
-    newDay: string,
-    newMonth: string,
-    newYear: string
-  ) => {
-    const combined = combineToMMDDYYYY(newDay, newMonth, newYear);
-    onChange(combined);
-  };
-
+  // Sanitize input to allow only digits and update parent
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDay = e.target.value;
-    setDay(newDay);
-    handleFieldChange(newDay, month, year);
+    const newDay = e.target.value.replace(/\D/g, ""); // Allow only digits
+    onChange(combineToMMDDYYYY(newDay, month, year));
   };
 
   const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newMonth = e.target.value;
-    setMonth(newMonth);
-    handleFieldChange(day, newMonth, year);
+    const newMonth = e.target.value.replace(/\D/g, ""); // Allow only digits
+    onChange(combineToMMDDYYYY(day, newMonth, year));
   };
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newYear = e.target.value;
-    setYear(newYear);
-    handleFieldChange(day, month, newYear);
+    const newYear = e.target.value.replace(/\D/g, ""); // Allow only digits
+    onChange(combineToMMDDYYYY(day, month, newYear));
   };
 
   const hasError = Boolean(error);
@@ -114,7 +89,11 @@ export function DateInput({
         )}
 
         {hasError && (
-          <p className="govuk-error-message mb-2 text-red-600" id={errorId}>
+          <p
+            aria-live="assertive"
+            className="govuk-error-message mb-2 text-red-600"
+            id={errorId}
+          >
             <span className="govuk-visually-hidden">Error:</span> {error}
           </p>
         )}

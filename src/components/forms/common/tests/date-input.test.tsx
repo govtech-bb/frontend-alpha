@@ -129,8 +129,8 @@ describe("DateInput", () => {
     await user.clear(dayInput);
     await user.type(dayInput, "15");
 
-    // Should call onChange with updated date
-    expect(handleChange).toHaveBeenCalledWith("07/15/1986");
+    // Should call onChange with updated date (check last call after all typing)
+    expect(handleChange).toHaveBeenLastCalledWith("07/15/1986");
   });
 
   it("should call onChange with combined MM/DD/YYYY when month is entered", async () => {
@@ -151,7 +151,7 @@ describe("DateInput", () => {
     await user.clear(monthInput);
     await user.type(monthInput, "12");
 
-    expect(handleChange).toHaveBeenCalledWith("12/30/1986");
+    expect(handleChange).toHaveBeenLastCalledWith("12/30/1986");
   });
 
   it("should call onChange with combined MM/DD/YYYY when year is entered", async () => {
@@ -172,10 +172,10 @@ describe("DateInput", () => {
     await user.clear(yearInput);
     await user.type(yearInput, "2000");
 
-    expect(handleChange).toHaveBeenCalledWith("07/30/2000");
+    expect(handleChange).toHaveBeenLastCalledWith("07/30/2000");
   });
 
-  it("should call onChange with empty string when fields are cleared", async () => {
+  it("should call onChange with partial date when field is cleared", async () => {
     const user = userEvent.setup();
     const handleChange = vi.fn();
 
@@ -192,7 +192,8 @@ describe("DateInput", () => {
 
     await user.clear(dayInput);
 
-    expect(handleChange).toHaveBeenCalledWith("");
+    // When one field is cleared, should call onChange with zero-padded partial date
+    expect(handleChange).toHaveBeenCalledWith("07/00/1986");
   });
 
   it("should pad single-digit day to 2 digits in onChange", async () => {
@@ -562,5 +563,137 @@ describe("DateInput", () => {
 
     const fieldset = screen.getByRole("group");
     expect(fieldset).toHaveAttribute("aria-describedby", "test-date-hint");
+  });
+
+  it("should sanitize non-numeric characters from day input", async () => {
+    const user = userEvent.setup();
+    const handleChange = vi.fn();
+
+    render(
+      <DateInput
+        id="test-date"
+        label="Date of birth"
+        onChange={handleChange}
+        value=""
+      />
+    );
+
+    const dayInput = screen.getByLabelText("Day");
+    await user.type(dayInput, "a1b2c3");
+
+    // Should call onChange with only the numeric characters (padded with zeros)
+    expect(handleChange).toHaveBeenLastCalledWith("00/123/0000");
+  });
+
+  it("should sanitize non-numeric characters from month input", async () => {
+    const user = userEvent.setup();
+    const handleChange = vi.fn();
+
+    render(
+      <DateInput
+        id="test-date"
+        label="Date of birth"
+        onChange={handleChange}
+        value=""
+      />
+    );
+
+    const monthInput = screen.getByLabelText("Month");
+    await user.type(monthInput, "x4y5z");
+
+    // Should call onChange with only the numeric characters (padded with zeros)
+    expect(handleChange).toHaveBeenLastCalledWith("45/00/0000");
+  });
+
+  it("should sanitize non-numeric characters from year input", async () => {
+    const user = userEvent.setup();
+    const handleChange = vi.fn();
+
+    render(
+      <DateInput
+        id="test-date"
+        label="Date of birth"
+        onChange={handleChange}
+        value=""
+      />
+    );
+
+    const yearInput = screen.getByLabelText("Year");
+    await user.type(yearInput, "abc1986def");
+
+    // Should call onChange with only the numeric characters (padded with zeros)
+    expect(handleChange).toHaveBeenLastCalledWith("00/00/1986");
+  });
+
+  it("should handle paste with non-numeric characters", async () => {
+    const user = userEvent.setup();
+    const handleChange = vi.fn();
+
+    render(
+      <DateInput
+        id="test-date"
+        label="Date of birth"
+        onChange={handleChange}
+        value=""
+      />
+    );
+
+    const dayInput = screen.getByLabelText("Day");
+    await user.click(dayInput);
+    await user.paste("12abc");
+
+    // Should sanitize and only keep numeric characters
+    expect(handleChange).toHaveBeenCalledWith("00/12/0000");
+  });
+
+  it("should have aria-live assertive on error message", () => {
+    render(
+      <DateInput
+        error="Enter a valid date"
+        id="test-date"
+        label="Date of birth"
+        onChange={() => {
+          /* Test handler */
+        }}
+        value=""
+      />
+    );
+
+    const errorMessage = screen.getByText("Enter a valid date");
+    expect(errorMessage).toHaveAttribute("aria-live", "assertive");
+  });
+
+  it("should be fully controlled component without internal state", async () => {
+    const user = userEvent.setup();
+    const handleChange = vi.fn();
+    const { rerender } = render(
+      <DateInput
+        id="test-date"
+        label="Date of birth"
+        onChange={handleChange}
+        value=""
+      />
+    );
+
+    const dayInput = screen.getByLabelText("Day") as HTMLInputElement;
+
+    // User types "1"
+    await user.type(dayInput, "1");
+
+    // Parent component receives onChange call (with padding)
+    expect(handleChange).toHaveBeenCalledWith("00/01/0000");
+
+    // Parent updates with new value (empty because incomplete date)
+    rerender(
+      <DateInput
+        id="test-date"
+        label="Date of birth"
+        onChange={handleChange}
+        value=""
+      />
+    );
+
+    // Input should show the value from props (empty), not maintain internal state
+    expect(dayInput.value).toBe("");
   });
 });

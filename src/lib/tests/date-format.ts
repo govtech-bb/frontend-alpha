@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { convertFromInputFormat, convertToInputFormat } from "../date-format";
+import {
+  convertFromInputFormat,
+  convertToInputFormat,
+  convertToISO8601,
+  parseMMDDYYYY,
+} from "../date-format";
 
 describe("convertToInputFormat", () => {
   describe("valid conversions", () => {
@@ -149,5 +154,57 @@ describe("round-trip conversions", () => {
       date = convertFromInputFormat(input);
     }
     expect(date).toBe("12/25/2024");
+  });
+});
+
+describe("semantic date validation", () => {
+  describe("invalid dates should be rejected", () => {
+    it("should reject February 30th", () => {
+      expect(convertToISO8601("02/30/2024")).toBe("");
+      expect(parseMMDDYYYY("02/30/2024")).toEqual({
+        day: "",
+        month: "",
+        year: "",
+      });
+    });
+
+    it("should reject February 31st", () => {
+      expect(convertToISO8601("02/31/2024")).toBe("");
+    });
+
+    it("should reject April 31st (April has 30 days)", () => {
+      expect(convertToISO8601("04/31/2024")).toBe("");
+    });
+
+    it("should reject month 13", () => {
+      expect(convertToISO8601("13/01/2024")).toBe("");
+    });
+
+    it("should reject month 00", () => {
+      expect(convertToISO8601("00/15/2024")).toBe("");
+    });
+
+    it("should reject day 00", () => {
+      expect(convertToISO8601("01/00/2024")).toBe("");
+    });
+
+    it("should reject impossible dates like 99/99/9999", () => {
+      expect(convertToISO8601("99/99/9999")).toBe("");
+    });
+
+    it("should reject February 29 in non-leap years", () => {
+      expect(convertToISO8601("02/29/2023")).toBe("");
+    });
+  });
+
+  describe("valid dates should be accepted", () => {
+    it("should accept February 29 in leap years", () => {
+      expect(convertToISO8601("02/29/2024")).toBe("2024-02-29");
+    });
+
+    it("should accept day 31 in months with 31 days", () => {
+      expect(convertToISO8601("01/31/2024")).toBe("2024-01-31");
+      expect(convertToISO8601("03/31/2024")).toBe("2024-03-31");
+    });
   });
 });
