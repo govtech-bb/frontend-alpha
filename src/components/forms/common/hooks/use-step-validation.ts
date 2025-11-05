@@ -74,14 +74,22 @@ export function useStepValidation<T extends Record<string, unknown>>({
 
   /**
    * Handle field value changes
-   * Validates field after first submit attempt
+   * Clears error when user starts typing (validation happens only on blur/submit)
    */
   const handleChange = (field: keyof T, fieldValue: unknown) => {
     onChange({ ...value, [field]: fieldValue } as Partial<T>);
 
-    // Clear error when user starts typing (after first submit)
-    if (hasSubmitted) {
-      validateField(field, fieldValue);
+    // Clear error when user starts typing, but don't re-validate yet
+    // Validation happens on blur or submit
+    if (hasSubmitted && fieldErrors[field as string]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[field as string];
+        return next;
+      });
+      setErrors((prev) =>
+        prev.filter((e) => e.field !== `${fieldPrefix}${String(field)}`)
+      );
     }
   };
 
