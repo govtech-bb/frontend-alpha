@@ -46,6 +46,11 @@ export function DateInput({
   // Derive values directly from props (fully controlled component)
   const { day, month, year } = parseMMDDYYYY(value);
 
+  // Filter display values - show empty string for zero-padded placeholders
+  const displayDay = day === "00" ? "" : day;
+  const displayMonth = month === "00" ? "" : month;
+  const displayYear = year === "0000" ? "" : year;
+
   // Sanitize input to allow only digits and update parent
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDay = e.target.value.replace(/\D/g, ""); // Allow only digits
@@ -121,7 +126,7 @@ export function DateInput({
               onChange={handleDayChange}
               pattern="[0-9]*"
               type="text"
-              value={day}
+              value={displayDay}
             />
           </div>
 
@@ -147,7 +152,7 @@ export function DateInput({
               onChange={handleMonthChange}
               pattern="[0-9]*"
               type="text"
-              value={month}
+              value={displayMonth}
             />
           </div>
 
@@ -173,7 +178,7 @@ export function DateInput({
               onChange={handleYearChange}
               pattern="[0-9]*"
               type="text"
-              value={year}
+              value={displayYear}
             />
           </div>
         </div>

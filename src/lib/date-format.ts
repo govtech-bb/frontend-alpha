@@ -100,7 +100,7 @@ function isValidDate(month: string, day: string, year: string): boolean {
 
 /**
  * Parses a date string in MM/DD/YYYY format into individual day, month, year components
- * Validates semantic correctness of the date
+ * Validates semantic correctness of the date (skips validation for partial dates with zeros)
  *
  * @param mmddyyyy - Date string in MM/DD/YYYY format (e.g., "07/30/1986")
  * @returns Object with day, month, year as strings, or empty strings if invalid
@@ -109,6 +109,7 @@ function isValidDate(month: string, day: string, year: string): boolean {
  * parseMMDDYYYY("07/30/1986") // { day: "30", month: "07", year: "1986" }
  * parseMMDDYYYY("") // { day: "", month: "", year: "" }
  * parseMMDDYYYY("02/30/2024") // { day: "", month: "", year: "" } (invalid date)
+ * parseMMDDYYYY("00/01/0000") // { day: "01", month: "00", year: "0000" } (partial date)
  */
 export function parseMMDDYYYY(mmddyyyy: string): {
   day: string;
@@ -127,8 +128,11 @@ export function parseMMDDYYYY(mmddyyyy: string): {
 
   const [, month, day, year] = match;
 
-  // Validate the date is semantically correct
-  if (!isValidDate(month, day, year)) {
+  // Skip validation for partial dates (those with 00 or 0000 components)
+  const isPartialDate = month === "00" || day === "00" || year === "0000";
+
+  // Only validate complete dates
+  if (!(isPartialDate || isValidDate(month, day, year))) {
     return { day: "", month: "", year: "" };
   }
 
@@ -137,32 +141,34 @@ export function parseMMDDYYYY(mmddyyyy: string): {
 
 /**
  * Combines individual day, month, year components into MM/DD/YYYY format
+ * Pads with zeros to allow partial dates (supports typing workflow)
  *
- * @param day - Day as string (can be 1 or 2 digits)
- * @param month - Month as string (can be 1 or 2 digits)
- * @param year - Year as string (4 digits)
- * @returns Date string in MM/DD/YYYY format, or empty string if any component is missing
+ * @param day - Day as string (can be 1 or 2 digits, or empty)
+ * @param month - Month as string (can be 1 or 2 digits, or empty)
+ * @param year - Year as string (4 digits, or empty)
+ * @returns Date string in MM/DD/YYYY format, empty string if all fields empty
  *
  * @example
  * combineToMMDDYYYY("30", "7", "1986") // "07/30/1986"
- * combineToMMDDYYYY("5", "12", "2024") // "12/05/2024"
- * combineToMMDDYYYY("", "7", "1986") // ""
+ * combineToMMDDYYYY("5", "", "") // "00/05/0000" (partial date)
+ * combineToMMDDYYYY("", "", "") // ""
  */
 export function combineToMMDDYYYY(
   day: string,
   month: string,
   year: string
 ): string {
-  // Return empty if any component is missing
-  if (!(day && month && year)) {
+  // Return empty only if ALL components are empty
+  if (!(day || month || year)) {
     return "";
   }
 
-  // Pad day and month to 2 digits
-  const paddedDay = day.padStart(2, "0");
-  const paddedMonth = month.padStart(2, "0");
+  // Pad with zeros to support partial dates
+  const paddedDay = (day || "00").padStart(2, "0");
+  const paddedMonth = (month || "00").padStart(2, "0");
+  const paddedYear = (year || "0000").padStart(4, "0");
 
-  return `${paddedMonth}/${paddedDay}/${year}`;
+  return `${paddedMonth}/${paddedDay}/${paddedYear}`;
 }
 
 /**
