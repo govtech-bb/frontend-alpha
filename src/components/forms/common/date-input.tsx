@@ -48,17 +48,15 @@ export function DateInput({
   const { day, month, year } = parseMMDDYYYY(value);
 
   // Filter display values - show empty for placeholders, strip leading zeros for real input
+  // "" → "" (empty from parse error)
   // "00" → "" (empty placeholder)
   // "01" → "1" (user typed 1)
   // "12" → "12" (user typed 12)
   // "0000" → "" (empty placeholder)
   // "0001" → "1" (user typed 1)
-  const displayDay =
-    day === "00" || Number(day) === 0 ? "" : String(Number(day));
-  const displayMonth =
-    month === "00" || Number(month) === 0 ? "" : String(Number(month));
-  const displayYear =
-    year === "0000" || Number(year) === 0 ? "" : String(Number(year));
+  const displayDay = !day || day === "00" ? "" : String(Number(day));
+  const displayMonth = !month || month === "00" ? "" : String(Number(month));
+  const displayYear = !year || year === "0000" ? "" : String(Number(year));
 
   // Sanitize input to allow only digits and update parent
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {

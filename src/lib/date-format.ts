@@ -129,7 +129,10 @@ export function parseMMDDYYYY(mmddyyyy: string): {
   const [, month, day, year] = match;
 
   // Skip validation for partial dates (those with 00 or 0000 components)
-  const isPartialDate = month === "00" || day === "00" || year === "0000";
+  // Also skip validation for years with leading zeros (e.g., "0001", "0012")
+  // as these are intermediate typing states, not real dates
+  const isPartialDate =
+    month === "00" || day === "00" || year === "0000" || year.startsWith("0");
 
   // Only validate complete dates
   if (!(isPartialDate || isValidDate(month, day, year))) {
