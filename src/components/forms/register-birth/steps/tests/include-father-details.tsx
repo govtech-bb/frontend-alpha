@@ -67,25 +67,38 @@ describe("IncludeFatherDetails", () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it("should disable Next button when no selection is made", () => {
+  it("should show validation error when Next button is clicked without selection", () => {
     render(<IncludeFatherDetails {...defaultProps} value="" />);
 
     const nextButton = screen.getByRole("button", { name: /next/i });
-    expect(nextButton).toBeDisabled();
+    fireEvent.click(nextButton);
+
+    // Check that error appears in both error summary and field error
+    expect(
+      screen.getAllByText(
+        "Select yes if you want to include the father's details"
+      )
+    ).toHaveLength(2);
   });
 
-  it("should enable Next button when Yes is selected", () => {
+  it("should not show validation error when Yes is selected", () => {
     render(<IncludeFatherDetails {...defaultProps} value="yes" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
-    expect(nextButton).not.toBeDisabled();
+    expect(
+      screen.queryByText(
+        "Select yes if you want to include the father's details"
+      )
+    ).not.toBeInTheDocument();
   });
 
-  it("should enable Next button when No is selected", () => {
+  it("should not show validation error when No is selected", () => {
     render(<IncludeFatherDetails {...defaultProps} value="no" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
-    expect(nextButton).not.toBeDisabled();
+    expect(
+      screen.queryByText(
+        "Select yes if you want to include the father's details"
+      )
+    ).not.toBeInTheDocument();
   });
 
   it("should check the correct radio button based on value prop", () => {
@@ -138,8 +151,14 @@ describe("IncludeFatherDetails", () => {
     const nextButton = screen.getByRole("button", { name: /next/i });
     fireEvent.click(nextButton);
 
-    // Button is disabled, so click should not trigger onNext
+    // Validation should prevent onNext from being called
     expect(onNext).not.toHaveBeenCalled();
+    // And should show validation error (appears in both error summary and field error)
+    expect(
+      screen.getAllByText(
+        "Select yes if you want to include the father's details"
+      )
+    ).toHaveLength(2);
   });
 
   it("should have accessible form structure", () => {
