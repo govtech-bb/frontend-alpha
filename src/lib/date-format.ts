@@ -100,15 +100,15 @@ function isValidDate(month: string, day: string, year: string): boolean {
 
 /**
  * Parses a date string in MM/DD/YYYY format into individual day, month, year components
- * Validates semantic correctness of the date (skips validation for partial dates with zeros)
+ * Does NOT validate - validation should happen on form submission, not during typing
  *
  * @param mmddyyyy - Date string in MM/DD/YYYY format (e.g., "07/30/1986")
- * @returns Object with day, month, year as strings, or empty strings if invalid
+ * @returns Object with day, month, year as strings, or empty strings if format invalid
  *
  * @example
  * parseMMDDYYYY("07/30/1986") // { day: "30", month: "07", year: "1986" }
  * parseMMDDYYYY("") // { day: "", month: "", year: "" }
- * parseMMDDYYYY("02/30/2024") // { day: "", month: "", year: "" } (invalid date)
+ * parseMMDDYYYY("02/30/2024") // { day: "30", month: "02", year: "2024" } (no validation)
  * parseMMDDYYYY("00/01/0000") // { day: "01", month: "00", year: "0000" } (partial date)
  */
 export function parseMMDDYYYY(mmddyyyy: string): {
@@ -128,17 +128,8 @@ export function parseMMDDYYYY(mmddyyyy: string): {
 
   const [, month, day, year] = match;
 
-  // Skip validation for partial dates (those with 00 or 0000 components)
-  // Also skip validation for years with leading zeros (e.g., "0001", "0012")
-  // as these are intermediate typing states, not real dates
-  const isPartialDate =
-    month === "00" || day === "00" || year === "0000" || year.startsWith("0");
-
-  // Only validate complete dates
-  if (!(isPartialDate || isValidDate(month, day, year))) {
-    return { day: "", month: "", year: "" };
-  }
-
+  // No validation - just return the parsed values
+  // Validation happens on form submission, not during typing
   return { day, month, year };
 }
 
