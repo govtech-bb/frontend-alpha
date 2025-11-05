@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  convertFromInputFormat,
-  convertToInputFormat,
-} from "@/lib/date-format";
+import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import {
@@ -127,36 +124,15 @@ export function FathersDetails({
       </div>
 
       {/* Date of birth */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-dateOfBirth"
-        >
-          Date of birth
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          Use the calendar picker or enter the date
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.dateOfBirth ? "father-dateOfBirth-error" : undefined
-          }
-          aria-invalid={fieldErrors.dateOfBirth ? true : undefined}
-          className="w-full max-w-xs rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
-          id="father-dateOfBirth"
-          lang="en-US"
-          onBlur={() => handleBlur("dateOfBirth")}
-          onChange={(e) =>
-            handleChange("dateOfBirth", convertFromInputFormat(e.target.value))
-          }
-          type="date"
-          value={convertToInputFormat(value.dateOfBirth || "")}
-        />
-        <FormFieldError
-          id="father-dateOfBirth"
-          message={fieldErrors.dateOfBirth}
-        />
-      </div>
+      <DateInput
+        error={fieldErrors.dateOfBirth}
+        hint="For example, 27 3 2007"
+        id="father-dateOfBirth"
+        label="Date of birth"
+        onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
+        required
+        value={value.dateOfBirth || ""}
+      />
 
       {/* Address */}
       <div>

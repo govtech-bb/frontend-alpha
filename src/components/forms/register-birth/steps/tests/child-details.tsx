@@ -22,7 +22,10 @@ describe("ChildDetails", () => {
     expect(screen.getByLabelText("First name")).toBeInTheDocument();
     expect(screen.getByLabelText("Middle name(s)")).toBeInTheDocument();
     expect(screen.getByLabelText("Last name")).toBeInTheDocument();
-    expect(screen.getByLabelText("Date of birth")).toBeInTheDocument();
+    // Date of birth is now three separate fields
+    expect(screen.getByLabelText("Day")).toBeInTheDocument();
+    expect(screen.getByLabelText("Month")).toBeInTheDocument();
+    expect(screen.getByLabelText("Year")).toBeInTheDocument();
     expect(screen.getByLabelText("Sex at birth")).toBeInTheDocument();
     expect(screen.getByLabelText("Place of birth")).toBeInTheDocument();
   });
@@ -38,9 +41,7 @@ describe("ChildDetails", () => {
   it("should display date format hint", () => {
     render(<ChildDetails {...defaultProps} />);
 
-    expect(
-      screen.getByText(/Use the calendar picker or enter the date/)
-    ).toBeInTheDocument();
+    expect(screen.getByText("For example, 27 3 2007")).toBeInTheDocument();
   });
 
   it("should display sex at birth explanation", () => {
@@ -86,9 +87,14 @@ describe("ChildDetails", () => {
     expect((screen.getByLabelText("Last name") as HTMLInputElement).value).toBe(
       "Smith"
     );
-    expect(
-      (screen.getByLabelText("Date of birth") as HTMLInputElement).value
-    ).toBe("2025-10-22");
+    // Date of birth is now split into Day, Month, Year
+    expect((screen.getByLabelText("Day") as HTMLInputElement).value).toBe("22");
+    expect((screen.getByLabelText("Month") as HTMLInputElement).value).toBe(
+      "10"
+    );
+    expect((screen.getByLabelText("Year") as HTMLInputElement).value).toBe(
+      "2025"
+    );
     expect(
       (screen.getByLabelText("Sex at birth") as HTMLSelectElement).value
     ).toBe("Male");
@@ -214,9 +220,18 @@ describe("ChildDetails", () => {
       "id",
       "child-lastName"
     );
-    expect(screen.getByLabelText("Date of birth")).toHaveAttribute(
+    // Date of birth is now three separate fields with their own IDs
+    expect(screen.getByLabelText("Day")).toHaveAttribute(
       "id",
-      "child-dateOfBirth"
+      "child-dateOfBirth-day"
+    );
+    expect(screen.getByLabelText("Month")).toHaveAttribute(
+      "id",
+      "child-dateOfBirth-month"
+    );
+    expect(screen.getByLabelText("Year")).toHaveAttribute(
+      "id",
+      "child-dateOfBirth-year"
     );
   });
 
@@ -246,8 +261,9 @@ describe("ChildDetails", () => {
 
     // Check for error (message appears in both summary and field)
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    const dateInput = screen.getByLabelText("Date of birth");
-    expect(dateInput).toHaveAttribute("aria-invalid", "true");
+    // All date fields should have aria-invalid when there's an error
+    const dayInput = screen.getByLabelText("Day");
+    expect(dayInput).toHaveAttribute("aria-invalid", "true");
   });
 
   it("should accept middle names as optional", () => {

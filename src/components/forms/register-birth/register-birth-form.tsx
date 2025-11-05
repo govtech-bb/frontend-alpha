@@ -3,6 +3,7 @@
 import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
 import { useEffect, useState } from "react";
+import { convertToISO8601 } from "@/lib/date-format";
 import { useFormNavigation } from "../common/hooks/use-form-navigation";
 import { useFormStorage } from "../common/hooks/use-form-storage";
 import { birthRegistrationSchema } from "./schema";
@@ -56,18 +57,48 @@ export function RegisterBirthForm() {
       wantContact: "",
       phoneNumber: "",
     } as PartialBirthRegistrationFormData,
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Form submission requires ISO conversion and error handling
     onSubmit: async ({ value }) => {
       setIsSubmitting(true);
       setSubmissionError(null);
 
       try {
+        // Convert dates from MM/DD/YYYY to ISO 8601 format for API
+        const apiPayload = {
+          ...value,
+          child: value.child
+            ? {
+                ...value.child,
+                dateOfBirth: value.child.dateOfBirth
+                  ? convertToISO8601(value.child.dateOfBirth)
+                  : "",
+              }
+            : undefined,
+          mother: value.mother
+            ? {
+                ...value.mother,
+                dateOfBirth: value.mother.dateOfBirth
+                  ? convertToISO8601(value.mother.dateOfBirth)
+                  : "",
+              }
+            : undefined,
+          father: value.father
+            ? {
+                ...value.father,
+                dateOfBirth: value.father.dateOfBirth
+                  ? convertToISO8601(value.father.dateOfBirth)
+                  : "",
+              }
+            : undefined,
+        };
+
         // Submit to API
         const response = await fetch("/api/register-birth", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(value),
+          body: JSON.stringify(apiPayload),
         });
 
         if (!response.ok) {

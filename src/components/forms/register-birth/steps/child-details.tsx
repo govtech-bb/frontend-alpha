@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  convertFromInputFormat,
-  convertToInputFormat,
-} from "@/lib/date-format";
+import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import { getFieldClassName } from "../../common/form-utils";
@@ -23,7 +20,6 @@ type ChildDetailsProps = {
  * Step: Child's Details
  * Collects information about the child being registered
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Error handling logic requires validation state management
 export function ChildDetails({
   value,
   onChange,
@@ -124,36 +120,15 @@ export function ChildDetails({
       </div>
 
       {/* Date of birth */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="child-dateOfBirth"
-        >
-          Date of birth
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          Use the calendar picker or enter the date
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.dateOfBirth ? "child-dateOfBirth-error" : undefined
-          }
-          aria-invalid={fieldErrors.dateOfBirth ? true : undefined}
-          className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
-          id="child-dateOfBirth"
-          lang="en-US"
-          onBlur={() => handleBlur("dateOfBirth")}
-          onChange={(e) =>
-            handleChange("dateOfBirth", convertFromInputFormat(e.target.value))
-          }
-          type="date"
-          value={convertToInputFormat(value.dateOfBirth || "")}
-        />
-        <FormFieldError
-          id="child-dateOfBirth"
-          message={fieldErrors.dateOfBirth}
-        />
-      </div>
+      <DateInput
+        error={fieldErrors.dateOfBirth}
+        hint="For example, 27 3 2007"
+        id="child-dateOfBirth"
+        label="Date of birth"
+        onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
+        required
+        value={value.dateOfBirth || ""}
+      />
 
       {/* Sex at birth */}
       <div>

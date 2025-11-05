@@ -24,7 +24,9 @@ describe("FathersDetails", () => {
     expect(screen.getByLabelText("First name")).toBeInTheDocument();
     expect(screen.getByLabelText("Middle name(s)")).toBeInTheDocument();
     expect(screen.getByLabelText("Last name")).toBeInTheDocument();
-    expect(screen.getByLabelText("Date of birth")).toBeInTheDocument();
+    expect(screen.getByLabelText("Day")).toBeInTheDocument();
+    expect(screen.getByLabelText("Month")).toBeInTheDocument();
+    expect(screen.getByLabelText("Year")).toBeInTheDocument();
     expect(screen.getByLabelText("Current address")).toBeInTheDocument();
     expect(
       screen.getByLabelText("National registration number")
@@ -43,9 +45,7 @@ describe("FathersDetails", () => {
   it("should display date format hint", () => {
     render(<FathersDetails {...defaultProps} />);
 
-    expect(
-      screen.getByText(/Use the calendar picker or enter the date/)
-    ).toBeInTheDocument();
+    expect(screen.getByText("For example, 27 3 2007")).toBeInTheDocument();
   });
 
   it("should display occupation explanation", () => {
@@ -83,9 +83,14 @@ describe("FathersDetails", () => {
     expect((screen.getByLabelText("Last name") as HTMLInputElement).value).toBe(
       "Smith"
     );
-    expect(
-      (screen.getByLabelText("Date of birth") as HTMLInputElement).value
-    ).toBe("1986-07-30");
+    // Date of birth is now split into Day, Month, Year
+    expect((screen.getByLabelText("Day") as HTMLInputElement).value).toBe("30");
+    expect((screen.getByLabelText("Month") as HTMLInputElement).value).toBe(
+      "07"
+    );
+    expect((screen.getByLabelText("Year") as HTMLInputElement).value).toBe(
+      "1986"
+    );
     expect(
       (screen.getByLabelText("Current address") as HTMLTextAreaElement).value
     ).toBe("123 Main St");
@@ -245,9 +250,18 @@ describe("FathersDetails", () => {
       "id",
       "father-lastName"
     );
-    expect(screen.getByLabelText("Date of birth")).toHaveAttribute(
+    // Date fields now have separate IDs
+    expect(screen.getByLabelText("Day")).toHaveAttribute(
       "id",
-      "father-dateOfBirth"
+      "father-dateOfBirth-day"
+    );
+    expect(screen.getByLabelText("Month")).toHaveAttribute(
+      "id",
+      "father-dateOfBirth-month"
+    );
+    expect(screen.getByLabelText("Year")).toHaveAttribute(
+      "id",
+      "father-dateOfBirth-year"
     );
     expect(screen.getByLabelText("Current address")).toHaveAttribute(
       "id",
@@ -281,7 +295,7 @@ describe("FathersDetails", () => {
 
     // Check for error (message appears in both summary and field)
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    const dateInput = screen.getByLabelText("Date of birth");
+    const dateInput = screen.getByLabelText("Day");
     expect(dateInput).toHaveAttribute("aria-invalid", "true");
   });
 
