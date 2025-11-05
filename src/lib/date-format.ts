@@ -6,69 +6,6 @@
  */
 
 /**
- * Converts a date string from MM/DD/YYYY format to YYYY-MM-DD format
- * for use with HTML5 date input elements
- *
- * @param mmddyyyy - Date string in MM/DD/YYYY format (e.g., "07/30/1986")
- * @returns Date string in YYYY-MM-DD format (e.g., "1986-07-30"), or empty string if invalid
- *
- * @example
- * convertToInputFormat("07/30/1986") // "1986-07-30"
- * convertToInputFormat("12/25/2024") // "2024-12-25"
- * convertToInputFormat("") // ""
- * convertToInputFormat("invalid") // ""
- * convertToInputFormat("02/30/2024") // "" (invalid date)
- */
-export function convertToInputFormat(mmddyyyy: string): string {
-  if (!mmddyyyy || mmddyyyy.trim() === "") {
-    return "";
-  }
-
-  // Match MM/DD/YYYY format
-  const match = mmddyyyy.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-  if (!match) {
-    return "";
-  }
-
-  const [, month, day, year] = match;
-
-  // Validate the date is semantically correct
-  if (!isValidDate(month, day, year)) {
-    return "";
-  }
-
-  return `${year}-${month}-${day}`;
-}
-
-/**
- * Converts a date string from YYYY-MM-DD format to MM/DD/YYYY format
- * for storage and validation
- *
- * @param yyyymmdd - Date string in YYYY-MM-DD format (e.g., "1986-07-30")
- * @returns Date string in MM/DD/YYYY format (e.g., "07/30/1986"), or empty string if invalid
- *
- * @example
- * convertFromInputFormat("1986-07-30") // "07/30/1986"
- * convertFromInputFormat("2024-12-25") // "12/25/2024"
- * convertFromInputFormat("") // ""
- * convertFromInputFormat("invalid") // ""
- */
-export function convertFromInputFormat(yyyymmdd: string): string {
-  if (!yyyymmdd || yyyymmdd.trim() === "") {
-    return "";
-  }
-
-  // Match YYYY-MM-DD format
-  const match = yyyymmdd.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!match) {
-    return "";
-  }
-
-  const [, year, month, day] = match;
-  return `${month}/${day}/${year}`;
-}
-
-/**
  * Validates that a date is semantically correct (not just format)
  *
  * @param month - Month string (01-12)
@@ -232,3 +169,38 @@ export function convertFromISO8601(iso: string): string {
 
   return `${month}/${day}/${year}`;
 }
+
+/**
+ * Converts a date string from MM/DD/YYYY format to YYYY-MM-DD format
+ * for use with HTML5 date input elements.
+ *
+ * This is an alias for convertToISO8601 to maintain compatibility with HTML5 date inputs.
+ *
+ * @param mmddyyyy - Date string in MM/DD/YYYY format (e.g., "07/30/1986")
+ * @returns Date string in YYYY-MM-DD format (e.g., "1986-07-30"), or empty string if invalid
+ *
+ * @example
+ * convertToInputFormat("07/30/1986") // "1986-07-30"
+ * convertToInputFormat("12/25/2024") // "2024-12-25"
+ * convertToInputFormat("") // ""
+ * convertToInputFormat("invalid") // ""
+ * convertToInputFormat("02/30/2024") // "" (invalid date)
+ */
+export const convertToInputFormat = convertToISO8601;
+
+/**
+ * Converts a date string from YYYY-MM-DD format to MM/DD/YYYY format
+ * for storage and validation.
+ *
+ * This is an alias for convertFromISO8601 for consistency.
+ *
+ * @param yyyymmdd - Date string in YYYY-MM-DD format (e.g., "1986-07-30")
+ * @returns Date string in MM/DD/YYYY format (e.g., "07/30/1986"), or empty string if invalid
+ *
+ * @example
+ * convertFromInputFormat("1986-07-30") // "07/30/1986"
+ * convertFromInputFormat("2024-12-25") // "12/25/2024"
+ * convertFromInputFormat("") // ""
+ * convertFromInputFormat("invalid") // ""
+ */
+export const convertFromInputFormat = convertFromISO8601;

@@ -32,7 +32,6 @@ export type DateInputProps = {
  *   error={errors.dateOfBirth}
  * />
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Date input component requires multiple conditional checks for display filtering and validation
 export function DateInput({
   id,
   label,
@@ -52,25 +51,21 @@ export function DateInput({
   // "12" → "12" (user typed 12)
   // "0000" → "" (empty placeholder)
   // "0001" → "1" (user typed 1)
-  const displayDay = !day || day === "00" ? "" : String(Number(day));
-  const displayMonth = !month || month === "00" ? "" : String(Number(month));
-  const displayYear = !year || year === "0000" ? "" : String(Number(year));
+  const filterDisplayValue = (fieldValue: string, emptyValue: string) =>
+    !fieldValue || fieldValue === emptyValue ? "" : String(Number(fieldValue));
+
+  const displayDay = filterDisplayValue(day, "00");
+  const displayMonth = filterDisplayValue(month, "00");
+  const displayYear = filterDisplayValue(year, "0000");
 
   // Sanitize input to allow only digits and update parent
-  const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDay = e.target.value.replace(/\D/g, ""); // Allow only digits
-    onChange(combineToMMDDYYYY(newDay, month, year));
-  };
-
-  const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newMonth = e.target.value.replace(/\D/g, ""); // Allow only digits
-    onChange(combineToMMDDYYYY(day, newMonth, year));
-  };
-
-  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newYear = e.target.value.replace(/\D/g, ""); // Allow only digits
-    onChange(combineToMMDDYYYY(day, month, newYear));
-  };
+  const handleFieldChange =
+    (field: "day" | "month" | "year") =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const sanitized = e.target.value.replace(/\D/g, ""); // Allow only digits
+      const updates = { day, month, year, [field]: sanitized };
+      onChange(combineToMMDDYYYY(updates.day, updates.month, updates.year));
+    };
 
   const hasError = Boolean(error);
   const errorId = `${id}-error`;
@@ -125,7 +120,7 @@ export function DateInput({
               maxLength={2}
               name={`${id}-day`}
               onBlur={onBlur}
-              onChange={handleDayChange}
+              onChange={handleFieldChange("day")}
               pattern="[0-9]*"
               type="text"
               value={displayDay}
@@ -151,7 +146,7 @@ export function DateInput({
               maxLength={2}
               name={`${id}-month`}
               onBlur={onBlur}
-              onChange={handleMonthChange}
+              onChange={handleFieldChange("month")}
               pattern="[0-9]*"
               type="text"
               value={displayMonth}
@@ -177,7 +172,7 @@ export function DateInput({
               maxLength={4}
               name={`${id}-year`}
               onBlur={onBlur}
-              onChange={handleYearChange}
+              onChange={handleFieldChange("year")}
               pattern="[0-9]*"
               type="text"
               value={displayYear}
