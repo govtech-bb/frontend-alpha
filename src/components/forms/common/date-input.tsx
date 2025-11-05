@@ -10,7 +10,6 @@ export type DateInputProps = {
   onChange: (value: string) => void;
   onBlur?: () => void;
   error?: string;
-  required?: boolean;
 };
 
 /**
@@ -42,7 +41,6 @@ export function DateInput({
   onChange,
   onBlur,
   error,
-  required = false,
 }: DateInputProps) {
   // Derive values directly from props (fully controlled component)
   const { day, month, year } = parseMMDDYYYY(value);
@@ -89,10 +87,7 @@ export function DateInput({
         aria-describedby={describedby || undefined}
         className="govuk-fieldset"
       >
-        <legend className="govuk-label govuk-label--m">
-          {label}
-          {required && <span className="ml-1 text-red-600">*</span>}
-        </legend>
+        <legend className="govuk-label govuk-label--m">{label}</legend>
 
         {hint && (
           <div className="govuk-hint mb-2 text-gray-600 text-sm" id={hintId}>
@@ -120,7 +115,7 @@ export function DateInput({
             </label>
             <input
               aria-invalid={hasError ? "true" : undefined}
-              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] rounded border-2 px-2 py-1 ${
+              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] border-2 px-2 py-1 ${
                 hasError
                   ? "govuk-input--error border-red-600"
                   : "border-gray-400"
@@ -146,7 +141,7 @@ export function DateInput({
             </label>
             <input
               aria-invalid={hasError ? "true" : undefined}
-              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] rounded border-2 px-2 py-1 ${
+              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] border-2 px-2 py-1 ${
                 hasError
                   ? "govuk-input--error border-red-600"
                   : "border-gray-400"
@@ -172,7 +167,7 @@ export function DateInput({
             </label>
             <input
               aria-invalid={hasError ? "true" : undefined}
-              className={`govuk-input govuk-date-input__input govuk-input--width-4 w-[7ch] rounded border-2 px-2 py-1 ${
+              className={`govuk-input govuk-date-input__input govuk-input--width-4 w-[7ch] border-2 px-2 py-1 ${
                 hasError
                   ? "govuk-input--error border-red-600"
                   : "border-gray-400"

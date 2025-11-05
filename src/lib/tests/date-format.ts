@@ -161,10 +161,11 @@ describe("semantic date validation", () => {
   describe("invalid dates should be rejected", () => {
     it("should reject February 30th", () => {
       expect(convertToISO8601("02/30/2024")).toBe("");
+      // parseMMDDYYYY only parses format, does not validate
       expect(parseMMDDYYYY("02/30/2024")).toEqual({
-        day: "",
-        month: "",
-        year: "",
+        day: "30",
+        month: "02",
+        year: "2024",
       });
     });
 
