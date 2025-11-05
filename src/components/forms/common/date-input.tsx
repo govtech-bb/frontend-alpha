@@ -33,6 +33,7 @@ export type DateInputProps = {
  *   error={errors.dateOfBirth}
  * />
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Date input component requires multiple conditional checks for display filtering and validation
 export function DateInput({
   id,
   label,
@@ -50,9 +51,14 @@ export function DateInput({
   // "00" → "" (empty placeholder)
   // "01" → "1" (user typed 1)
   // "12" → "12" (user typed 12)
-  const displayDay = day === "00" ? "" : String(Number(day));
-  const displayMonth = month === "00" ? "" : String(Number(month));
-  const displayYear = year === "0000" ? "" : String(Number(year));
+  // "0000" → "" (empty placeholder)
+  // "0001" → "1" (user typed 1)
+  const displayDay =
+    day === "00" || Number(day) === 0 ? "" : String(Number(day));
+  const displayMonth =
+    month === "00" || Number(month) === 0 ? "" : String(Number(month));
+  const displayYear =
+    year === "0000" || Number(year) === 0 ? "" : String(Number(year));
 
   // Sanitize input to allow only digits and update parent
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
