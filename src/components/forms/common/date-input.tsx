@@ -46,10 +46,13 @@ export function DateInput({
   // Derive values directly from props (fully controlled component)
   const { day, month, year } = parseMMDDYYYY(value);
 
-  // Filter display values - show empty string for zero-padded placeholders
-  const displayDay = day === "00" ? "" : day;
-  const displayMonth = month === "00" ? "" : month;
-  const displayYear = year === "0000" ? "" : year;
+  // Filter display values - show empty for placeholders, strip leading zeros for real input
+  // "00" → "" (empty placeholder)
+  // "01" → "1" (user typed 1)
+  // "12" → "12" (user typed 12)
+  const displayDay = day === "00" ? "" : String(Number(day));
+  const displayMonth = month === "00" ? "" : String(Number(month));
+  const displayYear = year === "0000" ? "" : String(Number(year));
 
   // Sanitize input to allow only digits and update parent
   const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
