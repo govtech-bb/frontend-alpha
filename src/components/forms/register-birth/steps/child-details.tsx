@@ -126,7 +126,6 @@ export function ChildDetails({
         id="child-dateOfBirth"
         label="Date of birth"
         onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
-        required
         value={value.dateOfBirth || ""}
       />
 
