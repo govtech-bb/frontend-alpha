@@ -1,14 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ds";
+import { Button, Input } from "@/components/ds";
 import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
-import {
-  getFieldClassName,
-  getTextareaClassName,
-} from "../../common/form-utils";
+import { getTextareaClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
@@ -66,41 +63,23 @@ export function MothersDetails({
 
       {/* First name */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-firstName"
-        >
-          First name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.firstName ? "mother-firstName-error" : undefined
-          }
-          aria-invalid={fieldErrors.firstName ? true : undefined}
-          className={getFieldClassName("firstName", fieldErrors)}
+        <Input
+          error={fieldErrors.firstName}
           id="mother-firstName"
+          label="First name"
           onBlur={() => handleBlur("firstName")}
           onChange={(e) => handleChange("firstName", e.target.value)}
           type="text"
           value={value.firstName || ""}
         />
-        <FormFieldError id="mother-firstName" message={fieldErrors.firstName} />
       </div>
 
       {/* Middle name */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-middleName"
-        >
-          Middle name(s)
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          If they have more than one, add them in order
-        </p>
-        <input
-          className={getFieldClassName("middleName", fieldErrors)}
+        <Input
+          description="If they have more than one, add them in order"
           id="mother-middleName"
+          label="Middle name(s)"
           onChange={(e) => handleChange("middleName", e.target.value)}
           type="text"
           value={value.middleName || ""}
@@ -109,25 +88,15 @@ export function MothersDetails({
 
       {/* Last name */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-lastName"
-        >
-          Last name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.lastName ? "mother-lastName-error" : undefined
-          }
-          aria-invalid={fieldErrors.lastName ? true : undefined}
-          className={getFieldClassName("lastName", fieldErrors)}
+        <Input
+          error={fieldErrors.lastName}
           id="mother-lastName"
+          label="Last name"
           onBlur={() => handleBlur("lastName")}
           onChange={(e) => handleChange("lastName", e.target.value)}
           type="text"
           value={value.lastName || ""}
         />
-        <FormFieldError id="mother-lastName" message={fieldErrors.lastName} />
       </div>
 
       {/* Had other surname */}
@@ -178,15 +147,9 @@ export function MothersDetails({
 
         {value.hadOtherSurname === "yes" && (
           <div className="mt-4">
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-otherSurname"
-            >
-              What was it
-            </label>
-            <input
-              className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
+            <Input
               id="mother-otherSurname"
+              label="What was it"
               onChange={(e) => handleChange("otherSurname", e.target.value)}
               type="text"
               value={value.otherSurname || ""}
@@ -235,26 +198,10 @@ export function MothersDetails({
 
       {/* National registration number */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-nationalRegistrationNumber"
-        >
-          National registration number
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.nationalRegistrationNumber
-              ? "mother-nationalRegistrationNumber-error"
-              : undefined
-          }
-          aria-invalid={
-            fieldErrors.nationalRegistrationNumber ? true : undefined
-          }
-          className={getFieldClassName(
-            "nationalRegistrationNumber",
-            fieldErrors
-          )}
+        <Input
+          error={fieldErrors.nationalRegistrationNumber}
           id="mother-nationalRegistrationNumber"
+          label="National registration number"
           onBlur={() => handleBlur("nationalRegistrationNumber")}
           onChange={(e) =>
             handleChange("nationalRegistrationNumber", e.target.value)
@@ -262,10 +209,6 @@ export function MothersDetails({
           placeholder="123456-7890"
           type="text"
           value={value.nationalRegistrationNumber || ""}
-        />
-        <FormFieldError
-          id="mother-nationalRegistrationNumber"
-          message={fieldErrors.nationalRegistrationNumber}
         />
 
         {/* Passport number disclosure */}
@@ -283,29 +226,14 @@ export function MothersDetails({
               If you don't have a National Registration number, you can use your
               passport number instead.
             </p>
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-passportNumber"
-            >
-              Passport number
-            </label>
-            <input
-              aria-describedby={
-                fieldErrors.passportNumber
-                  ? "mother-passportNumber-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.passportNumber ? true : undefined}
-              className={getFieldClassName("passportNumber", fieldErrors)}
+            <Input
+              error={fieldErrors.passportNumber}
               id="mother-passportNumber"
+              label="Passport number"
               onBlur={() => handleBlur("passportNumber")}
               onChange={(e) => handleChange("passportNumber", e.target.value)}
               type="text"
               value={value.passportNumber || ""}
-            />
-            <FormFieldError
-              id="mother-passportNumber"
-              message={fieldErrors.passportNumber}
             />
           </div>
         </details>
@@ -313,31 +241,15 @@ export function MothersDetails({
 
       {/* Occupation */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-occupation"
-        >
-          Occupation
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          This will be included on the child's birth certificate and in official
-          records.
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.occupation ? "mother-occupation-error" : undefined
-          }
-          aria-invalid={fieldErrors.occupation ? true : undefined}
-          className={getFieldClassName("occupation", fieldErrors)}
+        <Input
+          description="This will be included on the child's birth certificate and in official records."
+          error={fieldErrors.occupation}
           id="mother-occupation"
+          label="Occupation"
           onBlur={() => handleBlur("occupation")}
           onChange={(e) => handleChange("occupation", e.target.value)}
           type="text"
           value={value.occupation || ""}
-        />
-        <FormFieldError
-          id="mother-occupation"
-          message={fieldErrors.occupation}
         />
       </div>
 

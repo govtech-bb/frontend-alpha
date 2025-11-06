@@ -261,7 +261,7 @@ describe("MothersDetails", () => {
     const form = screen.getByRole("button", { name: /next/i }).closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
   });
 
   it("should call onNext on successful form submission", () => {
@@ -375,7 +375,7 @@ describe("MothersDetails", () => {
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
     const dateInput = screen.getByLabelText("Day");
     expect(dateInput).toHaveAttribute("aria-invalid", "true");
   });
@@ -518,7 +518,7 @@ describe("MothersDetails", () => {
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
     const input = screen.getByLabelText("National registration number");
     expect(input).toHaveAttribute("aria-invalid", "true");
   });
