@@ -264,9 +264,9 @@ describe("DateInput", () => {
     const monthInput = screen.getByLabelText("Month");
     const yearInput = screen.getByLabelText("Year");
 
-    expect(dayInput).toHaveClass("border-red-600");
-    expect(monthInput).toHaveClass("border-red-600");
-    expect(yearInput).toHaveClass("border-red-600");
+    expect(dayInput).toHaveClass("border-destructive");
+    expect(monthInput).toHaveClass("border-destructive");
+    expect(yearInput).toHaveClass("border-destructive");
   });
 
   it("should set aria-invalid on inputs when error is present", () => {
@@ -830,9 +830,9 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).toHaveClass("border-red-600");
-      expect(monthInput).not.toHaveClass("border-red-600");
-      expect(yearInput).not.toHaveClass("border-red-600");
+      expect(dayInput).toHaveClass("border-destructive");
+      expect(monthInput).not.toHaveClass("border-destructive");
+      expect(yearInput).not.toHaveClass("border-destructive");
     });
 
     it("should highlight only month field when month has error", () => {
@@ -852,9 +852,9 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).not.toHaveClass("border-red-600");
-      expect(monthInput).toHaveClass("border-red-600");
-      expect(yearInput).not.toHaveClass("border-red-600");
+      expect(dayInput).not.toHaveClass("border-destructive");
+      expect(monthInput).toHaveClass("border-destructive");
+      expect(yearInput).not.toHaveClass("border-destructive");
     });
 
     it("should highlight only year field when year has error", () => {
@@ -874,9 +874,9 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).not.toHaveClass("border-red-600");
-      expect(monthInput).not.toHaveClass("border-red-600");
-      expect(yearInput).toHaveClass("border-red-600");
+      expect(dayInput).not.toHaveClass("border-destructive");
+      expect(monthInput).not.toHaveClass("border-destructive");
+      expect(yearInput).toHaveClass("border-destructive");
     });
 
     it("should highlight multiple fields when multiple errors present", () => {
@@ -899,9 +899,9 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).toHaveClass("border-red-600");
-      expect(monthInput).toHaveClass("border-red-600");
-      expect(yearInput).not.toHaveClass("border-red-600");
+      expect(dayInput).toHaveClass("border-destructive");
+      expect(monthInput).toHaveClass("border-destructive");
+      expect(yearInput).not.toHaveClass("border-destructive");
     });
 
     it("should set aria-invalid only on fields with errors", () => {
@@ -1019,9 +1019,9 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).not.toHaveClass("border-red-600");
-      expect(monthInput).not.toHaveClass("border-red-600");
-      expect(yearInput).not.toHaveClass("border-red-600");
+      expect(dayInput).not.toHaveClass("border-destructive");
+      expect(monthInput).not.toHaveClass("border-destructive");
+      expect(yearInput).not.toHaveClass("border-destructive");
     });
   });
 });

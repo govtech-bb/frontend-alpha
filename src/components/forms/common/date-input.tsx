@@ -123,7 +123,10 @@ export function DateInput({
         <legend className="govuk-label govuk-label--m">{label}</legend>
 
         {hint && (
-          <div className="govuk-hint mb-2 text-gray-600 text-sm" id={hintId}>
+          <div
+            className="govuk-hint mb-2 text-muted-foreground text-sm"
+            id={hintId}
+          >
             {hint}
           </div>
         )}
@@ -131,7 +134,7 @@ export function DateInput({
         {hasAnyError && (
           <div
             aria-live="assertive"
-            className="govuk-error-message mb-2 text-red-600"
+            className="govuk-error-message mb-2 text-destructive"
             id={errorId}
           >
             {errorMessages.map((msg, idx) => (
@@ -153,10 +156,10 @@ export function DateInput({
             <input
               aria-invalid={hasErrorDay ? "true" : undefined}
               autoComplete="bday-day"
-              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] border-2 px-2 py-1 ${
+              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] rounded-md border-2 px-2 py-1 ${
                 hasErrorDay
-                  ? "govuk-input--error border-red-600"
-                  : "border-gray-400"
+                  ? "govuk-input--error border-destructive"
+                  : "border-input"
               }`}
               id={`${id}-day`}
               inputMode="numeric"
@@ -180,10 +183,10 @@ export function DateInput({
             <input
               aria-invalid={hasErrorMonth ? "true" : undefined}
               autoComplete="bday-month"
-              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[10ch] border-2 px-2 py-1 ${
+              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[10ch] rounded-md border-2 px-2 py-1 ${
                 hasErrorMonth
-                  ? "govuk-input--error border-red-600"
-                  : "border-gray-400"
+                  ? "govuk-input--error border-destructive"
+                  : "border-input"
               }`}
               id={`${id}-month`}
               maxLength={9}
@@ -206,10 +209,10 @@ export function DateInput({
             <input
               aria-invalid={hasErrorYear ? "true" : undefined}
               autoComplete="bday-year"
-              className={`govuk-input govuk-date-input__input govuk-input--width-4 w-[7ch] border-2 px-2 py-1 ${
+              className={`govuk-input govuk-date-input__input govuk-input--width-4 w-[7ch] rounded-md border-2 px-2 py-1 ${
                 hasErrorYear
-                  ? "govuk-input--error border-red-600"
-                  : "border-gray-400"
+                  ? "govuk-input--error border-destructive"
+                  : "border-input"
               }`}
               id={`${id}-year`}
               inputMode="numeric"
