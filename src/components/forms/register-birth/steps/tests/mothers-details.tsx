@@ -132,8 +132,8 @@ describe("MothersDetails", () => {
 
     expect(yesRadio).toBeInTheDocument();
     expect(noRadio).toBeInTheDocument();
-    expect(yesRadio).toHaveAttribute("name", "mother-hadOtherSurname");
-    expect(noRadio).toHaveAttribute("name", "mother-hadOtherSurname");
+    // Design System Radio components don't use native name attributes
+    // They use Radix UI which manages state via data-state attributes
   });
 
   it("should call onChange when Yes is selected for hadOtherSurname", () => {
@@ -468,20 +468,21 @@ describe("MothersDetails", () => {
 
     const yesRadio = screen.getByRole("radio", {
       name: "Yes",
-    }) as HTMLInputElement;
+    });
     const noRadio = screen.getByRole("radio", {
       name: "No",
-    }) as HTMLInputElement;
+    });
 
-    expect(yesRadio.checked).toBe(true);
-    expect(noRadio.checked).toBe(false);
+    // Design System Radio uses Radix UI which uses data-state attribute
+    expect(yesRadio).toHaveAttribute("data-state", "checked");
+    expect(noRadio).toHaveAttribute("data-state", "unchecked");
 
     rerender(
       <MothersDetails {...defaultProps} value={{ hadOtherSurname: "no" }} />
     );
 
-    expect(yesRadio.checked).toBe(false);
-    expect(noRadio.checked).toBe(true);
+    expect(yesRadio).toHaveAttribute("data-state", "unchecked");
+    expect(noRadio).toHaveAttribute("data-state", "checked");
   });
 
   it("should display placeholder for national registration number", () => {
