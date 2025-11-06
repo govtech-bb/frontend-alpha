@@ -5,7 +5,8 @@
     "rules": {
       "performance": {
         "noNamespaceImport": "off",
-        "useTopLevelRegex": "off"
+        "useTopLevelRegex": "off",
+        "noBarrelFile": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
