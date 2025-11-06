@@ -39,9 +39,11 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 - [x] Select migration (1 file: child-details)
 - [x] TextArea migration (2 files: mothers-details, fathers-details)
 
-### Phase 4: Specialized Components (PLANNED)
-- [ ] StatusBanner migration
-- [ ] Optional: OfficialBanner, Footer, Logo
+### Phase 4: Layout Components (PARTIAL)
+- [x] OfficialBanner migration (banner.tsx)
+- [~] Footer - KEEP CUSTOM (has specific layout requirements)
+- [~] Logo - KEEP CUSTOM (integrated in header, works well)
+- [~] StatusBanner - NOT USED (no status banners in current pages)
 
 ## Component Mapping
 
@@ -55,7 +57,10 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 | Checkbox | DS Checkbox | N/A | Phase 3 - Not used in forms |
 | Select | DS Select | ✓ Complete | Phase 3 - 1 file |
 | TextArea | DS TextArea | ✓ Complete | Phase 3 - 2 files |
-| Typography | DS Typography | Pending | Phase 1 |
+| Typography | DS Typography | ✓ Complete | Phase 1 - Site-wide |
+| OfficialBanner | DS OfficialBanner | ✓ Complete | Phase 4 - banner.tsx |
+| Footer | KEEP CUSTOM | N/A | Custom layout |
+| Logo | KEEP CUSTOM | N/A | Integrated in header |
 | **DateInput** | **KEEP CUSTOM** | N/A | See rationale below |
 | HelpfulBox | KEEP CUSTOM | N/A | No DS equivalent |
 | MarkdownContent | KEEP CUSTOM | N/A | No DS equivalent |
