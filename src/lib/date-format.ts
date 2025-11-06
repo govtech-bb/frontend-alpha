@@ -6,6 +6,24 @@
  */
 
 /**
+ * Month name to number mapping for text month input
+ */
+const MONTH_NAMES: Record<string, string> = {
+  january: "01",
+  february: "02",
+  march: "03",
+  april: "04",
+  may: "05",
+  june: "06",
+  july: "07",
+  august: "08",
+  september: "09",
+  october: "10",
+  november: "11",
+  december: "12",
+};
+
+/**
  * Validates that a date is semantically correct (not just format)
  *
  * @param month - Month string (01-12)
@@ -36,14 +54,105 @@ function isValidDate(month: string, day: string, year: string): boolean {
 }
 
 /**
- * Parses a date string in MM/DD/YYYY format into individual day, month, year components
+ * Converts text month input to numeric format (01-12)
+ * Handles both full month names and abbreviations, case insensitive
+ * Returns empty string for ambiguous or invalid input
+ *
+ * @param input - Month as text ("Jan", "January", "7") or number ("7", "12")
+ * @returns Two-digit month string (01-12) or empty string if ambiguous/invalid
+ *
+ * @example
+ * parseTextMonth("Jan") // "01"
+ * parseTextMonth("january") // "01"
+ * parseTextMonth("DECEMBER") // "12"
+ * parseTextMonth("7") // "07"
+ * parseTextMonth("Ju") // "" (ambiguous: June or July)
+ * parseTextMonth("Foo") // "" (invalid)
+ */
+export function parseTextMonth(input: string): string {
+  if (!input || input.trim() === "") {
+    return "";
+  }
+
+  const trimmed = input.trim().toLowerCase();
+
+  // Check if input is numeric
+  if (/^\d+$/.test(trimmed)) {
+    const monthNum = Number.parseInt(trimmed, 10);
+    // Validate range 1-12
+    if (monthNum < 1 || monthNum > 12) {
+      return "";
+    }
+    // Pad single digit to 2 digits
+    return monthNum.toString().padStart(2, "0");
+  }
+
+  // Find all months that start with the input
+  const matches = Object.entries(MONTH_NAMES).filter(([monthName]) =>
+    monthName.startsWith(trimmed)
+  );
+
+  // Return empty if ambiguous (multiple matches) or no match
+  if (matches.length !== 1) {
+    return "";
+  }
+
+  // Return the numeric value of the single match
+  return matches[0][1];
+}
+
+/**
+ * Normalizes a date string by converting text month to numeric format
+ * Preserves ambiguous or invalid month input unchanged (for validation to catch)
+ *
+ * @param dateString - Date in format "<month>/DD/YYYY" where month can be text or numeric
+ * @returns Date in format "MM/DD/YYYY" with numeric month, or original if conversion fails
+ *
+ * @example
+ * normalizeMonthInput("Jan/15/2024") // "01/15/2024"
+ * normalizeMonthInput("7/15/2024") // "07/15/2024"
+ * normalizeMonthInput("Ju/15/2024") // "Ju/15/2024" (ambiguous, preserved)
+ * normalizeMonthInput("01/15/2024") // "01/15/2024" (already normalized)
+ */
+export function normalizeMonthInput(dateString: string): string {
+  if (!dateString || dateString.trim() === "") {
+    return "";
+  }
+
+  // Parse the date string (handles both text and numeric months)
+  const parts = dateString.split("/");
+  if (parts.length !== 3) {
+    return dateString; // Invalid format, return as-is
+  }
+
+  const [month, day, year] = parts;
+
+  // Try to convert month to numeric
+  const numericMonth = parseTextMonth(month);
+
+  // If conversion failed (ambiguous or invalid), return original
+  if (!numericMonth) {
+    return dateString;
+  }
+
+  // Pad day and year
+  const paddedDay = day.padStart(2, "0");
+  const paddedYear = year.padStart(4, "0");
+
+  return `${numericMonth}/${paddedDay}/${paddedYear}`;
+}
+
+/**
+ * Parses a date string into individual day, month, year components
+ * Now supports both numeric (MM/DD/YYYY) and text month formats (Jan/DD/YYYY)
  * Does NOT validate - validation should happen on form submission, not during typing
  *
- * @param mmddyyyy - Date string in MM/DD/YYYY format (e.g., "07/30/1986")
+ * @param mmddyyyy - Date string in format "<month>/DD/YYYY" where month can be text or numeric
  * @returns Object with day, month, year as strings, or empty strings if format invalid
  *
  * @example
  * parseMMDDYYYY("07/30/1986") // { day: "30", month: "07", year: "1986" }
+ * parseMMDDYYYY("Jan/30/1986") // { day: "30", month: "Jan", year: "1986" }
  * parseMMDDYYYY("") // { day: "", month: "", year: "" }
  * parseMMDDYYYY("02/30/2024") // { day: "30", month: "02", year: "2024" } (no validation)
  * parseMMDDYYYY("00/01/0000") // { day: "01", month: "00", year: "0000" } (partial date)
@@ -57,13 +166,14 @@ export function parseMMDDYYYY(mmddyyyy: string): {
     return { day: "", month: "", year: "" };
   }
 
-  // Match MM/DD/YYYY format
-  const match = mmddyyyy.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-  if (!match) {
+  // Match <month>/<day>/<year> format where month can be text or numeric
+  // Split by "/" to handle both text and numeric months
+  const parts = mmddyyyy.split("/");
+  if (parts.length !== 3) {
     return { day: "", month: "", year: "" };
   }
 
-  const [, month, day, year] = match;
+  const [month, day, year] = parts;
 
   // No validation - just return the parsed values
   // Validation happens on form submission, not during typing
@@ -71,16 +181,18 @@ export function parseMMDDYYYY(mmddyyyy: string): {
 }
 
 /**
- * Combines individual day, month, year components into MM/DD/YYYY format
+ * Combines individual day, month, year components into date string format
+ * Now supports both numeric and text month input
  * Pads with zeros to allow partial dates (supports typing workflow)
  *
  * @param day - Day as string (can be 1 or 2 digits, or empty)
- * @param month - Month as string (can be 1 or 2 digits, or empty)
+ * @param month - Month as string (numeric "1"/"12" or text "Jan"/"December")
  * @param year - Year as string (4 digits, or empty)
- * @returns Date string in MM/DD/YYYY format, empty string if all fields empty
+ * @returns Date string in format "<month>/DD/YYYY", empty string if all fields empty
  *
  * @example
  * combineToMMDDYYYY("30", "7", "1986") // "07/30/1986"
+ * combineToMMDDYYYY("30", "Jan", "1986") // "Jan/30/1986"
  * combineToMMDDYYYY("5", "", "") // "00/05/0000" (partial date)
  * combineToMMDDYYYY("", "", "") // ""
  */
@@ -94,10 +206,21 @@ export function combineToMMDDYYYY(
     return "";
   }
 
-  // Pad with zeros to support partial dates
+  // Pad day and year with zeros to support partial dates
   const paddedDay = (day || "00").padStart(2, "0");
-  const paddedMonth = (month || "00").padStart(2, "0");
   const paddedYear = (year || "0000").padStart(4, "0");
+
+  // For month: only pad if it's numeric, otherwise pass through text as-is
+  let paddedMonth: string;
+  if (!month) {
+    paddedMonth = "00";
+  } else if (/^\d+$/.test(month)) {
+    // Numeric month - pad to 2 digits
+    paddedMonth = month.padStart(2, "0");
+  } else {
+    // Text month - pass through as-is
+    paddedMonth = month;
+  }
 
   return `${paddedMonth}/${paddedDay}/${paddedYear}`;
 }

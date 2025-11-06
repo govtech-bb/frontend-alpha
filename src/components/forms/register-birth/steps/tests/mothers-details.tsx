@@ -103,7 +103,7 @@ describe("MothersDetails", () => {
     // Date of birth is now split into Day, Month, Year
     expect((screen.getByLabelText("Day") as HTMLInputElement).value).toBe("30");
     expect((screen.getByLabelText("Month") as HTMLInputElement).value).toBe(
-      "07"
+      "7"
     );
     expect((screen.getByLabelText("Year") as HTMLInputElement).value).toBe(
       "1986"

@@ -3,7 +3,7 @@
 import { useForm } from "@tanstack/react-form";
 import { useStore } from "@tanstack/react-store";
 import { useEffect, useState } from "react";
-import { convertToISO8601 } from "@/lib/date-format";
+import { convertToISO8601, normalizeMonthInput } from "@/lib/date-format";
 import { useFormNavigation } from "../common/hooks/use-form-navigation";
 import { useFormStorage } from "../common/hooks/use-form-storage";
 import { birthRegistrationSchema } from "./schema";
@@ -63,14 +63,17 @@ export function RegisterBirthForm() {
       setSubmissionError(null);
 
       try {
-        // Convert dates from MM/DD/YYYY to ISO 8601 format for API
+        // Convert dates from <month>/DD/YYYY (text or numeric) to ISO 8601 format for API
+        // First normalize text months to numeric, then convert to ISO format
         const apiPayload = {
           ...value,
           child: value.child
             ? {
                 ...value.child,
                 dateOfBirth: value.child.dateOfBirth
-                  ? convertToISO8601(value.child.dateOfBirth)
+                  ? convertToISO8601(
+                      normalizeMonthInput(value.child.dateOfBirth)
+                    )
                   : "",
               }
             : undefined,
@@ -78,7 +81,9 @@ export function RegisterBirthForm() {
             ? {
                 ...value.mother,
                 dateOfBirth: value.mother.dateOfBirth
-                  ? convertToISO8601(value.mother.dateOfBirth)
+                  ? convertToISO8601(
+                      normalizeMonthInput(value.mother.dateOfBirth)
+                    )
                   : "",
               }
             : undefined,
@@ -86,7 +91,9 @@ export function RegisterBirthForm() {
             ? {
                 ...value.father,
                 dateOfBirth: value.father.dateOfBirth
-                  ? convertToISO8601(value.father.dateOfBirth)
+                  ? convertToISO8601(
+                      normalizeMonthInput(value.father.dateOfBirth)
+                    )
                   : "",
               }
             : undefined,

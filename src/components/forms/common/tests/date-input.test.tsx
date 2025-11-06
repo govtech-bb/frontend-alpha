@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { DateInput } from "../date-input";
@@ -111,8 +111,7 @@ describe("DateInput", () => {
     expect(yearInput.value).toBe("");
   });
 
-  it("should call onChange when day is entered", async () => {
-    const user = userEvent.setup();
+  it("should call onChange when day is entered", () => {
     const handleChange = vi.fn();
 
     render(
@@ -125,17 +124,13 @@ describe("DateInput", () => {
     );
 
     const dayInput = screen.getByLabelText("Day");
-    await user.type(dayInput, "15");
+    fireEvent.change(dayInput, { target: { value: "15" } });
 
-    // Check that onChange was called
-    expect(handleChange).toHaveBeenCalled();
-    // Final call should have day padded correctly
-    const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("00/15/0000");
+    // Check that onChange was called with day padded correctly
+    expect(handleChange).toHaveBeenCalledWith("00/15/0000");
   });
 
-  it("should call onChange when month is entered", async () => {
-    const user = userEvent.setup();
+  it("should call onChange when month is entered", () => {
     const handleChange = vi.fn();
 
     render(
@@ -148,15 +143,12 @@ describe("DateInput", () => {
     );
 
     const monthInput = screen.getByLabelText("Month");
-    await user.type(monthInput, "12");
+    fireEvent.change(monthInput, { target: { value: "12" } });
 
-    expect(handleChange).toHaveBeenCalled();
-    const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("12/00/0000");
+    expect(handleChange).toHaveBeenCalledWith("12/00/0000");
   });
 
-  it("should call onChange when year is entered", async () => {
-    const user = userEvent.setup();
+  it("should call onChange when year is entered", () => {
     const handleChange = vi.fn();
 
     render(
@@ -169,11 +161,9 @@ describe("DateInput", () => {
     );
 
     const yearInput = screen.getByLabelText("Year");
-    await user.type(yearInput, "2000");
+    fireEvent.change(yearInput, { target: { value: "2000" } });
 
-    expect(handleChange).toHaveBeenCalled();
-    const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("00/00/2000");
+    expect(handleChange).toHaveBeenCalledWith("00/00/2000");
   });
 
   it("should call onChange with partial date when field is cleared", async () => {
@@ -442,7 +432,7 @@ describe("DateInput", () => {
     const yearInput = screen.getByLabelText("Year");
 
     expect(dayInput).toHaveClass("w-[5ch]");
-    expect(monthInput).toHaveClass("w-[5ch]");
+    expect(monthInput).toHaveClass("w-[10ch]"); // Wider for text months
     expect(yearInput).toHaveClass("w-[7ch]");
   });
 
@@ -463,11 +453,11 @@ describe("DateInput", () => {
     const yearInput = screen.getByLabelText("Year");
 
     expect(dayInput).toHaveAttribute("maxLength", "2");
-    expect(monthInput).toHaveAttribute("maxLength", "2");
+    expect(monthInput).toHaveAttribute("maxLength", "9"); // Allows "September"
     expect(yearInput).toHaveAttribute("maxLength", "4");
   });
 
-  it("should have numeric input mode for mobile keyboards", () => {
+  it("should have numeric input mode for mobile keyboards on day and year", () => {
     render(
       <DateInput
         id="test-date"
@@ -484,7 +474,7 @@ describe("DateInput", () => {
     const yearInput = screen.getByLabelText("Year");
 
     expect(dayInput).toHaveAttribute("inputMode", "numeric");
-    expect(monthInput).toHaveAttribute("inputMode", "numeric");
+    expect(monthInput).not.toHaveAttribute("inputMode"); // Month allows text input
     expect(yearInput).toHaveAttribute("inputMode", "numeric");
   });
 
@@ -560,8 +550,7 @@ describe("DateInput", () => {
     expect(fieldset).toHaveAttribute("aria-describedby", "test-date-hint");
   });
 
-  it("should sanitize non-numeric characters from day input", async () => {
-    const user = userEvent.setup();
+  it("should sanitize non-numeric characters from day input", () => {
     const handleChange = vi.fn();
 
     render(
@@ -574,16 +563,13 @@ describe("DateInput", () => {
     );
 
     const dayInput = screen.getByLabelText("Day");
-    await user.type(dayInput, "a1b2c");
+    fireEvent.change(dayInput, { target: { value: "a1b2c" } });
 
-    // Should sanitize and only keep numeric characters (max 2 chars for day)
-    expect(handleChange).toHaveBeenCalled();
-    const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("00/12/0000");
+    // Should sanitize and only keep numeric characters
+    expect(handleChange).toHaveBeenCalledWith("00/12/0000");
   });
 
-  it("should sanitize non-numeric characters from month input", async () => {
-    const user = userEvent.setup();
+  it("should sanitize non-alphanumeric characters from month input but keep letters", () => {
     const handleChange = vi.fn();
 
     render(
@@ -596,16 +582,13 @@ describe("DateInput", () => {
     );
 
     const monthInput = screen.getByLabelText("Month");
-    await user.type(monthInput, "x4y5z");
+    fireEvent.change(monthInput, { target: { value: "J@a#n$1%" } });
 
-    // Should sanitize and keep only numeric characters
-    expect(handleChange).toHaveBeenCalled();
-    const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("45/00/0000");
+    // Should sanitize special chars but keep letters and digits
+    expect(handleChange).toHaveBeenCalledWith("Jan1/00/0000");
   });
 
-  it("should sanitize non-numeric characters from year input", async () => {
-    const user = userEvent.setup();
+  it("should sanitize non-numeric characters from year input", () => {
     const handleChange = vi.fn();
 
     render(
@@ -618,12 +601,10 @@ describe("DateInput", () => {
     );
 
     const yearInput = screen.getByLabelText("Year");
-    await user.type(yearInput, "abc1def");
+    fireEvent.change(yearInput, { target: { value: "abc1def" } });
 
-    // Should sanitize and keep only numeric characters (max 4 for year)
-    expect(handleChange).toHaveBeenCalled();
-    const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("00/00/0001");
+    // Should sanitize and keep only numeric characters
+    expect(handleChange).toHaveBeenCalledWith("00/00/0001");
   });
 
   it("should handle paste with non-numeric characters", async () => {
@@ -696,5 +677,136 @@ describe("DateInput", () => {
 
     // Input should show the value from props (empty), not maintain internal state
     expect(dayInput.value).toBe("");
+  });
+
+  describe("text month input support", () => {
+    it("should accept text month names in month field", () => {
+      const handleChange = vi.fn();
+
+      render(
+        <DateInput
+          id="test-date"
+          label="Date of birth"
+          onChange={handleChange}
+          value=""
+        />
+      );
+
+      const monthInput = screen.getByLabelText("Month");
+      // Simulate user pasting or completing typing "Jan"
+      fireEvent.change(monthInput, { target: { value: "Jan" } });
+
+      // Should store text month as-is
+      expect(handleChange).toHaveBeenCalledWith("Jan/00/0000");
+    });
+
+    it("should display text month as typed", () => {
+      render(
+        <DateInput
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value="December/25/2024"
+        />
+      );
+
+      const monthInput = screen.getByLabelText("Month") as HTMLInputElement;
+      expect(monthInput.value).toBe("December");
+    });
+
+    it("should accept case insensitive month names", () => {
+      const handleChange = vi.fn();
+
+      render(
+        <DateInput
+          id="test-date"
+          label="Date of birth"
+          onChange={handleChange}
+          value=""
+        />
+      );
+
+      const monthInput = screen.getByLabelText("Month");
+      fireEvent.change(monthInput, { target: { value: "JULY" } });
+
+      // Should preserve case as typed
+      expect(handleChange).toHaveBeenCalledWith("JULY/00/0000");
+    });
+
+    it("should still accept numeric month input", () => {
+      const handleChange = vi.fn();
+
+      render(
+        <DateInput
+          id="test-date"
+          label="Date of birth"
+          onChange={handleChange}
+          value=""
+        />
+      );
+
+      const monthInput = screen.getByLabelText("Month");
+      fireEvent.change(monthInput, { target: { value: "12" } });
+
+      // Should store numeric month
+      expect(handleChange).toHaveBeenCalledWith("12/00/0000");
+    });
+
+    it("should display numeric month without leading zero when single digit", () => {
+      render(
+        <DateInput
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value="07/15/2024"
+        />
+      );
+
+      const monthInput = screen.getByLabelText("Month") as HTMLInputElement;
+      // Numeric months still strip leading zeros for display
+      expect(monthInput.value).toBe("7");
+    });
+
+    it("should allow ambiguous partial text input during typing", () => {
+      const handleChange = vi.fn();
+
+      render(
+        <DateInput
+          id="test-date"
+          label="Date of birth"
+          onChange={handleChange}
+          value=""
+        />
+      );
+
+      const monthInput = screen.getByLabelText("Month");
+      fireEvent.change(monthInput, { target: { value: "Ju" } });
+
+      // Should allow partial ambiguous input (normalization happens on submit)
+      expect(handleChange).toHaveBeenCalledWith("Ju/00/0000");
+    });
+
+    it("should allow mixed alphanumeric input in month field", () => {
+      const handleChange = vi.fn();
+
+      render(
+        <DateInput
+          id="test-date"
+          label="Date of birth"
+          onChange={handleChange}
+          value=""
+        />
+      );
+
+      const monthInput = screen.getByLabelText("Month");
+      fireEvent.change(monthInput, { target: { value: "Jan1" } });
+
+      // Month field accepts both letters and digits
+      expect(handleChange).toHaveBeenCalledWith("Jan1/00/0000");
+    });
   });
 });

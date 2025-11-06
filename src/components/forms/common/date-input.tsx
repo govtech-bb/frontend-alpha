@@ -55,14 +55,26 @@ export function DateInput({
     !fieldValue || fieldValue === emptyValue ? "" : String(Number(fieldValue));
 
   const displayDay = filterDisplayValue(day, "00");
-  const displayMonth = filterDisplayValue(month, "00");
+  // For month: display text as-is, only strip zeros for numeric months
+  const displayMonth = /^\d+$/.test(month)
+    ? filterDisplayValue(month, "00")
+    : month;
   const displayYear = filterDisplayValue(year, "0000");
 
   // Sanitize input to allow only digits and update parent
   const handleFieldChange =
     (field: "day" | "month" | "year") =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const sanitized = e.target.value.replace(/\D/g, ""); // Allow only digits
+      let sanitized: string;
+
+      if (field === "month") {
+        // Month field: allow letters and digits
+        sanitized = e.target.value.replace(/[^a-zA-Z0-9]/g, "");
+      } else {
+        // Day and year fields: digits only
+        sanitized = e.target.value.replace(/\D/g, "");
+      }
+
       const updates = { day, month, year, [field]: sanitized };
       onChange(combineToMMDDYYYY(updates.day, updates.month, updates.year));
     };
@@ -136,18 +148,17 @@ export function DateInput({
             </label>
             <input
               aria-invalid={hasError ? "true" : undefined}
-              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] border-2 px-2 py-1 ${
+              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[10ch] border-2 px-2 py-1 ${
                 hasError
                   ? "govuk-input--error border-red-600"
                   : "border-gray-400"
               }`}
               id={`${id}-month`}
-              inputMode="numeric"
-              maxLength={2}
+              maxLength={9}
               name={`${id}-month`}
               onBlur={onBlur}
               onChange={handleFieldChange("month")}
-              pattern="[0-9]*"
+              pattern="[a-zA-Z0-9]*"
               type="text"
               value={displayMonth}
             />
