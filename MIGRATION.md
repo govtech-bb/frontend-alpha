@@ -33,8 +33,8 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 - [x] ErrorSummary migration (7 form step files)
 - [~] Link migration - DEFERRED (check-answers "Change" buttons are semantically buttons, not links)
 
-### Phase 3: Enhanced Form Controls (PLANNED)
-- [ ] Radio migration (Radix UI)
+### Phase 3: Enhanced Form Controls (IN PROGRESS)
+- [x] Radio migration (2 files: marriage-status, include-father-details)
 - [ ] Checkbox migration (Radix UI)
 - [ ] Select migration
 - [ ] TextArea migration
@@ -212,10 +212,15 @@ Use this checklist for each migrated component:
 
 ## Gotchas & Learnings
 
-### Issue #1: [To be filled as we discover issues]
-**Problem**: [Description]
-**Solution**: [How we fixed it]
-**Date**: [When discovered]
+### Issue #1: ResizeObserver not available in test environment
+**Problem**: Radix UI components (Radio, Checkbox, etc.) use ResizeObserver which is not available in the Vitest test environment, causing all tests to fail with "ResizeObserver is not defined"
+**Solution**: Added ResizeObserver mock to vitest.setup.ts with empty implementations for observe(), unobserve(), and disconnect() methods
+**Date**: November 6, 2025
+
+### Issue #2: Radix Radio uses data-state instead of checked property
+**Problem**: Tests checking `radio.checked` property failed because Radix UI Radio elements don't expose the native checked property
+**Solution**: Updated tests to check `data-state="checked"` or `data-state="unchecked"` attributes instead. Also changed from checking individual radio buttons to checking the RadioGroup for aria-invalid state
+**Date**: November 6, 2025
 
 ## Questions?
 
