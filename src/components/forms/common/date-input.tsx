@@ -120,13 +120,10 @@ export function DateInput({
         aria-describedby={describedby || undefined}
         className="govuk-fieldset"
       >
-        <legend className="govuk-label govuk-label--m">{label}</legend>
+        <legend className="block text-h4 text-neutral-black">{label}</legend>
 
         {hint && (
-          <div
-            className="govuk-hint mb-2 text-muted-foreground text-sm"
-            id={hintId}
-          >
+          <div className="mt-1 text-body text-neutral-black" id={hintId}>
             {hint}
           </div>
         )}
@@ -134,8 +131,9 @@ export function DateInput({
         {hasAnyError && (
           <div
             aria-live="assertive"
-            className="govuk-error-message mb-2 text-destructive"
+            className="mt-1 text-body text-red-dark"
             id={errorId}
+            role="alert"
           >
             {errorMessages.map((msg, idx) => (
               <p className="mb-1" key={idx}>
@@ -145,85 +143,97 @@ export function DateInput({
           </div>
         )}
 
-        <div className="govuk-date-input flex items-center gap-4">
-          <div className="govuk-date-input__item">
+        <div className="flex flex-wrap items-end gap-4">
+          <div className="flex flex-col">
             <label
-              className="govuk-label govuk-date-input__label mb-1 block font-medium text-sm"
+              className="mb-1 font-medium text-neutral-black text-sm"
               htmlFor={`${id}-day`}
             >
               Day
             </label>
-            <input
-              aria-invalid={hasErrorDay ? "true" : undefined}
-              autoComplete="bday-day"
-              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] rounded-md border-2 px-2 py-1 ${
+            <div
+              className={`relative inline-flex w-16 items-center rounded-sm border-2 bg-neutral-white transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
                 hasErrorDay
-                  ? "govuk-input--error border-destructive"
-                  : "border-input"
+                  ? "border-red-dark focus-within:border-red-dark"
+                  : "border-neutral-black"
               }`}
-              id={`${id}-day`}
-              inputMode="numeric"
-              maxLength={2}
-              name={`${id}-day`}
-              onBlur={onBlur}
-              onChange={handleFieldChange("day")}
-              pattern="[0-9]*"
-              type="text"
-              value={displayDay}
-            />
+            >
+              <input
+                aria-invalid={hasErrorDay ? "true" : undefined}
+                autoComplete="bday-day"
+                className="w-full min-w-0 rounded-sm px-4 py-4 text-center outline-none"
+                id={`${id}-day`}
+                inputMode="numeric"
+                maxLength={2}
+                name={`${id}-day`}
+                onBlur={onBlur}
+                onChange={handleFieldChange("day")}
+                pattern="[0-9]*"
+                type="text"
+                value={displayDay}
+              />
+            </div>
           </div>
 
-          <div className="govuk-date-input__item">
+          <div className="flex flex-col">
             <label
-              className="govuk-label govuk-date-input__label mb-1 block font-medium text-sm"
+              className="mb-1 font-medium text-neutral-black text-sm"
               htmlFor={`${id}-month`}
             >
               Month
             </label>
-            <input
-              aria-invalid={hasErrorMonth ? "true" : undefined}
-              autoComplete="bday-month"
-              className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[10ch] rounded-md border-2 px-2 py-1 ${
+            <div
+              className={`relative inline-flex w-16 items-center rounded-sm border-2 bg-neutral-white transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
                 hasErrorMonth
-                  ? "govuk-input--error border-destructive"
-                  : "border-input"
+                  ? "border-red-dark focus-within:border-red-dark"
+                  : "border-neutral-black"
               }`}
-              id={`${id}-month`}
-              maxLength={9}
-              name={`${id}-month`}
-              onBlur={onBlur}
-              onChange={handleFieldChange("month")}
-              pattern="[a-zA-Z0-9]*"
-              type="text"
-              value={displayMonth}
-            />
+            >
+              <input
+                aria-invalid={hasErrorMonth ? "true" : undefined}
+                autoComplete="bday-month"
+                className="w-full min-w-0 rounded-sm px-4 py-4 text-center outline-none"
+                id={`${id}-month`}
+                maxLength={9}
+                name={`${id}-month`}
+                onBlur={onBlur}
+                onChange={handleFieldChange("month")}
+                pattern="[a-zA-Z0-9]*"
+                type="text"
+                value={displayMonth}
+              />
+            </div>
           </div>
 
-          <div className="govuk-date-input__item">
+          <div className="flex flex-col">
             <label
-              className="govuk-label govuk-date-input__label mb-1 block font-medium text-sm"
+              className="mb-1 font-medium text-neutral-black text-sm"
               htmlFor={`${id}-year`}
             >
               Year
             </label>
-            <input
-              aria-invalid={hasErrorYear ? "true" : undefined}
-              autoComplete="bday-year"
-              className={`govuk-input govuk-date-input__input govuk-input--width-4 w-[7ch] rounded-md border-2 px-2 py-1 ${
+            <div
+              className={`relative inline-flex w-24 items-center rounded-sm border-2 bg-neutral-white transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
                 hasErrorYear
-                  ? "govuk-input--error border-destructive"
-                  : "border-input"
+                  ? "border-red-dark focus-within:border-red-dark"
+                  : "border-neutral-black"
               }`}
-              id={`${id}-year`}
-              inputMode="numeric"
-              maxLength={4}
-              name={`${id}-year`}
-              onBlur={onBlur}
-              onChange={handleFieldChange("year")}
-              pattern="[0-9]*"
-              type="text"
-              value={displayYear}
-            />
+            >
+              <input
+                aria-invalid={hasErrorYear ? "true" : undefined}
+                autoComplete="bday-year"
+                className="w-full min-w-0 rounded-sm px-4 py-4 text-center outline-none"
+                id={`${id}-year`}
+                inputMode="numeric"
+                maxLength={4}
+                name={`${id}-year`}
+                onBlur={onBlur}
+                onChange={handleFieldChange("year")}
+                pattern="[0-9]*"
+                type="text"
+                value={displayYear}
+              />
+            </div>
           </div>
         </div>
       </fieldset>

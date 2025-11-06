@@ -260,7 +260,7 @@ describe("ChildDetails", () => {
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
     // All date fields should have aria-invalid when there's an error
     const dayInput = screen.getByLabelText("Day");
     expect(dayInput).toHaveAttribute("aria-invalid", "true");

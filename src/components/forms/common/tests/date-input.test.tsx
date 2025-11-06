@@ -264,9 +264,10 @@ describe("DateInput", () => {
     const monthInput = screen.getByLabelText("Month");
     const yearInput = screen.getByLabelText("Year");
 
-    expect(dayInput).toHaveClass("border-destructive");
-    expect(monthInput).toHaveClass("border-destructive");
-    expect(yearInput).toHaveClass("border-destructive");
+    // Border is now on parent container, not input
+    expect(dayInput.parentElement).toHaveClass("border-red-dark");
+    expect(monthInput.parentElement).toHaveClass("border-red-dark");
+    expect(yearInput.parentElement).toHaveClass("border-red-dark");
   });
 
   it("should set aria-invalid on inputs when error is present", () => {
@@ -433,9 +434,10 @@ describe("DateInput", () => {
     const monthInput = screen.getByLabelText("Month");
     const yearInput = screen.getByLabelText("Year");
 
-    expect(dayInput).toHaveClass("w-[5ch]");
-    expect(monthInput).toHaveClass("w-[10ch]"); // Wider for text months
-    expect(yearInput).toHaveClass("w-[7ch]");
+    // Widths are now on parent containers
+    expect(dayInput.parentElement).toHaveClass("w-16");
+    expect(monthInput.parentElement).toHaveClass("w-16"); // Same width as day for DS consistency
+    expect(yearInput.parentElement).toHaveClass("w-24");
   });
 
   it("should have maxLength attributes to limit input", () => {
@@ -830,9 +832,10 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).toHaveClass("border-destructive");
-      expect(monthInput).not.toHaveClass("border-destructive");
-      expect(yearInput).not.toHaveClass("border-destructive");
+      // Border is now on parent container
+      expect(dayInput.parentElement).toHaveClass("border-red-dark");
+      expect(monthInput.parentElement).not.toHaveClass("border-red-dark");
+      expect(yearInput.parentElement).not.toHaveClass("border-red-dark");
     });
 
     it("should highlight only month field when month has error", () => {
@@ -852,9 +855,10 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).not.toHaveClass("border-destructive");
-      expect(monthInput).toHaveClass("border-destructive");
-      expect(yearInput).not.toHaveClass("border-destructive");
+      // Border is now on parent container
+      expect(dayInput.parentElement).not.toHaveClass("border-red-dark");
+      expect(monthInput.parentElement).toHaveClass("border-red-dark");
+      expect(yearInput.parentElement).not.toHaveClass("border-red-dark");
     });
 
     it("should highlight only year field when year has error", () => {
@@ -874,9 +878,10 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).not.toHaveClass("border-destructive");
-      expect(monthInput).not.toHaveClass("border-destructive");
-      expect(yearInput).toHaveClass("border-destructive");
+      // Border is now on parent container
+      expect(dayInput.parentElement).not.toHaveClass("border-red-dark");
+      expect(monthInput.parentElement).not.toHaveClass("border-red-dark");
+      expect(yearInput.parentElement).toHaveClass("border-red-dark");
     });
 
     it("should highlight multiple fields when multiple errors present", () => {
@@ -899,9 +904,10 @@ describe("DateInput", () => {
       const monthInput = screen.getByLabelText("Month");
       const yearInput = screen.getByLabelText("Year");
 
-      expect(dayInput).toHaveClass("border-destructive");
-      expect(monthInput).toHaveClass("border-destructive");
-      expect(yearInput).not.toHaveClass("border-destructive");
+      // Border is now on parent container
+      expect(dayInput.parentElement).toHaveClass("border-red-dark");
+      expect(monthInput.parentElement).toHaveClass("border-red-dark");
+      expect(yearInput.parentElement).not.toHaveClass("border-red-dark");
     });
 
     it("should set aria-invalid only on fields with errors", () => {
