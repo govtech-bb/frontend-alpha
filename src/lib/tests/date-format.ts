@@ -283,6 +283,10 @@ describe("parseTextMonth", () => {
       expect(parseTextMonth("december")).toBe("12");
     });
 
+    it("should handle lowercase july", () => {
+      expect(parseTextMonth("july")).toBe("07");
+    });
+
     it("should handle uppercase", () => {
       expect(parseTextMonth("JAN")).toBe("01");
       expect(parseTextMonth("DECEMBER")).toBe("12");
@@ -383,6 +387,10 @@ describe("normalizeMonthInput", () => {
     it("should handle case insensitive month names", () => {
       expect(normalizeMonthInput("jan/15/2024")).toBe("01/15/2024");
       expect(normalizeMonthInput("DECEMBER/25/2024")).toBe("12/25/2024");
+    });
+
+    it("should convert lowercase july to numeric format", () => {
+      expect(normalizeMonthInput("july/30/1977")).toBe("07/30/1977");
     });
   });
 

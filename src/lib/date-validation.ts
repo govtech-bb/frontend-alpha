@@ -3,6 +3,8 @@
  * Handles format validation, date validity, and edge cases like leap years
  */
 
+import { normalizeMonthInput } from "./date-format";
+
 // Regex pattern for MM/DD/YYYY format
 // Month: 01-12, Day: 01-31, Year: 4 digits
 export const DATE_REGEX = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
@@ -10,18 +12,22 @@ export const DATE_REGEX = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
 /**
  * Validates both format and actual date validity
  * Handles leap years and month-specific day counts
+ * Normalizes text month names to numeric format before validation
  *
- * @param dateString - Date string in MM/DD/YYYY format
+ * @param dateString - Date string in MM/DD/YYYY format (or with text month)
  * @returns true if the date is valid, false otherwise
  */
 export function isValidDate(dateString: string): boolean {
+  // Normalize text months to numeric format first
+  const normalized = normalizeMonthInput(dateString);
+
   // Check format first
-  if (!DATE_REGEX.test(dateString)) {
+  if (!DATE_REGEX.test(normalized)) {
     return false;
   }
 
   // Parse and validate actual date
-  const [month, day, year] = dateString.split("/").map(Number);
+  const [month, day, year] = normalized.split("/").map(Number);
   const date = new Date(year, month - 1, day);
 
   // Verify the date components match (catches invalid dates like 02/30)

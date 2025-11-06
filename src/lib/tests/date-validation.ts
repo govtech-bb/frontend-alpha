@@ -17,10 +17,21 @@ describe("isValidDate", () => {
   it("should reject invalid format", () => {
     expect(isValidDate("2024-01-01")).toBe(false); // ISO format
     expect(isValidDate("01-01-2024")).toBe(false); // Dashes
-    expect(isValidDate("1/1/2024")).toBe(false); // Single digits
     expect(isValidDate("13/01/2024")).toBe(false); // Invalid month
     expect(isValidDate("00/01/2024")).toBe(false); // Invalid month
-    expect(isValidDate("30 July 1986")).toBe(false); // Text format
+    expect(isValidDate("30 July 1986")).toBe(false); // Text format with spaces
+  });
+
+  it("should accept single digit months and days (auto-normalized)", () => {
+    expect(isValidDate("1/1/2024")).toBe(true); // Normalized to 01/01/2024
+    expect(isValidDate("7/30/1986")).toBe(true); // Normalized to 07/30/1986
+    expect(isValidDate("12/5/2024")).toBe(true); // Normalized to 12/05/2024
+  });
+
+  it("should accept text month names (auto-normalized)", () => {
+    expect(isValidDate("july/30/1977")).toBe(true); // Normalized to 07/30/1977
+    expect(isValidDate("January/15/2024")).toBe(true); // Normalized to 01/15/2024
+    expect(isValidDate("Dec/25/2024")).toBe(true); // Normalized to 12/25/2024
   });
 
   it("should reject invalid dates", () => {
