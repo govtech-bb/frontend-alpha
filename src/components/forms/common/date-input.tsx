@@ -85,7 +85,7 @@ export function DateInput({
       }
 
       const updates = { day, month, year, [field]: sanitized };
-      onChange(combineToISO8601(updates.day, updates.month, updates.year));
+      onChange(combineToISO8601(updates.year, updates.month, updates.day));
     };
 
   // Support both old error prop (string) and new errors prop (object)

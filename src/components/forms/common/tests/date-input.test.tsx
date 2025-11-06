@@ -589,7 +589,7 @@ describe("DateInput", () => {
     fireEvent.change(monthInput, { target: { value: "J@a#n$1%" } });
 
     // Should sanitize special chars but keep letters and digits
-    expect(handleChange).toHaveBeenCalledWith("Jan1/00/0000");
+    expect(handleChange).toHaveBeenCalledWith("0000-Jan1-00");
   });
 
   it("should sanitize non-numeric characters from year input", () => {
@@ -810,7 +810,7 @@ describe("DateInput", () => {
       fireEvent.change(monthInput, { target: { value: "Jan1" } });
 
       // Month field accepts both letters and digits
-      expect(handleChange).toHaveBeenCalledWith("Jan1/00/0000");
+      expect(handleChange).toHaveBeenCalledWith("0000-Jan1-00");
     });
   });
 

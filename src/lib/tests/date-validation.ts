@@ -16,17 +16,16 @@ describe("isValidDate", () => {
   });
 
   it("should reject invalid format", () => {
-    expect(isValidDate("2024-01-01")).toBe(false); // ISO format
-    expect(isValidDate("01-01-2024")).toBe(false); // Dashes
+    expect(isValidDate("01-01-2024")).toBe(false); // Wrong order
     expect(isValidDate("2024-13-01")).toBe(false); // Invalid month
     expect(isValidDate("2024-00-01")).toBe(false); // Invalid month
     expect(isValidDate("30 July 1986")).toBe(false); // Text format with spaces
   });
 
   it("should accept single digit months and days (auto-normalized)", () => {
-    expect(isValidDate("1/1/2024")).toBe(true); // Normalized to 01/01/2024
-    expect(isValidDate("7/30/1986")).toBe(true); // Normalized to 07/30/1986
-    expect(isValidDate("12/5/2024")).toBe(true); // Normalized to 12/05/2024
+    expect(isValidDate("2024-1-1")).toBe(true); // Normalized to 2024-01-01
+    expect(isValidDate("1986-7-30")).toBe(true); // Normalized to 1986-07-30
+    expect(isValidDate("2024-12-5")).toBe(true); // Normalized to 2024-12-05
   });
 
   it("should accept text month names (auto-normalized)", () => {
@@ -67,17 +66,17 @@ describe("isValidBirthDate", () => {
 
   it("should reject future dates", () => {
     const nextYear = new Date().getFullYear() + 1;
-    expect(isValidBirthDate(`01/01/${nextYear}`)).toBe(false);
+    expect(isValidBirthDate(`${nextYear}-01-01`)).toBe(false);
   });
 
   it("should accept current year dates", () => {
     const currentYear = new Date().getFullYear();
-    expect(isValidBirthDate(`01/01/${currentYear}`)).toBe(true);
+    expect(isValidBirthDate(`${currentYear}-01-01`)).toBe(true);
   });
 
   it("should reject invalid formats", () => {
-    expect(isValidBirthDate("1986-30-07")).toBe(false); // DD/MM/YYYY
-    expect(isValidBirthDate("1986-07-30")).toBe(false); // ISO format
+    expect(isValidBirthDate("1986-30-07")).toBe(false); // DD/MM/YYYY - wrong order
+    expect(isValidBirthDate("07-30-1986")).toBe(false); // MM/DD/YYYY - old format
   });
 });
 
@@ -88,7 +87,7 @@ describe("isValidChildBirthDate", () => {
     const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
     const day = String(tomorrow.getDate()).padStart(2, "0");
     const year = tomorrow.getFullYear();
-    expect(isValidChildBirthDate(`${month}/${day}/${year}`)).toBe(false);
+    expect(isValidChildBirthDate(`${year}-${month}-${day}`)).toBe(false);
   });
 
   it("should accept today's date", () => {
@@ -96,7 +95,7 @@ describe("isValidChildBirthDate", () => {
     const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
     const year = today.getFullYear();
-    expect(isValidChildBirthDate(`${month}/${day}/${year}`)).toBe(true);
+    expect(isValidChildBirthDate(`${year}-${month}-${day}`)).toBe(true);
   });
 
   it("should accept past dates", () => {
@@ -109,8 +108,8 @@ describe("isValidChildBirthDate", () => {
   });
 
   it("should reject invalid formats", () => {
-    expect(isValidChildBirthDate("2023-22-10")).toBe(false); // DD/MM/YYYY
-    expect(isValidChildBirthDate("2023-10-22")).toBe(false); // ISO format
+    expect(isValidChildBirthDate("2023-22-10")).toBe(false); // Invalid month (22)
+    expect(isValidChildBirthDate("10-22-2023")).toBe(false); // MM/DD/YYYY - old format
   });
 });
 
@@ -196,17 +195,17 @@ describe("validateDateFields", () => {
 
   describe("invalid year detection", () => {
     it("should return error for incomplete year (3 digits)", () => {
-      const result = validateDateFields("01/15/202");
+      const result = validateDateFields("202-01-15");
       expect(result).toEqual({ year: "Year must be 4 digits" });
     });
 
     it("should return error for incomplete year (2 digits)", () => {
-      const result = validateDateFields("01/15/24");
+      const result = validateDateFields("24-01-15");
       expect(result).toEqual({ year: "Year must be 4 digits" });
     });
 
     it("should return error for incomplete year (1 digit)", () => {
-      const result = validateDateFields("01/15/2");
+      const result = validateDateFields("2-01-15");
       expect(result).toEqual({ year: "Year must be 4 digits" });
     });
 
@@ -224,7 +223,7 @@ describe("validateDateFields", () => {
       const day = String(tomorrow.getDate()).padStart(2, "0");
       const year = tomorrow.getFullYear();
 
-      const result = validateDateFields(`${month}/${day}/${year}`);
+      const result = validateDateFields(`${year}-${month}-${day}`);
       expect(result).toEqual({ year: "Date cannot be in the future" });
     });
 
@@ -234,7 +233,7 @@ describe("validateDateFields", () => {
       const day = String(today.getDate()).padStart(2, "0");
       const year = today.getFullYear();
 
-      const result = validateDateFields(`${month}/${day}/${year}`);
+      const result = validateDateFields(`${year}-${month}-${day}`);
       expect(result).toBeNull();
     });
   });
@@ -293,7 +292,7 @@ describe("validateDateFields", () => {
     });
 
     it("should return day error when day and year invalid", () => {
-      const result = validateDateFields("01/32/24");
+      const result = validateDateFields("24-01-32");
       expect(result).toEqual({
         day: "Day must be between 1 and 31",
         year: "Year must be 4 digits",
