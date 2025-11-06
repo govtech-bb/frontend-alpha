@@ -1,14 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ds";
+import { Button, Input } from "@/components/ds";
 import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
-import {
-  getFieldClassName,
-  getTextareaClassName,
-} from "../../common/form-utils";
+import { getTextareaClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { fatherDetailsValidation } from "../schema";
@@ -67,41 +64,23 @@ export function FathersDetails({
 
       {/* First name */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-firstName"
-        >
-          First name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.firstName ? "father-firstName-error" : undefined
-          }
-          aria-invalid={fieldErrors.firstName ? true : undefined}
-          className={getFieldClassName("firstName", fieldErrors)}
+        <Input
+          error={fieldErrors.firstName}
           id="father-firstName"
+          label="First name"
           onBlur={() => handleBlur("firstName")}
           onChange={(e) => handleChange("firstName", e.target.value)}
           type="text"
           value={value.firstName || ""}
         />
-        <FormFieldError id="father-firstName" message={fieldErrors.firstName} />
       </div>
 
       {/* Middle name */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-middleName"
-        >
-          Middle name(s)
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          If they have more than one, add them in order
-        </p>
-        <input
-          className={getFieldClassName("middleName", fieldErrors)}
+        <Input
+          description="If they have more than one, add them in order"
           id="father-middleName"
+          label="Middle name(s)"
           onChange={(e) => handleChange("middleName", e.target.value)}
           type="text"
           value={value.middleName || ""}
@@ -110,25 +89,15 @@ export function FathersDetails({
 
       {/* Last name */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-lastName"
-        >
-          Last name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.lastName ? "father-lastName-error" : undefined
-          }
-          aria-invalid={fieldErrors.lastName ? true : undefined}
-          className={getFieldClassName("lastName", fieldErrors)}
+        <Input
+          error={fieldErrors.lastName}
           id="father-lastName"
+          label="Last name"
           onBlur={() => handleBlur("lastName")}
           onChange={(e) => handleChange("lastName", e.target.value)}
           type="text"
           value={value.lastName || ""}
         />
-        <FormFieldError id="father-lastName" message={fieldErrors.lastName} />
       </div>
 
       {/* Date of birth */}
@@ -171,26 +140,10 @@ export function FathersDetails({
 
       {/* National registration number */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-nationalRegistrationNumber"
-        >
-          National registration number
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.nationalRegistrationNumber
-              ? "father-nationalRegistrationNumber-error"
-              : undefined
-          }
-          aria-invalid={
-            fieldErrors.nationalRegistrationNumber ? true : undefined
-          }
-          className={getFieldClassName(
-            "nationalRegistrationNumber",
-            fieldErrors
-          )}
+        <Input
+          error={fieldErrors.nationalRegistrationNumber}
           id="father-nationalRegistrationNumber"
+          label="National registration number"
           onBlur={() => handleBlur("nationalRegistrationNumber")}
           onChange={(e) =>
             handleChange("nationalRegistrationNumber", e.target.value)
@@ -198,10 +151,6 @@ export function FathersDetails({
           placeholder="123456-7890"
           type="text"
           value={value.nationalRegistrationNumber || ""}
-        />
-        <FormFieldError
-          id="father-nationalRegistrationNumber"
-          message={fieldErrors.nationalRegistrationNumber}
         />
 
         {/* Passport number disclosure */}
@@ -219,29 +168,14 @@ export function FathersDetails({
               If you don't have a National Registration number, you can use your
               passport number instead.
             </p>
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="father-passportNumber"
-            >
-              Passport number
-            </label>
-            <input
-              aria-describedby={
-                fieldErrors.passportNumber
-                  ? "father-passportNumber-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.passportNumber ? true : undefined}
-              className={getFieldClassName("passportNumber", fieldErrors)}
+            <Input
+              error={fieldErrors.passportNumber}
               id="father-passportNumber"
+              label="Passport number"
               onBlur={() => handleBlur("passportNumber")}
               onChange={(e) => handleChange("passportNumber", e.target.value)}
               type="text"
               value={value.passportNumber || ""}
-            />
-            <FormFieldError
-              id="father-passportNumber"
-              message={fieldErrors.passportNumber}
             />
           </div>
         </details>
@@ -249,31 +183,15 @@ export function FathersDetails({
 
       {/* Occupation */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-occupation"
-        >
-          Occupation
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          This will be included on the child's birth certificate and in official
-          records.
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.occupation ? "father-occupation-error" : undefined
-          }
-          aria-invalid={fieldErrors.occupation ? true : undefined}
-          className={getFieldClassName("occupation", fieldErrors)}
+        <Input
+          description="This will be included on the child's birth certificate and in official records."
+          error={fieldErrors.occupation}
           id="father-occupation"
+          label="Occupation"
           onBlur={() => handleBlur("occupation")}
           onChange={(e) => handleChange("occupation", e.target.value)}
           type="text"
           value={value.occupation || ""}
-        />
-        <FormFieldError
-          id="father-occupation"
-          message={fieldErrors.occupation}
         />
       </div>
 
