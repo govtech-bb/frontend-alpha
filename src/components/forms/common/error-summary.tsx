@@ -22,12 +22,21 @@ export function ErrorSummary({
   title = "There is a problem",
 }: ErrorSummaryProps) {
   const summaryRef = useRef<HTMLDivElement>(null);
+  const prevErrorCountRef = useRef(0);
 
   // Focus the error summary when it appears (accessibility)
+  // Only focus when errors FIRST APPEAR (0 → N), not when errors change
   useEffect(() => {
-    if (errors.length > 0 && summaryRef.current) {
+    const hadNoErrors = prevErrorCountRef.current === 0;
+    const nowHasErrors = errors.length > 0;
+
+    // Only focus when transitioning from no errors to having errors
+    if (hadNoErrors && nowHasErrors && summaryRef.current) {
       summaryRef.current.focus();
     }
+
+    // Update the ref for next render
+    prevErrorCountRef.current = errors.length;
   }, [errors.length]);
 
   if (errors.length === 0) {
