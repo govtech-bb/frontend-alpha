@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@govtech-bb/design/src/index.css";
+@import "@govtech-bb/design";
+@source "../../node_modules/@govtech-bb/react/dist/**/**.js";
 
 /* @custom-variant dark (&:is(.dark *)); */
 
