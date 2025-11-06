@@ -1,11 +1,16 @@
+import { normalizeMonthInput } from "./date-format";
+
 /**
  * Formats a date from MM/DD/YYYY to spelled-out format like "Jul 30, 2011"
+ * Now supports text month input like "Sep/11/2001" or "September/11/2001"
  *
- * @param mmddyyyy - Date string in MM/DD/YYYY format or undefined
+ * @param mmddyyyy - Date string in MM/DD/YYYY format (or with text month) or undefined
  * @returns Formatted date string like "Jul 30, 2011" or empty string if invalid
  *
  * @example
  * formatDateForDisplay("07/30/2011") // Returns "Jul 30, 2011"
+ * formatDateForDisplay("Sep/11/2001") // Returns "Sep 11, 2001"
+ * formatDateForDisplay("September/11/2001") // Returns "Sep 11, 2001"
  * formatDateForDisplay("invalid") // Returns ""
  * formatDateForDisplay(undefined) // Returns ""
  */
@@ -15,8 +20,11 @@ export function formatDateForDisplay(mmddyyyy: string | undefined): string {
     return "";
   }
 
+  // Normalize text months to numeric format first
+  const normalized = normalizeMonthInput(mmddyyyy);
+
   // Validate format: MM/DD/YYYY
-  const match = mmddyyyy.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  const match = normalized.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   if (!match) {
     return "";
   }

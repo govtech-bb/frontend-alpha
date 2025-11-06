@@ -2,6 +2,36 @@ import { describe, expect, it } from "vitest";
 import { formatDateForDisplay } from "../date-display";
 
 describe("formatDateForDisplay", () => {
+  describe("text month input", () => {
+    it("should handle text month abbreviations like 'Sep'", () => {
+      expect(formatDateForDisplay("Sep/11/2001")).toBe("Sep 11, 2001");
+    });
+
+    it("should handle full month names like 'September'", () => {
+      expect(formatDateForDisplay("September/11/2001")).toBe("Sep 11, 2001");
+    });
+
+    it("should handle mixed case month names", () => {
+      expect(formatDateForDisplay("jan/15/2020")).toBe("Jan 15, 2020");
+      expect(formatDateForDisplay("MARCH/10/2018")).toBe("Mar 10, 2018");
+    });
+
+    it("should handle all month abbreviations", () => {
+      expect(formatDateForDisplay("Jan/1/2020")).toBe("Jan 1, 2020");
+      expect(formatDateForDisplay("Feb/1/2020")).toBe("Feb 1, 2020");
+      expect(formatDateForDisplay("Mar/1/2020")).toBe("Mar 1, 2020");
+      expect(formatDateForDisplay("Apr/1/2020")).toBe("Apr 1, 2020");
+      expect(formatDateForDisplay("May/1/2020")).toBe("May 1, 2020");
+      expect(formatDateForDisplay("Jun/1/2020")).toBe("Jun 1, 2020");
+      expect(formatDateForDisplay("Jul/1/2020")).toBe("Jul 1, 2020");
+      expect(formatDateForDisplay("Aug/1/2020")).toBe("Aug 1, 2020");
+      expect(formatDateForDisplay("Sep/1/2020")).toBe("Sep 1, 2020");
+      expect(formatDateForDisplay("Oct/1/2020")).toBe("Oct 1, 2020");
+      expect(formatDateForDisplay("Nov/1/2020")).toBe("Nov 1, 2020");
+      expect(formatDateForDisplay("Dec/1/2020")).toBe("Dec 1, 2020");
+    });
+  });
+
   describe("valid dates", () => {
     it("should format a valid date to spelled-out format", () => {
       expect(formatDateForDisplay("07/30/2011")).toBe("Jul 30, 2011");
