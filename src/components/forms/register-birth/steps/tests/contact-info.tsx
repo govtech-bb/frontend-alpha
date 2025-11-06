@@ -106,7 +106,7 @@ describe("ContactInfo", () => {
       .closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
     const emailInput = screen.getByLabelText("Email address");
     expect(emailInput).toHaveAttribute("aria-invalid", "true");
   });
@@ -119,7 +119,7 @@ describe("ContactInfo", () => {
       .closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
   });
 
   it("should call onNext with wantContact set to yes on successful submission", () => {
@@ -152,7 +152,7 @@ describe("ContactInfo", () => {
       .closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
   });
 
   it("should mark email input as invalid when there are errors", () => {
@@ -217,7 +217,7 @@ describe("ContactInfo", () => {
       .closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
     const phoneInput = screen.getByLabelText("Phone number");
     expect(phoneInput).toHaveAttribute("aria-invalid", "true");
   });

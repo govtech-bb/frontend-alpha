@@ -1,10 +1,8 @@
 "use client";
 
-import { Button } from "@/components/ds";
+import { Button, Input } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
 import { ErrorSummary } from "../../common/error-summary";
-import { FormFieldError } from "../../common/form-field-error";
-import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { contactInfoValidation } from "../schema";
@@ -87,46 +85,28 @@ export function ContactInfo({
 
       {/* Email address */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="email"
-        >
-          Email address
-        </label>
-        <input
-          aria-describedby={fieldErrors.email ? "email-error" : undefined}
-          aria-invalid={fieldErrors.email ? true : undefined}
-          className={getFieldClassName("email", fieldErrors)}
+        <Input
+          error={fieldErrors.email}
           id="email"
+          label="Email address"
           onBlur={() => handleBlur("email")}
           onChange={(e) => handleChange("email", e.target.value)}
           type="email"
           value={email || ""}
         />
-        <FormFieldError id="email" message={fieldErrors.email} />
       </div>
 
       {/* Phone number */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="phoneNumber"
-        >
-          Phone number
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.phoneNumber ? "phoneNumber-error" : undefined
-          }
-          aria-invalid={fieldErrors.phoneNumber ? true : undefined}
-          className={getFieldClassName("phoneNumber", fieldErrors)}
+        <Input
+          error={fieldErrors.phoneNumber}
           id="phoneNumber"
+          label="Phone number"
           onBlur={() => handleBlur("phoneNumber")}
           onChange={(e) => handleChange("phoneNumber", e.target.value)}
           type="tel"
           value={phoneNumber || ""}
         />
-        <FormFieldError id="phoneNumber" message={fieldErrors.phoneNumber} />
       </div>
 
       <div className="flex gap-4">
