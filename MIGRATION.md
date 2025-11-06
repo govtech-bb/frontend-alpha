@@ -30,7 +30,7 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 ### Phase 2: Core Interactive Elements ✓ IN PROGRESS
 - [x] Button migration (all 8 form step files)
 - [ ] Link migration (Change buttons in check-answers)
-- [~] Input migration (2 of 4 files: child-details, contact-info)
+- [x] Input migration (4 of 4 files: child-details, contact-info, mothers-details, fathers-details)
 - [ ] ErrorSummary migration
 
 ### Phase 3: Enhanced Form Controls (PLANNED)
