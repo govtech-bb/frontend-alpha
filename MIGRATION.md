@@ -17,15 +17,15 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 
 ## Migration Status
 
-### Phase 1: Foundation & Theming ✓ IN PROGRESS
+### Phase 1: Foundation & Theming ✓ COMPLETED
 - [x] Install packages (exact version lock)
 - [x] Create design system alias (`src/components/ds/index.ts`)
-- [ ] Import design tokens
-- [ ] Migrate color tokens
-- [ ] Migrate typography
-- [ ] Restyle custom DateInput
-- [ ] Delete dead code (form-progress-indicator)
-- [ ] Set up visual regression testing
+- [x] Import design tokens
+- [x] Migrate color tokens
+- [x] Migrate typography
+- [x] Restyle custom DateInput
+- [x] Delete dead code (form-progress-indicator)
+- [ ] Set up visual regression testing (deferred to Phase 4)
 
 ### Phase 2: Core Interactive Elements (PLANNED)
 - [ ] Button migration
