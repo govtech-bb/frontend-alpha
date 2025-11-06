@@ -48,7 +48,9 @@ describe("DateInput", () => {
       />
     );
 
-    expect(screen.getByText("For example, 27 3 2007")).toBeInTheDocument();
+    expect(
+      screen.getByText("For example, 27 3 2007 or 27 Mar 2007")
+    ).toBeInTheDocument();
   });
 
   it("should render custom hint text", () => {

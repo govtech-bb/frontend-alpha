@@ -35,7 +35,7 @@ export type DateInputProps = {
 export function DateInput({
   id,
   label,
-  hint = "For example, 27 3 2007",
+  hint = "For example, 27 3 2007 or 27 Mar 2007",
   value,
   onChange,
   onBlur,
