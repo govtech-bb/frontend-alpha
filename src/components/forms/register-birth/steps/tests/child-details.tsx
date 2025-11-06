@@ -151,7 +151,7 @@ describe("ChildDetails", () => {
     const form = screen.getByRole("button", { name: /next/i }).closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getByText("There is a problem")).toBeInTheDocument();
   });
 
   it("should call onNext on successful form submission", () => {

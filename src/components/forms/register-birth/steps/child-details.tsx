@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ds";
+import { Button, Input } from "@/components/ds";
 import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
@@ -61,44 +61,23 @@ export function ChildDetails({
 
       {/* First name(s) */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="child-firstNames"
-        >
-          First name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.firstNames ? "child-firstNames-error" : undefined
-          }
-          aria-invalid={fieldErrors.firstNames ? true : undefined}
-          className={getFieldClassName("firstNames", fieldErrors)}
+        <Input
+          error={fieldErrors.firstNames}
           id="child-firstNames"
+          label="First name"
           onBlur={() => handleBlur("firstNames")}
           onChange={(e) => handleChange("firstNames", e.target.value)}
           type="text"
           value={value.firstNames || ""}
         />
-        <FormFieldError
-          id="child-firstNames"
-          message={fieldErrors.firstNames}
-        />
       </div>
 
       {/* Middle name(s) */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="child-middleNames"
-        >
-          Middle name(s)
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          If they have more than one, add them in order
-        </p>
-        <input
-          className={getFieldClassName("middleNames", fieldErrors)}
+        <Input
+          description="If they have more than one, add them in order"
           id="child-middleNames"
+          label="Middle name(s)"
           onChange={(e) => handleChange("middleNames", e.target.value)}
           type="text"
           value={value.middleNames || ""}
@@ -107,25 +86,15 @@ export function ChildDetails({
 
       {/* Last name (prefilled) */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="child-lastName"
-        >
-          Last name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.lastName ? "child-lastName-error" : undefined
-          }
-          aria-invalid={fieldErrors.lastName ? true : undefined}
-          className={getFieldClassName("lastName", fieldErrors)}
+        <Input
+          error={fieldErrors.lastName}
           id="child-lastName"
+          label="Last name"
           onBlur={() => handleBlur("lastName")}
           onChange={(e) => handleChange("lastName", e.target.value)}
           type="text"
           value={value.lastName || ""}
         />
-        <FormFieldError id="child-lastName" message={fieldErrors.lastName} />
       </div>
 
       {/* Date of birth */}
@@ -178,36 +147,15 @@ export function ChildDetails({
 
       {/* Place of birth */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="child-parishOfBirth"
-        >
-          Place of birth
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          Include the town and parish in your answer.
-        </p>
-        <p className="mb-2 text-base text-gray-600">
-          For example, Queen Elizabeth Hospital, Bridgetown, St. Michael.
-        </p>
-        <p className="mb-2 text-base text-gray-600">
-          Or a home address if they were born at home.
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.parishOfBirth ? "child-parishOfBirth-error" : undefined
-          }
-          aria-invalid={fieldErrors.parishOfBirth ? true : undefined}
-          className={getFieldClassName("parishOfBirth", fieldErrors)}
+        <Input
+          description="Include the town and parish in your answer. For example, Queen Elizabeth Hospital, Bridgetown, St. Michael. Or a home address if they were born at home."
+          error={fieldErrors.parishOfBirth}
           id="child-parishOfBirth"
+          label="Place of birth"
           onBlur={() => handleBlur("parishOfBirth")}
           onChange={(e) => handleChange("parishOfBirth", e.target.value)}
           type="text"
           value={value.parishOfBirth || ""}
-        />
-        <FormFieldError
-          id="child-parishOfBirth"
-          message={fieldErrors.parishOfBirth}
         />
       </div>
 
