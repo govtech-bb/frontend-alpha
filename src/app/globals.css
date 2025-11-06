@@ -5,41 +5,27 @@
 /* @custom-variant dark (&:is(.dark *)); */
 
 @theme inline {
-  /* Yellow */
-  --color-yellow-dark: hsla(39, 80%, 55%, 1);
-  --color-yellow-bright: hsla(45, 100%, 57%, 1);
-  --color-yellow-light: hsla(46, 100%, 83%, 1);
-
-  /* Teal */
-  --color-teal-dark: hsla(183, 75%, 22%, 1);
-  --color-teal-bright: hsla(183, 61%, 49%, 1);
-  --color-teal-light: hsla(183, 57%, 92%, 1);
-
-  --color-blue-dark: hsla(222, 100%, 25%, 1);
-  --color-blue-bright: hsla(210, 93%, 61%, 1);
-  --color-blue-light: hsla(210, 100%, 85%, 1);
-
-  --color-neutral-black: hsla(0, 0%, 0%, 1);
-  --color-neutral-grey: hsla(211, 16%, 90%, 1);
-  --color-neutral-white: hsla(0, 0%, 100%, 1);
-
-  --color-red-dark: hsla(0, 58%, 41%, 1);
-  --color-red-bright: hsla(0, 100%, 71%, 1);
-  --color-red-light: hsla(0, 100%, 92%, 1);
-
-  --color-pink-dark: hsla(333, 82%, 37%, 1);
-  --color-pink-bright: hsla(321, 100%, 79%, 1);
-  --color-pink-light: hsla(321, 100%, 92%, 1);
-
-  --color-purple-dark: hsla(283, 44%, 25%, 1);
-  --color-purple-bright: hsla(282, 47%, 58%, 1);
-  --color-purple-light: hsla(291, 46%, 83%, 1);
-
-  --color-green-dark: hsla(164, 100%, 20%, 1);
-  --color-green-bright: hsla(158, 72%, 44%, 1);
-  --color-green-light: hsla(158, 55%, 78%, 1);
-
-  --color-exp-pink-10: hsla(322, 100%, 98%, 1);
+  /* Note: Color tokens now imported from @govtech-bb/design
+   * The design system provides these tokens:
+   * - Yellow: yellow-dark, yellow-100, yellow-40, yellow-10
+   * - Teal: teal-dark, teal-100, teal-40, teal-10
+   * - Blue: blue-dark, blue-100, blue-40, blue-10
+   * - Neutral: neutral-black, neutral-midgrey, neutral-grey, neutral-white
+   * - Red: red-dark, red-100, red-40, red-10
+   * - Pink: pink-dark, pink-100, pink-40, pink-10
+   * - Purple: purple-dark, purple-100, purple-40, purple-10
+   * - Green: green-dark, green-100, green-40, green-10
+   *
+   * Our old color scheme has been replaced by design system tokens.
+   * Mapping:
+   * - Our yellow-dark → DS yellow-dark (#e8a833)
+   * - Our yellow-bright → DS yellow-100 (#ffc726)
+   * - Our yellow-light → DS yellow-10 (#fff9e9)
+   * - Our teal-dark → DS teal-dark (#0e5f64)
+   * - Our teal-bright → DS teal-100 (#30c0c8)
+   * - Our teal-light → DS teal-10 (#eaf9f9)
+   * (etc. for other colors)
+   */
 
   /* --font-mono: var(--font-geist-mono); */
   --radius-sm: calc(var(--radius) - 4px);
@@ -49,47 +35,52 @@
 }
 
 :root {
-  /* Yellow */
-  --yellow-dark: hsla(39, 80%, 55%, 1);
-  --yellow-bright: hsla(45, 100%, 57%, 1);
-  --yellow-light: hsla(46, 100%, 83%, 1);
+  /* Alias design system tokens for backward compatibility
+   * These map our old naming convention to the new DS tokens
+   */
 
-  --teal-dark: hsla(183, 75%, 22%, 1);
-  --teal-bright: hsla(183, 61%, 49%, 1);
-  --teal-light: hsla(183, 57%, 92%, 1);
+  /* Yellow - using DS tokens */
+  --yellow-dark: var(--color-yellow-dark);
+  --yellow-bright: var(--color-yellow-100);
+  --yellow-light: var(--color-yellow-10);
 
-  /* Blue */
-  --blue-dark: hsla(222, 100%, 25%, 1);
-  --blue-bright: hsla(210, 93%, 61%, 1);
-  --blue-light: hsla(210, 100%, 85%, 1);
+  /* Teal - using DS tokens */
+  --teal-dark: var(--color-teal-dark);
+  --teal-bright: var(--color-teal-100);
+  --teal-light: var(--color-teal-10);
 
-  /* Neutral */
-  --neutral-black: hsla(0, 0%, 0%, 1);
-  --neutral-grey: hsla(211, 16%, 90%, 1);
-  --neutral-white: hsla(0, 0%, 100%, 1);
+  /* Blue - using DS tokens */
+  --blue-dark: var(--color-blue-dark);
+  --blue-bright: var(--color-blue-100);
+  --blue-light: var(--color-blue-10);
 
-  /* Red */
-  --red-dark: hsla(0, 58%, 41%, 1);
-  --red-bright: hsla(0, 100%, 71%, 1);
-  --red-light: hsla(0, 100%, 92%, 1);
+  /* Neutral - using DS tokens */
+  --neutral-black: var(--color-neutral-black);
+  --neutral-grey: var(--color-neutral-grey);
+  --neutral-white: var(--color-neutral-white);
 
-  /* Pink */
-  --pink-dark: hsla(333, 82%, 37%, 1);
-  --pink-bright: hsla(321, 100%, 79%, 1);
-  --pink-light: hsla(321, 100%, 92%, 1);
+  /* Red - using DS tokens */
+  --red-dark: var(--color-red-dark);
+  --red-bright: var(--color-red-100);
+  --red-light: var(--color-red-10);
 
-  /* Purple */
-  --purple-dark: hsla(283, 44%, 25%, 1);
-  --purple-bright: hsla(282, 47%, 58%, 1);
-  --purple-light: hsla(291, 46%, 83%, 1);
+  /* Pink - using DS tokens */
+  --pink-dark: var(--color-pink-dark);
+  --pink-bright: var(--color-pink-100);
+  --pink-light: var(--color-pink-10);
 
-  /* Green */
-  --green-dark: hsla(164, 100%, 20%, 1);
-  --green-bright: hsla(158, 72%, 44%, 1);
-  --green-light: hsla(158, 55%, 78%, 1);
+  /* Purple - using DS tokens */
+  --purple-dark: var(--color-purple-dark);
+  --purple-bright: var(--color-purple-100);
+  --purple-light: var(--color-purple-10);
 
-  /* Experimental */
-  --exp-pink-10: hsla(322, 100%, 98%, 1);
+  /* Green - using DS tokens */
+  --green-dark: var(--color-green-dark);
+  --green-bright: var(--color-green-100);
+  --green-light: var(--color-green-10);
+
+  /* Experimental - map to DS pink-10 */
+  --exp-pink-10: var(--color-pink-10);
 
   /* ---------- 2) Layout / type tokens ---------- */
   --layout-sm: 40rem;
