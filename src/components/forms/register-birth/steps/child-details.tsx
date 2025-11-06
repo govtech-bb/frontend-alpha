@@ -1,5 +1,6 @@
 "use client";
 
+import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
@@ -121,10 +122,11 @@ export function ChildDetails({
 
       {/* Date of birth */}
       <DateInput
-        error={fieldErrors.dateOfBirth}
+        errors={validateDateFields(value.dateOfBirth || "")}
         hint="For example, 27 3 2007"
         id="child-dateOfBirth"
         label="Date of birth"
+        onBlur={() => handleBlur("dateOfBirth")}
         onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
         value={value.dateOfBirth || ""}
       />
