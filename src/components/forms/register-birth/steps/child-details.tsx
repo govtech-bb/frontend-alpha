@@ -1,10 +1,8 @@
 "use client";
 
-import { Button, ErrorSummary, Input } from "@/components/ds";
+import { Button, ErrorSummary, Input, Select } from "@/components/ds";
 import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
-import { FormFieldError } from "../../common/form-field-error";
-import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { childDetailsValidation } from "../schema";
@@ -112,22 +110,11 @@ export function ChildDetails({
 
       {/* Sex at birth */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="child-sexAtBirth"
-        >
-          Sex at birth
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          We ask this so that we can monitor population trends.
-        </p>
-        <select
-          aria-describedby={
-            fieldErrors.sexAtBirth ? "child-sexAtBirth-error" : undefined
-          }
-          aria-invalid={fieldErrors.sexAtBirth ? true : undefined}
-          className={getFieldClassName("sexAtBirth", fieldErrors)}
+        <Select
+          description="We ask this so that we can monitor population trends."
+          error={fieldErrors.sexAtBirth}
           id="child-sexAtBirth"
+          label="Sex at birth"
           onBlur={() => handleBlur("sexAtBirth")}
           onChange={(e) => handleChange("sexAtBirth", e.target.value)}
           value={value.sexAtBirth || ""}
@@ -136,11 +123,7 @@ export function ChildDetails({
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Intersex">Intersex</option>
-        </select>
-        <FormFieldError
-          id="child-sexAtBirth"
-          message={fieldErrors.sexAtBirth}
-        />
+        </Select>
       </div>
 
       {/* Place of birth */}
