@@ -1,10 +1,8 @@
 "use client";
 
-import { Button, ErrorSummary, Input } from "@/components/ds";
+import { Button, ErrorSummary, Input, TextArea } from "@/components/ds";
 import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
-import { FormFieldError } from "../../common/form-field-error";
-import { getTextareaClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
@@ -173,25 +171,15 @@ export function MothersDetails({
 
       {/* Address */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-address"
-        >
-          Current address
-        </label>
-        <textarea
-          aria-describedby={
-            fieldErrors.address ? "mother-address-error" : undefined
-          }
-          aria-invalid={fieldErrors.address ? true : undefined}
-          className={getTextareaClassName("address", fieldErrors)}
+        <TextArea
+          error={fieldErrors.address}
           id="mother-address"
+          label="Current address"
           onBlur={() => handleBlur("address")}
           onChange={(e) => handleChange("address", e.target.value)}
           rows={3}
           value={value.address || ""}
         />
-        <FormFieldError id="mother-address" message={fieldErrors.address} />
       </div>
 
       {/* National registration number */}
