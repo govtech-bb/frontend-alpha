@@ -71,7 +71,7 @@ describe("DateInput", () => {
     ).toBeInTheDocument();
   });
 
-  it("should parse MM/DD/YYYY value into separate fields", () => {
+  it("should parse YYYY-MM-DD value into separate fields", () => {
     render(
       <DateInput
         id="test-date"
@@ -79,7 +79,7 @@ describe("DateInput", () => {
         onChange={() => {
           /* Test handler */
         }}
-        value="07/30/1986"
+        value="1986-07-30"
       />
     );
 
@@ -129,7 +129,7 @@ describe("DateInput", () => {
     fireEvent.change(dayInput, { target: { value: "15" } });
 
     // Check that onChange was called with day padded correctly
-    expect(handleChange).toHaveBeenCalledWith("00/15/0000");
+    expect(handleChange).toHaveBeenCalledWith("0000-00-15");
   });
 
   it("should call onChange when month is entered", () => {
@@ -147,7 +147,7 @@ describe("DateInput", () => {
     const monthInput = screen.getByLabelText("Month");
     fireEvent.change(monthInput, { target: { value: "12" } });
 
-    expect(handleChange).toHaveBeenCalledWith("12/00/0000");
+    expect(handleChange).toHaveBeenCalledWith("0000-12-00");
   });
 
   it("should call onChange when year is entered", () => {
@@ -165,7 +165,7 @@ describe("DateInput", () => {
     const yearInput = screen.getByLabelText("Year");
     fireEvent.change(yearInput, { target: { value: "2000" } });
 
-    expect(handleChange).toHaveBeenCalledWith("00/00/2000");
+    expect(handleChange).toHaveBeenCalledWith("2000-00-00");
   });
 
   it("should call onChange with partial date when field is cleared", async () => {
@@ -177,7 +177,7 @@ describe("DateInput", () => {
         id="test-date"
         label="Date of birth"
         onChange={handleChange}
-        value="07/30/1986"
+        value="1986-07-30"
       />
     );
 
@@ -186,7 +186,7 @@ describe("DateInput", () => {
     await user.clear(dayInput);
 
     // When one field is cleared, should call onChange with zero-padded partial date
-    expect(handleChange).toHaveBeenCalledWith("07/00/1986");
+    expect(handleChange).toHaveBeenCalledWith("1986-07-00");
   });
 
   it("should pad single-digit day to 2 digits in onChange", async () => {
@@ -207,7 +207,7 @@ describe("DateInput", () => {
 
     expect(handleChange).toHaveBeenCalled();
     const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("00/05/0000");
+    expect(lastCall).toBe("0000-00-05");
   });
 
   it("should pad single-digit month to 2 digits in onChange", async () => {
@@ -228,7 +228,7 @@ describe("DateInput", () => {
 
     expect(handleChange).toHaveBeenCalled();
     const lastCall = handleChange.mock.calls.at(-1)[0];
-    expect(lastCall).toBe("03/00/0000");
+    expect(lastCall).toBe("0000-03-00");
   });
 
   it("should render error message when error prop is provided", () => {
@@ -389,7 +389,7 @@ describe("DateInput", () => {
         onChange={() => {
           /* Test handler */
         }}
-        value="07/30/1986"
+        value="1986-07-30"
       />
     );
 
@@ -409,7 +409,7 @@ describe("DateInput", () => {
         onChange={() => {
           /* Test handler */
         }}
-        value="12/25/2000"
+        value="2000-12-25"
       />
     );
 
@@ -570,7 +570,7 @@ describe("DateInput", () => {
     fireEvent.change(dayInput, { target: { value: "a1b2c" } });
 
     // Should sanitize and only keep numeric characters
-    expect(handleChange).toHaveBeenCalledWith("00/12/0000");
+    expect(handleChange).toHaveBeenCalledWith("0000-00-12");
   });
 
   it("should sanitize non-alphanumeric characters from month input but keep letters", () => {
@@ -608,7 +608,7 @@ describe("DateInput", () => {
     fireEvent.change(yearInput, { target: { value: "abc1def" } });
 
     // Should sanitize and keep only numeric characters
-    expect(handleChange).toHaveBeenCalledWith("00/00/0001");
+    expect(handleChange).toHaveBeenCalledWith("0001-00-00");
   });
 
   it("should handle paste with non-numeric characters", async () => {
@@ -629,7 +629,7 @@ describe("DateInput", () => {
     await user.paste("12abc");
 
     // Should sanitize and only keep numeric characters
-    expect(handleChange).toHaveBeenCalledWith("00/12/0000");
+    expect(handleChange).toHaveBeenCalledWith("0000-00-12");
   });
 
   it("should have aria-live assertive on error message container", () => {
@@ -667,7 +667,7 @@ describe("DateInput", () => {
     await user.type(dayInput, "1");
 
     // Parent component receives onChange call (with padding)
-    expect(handleChange).toHaveBeenCalledWith("00/01/0000");
+    expect(handleChange).toHaveBeenCalledWith("0000-00-01");
 
     // Parent updates with new value (empty because incomplete date)
     rerender(
@@ -701,7 +701,7 @@ describe("DateInput", () => {
       fireEvent.change(monthInput, { target: { value: "Jan" } });
 
       // Should store text month as-is
-      expect(handleChange).toHaveBeenCalledWith("Jan/00/0000");
+      expect(handleChange).toHaveBeenCalledWith("0000-Jan-00");
     });
 
     it("should display text month as typed", () => {
@@ -712,7 +712,7 @@ describe("DateInput", () => {
           onChange={() => {
             /* Test handler */
           }}
-          value="December/25/2024"
+          value="2024-December-25"
         />
       );
 
@@ -736,7 +736,7 @@ describe("DateInput", () => {
       fireEvent.change(monthInput, { target: { value: "JULY" } });
 
       // Should preserve case as typed
-      expect(handleChange).toHaveBeenCalledWith("JULY/00/0000");
+      expect(handleChange).toHaveBeenCalledWith("0000-JULY-00");
     });
 
     it("should still accept numeric month input", () => {
@@ -755,7 +755,7 @@ describe("DateInput", () => {
       fireEvent.change(monthInput, { target: { value: "12" } });
 
       // Should store numeric month
-      expect(handleChange).toHaveBeenCalledWith("12/00/0000");
+      expect(handleChange).toHaveBeenCalledWith("0000-12-00");
     });
 
     it("should display numeric month without leading zero when single digit", () => {
@@ -766,7 +766,7 @@ describe("DateInput", () => {
           onChange={() => {
             /* Test handler */
           }}
-          value="07/15/2024"
+          value="2024-07-15"
         />
       );
 
@@ -791,7 +791,7 @@ describe("DateInput", () => {
       fireEvent.change(monthInput, { target: { value: "Ju" } });
 
       // Should allow partial ambiguous input (normalization happens on submit)
-      expect(handleChange).toHaveBeenCalledWith("Ju/00/0000");
+      expect(handleChange).toHaveBeenCalledWith("0000-Ju-00");
     });
 
     it("should allow mixed alphanumeric input in month field", () => {

@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, ErrorSummary, Input, TextArea } from "@/components/ds";
+import {
+  Button,
+  ErrorSummary,
+  Input,
+  Radio,
+  RadioGroup,
+  TextArea,
+} from "@/components/ds";
 import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -96,50 +103,26 @@ export function MothersDetails({
       </div>
 
       {/* Had other surname */}
-      <fieldset>
-        <legend className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]">
-          Has the mother had any other last name?
-        </legend>
-        <p className="mb-2 text-base text-gray-600">
-          For example, a maiden name
-        </p>
-        <div className="space-y-3">
-          <div className="flex items-start">
-            <input
-              checked={value.hadOtherSurname === "yes"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="mother-hadOtherSurname-yes"
-              name="mother-hadOtherSurname"
-              onChange={() => handleChange("hadOtherSurname", "yes")}
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-hadOtherSurname-yes"
-            >
-              Yes
-            </label>
-          </div>
+      <div>
+        <fieldset>
+          <legend className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]">
+            Has the mother had any other last name?
+          </legend>
+          <p className="mb-4 text-[19px] text-gray-600">
+            For example, a maiden name
+          </p>
 
-          <div className="flex items-start">
-            <input
-              checked={value.hadOtherSurname === "no"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="mother-hadOtherSurname-no"
-              name="mother-hadOtherSurname"
-              onChange={() => handleChange("hadOtherSurname", "no")}
-              type="radio"
-              value="no"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-hadOtherSurname-no"
-            >
-              No
-            </label>
-          </div>
-        </div>
+          <RadioGroup
+            aria-label="Has the mother had any other last name?"
+            onValueChange={(val) =>
+              handleChange("hadOtherSurname", val as "yes" | "no")
+            }
+            value={value.hadOtherSurname || undefined}
+          >
+            <Radio id="mother-hadOtherSurname-yes" label="Yes" value="yes" />
+            <Radio id="mother-hadOtherSurname-no" label="No" value="no" />
+          </RadioGroup>
+        </fieldset>
 
         {value.hadOtherSurname === "yes" && (
           <div className="mt-4">
@@ -152,7 +135,7 @@ export function MothersDetails({
             />
           </div>
         )}
-      </fieldset>
+      </div>
 
       {/* Date of birth */}
       <DateInput

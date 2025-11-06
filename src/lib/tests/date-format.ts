@@ -4,35 +4,35 @@ import {
   convertToInputFormat,
   convertToISO8601,
   normalizeMonthInput,
-  parseMMDDYYYY,
+  parseISO8601,
   parseTextMonth,
 } from "../date-format";
 
 describe("convertToInputFormat", () => {
   describe("valid conversions", () => {
-    it("should convert MM/DD/YYYY to YYYY-MM-DD", () => {
-      expect(convertToInputFormat("07/30/1986")).toBe("1986-07-30");
+    it("should convert YYYY-MM-DD to YYYY-MM-DD", () => {
+      expect(convertToInputFormat("1986-07-30")).toBe("1986-07-30");
     });
 
     it("should convert single digit month and day with zero padding", () => {
-      expect(convertToInputFormat("01/05/2024")).toBe("2024-01-05");
+      expect(convertToInputFormat("2024-01-05")).toBe("2024-01-05");
     });
 
     it("should convert end of year date", () => {
-      expect(convertToInputFormat("12/31/2024")).toBe("2024-12-31");
+      expect(convertToInputFormat("2024-12-31")).toBe("2024-12-31");
     });
 
     it("should convert beginning of year date", () => {
-      expect(convertToInputFormat("01/01/2024")).toBe("2024-01-01");
+      expect(convertToInputFormat("2024-01-01")).toBe("2024-01-01");
     });
 
     it("should convert leap day", () => {
-      expect(convertToInputFormat("02/29/2024")).toBe("2024-02-29");
+      expect(convertToInputFormat("2024-02-29")).toBe("2024-02-29");
     });
 
     it("should convert dates from different centuries", () => {
-      expect(convertToInputFormat("03/15/1990")).toBe("1990-03-15");
-      expect(convertToInputFormat("10/22/2025")).toBe("2025-10-22");
+      expect(convertToInputFormat("1990-03-15")).toBe("1990-03-15");
+      expect(convertToInputFormat("2025-10-22")).toBe("2025-10-22");
     });
   });
 
@@ -53,16 +53,16 @@ describe("convertToInputFormat", () => {
       expect(convertToInputFormat("07-30-1986")).toBe("");
     });
 
-    it("should return empty string for YYYY-MM-DD format (wrong direction)", () => {
-      expect(convertToInputFormat("1986-07-30")).toBe("");
+    it("should accept and validate YYYY-MM-DD format", () => {
+      expect(convertToInputFormat("1986-07-30")).toBe("1986-07-30");
     });
 
     it("should return empty string for single digit month without zero padding", () => {
-      expect(convertToInputFormat("7/30/1986")).toBe("");
+      expect(convertToInputFormat("1986-7-30")).toBe("");
     });
 
     it("should return empty string for single digit day without zero padding", () => {
-      expect(convertToInputFormat("07/3/1986")).toBe("");
+      expect(convertToInputFormat("1986-07-3")).toBe("");
     });
 
     it("should return empty string for wrong number of year digits", () => {
@@ -73,29 +73,29 @@ describe("convertToInputFormat", () => {
 
 describe("convertFromInputFormat", () => {
   describe("valid conversions", () => {
-    it("should convert YYYY-MM-DD to MM/DD/YYYY", () => {
-      expect(convertFromInputFormat("1986-07-30")).toBe("07/30/1986");
+    it("should convert YYYY-MM-DD to YYYY-MM-DD", () => {
+      expect(convertFromInputFormat("1986-07-30")).toBe("1986-07-30");
     });
 
     it("should convert single digit month and day with zero padding", () => {
-      expect(convertFromInputFormat("2024-01-05")).toBe("01/05/2024");
+      expect(convertFromInputFormat("2024-01-05")).toBe("2024-01-05");
     });
 
     it("should convert end of year date", () => {
-      expect(convertFromInputFormat("2024-12-31")).toBe("12/31/2024");
+      expect(convertFromInputFormat("2024-12-31")).toBe("2024-12-31");
     });
 
     it("should convert beginning of year date", () => {
-      expect(convertFromInputFormat("2024-01-01")).toBe("01/01/2024");
+      expect(convertFromInputFormat("2024-01-01")).toBe("2024-01-01");
     });
 
     it("should convert leap day", () => {
-      expect(convertFromInputFormat("2024-02-29")).toBe("02/29/2024");
+      expect(convertFromInputFormat("2024-02-29")).toBe("2024-02-29");
     });
 
     it("should convert dates from different centuries", () => {
-      expect(convertFromInputFormat("1990-03-15")).toBe("03/15/1990");
-      expect(convertFromInputFormat("2025-10-22")).toBe("10/22/2025");
+      expect(convertFromInputFormat("1990-03-15")).toBe("1990-03-15");
+      expect(convertFromInputFormat("2025-10-22")).toBe("2025-10-22");
     });
   });
 
@@ -116,8 +116,8 @@ describe("convertFromInputFormat", () => {
       expect(convertFromInputFormat("1986/07/30")).toBe("");
     });
 
-    it("should return empty string for MM/DD/YYYY format (wrong direction)", () => {
-      expect(convertFromInputFormat("07/30/1986")).toBe("");
+    it("should accept and validate YYYY-MM-DD format", () => {
+      expect(convertFromInputFormat("1986-07-30")).toBe("1986-07-30");
     });
 
     it("should return empty string for single digit month without zero padding", () => {
@@ -136,7 +136,7 @@ describe("convertFromInputFormat", () => {
 
 describe("round-trip conversions", () => {
   it("should maintain data integrity when converting back and forth", () => {
-    const original = "07/30/1986";
+    const original = "1986-07-30";
     const toInput = convertToInputFormat(original);
     const backToOriginal = convertFromInputFormat(toInput);
     expect(backToOriginal).toBe(original);
@@ -150,21 +150,21 @@ describe("round-trip conversions", () => {
   });
 
   it("should handle multiple round trips", () => {
-    let date = "12/25/2024";
+    let date = "2024-12-25";
     for (let i = 0; i < 10; i++) {
       const input = convertToInputFormat(date);
       date = convertFromInputFormat(input);
     }
-    expect(date).toBe("12/25/2024");
+    expect(date).toBe("2024-12-25");
   });
 });
 
 describe("semantic date validation", () => {
   describe("invalid dates should be rejected", () => {
     it("should reject February 30th", () => {
-      expect(convertToISO8601("02/30/2024")).toBe("");
-      // parseMMDDYYYY only parses format, does not validate
-      expect(parseMMDDYYYY("02/30/2024")).toEqual({
+      expect(convertToISO8601("2024-02-30")).toBe("");
+      // parseISO8601 only parses format, does not validate
+      expect(parseISO8601("2024-02-30")).toEqual({
         day: "30",
         month: "02",
         year: "2024",
@@ -172,42 +172,42 @@ describe("semantic date validation", () => {
     });
 
     it("should reject February 31st", () => {
-      expect(convertToISO8601("02/31/2024")).toBe("");
+      expect(convertToISO8601("2024-02-31")).toBe("");
     });
 
     it("should reject April 31st (April has 30 days)", () => {
-      expect(convertToISO8601("04/31/2024")).toBe("");
+      expect(convertToISO8601("2024-04-31")).toBe("");
     });
 
     it("should reject month 13", () => {
-      expect(convertToISO8601("13/01/2024")).toBe("");
+      expect(convertToISO8601("2024-13-01")).toBe("");
     });
 
     it("should reject month 00", () => {
-      expect(convertToISO8601("00/15/2024")).toBe("");
+      expect(convertToISO8601("2024-00-15")).toBe("");
     });
 
     it("should reject day 00", () => {
-      expect(convertToISO8601("01/00/2024")).toBe("");
+      expect(convertToISO8601("2024-01-00")).toBe("");
     });
 
     it("should reject impossible dates like 99/99/9999", () => {
-      expect(convertToISO8601("99/99/9999")).toBe("");
+      expect(convertToISO8601("9999-99-99")).toBe("");
     });
 
     it("should reject February 29 in non-leap years", () => {
-      expect(convertToISO8601("02/29/2023")).toBe("");
+      expect(convertToISO8601("2023-02-29")).toBe("");
     });
   });
 
   describe("valid dates should be accepted", () => {
     it("should accept February 29 in leap years", () => {
-      expect(convertToISO8601("02/29/2024")).toBe("2024-02-29");
+      expect(convertToISO8601("2024-02-29")).toBe("2024-02-29");
     });
 
     it("should accept day 31 in months with 31 days", () => {
-      expect(convertToISO8601("01/31/2024")).toBe("2024-01-31");
-      expect(convertToISO8601("03/31/2024")).toBe("2024-03-31");
+      expect(convertToISO8601("2024-01-31")).toBe("2024-01-31");
+      expect(convertToISO8601("2024-03-31")).toBe("2024-03-31");
     });
   });
 });
@@ -377,40 +377,40 @@ describe("parseTextMonth", () => {
 describe("normalizeMonthInput", () => {
   describe("text month conversion", () => {
     it("should convert short month name to numeric format", () => {
-      expect(normalizeMonthInput("Jan/15/2024")).toBe("01/15/2024");
+      expect(normalizeMonthInput("2024-Jan-15")).toBe("2024-01-15");
     });
 
     it("should convert full month name to numeric format", () => {
-      expect(normalizeMonthInput("December/25/2024")).toBe("12/25/2024");
+      expect(normalizeMonthInput("2024-December-25")).toBe("2024-12-25");
     });
 
     it("should handle case insensitive month names", () => {
-      expect(normalizeMonthInput("jan/15/2024")).toBe("01/15/2024");
-      expect(normalizeMonthInput("DECEMBER/25/2024")).toBe("12/25/2024");
+      expect(normalizeMonthInput("2024-jan-15")).toBe("2024-01-15");
+      expect(normalizeMonthInput("2024-DECEMBER-25")).toBe("2024-12-25");
     });
 
     it("should convert lowercase july to numeric format", () => {
-      expect(normalizeMonthInput("july/30/1977")).toBe("07/30/1977");
+      expect(normalizeMonthInput("1977-july-30")).toBe("1977-07-30");
     });
   });
 
   describe("numeric month passthrough", () => {
     it("should pad single digit numeric months", () => {
-      expect(normalizeMonthInput("7/15/2024")).toBe("07/15/2024");
+      expect(normalizeMonthInput("2024-7-15")).toBe("2024-07-15");
     });
 
     it("should preserve two-digit numeric months", () => {
-      expect(normalizeMonthInput("12/25/2024")).toBe("12/25/2024");
+      expect(normalizeMonthInput("2024-12-25")).toBe("2024-12-25");
     });
   });
 
   describe("ambiguous input preservation", () => {
     it("should preserve ambiguous month input unchanged", () => {
-      expect(normalizeMonthInput("Ju/15/2024")).toBe("Ju/15/2024");
+      expect(normalizeMonthInput("2024-Ju-15")).toBe("2024-Ju-15");
     });
 
     it("should preserve invalid month input unchanged", () => {
-      expect(normalizeMonthInput("Foo/15/2024")).toBe("Foo/15/2024");
+      expect(normalizeMonthInput("2024-Foo-15")).toBe("2024-Foo-15");
     });
   });
 
@@ -420,18 +420,18 @@ describe("normalizeMonthInput", () => {
     });
 
     it("should handle partial dates", () => {
-      expect(normalizeMonthInput("Jan/00/0000")).toBe("01/00/0000");
+      expect(normalizeMonthInput("0000-Jan-00")).toBe("0000-01-00");
     });
 
     it("should normalize day and year padding", () => {
-      expect(normalizeMonthInput("Jan/5/2024")).toBe("01/05/2024");
+      expect(normalizeMonthInput("2024-Jan-5")).toBe("2024-01-05");
     });
   });
 
   describe("backward compatibility", () => {
     it("should handle already normalized dates", () => {
-      expect(normalizeMonthInput("01/15/2024")).toBe("01/15/2024");
-      expect(normalizeMonthInput("12/25/2024")).toBe("12/25/2024");
+      expect(normalizeMonthInput("2024-01-15")).toBe("2024-01-15");
+      expect(normalizeMonthInput("2024-12-25")).toBe("2024-12-25");
     });
   });
 });

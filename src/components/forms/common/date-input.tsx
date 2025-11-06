@@ -1,6 +1,6 @@
 "use client";
 
-import { combineToMMDDYYYY, parseMMDDYYYY } from "@/lib/date-format";
+import { combineToISO8601, parseISO8601 } from "@/lib/date-format";
 
 export type DateFieldErrors = {
   day?: string;
@@ -12,7 +12,7 @@ export type DateInputProps = {
   id: string;
   label: string;
   hint?: string;
-  value: string; // MM/DD/YYYY format or empty string
+  value: string; // YYYY-MM-DD format or empty string
   onChange: (value: string) => void;
   onBlur?: () => void;
   error?: string; // Deprecated: use errors instead
@@ -24,7 +24,7 @@ export type DateInputProps = {
  *
  * Features:
  * - Three separate text inputs for day, month, year
- * - Converts to/from MM/DD/YYYY format
+ * - Converts to/from YYYY-MM-DD format
  * - GOV.UK Design System compliant
  * - Accessible with proper ARIA attributes
  * - Error state styling
@@ -51,7 +51,7 @@ export function DateInput({
   errors,
 }: DateInputProps) {
   // Derive values directly from props (fully controlled component)
-  const { day, month, year } = parseMMDDYYYY(value);
+  const { day, month, year } = parseISO8601(value);
 
   // Filter display values - show empty for placeholders, strip leading zeros for real input
   // "" → "" (empty from parse error)
@@ -85,7 +85,7 @@ export function DateInput({
       }
 
       const updates = { day, month, year, [field]: sanitized };
-      onChange(combineToMMDDYYYY(updates.day, updates.month, updates.year));
+      onChange(combineToISO8601(updates.day, updates.month, updates.year));
     };
 
   // Support both old error prop (string) and new errors prop (object)

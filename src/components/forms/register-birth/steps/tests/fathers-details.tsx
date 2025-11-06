@@ -66,7 +66,7 @@ describe("FathersDetails", () => {
           firstName: "John",
           middleName: "Paul",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "Engineer",
@@ -192,7 +192,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "Engineer",
@@ -308,7 +308,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "Engineer",
@@ -331,7 +331,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           // occupation is missing
@@ -360,7 +360,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "",
@@ -402,7 +402,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "abc",
         }}

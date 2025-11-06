@@ -71,7 +71,7 @@ describe("ChildDetails", () => {
           firstNames: "John",
           middleNames: "Paul",
           lastName: "Smith",
-          dateOfBirth: "10/22/2025",
+          dateOfBirth: "2025-10-22",
           sexAtBirth: "Male",
           parishOfBirth: "St. Michael",
         }}
@@ -163,7 +163,7 @@ describe("ChildDetails", () => {
         value={{
           firstNames: "John",
           lastName: "Smith",
-          dateOfBirth: "10/22/2025",
+          dateOfBirth: "2025-10-22",
           sexAtBirth: "Male",
           parishOfBirth: "St. Michael",
         }}
@@ -275,7 +275,7 @@ describe("ChildDetails", () => {
         value={{
           firstNames: "John",
           lastName: "Smith",
-          dateOfBirth: "10/22/2025",
+          dateOfBirth: "2025-10-22",
           sexAtBirth: "Male",
           parishOfBirth: "St. Michael",
         }}

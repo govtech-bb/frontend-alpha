@@ -1,8 +1,8 @@
 /**
  * Date format conversion utilities
  *
- * Converts between MM/DD/YYYY format (used for storage and validation)
- * and YYYY-MM-DD format (required by HTML5 date inputs)
+ * Internal format: ISO 8601 (YYYY-MM-DD) for storage, validation, and APIs
+ * User-facing format: Three separate fields (day, month, year) where month can be text or numeric
  */
 
 /**
@@ -26,15 +26,15 @@ const MONTH_NAMES: Record<string, string> = {
 /**
  * Validates that a date is semantically correct (not just format)
  *
+ * @param year - Year string (4 digits)
  * @param month - Month string (01-12)
  * @param day - Day string (01-31)
- * @param year - Year string (4 digits)
  * @returns true if the date is valid, false otherwise
  */
-function isValidDate(month: string, day: string, year: string): boolean {
+function isValidDate(year: string, month: string, day: string): boolean {
+  const yearInt = Number.parseInt(year, 10);
   const monthInt = Number.parseInt(month, 10);
   const dayInt = Number.parseInt(day, 10);
-  const yearInt = Number.parseInt(year, 10);
 
   // Check basic ranges
   if (monthInt < 1 || monthInt > 12 || dayInt < 1 || dayInt > 31) {
@@ -105,14 +105,14 @@ export function parseTextMonth(input: string): string {
  * Normalizes a date string by converting text month to numeric format
  * Preserves ambiguous or invalid month input unchanged (for validation to catch)
  *
- * @param dateString - Date in format "<month>/DD/YYYY" where month can be text or numeric
- * @returns Date in format "MM/DD/YYYY" with numeric month, or original if conversion fails
+ * @param dateString - Date in format "YYYY-<month>-DD" where month can be text or numeric
+ * @returns Date in format "YYYY-MM-DD" with numeric month, or original if conversion fails
  *
  * @example
- * normalizeMonthInput("Jan/15/2024") // "01/15/2024"
- * normalizeMonthInput("7/15/2024") // "07/15/2024"
- * normalizeMonthInput("Ju/15/2024") // "Ju/15/2024" (ambiguous, preserved)
- * normalizeMonthInput("01/15/2024") // "01/15/2024" (already normalized)
+ * normalizeMonthInput("2024-Jan-15") // "2024-01-15"
+ * normalizeMonthInput("2024-7-15") // "2024-07-15"
+ * normalizeMonthInput("2024-Ju-15") // "2024-Ju-15" (ambiguous, preserved)
+ * normalizeMonthInput("2024-01-15") // "2024-01-15" (already normalized)
  */
 export function normalizeMonthInput(dateString: string): string {
   if (!dateString || dateString.trim() === "") {
@@ -120,12 +120,12 @@ export function normalizeMonthInput(dateString: string): string {
   }
 
   // Parse the date string (handles both text and numeric months)
-  const parts = dateString.split("/");
+  const parts = dateString.split("-");
   if (parts.length !== 3) {
     return dateString; // Invalid format, return as-is
   }
 
-  const [month, day, year] = parts;
+  const [year, month, day] = parts;
 
   // Try to convert month to numeric
   const numericMonth = parseTextMonth(month);
@@ -139,41 +139,41 @@ export function normalizeMonthInput(dateString: string): string {
   const paddedDay = day.padStart(2, "0");
   const paddedYear = year.padStart(4, "0");
 
-  return `${numericMonth}/${paddedDay}/${paddedYear}`;
+  return `${paddedYear}-${numericMonth}-${paddedDay}`;
 }
 
 /**
- * Parses a date string into individual day, month, year components
- * Now supports both numeric (MM/DD/YYYY) and text month formats (Jan/DD/YYYY)
+ * Parses an ISO 8601 date string into individual day, month, year components
+ * Supports both numeric (YYYY-MM-DD) and text month formats (YYYY-Jan-DD)
  * Does NOT validate - validation should happen on form submission, not during typing
  *
- * @param mmddyyyy - Date string in format "<month>/DD/YYYY" where month can be text or numeric
+ * @param iso8601 - Date string in format "YYYY-<month>-DD" where month can be text or numeric
  * @returns Object with day, month, year as strings, or empty strings if format invalid
  *
  * @example
- * parseMMDDYYYY("07/30/1986") // { day: "30", month: "07", year: "1986" }
- * parseMMDDYYYY("Jan/30/1986") // { day: "30", month: "Jan", year: "1986" }
- * parseMMDDYYYY("") // { day: "", month: "", year: "" }
- * parseMMDDYYYY("02/30/2024") // { day: "30", month: "02", year: "2024" } (no validation)
- * parseMMDDYYYY("00/01/0000") // { day: "01", month: "00", year: "0000" } (partial date)
+ * parseISO8601("1986-07-30") // { day: "30", month: "07", year: "1986" }
+ * parseISO8601("1986-Jan-30") // { day: "30", month: "Jan", year: "1986" }
+ * parseISO8601("") // { day: "", month: "", year: "" }
+ * parseISO8601("2024-02-30") // { day: "30", month: "02", year: "2024" } (no validation)
+ * parseISO8601("0000-00-01") // { day: "01", month: "00", year: "0000" } (partial date)
  */
-export function parseMMDDYYYY(mmddyyyy: string): {
+export function parseISO8601(iso8601: string): {
   day: string;
   month: string;
   year: string;
 } {
-  if (!mmddyyyy || mmddyyyy.trim() === "") {
+  if (!iso8601 || iso8601.trim() === "") {
     return { day: "", month: "", year: "" };
   }
 
-  // Match <month>/<day>/<year> format where month can be text or numeric
-  // Split by "/" to handle both text and numeric months
-  const parts = mmddyyyy.split("/");
+  // Match YYYY-<month>-DD format where month can be text or numeric
+  // Split by "-" to handle both text and numeric months
+  const parts = iso8601.split("-");
   if (parts.length !== 3) {
     return { day: "", month: "", year: "" };
   }
 
-  const [month, day, year] = parts;
+  const [year, month, day] = parts;
 
   // No validation - just return the parsed values
   // Validation happens on form submission, not during typing
@@ -181,25 +181,25 @@ export function parseMMDDYYYY(mmddyyyy: string): {
 }
 
 /**
- * Combines individual day, month, year components into date string format
- * Now supports both numeric and text month input
+ * Combines individual day, month, year components into ISO 8601 date string format
+ * Supports both numeric and text month input
  * Pads with zeros to allow partial dates (supports typing workflow)
  *
- * @param day - Day as string (can be 1 or 2 digits, or empty)
- * @param month - Month as string (numeric "1"/"12" or text "Jan"/"December")
  * @param year - Year as string (4 digits, or empty)
- * @returns Date string in format "<month>/DD/YYYY", empty string if all fields empty
+ * @param month - Month as string (numeric "1"/"12" or text "Jan"/"December")
+ * @param day - Day as string (can be 1 or 2 digits, or empty)
+ * @returns Date string in format "YYYY-<month>-DD", empty string if all fields empty
  *
  * @example
- * combineToMMDDYYYY("30", "7", "1986") // "07/30/1986"
- * combineToMMDDYYYY("30", "Jan", "1986") // "Jan/30/1986"
- * combineToMMDDYYYY("5", "", "") // "00/05/0000" (partial date)
- * combineToMMDDYYYY("", "", "") // ""
+ * combineToISO8601("1986", "7", "30") // "1986-07-30"
+ * combineToISO8601("1986", "Jan", "30") // "1986-Jan-30"
+ * combineToISO8601("", "", "5") // "0000-00-05" (partial date)
+ * combineToISO8601("", "", "") // ""
  */
-export function combineToMMDDYYYY(
-  day: string,
+export function combineToISO8601(
+  year: string,
   month: string,
-  year: string
+  day: string
 ): string {
   // Return empty only if ALL components are empty
   if (!(day || month || year)) {
@@ -222,37 +222,37 @@ export function combineToMMDDYYYY(
     paddedMonth = month;
   }
 
-  return `${paddedMonth}/${paddedDay}/${paddedYear}`;
+  return `${paddedYear}-${paddedMonth}-${paddedDay}`;
 }
 
 /**
- * Converts a date string from MM/DD/YYYY format to ISO 8601 format (YYYY-MM-DD)
- * for backend API submission
+ * Converts an ISO 8601 date string to a format suitable for backend API submission
+ * This is essentially a validation and normalization pass
  *
- * @param mmddyyyy - Date string in MM/DD/YYYY format (e.g., "07/30/1986")
- * @returns Date string in ISO 8601 format (e.g., "1986-07-30"), or empty string if invalid
+ * @param iso8601 - Date string in YYYY-MM-DD format (e.g., "1986-07-30")
+ * @returns Normalized date string in ISO 8601 format (e.g., "1986-07-30"), or empty string if invalid
  *
  * @example
- * convertToISO8601("07/30/1986") // "1986-07-30"
- * convertToISO8601("12/25/2024") // "2024-12-25"
+ * convertToISO8601("1986-07-30") // "1986-07-30"
+ * convertToISO8601("2024-12-25") // "2024-12-25"
  * convertToISO8601("") // ""
- * convertToISO8601("02/30/2024") // "" (invalid date)
+ * convertToISO8601("2024-02-30") // "" (invalid date)
  */
-export function convertToISO8601(mmddyyyy: string): string {
-  if (!mmddyyyy || mmddyyyy.trim() === "") {
+export function convertToISO8601(iso8601: string): string {
+  if (!iso8601 || iso8601.trim() === "") {
     return "";
   }
 
-  // Match MM/DD/YYYY format
-  const match = mmddyyyy.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  // Match YYYY-MM-DD format
+  const match = iso8601.match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if (!match) {
     return "";
   }
 
-  const [, month, day, year] = match;
+  const [, year, month, day] = match;
 
   // Validate the date is semantically correct
-  if (!isValidDate(month, day, year)) {
+  if (!isValidDate(year, month, day)) {
     return "";
   }
 
@@ -260,15 +260,15 @@ export function convertToISO8601(mmddyyyy: string): string {
 }
 
 /**
- * Converts a date string from ISO 8601 format (YYYY-MM-DD) to MM/DD/YYYY format
- * for internal storage and display
+ * Converts an ISO 8601 date string to another ISO 8601 date string
+ * This function exists for API compatibility but is essentially a validation pass
  *
  * @param iso - Date string in ISO 8601 format (e.g., "1986-07-30")
- * @returns Date string in MM/DD/YYYY format (e.g., "07/30/1986"), or empty string if invalid
+ * @returns Date string in ISO 8601 format (e.g., "1986-07-30"), or empty string if invalid
  *
  * @example
- * convertFromISO8601("1986-07-30") // "07/30/1986"
- * convertFromISO8601("2024-12-25") // "12/25/2024"
+ * convertFromISO8601("1986-07-30") // "1986-07-30"
+ * convertFromISO8601("2024-12-25") // "2024-12-25"
  * convertFromISO8601("") // ""
  * convertFromISO8601("2024-02-30") // "" (invalid date)
  */
@@ -286,43 +286,39 @@ export function convertFromISO8601(iso: string): string {
   const [, year, month, day] = match;
 
   // Validate the date is semantically correct
-  if (!isValidDate(month, day, year)) {
+  if (!isValidDate(year, month, day)) {
     return "";
   }
 
-  return `${month}/${day}/${year}`;
+  return `${year}-${month}-${day}`;
 }
 
 /**
- * Converts a date string from MM/DD/YYYY format to YYYY-MM-DD format
- * for use with HTML5 date input elements.
+ * Converts an ISO 8601 date string to a format suitable for HTML5 date input elements
+ * Since HTML5 date inputs expect YYYY-MM-DD, this is essentially a validation pass
  *
- * This is an alias for convertToISO8601 to maintain compatibility with HTML5 date inputs.
- *
- * @param mmddyyyy - Date string in MM/DD/YYYY format (e.g., "07/30/1986")
+ * @param iso8601 - Date string in YYYY-MM-DD format (e.g., "1986-07-30")
  * @returns Date string in YYYY-MM-DD format (e.g., "1986-07-30"), or empty string if invalid
  *
  * @example
- * convertToInputFormat("07/30/1986") // "1986-07-30"
- * convertToInputFormat("12/25/2024") // "2024-12-25"
+ * convertToInputFormat("1986-07-30") // "1986-07-30"
+ * convertToInputFormat("2024-12-25") // "2024-12-25"
  * convertToInputFormat("") // ""
  * convertToInputFormat("invalid") // ""
- * convertToInputFormat("02/30/2024") // "" (invalid date)
+ * convertToInputFormat("2024-02-30") // "" (invalid date)
  */
 export const convertToInputFormat = convertToISO8601;
 
 /**
- * Converts a date string from YYYY-MM-DD format to MM/DD/YYYY format
- * for storage and validation.
- *
- * This is an alias for convertFromISO8601 for consistency.
+ * Converts a date string from YYYY-MM-DD format to ISO 8601 format
+ * This is an alias for convertFromISO8601 for consistency
  *
  * @param yyyymmdd - Date string in YYYY-MM-DD format (e.g., "1986-07-30")
- * @returns Date string in MM/DD/YYYY format (e.g., "07/30/1986"), or empty string if invalid
+ * @returns Date string in YYYY-MM-DD format (e.g., "1986-07-30"), or empty string if invalid
  *
  * @example
- * convertFromInputFormat("1986-07-30") // "07/30/1986"
- * convertFromInputFormat("2024-12-25") // "12/25/2024"
+ * convertFromInputFormat("1986-07-30") // "1986-07-30"
+ * convertFromInputFormat("2024-12-25") // "2024-12-25"
  * convertFromInputFormat("") // ""
  * convertFromInputFormat("invalid") // ""
  */

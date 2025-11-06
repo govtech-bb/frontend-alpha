@@ -1,9 +1,9 @@
 /**
- * Date validation utilities for MM/DD/YYYY format
+ * Date validation utilities for YYYY-MM-DD format
  * Handles format validation, date validity, and edge cases like leap years
  */
 
-import { normalizeMonthInput, parseMMDDYYYY } from "./date-format";
+import { normalizeMonthInput, parseISO8601 } from "./date-format";
 
 export type DateFieldErrors = {
   day?: string;
@@ -11,16 +11,16 @@ export type DateFieldErrors = {
   year?: string;
 };
 
-// Regex pattern for MM/DD/YYYY format
-// Month: 01-12, Day: 01-31, Year: 4 digits
-export const DATE_REGEX = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+// Regex pattern for YYYY-MM-DD format
+// Year: 4 digits, Month: 01-12, Day: 01-31
+export const DATE_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
 /**
  * Validates both format and actual date validity
  * Handles leap years and month-specific day counts
  * Normalizes text month names to numeric format before validation
  *
- * @param dateString - Date string in MM/DD/YYYY format (or with text month)
+ * @param dateString - Date string in YYYY-MM-DD format (or with text month)
  * @returns true if the date is valid, false otherwise
  */
 export function isValidDate(dateString: string): boolean {
@@ -33,7 +33,7 @@ export function isValidDate(dateString: string): boolean {
   }
 
   // Parse and validate actual date
-  const [month, day, year] = normalized.split("/").map(Number);
+  const [year, month, day] = normalized.split("-").map(Number);
   const date = new Date(year, month - 1, day);
 
   // Verify the date components match (catches invalid dates like 02/30)
@@ -47,7 +47,7 @@ export function isValidDate(dateString: string): boolean {
 /**
  * Validates date is in reasonable range for birth dates (1900 to current year)
  *
- * @param dateString - Date string in MM/DD/YYYY format
+ * @param dateString - Date string in YYYY-MM-DD format
  * @param minYear - Minimum valid year (default: 1900)
  * @param maxYear - Maximum valid year (default: current year)
  * @returns true if the date is valid and within range, false otherwise
@@ -61,14 +61,14 @@ export function isValidBirthDate(
     return false;
   }
 
-  const [, , year] = dateString.split("/").map(Number);
+  const [year] = dateString.split("-").map(Number);
   return year >= minYear && year <= maxYear;
 }
 
 /**
  * Validates child's birth date is not in the future and within reasonable range
  *
- * @param dateString - Date string in MM/DD/YYYY format
+ * @param dateString - Date string in YYYY-MM-DD format
  * @returns true if the date is valid and not in future, false otherwise
  */
 export function isValidChildBirthDate(dateString: string): boolean {
@@ -76,7 +76,7 @@ export function isValidChildBirthDate(dateString: string): boolean {
     return false;
   }
 
-  const [month, day, year] = dateString.split("/").map(Number);
+  const [year, month, day] = dateString.split("-").map(Number);
   const birthDate = new Date(year, month - 1, day);
   const today = new Date();
 
@@ -92,12 +92,12 @@ export function isValidChildBirthDate(dateString: string): boolean {
  * Validates individual date fields and returns specific error messages
  * Returns null if all fields are valid, otherwise returns an object with field-specific errors
  *
- * @param dateString - Date string in MM/DD/YYYY format or with text month
+ * @param dateString - Date string in YYYY-MM-DD format or with text month
  * @returns DateFieldErrors object with specific errors, or null if valid
  */
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Will refactor in future iteration
 export function validateDateFields(dateString: string): DateFieldErrors | null {
-  const { day, month, year } = parseMMDDYYYY(dateString);
+  const { year, month, day } = parseISO8601(dateString);
   const errors: DateFieldErrors = {};
 
   // Check for missing fields first
@@ -141,8 +141,8 @@ export function validateDateFields(dateString: string): DateFieldErrors | null {
   } else {
     // It's a text month, try to normalize it
     try {
-      const normalized = normalizeMonthInput(`${month}/01/2000`);
-      const [normalizedMonth] = normalized.split("/");
+      const normalized = normalizeMonthInput(`2000-${month}-01`);
+      const [, normalizedMonth] = normalized.split("-");
       monthNum = Number(normalizedMonth);
 
       // Check if month is in valid range
