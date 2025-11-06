@@ -31,7 +31,7 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 - [x] Button migration (all 8 form step files)
 - [ ] Link migration (Change buttons in check-answers)
 - [x] Input migration (4 of 4 files: child-details, contact-info, mothers-details, fathers-details)
-- [ ] ErrorSummary migration
+- [x] ErrorSummary migration (7 form step files)
 
 ### Phase 3: Enhanced Form Controls (PLANNED)
 - [ ] Radio migration (Radix UI)
