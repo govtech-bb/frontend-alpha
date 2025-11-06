@@ -33,11 +33,11 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 - [x] ErrorSummary migration (7 form step files)
 - [~] Link migration - DEFERRED (check-answers "Change" buttons are semantically buttons, not links)
 
-### Phase 3: Enhanced Form Controls (IN PROGRESS)
+### Phase 3: Enhanced Form Controls ✓ COMPLETE
 - [x] Radio migration (2 files: marriage-status, include-father-details)
-- [ ] Checkbox migration (Radix UI)
-- [ ] Select migration
-- [ ] TextArea migration
+- [~] Checkbox migration - NOT NEEDED (no checkboxes in form)
+- [x] Select migration (1 file: child-details)
+- [x] TextArea migration (2 files: mothers-details, fathers-details)
 
 ### Phase 4: Specialized Components (PLANNED)
 - [ ] StatusBanner migration
@@ -47,19 +47,19 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 
 | Our Component | Design System Component | Status | Notes |
 |---------------|-------------------------|--------|-------|
-| Button | DS Button | Pending | Phase 2 |
-| Link | DS Link | Pending | Phase 2 |
-| Input | DS Input | Pending | Phase 2 |
-| ErrorSummary | DS ErrorSummary | Pending | Phase 2 |
-| Radio | DS Radio | Pending | Phase 3 - Radix UI |
-| Checkbox | DS Checkbox | Pending | Phase 3 - Radix UI |
-| Select | DS Select | Pending | Phase 3 |
-| TextArea | DS TextArea | Pending | Phase 3 |
+| Button | DS Button | ✓ Complete | Phase 2 - 8 files |
+| Link | DS Link | Deferred | Phase 2 - Semantically buttons |
+| Input | DS Input | ✓ Complete | Phase 2 - 4 files, 19 inputs |
+| ErrorSummary | DS ErrorSummary | ✓ Complete | Phase 2 - 7 files |
+| Radio | DS Radio | ✓ Complete | Phase 3 - 2 files, Radix UI |
+| Checkbox | DS Checkbox | N/A | Phase 3 - Not used in forms |
+| Select | DS Select | ✓ Complete | Phase 3 - 1 file |
+| TextArea | DS TextArea | ✓ Complete | Phase 3 - 2 files |
 | Typography | DS Typography | Pending | Phase 1 |
 | **DateInput** | **KEEP CUSTOM** | N/A | See rationale below |
 | HelpfulBox | KEEP CUSTOM | N/A | No DS equivalent |
 | MarkdownContent | KEEP CUSTOM | N/A | No DS equivalent |
-| FormProgressIndicator | DELETE | Pending | Dead code, not used |
+| FormProgressIndicator | DELETE | ✓ Complete | Phase 1 - Deleted |
 
 ## Why We Keep Custom DateInput
 
