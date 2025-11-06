@@ -22,7 +22,6 @@ type ChildDetailsProps = {
  * Step: Child's Details
  * Collects information about the child being registered
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function ChildDetails({
   value,
   onChange,
