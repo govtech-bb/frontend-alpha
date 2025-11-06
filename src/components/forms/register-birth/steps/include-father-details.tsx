@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, ErrorSummary } from "@/components/ds";
+import { Button, ErrorSummary, Radio, RadioGroup } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
-import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { includeFatherDetailsValidation } from "../schema";
@@ -80,64 +79,39 @@ export function IncludeFatherDetails({
         </div>
       </div>
 
-      <fieldset>
-        <legend className="sr-only">Include father's details</legend>
-
-        <div className="space-y-3">
-          <div className="flex items-start">
-            <input
-              aria-describedby={
-                fieldErrors.includeFatherDetails
-                  ? "includeFatherDetails-includeFatherDetails-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.includeFatherDetails ? "true" : "false"}
-              checked={value === "yes"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="include-father-yes"
-              name="includeFatherDetails"
-              onChange={() => handleChange("includeFatherDetails", "yes")}
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="include-father-yes"
-            >
-              Yes, include the father's details
-            </label>
-          </div>
-
-          <div className="flex items-start">
-            <input
-              aria-describedby={
-                fieldErrors.includeFatherDetails
-                  ? "includeFatherDetails-includeFatherDetails-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.includeFatherDetails ? "true" : "false"}
-              checked={value === "no"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="include-father-no"
-              name="includeFatherDetails"
-              onChange={() => handleChange("includeFatherDetails", "no")}
-              type="radio"
-              value="no"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="include-father-no"
-            >
-              No, do not include the father's details
-            </label>
-          </div>
-        </div>
-
-        <FormFieldError
-          id="includeFatherDetails-includeFatherDetails"
-          message={fieldErrors.includeFatherDetails}
+      <RadioGroup
+        aria-describedby={
+          fieldErrors.includeFatherDetails
+            ? "includeFatherDetails-includeFatherDetails-error"
+            : undefined
+        }
+        aria-invalid={fieldErrors.includeFatherDetails ? "true" : undefined}
+        aria-label="Include father's details"
+        onValueChange={(val) =>
+          handleChange("includeFatherDetails", val as "yes" | "no")
+        }
+        value={value || undefined}
+      >
+        <Radio
+          id="include-father-yes"
+          label="Yes, include the father's details"
+          value="yes"
         />
-      </fieldset>
+        <Radio
+          id="include-father-no"
+          label="No, do not include the father's details"
+          value="no"
+        />
+      </RadioGroup>
+
+      {fieldErrors.includeFatherDetails && (
+        <p
+          className="mt-2 text-[20px] text-red-dark"
+          id="includeFatherDetails-includeFatherDetails-error"
+        >
+          {fieldErrors.includeFatherDetails}
+        </p>
+      )}
 
       <div className="flex gap-4">
         <Button onClick={onBack} type="button" variant="secondary">

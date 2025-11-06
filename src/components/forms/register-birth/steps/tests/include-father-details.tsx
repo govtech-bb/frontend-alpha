@@ -106,20 +106,19 @@ describe("IncludeFatherDetails", () => {
       <IncludeFatherDetails {...defaultProps} value="yes" />
     );
 
-    const yesRadio = screen.getByLabelText(
-      "Yes, include the father's details"
-    ) as HTMLInputElement;
+    const yesRadio = screen.getByLabelText("Yes, include the father's details");
     const noRadio = screen.getByLabelText(
       "No, do not include the father's details"
-    ) as HTMLInputElement;
+    );
 
-    expect(yesRadio.checked).toBe(true);
-    expect(noRadio.checked).toBe(false);
+    // Radix UI Radio uses data-state attribute
+    expect(yesRadio).toHaveAttribute("data-state", "checked");
+    expect(noRadio).toHaveAttribute("data-state", "unchecked");
 
     rerender(<IncludeFatherDetails {...defaultProps} value="no" />);
 
-    expect(yesRadio.checked).toBe(false);
-    expect(noRadio.checked).toBe(true);
+    expect(yesRadio).toHaveAttribute("data-state", "unchecked");
+    expect(noRadio).toHaveAttribute("data-state", "checked");
   });
 
   it("should call onBack when Back button is clicked", () => {
@@ -164,20 +163,20 @@ describe("IncludeFatherDetails", () => {
   it("should have accessible form structure", () => {
     render(<IncludeFatherDetails {...defaultProps} />);
 
-    // Check for proper fieldset and legend (screen reader only)
-    const fieldset = screen.getByRole("group", {
+    // RadioGroup uses radiogroup role instead of group
+    const radioGroup = screen.getByRole("radiogroup", {
       name: /include father's details/i,
     });
-    expect(fieldset).toBeInTheDocument();
+    expect(radioGroup).toBeInTheDocument();
 
-    // Check that radio buttons are properly grouped
+    // Check that radio buttons are present and properly labeled
     const yesRadio = screen.getByLabelText("Yes, include the father's details");
     const noRadio = screen.getByLabelText(
       "No, do not include the father's details"
     );
 
-    expect(yesRadio).toHaveAttribute("name", "includeFatherDetails");
-    expect(noRadio).toHaveAttribute("name", "includeFatherDetails");
+    expect(yesRadio).toHaveAttribute("role", "radio");
+    expect(noRadio).toHaveAttribute("role", "radio");
   });
 
   it("should focus on title when component mounts", () => {
