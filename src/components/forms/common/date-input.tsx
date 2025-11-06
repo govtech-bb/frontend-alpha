@@ -2,6 +2,12 @@
 
 import { combineToMMDDYYYY, parseMMDDYYYY } from "@/lib/date-format";
 
+export type DateFieldErrors = {
+  day?: string;
+  month?: string;
+  year?: string;
+};
+
 export type DateInputProps = {
   id: string;
   label: string;
@@ -9,7 +15,8 @@ export type DateInputProps = {
   value: string; // MM/DD/YYYY format or empty string
   onChange: (value: string) => void;
   onBlur?: () => void;
-  error?: string;
+  error?: string; // Deprecated: use errors instead
+  errors?: DateFieldErrors;
 };
 
 /**
@@ -32,6 +39,7 @@ export type DateInputProps = {
  *   error={errors.dateOfBirth}
  * />
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Will refactor in future iteration
 export function DateInput({
   id,
   label,
@@ -39,7 +47,8 @@ export function DateInput({
   value,
   onChange,
   onBlur,
-  error,
+  error, // Deprecated - backwards compatibility
+  errors,
 }: DateInputProps) {
   // Derive values directly from props (fully controlled component)
   const { day, month, year } = parseMMDDYYYY(value);
@@ -79,12 +88,29 @@ export function DateInput({
       onChange(combineToMMDDYYYY(updates.day, updates.month, updates.year));
     };
 
-  const hasError = Boolean(error);
+  // Support both old error prop (string) and new errors prop (object)
+  const fieldErrors = errors || {};
+  const hasAnyError =
+    Boolean(error) || Boolean(errors?.day || errors?.month || errors?.year);
+
+  const hasErrorDay = Boolean(error || fieldErrors.day);
+  const hasErrorMonth = Boolean(error || fieldErrors.month);
+  const hasErrorYear = Boolean(error || fieldErrors.year);
+
   const errorId = `${id}-error`;
   const hintId = `${id}-hint`;
 
+  // Collect all error messages
+  const errorMessages: string[] = [];
+  if (error) {
+    errorMessages.push(error); // Backward compatibility
+  }
+  if (fieldErrors.day) errorMessages.push(fieldErrors.day);
+  if (fieldErrors.month) errorMessages.push(fieldErrors.month);
+  if (fieldErrors.year) errorMessages.push(fieldErrors.year);
+
   // Build describedby attribute
-  const describedby = [hint ? hintId : null, hasError ? errorId : null]
+  const describedby = [hint ? hintId : null, hasAnyError ? errorId : null]
     .filter(Boolean)
     .join(" ");
 
@@ -102,14 +128,18 @@ export function DateInput({
           </div>
         )}
 
-        {hasError && (
-          <p
+        {hasAnyError && (
+          <div
             aria-live="assertive"
             className="govuk-error-message mb-2 text-red-600"
             id={errorId}
           >
-            <span className="govuk-visually-hidden">Error:</span> {error}
-          </p>
+            {errorMessages.map((msg, idx) => (
+              <p className="mb-1" key={idx}>
+                <span className="govuk-visually-hidden">Error:</span> {msg}
+              </p>
+            ))}
+          </div>
         )}
 
         <div className="govuk-date-input flex items-center gap-4">
@@ -121,10 +151,10 @@ export function DateInput({
               Day
             </label>
             <input
-              aria-invalid={hasError ? "true" : undefined}
+              aria-invalid={hasErrorDay ? "true" : undefined}
               autoComplete="bday-day"
               className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] border-2 px-2 py-1 ${
-                hasError
+                hasErrorDay
                   ? "govuk-input--error border-red-600"
                   : "border-gray-400"
               }`}
@@ -148,10 +178,10 @@ export function DateInput({
               Month
             </label>
             <input
-              aria-invalid={hasError ? "true" : undefined}
+              aria-invalid={hasErrorMonth ? "true" : undefined}
               autoComplete="bday-month"
               className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[10ch] border-2 px-2 py-1 ${
-                hasError
+                hasErrorMonth
                   ? "govuk-input--error border-red-600"
                   : "border-gray-400"
               }`}
@@ -174,10 +204,10 @@ export function DateInput({
               Year
             </label>
             <input
-              aria-invalid={hasError ? "true" : undefined}
+              aria-invalid={hasErrorYear ? "true" : undefined}
               autoComplete="bday-year"
               className={`govuk-input govuk-date-input__input govuk-input--width-4 w-[7ch] border-2 px-2 py-1 ${
-                hasError
+                hasErrorYear
                   ? "govuk-input--error border-red-600"
                   : "border-gray-400"
               }`}

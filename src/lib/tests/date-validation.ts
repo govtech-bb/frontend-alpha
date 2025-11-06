@@ -3,6 +3,7 @@ import {
   isValidBirthDate,
   isValidChildBirthDate,
   isValidDate,
+  validateDateFields,
 } from "../date-validation";
 
 describe("isValidDate", () => {
@@ -110,5 +111,193 @@ describe("isValidChildBirthDate", () => {
   it("should reject invalid formats", () => {
     expect(isValidChildBirthDate("22/10/2023")).toBe(false); // DD/MM/YYYY
     expect(isValidChildBirthDate("2023-10-22")).toBe(false); // ISO format
+  });
+});
+
+describe("validateDateFields", () => {
+  describe("missing field detection", () => {
+    it("should return error for missing day", () => {
+      const result = validateDateFields("01/00/2024");
+      expect(result).toEqual({ day: "Enter a day" });
+    });
+
+    it("should return error for missing month", () => {
+      const result = validateDateFields("00/15/2024");
+      expect(result).toEqual({ month: "Enter a month" });
+    });
+
+    it("should return error for missing year", () => {
+      const result = validateDateFields("01/15/0000");
+      expect(result).toEqual({ year: "Enter a year" });
+    });
+
+    it("should return errors for all missing fields", () => {
+      const result = validateDateFields("00/00/0000");
+      expect(result).toEqual({
+        day: "Enter a day",
+        month: "Enter a month",
+        year: "Enter a year",
+      });
+    });
+
+    it("should return error for empty string", () => {
+      const result = validateDateFields("");
+      expect(result).toEqual({
+        day: "Enter a day",
+        month: "Enter a month",
+        year: "Enter a year",
+      });
+    });
+  });
+
+  describe("invalid day detection", () => {
+    it("should return error for day too high", () => {
+      const result = validateDateFields("01/32/2024");
+      expect(result).toEqual({ day: "Day must be between 1 and 31" });
+    });
+
+    it("should return error for day zero", () => {
+      const result = validateDateFields("01/00/2024");
+      expect(result).toEqual({ day: "Enter a day" });
+    });
+
+    it("should return error for invalid day in specific month (Feb 30)", () => {
+      const result = validateDateFields("02/30/2024");
+      expect(result).toEqual({ day: "Enter a valid day for this month" });
+    });
+
+    it("should return error for invalid day in specific month (April 31)", () => {
+      const result = validateDateFields("04/31/2024");
+      expect(result).toEqual({ day: "Enter a valid day for this month" });
+    });
+  });
+
+  describe("invalid month detection", () => {
+    it("should return error for month too high", () => {
+      const result = validateDateFields("13/15/2024");
+      expect(result).toEqual({ month: "Month must be between 1 and 12" });
+    });
+
+    it("should return error for month zero", () => {
+      const result = validateDateFields("00/15/2024");
+      expect(result).toEqual({ month: "Enter a month" });
+    });
+
+    it("should return error for invalid text month", () => {
+      const result = validateDateFields("Xyz/15/2024");
+      expect(result).toEqual({ month: "Enter a valid month" });
+    });
+
+    it("should return error for partial text month", () => {
+      const result = validateDateFields("Ju/15/2024");
+      expect(result).toEqual({ month: "Enter a valid month" });
+    });
+  });
+
+  describe("invalid year detection", () => {
+    it("should return error for incomplete year (3 digits)", () => {
+      const result = validateDateFields("01/15/202");
+      expect(result).toEqual({ year: "Year must be 4 digits" });
+    });
+
+    it("should return error for incomplete year (2 digits)", () => {
+      const result = validateDateFields("01/15/24");
+      expect(result).toEqual({ year: "Year must be 4 digits" });
+    });
+
+    it("should return error for incomplete year (1 digit)", () => {
+      const result = validateDateFields("01/15/2");
+      expect(result).toEqual({ year: "Year must be 4 digits" });
+    });
+
+    it("should return error for year before 1900", () => {
+      const result = validateDateFields("01/15/1899");
+      expect(result).toEqual({ year: "Year must be 1900 or later" });
+    });
+  });
+
+  describe("future date detection", () => {
+    it("should return error for future date", () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+      const day = String(tomorrow.getDate()).padStart(2, "0");
+      const year = tomorrow.getFullYear();
+
+      const result = validateDateFields(`${month}/${day}/${year}`);
+      expect(result).toEqual({ year: "Date cannot be in the future" });
+    });
+
+    it("should not return error for today's date", () => {
+      const today = new Date();
+      const month = String(today.getMonth() + 1).padStart(2, "0");
+      const day = String(today.getDate()).padStart(2, "0");
+      const year = today.getFullYear();
+
+      const result = validateDateFields(`${month}/${day}/${year}`);
+      expect(result).toBeNull();
+    });
+  });
+
+  describe("valid dates", () => {
+    it("should return null for valid numeric date", () => {
+      const result = validateDateFields("07/30/1986");
+      expect(result).toBeNull();
+    });
+
+    it("should return null for valid text month date", () => {
+      const result = validateDateFields("July/30/1986");
+      expect(result).toBeNull();
+    });
+
+    it("should return null for valid abbreviated text month", () => {
+      const result = validateDateFields("Jan/15/2024");
+      expect(result).toBeNull();
+    });
+
+    it("should return null for valid date with case-insensitive month", () => {
+      const result = validateDateFields("MARCH/15/2024");
+      expect(result).toBeNull();
+    });
+  });
+
+  describe("leap year handling", () => {
+    it("should allow Feb 29 in leap year", () => {
+      const result = validateDateFields("02/29/2024");
+      expect(result).toBeNull();
+    });
+
+    it("should reject Feb 29 in non-leap year", () => {
+      const result = validateDateFields("02/29/2023");
+      expect(result).toEqual({ day: "Enter a valid day for this month" });
+    });
+
+    it("should allow Feb 29 in year 2000 (leap year)", () => {
+      const result = validateDateFields("02/29/2000");
+      expect(result).toBeNull();
+    });
+
+    it("should reject Feb 29 in year 1900 (not a leap year)", () => {
+      const result = validateDateFields("02/29/1900");
+      expect(result).toEqual({ day: "Enter a valid day for this month" });
+    });
+  });
+
+  describe("multiple errors", () => {
+    it("should return only first error found (missing day takes priority)", () => {
+      const result = validateDateFields("00/00/2024");
+      expect(result).toEqual({
+        day: "Enter a day",
+        month: "Enter a month",
+      });
+    });
+
+    it("should return day error when day and year invalid", () => {
+      const result = validateDateFields("01/32/24");
+      expect(result).toEqual({
+        day: "Day must be between 1 and 31",
+        year: "Year must be 4 digits",
+      });
+    });
   });
 });

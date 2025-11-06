@@ -630,7 +630,7 @@ describe("DateInput", () => {
     expect(handleChange).toHaveBeenCalledWith("00/12/0000");
   });
 
-  it("should have aria-live assertive on error message", () => {
+  it("should have aria-live assertive on error message container", () => {
     render(
       <DateInput
         error="Enter a valid date"
@@ -643,8 +643,8 @@ describe("DateInput", () => {
       />
     );
 
-    const errorMessage = screen.getByText("Enter a valid date");
-    expect(errorMessage).toHaveAttribute("aria-live", "assertive");
+    const errorContainer = screen.getByText("Enter a valid date").parentElement;
+    expect(errorContainer).toHaveAttribute("aria-live", "assertive");
   });
 
   it("should be fully controlled component without internal state", async () => {
@@ -809,6 +809,219 @@ describe("DateInput", () => {
 
       // Month field accepts both letters and digits
       expect(handleChange).toHaveBeenCalledWith("Jan1/00/0000");
+    });
+  });
+
+  describe("per-field error handling", () => {
+    it("should highlight only day field when day has error", () => {
+      render(
+        <DateInput
+          errors={{ day: "Day must be a number between 1 and 31" }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      const dayInput = screen.getByLabelText("Day");
+      const monthInput = screen.getByLabelText("Month");
+      const yearInput = screen.getByLabelText("Year");
+
+      expect(dayInput).toHaveClass("border-red-600");
+      expect(monthInput).not.toHaveClass("border-red-600");
+      expect(yearInput).not.toHaveClass("border-red-600");
+    });
+
+    it("should highlight only month field when month has error", () => {
+      render(
+        <DateInput
+          errors={{ month: "Month must be between 1 and 12" }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      const dayInput = screen.getByLabelText("Day");
+      const monthInput = screen.getByLabelText("Month");
+      const yearInput = screen.getByLabelText("Year");
+
+      expect(dayInput).not.toHaveClass("border-red-600");
+      expect(monthInput).toHaveClass("border-red-600");
+      expect(yearInput).not.toHaveClass("border-red-600");
+    });
+
+    it("should highlight only year field when year has error", () => {
+      render(
+        <DateInput
+          errors={{ year: "Year must include 4 numbers" }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      const dayInput = screen.getByLabelText("Day");
+      const monthInput = screen.getByLabelText("Month");
+      const yearInput = screen.getByLabelText("Year");
+
+      expect(dayInput).not.toHaveClass("border-red-600");
+      expect(monthInput).not.toHaveClass("border-red-600");
+      expect(yearInput).toHaveClass("border-red-600");
+    });
+
+    it("should highlight multiple fields when multiple errors present", () => {
+      render(
+        <DateInput
+          errors={{
+            day: "Day is required",
+            month: "Month is required",
+          }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      const dayInput = screen.getByLabelText("Day");
+      const monthInput = screen.getByLabelText("Month");
+      const yearInput = screen.getByLabelText("Year");
+
+      expect(dayInput).toHaveClass("border-red-600");
+      expect(monthInput).toHaveClass("border-red-600");
+      expect(yearInput).not.toHaveClass("border-red-600");
+    });
+
+    it("should set aria-invalid only on fields with errors", () => {
+      render(
+        <DateInput
+          errors={{ day: "Day is required" }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      const dayInput = screen.getByLabelText("Day");
+      const monthInput = screen.getByLabelText("Month");
+      const yearInput = screen.getByLabelText("Year");
+
+      expect(dayInput).toHaveAttribute("aria-invalid", "true");
+      expect(monthInput).not.toHaveAttribute("aria-invalid");
+      expect(yearInput).not.toHaveAttribute("aria-invalid");
+    });
+
+    it("should display error message for day field", () => {
+      render(
+        <DateInput
+          errors={{ day: "Day must be between 1 and 31" }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      expect(
+        screen.getByText("Day must be between 1 and 31")
+      ).toBeInTheDocument();
+    });
+
+    it("should display error message for month field", () => {
+      render(
+        <DateInput
+          errors={{ month: "Month must be between 1 and 12" }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      expect(
+        screen.getByText("Month must be between 1 and 12")
+      ).toBeInTheDocument();
+    });
+
+    it("should display error message for year field", () => {
+      render(
+        <DateInput
+          errors={{ year: "Year must include 4 numbers" }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      expect(
+        screen.getByText("Year must include 4 numbers")
+      ).toBeInTheDocument();
+    });
+
+    it("should display all error messages when multiple fields have errors", () => {
+      render(
+        <DateInput
+          errors={{
+            day: "Day is required",
+            month: "Month is required",
+            year: "Year is required",
+          }}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      expect(screen.getByText("Day is required")).toBeInTheDocument();
+      expect(screen.getByText("Month is required")).toBeInTheDocument();
+      expect(screen.getByText("Year is required")).toBeInTheDocument();
+    });
+
+    it("should not display any errors when errors object is empty", () => {
+      render(
+        <DateInput
+          errors={{}}
+          id="test-date"
+          label="Date of birth"
+          onChange={() => {
+            /* Test handler */
+          }}
+          value=""
+        />
+      );
+
+      const dayInput = screen.getByLabelText("Day");
+      const monthInput = screen.getByLabelText("Month");
+      const yearInput = screen.getByLabelText("Year");
+
+      expect(dayInput).not.toHaveClass("border-red-600");
+      expect(monthInput).not.toHaveClass("border-red-600");
+      expect(yearInput).not.toHaveClass("border-red-600");
     });
   });
 });
