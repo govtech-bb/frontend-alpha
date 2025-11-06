@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, ErrorSummary } from "@/components/ds";
+import { Button, ErrorSummary, Radio, RadioGroup } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
-import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { marriageStatusValidation } from "../schema";
@@ -74,64 +73,31 @@ export function MarriageStatus({
         </ul>
       </div>
 
-      <fieldset>
-        <legend className="sr-only">Marriage status</legend>
+      <RadioGroup
+        aria-describedby={
+          fieldErrors.marriageStatus
+            ? "marriageStatus-marriageStatus-error"
+            : undefined
+        }
+        aria-invalid={fieldErrors.marriageStatus ? "true" : undefined}
+        aria-label="Marriage status"
+        onValueChange={(val) =>
+          handleChange("marriageStatus", val as "yes" | "no")
+        }
+        value={value || undefined}
+      >
+        <Radio id="married-yes" label="Yes" value="yes" />
+        <Radio id="married-no" label="No" value="no" />
+      </RadioGroup>
 
-        <div className="space-y-3">
-          <div className="flex items-start">
-            <input
-              aria-describedby={
-                fieldErrors.marriageStatus
-                  ? "marriageStatus-marriageStatus-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.marriageStatus ? "true" : "false"}
-              checked={value === "yes"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="married-yes"
-              name="marriageStatus"
-              onChange={() => handleChange("marriageStatus", "yes")}
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="married-yes"
-            >
-              Yes
-            </label>
-          </div>
-
-          <div className="flex items-start">
-            <input
-              aria-describedby={
-                fieldErrors.marriageStatus
-                  ? "marriageStatus-marriageStatus-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.marriageStatus ? "true" : "false"}
-              checked={value === "no"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="married-no"
-              name="marriageStatus"
-              onChange={() => handleChange("marriageStatus", "no")}
-              type="radio"
-              value="no"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="married-no"
-            >
-              No
-            </label>
-          </div>
-        </div>
-
-        <FormFieldError
-          id="marriageStatus-marriageStatus"
-          message={fieldErrors.marriageStatus}
-        />
-      </fieldset>
+      {fieldErrors.marriageStatus && (
+        <p
+          className="mt-2 text-[20px] text-red-dark"
+          id="marriageStatus-marriageStatus-error"
+        >
+          {fieldErrors.marriageStatus}
+        </p>
+      )}
 
       <Button type="submit" variant="primary">
         Next

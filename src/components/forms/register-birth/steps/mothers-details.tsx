@@ -21,7 +21,6 @@ type MothersDetailsProps = {
  * Step: Mother's Details
  * Collects information about the mother
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function MothersDetails({
   value,
   onChange,

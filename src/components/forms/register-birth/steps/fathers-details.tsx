@@ -22,7 +22,6 @@ type FathersDetailsProps = {
  * Collects comprehensive information about the father
  * Based on PDF page 2
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function FathersDetails({
   value,
   onChange,
