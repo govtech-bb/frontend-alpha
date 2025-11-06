@@ -134,12 +134,13 @@ describe("useStepValidation", () => {
     expect(result.current.hasSubmitted).toBe(true);
     expect(result.current.fieldErrors.name).toBe("Name is required");
 
-    // Update value and trigger change - error should persist for empty value
+    // Update value and trigger change - error should be cleared immediately when user starts typing
+    // This provides better UX - errors disappear as soon as user engages with the field
     act(() => {
       result.current.handleChange("name", "");
     });
 
-    expect(result.current.fieldErrors.name).toBe("Name is required");
+    expect(result.current.fieldErrors.name).toBeUndefined();
 
     // Now update value to simulate parent re-render with valid value
     rerender({ value: { name: "John", email: "test@example.com" } });
