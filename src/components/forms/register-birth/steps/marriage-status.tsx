@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
@@ -133,12 +134,9 @@ export function MarriageStatus({
         />
       </fieldset>
 
-      <button
-        className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
-        type="submit"
-      >
+      <Button type="submit" variant="primary">
         Next
-      </button>
+      </Button>
     </form>
   );
 }

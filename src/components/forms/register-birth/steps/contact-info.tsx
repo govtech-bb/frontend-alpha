@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
 import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
@@ -129,20 +130,13 @@ export function ContactInfo({
       </div>
 
       <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
+        <Button onClick={onBack} type="button" variant="secondary">
           Back
-        </button>
+        </Button>
 
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
-          type="submit"
-        >
+        <Button type="submit" variant="primary">
           Continue
-        </button>
+        </Button>
       </div>
     </form>
   );

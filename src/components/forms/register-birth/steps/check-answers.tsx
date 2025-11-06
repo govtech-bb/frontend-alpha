@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
 import { formatDateForDisplay } from "@/lib/date-display";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -89,13 +90,9 @@ export function CheckAnswers({
           )}
         </div>
 
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
+        <Button onClick={onBack} type="button" variant="secondary">
           Back
-        </button>
+        </Button>
       </div>
     );
   }
@@ -362,22 +359,18 @@ export function CheckAnswers({
       )}
 
       <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
+        <Button
           disabled={isSubmitting}
           onClick={onBack}
           type="button"
+          variant="secondary"
         >
           Back
-        </button>
+        </Button>
 
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:cursor-not-allowed disabled:opacity-50"
-          disabled={isSubmitting}
-          type="submit"
-        >
+        <Button disabled={isSubmitting} type="submit" variant="primary">
           {isSubmitting ? "Submitting..." : "Confirm and send"}
-        </button>
+        </Button>
       </div>
     </form>
   );
