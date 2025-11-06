@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { z } from "zod";
-import type { ValidationError } from "../error-summary";
+import type { ErrorItem } from "@/components/ds";
 
 type UseStepValidationParams<T> = {
   schema: z.ZodSchema<T>;
@@ -27,7 +27,7 @@ export function useStepValidation<T extends Record<string, unknown>>({
   onNext,
   fieldPrefix = "",
 }: UseStepValidationParams<T>) {
-  const [errors, setErrors] = useState<ValidationError[]>([]);
+  const [errors, setErrors] = useState<ErrorItem[]>([]);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -46,7 +46,7 @@ export function useStepValidation<T extends Record<string, unknown>>({
         return next;
       });
       setErrors((prev) =>
-        prev.filter((e) => e.field !== `${fieldPrefix}${String(field)}`)
+        prev.filter((e) => e.target !== `${fieldPrefix}${String(field)}`)
       );
     } else {
       // Set error for this field
@@ -58,13 +58,13 @@ export function useStepValidation<T extends Record<string, unknown>>({
         }));
         setErrors((prev) => {
           const filtered = prev.filter(
-            (e) => e.field !== `${fieldPrefix}${String(field)}`
+            (e) => e.target !== `${fieldPrefix}${String(field)}`
           );
           return [
             ...filtered,
             {
-              field: `${fieldPrefix}${String(field)}`,
-              message: fieldError.message,
+              target: `${fieldPrefix}${String(field)}`,
+              text: fieldError.message,
             },
           ];
         });
@@ -88,7 +88,7 @@ export function useStepValidation<T extends Record<string, unknown>>({
         return next;
       });
       setErrors((prev) =>
-        prev.filter((e) => e.field !== `${fieldPrefix}${String(field)}`)
+        prev.filter((e) => e.target !== `${fieldPrefix}${String(field)}`)
       );
     }
   };
@@ -118,14 +118,14 @@ export function useStepValidation<T extends Record<string, unknown>>({
       onNext();
     } else {
       // Build error list for summary and field errors
-      const validationErrors: ValidationError[] = [];
+      const validationErrors: ErrorItem[] = [];
       const newFieldErrors: Record<string, string> = {};
 
       for (const error of result.error.issues) {
         const field = error.path[0] as string;
         validationErrors.push({
-          field: `${fieldPrefix}${field}`,
-          message: error.message,
+          target: `${fieldPrefix}${field}`,
+          text: error.message,
         });
         newFieldErrors[field] = error.message;
       }

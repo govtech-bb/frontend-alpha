@@ -253,8 +253,8 @@ describe("useStepValidation", () => {
       } as React.FormEvent);
     });
 
-    expect(result.current.errors[0].field).toBe("test-name");
-    expect(result.current.errors[1].field).toBe("test-email");
+    expect(result.current.errors[0].target).toBe("test-name");
+    expect(result.current.errors[1].target).toBe("test-email");
   });
 
   it("should handle optional fields correctly", () => {

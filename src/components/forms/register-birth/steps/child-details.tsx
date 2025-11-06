@@ -1,9 +1,8 @@
 "use client";
 
-import { Button, Input } from "@/components/ds";
+import { Button, ErrorSummary, Input } from "@/components/ds";
 import { validateDateFields } from "@/lib/date-validation";
 import { DateInput } from "../../common/date-input";
-import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -56,7 +55,7 @@ export function ChildDetails({
         Tell us about the child
       </h1>
 
-      <ErrorSummary errors={errors} />
+      <ErrorSummary errors={errors} title="There is a problem" />
 
       {/* First name(s) */}
       <div>

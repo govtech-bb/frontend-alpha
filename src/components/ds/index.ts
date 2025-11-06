@@ -11,6 +11,7 @@
 export type {
   ButtonProps,
   CheckboxProps,
+  ErrorItem,
   ErrorSummaryProps,
   FooterProps,
   InputProps,

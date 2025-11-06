@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, Input } from "@/components/ds";
+import { Button, ErrorSummary, Input } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { contactInfoValidation } from "../schema";
@@ -76,7 +75,7 @@ export function ContactInfo({
         Contact details
       </h1>
 
-      <ErrorSummary errors={errors} />
+      <ErrorSummary errors={errors} title="There is a problem" />
 
       <Typography className="mb-4 leading-tight" variant="paragraph">
         We ask for this information so we can send you confirmation and let you

@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ds";
+import { Button, ErrorSummary } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -64,7 +63,7 @@ export function Certificates({
         Order a birth certificate
       </h1>
 
-      <ErrorSummary errors={errors} />
+      <ErrorSummary errors={errors} title="There is a problem" />
 
       <Typography className="mb-4 leading-tight" variant="paragraph">
         A birth certificate is essential for access to some public services.

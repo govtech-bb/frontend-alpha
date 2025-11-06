@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ds";
+import { Button, ErrorSummary } from "@/components/ds";
 import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
 import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
@@ -53,7 +52,7 @@ export function MarriageStatus({
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <ErrorSummary errors={errors} />
+      <ErrorSummary errors={errors} title="There is a problem" />
 
       <div>
         <h1
