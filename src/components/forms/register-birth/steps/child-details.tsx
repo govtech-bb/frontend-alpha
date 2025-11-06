@@ -21,6 +21,7 @@ type ChildDetailsProps = {
  * Step: Child's Details
  * Collects information about the child being registered
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function ChildDetails({
   value,
   onChange,
@@ -30,14 +31,20 @@ export function ChildDetails({
   const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
 
   // Use generic validation hook
-  const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
-    useStepValidation({
-      schema: childDetailsValidation,
-      value,
-      onChange,
-      onNext,
-      fieldPrefix: "child-",
-    });
+  const {
+    errors,
+    fieldErrors,
+    hasSubmitted,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useStepValidation({
+    schema: childDetailsValidation,
+    value,
+    onChange,
+    onNext,
+    fieldPrefix: "child-",
+  });
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -122,7 +129,11 @@ export function ChildDetails({
 
       {/* Date of birth */}
       <DateInput
-        errors={validateDateFields(value.dateOfBirth || "")}
+        errors={
+          hasSubmitted
+            ? (validateDateFields(value.dateOfBirth || "") ?? undefined)
+            : undefined
+        }
         hint="For example, 27 3 2007"
         id="child-dateOfBirth"
         label="Date of birth"
