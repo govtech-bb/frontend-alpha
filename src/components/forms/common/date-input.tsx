@@ -122,6 +122,7 @@ export function DateInput({
             </label>
             <input
               aria-invalid={hasError ? "true" : undefined}
+              autoComplete="bday-day"
               className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[5ch] border-2 px-2 py-1 ${
                 hasError
                   ? "govuk-input--error border-red-600"
@@ -148,6 +149,7 @@ export function DateInput({
             </label>
             <input
               aria-invalid={hasError ? "true" : undefined}
+              autoComplete="bday-month"
               className={`govuk-input govuk-date-input__input govuk-input--width-2 w-[10ch] border-2 px-2 py-1 ${
                 hasError
                   ? "govuk-input--error border-red-600"
@@ -173,6 +175,7 @@ export function DateInput({
             </label>
             <input
               aria-invalid={hasError ? "true" : undefined}
+              autoComplete="bday-year"
               className={`govuk-input govuk-date-input__input govuk-input--width-4 w-[7ch] border-2 px-2 py-1 ${
                 hasError
                   ? "govuk-input--error border-red-600"
