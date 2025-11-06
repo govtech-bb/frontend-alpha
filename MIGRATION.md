@@ -27,10 +27,10 @@ This document tracks our migration from custom components to the @govtech-bb/rea
 - [x] Delete dead code (form-progress-indicator)
 - [ ] Set up visual regression testing (deferred to Phase 4)
 
-### Phase 2: Core Interactive Elements (PLANNED)
-- [ ] Button migration
-- [ ] Link migration
-- [ ] Input migration
+### Phase 2: Core Interactive Elements ✓ IN PROGRESS
+- [x] Button migration (all 8 form step files)
+- [ ] Link migration (Change buttons in check-answers)
+- [~] Input migration (2 of 4 files: child-details, contact-info)
 - [ ] ErrorSummary migration
 
 ### Phase 3: Enhanced Form Controls (PLANNED)
