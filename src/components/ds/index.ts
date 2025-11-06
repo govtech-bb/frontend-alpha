@@ -22,7 +22,7 @@ export type {
   SelectProps,
   ShowHideProps,
   StatusBannerProps,
-  TextAreaProps,
+  TextareaProps,
   TypographyProps,
 } from "@govtech-bb/react";
 // Core Components
