@@ -154,7 +154,7 @@ export function DateInput({
             >
               <input
                 aria-invalid={hasErrorDay ? "true" : undefined}
-                autoComplete="bday-day"
+                autoComplete="off"
                 className="w-full min-w-0 rounded-sm px-4 py-4 text-center text-xl outline-none"
                 id={`${id}-day`}
                 inputMode="numeric"
@@ -185,7 +185,7 @@ export function DateInput({
             >
               <input
                 aria-invalid={hasErrorMonth ? "true" : undefined}
-                autoComplete="bday-month"
+                autoComplete="off"
                 className="w-full min-w-0 rounded-sm px-4 py-4 text-center text-xl outline-none"
                 id={`${id}-month`}
                 maxLength={9}
@@ -215,7 +215,7 @@ export function DateInput({
             >
               <input
                 aria-invalid={hasErrorYear ? "true" : undefined}
-                autoComplete="bday-year"
+                autoComplete="off"
                 className="w-full min-w-0 rounded-sm px-4 py-4 text-center text-xl outline-none"
                 id={`${id}-year`}
                 inputMode="numeric"

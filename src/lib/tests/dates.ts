@@ -99,6 +99,39 @@ describe("combine", () => {
       expect(combined).toBe(original);
     });
   });
+
+  describe("text month handling", () => {
+    it("should not pad single letter months", () => {
+      expect(combine("2024", "J", "15")).toBe("2024-J-15");
+    });
+
+    it("should not pad two letter months", () => {
+      expect(combine("2024", "Ja", "15")).toBe("2024-Ja-15");
+    });
+
+    it("should not pad abbreviated month names", () => {
+      expect(combine("2024", "Jan", "15")).toBe("2024-Jan-15");
+      expect(combine("2024", "Feb", "20")).toBe("2024-Feb-20");
+      expect(combine("2024", "Dec", "25")).toBe("2024-Dec-25");
+    });
+
+    it("should not pad full month names", () => {
+      expect(combine("2024", "January", "15")).toBe("2024-January-15");
+      expect(combine("2024", "February", "20")).toBe("2024-February-20");
+      expect(combine("2024", "December", "25")).toBe("2024-December-25");
+    });
+
+    it("should still pad numeric months", () => {
+      expect(combine("2024", "1", "15")).toBe("2024-01-15");
+      expect(combine("2024", "9", "5")).toBe("2024-09-05");
+      expect(combine("2024", "12", "25")).toBe("2024-12-25");
+    });
+
+    it("should handle mixed case month names", () => {
+      expect(combine("2024", "JANUARY", "15")).toBe("2024-JANUARY-15");
+      expect(combine("2024", "january", "15")).toBe("2024-january-15");
+    });
+  });
 });
 
 describe("validateFields", () => {

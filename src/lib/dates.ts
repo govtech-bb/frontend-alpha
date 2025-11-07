@@ -61,7 +61,9 @@ export function combine(year: string, month: string, day: string): string {
 
   const paddedDay = (day || "00").padStart(2, "0");
   const paddedYear = (year || "0000").padStart(4, "0");
-  const paddedMonth = (month || "00").padStart(2, "0");
+  // Only pad numeric months (or empty), leave text months as-is
+  const paddedMonth =
+    !month || /^\d+$/.test(month) ? (month || "00").padStart(2, "0") : month;
 
   return `${paddedYear}-${paddedMonth}-${paddedDay}`;
 }
