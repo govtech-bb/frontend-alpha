@@ -3,9 +3,9 @@ import { Typography } from "@/components/ui/typography";
 
 export const Banner = () => {
   return (
-    <div className="bg-blue-dark text-neutral-white">
+    <div className="bg-blue-100 text-neutral-white">
       <div className="container">
-        <div className="flex items-center justify-between py-[7px]">
+        <div className="flex items-center justify-between py-2">
           <span className="flex items-center gap-2">
             <Image
               alt="flag"

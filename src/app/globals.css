@@ -11,87 +11,9 @@
 
 @theme inline {
   --font-sans: var(--font-figtree);
-
-  /* Yellow */
-  --color-yellow-dark: hsla(39, 80%, 55%, 1);
-  --color-yellow-bright: hsla(45, 100%, 57%, 1);
-  --color-yellow-light: hsla(46, 100%, 83%, 1);
-
-  /* Teal */
-  --color-teal-dark: hsla(183, 75%, 22%, 1);
-  --color-teal-bright: hsla(183, 61%, 49%, 1);
-  --color-teal-light: hsla(183, 57%, 92%, 1);
-
-  --color-blue-dark: hsla(222, 100%, 25%, 1);
-  --color-blue-bright: hsla(210, 93%, 61%, 1);
-  --color-blue-light: hsla(210, 100%, 85%, 1);
-
-  --color-neutral-black: hsla(0, 0%, 0%, 1);
-  --color-neutral-grey: hsla(211, 16%, 90%, 1);
-  --color-neutral-white: hsla(0, 0%, 100%, 1);
-
-  --color-red-dark: hsla(0, 58%, 41%, 1);
-  --color-red-bright: hsla(0, 100%, 71%, 1);
-  --color-red-light: hsla(0, 100%, 92%, 1);
-
-  --color-pink-dark: hsla(333, 82%, 37%, 1);
-  --color-pink-bright: hsla(321, 100%, 79%, 1);
-  --color-pink-light: hsla(321, 100%, 92%, 1);
-
-  --color-purple-dark: hsla(283, 44%, 25%, 1);
-  --color-purple-bright: hsla(282, 47%, 58%, 1);
-  --color-purple-light: hsla(291, 46%, 83%, 1);
-
-  --color-green-dark: hsla(164, 100%, 20%, 1);
-  --color-green-bright: hsla(158, 72%, 44%, 1);
-  --color-green-light: hsla(158, 55%, 78%, 1);
-
-  --color-exp-pink-10: hsla(322, 100%, 98%, 1);
 }
 
 :root {
-  /* Yellow */
-  --yellow-dark: hsla(39, 80%, 55%, 1);
-  --yellow-bright: hsla(45, 100%, 57%, 1);
-  --yellow-light: hsla(46, 100%, 83%, 1);
-
-  --teal-dark: hsla(183, 75%, 22%, 1);
-  --teal-bright: hsla(183, 61%, 49%, 1);
-  --teal-light: hsla(183, 57%, 92%, 1);
-
-  /* Blue */
-  --blue-dark: hsla(222, 100%, 25%, 1);
-  --blue-bright: hsla(210, 93%, 61%, 1);
-  --blue-light: hsla(210, 100%, 85%, 1);
-
-  /* Neutral */
-  --neutral-black: hsla(0, 0%, 0%, 1);
-  --neutral-grey: hsla(211, 16%, 90%, 1);
-  --neutral-white: hsla(0, 0%, 100%, 1);
-
-  /* Red */
-  --red-dark: hsla(0, 58%, 41%, 1);
-  --red-bright: hsla(0, 100%, 71%, 1);
-  --red-light: hsla(0, 100%, 92%, 1);
-
-  /* Pink */
-  --pink-dark: hsla(333, 82%, 37%, 1);
-  --pink-bright: hsla(321, 100%, 79%, 1);
-  --pink-light: hsla(321, 100%, 92%, 1);
-
-  /* Purple */
-  --purple-dark: hsla(283, 44%, 25%, 1);
-  --purple-bright: hsla(282, 47%, 58%, 1);
-  --purple-light: hsla(291, 46%, 83%, 1);
-
-  /* Green */
-  --green-dark: hsla(164, 100%, 20%, 1);
-  --green-bright: hsla(158, 72%, 44%, 1);
-  --green-light: hsla(158, 55%, 78%, 1);
-
-  /* Experimental */
-  --exp-pink-10: hsla(322, 100%, 98%, 1);
-
   /* ---------- 2) Layout / type tokens ---------- */
   --layout-sm: 40rem;
   --layout-md: 48rem;
@@ -150,16 +72,26 @@
   width: 100%;
   padding-inline: 1rem;
 
-  @variant sm {
-    max-width: var(--layout-sm);
+  @media (min-width: 1024px) {
+    max-width: 1200px;
+    padding-inline: 8rem;
   }
-  @variant md {
-    max-width: var(--layout-md);
-  }
-  @variant lg {
-    max-width: var(--layout-lg);
-  }
-  @variant xl {
-    max-width: var(--layout-xl);
-  }
+}
+
+@utility grid-cols-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@utility grid-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@utility grid-cols-2-1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
 }

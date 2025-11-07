@@ -56,7 +56,7 @@ const components: Components = {
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
       ? "underline"
-      : "text-teal-dark underline leading-[150%]";
+      : "text-teal-dark underline leading-normal";
 
     return (
       <a
@@ -119,21 +119,11 @@ export const MarkdownContent = ({
 }) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="space-y-4 overflow-hidden bg-white pb-8">
-      <div className="space-y-4 pb-4">
+    <div className="space-y-8 overflow-hidden">
+      <div className="space-y-6">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
         )}
-
-        {/*
-          TODO: Should we remove description entirely?
-         {frontmatter.description
-          ?.split("\n")
-          .map((line: string, _index: number) => (
-            <Typography key={_index} variant="paragraph">
-              {line}
-            </Typography>
-          ))} */}
 
         {frontmatter.stage?.length > 0 ? (
           <StageBanner stage={frontmatter.stage} />
@@ -142,7 +132,7 @@ export const MarkdownContent = ({
           <MigrationBanner pageURL={frontmatter.source_url} />
         ) : null}
         {frontmatter.publish_date && (
-          <div className="border-gray-200 border-b-4 pb-4 text-gray-500">
+          <div className="border-blue-10 border-b-4 pb-4 text-[16px] text-neutral-midgrey leading-normal">
             Last updated on{" "}
             {format(
               parseISO(frontmatter.publish_date.toISOString().split("T")[0]),
