@@ -447,6 +447,19 @@ describe("formatForDisplay", () => {
     it("should format dates with single digit day", () => {
       expect(formatForDisplay("2010-03-05")).toBe("Mar 5, 2010");
     });
+
+    it("should format dates with text months", () => {
+      expect(formatForDisplay("2011-jul-30")).toBe("Jul 30, 2011");
+      expect(formatForDisplay("1977-july-30")).toBe("Jul 30, 1977");
+      expect(formatForDisplay("2020-jan-15")).toBe("Jan 15, 2020");
+      expect(formatForDisplay("2020-december-25")).toBe("Dec 25, 2020");
+    });
+
+    it("should format dates with abbreviated text months", () => {
+      expect(formatForDisplay("2011-jul-1")).toBe("Jul 1, 2011");
+      expect(formatForDisplay("2020-feb-29")).toBe("Feb 29, 2020");
+      expect(formatForDisplay("2015-sep-5")).toBe("Sep 5, 2015");
+    });
   });
 
   describe("invalid inputs", () => {

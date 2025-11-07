@@ -303,13 +303,15 @@ export function isValidBirthDate(dateString: string, minYear = 1900): boolean {
 }
 
 /**
- * Formats a date from ISO 8601 (YYYY-MM-DD) to spelled-out format like "Jul 30, 2011"
+ * Formats a date from ISO 8601 (YYYY-MM-DD or YYYY-<month>-DD) to spelled-out format like "Jul 30, 2011"
+ * Supports both numeric months (01-12) and text months (jan, July, etc.)
  *
- * @param iso8601 - Date string in YYYY-MM-DD format or undefined
+ * @param iso8601 - Date string in YYYY-MM-DD or YYYY-<month>-DD format or undefined
  * @returns Formatted date string like "Jul 30, 2011" or empty string if invalid
  *
  * @example
  * formatForDisplay("2011-07-30") // "Jul 30, 2011"
+ * formatForDisplay("2011-jul-30") // "Jul 30, 2011"
  * formatForDisplay("") // ""
  */
 export function formatForDisplay(iso8601: string | undefined): string {
@@ -317,22 +319,22 @@ export function formatForDisplay(iso8601: string | undefined): string {
     return "";
   }
 
-  // Validate format: YYYY-MM-DD
-  const match = iso8601.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!match) {
-    return "";
-  }
-
-  const [, year, month, day] = match;
-
-  // Validate the date is semantically correct
+  // Validate the date is semantically correct (handles both numeric and text months)
   if (!isValidDateSemantically(iso8601)) {
     return "";
   }
 
+  // Parse components (handles both numeric and text formats)
+  const { year, month, day } = parseDate(iso8601);
+
   const yearNum = Number(year);
-  const monthNum = Number(month);
+  const monthNum = parseMonthToNumber(month);
   const dayNum = Number(day);
+
+  // Ensure parsing succeeded
+  if (Number.isNaN(yearNum) || Number.isNaN(monthNum) || Number.isNaN(dayNum)) {
+    return "";
+  }
 
   // Create a Date object (month is 0-indexed in JavaScript)
   const date = new Date(yearNum, monthNum - 1, dayNum);
