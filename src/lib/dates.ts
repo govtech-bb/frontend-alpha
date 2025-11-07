@@ -12,6 +12,50 @@ export type DateFieldErrors = {
 };
 
 /**
+ * Parses a month string (numeric or text) to a month number (1-12)
+ * Returns NaN if the month cannot be parsed
+ *
+ * @param month - Month string (e.g., "01", "1", "Jan", "January", "jul")
+ * @returns Month number 1-12, or NaN if invalid
+ */
+function parseMonthToNumber(month: string): number {
+  // If it's already numeric, return it
+  if (/^\d+$/.test(month)) {
+    return Number(month);
+  }
+
+  // Parse text month names (case-insensitive)
+  const monthLower = month.toLowerCase();
+  const monthMap: Record<string, number> = {
+    jan: 1,
+    january: 1,
+    feb: 2,
+    february: 2,
+    mar: 3,
+    march: 3,
+    apr: 4,
+    april: 4,
+    may: 5,
+    jun: 6,
+    june: 6,
+    jul: 7,
+    july: 7,
+    aug: 8,
+    august: 8,
+    sep: 9,
+    september: 9,
+    oct: 10,
+    october: 10,
+    nov: 11,
+    november: 11,
+    dec: 12,
+    december: 12,
+  };
+
+  return monthMap[monthLower] ?? Number.NaN;
+}
+
+/**
  * Parses an ISO 8601 date string into individual day, month, year components
  * Does NOT validate - parsing is format-only
  *
@@ -71,8 +115,9 @@ export function combine(year: string, month: string, day: string): string {
 /**
  * Validates a date is semantically correct (day/month/year are valid for the date)
  * Handles leap years automatically
+ * Supports both numeric months (01-12) and text months (Jan, January, etc.)
  *
- * @param dateString - Date string in YYYY-MM-DD format
+ * @param dateString - Date string in YYYY-MM-DD or YYYY-<month>-DD format
  * @returns true if the date is valid, false otherwise
  */
 function isValidDateSemantically(dateString: string): boolean {
@@ -80,19 +125,27 @@ function isValidDateSemantically(dateString: string): boolean {
     return false;
   }
 
-  const match = dateString.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!match) {
+  // Parse components (handles both numeric and text formats)
+  const { year, month, day } = parse(dateString);
+
+  if (!(year && month && day)) {
     return false;
   }
 
-  const [, year, month, day] = match;
-
   const yearNum = Number(year);
-  const monthNum = Number(month);
+  const monthNum = parseMonthToNumber(month);
   const dayNum = Number(day);
 
-  // Check basic ranges
-  if (monthNum < 1 || monthNum > 12 || dayNum < 1 || dayNum > 31) {
+  // Check if parsing succeeded and values are in valid ranges
+  if (
+    Number.isNaN(yearNum) ||
+    Number.isNaN(monthNum) ||
+    Number.isNaN(dayNum) ||
+    monthNum < 1 ||
+    monthNum > 12 ||
+    dayNum < 1 ||
+    dayNum > 31
+  ) {
     return false;
   }
 
@@ -145,14 +198,12 @@ export function validateFields(dateString: string): DateFieldErrors | null {
     }
   }
 
-  // Validate month range
-  if (/^\d+$/.test(month)) {
-    const monthNum = Number(month);
-    if (monthNum > 12) {
-      errors.month = "Month must be between 1 and 12";
-    } else if (monthNum < 1) {
-      errors.month = "Enter a valid month";
-    }
+  // Validate month range (handles both numeric and text months)
+  const monthNum = parseMonthToNumber(month);
+  if (Number.isNaN(monthNum)) {
+    errors.month = "Enter a valid month";
+  } else if (monthNum > 12 || monthNum < 1) {
+    errors.month = "Month must be between 1 and 12";
   }
 
   // Validate day range
@@ -175,7 +226,7 @@ export function validateFields(dateString: string): DateFieldErrors | null {
   // Check if date is in the future
   if (Object.keys(errors).length === 0) {
     const futureYearNum = Number(year);
-    const futureMonthNum = Number(month);
+    const futureMonthNum = parseMonthToNumber(month);
     const futureDayNum = Number(day);
     const birthDate = startOfDay(
       new Date(futureYearNum, futureMonthNum - 1, futureDayNum)
@@ -192,8 +243,9 @@ export function validateFields(dateString: string): DateFieldErrors | null {
 
 /**
  * Validates date is in reasonable range for birth dates (1900 to current year)
+ * Supports both numeric and text month formats
  *
- * @param dateString - Date string in YYYY-MM-DD format
+ * @param dateString - Date string in YYYY-MM-DD or YYYY-<month>-DD format
  * @param minYear - Minimum valid year (default: 1900)
  * @param maxYear - Maximum valid year (default: current year)
  * @returns true if the date is valid and within range, false otherwise
@@ -211,8 +263,9 @@ export function isValidBirthDate(
     return false;
   }
 
-  const [year] = dateString.split("-").map(Number);
-  return year >= minYear && year <= maxYear;
+  const { year } = parse(dateString);
+  const yearNum = Number(year);
+  return yearNum >= minYear && yearNum <= maxYear;
 }
 
 /**

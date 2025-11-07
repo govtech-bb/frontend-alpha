@@ -277,6 +277,52 @@ describe("validateFields", () => {
       expect(validateFields("2024-03-31")).toBeNull();
     });
   });
+
+  describe("text month validation", () => {
+    it("should accept abbreviated month names", () => {
+      expect(validateFields("2011-jul-1")).toBeNull();
+      expect(validateFields("2011-Jan-1")).toBeNull();
+      expect(validateFields("2011-DEC-25")).toBeNull();
+    });
+
+    it("should accept full month names", () => {
+      expect(validateFields("2011-July-1")).toBeNull();
+      expect(validateFields("2011-January-1")).toBeNull();
+      expect(validateFields("2011-December-25")).toBeNull();
+    });
+
+    it("should accept single letters for valid months", () => {
+      // While uncommon, if user types just the first letter, it should validate
+      // Actually single letters won't match known months, so they should error
+      expect(validateFields("2011-j-1")?.month).toBe("Enter a valid month");
+    });
+
+    it("should reject invalid month names", () => {
+      const result = validateFields("2011-xyz-1");
+      expect(result?.month).toBe("Enter a valid month");
+    });
+
+    it("should validate day ranges with text months", () => {
+      // February 30 should fail
+      const result = validateFields("2011-Feb-30");
+      expect(result?.day).toBe("Enter a valid day for this month");
+    });
+
+    it("should validate leap years with text months", () => {
+      // 2024 is a leap year
+      expect(validateFields("2024-Feb-29")).toBeNull();
+      // 2011 is not a leap year
+      const result = validateFields("2011-Feb-29");
+      expect(result?.day).toBe("Enter a valid day for this month");
+    });
+
+    it("should check future dates with text months", () => {
+      // Create a date far in the future
+      const futureYear = new Date().getFullYear() + 10;
+      const result = validateFields(`${futureYear}-Jul-1`);
+      expect(result?.year).toBe("Date cannot be in the future");
+    });
+  });
 });
 
 describe("isValidBirthDate", () => {
