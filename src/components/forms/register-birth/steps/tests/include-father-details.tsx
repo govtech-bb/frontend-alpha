@@ -67,10 +67,10 @@ describe("IncludeFatherDetails", () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it("should show validation error when Next button is clicked without selection", () => {
+  it("should show validation error when Continue button is clicked without selection", () => {
     render(<IncludeFatherDetails {...defaultProps} value="" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    const nextButton = screen.getByRole("button", { name: /continue/i });
     fireEvent.click(nextButton);
 
     // Check that error appears in error summary
@@ -130,23 +130,23 @@ describe("IncludeFatherDetails", () => {
     expect(onBack).toHaveBeenCalledTimes(1);
   });
 
-  it("should call onNext when Next button is clicked with valid selection", () => {
+  it("should call onNext when Continue button is clicked with valid selection", () => {
     const onNext = vi.fn();
     render(
       <IncludeFatherDetails {...defaultProps} onNext={onNext} value="yes" />
     );
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    const nextButton = screen.getByRole("button", { name: /continue/i });
     fireEvent.click(nextButton);
 
     expect(onNext).toHaveBeenCalledTimes(1);
   });
 
-  it("should prevent form submission when Next button is clicked without selection", () => {
+  it("should prevent form submission when Continue button is clicked without selection", () => {
     const onNext = vi.fn();
     render(<IncludeFatherDetails {...defaultProps} onNext={onNext} value="" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    const nextButton = screen.getByRole("button", { name: /continue/i });
     fireEvent.click(nextButton);
 
     // Validation should prevent onNext from being called
