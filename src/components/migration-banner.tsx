@@ -1,3 +1,4 @@
+import { StatusBanner } from "@govtech-bb/react";
 import Link from "next/link";
 import { Typography } from "@/components/ui/typography";
 
@@ -10,7 +11,7 @@ export const MigrationBanner = ({
   pageURL,
   url = "https://www.gov.bb",
 }: MigrationBannerProps) => (
-  <div className="space-y-4 border-pink-bright border-r-4 border-l-4 bg-exp-pink-10 px-4 py-3">
+  <StatusBanner variant="migrated">
     <Typography variant="paragraph">
       This {pageURL ? "page" : "content"} was originally published on{" "}
       <Link
@@ -33,5 +34,5 @@ export const MigrationBanner = ({
         View the original source
       </Link>
     ) : null}
-  </div>
+  </StatusBanner>
 );
