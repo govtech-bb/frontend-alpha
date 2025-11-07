@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isValidBirthDate, isValidChildBirthDate } from "@/lib/date-validation";
+import { isValidBirthDate, isValidChildBirthDate } from "@/lib/dates";
 
 /**
  * Zod schema for birth registration form data validation

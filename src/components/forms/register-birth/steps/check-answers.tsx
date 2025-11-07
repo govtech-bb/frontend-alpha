@@ -1,7 +1,7 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
-import { formatDateForDisplay } from "@/lib/date-display";
+import { formatForDisplay } from "@/lib/dates";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { finalSubmissionSchema } from "../schema";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
@@ -20,7 +20,7 @@ type CheckAnswersProps = {
  * Summary page showing all entered data with edit links
  * Based on PDF pages 8 and 18
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex form rendering logic is necessary for this component
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex form summary with conditional rendering
 export function CheckAnswers({
   formData,
   onSubmit,
@@ -150,7 +150,7 @@ export function CheckAnswers({
             <div className="flex">
               <dt className="w-1/3">Date of birth</dt>
               <dd className="w-2/3">
-                {formatDateForDisplay(formData.father.dateOfBirth)}
+                {formatForDisplay(formData.father.dateOfBirth)}
               </dd>
             </div>
             <div className="flex">
@@ -220,7 +220,7 @@ export function CheckAnswers({
             <dt className="w-1/3">Date of birth</dt>
             <dd className="w-2/3">
               {formData.mother?.dateOfBirth &&
-                formatDateForDisplay(formData.mother.dateOfBirth)}
+                formatForDisplay(formData.mother.dateOfBirth)}
             </dd>
           </div>
           <div className="flex">
@@ -280,7 +280,7 @@ export function CheckAnswers({
             <dt className="w-1/3">Date of birth</dt>
             <dd className="w-2/3">
               {formData.child?.dateOfBirth &&
-                formatDateForDisplay(formData.child.dateOfBirth)}
+                formatForDisplay(formData.child.dateOfBirth)}
             </dd>
           </div>
           <div className="flex">

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Input, Radio, RadioGroup, TextArea } from "@govtech-bb/react";
-import { validateDateFields } from "@/lib/date-validation";
+import { validateFields } from "@/lib/dates";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -20,7 +20,6 @@ type MothersDetailsProps = {
  * Step: Mother's Details
  * Collects information about the mother
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function MothersDetails({
   value,
   onChange,
@@ -120,7 +119,7 @@ export function MothersDetails({
       <DateInput
         errors={
           hasSubmitted
-            ? (validateDateFields(value.dateOfBirth || "") ?? undefined)
+            ? (validateFields(value.dateOfBirth || "") ?? undefined)
             : undefined
         }
         hint="For example, 27 3 2007 or 27 Mar 2007"

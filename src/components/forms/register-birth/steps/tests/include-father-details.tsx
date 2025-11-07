@@ -75,9 +75,7 @@ describe("IncludeFatherDetails", () => {
 
     // Check that error appears in error summary
     expect(
-      screen.getByText(
-        "Select yes if you want to include the father's details"
-      )
+      screen.getByText("Select yes if you want to include the father's details")
     ).toBeInTheDocument();
   });
 
@@ -155,9 +153,7 @@ describe("IncludeFatherDetails", () => {
     expect(onNext).not.toHaveBeenCalled();
     // And should show validation error in error summary
     expect(
-      screen.getByText(
-        "Select yes if you want to include the father's details"
-      )
+      screen.getByText("Select yes if you want to include the father's details")
     ).toBeInTheDocument();
   });
 

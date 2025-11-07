@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Input, Select } from "@govtech-bb/react";
-import { validateDateFields } from "@/lib/date-validation";
+import { validateFields } from "@/lib/dates";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -20,7 +20,6 @@ type ChildDetailsProps = {
  * Step: Child's Details
  * Collects information about the child being registered
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Error handling logic requires validation state management
 export function ChildDetails({
   value,
   onChange,
@@ -93,7 +92,7 @@ export function ChildDetails({
       <DateInput
         errors={
           hasSubmitted
-            ? (validateDateFields(value.dateOfBirth || "") ?? undefined)
+            ? (validateFields(value.dateOfBirth || "") ?? undefined)
             : undefined
         }
         hint="For example, 27 3 2007 or 27 Mar 2007"

@@ -1,12 +1,6 @@
 "use client";
 
-import { combineToISO8601, parseISO8601 } from "@/lib/date-format";
-
-export type DateFieldErrors = {
-  day?: string;
-  month?: string;
-  year?: string;
-};
+import { combine, type DateFieldErrors, parse } from "@/lib/dates";
 
 export type DateInputProps = {
   id: string;
@@ -39,7 +33,7 @@ export type DateInputProps = {
  *   error={errors.dateOfBirth}
  * />
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Will refactor in future iteration
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex form input handling with multiple states
 export function DateInput({
   id,
   label,
@@ -51,7 +45,7 @@ export function DateInput({
   errors,
 }: DateInputProps) {
   // Derive values directly from props (fully controlled component)
-  const { day, month, year } = parseISO8601(value);
+  const { day, month, year } = parse(value);
 
   // Filter display values - show empty for placeholders, strip leading zeros for real input
   // "" → "" (empty from parse error)
@@ -85,7 +79,7 @@ export function DateInput({
       }
 
       const updates = { day, month, year, [field]: sanitized };
-      onChange(combineToISO8601(updates.year, updates.month, updates.day));
+      onChange(combine(updates.year, updates.month, updates.day));
     };
 
   // Support both old error prop (string) and new errors prop (object)

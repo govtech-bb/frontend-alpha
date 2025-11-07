@@ -128,7 +128,9 @@ describe("MarriageStatus", () => {
     fireEvent.submit(form!);
 
     // RadioGroup itself gets aria-invalid, not individual radios
-    const radioGroup = screen.getByRole("radiogroup", { name: /marriage status/i });
+    const radioGroup = screen.getByRole("radiogroup", {
+      name: /marriage status/i,
+    });
     expect(radioGroup).toHaveAttribute("aria-invalid", "true");
   });
 
@@ -153,7 +155,9 @@ describe("MarriageStatus", () => {
     render(<MarriageStatus {...defaultProps} />);
 
     // Check for proper radiogroup with aria-label
-    const radioGroup = screen.getByRole("radiogroup", { name: /marriage status/i });
+    const radioGroup = screen.getByRole("radiogroup", {
+      name: /marriage status/i,
+    });
     expect(radioGroup).toBeInTheDocument();
 
     // Check that radio buttons are present and accessible
