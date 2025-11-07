@@ -24,7 +24,8 @@ describe("FathersDetails", () => {
     expect(screen.getByLabelText("First name")).toBeInTheDocument();
     expect(screen.getByLabelText("Middle name(s)")).toBeInTheDocument();
     expect(screen.getByLabelText("Last name")).toBeInTheDocument();
-    expect(screen.getByLabelText("Date of birth")).toBeInTheDocument();
+    // DateInput uses a fieldset with legend, not a label
+    expect(screen.getByText("Date of birth")).toBeInTheDocument();
     expect(screen.getByLabelText("Current address")).toBeInTheDocument();
     expect(
       screen.getByLabelText("National registration number")
@@ -44,7 +45,7 @@ describe("FathersDetails", () => {
     render(<FathersDetails {...defaultProps} />);
 
     expect(
-      screen.getByText(/Use the calendar picker or enter the date/)
+      screen.getByText(/For example, 27 3 2007 or 27 Mar 2007/)
     ).toBeInTheDocument();
   });
 
@@ -83,9 +84,10 @@ describe("FathersDetails", () => {
     expect((screen.getByLabelText("Last name") as HTMLInputElement).value).toBe(
       "Smith"
     );
-    expect(
-      (screen.getByLabelText("Date of birth") as HTMLInputElement).value
-    ).toBe("1986-07-30");
+    // DateInput uses separate fields (day, month, year) internally
+    expect(screen.getByLabelText("Day")).toHaveValue("30");
+    expect(screen.getByLabelText("Month")).toHaveValue("7");
+    expect(screen.getByLabelText("Year")).toHaveValue("1986");
     expect(
       (screen.getByLabelText("Current address") as HTMLTextAreaElement).value
     ).toBe("123 Main St");
@@ -175,7 +177,7 @@ describe("FathersDetails", () => {
     const form = screen.getByRole("button", { name: /next/i }).closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should call onNext on successful form submission", () => {
@@ -245,9 +247,10 @@ describe("FathersDetails", () => {
       "id",
       "father-lastName"
     );
-    expect(screen.getByLabelText("Date of birth")).toHaveAttribute(
+    // DateInput uses separate fields with -day, -month, -year suffixes
+    expect(screen.getByLabelText("Day")).toHaveAttribute(
       "id",
-      "father-dateOfBirth"
+      "father-dateOfBirth-day"
     );
     expect(screen.getByLabelText("Current address")).toHaveAttribute(
       "id",
@@ -280,9 +283,10 @@ describe("FathersDetails", () => {
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    const dateInput = screen.getByLabelText("Date of birth");
-    expect(dateInput).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
+    // DateInput marks invalid fields with aria-invalid
+    const dayInput = screen.getByLabelText("Day");
+    expect(dayInput).toHaveAttribute("aria-invalid", "true");
   });
 
   it("should accept middle name as optional", () => {
@@ -399,7 +403,7 @@ describe("FathersDetails", () => {
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
     const input = screen.getByLabelText("National registration number");
     expect(input).toHaveAttribute("aria-invalid", "true");
   });

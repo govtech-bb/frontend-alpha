@@ -19,7 +19,7 @@ describe("CheckAnswers", () => {
       firstNames: "John",
       middleNames: "Michael",
       lastName: "Smith",
-      dateOfBirth: "01/01/2024",
+      dateOfBirth: "2024-01-01",
       sexAtBirth: "Male",
       parishOfBirth: "St. Michael",
     },
@@ -29,7 +29,7 @@ describe("CheckAnswers", () => {
       lastName: "Smith",
       hadOtherSurname: "yes",
       otherSurname: "Johnson",
-      dateOfBirth: "03/15/1990",
+      dateOfBirth: "1990-03-15",
       address: "123 Main St\nBridgetown\nBarbados",
       nationalRegistrationNumber: "123456-7890",
       passportNumber: "",
@@ -41,7 +41,7 @@ describe("CheckAnswers", () => {
       lastName: "Smith",
       hadOtherSurname: "no",
       otherSurname: "",
-      dateOfBirth: "05/20/1988",
+      dateOfBirth: "1988-05-20",
       address: "123 Main St\nBridgetown\nBarbados",
       nationalRegistrationNumber: "987654-3210",
       passportNumber: "",
@@ -77,6 +77,7 @@ describe("CheckAnswers", () => {
         />
       );
 
+      // ISO 8601 format: 1990-03-15 -> Display format: Mar 15, 1990
       expect(screen.getByText("Mar 15, 1990")).toBeInTheDocument();
     });
 
@@ -253,6 +254,63 @@ describe("CheckAnswers", () => {
       expect(screen.getByText("Jan 1, 2024")).toBeInTheDocument();
       expect(screen.getByText("Male")).toBeInTheDocument();
       expect(screen.getByText("St. Michael")).toBeInTheDocument();
+    });
+  });
+
+  describe("Date format display", () => {
+    it("should display all dates in spelled-out format (Mon DD, YYYY) not ISO format", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      // Child's DOB: ISO 2024-01-01 should display as Jan 1, 2024
+      expect(screen.getByText("Jan 1, 2024")).toBeInTheDocument();
+      expect(screen.queryByText("2024-01-01")).not.toBeInTheDocument();
+
+      // Mother's DOB: ISO 1990-03-15 should display as Mar 15, 1990
+      expect(screen.getByText("Mar 15, 1990")).toBeInTheDocument();
+      expect(screen.queryByText("1990-03-15")).not.toBeInTheDocument();
+
+      // Father's DOB: ISO 1988-05-20 should display as May 20, 1988
+      expect(screen.getByText("May 20, 1988")).toBeInTheDocument();
+      expect(screen.queryByText("1988-05-20")).not.toBeInTheDocument();
+    });
+
+    it("should format dates consistently across all person details", () => {
+      const formDataWithVariedDates: PartialBirthRegistrationFormData = {
+        ...completeFormData,
+        child: {
+          ...completeFormData.child!,
+          dateOfBirth: "2023-12-25", // Christmas
+        },
+        mother: {
+          ...completeFormData.mother!,
+          dateOfBirth: "1985-01-01", // New Year's Day
+        },
+        father: {
+          ...completeFormData.father!,
+          dateOfBirth: "1980-07-04", // Independence Day
+        },
+      };
+
+      render(
+        <CheckAnswers
+          formData={formDataWithVariedDates}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      // Verify all dates use the same spelled-out format
+      expect(screen.getByText("Dec 25, 2023")).toBeInTheDocument();
+      expect(screen.getByText("Jan 1, 1985")).toBeInTheDocument();
+      expect(screen.getByText("Jul 4, 1980")).toBeInTheDocument();
     });
   });
 

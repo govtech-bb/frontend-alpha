@@ -22,7 +22,8 @@ describe("ChildDetails", () => {
     expect(screen.getByLabelText("First name")).toBeInTheDocument();
     expect(screen.getByLabelText("Middle name(s)")).toBeInTheDocument();
     expect(screen.getByLabelText("Last name")).toBeInTheDocument();
-    expect(screen.getByLabelText("Date of birth")).toBeInTheDocument();
+    // DateInput uses a fieldset with legend, not a label
+    expect(screen.getByText("Date of birth")).toBeInTheDocument();
     expect(screen.getByLabelText("Sex at birth")).toBeInTheDocument();
     expect(screen.getByLabelText("Place of birth")).toBeInTheDocument();
   });
@@ -146,7 +147,7 @@ describe("ChildDetails", () => {
     const form = screen.getByRole("button", { name: /next/i }).closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should call onNext on successful form submission", () => {
@@ -255,7 +256,7 @@ describe("ChildDetails", () => {
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
     // DateInput marks invalid fields with aria-invalid
     const dayInput = screen.getByLabelText("Day");
     expect(dayInput).toHaveAttribute("aria-invalid", "true");
