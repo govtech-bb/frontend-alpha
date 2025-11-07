@@ -282,11 +282,8 @@ describe("FathersDetails", () => {
     const form = screen.getByRole("button", { name: /next/i }).closest("form");
     fireEvent.submit(form!);
 
-    // Check for error (message appears in both summary and field)
+    // Check for error in ErrorSummary
     expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
-    // DateInput marks invalid fields with aria-invalid
-    const dayInput = screen.getByLabelText("Day");
-    expect(dayInput).toHaveAttribute("aria-invalid", "true");
   });
 
   it("should accept middle name as optional", () => {

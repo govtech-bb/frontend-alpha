@@ -1,7 +1,6 @@
 "use client";
 
 import { Button, Input, Select } from "@govtech-bb/react";
-import { validateFields } from "@/lib/dates";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -29,20 +28,15 @@ export function ChildDetails({
   const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
 
   // Use generic validation hook
-  const {
-    errors,
-    fieldErrors,
-    hasSubmitted,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-  } = useStepValidation({
-    schema: childDetailsValidation,
-    value,
-    onChange,
-    onNext,
-    fieldPrefix: "child-",
-  });
+  const { errors, fieldErrors, handleChange, handleSubmit } = useStepValidation(
+    {
+      schema: childDetailsValidation,
+      value,
+      onChange,
+      onNext,
+      fieldPrefix: "child-",
+    }
+  );
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -61,7 +55,6 @@ export function ChildDetails({
         error={fieldErrors.firstNames}
         id="child-firstNames"
         label="First name"
-        onBlur={() => handleBlur("firstNames")}
         onChange={(e) => handleChange("firstNames", e.target.value)}
         type="text"
         value={value.firstNames || ""}
@@ -82,7 +75,6 @@ export function ChildDetails({
         error={fieldErrors.lastName}
         id="child-lastName"
         label="Last name"
-        onBlur={() => handleBlur("lastName")}
         onChange={(e) => handleChange("lastName", e.target.value)}
         type="text"
         value={value.lastName || ""}
@@ -90,15 +82,9 @@ export function ChildDetails({
 
       {/* Date of birth */}
       <DateInput
-        errors={
-          hasSubmitted
-            ? (validateFields(value.dateOfBirth || "") ?? undefined)
-            : undefined
-        }
         hint="For example, 27 3 2007 or 27 Mar 2007"
         id="child-dateOfBirth"
         label="Date of birth"
-        onBlur={() => handleBlur("dateOfBirth")}
         onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
         value={value.dateOfBirth || ""}
       />
@@ -109,7 +95,6 @@ export function ChildDetails({
         error={fieldErrors.sexAtBirth}
         id="child-sexAtBirth"
         label="Sex at birth"
-        onBlur={() => handleBlur("sexAtBirth")}
         onChange={(e) => handleChange("sexAtBirth", e.target.value)}
         value={value.sexAtBirth || ""}
       >
@@ -125,7 +110,6 @@ export function ChildDetails({
           error={fieldErrors.parishOfBirth}
           id="child-parishOfBirth"
           label="Place of birth"
-          onBlur={() => handleBlur("parishOfBirth")}
           onChange={(e) => handleChange("parishOfBirth", e.target.value)}
           type="text"
           value={value.parishOfBirth || ""}
