@@ -88,7 +88,7 @@ describe("DateInput", () => {
     const yearInput = screen.getByLabelText("Year") as HTMLInputElement;
 
     expect(dayInput.value).toBe("30");
-    expect(monthInput.value).toBe("07"); // Preserve leading zero for consistency
+    expect(monthInput.value).toBe("7"); // Strip leading zero
     expect(yearInput.value).toBe("1986");
   });
 
@@ -336,7 +336,7 @@ describe("DateInput", () => {
     const yearInput = screen.getByLabelText("Year") as HTMLInputElement;
 
     expect(dayInput.value).toBe("30");
-    expect(monthInput.value).toBe("07"); // Preserve leading zero for consistency
+    expect(monthInput.value).toBe("7"); // Strip leading zero
     expect(yearInput.value).toBe("1986");
 
     // Update external value
@@ -617,8 +617,8 @@ describe("DateInput", () => {
       />
     );
 
-    // Input should show the value from props ("01"), not maintain internal state
-    expect(dayInput.value).toBe("01");
+    // Input should show the value from props ("1"), not maintain internal state
+    expect(dayInput.value).toBe("1");
   });
 
   describe("text month input support", () => {
@@ -696,7 +696,7 @@ describe("DateInput", () => {
       expect(handleChange).toHaveBeenCalledWith("0000-12-00");
     });
 
-    it("should preserve leading zero for numeric months", () => {
+    it("should strip leading zero from numeric months for display", () => {
       render(
         <DateInput
           id="test-date"
@@ -709,8 +709,8 @@ describe("DateInput", () => {
       );
 
       const monthInput = screen.getByLabelText("Month") as HTMLInputElement;
-      // Preserve leading zeros for consistency
-      expect(monthInput.value).toBe("07");
+      // Strip leading zero to allow entering "30" after typing "3"
+      expect(monthInput.value).toBe("7");
     });
 
     it("should allow ambiguous partial text input during typing", () => {

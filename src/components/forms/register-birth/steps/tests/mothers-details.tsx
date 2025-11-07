@@ -103,7 +103,7 @@ describe("MothersDetails", () => {
     );
     // DateInput uses separate fields (day, month, year) internally
     expect(screen.getByLabelText("Day")).toHaveValue("30");
-    expect(screen.getByLabelText("Month")).toHaveValue("07"); // Preserve leading zero
+    expect(screen.getByLabelText("Month")).toHaveValue("7"); // Strip leading zero
     expect(screen.getByLabelText("Year")).toHaveValue("1986");
     expect(
       (screen.getByLabelText("Current address") as HTMLTextAreaElement).value
