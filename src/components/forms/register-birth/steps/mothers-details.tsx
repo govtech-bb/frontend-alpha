@@ -1,6 +1,8 @@
 "use client";
 
 import { Button, Input, Radio, RadioGroup, TextArea } from "@govtech-bb/react";
+import { validateDateFields } from "@/lib/date-validation";
+import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
@@ -30,14 +32,20 @@ export function MothersDetails({
     "Register a Birth"
   );
 
-  const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
-    useStepValidation({
-      schema: motherDetailsValidation,
-      value,
-      onChange,
-      onNext,
-      fieldPrefix: "mother-",
-    });
+  const {
+    errors,
+    fieldErrors,
+    hasSubmitted,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+  } = useStepValidation({
+    schema: motherDetailsValidation,
+    value,
+    onChange,
+    onNext,
+    fieldPrefix: "mother-",
+  });
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -109,15 +117,17 @@ export function MothersDetails({
       </div>
 
       {/* Date of birth */}
-      <Input
-        description="For example, 07/30/1986"
-        error={fieldErrors.dateOfBirth}
+      <DateInput
+        errors={
+          hasSubmitted
+            ? (validateDateFields(value.dateOfBirth || "") ?? undefined)
+            : undefined
+        }
+        hint="For example, 27 3 2007 or 27 Mar 2007"
         id="mother-dateOfBirth"
         label="Date of birth"
         onBlur={() => handleBlur("dateOfBirth")}
-        onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-        placeholder="MM/DD/YYYY"
-        type="text"
+        onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
         value={value.dateOfBirth || ""}
       />
 

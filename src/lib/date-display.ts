@@ -1,27 +1,35 @@
+import { normalizeMonthInput } from "./date-format";
+
 /**
- * Formats a date from MM/DD/YYYY to spelled-out format like "Jul 30, 2011"
+ * Formats a date from ISO 8601 (YYYY-MM-DD) to spelled-out format like "Jul 30, 2011"
+ * Now supports text month input like "2001-Sep-11" or "2001-September-11"
  *
- * @param mmddyyyy - Date string in MM/DD/YYYY format or undefined
+ * @param iso8601 - Date string in YYYY-MM-DD format (or with text month) or undefined
  * @returns Formatted date string like "Jul 30, 2011" or empty string if invalid
  *
  * @example
- * formatDateForDisplay("07/30/2011") // Returns "Jul 30, 2011"
+ * formatDateForDisplay("2011-07-30") // Returns "Jul 30, 2011"
+ * formatDateForDisplay("2001-Sep-11") // Returns "Sep 11, 2001"
+ * formatDateForDisplay("2001-September-11") // Returns "Sep 11, 2001"
  * formatDateForDisplay("invalid") // Returns ""
  * formatDateForDisplay(undefined) // Returns ""
  */
-export function formatDateForDisplay(mmddyyyy: string | undefined): string {
+export function formatDateForDisplay(iso8601: string | undefined): string {
   // Return empty string for empty or whitespace-only input
-  if (!mmddyyyy || mmddyyyy.trim() === "") {
+  if (!iso8601 || iso8601.trim() === "") {
     return "";
   }
 
-  // Validate format: MM/DD/YYYY
-  const match = mmddyyyy.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  // Normalize text months to numeric format first
+  const normalized = normalizeMonthInput(iso8601);
+
+  // Validate format: YYYY-MM-DD
+  const match = normalized.match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if (!match) {
     return "";
   }
 
-  const [, month, day, year] = match;
+  const [, year, month, day] = match;
 
   // Create a Date object (month is 0-indexed in JavaScript Date)
   const monthNum = Number.parseInt(month, 10);
