@@ -167,11 +167,11 @@ export function MothersDetails({
         </details>
       </div>
 
-      {/* Occupation (optional) */}
+      {/* Occupation */}
       <Input
         description="This will be included on the child's birth certificate and in official records."
         id="mother-occupation"
-        label="Occupation (optional)"
+        label="Occupation"
         onChange={(e) => handleChange("occupation", e.target.value)}
         type="text"
         value={value.occupation || ""}
