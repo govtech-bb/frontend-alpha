@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input, Select } from "@govtech-bb/react";
+import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
@@ -18,7 +19,6 @@ type ChildDetailsProps = {
  * Step: Child's Details
  * Collects information about the child being registered
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Error handling logic requires validation state management
 export function ChildDetails({
   value,
   onChange,
@@ -28,7 +28,7 @@ export function ChildDetails({
   const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
 
   // Use generic validation hook
-  const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
+  const { errors, fieldErrors, dateFieldErrors, handleChange, handleSubmit } =
     useStepValidation({
       schema: childDetailsValidation,
       value,
@@ -54,7 +54,6 @@ export function ChildDetails({
         error={fieldErrors.firstNames}
         id="child-firstNames"
         label="First name"
-        onBlur={() => handleBlur("firstNames")}
         onChange={(e) => handleChange("firstNames", e.target.value)}
         type="text"
         value={value.firstNames || ""}
@@ -75,22 +74,18 @@ export function ChildDetails({
         error={fieldErrors.lastName}
         id="child-lastName"
         label="Last name"
-        onBlur={() => handleBlur("lastName")}
         onChange={(e) => handleChange("lastName", e.target.value)}
         type="text"
         value={value.lastName || ""}
       />
 
       {/* Date of birth */}
-      <Input
-        description="For example, 10/22/2025"
-        error={fieldErrors.dateOfBirth}
+      <DateInput
+        errors={dateFieldErrors.dateOfBirth}
+        hint="For example, 27 3 2007 or 27 Mar 2007"
         id="child-dateOfBirth"
         label="Date of birth"
-        onBlur={() => handleBlur("dateOfBirth")}
-        onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-        placeholder="MM/DD/YYYY"
-        type="text"
+        onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
         value={value.dateOfBirth || ""}
       />
 
@@ -100,7 +95,6 @@ export function ChildDetails({
         error={fieldErrors.sexAtBirth}
         id="child-sexAtBirth"
         label="Sex at birth"
-        onBlur={() => handleBlur("sexAtBirth")}
         onChange={(e) => handleChange("sexAtBirth", e.target.value)}
         value={value.sexAtBirth || ""}
       >
@@ -116,7 +110,6 @@ export function ChildDetails({
           error={fieldErrors.parishOfBirth}
           id="child-parishOfBirth"
           label="Place of birth"
-          onBlur={() => handleBlur("parishOfBirth")}
           onChange={(e) => handleChange("parishOfBirth", e.target.value)}
           type="text"
           value={value.parishOfBirth || ""}

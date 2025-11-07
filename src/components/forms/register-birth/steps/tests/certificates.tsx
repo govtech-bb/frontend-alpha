@@ -128,7 +128,7 @@ describe("Certificates", () => {
     fireEvent.submit(form!);
 
     // Check for error summary
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should have accessible form structure", () => {
@@ -152,7 +152,7 @@ describe("Certificates", () => {
     fireEvent.submit(form!);
 
     // Check for error summary component
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should mark input as invalid when there are errors", () => {

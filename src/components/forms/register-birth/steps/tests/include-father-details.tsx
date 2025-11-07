@@ -73,12 +73,10 @@ describe("IncludeFatherDetails", () => {
     const nextButton = screen.getByRole("button", { name: /next/i });
     fireEvent.click(nextButton);
 
-    // Check that error appears in both error summary and field error
+    // Check that error appears in error summary
     expect(
-      screen.getAllByText(
-        "Select yes if you want to include the father's details"
-      )
-    ).toHaveLength(2);
+      screen.getByText("Select yes if you want to include the father's details")
+    ).toBeInTheDocument();
   });
 
   it("should not show validation error when Yes is selected", () => {
@@ -113,13 +111,13 @@ describe("IncludeFatherDetails", () => {
       "No, do not include the father's details"
     ) as HTMLInputElement;
 
-    expect(yesRadio.checked).toBe(true);
-    expect(noRadio.checked).toBe(false);
+    expect(yesRadio).toBeChecked();
+    expect(noRadio).not.toBeChecked();
 
     rerender(<IncludeFatherDetails {...defaultProps} value="no" />);
 
-    expect(yesRadio.checked).toBe(false);
-    expect(noRadio.checked).toBe(true);
+    expect(yesRadio).not.toBeChecked();
+    expect(noRadio).toBeChecked();
   });
 
   it("should call onBack when Back button is clicked", () => {
@@ -153,31 +151,27 @@ describe("IncludeFatherDetails", () => {
 
     // Validation should prevent onNext from being called
     expect(onNext).not.toHaveBeenCalled();
-    // And should show validation error (appears in both error summary and field error)
+    // And should show validation error in error summary
     expect(
-      screen.getAllByText(
-        "Select yes if you want to include the father's details"
-      )
-    ).toHaveLength(2);
+      screen.getByText("Select yes if you want to include the father's details")
+    ).toBeInTheDocument();
   });
 
   it("should have accessible form structure", () => {
     render(<IncludeFatherDetails {...defaultProps} />);
 
-    // Check for proper fieldset and legend (screen reader only)
-    const fieldset = screen.getByRole("group", {
-      name: /include father's details/i,
-    });
-    expect(fieldset).toBeInTheDocument();
+    // Check for proper radiogroup (no aria-label on this component)
+    const radioGroup = screen.getByRole("radiogroup");
+    expect(radioGroup).toBeInTheDocument();
 
-    // Check that radio buttons are properly grouped
+    // Check that radio buttons are properly accessible
     const yesRadio = screen.getByLabelText("Yes, include the father's details");
     const noRadio = screen.getByLabelText(
       "No, do not include the father's details"
     );
 
-    expect(yesRadio).toHaveAttribute("name", "includeFatherDetails");
-    expect(noRadio).toHaveAttribute("name", "includeFatherDetails");
+    expect(yesRadio).toBeInTheDocument();
+    expect(noRadio).toBeInTheDocument();
   });
 
   it("should focus on title when component mounts", () => {

@@ -13,7 +13,7 @@ import type {
   PartialBirthRegistrationFormData,
   PersonDetails,
 } from "@/components/forms/register-birth/types";
-import { formatDateForDisplay } from "@/lib/date-display";
+import { formatForDisplay } from "@/lib/dates";
 
 type DepartmentNotificationEmailProps = {
   formData: PartialBirthRegistrationFormData;
@@ -99,7 +99,7 @@ function PersonDetailsSection({
                 <strong>Date of birth:</strong>
               </td>
               <td style={{ padding: "5px 10px" }}>
-                {formatDateForDisplay(person.dateOfBirth)}
+                {formatForDisplay(person.dateOfBirth)}
               </td>
             </tr>
           )}
@@ -227,7 +227,7 @@ function ChildDetailsSection({
                 <strong>Date of birth:</strong>
               </td>
               <td style={{ padding: "5px 10px" }}>
-                {formatDateForDisplay(child.dateOfBirth)}
+                {formatForDisplay(child.dateOfBirth)}
               </td>
             </tr>
           )}

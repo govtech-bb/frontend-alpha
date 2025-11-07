@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isValidBirthDate, isValidChildBirthDate } from "@/lib/date-validation";
+import { isValidBirthDate } from "@/lib/dates";
 
 /**
  * Zod schema for birth registration form data validation
@@ -143,7 +143,7 @@ function createPersonDetailsSchema(personType: "father" | "mother") {
           .min(1, `Enter the ${personType}'s date of birth`)
           .refine((val) => isValidBirthDate(val), {
             message:
-              "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
+              "Enter a valid date (for example, 27 3 2007 or 27 Mar 2007)",
           })
       ),
       address: z.preprocess(
@@ -182,9 +182,9 @@ export const childDetailsValidation = z.object({
     z
       .string()
       .min(1, "Enter the child's date of birth")
-      .refine((val) => isValidChildBirthDate(val), {
+      .refine((val) => isValidBirthDate(val), {
         message:
-          "Enter a valid date in MM/DD/YYYY format (for example, 10/22/2025). Date cannot be in the future",
+          "Enter a valid date (for example, 27 3 2007 or 27 Mar 2007). Date cannot be in the future",
       })
   ),
   sexAtBirth: z.enum(["Male", "Female", "Intersex"], {

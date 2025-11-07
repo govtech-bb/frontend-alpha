@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Input, Radio, RadioGroup, TextArea } from "@govtech-bb/react";
+import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
@@ -18,7 +19,6 @@ type MothersDetailsProps = {
  * Step: Mother's Details
  * Collects information about the mother
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function MothersDetails({
   value,
   onChange,
@@ -30,7 +30,7 @@ export function MothersDetails({
     "Register a Birth"
   );
 
-  const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
+  const { errors, fieldErrors, dateFieldErrors, handleChange, handleSubmit } =
     useStepValidation({
       schema: motherDetailsValidation,
       value,
@@ -56,7 +56,6 @@ export function MothersDetails({
         error={fieldErrors.firstName}
         id="mother-firstName"
         label="First name"
-        onBlur={() => handleBlur("firstName")}
         onChange={(e) => handleChange("firstName", e.target.value)}
         type="text"
         value={value.firstName || ""}
@@ -77,7 +76,6 @@ export function MothersDetails({
         error={fieldErrors.lastName}
         id="mother-lastName"
         label="Last name"
-        onBlur={() => handleBlur("lastName")}
         onChange={(e) => handleChange("lastName", e.target.value)}
         type="text"
         value={value.lastName || ""}
@@ -109,15 +107,12 @@ export function MothersDetails({
       </div>
 
       {/* Date of birth */}
-      <Input
-        description="For example, 07/30/1986"
-        error={fieldErrors.dateOfBirth}
+      <DateInput
+        errors={dateFieldErrors.dateOfBirth}
+        hint="For example, 27 3 2007 or 27 Mar 2007"
         id="mother-dateOfBirth"
         label="Date of birth"
-        onBlur={() => handleBlur("dateOfBirth")}
-        onChange={(e) => handleChange("dateOfBirth", e.target.value)}
-        placeholder="MM/DD/YYYY"
-        type="text"
+        onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
         value={value.dateOfBirth || ""}
       />
 
@@ -126,7 +121,6 @@ export function MothersDetails({
         error={fieldErrors.address}
         id="mother-address"
         label="Current address"
-        onBlur={() => handleBlur("address")}
         onChange={(e) => handleChange("address", e.target.value)}
         rows={3}
         value={value.address || ""}
@@ -138,7 +132,6 @@ export function MothersDetails({
           error={fieldErrors.nationalRegistrationNumber}
           id="mother-nationalRegistrationNumber"
           label="National registration number"
-          onBlur={() => handleBlur("nationalRegistrationNumber")}
           onChange={(e) =>
             handleChange("nationalRegistrationNumber", e.target.value)
           }
@@ -166,7 +159,6 @@ export function MothersDetails({
               error={fieldErrors.passportNumber}
               id="mother-passportNumber"
               label="Passport number"
-              onBlur={() => handleBlur("passportNumber")}
               onChange={(e) => handleChange("passportNumber", e.target.value)}
               type="text"
               value={value.passportNumber || ""}
