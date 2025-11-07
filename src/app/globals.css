@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Import the design tokens */
+@import "@govtech-bb/design";
+
+/* You need to add the path to the react components */
+@source "../../node_modules/@govtech-bb/react/dist/**/*.js";
+
 /* @custom-variant dark (&:is(.dark *)); */
 
 @theme inline {
@@ -41,12 +47,6 @@
   --color-green-light: hsla(158, 55%, 78%, 1);
 
   --color-exp-pink-10: hsla(322, 100%, 98%, 1);
-
-  /* --font-mono: var(--font-geist-mono); */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
 }
 
 :root {
@@ -98,10 +98,6 @@
   --layout-lg: 64rem;
   --layout-xl: 80rem;
   --layout-2xl: 94.5rem; /* 1512px */
-
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
 
   /* Typography helpers?? */
   --paragraph-spacing: 1rem; /* 16px */
