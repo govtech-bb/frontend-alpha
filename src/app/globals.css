@@ -4,6 +4,8 @@
 /* @custom-variant dark (&:is(.dark *)); */
 
 @theme inline {
+  --font-sans: var(--font-figtree);
+
   /* Yellow */
   --color-yellow-dark: hsla(39, 80%, 55%, 1);
   --color-yellow-bright: hsla(45, 100%, 57%, 1);
