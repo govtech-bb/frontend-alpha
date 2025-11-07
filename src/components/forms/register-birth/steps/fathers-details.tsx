@@ -31,15 +31,14 @@ export function FathersDetails({
     "Register a Birth"
   );
 
-  const { errors, fieldErrors, handleChange, handleSubmit } = useStepValidation(
-    {
+  const { errors, fieldErrors, dateFieldErrors, handleChange, handleSubmit } =
+    useStepValidation({
       schema: fatherDetailsValidation,
       value,
       onChange,
       onNext,
       fieldPrefix: "father-",
-    }
-  );
+    });
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -85,6 +84,7 @@ export function FathersDetails({
 
       {/* Date of birth */}
       <DateInput
+        errors={dateFieldErrors.dateOfBirth}
         hint="For example, 27 3 2007 or 27 Mar 2007"
         id="father-dateOfBirth"
         label="Date of birth"

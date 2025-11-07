@@ -231,67 +231,6 @@ describe("DateInput", () => {
     expect(lastCall).toBe("0000-03-00");
   });
 
-  it("should render error message when error prop is provided", () => {
-    render(
-      <DateInput
-        error="Enter a valid date"
-        id="test-date"
-        label="Date of birth"
-        onChange={() => {
-          /* Test handler */
-        }}
-        value=""
-      />
-    );
-
-    expect(screen.getByText("Enter a valid date")).toBeInTheDocument();
-  });
-
-  it("should apply error styling to inputs when error prop is provided", () => {
-    render(
-      <DateInput
-        error="Enter a valid date"
-        id="test-date"
-        label="Date of birth"
-        onChange={() => {
-          /* Test handler */
-        }}
-        value=""
-      />
-    );
-
-    const dayInput = screen.getByLabelText("Day");
-    const monthInput = screen.getByLabelText("Month");
-    const yearInput = screen.getByLabelText("Year");
-
-    // Border is now on parent container, not input
-    expect(dayInput.parentElement).toHaveClass("border-red-dark");
-    expect(monthInput.parentElement).toHaveClass("border-red-dark");
-    expect(yearInput.parentElement).toHaveClass("border-red-dark");
-  });
-
-  it("should set aria-invalid on inputs when error is present", () => {
-    render(
-      <DateInput
-        error="Enter a valid date"
-        id="test-date"
-        label="Date of birth"
-        onChange={() => {
-          /* Test handler */
-        }}
-        value=""
-      />
-    );
-
-    const dayInput = screen.getByLabelText("Day");
-    const monthInput = screen.getByLabelText("Month");
-    const yearInput = screen.getByLabelText("Year");
-
-    expect(dayInput).toHaveAttribute("aria-invalid", "true");
-    expect(monthInput).toHaveAttribute("aria-invalid", "true");
-    expect(yearInput).toHaveAttribute("aria-invalid", "true");
-  });
-
   it("should not set aria-invalid when no error", () => {
     render(
       <DateInput
@@ -516,10 +455,10 @@ describe("DateInput", () => {
     expect(legend.textContent).not.toContain("*");
   });
 
-  it("should have proper aria-describedby linking hint and error", () => {
+  it("should have proper aria-describedby linking hint and errors", () => {
     render(
       <DateInput
-        error="Enter a valid date"
+        errors={{ day: "Enter a day" }}
         hint="Custom hint text"
         id="test-date"
         label="Date of birth"
@@ -635,7 +574,7 @@ describe("DateInput", () => {
   it("should have aria-live assertive on error message container", () => {
     render(
       <DateInput
-        error="Enter a valid date"
+        errors={{ day: "Enter a day" }}
         id="test-date"
         label="Date of birth"
         onChange={() => {
@@ -645,7 +584,7 @@ describe("DateInput", () => {
       />
     );
 
-    const errorContainer = screen.getByText("Enter a valid date").parentElement;
+    const errorContainer = screen.getByText("Enter a day").parentElement;
     expect(errorContainer).toHaveAttribute("aria-live", "assertive");
   });
 

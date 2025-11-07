@@ -9,7 +9,6 @@ export type DateInputProps = {
   value: string; // YYYY-MM-DD format or empty string
   onChange: (value: string) => void;
   onBlur?: () => void;
-  error?: string; // Deprecated: use errors instead
   errors?: DateFieldErrors;
 };
 
@@ -41,7 +40,6 @@ export function DateInput({
   value,
   onChange,
   onBlur,
-  error, // Deprecated - backwards compatibility
   errors,
 }: DateInputProps) {
   // Derive values directly from props (fully controlled component)
@@ -82,23 +80,18 @@ export function DateInput({
       onChange(combineDate(updates.year, updates.month, updates.day));
     };
 
-  // Support both old error prop (string) and new errors prop (object)
   const fieldErrors = errors || {};
-  const hasAnyError =
-    Boolean(error) || Boolean(errors?.day || errors?.month || errors?.year);
+  const hasAnyError = Boolean(errors?.day || errors?.month || errors?.year);
 
-  const hasErrorDay = Boolean(error || fieldErrors.day);
-  const hasErrorMonth = Boolean(error || fieldErrors.month);
-  const hasErrorYear = Boolean(error || fieldErrors.year);
+  const hasErrorDay = Boolean(fieldErrors.day);
+  const hasErrorMonth = Boolean(fieldErrors.month);
+  const hasErrorYear = Boolean(fieldErrors.year);
 
   const errorId = `${id}-error`;
   const hintId = `${id}-hint`;
 
   // Collect all error messages
   const errorMessages: string[] = [];
-  if (error) {
-    errorMessages.push(error); // Backward compatibility
-  }
   if (fieldErrors.day) errorMessages.push(fieldErrors.day);
   if (fieldErrors.month) errorMessages.push(fieldErrors.month);
   if (fieldErrors.year) errorMessages.push(fieldErrors.year);

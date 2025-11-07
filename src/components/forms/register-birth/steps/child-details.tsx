@@ -28,15 +28,14 @@ export function ChildDetails({
   const titleRef = useStepFocus("Tell us about the child", "Register a Birth");
 
   // Use generic validation hook
-  const { errors, fieldErrors, handleChange, handleSubmit } = useStepValidation(
-    {
+  const { errors, fieldErrors, dateFieldErrors, handleChange, handleSubmit } =
+    useStepValidation({
       schema: childDetailsValidation,
       value,
       onChange,
       onNext,
       fieldPrefix: "child-",
-    }
-  );
+    });
 
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
@@ -82,6 +81,7 @@ export function ChildDetails({
 
       {/* Date of birth */}
       <DateInput
+        errors={dateFieldErrors.dateOfBirth}
         hint="For example, 27 3 2007 or 27 Mar 2007"
         id="child-dateOfBirth"
         label="Date of birth"
