@@ -77,16 +77,16 @@ describe("combineDate", () => {
       expect(combineDate("", "", "")).toBe("");
     });
 
-    it("should return empty string if year is missing", () => {
-      expect(combineDate("", "01", "15")).toBe("");
+    it("should pad empty year with zeros", () => {
+      expect(combineDate("", "01", "15")).toBe("0000-01-15");
     });
 
-    it("should return empty string if month is missing", () => {
-      expect(combineDate("2024", "", "15")).toBe("");
+    it("should pad empty month with zeros", () => {
+      expect(combineDate("2024", "", "15")).toBe("2024-00-15");
     });
 
-    it("should return empty string if day is missing", () => {
-      expect(combineDate("2024", "01", "")).toBe("");
+    it("should pad empty day with zeros", () => {
+      expect(combineDate("2024", "01", "")).toBe("2024-01-00");
     });
   });
 

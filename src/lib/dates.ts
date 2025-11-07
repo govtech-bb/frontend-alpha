@@ -104,28 +104,31 @@ export function parseDate(dateString: string): {
 
 /**
  * Combines individual day, month, year components into ISO 8601 format
- * Returns empty string if any component is missing to prevent invalid dates
+ * Pads with zeros to allow partial dates during input
+ * Note: Partial dates like "2024-00-00" are invalid ISO 8601, but needed for UI state.
+ * Use validateFields() to ensure complete dates before submission.
  *
  * @param year - Year as string (4 digits, or empty)
  * @param month - Month as string (numeric 1-12, or empty)
  * @param day - Day as string (1-31, or empty)
- * @returns Date string in format "YYYY-MM-DD", empty string if any field empty
+ * @returns Date string in format "YYYY-MM-DD", empty string if all fields empty
  *
  * @example
  * combineDate("1986", "7", "30") // "1986-07-30"
- * combineDate("2024", "", "") // ""
+ * combineDate("2024", "", "") // "2024-00-00" (partial, for UI state)
  * combineDate("", "", "") // ""
  */
 export function combineDate(year: string, month: string, day: string): string {
-  // Return empty if ANY component is empty to prevent invalid dates like "2024-00-00"
-  if (!(day && month && year)) {
+  // Return empty only if ALL components are empty
+  if (!(day || month || year)) {
     return "";
   }
 
-  // Only pad numeric months, leave text months as-is
-  const paddedMonth = /^\d+$/.test(month) ? month.padStart(2, "0") : month;
-  const paddedDay = day.padStart(2, "0");
-  const paddedYear = year.padStart(4, "0");
+  const paddedDay = (day || "00").padStart(2, "0");
+  const paddedYear = (year || "0000").padStart(4, "0");
+  // Only pad numeric months (or empty), leave text months as-is
+  const paddedMonth =
+    !month || /^\d+$/.test(month) ? (month || "00").padStart(2, "0") : month;
 
   return `${paddedYear}-${paddedMonth}-${paddedDay}`;
 }
