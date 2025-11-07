@@ -81,10 +81,10 @@ function parseMonthToNumber(month: string): number {
  * @returns Object with day, month, year as strings, or empty strings if format invalid
  *
  * @example
- * parse("1986-07-30") // { day: "30", month: "07", year: "1986" }
- * parse("") // { day: "", month: "", year: "" }
+ * parseDate("1986-07-30") // { day: "30", month: "07", year: "1986" }
+ * parseDate("") // { day: "", month: "", year: "" }
  */
-export function parse(dateString: string): {
+export function parseDate(dateString: string): {
   day: string;
   month: string;
   year: string;
@@ -112,10 +112,10 @@ export function parse(dateString: string): {
  * @returns Date string in format "YYYY-MM-DD", empty string if all fields empty
  *
  * @example
- * combine("1986", "7", "30") // "1986-07-30"
- * combine("", "", "") // ""
+ * combineDate("1986", "7", "30") // "1986-07-30"
+ * combineDate("", "", "") // ""
  */
-export function combine(year: string, month: string, day: string): string {
+export function combineDate(year: string, month: string, day: string): string {
   // Return empty only if ALL components are empty
   if (!(day || month || year)) {
     return "";
@@ -144,7 +144,7 @@ function isValidDateSemantically(dateString: string): boolean {
   }
 
   // Parse components (handles both numeric and text formats)
-  const { year, month, day } = parse(dateString);
+  const { year, month, day } = parseDate(dateString);
 
   if (!(year && month && day)) {
     return false;
@@ -187,7 +187,7 @@ function isValidDateSemantically(dateString: string): boolean {
  */
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex validation logic with multiple error checks
 export function validateFields(dateString: string): DateFieldErrors | null {
-  const { year, month, day } = parse(dateString);
+  const { year, month, day } = parseDate(dateString);
   const errors: DateFieldErrors = {};
 
   // Check for missing fields
@@ -244,7 +244,7 @@ export function validateFields(dateString: string): DateFieldErrors | null {
   }
 
   // Validate the complete date is semantically valid
-  const paddedDate = combine(year, month, day);
+  const paddedDate = combineDate(year, month, day);
   if (!isValidDateSemantically(paddedDate)) {
     errors.day = "Enter a valid day for this month";
   }
@@ -285,7 +285,7 @@ export function isValidBirthDate(dateString: string, minYear = 1900): boolean {
     return false;
   }
 
-  const { year, month, day } = parse(dateString);
+  const { year, month, day } = parseDate(dateString);
   const yearNum = Number(year);
   const monthNum = parseMonthToNumber(month);
   const dayNum = Number(day);

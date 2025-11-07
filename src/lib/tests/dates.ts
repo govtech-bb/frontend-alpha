@@ -1,16 +1,16 @@
 import { describe, expect, it } from "vitest";
 import {
-  combine,
+  combineDate,
   formatForDisplay,
   isValidBirthDate,
-  parse,
+  parseDate,
   validateFields,
 } from "../dates";
 
-describe("parse", () => {
+describe("parseDate", () => {
   describe("valid formats", () => {
     it("should parse YYYY-MM-DD format", () => {
-      expect(parse("1986-07-30")).toEqual({
+      expect(parseDate("1986-07-30")).toEqual({
         day: "30",
         month: "07",
         year: "1986",
@@ -18,7 +18,7 @@ describe("parse", () => {
     });
 
     it("should parse dates with leading zeros", () => {
-      expect(parse("2024-01-05")).toEqual({
+      expect(parseDate("2024-01-05")).toEqual({
         day: "05",
         month: "01",
         year: "2024",
@@ -26,7 +26,7 @@ describe("parse", () => {
     });
 
     it("should parse end of year dates", () => {
-      expect(parse("2024-12-31")).toEqual({
+      expect(parseDate("2024-12-31")).toEqual({
         day: "31",
         month: "12",
         year: "2024",
@@ -36,99 +36,99 @@ describe("parse", () => {
 
   describe("edge cases", () => {
     it("should return empty strings for empty input", () => {
-      expect(parse("")).toEqual({ day: "", month: "", year: "" });
+      expect(parseDate("")).toEqual({ day: "", month: "", year: "" });
     });
 
     it("should return empty strings for whitespace only", () => {
-      expect(parse("   ")).toEqual({ day: "", month: "", year: "" });
+      expect(parseDate("   ")).toEqual({ day: "", month: "", year: "" });
     });
 
     it("should return empty strings for invalid format", () => {
-      expect(parse("invalid")).toEqual({ day: "", month: "", year: "" });
+      expect(parseDate("invalid")).toEqual({ day: "", month: "", year: "" });
     });
 
     it("should return empty strings for wrong separator", () => {
-      expect(parse("07/30/1986")).toEqual({ day: "", month: "", year: "" });
+      expect(parseDate("07/30/1986")).toEqual({ day: "", month: "", year: "" });
     });
   });
 });
 
-describe("combine", () => {
+describe("combineDate", () => {
   describe("valid combinations", () => {
     it("should combine year, month, day into ISO 8601 format", () => {
-      expect(combine("1986", "7", "30")).toBe("1986-07-30");
+      expect(combineDate("1986", "7", "30")).toBe("1986-07-30");
     });
 
     it("should pad single digit month and day", () => {
-      expect(combine("2024", "1", "5")).toBe("2024-01-05");
+      expect(combineDate("2024", "1", "5")).toBe("2024-01-05");
     });
 
     it("should handle already padded values", () => {
-      expect(combine("2024", "12", "25")).toBe("2024-12-25");
+      expect(combineDate("2024", "12", "25")).toBe("2024-12-25");
     });
 
     it("should pad year if less than 4 digits", () => {
-      expect(combine("24", "01", "15")).toBe("0024-01-15");
+      expect(combineDate("24", "01", "15")).toBe("0024-01-15");
     });
   });
 
   describe("partial dates", () => {
     it("should return empty string if all components empty", () => {
-      expect(combine("", "", "")).toBe("");
+      expect(combineDate("", "", "")).toBe("");
     });
 
     it("should pad empty year with zeros", () => {
-      expect(combine("", "01", "15")).toBe("0000-01-15");
+      expect(combineDate("", "01", "15")).toBe("0000-01-15");
     });
 
     it("should pad empty month with zeros", () => {
-      expect(combine("2024", "", "15")).toBe("2024-00-15");
+      expect(combineDate("2024", "", "15")).toBe("2024-00-15");
     });
 
     it("should pad empty day with zeros", () => {
-      expect(combine("2024", "01", "")).toBe("2024-01-00");
+      expect(combineDate("2024", "01", "")).toBe("2024-01-00");
     });
   });
 
   describe("round-trip with parse", () => {
     it("should maintain data integrity when parsing and combining", () => {
       const original = "1986-07-30";
-      const { day, month, year } = parse(original);
-      const combined = combine(year, month, day);
+      const { day, month, year } = parseDate(original);
+      const combined = combineDate(year, month, day);
       expect(combined).toBe(original);
     });
   });
 
   describe("text month handling", () => {
     it("should not pad single letter months", () => {
-      expect(combine("2024", "J", "15")).toBe("2024-J-15");
+      expect(combineDate("2024", "J", "15")).toBe("2024-J-15");
     });
 
     it("should not pad two letter months", () => {
-      expect(combine("2024", "Ja", "15")).toBe("2024-Ja-15");
+      expect(combineDate("2024", "Ja", "15")).toBe("2024-Ja-15");
     });
 
     it("should not pad abbreviated month names", () => {
-      expect(combine("2024", "Jan", "15")).toBe("2024-Jan-15");
-      expect(combine("2024", "Feb", "20")).toBe("2024-Feb-20");
-      expect(combine("2024", "Dec", "25")).toBe("2024-Dec-25");
+      expect(combineDate("2024", "Jan", "15")).toBe("2024-Jan-15");
+      expect(combineDate("2024", "Feb", "20")).toBe("2024-Feb-20");
+      expect(combineDate("2024", "Dec", "25")).toBe("2024-Dec-25");
     });
 
     it("should not pad full month names", () => {
-      expect(combine("2024", "January", "15")).toBe("2024-January-15");
-      expect(combine("2024", "February", "20")).toBe("2024-February-20");
-      expect(combine("2024", "December", "25")).toBe("2024-December-25");
+      expect(combineDate("2024", "January", "15")).toBe("2024-January-15");
+      expect(combineDate("2024", "February", "20")).toBe("2024-February-20");
+      expect(combineDate("2024", "December", "25")).toBe("2024-December-25");
     });
 
     it("should still pad numeric months", () => {
-      expect(combine("2024", "1", "15")).toBe("2024-01-15");
-      expect(combine("2024", "9", "5")).toBe("2024-09-05");
-      expect(combine("2024", "12", "25")).toBe("2024-12-25");
+      expect(combineDate("2024", "1", "15")).toBe("2024-01-15");
+      expect(combineDate("2024", "9", "5")).toBe("2024-09-05");
+      expect(combineDate("2024", "12", "25")).toBe("2024-12-25");
     });
 
     it("should handle mixed case month names", () => {
-      expect(combine("2024", "JANUARY", "15")).toBe("2024-JANUARY-15");
-      expect(combine("2024", "january", "15")).toBe("2024-january-15");
+      expect(combineDate("2024", "JANUARY", "15")).toBe("2024-JANUARY-15");
+      expect(combineDate("2024", "january", "15")).toBe("2024-january-15");
     });
   });
 });
