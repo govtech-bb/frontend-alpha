@@ -138,7 +138,7 @@ describe("ChildDetails", () => {
     expect(options).toContain("");
     expect(options).toContain("Male");
     expect(options).toContain("Female");
-    expect(options).toContain("Intersex");
+    expect(options).not.toContain("Intersex");
   });
 
   it("should validate required fields on submission", () => {

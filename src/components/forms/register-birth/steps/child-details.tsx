@@ -101,7 +101,6 @@ export function ChildDetails({
         <option value="">Select an option</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
-        <option value="Intersex">Intersex</option>
       </Select>
 
       {/* Place of birth */}
