@@ -1,9 +1,8 @@
 "use client";
 
+import { Button, Input } from "@govtech-bb/react";
 import { Typography } from "@/components/ui/typography";
 import { ErrorSummary } from "../../common/error-summary";
-import { FormFieldError } from "../../common/form-field-error";
-import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { certificatesValidation } from "../schema";
@@ -78,52 +77,23 @@ export function Certificates({
         The birth registration is free of charge.
       </Typography>
 
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="numberOfCertificates"
-        >
-          Number of certificates required
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.numberOfCertificates
-              ? "numberOfCertificates-error"
-              : undefined
-          }
-          aria-invalid={fieldErrors.numberOfCertificates ? true : undefined}
-          className={getFieldClassName("numberOfCertificates", fieldErrors)}
-          id="numberOfCertificates"
-          max="20"
-          min="0"
-          onBlur={handleBlur}
-          onChange={(e) =>
-            handleChange(Number.parseInt(e.target.value, 10) || 0)
-          }
-          type="number"
-          value={value || 0}
-        />
-        <FormFieldError
-          id="numberOfCertificates"
-          message={fieldErrors.numberOfCertificates}
-        />
-      </div>
+      <Input
+        error={fieldErrors.numberOfCertificates}
+        id="numberOfCertificates"
+        label="Number of certificates required"
+        max="20"
+        min="0"
+        onBlur={handleBlur}
+        onChange={(e) => handleChange(Number.parseInt(e.target.value, 10) || 0)}
+        type="number"
+        value={value || 0}
+      />
 
       <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
+        <Button onClick={onBack} type="button" variant="secondary">
           Back
-        </button>
-
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
-          type="submit"
-        >
-          Next
-        </button>
+        </Button>
+        <Button type="submit">Next</Button>
       </div>
     </form>
   );

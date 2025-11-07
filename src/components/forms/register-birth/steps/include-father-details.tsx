@@ -1,8 +1,8 @@
 "use client";
 
+import { Button, Radio, RadioGroup } from "@govtech-bb/react";
 import { Typography } from "@/components/ui/typography";
 import { ErrorSummary } from "../../common/error-summary";
-import { FormFieldError } from "../../common/form-field-error";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { includeFatherDetailsValidation } from "../schema";
@@ -80,80 +80,35 @@ export function IncludeFatherDetails({
         </div>
       </div>
 
-      <fieldset>
-        <legend className="sr-only">Include father's details</legend>
-
-        <div className="space-y-3">
-          <div className="flex items-start">
-            <input
-              aria-describedby={
-                fieldErrors.includeFatherDetails
-                  ? "includeFatherDetails-includeFatherDetails-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.includeFatherDetails ? "true" : "false"}
-              checked={value === "yes"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="include-father-yes"
-              name="includeFatherDetails"
-              onChange={() => handleChange("includeFatherDetails", "yes")}
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="include-father-yes"
-            >
-              Yes, include the father's details
-            </label>
-          </div>
-
-          <div className="flex items-start">
-            <input
-              aria-describedby={
-                fieldErrors.includeFatherDetails
-                  ? "includeFatherDetails-includeFatherDetails-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.includeFatherDetails ? "true" : "false"}
-              checked={value === "no"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="include-father-no"
-              name="includeFatherDetails"
-              onChange={() => handleChange("includeFatherDetails", "no")}
-              type="radio"
-              value="no"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="include-father-no"
-            >
-              No, do not include the father's details
-            </label>
-          </div>
-        </div>
-
-        <FormFieldError
-          id="includeFatherDetails-includeFatherDetails"
-          message={fieldErrors.includeFatherDetails}
+      <RadioGroup
+        aria-describedby={
+          fieldErrors.includeFatherDetails
+            ? "includeFatherDetails-includeFatherDetails-error"
+            : undefined
+        }
+        aria-invalid={fieldErrors.includeFatherDetails ? "true" : undefined}
+        onValueChange={(val) =>
+          handleChange("includeFatherDetails", val as "yes" | "no")
+        }
+        value={value}
+      >
+        <Radio
+          id="include-father-yes"
+          label="Yes, include the father's details"
+          value="yes"
         />
-      </fieldset>
+        <Radio
+          id="include-father-no"
+          label="No, do not include the father's details"
+          value="no"
+        />
+      </RadioGroup>
 
       <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
+        <Button onClick={onBack} type="button" variant="secondary">
           Back
-        </button>
-
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
-          type="submit"
-        >
-          Next
-        </button>
+        </Button>
+        <Button type="submit">Next</Button>
       </div>
     </form>
   );

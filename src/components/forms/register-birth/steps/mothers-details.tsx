@@ -1,15 +1,7 @@
 "use client";
 
-import {
-  convertFromInputFormat,
-  convertToInputFormat,
-} from "@/lib/date-format";
+import { Button, Input, Radio, RadioGroup, TextArea } from "@govtech-bb/react";
 import { ErrorSummary } from "../../common/error-summary";
-import { FormFieldError } from "../../common/form-field-error";
-import {
-  getFieldClassName,
-  getTextareaClassName,
-} from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
@@ -60,213 +52,92 @@ export function MothersDetails({
       <ErrorSummary errors={errors} />
 
       {/* First name */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-firstName"
-        >
-          First name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.firstName ? "mother-firstName-error" : undefined
-          }
-          aria-invalid={fieldErrors.firstName ? true : undefined}
-          className={getFieldClassName("firstName", fieldErrors)}
-          id="mother-firstName"
-          onBlur={() => handleBlur("firstName")}
-          onChange={(e) => handleChange("firstName", e.target.value)}
-          type="text"
-          value={value.firstName || ""}
-        />
-        <FormFieldError id="mother-firstName" message={fieldErrors.firstName} />
-      </div>
+      <Input
+        error={fieldErrors.firstName}
+        id="mother-firstName"
+        label="First name"
+        onBlur={() => handleBlur("firstName")}
+        onChange={(e) => handleChange("firstName", e.target.value)}
+        type="text"
+        value={value.firstName || ""}
+      />
 
       {/* Middle name */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-middleName"
-        >
-          Middle name(s)
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          If they have more than one, add them in order
-        </p>
-        <input
-          className={getFieldClassName("middleName", fieldErrors)}
-          id="mother-middleName"
-          onChange={(e) => handleChange("middleName", e.target.value)}
-          type="text"
-          value={value.middleName || ""}
-        />
-      </div>
+      <Input
+        description="If they have more than one, add them in order"
+        id="mother-middleName"
+        label="Middle name(s)"
+        onChange={(e) => handleChange("middleName", e.target.value)}
+        type="text"
+        value={value.middleName || ""}
+      />
 
       {/* Last name */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-lastName"
-        >
-          Last name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.lastName ? "mother-lastName-error" : undefined
-          }
-          aria-invalid={fieldErrors.lastName ? true : undefined}
-          className={getFieldClassName("lastName", fieldErrors)}
-          id="mother-lastName"
-          onBlur={() => handleBlur("lastName")}
-          onChange={(e) => handleChange("lastName", e.target.value)}
-          type="text"
-          value={value.lastName || ""}
-        />
-        <FormFieldError id="mother-lastName" message={fieldErrors.lastName} />
-      </div>
+      <Input
+        error={fieldErrors.lastName}
+        id="mother-lastName"
+        label="Last name"
+        onBlur={() => handleBlur("lastName")}
+        onChange={(e) => handleChange("lastName", e.target.value)}
+        type="text"
+        value={value.lastName || ""}
+      />
 
       {/* Had other surname */}
-      <fieldset>
-        <legend className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]">
-          Has the mother had any other last name?
-        </legend>
-        <p className="mb-2 text-base text-gray-600">
-          For example, a maiden name
-        </p>
-        <div className="space-y-3">
-          <div className="flex items-start">
-            <input
-              checked={value.hadOtherSurname === "yes"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="mother-hadOtherSurname-yes"
-              name="mother-hadOtherSurname"
-              onChange={() => handleChange("hadOtherSurname", "yes")}
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-hadOtherSurname-yes"
-            >
-              Yes
-            </label>
-          </div>
-
-          <div className="flex items-start">
-            <input
-              checked={value.hadOtherSurname === "no"}
-              className="mt-1 size-5 border-2 border-gray-400 text-[#1E787D] focus:ring-2 focus:ring-[#1E787D]"
-              id="mother-hadOtherSurname-no"
-              name="mother-hadOtherSurname"
-              onChange={() => handleChange("hadOtherSurname", "no")}
-              type="radio"
-              value="no"
-            />
-            <label
-              className="ml-3 block font-normal text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-hadOtherSurname-no"
-            >
-              No
-            </label>
-          </div>
-        </div>
+      <div>
+        <RadioGroup
+          description="For example, a maiden name"
+          label="Has the mother had any other last name?"
+          onValueChange={(val) => handleChange("hadOtherSurname", val)}
+          value={value.hadOtherSurname || ""}
+        >
+          <Radio id="mother-hadOtherSurname-yes" label="Yes" value="yes" />
+          <Radio id="mother-hadOtherSurname-no" label="No" value="no" />
+        </RadioGroup>
 
         {value.hadOtherSurname === "yes" && (
           <div className="mt-4">
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-otherSurname"
-            >
-              What was it
-            </label>
-            <input
-              className="w-full max-w-sm rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
+            <Input
               id="mother-otherSurname"
+              label="What was it"
               onChange={(e) => handleChange("otherSurname", e.target.value)}
               type="text"
               value={value.otherSurname || ""}
             />
           </div>
         )}
-      </fieldset>
+      </div>
 
       {/* Date of birth */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-dateOfBirth"
-        >
-          Date of birth
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          Use the calendar picker or enter the date
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.dateOfBirth ? "mother-dateOfBirth-error" : undefined
-          }
-          aria-invalid={fieldErrors.dateOfBirth ? true : undefined}
-          className="w-full max-w-xs rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
-          id="mother-dateOfBirth"
-          lang="en-US"
-          onBlur={() => handleBlur("dateOfBirth")}
-          onChange={(e) =>
-            handleChange("dateOfBirth", convertFromInputFormat(e.target.value))
-          }
-          type="date"
-          value={convertToInputFormat(value.dateOfBirth || "")}
-        />
-        <FormFieldError
-          id="mother-dateOfBirth"
-          message={fieldErrors.dateOfBirth}
-        />
-      </div>
+      <Input
+        description="For example, 07/30/1986"
+        error={fieldErrors.dateOfBirth}
+        id="mother-dateOfBirth"
+        label="Date of birth"
+        onBlur={() => handleBlur("dateOfBirth")}
+        onChange={(e) => handleChange("dateOfBirth", e.target.value)}
+        placeholder="MM/DD/YYYY"
+        type="text"
+        value={value.dateOfBirth || ""}
+      />
 
       {/* Address */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-address"
-        >
-          Current address
-        </label>
-        <textarea
-          aria-describedby={
-            fieldErrors.address ? "mother-address-error" : undefined
-          }
-          aria-invalid={fieldErrors.address ? true : undefined}
-          className={getTextareaClassName("address", fieldErrors)}
-          id="mother-address"
-          onBlur={() => handleBlur("address")}
-          onChange={(e) => handleChange("address", e.target.value)}
-          rows={3}
-          value={value.address || ""}
-        />
-        <FormFieldError id="mother-address" message={fieldErrors.address} />
-      </div>
+      <TextArea
+        error={fieldErrors.address}
+        id="mother-address"
+        label="Current address"
+        onBlur={() => handleBlur("address")}
+        onChange={(e) => handleChange("address", e.target.value)}
+        rows={3}
+        value={value.address || ""}
+      />
 
       {/* National registration number */}
       <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-nationalRegistrationNumber"
-        >
-          National registration number
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.nationalRegistrationNumber
-              ? "mother-nationalRegistrationNumber-error"
-              : undefined
-          }
-          aria-invalid={
-            fieldErrors.nationalRegistrationNumber ? true : undefined
-          }
-          className={getFieldClassName(
-            "nationalRegistrationNumber",
-            fieldErrors
-          )}
+        <Input
+          error={fieldErrors.nationalRegistrationNumber}
           id="mother-nationalRegistrationNumber"
+          label="National registration number"
           onBlur={() => handleBlur("nationalRegistrationNumber")}
           onChange={(e) =>
             handleChange("nationalRegistrationNumber", e.target.value)
@@ -274,10 +145,6 @@ export function MothersDetails({
           placeholder="123456-7890"
           type="text"
           value={value.nationalRegistrationNumber || ""}
-        />
-        <FormFieldError
-          id="mother-nationalRegistrationNumber"
-          message={fieldErrors.nationalRegistrationNumber}
         />
 
         {/* Passport number disclosure */}
@@ -295,79 +162,34 @@ export function MothersDetails({
               If you don't have a National Registration number, you can use your
               passport number instead.
             </p>
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="mother-passportNumber"
-            >
-              Passport number
-            </label>
-            <input
-              aria-describedby={
-                fieldErrors.passportNumber
-                  ? "mother-passportNumber-error"
-                  : undefined
-              }
-              aria-invalid={fieldErrors.passportNumber ? true : undefined}
-              className={getFieldClassName("passportNumber", fieldErrors)}
+            <Input
+              error={fieldErrors.passportNumber}
               id="mother-passportNumber"
+              label="Passport number"
               onBlur={() => handleBlur("passportNumber")}
               onChange={(e) => handleChange("passportNumber", e.target.value)}
               type="text"
               value={value.passportNumber || ""}
             />
-            <FormFieldError
-              id="mother-passportNumber"
-              message={fieldErrors.passportNumber}
-            />
           </div>
         </details>
       </div>
 
-      {/* Occupation */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="mother-occupation"
-        >
-          Occupation
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          This will be included on the child's birth certificate and in official
-          records.
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.occupation ? "mother-occupation-error" : undefined
-          }
-          aria-invalid={fieldErrors.occupation ? true : undefined}
-          className={getFieldClassName("occupation", fieldErrors)}
-          id="mother-occupation"
-          onBlur={() => handleBlur("occupation")}
-          onChange={(e) => handleChange("occupation", e.target.value)}
-          type="text"
-          value={value.occupation || ""}
-        />
-        <FormFieldError
-          id="mother-occupation"
-          message={fieldErrors.occupation}
-        />
-      </div>
+      {/* Occupation (optional) */}
+      <Input
+        description="This will be included on the child's birth certificate and in official records."
+        id="mother-occupation"
+        label="Occupation (optional)"
+        onChange={(e) => handleChange("occupation", e.target.value)}
+        type="text"
+        value={value.occupation || ""}
+      />
 
       <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
+        <Button onClick={onBack} type="button" variant="secondary">
           Back
-        </button>
-
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
-          type="submit"
-        >
-          Next
-        </button>
+        </Button>
+        <Button type="submit">Next</Button>
       </div>
     </form>
   );
