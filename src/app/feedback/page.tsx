@@ -1,30 +1,27 @@
 import { SimpleFeedbackForm } from "@/components/forms/simple-feedback-form";
 import { BackButton } from "@/components/layout/back-button";
+import { HelpfulBox } from "@/components/layout/helpful-box";
 import { Typography } from "@/components/ui/typography";
 
 export default function FeedbackPage() {
   return (
-    <div className="overflow-hidden bg-neutral-white lg:rounded-t-3xl">
-      <div className="container space-y-4">
-        <BackButton className="py-6 lg:pb-0" />
-        <Typography variant="h1">Help us improve alpha.gov.bb</Typography>
-
-        <div className="border-blue-bright border-r-4 border-l-4 bg-blue-light/30 px-4 py-3">
-          <Typography variant="paragraph">
-            This Page is in <span className="capitalize underline">Alpha</span>.
-          </Typography>
+    <div className="h-full bg-yellow-100">
+      <div className="h-full rounded-t-3xl bg-neutral-white">
+        <div className="container overflow-hidden pt-4">
+          <div className="mb-6 space-y-6">
+            <BackButton />
+            <Typography variant="h1">Help us improve alpha.gov.bb</Typography>
+            <div className="space-y-3 text-[20px] leading-[1.7]">
+              <p>
+                Your feedback will help us make it clearer, simpler and faster
+                to find and use public services.
+              </p>
+              <p>Do not include personal information.</p>
+            </div>
+          </div>
+          <SimpleFeedbackForm />
+          <HelpfulBox />
         </div>
-
-        <Typography variant="paragraph">
-          Your feedback will help us make it clearer, simpler and faster to find
-          and use public services.
-        </Typography>
-
-        <Typography variant="paragraph">
-          Do not include personal information.
-        </Typography>
-
-        <SimpleFeedbackForm />
       </div>
     </div>
   );
