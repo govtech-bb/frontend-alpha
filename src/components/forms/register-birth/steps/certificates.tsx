@@ -3,8 +3,6 @@
 import { Button, Input } from "@govtech-bb/react";
 import { Typography } from "@/components/ui/typography";
 import { ErrorSummary } from "../../common/error-summary";
-import { FormFieldError } from "../../common/form-field-error";
-import { getFieldClassName } from "../../common/form-utils";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { certificatesValidation } from "../schema";
@@ -86,20 +84,16 @@ export function Certificates({
         max="20"
         min="0"
         onBlur={handleBlur}
-        onChange={(e) =>
-          handleChange(Number.parseInt(e.target.value, 10) || 0)
-        }
+        onChange={(e) => handleChange(Number.parseInt(e.target.value, 10) || 0)}
         type="number"
         value={value || 0}
       />
 
       <div className="flex gap-4">
-        <Button onClick={onBack} variant="secondary" type="button">
+        <Button onClick={onBack} type="button" variant="secondary">
           Back
         </Button>
-        <Button type="submit">
-          Next
-        </Button>
+        <Button type="submit">Next</Button>
       </div>
     </form>
   );
