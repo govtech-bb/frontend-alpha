@@ -101,7 +101,7 @@ export function MarriageStatus({
       )}
 
       <div className="flex gap-4">
-        <Button type="submit">Next</Button>
+        <Button type="submit">Continue</Button>
       </div>
     </form>
   );

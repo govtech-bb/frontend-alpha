@@ -129,7 +129,7 @@ export function ChildDetails({
         <Button onClick={onBack} type="button" variant="secondary">
           Back
         </Button>
-        <Button type="submit">Next</Button>
+        <Button type="submit">Continue</Button>
       </div>
     </form>
   );

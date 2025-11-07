@@ -256,7 +256,9 @@ describe("MothersDetails", () => {
   it("should validate required fields on submission", () => {
     render(<MothersDetails {...defaultProps} value={{}} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
@@ -279,7 +281,9 @@ describe("MothersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalledTimes(1);
@@ -298,7 +302,9 @@ describe("MothersDetails", () => {
   it("should mark invalid fields with aria-invalid after submission", () => {
     render(<MothersDetails {...defaultProps} value={{ firstName: "" }} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     const firstNameInput = screen.getByLabelText("First name");
@@ -308,7 +314,9 @@ describe("MothersDetails", () => {
   it("should link error messages to inputs with aria-describedby", () => {
     render(<MothersDetails {...defaultProps} value={{ firstName: "" }} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     const firstNameInput = screen.getByLabelText("First name");
@@ -361,7 +369,9 @@ describe("MothersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Check for error in ErrorSummary
@@ -385,7 +395,9 @@ describe("MothersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalled();
@@ -408,7 +420,9 @@ describe("MothersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Should not proceed to next step
@@ -437,7 +451,9 @@ describe("MothersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Should not proceed to next step
@@ -499,7 +515,9 @@ describe("MothersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)

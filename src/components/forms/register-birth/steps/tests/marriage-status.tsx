@@ -62,10 +62,10 @@ describe("MarriageStatus", () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it("should have Next button always enabled", () => {
+  it("should have Continue button always enabled", () => {
     const { rerender } = render(<MarriageStatus {...defaultProps} value="" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    const nextButton = screen.getByRole("button", { name: /continue/i });
     expect(nextButton).not.toBeDisabled();
 
     rerender(<MarriageStatus {...defaultProps} value="yes" />);
@@ -99,11 +99,11 @@ describe("MarriageStatus", () => {
     expect(backButton).not.toBeInTheDocument();
   });
 
-  it("should call onNext when Next button is clicked with valid selection", () => {
+  it("should call onNext when Continue button is clicked with valid selection", () => {
     const onNext = vi.fn();
     render(<MarriageStatus {...defaultProps} onNext={onNext} value="yes" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    const nextButton = screen.getByRole("button", { name: /continue/i });
     fireEvent.click(nextButton);
 
     expect(onNext).toHaveBeenCalledTimes(1);
@@ -113,7 +113,9 @@ describe("MarriageStatus", () => {
     const onNext = vi.fn();
     render(<MarriageStatus {...defaultProps} onNext={onNext} value="" />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Should show error and not proceed
@@ -124,7 +126,9 @@ describe("MarriageStatus", () => {
   it("should mark radio group as invalid when validation fails", () => {
     render(<MarriageStatus {...defaultProps} value="" />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // RadioGroup itself gets aria-invalid, not individual radios
@@ -139,7 +143,9 @@ describe("MarriageStatus", () => {
     render(<MarriageStatus {...defaultProps} onChange={onChange} value="" />);
 
     // First trigger validation error
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
     expect(screen.getByRole("alert")).toBeInTheDocument();
 
