@@ -13,7 +13,7 @@ describe("fatherDetailsValidation", () => {
     lastName: "Smith",
     hadOtherSurname: "no" as const,
     otherSurname: "",
-    dateOfBirth: "07/30/1986",
+    dateOfBirth: "1986-07-30",
     address: "123 Main St",
     occupation: "Engineer",
   };
@@ -203,7 +203,7 @@ describe("motherDetailsValidation", () => {
     lastName: "Smith",
     hadOtherSurname: "no" as const,
     otherSurname: "",
-    dateOfBirth: "03/15/1990",
+    dateOfBirth: "1990-03-15",
     address: "123 Main St",
     occupation: "Teacher",
   };
@@ -271,7 +271,7 @@ describe("motherDetailsValidation", () => {
         firstName: undefined,
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
       };
@@ -292,7 +292,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: undefined,
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
       };
@@ -332,7 +332,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: undefined,
         nationalRegistrationNumber: "123456-7890",
       };
@@ -354,7 +354,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
         // occupation is missing
@@ -374,7 +374,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
         occupation: "",
@@ -398,7 +398,7 @@ describe("childDetailsValidation", () => {
         firstNames: undefined,
         middleNames: "",
         lastName: "Smith",
-        dateOfBirth: "10/22/2024",
+        dateOfBirth: "2024-10-22",
         sexAtBirth: "Male" as const,
         parishOfBirth: "St. Michael",
       };
@@ -419,7 +419,7 @@ describe("childDetailsValidation", () => {
         firstNames: "John",
         middleNames: "",
         lastName: undefined,
-        dateOfBirth: "10/22/2024",
+        dateOfBirth: "2024-10-22",
         sexAtBirth: "Male" as const,
         parishOfBirth: "St. Michael",
       };
@@ -459,7 +459,7 @@ describe("childDetailsValidation", () => {
         firstNames: "John",
         middleNames: "",
         lastName: "Smith",
-        dateOfBirth: "10/22/2024",
+        dateOfBirth: "2024-10-22",
         sexAtBirth: "Male" as const,
         parishOfBirth: undefined,
       };
@@ -588,7 +588,7 @@ describe("fatherDetailsValidation - undefined field handling", () => {
       firstName: "John",
       middleName: "Michael",
       lastName: "Smith",
-      dateOfBirth: "07/30/1986",
+      dateOfBirth: "1986-07-30",
       address: "123 Main St",
       nationalRegistrationNumber: "123456-7890",
       // occupation is missing
@@ -608,7 +608,7 @@ describe("fatherDetailsValidation - undefined field handling", () => {
       firstName: "John",
       middleName: "Michael",
       lastName: "Smith",
-      dateOfBirth: "07/30/1986",
+      dateOfBirth: "1986-07-30",
       address: "123 Main St",
       nationalRegistrationNumber: "123456-7890",
       occupation: "",

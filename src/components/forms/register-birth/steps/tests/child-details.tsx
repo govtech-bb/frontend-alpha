@@ -39,7 +39,7 @@ describe("ChildDetails", () => {
     render(<ChildDetails {...defaultProps} />);
 
     expect(
-      screen.getByText(/Use the calendar picker or enter the date/)
+      screen.getByText(/For example, 27 3 2007 or 27 Mar 2007/)
     ).toBeInTheDocument();
   });
 
@@ -70,7 +70,7 @@ describe("ChildDetails", () => {
           firstNames: "John",
           middleNames: "Paul",
           lastName: "Smith",
-          dateOfBirth: "10/22/2025",
+          dateOfBirth: "2025-10-22",
           sexAtBirth: "Male",
           parishOfBirth: "St. Michael",
         }}
@@ -86,9 +86,10 @@ describe("ChildDetails", () => {
     expect((screen.getByLabelText("Last name") as HTMLInputElement).value).toBe(
       "Smith"
     );
-    expect(
-      (screen.getByLabelText("Date of birth") as HTMLInputElement).value
-    ).toBe("2025-10-22");
+    // DateInput uses separate fields (day, month, year) internally
+    expect(screen.getByLabelText("Day")).toHaveValue("22");
+    expect(screen.getByLabelText("Month")).toHaveValue("10");
+    expect(screen.getByLabelText("Year")).toHaveValue("2025");
     expect(
       (screen.getByLabelText("Sex at birth") as HTMLSelectElement).value
     ).toBe("Male");
@@ -157,7 +158,7 @@ describe("ChildDetails", () => {
         value={{
           firstNames: "John",
           lastName: "Smith",
-          dateOfBirth: "10/22/2025",
+          dateOfBirth: "2025-10-22",
           sexAtBirth: "Male",
           parishOfBirth: "St. Michael",
         }}
@@ -214,9 +215,18 @@ describe("ChildDetails", () => {
       "id",
       "child-lastName"
     );
-    expect(screen.getByLabelText("Date of birth")).toHaveAttribute(
+    // DateInput uses separate fields with -day, -month, -year suffixes
+    expect(screen.getByLabelText("Day")).toHaveAttribute(
       "id",
-      "child-dateOfBirth"
+      "child-dateOfBirth-day"
+    );
+    expect(screen.getByLabelText("Month")).toHaveAttribute(
+      "id",
+      "child-dateOfBirth-month"
+    );
+    expect(screen.getByLabelText("Year")).toHaveAttribute(
+      "id",
+      "child-dateOfBirth-year"
     );
   });
 
@@ -246,8 +256,9 @@ describe("ChildDetails", () => {
 
     // Check for error (message appears in both summary and field)
     expect(screen.getByRole("alert")).toBeInTheDocument();
-    const dateInput = screen.getByLabelText("Date of birth");
-    expect(dateInput).toHaveAttribute("aria-invalid", "true");
+    // DateInput marks invalid fields with aria-invalid
+    const dayInput = screen.getByLabelText("Day");
+    expect(dayInput).toHaveAttribute("aria-invalid", "true");
   });
 
   it("should accept middle names as optional", () => {
@@ -259,7 +270,7 @@ describe("ChildDetails", () => {
         value={{
           firstNames: "John",
           lastName: "Smith",
-          dateOfBirth: "10/22/2025",
+          dateOfBirth: "2025-10-22",
           sexAtBirth: "Male",
           parishOfBirth: "St. Michael",
         }}
