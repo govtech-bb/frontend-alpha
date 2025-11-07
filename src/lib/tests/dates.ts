@@ -423,6 +423,17 @@ describe("isValidChildBirthDate", () => {
   it("should reject empty strings", () => {
     expect(isValidChildBirthDate("")).toBe(false);
   });
+
+  it("should accept text months in past dates", () => {
+    expect(isValidChildBirthDate("2011-jul-1")).toBe(true);
+    expect(isValidChildBirthDate("2020-jan-15")).toBe(true);
+    expect(isValidChildBirthDate("2015-dec-25")).toBe(true);
+  });
+
+  it("should reject text months in future dates", () => {
+    const futureYear = new Date().getFullYear() + 1;
+    expect(isValidChildBirthDate(`${futureYear}-jul-1`)).toBe(false);
+  });
 });
 
 describe("formatForDisplay", () => {

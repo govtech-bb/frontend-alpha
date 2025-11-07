@@ -296,8 +296,9 @@ export function isValidBirthDate(
 
 /**
  * Validates child's birth date is not in the future and within reasonable range
+ * Supports both numeric and text month formats
  *
- * @param dateString - Date string in YYYY-MM-DD format
+ * @param dateString - Date string in YYYY-MM-DD or YYYY-<month>-DD format
  * @returns true if the date is valid and not in future, false otherwise
  */
 export function isValidChildBirthDate(dateString: string): boolean {
@@ -309,11 +310,15 @@ export function isValidChildBirthDate(dateString: string): boolean {
     return false;
   }
 
-  const [year, month, day] = dateString.split("-").map(Number);
-  const birthDate = startOfDay(new Date(year, month - 1, day));
+  const { year, month, day } = parse(dateString);
+  const yearNum = Number(year);
+  const monthNum = parseMonthToNumber(month);
+  const dayNum = Number(day);
+
+  const birthDate = startOfDay(new Date(yearNum, monthNum - 1, dayNum));
   const today = startOfDay(new Date());
 
-  return !isAfter(birthDate, today) && year >= 1900;
+  return !isAfter(birthDate, today) && yearNum >= 1900;
 }
 
 /**
