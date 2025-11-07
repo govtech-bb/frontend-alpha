@@ -268,40 +268,15 @@ export function validateFields(dateString: string): DateFieldErrors | null {
 }
 
 /**
- * Validates date is in reasonable range for birth dates (1900 to current year)
+ * Validates date is in reasonable range for birth dates (1900 to today)
+ * Validates down to the day level - birth date cannot be in the future
  * Supports both numeric and text month formats
  *
  * @param dateString - Date string in YYYY-MM-DD or YYYY-<month>-DD format
  * @param minYear - Minimum valid year (default: 1900)
- * @param maxYear - Maximum valid year (default: current year)
- * @returns true if the date is valid and within range, false otherwise
+ * @returns true if the date is valid, within range, and not in future, false otherwise
  */
-export function isValidBirthDate(
-  dateString: string,
-  minYear = 1900,
-  maxYear = new Date().getFullYear()
-): boolean {
-  if (!dateString || dateString.trim() === "") {
-    return false;
-  }
-
-  if (!isValidDateSemantically(dateString)) {
-    return false;
-  }
-
-  const { year } = parse(dateString);
-  const yearNum = Number(year);
-  return yearNum >= minYear && yearNum <= maxYear;
-}
-
-/**
- * Validates child's birth date is not in the future and within reasonable range
- * Supports both numeric and text month formats
- *
- * @param dateString - Date string in YYYY-MM-DD or YYYY-<month>-DD format
- * @returns true if the date is valid and not in future, false otherwise
- */
-export function isValidChildBirthDate(dateString: string): boolean {
+export function isValidBirthDate(dateString: string, minYear = 1900): boolean {
   if (!dateString || dateString.trim() === "") {
     return false;
   }
@@ -315,10 +290,24 @@ export function isValidChildBirthDate(dateString: string): boolean {
   const monthNum = parseMonthToNumber(month);
   const dayNum = Number(day);
 
+  // Check minimum year
+  if (yearNum < minYear) {
+    return false;
+  }
+
+  // Check date is not in the future (day-level precision)
   const birthDate = startOfDay(new Date(yearNum, monthNum - 1, dayNum));
   const today = startOfDay(new Date());
 
-  return !isAfter(birthDate, today) && yearNum >= 1900;
+  return !isAfter(birthDate, today);
+}
+
+/**
+ * Alias for isValidBirthDate() - kept for backward compatibility
+ * @deprecated Use isValidBirthDate() instead
+ */
+export function isValidChildBirthDate(dateString: string): boolean {
+  return isValidBirthDate(dateString);
 }
 
 /**

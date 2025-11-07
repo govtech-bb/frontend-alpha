@@ -365,38 +365,18 @@ describe("isValidBirthDate", () => {
     expect(isValidBirthDate("1986-07-30")).toBe(true);
   });
 
-  it("should reject future dates", () => {
+  it("should reject future dates (year level)", () => {
     const nextYear = new Date().getFullYear() + 1;
     expect(isValidBirthDate(`${nextYear}-01-01`)).toBe(false);
   });
 
-  it("should accept current year dates", () => {
-    const currentYear = new Date().getFullYear();
-    expect(isValidBirthDate(`${currentYear}-01-01`)).toBe(true);
-  });
-
-  it("should reject invalid dates (Feb 30)", () => {
-    expect(isValidBirthDate("1986-02-30")).toBe(false);
-  });
-
-  it("should reject empty strings", () => {
-    expect(isValidBirthDate("")).toBe(false);
-  });
-
-  it("should accept custom year range", () => {
-    expect(isValidBirthDate("1950-01-01", 1950, 2000)).toBe(true);
-    expect(isValidBirthDate("1940-01-01", 1950, 2000)).toBe(false);
-  });
-});
-
-describe("isValidChildBirthDate", () => {
-  it("should reject future dates", () => {
+  it("should reject future dates (day level)", () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
     const day = String(tomorrow.getDate()).padStart(2, "0");
     const year = tomorrow.getFullYear();
-    expect(isValidChildBirthDate(`${year}-${month}-${day}`)).toBe(false);
+    expect(isValidBirthDate(`${year}-${month}-${day}`)).toBe(false);
   });
 
   it("should accept today's date", () => {
@@ -404,35 +384,52 @@ describe("isValidChildBirthDate", () => {
     const month = String(today.getMonth() + 1).padStart(2, "0");
     const day = String(today.getDate()).padStart(2, "0");
     const year = today.getFullYear();
-    expect(isValidChildBirthDate(`${year}-${month}-${day}`)).toBe(true);
+    expect(isValidBirthDate(`${year}-${month}-${day}`)).toBe(true);
   });
 
   it("should accept past dates", () => {
-    expect(isValidChildBirthDate("2024-01-01")).toBe(true);
-    expect(isValidChildBirthDate("2023-10-22")).toBe(true);
+    expect(isValidBirthDate("2024-01-01")).toBe(true);
+    expect(isValidBirthDate("2023-10-22")).toBe(true);
   });
 
-  it("should reject dates before 1900", () => {
-    expect(isValidChildBirthDate("1899-01-01")).toBe(false);
-  });
-
-  it("should reject invalid dates", () => {
-    expect(isValidChildBirthDate("2023-02-29")).toBe(false);
+  it("should reject invalid dates (Feb 30)", () => {
+    expect(isValidBirthDate("1986-02-30")).toBe(false);
+    expect(isValidBirthDate("2023-02-29")).toBe(false);
   });
 
   it("should reject empty strings", () => {
-    expect(isValidChildBirthDate("")).toBe(false);
+    expect(isValidBirthDate("")).toBe(false);
+  });
+
+  it("should accept custom minimum year", () => {
+    expect(isValidBirthDate("1950-01-01", 1950)).toBe(true);
+    expect(isValidBirthDate("1940-01-01", 1950)).toBe(false);
   });
 
   it("should accept text months in past dates", () => {
-    expect(isValidChildBirthDate("2011-jul-1")).toBe(true);
-    expect(isValidChildBirthDate("2020-jan-15")).toBe(true);
-    expect(isValidChildBirthDate("2015-dec-25")).toBe(true);
+    expect(isValidBirthDate("2011-jul-1")).toBe(true);
+    expect(isValidBirthDate("2020-jan-15")).toBe(true);
+    expect(isValidBirthDate("2015-dec-25")).toBe(true);
   });
 
   it("should reject text months in future dates", () => {
     const futureYear = new Date().getFullYear() + 1;
-    expect(isValidChildBirthDate(`${futureYear}-jul-1`)).toBe(false);
+    expect(isValidBirthDate(`${futureYear}-jul-1`)).toBe(false);
+  });
+});
+
+describe("isValidChildBirthDate", () => {
+  it("should be an alias for isValidBirthDate", () => {
+    // Test a few cases to ensure backward compatibility
+    expect(isValidChildBirthDate("2011-jul-1")).toBe(true);
+    expect(isValidChildBirthDate("1899-01-01")).toBe(false);
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+    const day = String(tomorrow.getDate()).padStart(2, "0");
+    const year = tomorrow.getFullYear();
+    expect(isValidChildBirthDate(`${year}-${month}-${day}`)).toBe(false);
   });
 });
 
