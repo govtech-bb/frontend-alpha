@@ -279,22 +279,43 @@ describe("validateFields", () => {
   });
 
   describe("text month validation", () => {
-    it("should accept abbreviated month names", () => {
+    it("should accept unambiguous abbreviated month names", () => {
       expect(validateFields("2011-jul-1")).toBeNull();
-      expect(validateFields("2011-Jan-1")).toBeNull();
-      expect(validateFields("2011-DEC-25")).toBeNull();
+      expect(validateFields("2011-jan-1")).toBeNull();
+      expect(validateFields("2011-dec-25")).toBeNull();
+      expect(validateFields("2011-ap-15")).toBeNull(); // april (unambiguous)
+      expect(validateFields("2011-au-20")).toBeNull(); // august (unambiguous)
+      expect(validateFields("2011-mar-5")).toBeNull(); // march (unambiguous)
     });
 
-    it("should accept full month names", () => {
-      expect(validateFields("2011-July-1")).toBeNull();
+    it("should accept full month names (case-insensitive)", () => {
+      expect(validateFields("2011-july-1")).toBeNull();
       expect(validateFields("2011-January-1")).toBeNull();
-      expect(validateFields("2011-December-25")).toBeNull();
+      expect(validateFields("2011-DECEMBER-25")).toBeNull();
     });
 
-    it("should accept single letters for valid months", () => {
-      // While uncommon, if user types just the first letter, it should validate
-      // Actually single letters won't match known months, so they should error
+    it("should accept minimal unambiguous prefixes", () => {
+      expect(validateFields("2011-jan-1")).toBeNull(); // january
+      expect(validateFields("2011-feb-1")).toBeNull(); // february
+      expect(validateFields("2011-mar-1")).toBeNull(); // march
+      expect(validateFields("2011-ap-1")).toBeNull(); // april
+      expect(validateFields("2011-may-1")).toBeNull(); // may
+      expect(validateFields("2011-jun-1")).toBeNull(); // june
+      expect(validateFields("2011-jul-1")).toBeNull(); // july
+      expect(validateFields("2011-au-1")).toBeNull(); // august
+      expect(validateFields("2011-s-1")).toBeNull(); // september (unambiguous)
+      expect(validateFields("2011-o-1")).toBeNull(); // october (unambiguous)
+      expect(validateFields("2011-n-1")).toBeNull(); // november (unambiguous)
+      expect(validateFields("2011-d-1")).toBeNull(); // december (unambiguous)
+    });
+
+    it("should reject ambiguous month prefixes", () => {
+      // "j" matches january, june, july
       expect(validateFields("2011-j-1")?.month).toBe("Enter a valid month");
+      // "ju" matches june, july
+      expect(validateFields("2011-ju-1")?.month).toBe("Enter a valid month");
+      // "a" matches april, august
+      expect(validateFields("2011-a-1")?.month).toBe("Enter a valid month");
     });
 
     it("should reject invalid month names", () => {
@@ -304,23 +325,32 @@ describe("validateFields", () => {
 
     it("should validate day ranges with text months", () => {
       // February 30 should fail
-      const result = validateFields("2011-Feb-30");
+      const result = validateFields("2011-feb-30");
       expect(result?.day).toBe("Enter a valid day for this month");
     });
 
     it("should validate leap years with text months", () => {
       // 2024 is a leap year
-      expect(validateFields("2024-Feb-29")).toBeNull();
+      expect(validateFields("2024-feb-29")).toBeNull();
       // 2011 is not a leap year
-      const result = validateFields("2011-Feb-29");
+      const result = validateFields("2011-feb-29");
       expect(result?.day).toBe("Enter a valid day for this month");
     });
 
     it("should check future dates with text months", () => {
       // Create a date far in the future
       const futureYear = new Date().getFullYear() + 10;
-      const result = validateFields(`${futureYear}-Jul-1`);
+      const result = validateFields(`${futureYear}-jul-1`);
       expect(result?.year).toBe("Date cannot be in the future");
+    });
+
+    it("should handle edge case months that need more characters", () => {
+      // June and July both start with "ju"
+      expect(validateFields("2011-june-1")).toBeNull();
+      expect(validateFields("2011-july-1")).toBeNull();
+      // April and August both start with "a"
+      expect(validateFields("2011-april-1")).toBeNull();
+      expect(validateFields("2011-august-1")).toBeNull();
     });
   });
 });

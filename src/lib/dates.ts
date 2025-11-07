@@ -12,47 +12,65 @@ export type DateFieldErrors = {
 };
 
 /**
+ * Month name mapping for text month input
+ */
+const MONTH_NAMES: Record<string, number> = {
+  january: 1,
+  february: 2,
+  march: 3,
+  april: 4,
+  may: 5,
+  june: 6,
+  july: 7,
+  august: 8,
+  september: 9,
+  october: 10,
+  november: 11,
+  december: 12,
+};
+
+/**
  * Parses a month string (numeric or text) to a month number (1-12)
- * Returns NaN if the month cannot be parsed
+ * Supports non-ambiguous prefix matching for month names
+ * Returns NaN if the month cannot be parsed or is ambiguous
  *
- * @param month - Month string (e.g., "01", "1", "Jan", "January", "jul")
- * @returns Month number 1-12, or NaN if invalid
+ * @param month - Month string (e.g., "01", "1", "jan", "Jul", "de")
+ * @returns Month number 1-12, or NaN if invalid/ambiguous
+ *
+ * @example
+ * parseMonthToNumber("1") // 1
+ * parseMonthToNumber("jan") // 1 (unambiguous: only january)
+ * parseMonthToNumber("ju") // NaN (ambiguous: june or july)
+ * parseMonthToNumber("jul") // 7 (unambiguous: only july)
+ * parseMonthToNumber("a") // NaN (ambiguous: april or august)
+ * parseMonthToNumber("ap") // 4 (unambiguous: only april)
  */
 function parseMonthToNumber(month: string): number {
-  // If it's already numeric, return it
-  if (/^\d+$/.test(month)) {
-    return Number(month);
+  if (!month || month.trim() === "") {
+    return Number.NaN;
   }
 
-  // Parse text month names (case-insensitive)
-  const monthLower = month.toLowerCase();
-  const monthMap: Record<string, number> = {
-    jan: 1,
-    january: 1,
-    feb: 2,
-    february: 2,
-    mar: 3,
-    march: 3,
-    apr: 4,
-    april: 4,
-    may: 5,
-    jun: 6,
-    june: 6,
-    jul: 7,
-    july: 7,
-    aug: 8,
-    august: 8,
-    sep: 9,
-    september: 9,
-    oct: 10,
-    october: 10,
-    nov: 11,
-    november: 11,
-    dec: 12,
-    december: 12,
-  };
+  const trimmed = month.trim();
 
-  return monthMap[monthLower] ?? Number.NaN;
+  // If it's already numeric, validate range and return
+  if (/^\d+$/.test(trimmed)) {
+    const monthNum = Number(trimmed);
+    return monthNum >= 1 && monthNum <= 12 ? monthNum : Number.NaN;
+  }
+
+  // Find all months that start with the input (case-insensitive)
+  const lowerInput = trimmed.toLowerCase();
+  const matches = Object.entries(MONTH_NAMES).filter(([monthName]) =>
+    monthName.startsWith(lowerInput)
+  );
+
+  // Return NaN if ambiguous (multiple matches) or no match
+  if (matches.length !== 1) {
+    return Number.NaN;
+  }
+
+  // Return the numeric value of the single unambiguous match
+  return matches[0][1];
 }
 
 /**
@@ -201,9 +219,17 @@ export function validateFields(dateString: string): DateFieldErrors | null {
   // Validate month range (handles both numeric and text months)
   const monthNum = parseMonthToNumber(month);
   if (Number.isNaN(monthNum)) {
-    errors.month = "Enter a valid month";
-  } else if (monthNum > 12 || monthNum < 1) {
-    errors.month = "Month must be between 1 and 12";
+    // Check if it was a numeric month out of range for better error message
+    if (/^\d+$/.test(month)) {
+      const num = Number(month);
+      if (num > 12 || num < 1) {
+        errors.month = "Month must be between 1 and 12";
+      } else {
+        errors.month = "Enter a valid month";
+      }
+    } else {
+      errors.month = "Enter a valid month";
+    }
   }
 
   // Validate day range
