@@ -45,22 +45,12 @@ export function DateInput({
   // Derive values directly from props (fully controlled component)
   const { day, month, year } = parseDate(value);
 
-  // Filter display values - show empty for placeholders, strip leading zeros for real input
-  // "" → "" (empty from parse error)
-  // "00" → "" (empty placeholder)
-  // "01" → "1" (user typed 1)
-  // "12" → "12" (user typed 12)
-  // "0000" → "" (empty placeholder)
-  // "0001" → "1" (user typed 1)
-  const filterDisplayValue = (fieldValue: string, emptyValue: string) =>
-    !fieldValue || fieldValue === emptyValue ? "" : String(Number(fieldValue));
-
-  const displayDay = filterDisplayValue(day, "00");
-  // For month: display text as-is, only strip zeros for numeric months
-  const displayMonth = /^\d+$/.test(month)
-    ? filterDisplayValue(month, "00")
-    : month;
-  const displayYear = filterDisplayValue(year, "0000");
+  // Display values as-is to preserve user input consistency
+  // Only hide internal placeholders (00, 0000) used for empty fields
+  // This ensures "01" displays as "01" and "12" displays as "12"
+  const displayDay = day && day !== "00" ? day : "";
+  const displayMonth = month && month !== "00" ? month : "";
+  const displayYear = year && year !== "0000" ? year : "";
 
   // Sanitize input to allow only digits and update parent
   const handleFieldChange =

@@ -3,7 +3,7 @@
  * Consolidates parsing, validation, and display formatting
  */
 
-import { isAfter, startOfDay } from "date-fns";
+import { isAfter } from "date-fns";
 
 export type DateFieldErrors = {
   day?: string;
@@ -104,28 +104,28 @@ export function parseDate(dateString: string): {
 
 /**
  * Combines individual day, month, year components into ISO 8601 format
- * Pads with zeros to allow partial dates
+ * Returns empty string if any component is missing to prevent invalid dates
  *
  * @param year - Year as string (4 digits, or empty)
  * @param month - Month as string (numeric 1-12, or empty)
  * @param day - Day as string (1-31, or empty)
- * @returns Date string in format "YYYY-MM-DD", empty string if all fields empty
+ * @returns Date string in format "YYYY-MM-DD", empty string if any field empty
  *
  * @example
  * combineDate("1986", "7", "30") // "1986-07-30"
+ * combineDate("2024", "", "") // ""
  * combineDate("", "", "") // ""
  */
 export function combineDate(year: string, month: string, day: string): string {
-  // Return empty only if ALL components are empty
-  if (!(day || month || year)) {
+  // Return empty if ANY component is empty to prevent invalid dates like "2024-00-00"
+  if (!(day && month && year)) {
     return "";
   }
 
-  const paddedDay = (day || "00").padStart(2, "0");
-  const paddedYear = (year || "0000").padStart(4, "0");
-  // Only pad numeric months (or empty), leave text months as-is
-  const paddedMonth =
-    !month || /^\d+$/.test(month) ? (month || "00").padStart(2, "0") : month;
+  // Only pad numeric months, leave text months as-is
+  const paddedMonth = /^\d+$/.test(month) ? month.padStart(2, "0") : month;
+  const paddedDay = day.padStart(2, "0");
+  const paddedYear = year.padStart(4, "0");
 
   return `${paddedYear}-${paddedMonth}-${paddedDay}`;
 }
@@ -168,13 +168,14 @@ function isValidDateSemantically(dateString: string): boolean {
   }
 
   // Use JavaScript Date to validate (it handles leap years correctly)
-  const date = new Date(yearNum, monthNum - 1, dayNum);
+  // Use UTC to avoid timezone-related off-by-one errors
+  const date = new Date(Date.UTC(yearNum, monthNum - 1, dayNum));
 
   // Check if the created date matches the input (catches Feb 30, April 31, etc.)
   return (
-    date.getFullYear() === yearNum &&
-    date.getMonth() === monthNum - 1 &&
-    date.getDate() === dayNum
+    date.getUTCFullYear() === yearNum &&
+    date.getUTCMonth() === monthNum - 1 &&
+    date.getUTCDate() === dayNum
   );
 }
 
@@ -254,12 +255,21 @@ export function validateFields(dateString: string): DateFieldErrors | null {
     const futureYearNum = Number(year);
     const futureMonthNum = parseMonthToNumber(month);
     const futureDayNum = Number(day);
-    const birthDate = startOfDay(
-      new Date(futureYearNum, futureMonthNum - 1, futureDayNum)
+    // Use UTC dates to avoid timezone-related off-by-one errors
+    const birthDate = new Date(
+      Date.UTC(futureYearNum, futureMonthNum - 1, futureDayNum)
     );
-    const today = startOfDay(new Date());
+    const today = new Date(
+      Date.UTC(
+        new Date().getUTCFullYear(),
+        new Date().getUTCMonth(),
+        new Date().getUTCDate()
+      )
+    );
 
     if (isAfter(birthDate, today)) {
+      errors.day = "Date cannot be in the future";
+      errors.month = "Date cannot be in the future";
       errors.year = "Date cannot be in the future";
     }
   }
@@ -296,8 +306,15 @@ export function isValidBirthDate(dateString: string, minYear = 1900): boolean {
   }
 
   // Check date is not in the future (day-level precision)
-  const birthDate = startOfDay(new Date(yearNum, monthNum - 1, dayNum));
-  const today = startOfDay(new Date());
+  // Use UTC dates to avoid timezone-related off-by-one errors
+  const birthDate = new Date(Date.UTC(yearNum, monthNum - 1, dayNum));
+  const today = new Date(
+    Date.UTC(
+      new Date().getUTCFullYear(),
+      new Date().getUTCMonth(),
+      new Date().getUTCDate()
+    )
+  );
 
   return !isAfter(birthDate, today);
 }
