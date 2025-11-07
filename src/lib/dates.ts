@@ -303,14 +303,6 @@ export function isValidBirthDate(dateString: string, minYear = 1900): boolean {
 }
 
 /**
- * Alias for isValidBirthDate() - kept for backward compatibility
- * @deprecated Use isValidBirthDate() instead
- */
-export function isValidChildBirthDate(dateString: string): boolean {
-  return isValidBirthDate(dateString);
-}
-
-/**
  * Formats a date from ISO 8601 (YYYY-MM-DD) to spelled-out format like "Jul 30, 2011"
  *
  * @param iso8601 - Date string in YYYY-MM-DD format or undefined

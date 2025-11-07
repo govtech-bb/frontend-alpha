@@ -3,7 +3,6 @@ import {
   combine,
   formatForDisplay,
   isValidBirthDate,
-  isValidChildBirthDate,
   parse,
   validateFields,
 } from "../dates";
@@ -415,21 +414,6 @@ describe("isValidBirthDate", () => {
   it("should reject text months in future dates", () => {
     const futureYear = new Date().getFullYear() + 1;
     expect(isValidBirthDate(`${futureYear}-jul-1`)).toBe(false);
-  });
-});
-
-describe("isValidChildBirthDate", () => {
-  it("should be an alias for isValidBirthDate", () => {
-    // Test a few cases to ensure backward compatibility
-    expect(isValidChildBirthDate("2011-jul-1")).toBe(true);
-    expect(isValidChildBirthDate("1899-01-01")).toBe(false);
-
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
-    const day = String(tomorrow.getDate()).padStart(2, "0");
-    const year = tomorrow.getFullYear();
-    expect(isValidChildBirthDate(`${year}-${month}-${day}`)).toBe(false);
   });
 });
 
