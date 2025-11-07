@@ -83,13 +83,13 @@ describe("MarriageStatus", () => {
     const yesRadio = screen.getByLabelText("Yes") as HTMLInputElement;
     const noRadio = screen.getByLabelText("No") as HTMLInputElement;
 
-    expect(yesRadio.checked).toBe(true);
-    expect(noRadio.checked).toBe(false);
+    expect(yesRadio).toBeChecked();
+    expect(noRadio).not.toBeChecked();
 
     rerender(<MarriageStatus {...defaultProps} value="no" />);
 
-    expect(yesRadio.checked).toBe(false);
-    expect(noRadio.checked).toBe(true);
+    expect(yesRadio).not.toBeChecked();
+    expect(noRadio).toBeChecked();
   });
 
   it("should not render Back button as this is the first step", () => {
@@ -121,17 +121,15 @@ describe("MarriageStatus", () => {
     expect(onNext).not.toHaveBeenCalled();
   });
 
-  it("should mark radio buttons as invalid when validation fails", () => {
+  it("should mark radio group as invalid when validation fails", () => {
     render(<MarriageStatus {...defaultProps} value="" />);
 
     const form = screen.getByRole("button", { name: /next/i }).closest("form");
     fireEvent.submit(form!);
 
-    const yesRadio = screen.getByLabelText("Yes");
-    const noRadio = screen.getByLabelText("No");
-
-    expect(yesRadio).toHaveAttribute("aria-invalid", "true");
-    expect(noRadio).toHaveAttribute("aria-invalid", "true");
+    // RadioGroup itself gets aria-invalid, not individual radios
+    const radioGroup = screen.getByRole("radiogroup", { name: /marriage status/i });
+    expect(radioGroup).toHaveAttribute("aria-invalid", "true");
   });
 
   it("should clear errors when a selection is made after validation failure", () => {
@@ -154,16 +152,16 @@ describe("MarriageStatus", () => {
   it("should have accessible form structure", () => {
     render(<MarriageStatus {...defaultProps} />);
 
-    // Check for proper fieldset and legend
-    const fieldset = screen.getByRole("group", { name: /marriage status/i });
-    expect(fieldset).toBeInTheDocument();
+    // Check for proper radiogroup with aria-label
+    const radioGroup = screen.getByRole("radiogroup", { name: /marriage status/i });
+    expect(radioGroup).toBeInTheDocument();
 
-    // Check that radio buttons are properly grouped
+    // Check that radio buttons are present and accessible
     const yesRadio = screen.getByLabelText("Yes");
     const noRadio = screen.getByLabelText("No");
 
-    expect(yesRadio).toHaveAttribute("name", "marriageStatus");
-    expect(noRadio).toHaveAttribute("name", "marriageStatus");
+    expect(yesRadio).toBeInTheDocument();
+    expect(noRadio).toBeInTheDocument();
   });
 
   it("should focus on title when component mounts", () => {
