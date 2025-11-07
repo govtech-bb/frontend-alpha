@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@govtech-bb/react";
+import NextLink from "next/link";
 
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
@@ -10,26 +11,24 @@ export default async function Home() {
   const featuredServices = await getFeaturedServices();
   return (
     <>
-      <section className="border-yellow-dark border-b-4 bg-yellow-bright">
+      <section className="border-yellow-dark border-b-4 bg-yellow-100">
         <div className="container">
-          <div className="space-y-8 py-8 lg:pt-32 lg:pb-16">
-            <Typography variant="display">
+          <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
+            <Typography variant="h1">
               How you find and use public services is changing
             </Typography>
-            <div className="space-y-4">
-              <Typography variant="subheading">
-                It will be clearer, simpler and faster for citizens to get
-                things done.
-              </Typography>
-            </div>
+            <Typography variant="paragraph">
+              It will be clearer, simpler and faster for citizens get things
+              done.
+            </Typography>
           </div>
         </div>
       </section>
 
-      <section className="border-teal-bright border-b-4 bg-teal-light">
+      <section className="border-teal-40 border-b-4 bg-teal-10">
         <div className="container">
-          <div className="space-y-6 py-8 lg:py-16">
-            <Typography variant="h2">Preview new public services</Typography>
+          <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
+            <Typography variant="h2">Alpha public services</Typography>
 
             <Typography variant="paragraph">
               These services are new. We’re working on them and they are likely
@@ -43,10 +42,13 @@ export default async function Home() {
                   key={service.slug}
                 >
                   <ChevronLeftSVG className="hidden shrink-0 rotate-180 lg:inline-block" />
+
                   <Link
-                    className="inline-flex cursor-pointer items-center font-normal text-[20px] leading-[150%] underline lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                    as={NextLink}
+                    className="text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
                     href={`/${service.slug}`}
                     key={service.slug}
+                    variant={"secondary"}
                   >
                     {service.title}
                   </Link>
@@ -57,19 +59,20 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="border-neutral-grey border-b-4 bg-neutral-white">
+      <section className="bg-neutral-white">
         <div className="container">
-          <div className="space-y-6 py-8 lg:pt-16 lg:pb-6">
+          <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
             <Typography variant="h2">Find government services</Typography>
 
             <div className="flex flex-col">
               {SERVICE_CATEGORIES.map((service) => (
                 <div
-                  className="my-2 border-gray-200 border-b-2 pb-4 last:border-0 lg:pb-8"
+                  className="border-neutral-grey border-t-2 py-4 first:border-0 lg:py-8"
                   key={service.title}
                 >
                   <Link
-                    className="cursor-pointer font-bold text-[20px] text-teal-dark leading-[150%] underline underline-offset-2 lg:text-3xl"
+                    as={NextLink}
+                    className="mb-2 text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
                     href={service.slug}
                   >
                     {service.title}

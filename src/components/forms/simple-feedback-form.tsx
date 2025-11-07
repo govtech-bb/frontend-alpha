@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import type { ErrorItem } from "@govtech-bb/react";
+import { Button, ErrorSummary, TextArea } from "@govtech-bb/react";
+import { useEffect, useRef, useState } from "react";
 import { Typography } from "../ui/typography";
+
+type FormErrors = {
+  visitReason?: string;
+  whatWentWrong?: string;
+};
 
 export function SimpleFeedbackForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +20,9 @@ export function SimpleFeedbackForm() {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
+  const [showValidation, setShowValidation] = useState(false);
+  const errorSummaryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Read the referrer from sessionStorage
@@ -20,8 +30,39 @@ export function SimpleFeedbackForm() {
     setFormData((prev) => ({ ...prev, referrer }));
   }, []);
 
+  // Focus error summary when validation errors appear
+  useEffect(() => {
+    if (showValidation && Object.keys(fieldErrors).length > 0) {
+      errorSummaryRef.current?.focus();
+    }
+  }, [showValidation, fieldErrors]);
+
+  const validateForm = (): FormErrors => {
+    const errors: FormErrors = {};
+
+    if (!formData.visitReason.trim()) {
+      errors.visitReason = "Please enter a reason.";
+    }
+
+    if (!formData.whatWentWrong.trim()) {
+      errors.whatWentWrong = "Please enter a reason.";
+    }
+
+    return errors;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setShowValidation(true);
+
+    const errors = validateForm();
+    setFieldErrors(errors);
+
+    // If there are validation errors, don't submit
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
@@ -40,6 +81,8 @@ export function SimpleFeedbackForm() {
 
       if (response.ok) {
         setSubmitStatus("success");
+        setShowValidation(false);
+        setFieldErrors({});
         setFormData({
           visitReason: "",
           whatWentWrong: "",
@@ -62,13 +105,35 @@ export function SimpleFeedbackForm() {
 
   const resetForm = () => {
     setSubmitStatus("idle");
+    setShowValidation(false);
+    setFieldErrors({});
     setFormData((prev) => ({ ...prev, visitReason: "", whatWentWrong: "" }));
+  };
+
+  // Convert field errors to ErrorItem format for ErrorSummary
+  const errorItems: ErrorItem[] = Object.entries(fieldErrors).map(
+    ([field, message]) => ({
+      text: message,
+      target: field,
+    })
+  );
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   };
 
   return (
     <div className="mb-6 space-y-6">
       {submitStatus === "success" ? (
-        <div className="gap-2 space-y-2 border-4 border-teal-bright bg-teal-light p-6">
+        <div className="space-y-2 border-4 border-teal-40 bg-teal-10 p-6">
           <Typography className="font-bold text-black" variant="paragraph">
             Thank you for your feedback.
           </Typography>
@@ -82,16 +147,20 @@ export function SimpleFeedbackForm() {
         </div>
       ) : (
         <form className="space-y-6" onSubmit={handleSubmit}>
+          {showValidation && errorItems.length > 0 && (
+            <ErrorSummary
+              errors={errorItems}
+              onErrorClick={handleErrorClick}
+              ref={errorSummaryRef}
+              title="There is a problem"
+            />
+          )}
+
           <div>
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="visitReason"
-            >
-              Why did you visit alpha.gov.bb?
-            </label>
-            <textarea
-              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-gray-900 transition-all focus:border-teal-bright focus:ring-2 focus:ring-teal-bright/20"
+            <TextArea
+              error={showValidation ? fieldErrors.visitReason : undefined}
               id="visitReason"
+              label="Why did you visit alpha.gov.bb?"
               name="visitReason"
               onChange={handleChange}
               rows={3}
@@ -100,15 +169,10 @@ export function SimpleFeedbackForm() {
           </div>
 
           <div>
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="whatWentWrong"
-            >
-              What went wrong?
-            </label>
-            <textarea
-              className="w-full resize-y rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-teal-bright focus:ring-2 focus:ring-teal-bright/20"
+            <TextArea
+              error={showValidation ? fieldErrors.whatWentWrong : undefined}
               id="whatWentWrong"
+              label={"What went wrong?"}
               name="whatWentWrong"
               onChange={handleChange}
               rows={4}
@@ -118,16 +182,13 @@ export function SimpleFeedbackForm() {
 
           <input name="referrer" type="hidden" value={formData.referrer} />
 
-          <button
-            className="w-full rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90 disabled:bg-gray-400"
-            disabled={isSubmitting}
-            type="submit"
-          >
-            {isSubmitting ? "Submitting..." : "Send Feedback"}
-          </button>
+          <Button className="w-full" type="submit" variant="primary">
+            {" "}
+            {isSubmitting ? "Submitting..." : "Send Feedback"}{" "}
+          </Button>
 
           {submitStatus === "error" && (
-            <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-red-800">
+            <div className="rounded-md border border-red-100 bg-red-10 px-4 py-3 text-red-dark">
               Sorry, there was an error sending your feedback. Please try again.
             </div>
           )}

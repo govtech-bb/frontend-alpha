@@ -2,6 +2,7 @@
 
 import { format, parseISO } from "date-fns";
 import ReactMarkdown, { type Components } from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { Typography } from "@/components/ui/typography";
 import { MigrationBanner } from "./migration-banner";
@@ -50,12 +51,12 @@ const components: Components = {
     </li>
   ),
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
-  a: ({ href, children, ...props }: any) => {
+  a: ({ href, children, target, ...props }: any) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
       ? "underline"
-      : "text-teal-dark underline leading-[150%]";
+      : "text-teal-dark underline leading-normal";
 
     return (
       <a
@@ -63,12 +64,18 @@ const components: Components = {
         href={href}
         {...props}
         rel="noopener noreferrer"
-        target="_blank"
+        target={target || "_blank"}
       >
         {children}
       </a>
     );
   },
+  blockquote: (props: any) => (
+    <blockquote
+      className="ml-[0.075em] border-gray-300 border-l-3 pl-4 text-gray-700 dark:border-zinc-400 dark:text-zinc-400"
+      {...props}
+    />
+  ),
   table: ({ node, ...props }) => (
     <div className="mx-4 my-6 overflow-x-auto sm:mx-0">
       <div className="inline-block min-w-full align-middle">
@@ -112,21 +119,11 @@ export const MarkdownContent = ({
 }) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="space-y-4 pb-8">
-      <div className="space-y-4 pb-4">
+    <div className="space-y-8 overflow-hidden">
+      <div className="space-y-6">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
         )}
-
-        {/*
-          TODO: Should we remove description entirely?
-         {frontmatter.description
-          ?.split("\n")
-          .map((line: string, _index: number) => (
-            <Typography key={_index} variant="paragraph">
-              {line}
-            </Typography>
-          ))} */}
 
         {frontmatter.stage?.length > 0 ? (
           <StageBanner stage={frontmatter.stage} />
@@ -135,7 +132,7 @@ export const MarkdownContent = ({
           <MigrationBanner pageURL={frontmatter.source_url} />
         ) : null}
         {frontmatter.publish_date && (
-          <div className="border-gray-200 border-b-4 pb-4 text-gray-500">
+          <div className="border-blue-10 border-b-4 pb-4 text-[16px] text-neutral-midgrey leading-normal">
             Last updated on{" "}
             {format(
               parseISO(frontmatter.publish_date.toISOString().split("T")[0]),
@@ -144,7 +141,11 @@ export const MarkdownContent = ({
           </div>
         )}
       </div>
-      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
+      <ReactMarkdown
+        components={components}
+        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[remarkGfm]}
+      >
         {content}
       </ReactMarkdown>
     </div>

@@ -7,11 +7,13 @@ export default function EntryPointLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="overflow-hidden bg-white lg:rounded-t-3xl">
-      <div className="container lg:space-y-16">
-        <BackButton className="py-6" />
-        {children}
-        <HelpfulBox />
+    <div className="h-full bg-yellow-100">
+      <div className="h-full rounded-t-3xl bg-neutral-white">
+        <div className="container space-y-8 overflow-hidden pt-4">
+          <BackButton />
+          {children}
+          <HelpfulBox />
+        </div>
       </div>
     </div>
   );

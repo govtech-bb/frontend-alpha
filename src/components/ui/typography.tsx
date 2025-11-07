@@ -7,22 +7,20 @@ const typographyVariants = cva(
   {
     variants: {
       variant: {
-        display:
-          "font-bold text-[48px] leading-[115%] tracking-tight lg:text-[80px]",
-        h1: "font-bold text-[40px] leading-[115%] tracking-tight lg:text-[56px]",
-        h2: "font-bold text-[32px] leading-[115%] tracking-tight lg:text-[2.5rem] lg:leading-[125%]",
-        h3: "font-bold text-[28px] leading-[115%] tracking-tight",
-        h4: "font-semibold text-2xl leading-[115%] tracking-tight", //24px
-        h5: "font-medium text-xl leading-[115%] tracking-tight", //20px
-        h6: "font-medium text-base leading-[115%] tracking-tight", //16px
+        display: "font-bold text-[80px] leading-[1]",
+        h1: "font-bold text-[56px] leading-[1.15]",
+        h2: "font-bold text-[32px] leading-[115%] lg:text-[2.5rem] lg:leading-[125%]",
+        h3: "font-bold text-[28px] leading-[115%]",
+        h4: "font-semibold text-2xl leading-[115%]", //24px
+        h5: "font-medium text-xl leading-[115%]", //20px
+        h6: "font-medium text-base leading-[115%]", //16px
         subheading:
-          "font-medium text-[24px] leading-[130%] lg:text-[32px] lg:leading-[150%]",
-        paragraph:
-          "font-normal text-xl leading-[150%] lg:text-[1.5rem] lg:leading-[170%]",
-        body: "font-normal text-base leading-[150%] lg:text-[1.5rem]",
+          "font-medium text-[24px] leading-[130%] lg:text-[32px] lg:leading-normal",
+        paragraph: "font-normal text-xl leading-[170%] lg:text-[1.5rem]",
+        body: "font-normal text-base leading-normal lg:text-[1.5rem]",
         small: "font-normal text-xs leading-[125%] lg:text-base",
-        muted: "text-muted-foreground text-sm leading-[150%]",
-        link: "cursor-pointer font-normal text-[20px] text-primary leading-[150%] underline-offset-4 transition-colors hover:underline",
+        muted: "text-muted-foreground text-sm leading-normal",
+        link: "cursor-pointer font-normal text-[20px] text-primary leading-normal underline-offset-4 transition-colors hover:underline",
         code: "rounded-md bg-muted px-2 py-1 font-mono text-sm",
       },
     },
