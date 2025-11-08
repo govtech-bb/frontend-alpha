@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, Input, Radio, RadioGroup, TextArea } from "@govtech-bb/react";
+import {
+  Button,
+  Input,
+  Radio,
+  RadioGroup,
+  ShowHide,
+  TextArea,
+} from "@govtech-bb/react";
 import { DateInput } from "../../common/date-input";
 import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
@@ -141,30 +148,22 @@ export function MothersDetails({
         />
 
         {/* Passport number disclosure */}
-        <details className="mt-4">
-          <summary className="cursor-pointer list-none text-[#1E787D] underline">
-            <span className="inline-flex items-center gap-1">
-              <span className="inline-block transition-transform [details[open]_&]:rotate-90">
-                ▸
-              </span>
-              Use passport number instead
-            </span>
-          </summary>
-          <div className="mt-4">
-            <p className="mb-4 text-base text-gray-600">
+        <ShowHide summary="Use passport number instead">
+          <div>
+            <p className="mb-4 text-[20px] text-neutral-midgrey leading-[1.7]">
               If you don't have a National Registration number, you can use your
               passport number instead.
             </p>
             <Input
               error={fieldErrors.passportNumber}
-              id="mother-passportNumber"
+              id="father-passportNumber"
               label="Passport number"
               onChange={(e) => handleChange("passportNumber", e.target.value)}
               type="text"
               value={value.passportNumber || ""}
             />
           </div>
-        </details>
+        </ShowHide>
       </div>
 
       {/* Occupation */}
