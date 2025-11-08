@@ -1,6 +1,8 @@
 "use client";
 
-import { Typography } from "@/components/ui/typography";
+import { Link } from "@govtech-bb/react";
+import NextLink from "next/link";
+import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 
 type ConfirmationProps = {
@@ -26,77 +28,112 @@ export function Confirmation({
   const totalCost = numberOfCertificates * 5.0;
 
   return (
-    <div className="space-y-6">
-      <div className="-mx-[50vw] relative right-1/2 left-1/2 mb-6 w-screen bg-[#D4F1F4] px-4 py-6 sm:px-6">
-        <div className="container mx-auto max-w-3xl">
-          <h1
-            className="mb-4 font-bold text-5xl leading-tight focus:outline-none"
-            ref={titleRef}
-            tabIndex={-1}
-          >
-            Pre-registration complete
-          </h1>
+    <div>
+      {/* Header section with breadcrumb and title */}
+      <div className="bg-green-40 pb-8">
+        <div className="container">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 py-4">
+            <div className="flex items-center gap-x-2">
+              <ChevronLeftSVG className="shrink-0" />
 
-          <Typography variant="paragraph">
-            Your information has been sent to the Registration Department.
-          </Typography>
+              <Link
+                as={NextLink}
+                className="text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                href="#"
+                variant={"secondary"}
+              >
+                Family, birth and relationships
+              </Link>
+            </div>
+          </div>
+
+          {/* Title section */}
+          <div className="flex flex-col gap-4 pt-16">
+            <h1
+              className="font-bold text-[56px] text-black leading-[1.15] focus:outline-none"
+              ref={titleRef}
+              tabIndex={-1}
+            >
+              Pre-registration complete
+            </h1>
+
+            <p className="font-normal text-[32px] text-black leading-[1.5]">
+              Your information has been sent to the Registration Department.
+            </p>
+          </div>
         </div>
       </div>
+      {/* Main content */}
+      <div className="h-full bg-neutral-white">
+        <div className="container h-full">
+          <div className="space-y-8 py-8">
+            {/* What you must do next */}
+            <div className="flex flex-col gap-4">
+              <h2 className="w-full font-bold text-[40px] text-black leading-[1.25]">
+                What you must do next
+              </h2>
+              <div className="w-full font-normal text-[20px] text-black leading-[1.7]">
+                <p className="mb-4">
+                  You must now visit the Registration Department in person to
+                  sign the birth register. This makes the registration official.
+                </p>
+                <p>You do not need an appointment.</p>
+              </div>
+            </div>
 
-      <div className="space-y-4">
-        <h2 className="font-bold text-2xl">What you must do next</h2>
+            {/* Who must attend */}
+            <div className="flex flex-col items-start gap-4">
+              <h3 className="font-bold text-[24px] text-black leading-[1.25]">
+                Who must attend the appointment
+              </h3>
 
-        <Typography variant="paragraph">
-          You must now visit the Registration Department in person to sign the
-          birth register. This makes the registration official.
-        </Typography>
+              <p className="font-normal text-[20px] text-black leading-[1.7]">
+                {hasFatherDetails
+                  ? "Both the mother and father of the child must attend the appointment."
+                  : "The mother must attend the appointment."}
+              </p>
 
-        <Typography variant="paragraph">
-          You do not need an appointment.
-        </Typography>
+              <Link
+                as={NextLink}
+                className="text-[20px] leading-[1.7]"
+                href="#"
+              >
+                See what you need to bring with you
+              </Link>
+            </div>
+
+            {/* Location */}
+            <div className="flex flex-col gap-4">
+              <h3 className="font-bold text-[24px] text-black leading-[1.25]">
+                Location
+              </h3>
+
+              <address className="font-normal text-[20px] text-black not-italic leading-[1.7]">
+                Registration Department
+                <br />
+                Supreme Court Complex
+                <br />
+                Whitepark Road
+                <br />
+                St. Michael
+              </address>
+
+              <div className="space-y-4 font-normal text-[20px] text-black leading-[1.7]">
+                <p>
+                  The total cost for your requested certificates is{" "}
+                  {totalCost === 0 ? "free" : `BBD $${totalCost.toFixed(2)}`}.
+                  {totalCost > 0 && " Remember to bring payment with you."}
+                </p>
+                <p>
+                  You should also bring valid photo identification for the
+                  parent(s) attending.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="space-y-4">
-        <h3 className="font-bold text-xl">Who must attend the appointment</h3>
-
-        <Typography variant="paragraph">
-          {hasFatherDetails
-            ? "Both the mother and father of the child must attend the appointment."
-            : "The mother must attend the appointment."}
-        </Typography>
-
-        <button
-          className="text-[#1E787D] underline hover:text-[#1E787D]/80"
-          type="button"
-        >
-          See what you need to bring with you
-        </button>
-      </div>
-
-      <div className="space-y-4">
-        <h3 className="font-bold text-xl">Location</h3>
-
-        <p className="text-base">
-          Registration Department
-          <br />
-          Supreme Court Complex
-          <br />
-          Whitepark Road
-          <br />
-          St. Michael
-        </p>
-      </div>
-
-      <Typography variant="paragraph">
-        The total cost for your requested certificates is{" "}
-        {totalCost === 0 ? "free" : `BDD$${totalCost.toFixed(2)}`}.
-        {totalCost > 0 && " Remember to bring payment with you."}
-      </Typography>
-
-      <Typography variant="paragraph">
-        You should also bring valid photo identification for the parent(s)
-        attending.
-      </Typography>
     </div>
   );
 }
