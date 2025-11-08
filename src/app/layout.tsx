@@ -29,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className="bg-blue-100" lang="en">
       <body
-        className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] bg-blue-100 font-sans antialiased`}
+        className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] bg-neutral-white font-sans antialiased`}
       >
         <Header />
         {children}
