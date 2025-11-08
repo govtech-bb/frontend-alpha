@@ -164,7 +164,7 @@ export function RegisterBirthForm() {
   // This prevents hydration mismatch and ensures correct step is shown
   if (!isDataLoaded) {
     return (
-      <div className="min-h-screen bg-neutral-white">
+      <div className="bg-neutral-white">
         <div className="py-8">
           <div className="container mx-auto max-w-2xl animate-pulse">
             <div className="mb-6 h-12 w-3/4 rounded bg-gray-200" />
@@ -178,7 +178,7 @@ export function RegisterBirthForm() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-white">
+    <div className="bg-neutral-white">
       <div className="py-8">
         {/* Render current step */}
         {currentStep.id === "marriage-status" && (
