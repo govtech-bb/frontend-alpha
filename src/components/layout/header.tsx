@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Banner } from "./banner";
 
 export const Header = () => (
-  <>
+  <div>
     <Banner />
     <header className="bg-yellow-100">
       <div className="container">
@@ -14,5 +14,5 @@ export const Header = () => (
         </div>
       </div>
     </header>
-  </>
+  </div>
 );
