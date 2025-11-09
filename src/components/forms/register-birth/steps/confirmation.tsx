@@ -28,7 +28,7 @@ export function Confirmation({
   const totalCost = numberOfCertificates * 5.0;
 
   return (
-    <div>
+    <>
       {/* Header section with breadcrumb and title */}
       <div className="bg-green-40 pb-8">
         <div className="container">
@@ -65,23 +65,21 @@ export function Confirmation({
         </div>
       </div>
       {/* Main content */}
-      <div className="h-full bg-neutral-white">
-        <div className="container h-full">
-          <div className="space-y-8 py-8">
-            {/* What you must do next */}
-            <div className="flex flex-col gap-4">
-              <h2 className="w-full font-bold text-[40px] text-black leading-[1.25]">
-                What you must do next
-              </h2>
-              <div className="w-full font-normal text-[20px] text-black leading-[1.7]">
-                <p className="mb-4">
-                  You must now visit the Registration Department in person to
-                  sign the birth register. This makes the registration official.
-                </p>
-                <p>You do not need an appointment.</p>
-              </div>
-            </div>
 
+      <div className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3">
+        <div className="col-span-2 flex flex-col gap-8">
+          <div className="flex flex-col gap-4">
+            {/* What you must do next */}
+            <h2 className="font-bold text-[40px] text-black leading-[1.25]">
+              What you must do next
+            </h2>
+            <div className="font-normal text-[20px] text-black leading-[1.7]">
+              <p className="mb-4">
+                You must now visit the Registration Department in person to sign
+                the birth register. This makes the registration official.
+              </p>
+              <p>You do not need an appointment.</p>
+            </div>
             {/* Who must attend */}
             <div className="flex flex-col items-start gap-4">
               <h3 className="font-bold text-[24px] text-black leading-[1.25]">
@@ -102,7 +100,6 @@ export function Confirmation({
                 See what you need to bring with you
               </Link>
             </div>
-
             {/* Location */}
             <div className="flex flex-col gap-4">
               <h3 className="font-bold text-[24px] text-black leading-[1.25]">
@@ -134,6 +131,6 @@ export function Confirmation({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
