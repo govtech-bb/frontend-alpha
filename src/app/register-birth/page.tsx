@@ -11,9 +11,7 @@ export const metadata: Metadata = {
 export default function RegisterBirthPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div className="container py-16">
-        <RegisterBirthForm />
-      </div>
+      <RegisterBirthForm />
     </Suspense>
   );
 }

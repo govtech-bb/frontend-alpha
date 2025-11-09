@@ -101,7 +101,7 @@ export function CheckAnswers({
   }
 
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
+    <form className="container space-y-8 pt-8 pb-16" onSubmit={handleSubmit}>
       <h1
         className="mb-6 font-bold text-5xl leading-tight focus:outline-none"
         ref={titleRef}

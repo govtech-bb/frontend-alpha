@@ -70,7 +70,7 @@ export function Certificates({
   };
 
   return (
-    <form className="space-y-8" onSubmit={handleSubmit}>
+    <form className="container space-y-8 pt-8 pb-16" onSubmit={handleSubmit}>
       <h1
         className="mb-2 font-bold text-[56px] leading-[1.15]"
         ref={titleRef}
