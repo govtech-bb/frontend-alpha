@@ -24,7 +24,7 @@ describe("MarriageStatus", () => {
     render(<MarriageStatus {...defaultProps} />);
 
     expect(
-      screen.getByText("We ask this because your answer determines:")
+      screen.getByText("We ask this because your answer might determine:")
     ).toBeInTheDocument();
     expect(screen.getByText("the surname of the child")).toBeInTheDocument();
     expect(screen.getByText("who can register the birth")).toBeInTheDocument();

@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, Radio, RadioGroup } from "@govtech-bb/react";
-import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
+import type { ErrorItem } from "@govtech-bb/react";
+import { Button, ErrorSummary, Radio, RadioGroup } from "@govtech-bb/react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { includeFatherDetailsValidation } from "../schema";
@@ -54,30 +53,53 @@ export function IncludeFatherDetails({
     }
   );
 
-  return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
-      <ErrorSummary errors={errors} />
+  // Convert ValidationError[] to ErrorItem[] for ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
 
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  return (
+    <form className="space-y-8" onSubmit={handleSubmit}>
       <div>
         <h1
-          className="mb-4 font-bold text-5xl leading-tight focus:outline-none"
+          className="mb-2 font-bold text-[56px] leading-[1.15]"
           ref={titleRef}
           tabIndex={-1}
         >
           Do you want to include the father's details on the birth record?
         </h1>
 
-        <div className="mb-6 space-y-4">
-          <Typography className="leading-tight" variant="paragraph">
-            If you choose 'Yes', both parents must go to the Registration
-            Department and sign the official register together.
-          </Typography>
+        {errorItems.length > 0 && (
+          <ErrorSummary
+            errors={errorItems}
+            onErrorClick={handleErrorClick}
+            title="There is a problem"
+          />
+        )}
+      </div>
 
-          <Typography className="leading-tight" variant="paragraph">
-            If you choose 'No', the mother must go to the Registration
-            Department but it is not necessary for the father to attend.
-          </Typography>
-        </div>
+      <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+        <p>
+          If you choose ‘Yes’, both parents must go to the Registration
+          Department and sign the official register together.
+        </p>
+        <p>
+          If you choose ‘No’, the mother must go to the Registration Department
+          but it is not necessary for the father to attend.
+        </p>
       </div>
 
       <RadioGroup

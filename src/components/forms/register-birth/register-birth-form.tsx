@@ -164,125 +164,121 @@ export function RegisterBirthForm() {
   // This prevents hydration mismatch and ensures correct step is shown
   if (!isDataLoaded) {
     return (
-      <div className="bg-neutral-white">
-        <div className="py-8">
-          <div className="container mx-auto max-w-2xl animate-pulse">
-            <div className="mb-6 h-12 w-3/4 rounded bg-gray-200" />
-            <div className="mb-4 h-32 w-full rounded bg-gray-200" />
-            <div className="mb-4 h-12 w-full rounded bg-gray-200" />
-            <div className="h-12 w-1/3 rounded bg-gray-200" />
-          </div>
+      <div className="py-8">
+        <div className="container mx-auto max-w-2xl animate-pulse">
+          <div className="mb-6 h-12 w-3/4 rounded bg-gray-200" />
+          <div className="mb-4 h-32 w-full rounded bg-gray-200" />
+          <div className="mb-4 h-12 w-full rounded bg-gray-200" />
+          <div className="h-12 w-1/3 rounded bg-gray-200" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-neutral-white">
-      <div className="py-8">
-        {/* Render current step */}
-        {currentStep.id === "marriage-status" && (
-          <MarriageStatus
-            onBack={goBack}
-            onChange={(value) => form.setFieldValue("marriageStatus", value)}
-            onNext={goNext}
-            value={formValues.marriageStatus || ""}
-          />
-        )}
+    <>
+      {/* Render current step */}
+      {currentStep.id === "marriage-status" && (
+        <MarriageStatus
+          onBack={goBack}
+          onChange={(value) => form.setFieldValue("marriageStatus", value)}
+          onNext={goNext}
+          value={formValues.marriageStatus || ""}
+        />
+      )}
 
-        {currentStep.id === "include-father" && (
-          <IncludeFatherDetails
-            onBack={goBack}
-            onChange={(value) =>
-              form.setFieldValue("includeFatherDetails", value)
-            }
-            onNext={goNext}
-            value={formValues.includeFatherDetails || ""}
-          />
-        )}
+      {currentStep.id === "include-father" && (
+        <IncludeFatherDetails
+          onBack={goBack}
+          onChange={(value) =>
+            form.setFieldValue("includeFatherDetails", value)
+          }
+          onNext={goNext}
+          value={formValues.includeFatherDetails || ""}
+        />
+      )}
 
-        {currentStep.id === "father-details" && (
-          <FathersDetails
-            onBack={goBack}
-            onChange={(update) =>
-              form.setFieldValue("father", {
-                ...(formValues.father || {}),
-                ...update,
-              })
-            }
-            onNext={goNext}
-            value={formValues.father || {}}
-          />
-        )}
+      {currentStep.id === "father-details" && (
+        <FathersDetails
+          onBack={goBack}
+          onChange={(update) =>
+            form.setFieldValue("father", {
+              ...(formValues.father || {}),
+              ...update,
+            })
+          }
+          onNext={goNext}
+          value={formValues.father || {}}
+        />
+      )}
 
-        {currentStep.id === "mother-details" && (
-          <MothersDetails
-            onBack={goBack}
-            onChange={(update) =>
-              form.setFieldValue("mother", {
-                ...(formValues.mother || {}),
-                ...update,
-              })
-            }
-            onNext={goNext}
-            value={formValues.mother || {}}
-          />
-        )}
+      {currentStep.id === "mother-details" && (
+        <MothersDetails
+          onBack={goBack}
+          onChange={(update) =>
+            form.setFieldValue("mother", {
+              ...(formValues.mother || {}),
+              ...update,
+            })
+          }
+          onNext={goNext}
+          value={formValues.mother || {}}
+        />
+      )}
 
-        {currentStep.id === "child-details" && (
-          <ChildDetails
-            onBack={goBack}
-            onChange={(value) => form.setFieldValue("child", value)}
-            onNext={goNext}
-            value={formValues.child || {}}
-          />
-        )}
+      {currentStep.id === "child-details" && (
+        <ChildDetails
+          onBack={goBack}
+          onChange={(value) => form.setFieldValue("child", value)}
+          onNext={goNext}
+          value={formValues.child || {}}
+        />
+      )}
 
-        {currentStep.id === "certificates" && (
-          <Certificates
-            onBack={goBack}
-            onChange={(value) =>
-              form.setFieldValue("numberOfCertificates", value)
-            }
-            onNext={goNext}
-            value={formValues.numberOfCertificates || 0}
-          />
-        )}
+      {currentStep.id === "certificates" && (
+        <Certificates
+          onBack={goBack}
+          onChange={(value) =>
+            form.setFieldValue("numberOfCertificates", value)
+          }
+          onNext={goNext}
+          value={formValues.numberOfCertificates || 0}
+        />
+      )}
 
-        {currentStep.id === "contact-info" && (
-          <ContactInfo
-            email={formValues.email || ""}
-            onBack={goBack}
-            onChange={(field, value) =>
-              form.setFieldValue(
-                field as keyof PartialBirthRegistrationFormData,
-                value
-              )
-            }
-            onNext={goNext}
-            phoneNumber={formValues.phoneNumber || ""}
-            wantContact={formValues.wantContact || ""}
-          />
-        )}
+      {currentStep.id === "contact-info" && (
+        <ContactInfo
+          email={formValues.email || ""}
+          onBack={goBack}
+          onChange={(field, value) =>
+            form.setFieldValue(
+              field as keyof PartialBirthRegistrationFormData,
+              value
+            )
+          }
+          onNext={goNext}
+          phoneNumber={formValues.phoneNumber || ""}
+          wantContact={formValues.wantContact || ""}
+        />
+      )}
 
-        {currentStep.id === "check-answers" && (
-          <CheckAnswers
-            formData={formValues}
-            isSubmitting={isSubmitting}
-            onBack={goBack}
-            onEdit={goToStep}
-            onSubmit={handleSubmit}
-            submissionError={submissionError}
-          />
-        )}
+      {currentStep.id === "check-answers" && (
+        <CheckAnswers
+          formData={formValues}
+          isSubmitting={isSubmitting}
+          onBack={goBack}
+          onEdit={goToStep}
+          onSubmit={handleSubmit}
+          submissionError={submissionError}
+        />
+      )}
 
-        {currentStep.id === "confirmation" && (
-          <Confirmation
-            hasFatherDetails={hasFatherDetails}
-            numberOfCertificates={formValues.numberOfCertificates || 0}
-          />
-        )}
-      </div>
-    </div>
+      {currentStep.id === "confirmation" && (
+        <Confirmation
+          hasFatherDetails={hasFatherDetails}
+          numberOfCertificates={formValues.numberOfCertificates || 0}
+        />
+      )}
+    </>
   );
 }

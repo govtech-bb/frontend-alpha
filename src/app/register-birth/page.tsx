@@ -10,14 +10,10 @@ export const metadata: Metadata = {
 
 export default function RegisterBirthPage() {
   return (
-    <div className="h-full bg-yellow-100">
-      <div className="h-full overflow-hidden rounded-t-3xl bg-neutral-white">
-        <div className="container space-y-4">
-          <Suspense fallback={<div>Loading...</div>}>
-            <RegisterBirthForm />
-          </Suspense>
-        </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="container py-16">
+        <RegisterBirthForm />
       </div>
-    </div>
+    </Suspense>
   );
 }

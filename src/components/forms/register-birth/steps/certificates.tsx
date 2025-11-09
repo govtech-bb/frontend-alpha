@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, Input } from "@govtech-bb/react";
-import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
+import type { ErrorItem } from "@govtech-bb/react";
+import { Button, ErrorSummary, Input } from "@govtech-bb/react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { certificatesValidation } from "../schema";
@@ -52,32 +51,56 @@ export function Certificates({
     handleBlurInternal("numberOfCertificates");
   };
 
+  // Convert ValidationError[] to ErrorItem[] for ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
+    <form className="space-y-8" onSubmit={handleSubmit}>
       <h1
-        className="mb-6 font-bold text-5xl leading-tight focus:outline-none"
+        className="mb-2 font-bold text-[56px] leading-[1.15]"
         ref={titleRef}
         tabIndex={-1}
       >
         Order a birth certificate
       </h1>
 
-      <ErrorSummary errors={errors} />
+      {errorItems.length > 0 && (
+        <ErrorSummary
+          errors={errorItems}
+          onErrorClick={handleErrorClick}
+          title="There is a problem"
+        />
+      )}
 
-      <Typography className="mb-4 leading-tight" variant="paragraph">
-        A birth certificate is essential for access to some public services.
-        Each certificate costs BDD$5.00 when you collect them.
-      </Typography>
-
-      <Typography className="mb-4 leading-tight" variant="paragraph">
-        We keep the original so you can order a certified copy at any point.
-      </Typography>
-
-      <Typography className="mb-4 leading-tight" variant="paragraph">
-        The birth registration is free of charge.
-      </Typography>
+      <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+        <p>
+          A birth certificate is essential for access to some public services.
+          You wil need to pay BDD$5.00 for each certificate when you collect
+          them.
+        </p>
+        <p>
+          We keep the original so you can order a certified copy at any point.
+        </p>
+        <p>The birth registration is free of charge.</p>
+      </div>
 
       <Input
+        className="lg:w-80"
         error={fieldErrors.numberOfCertificates}
         id="numberOfCertificates"
         label="Number of certificates required"

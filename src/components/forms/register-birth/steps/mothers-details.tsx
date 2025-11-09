@@ -1,7 +1,9 @@
 "use client";
 
+import type { ErrorItem } from "@govtech-bb/react";
 import {
   Button,
+  ErrorSummary,
   Input,
   Radio,
   RadioGroup,
@@ -9,7 +11,6 @@ import {
   TextArea,
 } from "@govtech-bb/react";
 import { DateInput } from "../../common/date-input";
-import { ErrorSummary } from "../../common/error-summary";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
@@ -46,17 +47,41 @@ export function MothersDetails({
       fieldPrefix: "mother-",
     });
 
+  // Convert ValidationError[] to ErrorItem[] for ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
       <h1
-        className="mb-6 font-bold text-5xl leading-tight focus:outline-none"
+        className="mb-2 font-bold text-[56px] leading-[1.15]"
         ref={titleRef}
         tabIndex={-1}
       >
         Tell us about the child's mother
       </h1>
 
-      <ErrorSummary errors={errors} />
+      {errorItems.length > 0 && (
+        <ErrorSummary
+          errors={errorItems}
+          onErrorClick={handleErrorClick}
+          title="There is a problem"
+        />
+      )}
 
       {/* First name */}
       <Input

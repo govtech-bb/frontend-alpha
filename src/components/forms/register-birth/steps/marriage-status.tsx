@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, Radio, RadioGroup } from "@govtech-bb/react";
-import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
+import type { ErrorItem } from "@govtech-bb/react";
+import { Button, ErrorSummary, Radio, RadioGroup } from "@govtech-bb/react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { marriageStatusValidation } from "../schema";
@@ -50,13 +49,29 @@ export function MarriageStatus({
     }
   );
 
+  // Map ValidationError[] to ErrorItem[] for @govtech-bb/react ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <form className="space-y-6" onSubmit={handleSubmit}>
-      <ErrorSummary errors={errors} />
-
       <div>
         <h1
-          className="mb-4 font-bold text-5xl leading-tight focus:outline-none"
+          className="mb-2 font-bold text-[56px] leading-[1.15]"
           ref={titleRef}
           tabIndex={-1}
         >
@@ -64,14 +79,21 @@ export function MarriageStatus({
           other?
         </h1>
 
-        <Typography className="mb-4 leading-tight" variant="paragraph">
-          We ask this because your answer determines:
-        </Typography>
+        {errorItems.length > 0 && (
+          <ErrorSummary
+            errors={errorItems}
+            onErrorClick={handleErrorClick}
+            title="There is a problem"
+          />
+        )}
 
-        <ul className="mb-6 list-disc pl-6">
-          <li>the surname of the child</li>
-          <li>who can register the birth</li>
-        </ul>
+        <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+          <p>We ask this because your answer might determine:</p>
+          <ul className="mb-6 list-disc pl-6 text-[20px] leading-[1.5]">
+            <li className="mb-2">the surname of the child</li>
+            <li>who can register the birth</li>
+          </ul>
+        </div>
       </div>
 
       <RadioGroup
@@ -80,7 +102,7 @@ export function MarriageStatus({
             ? "marriageStatus-marriageStatus-error"
             : undefined
         }
-        aria-invalid={fieldErrors.marriageStatus ? "true" : undefined}
+        aria-invalid={!!fieldErrors.marriageStatus}
         aria-label="Marriage status"
         onValueChange={(val) =>
           handleChange("marriageStatus", val as "yes" | "no")
@@ -90,15 +112,6 @@ export function MarriageStatus({
         <Radio id="married-yes" label="Yes" value="yes" />
         <Radio id="married-no" label="No" value="no" />
       </RadioGroup>
-
-      {fieldErrors.marriageStatus && (
-        <p
-          className="mt-2 text-[20px] text-red-dark"
-          id="marriageStatus-marriageStatus-error"
-        >
-          {fieldErrors.marriageStatus}
-        </p>
-      )}
 
       <div className="flex gap-4">
         <Button type="submit">Continue</Button>
