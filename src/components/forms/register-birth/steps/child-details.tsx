@@ -105,23 +105,27 @@ export function ChildDetails({
 
       {/* Place of birth */}
       <div>
+        <label
+          className="block font-bold text-[20px] leading-[1.7]"
+          htmlFor="child-parishOfBirth"
+        >
+          Place of birth
+        </label>
+        <div className="mb-2 text-[20px] leading-[1.7]">
+          <p className="mb-4">Include the town and parish in your answer.</p>
+          <p>
+            For example, Queen Elizabeth Hospital, Bridgetown, St. Michael.
+            <br />
+            Or a home address if they were born at home.
+          </p>
+        </div>
         <Input
           error={fieldErrors.parishOfBirth}
           id="child-parishOfBirth"
-          label="Place of birth"
           onChange={(e) => handleChange("parishOfBirth", e.target.value)}
           type="text"
           value={value.parishOfBirth || ""}
         />
-        <p className="mt-2 text-base text-gray-600">
-          Include the town and parish in your answer.
-        </p>
-        <p className="mt-1 text-base text-gray-600">
-          For example, Queen Elizabeth Hospital, Bridgetown, St. Michael.
-        </p>
-        <p className="mt-1 text-base text-gray-600">
-          Or a home address if they were born at home.
-        </p>
       </div>
 
       <div className="flex gap-4">
