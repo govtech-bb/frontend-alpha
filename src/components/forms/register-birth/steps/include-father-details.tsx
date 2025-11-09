@@ -72,65 +72,71 @@ export function IncludeFatherDetails({
   };
 
   return (
-    <form className="container space-y-8 pt-8 pb-16" onSubmit={handleSubmit}>
-      <div>
-        <h1
-          className="mb-2 font-bold text-[56px] leading-[1.15]"
-          ref={titleRef}
-          tabIndex={-1}
-        >
-          Do you want to include the father's details on the birth record?
-        </h1>
+    <form
+      className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3"
+      onSubmit={handleSubmit}
+    >
+      <div className="col-span-2 flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
+          <div>
+            <h1
+              className="mb-2 font-bold text-[56px] leading-[1.15]"
+              ref={titleRef}
+              tabIndex={-1}
+            >
+              Do you want to include the father's details on the birth record?
+            </h1>
 
-        {errorItems.length > 0 && (
-          <ErrorSummary
-            errors={errorItems}
-            onErrorClick={handleErrorClick}
-            title="There is a problem"
-          />
-        )}
-      </div>
+            {errorItems.length > 0 && (
+              <ErrorSummary
+                errors={errorItems}
+                onErrorClick={handleErrorClick}
+                title="There is a problem"
+              />
+            )}
+          </div>
 
-      <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
-        <p>
-          If you choose ‘Yes’, both parents must go to the Registration
-          Department and sign the official register together.
-        </p>
-        <p>
-          If you choose ‘No’, the mother must go to the Registration Department
-          but it is not necessary for the father to attend.
-        </p>
-      </div>
+          <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+            <p>
+              If you choose ‘Yes’, both parents must go to the Registration
+              Department and sign the official register together.
+            </p>
+            <p>
+              If you choose ‘No’, the mother must go to the Registration
+              Department but it is not necessary for the father to attend.
+            </p>
+          </div>
 
-      <RadioGroup
-        aria-describedby={
-          fieldErrors.includeFatherDetails
-            ? "includeFatherDetails-includeFatherDetails-error"
-            : undefined
-        }
-        aria-invalid={fieldErrors.includeFatherDetails ? "true" : undefined}
-        onValueChange={(val) =>
-          handleChange("includeFatherDetails", val as "yes" | "no")
-        }
-        value={value}
-      >
-        <Radio
-          id="include-father-yes"
-          label="Yes, include the father's details"
-          value="yes"
-        />
-        <Radio
-          id="include-father-no"
-          label="No, do not include the father's details"
-          value="no"
-        />
-      </RadioGroup>
-
-      <div className="flex gap-4">
-        <Button onClick={onBack} type="button" variant="secondary">
-          Back
-        </Button>
-        <Button type="submit">Continue</Button>
+          <RadioGroup
+            aria-describedby={
+              fieldErrors.includeFatherDetails
+                ? "includeFatherDetails-includeFatherDetails-error"
+                : undefined
+            }
+            aria-invalid={fieldErrors.includeFatherDetails ? "true" : undefined}
+            onValueChange={(val) =>
+              handleChange("includeFatherDetails", val as "yes" | "no")
+            }
+            value={value}
+          >
+            <Radio
+              id="include-father-yes"
+              label="Yes, include the father's details"
+              value="yes"
+            />
+            <Radio
+              id="include-father-no"
+              label="No, do not include the father's details"
+              value="no"
+            />
+          </RadioGroup>
+        </div>
+        <div className="flex gap-4">
+          <Button onClick={onBack} type="button" variant="secondary">
+            Back
+          </Button>
+          <Button type="submit">Continue</Button>
+        </div>
       </div>
     </form>
   );

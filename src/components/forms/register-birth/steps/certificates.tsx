@@ -70,53 +70,62 @@ export function Certificates({
   };
 
   return (
-    <form className="container space-y-8 pt-8 pb-16" onSubmit={handleSubmit}>
-      <h1
-        className="mb-2 font-bold text-[56px] leading-[1.15]"
-        ref={titleRef}
-        tabIndex={-1}
-      >
-        Order a birth certificate
-      </h1>
+    <form
+      className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3"
+      onSubmit={handleSubmit}
+    >
+      <div className="col-span-2 flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
+          <h1
+            className="mb-2 font-bold text-[56px] leading-[1.15]"
+            ref={titleRef}
+            tabIndex={-1}
+          >
+            Order a birth certificate
+          </h1>
 
-      {errorItems.length > 0 && (
-        <ErrorSummary
-          errors={errorItems}
-          onErrorClick={handleErrorClick}
-          title="There is a problem"
-        />
-      )}
+          {errorItems.length > 0 && (
+            <ErrorSummary
+              errors={errorItems}
+              onErrorClick={handleErrorClick}
+              title="There is a problem"
+            />
+          )}
 
-      <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
-        <p>
-          A birth certificate is essential for access to some public services.
-          You wil need to pay BDD$5.00 for each certificate when you collect
-          them.
-        </p>
-        <p>
-          We keep the original so you can order a certified copy at any point.
-        </p>
-        <p>The birth registration is free of charge.</p>
-      </div>
+          <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+            <p>
+              A birth certificate is essential for access to some public
+              services. You wil need to pay BDD$5.00 for each certificate when
+              you collect them.
+            </p>
+            <p>
+              We keep the original so you can order a certified copy at any
+              point.
+            </p>
+            <p>The birth registration is free of charge.</p>
+          </div>
 
-      <Input
-        className="lg:w-80"
-        error={fieldErrors.numberOfCertificates}
-        id="numberOfCertificates"
-        label="Number of certificates required"
-        max="20"
-        min="0"
-        onBlur={handleBlur}
-        onChange={(e) => handleChange(Number.parseInt(e.target.value, 10) || 0)}
-        type="number"
-        value={value || 0}
-      />
-
-      <div className="flex gap-4">
-        <Button onClick={onBack} type="button" variant="secondary">
-          Back
-        </Button>
-        <Button type="submit">Continue</Button>
+          <Input
+            className="lg:w-80"
+            error={fieldErrors.numberOfCertificates}
+            id="numberOfCertificates"
+            label="Number of certificates required"
+            max="20"
+            min="0"
+            onBlur={handleBlur}
+            onChange={(e) =>
+              handleChange(Number.parseInt(e.target.value, 10) || 0)
+            }
+            type="number"
+            value={value || 0}
+          />
+        </div>
+        <div className="flex gap-4">
+          <Button onClick={onBack} type="button" variant="secondary">
+            Back
+          </Button>
+          <Button type="submit">Continue</Button>
+        </div>
       </div>
     </form>
   );

@@ -68,53 +68,59 @@ export function MarriageStatus({
   };
 
   return (
-    <form className="container space-y-8 pt-8 pb-16" onSubmit={handleSubmit}>
-      <div>
-        <h1
-          className="mb-2 font-bold text-[56px] leading-[1.15]"
-          ref={titleRef}
-          tabIndex={-1}
-        >
-          When the child was born, were the mother and father married to each
-          other?
-        </h1>
+    <form
+      className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3"
+      onSubmit={handleSubmit}
+    >
+      <div className="col-span-2 flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
+          <div>
+            <h1
+              className="mb-2 font-bold text-[56px] leading-[1.15]"
+              ref={titleRef}
+              tabIndex={-1}
+            >
+              When the child was born, were the mother and father married to
+              each other?
+            </h1>
 
-        {errorItems.length > 0 && (
-          <ErrorSummary
-            errors={errorItems}
-            onErrorClick={handleErrorClick}
-            title="There is a problem"
-          />
-        )}
+            {errorItems.length > 0 && (
+              <ErrorSummary
+                errors={errorItems}
+                onErrorClick={handleErrorClick}
+                title="There is a problem"
+              />
+            )}
 
-        <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
-          <p>We ask this because your answer might determine:</p>
-          <ul className="mb-6 list-disc pl-6 text-[20px] leading-[1.5]">
-            <li className="mb-2">the surname of the child</li>
-            <li>who can register the birth</li>
-          </ul>
+            <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+              <p>We ask this because your answer might determine:</p>
+              <ul className="mb-6 list-disc pl-6 text-[20px] leading-[1.5]">
+                <li className="mb-2">the surname of the child</li>
+                <li>who can register the birth</li>
+              </ul>
+            </div>
+          </div>
+
+          <RadioGroup
+            aria-describedby={
+              fieldErrors.marriageStatus
+                ? "marriageStatus-marriageStatus-error"
+                : undefined
+            }
+            aria-invalid={!!fieldErrors.marriageStatus}
+            aria-label="Marriage status"
+            onValueChange={(val) =>
+              handleChange("marriageStatus", val as "yes" | "no")
+            }
+            value={value || undefined}
+          >
+            <Radio id="married-yes" label="Yes" value="yes" />
+            <Radio id="married-no" label="No" value="no" />
+          </RadioGroup>
         </div>
-      </div>
-
-      <RadioGroup
-        aria-describedby={
-          fieldErrors.marriageStatus
-            ? "marriageStatus-marriageStatus-error"
-            : undefined
-        }
-        aria-invalid={!!fieldErrors.marriageStatus}
-        aria-label="Marriage status"
-        onValueChange={(val) =>
-          handleChange("marriageStatus", val as "yes" | "no")
-        }
-        value={value || undefined}
-      >
-        <Radio id="married-yes" label="Yes" value="yes" />
-        <Radio id="married-no" label="No" value="no" />
-      </RadioGroup>
-
-      <div className="flex gap-4">
-        <Button type="submit">Continue</Button>
+        <div className="flex gap-4">
+          <Button type="submit">Continue</Button>
+        </div>{" "}
       </div>
     </form>
   );

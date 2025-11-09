@@ -56,107 +56,115 @@ export function ChildDetails({
   };
 
   return (
-    <form className="container space-y-8 pt-8 pb-16" onSubmit={handleSubmit}>
-      <h1
-        className="mb-2 font-bold text-[56px] leading-[1.15]"
-        ref={titleRef}
-        tabIndex={-1}
-      >
-        Tell us about the child
-      </h1>
+    <form
+      className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3"
+      onSubmit={handleSubmit}
+    >
+      <div className="col-span-2 flex flex-col gap-8">
+        <div className="flex flex-col gap-4">
+          <h1
+            className="mb-2 font-bold text-[56px] leading-[1.15]"
+            ref={titleRef}
+            tabIndex={-1}
+          >
+            Tell us about the child
+          </h1>
 
-      {errorItems.length > 0 && (
-        <ErrorSummary
-          errors={errorItems}
-          onErrorClick={handleErrorClick}
-          title="There is a problem"
-        />
-      )}
+          {errorItems.length > 0 && (
+            <ErrorSummary
+              errors={errorItems}
+              onErrorClick={handleErrorClick}
+              title="There is a problem"
+            />
+          )}
 
-      {/* First name(s) */}
-      <Input
-        error={fieldErrors.firstNames}
-        id="child-firstNames"
-        label="First name"
-        onChange={(e) => handleChange("firstNames", e.target.value)}
-        type="text"
-        value={value.firstNames || ""}
-      />
+          {/* First name(s) */}
+          <Input
+            error={fieldErrors.firstNames}
+            id="child-firstNames"
+            label="First name"
+            onChange={(e) => handleChange("firstNames", e.target.value)}
+            type="text"
+            value={value.firstNames || ""}
+          />
 
-      {/* Middle name(s) */}
-      <Input
-        description="If they have more than one, add them in order"
-        id="child-middleNames"
-        label="Middle name(s)"
-        onChange={(e) => handleChange("middleNames", e.target.value)}
-        type="text"
-        value={value.middleNames || ""}
-      />
+          {/* Middle name(s) */}
+          <Input
+            description="If they have more than one, add them in order"
+            id="child-middleNames"
+            label="Middle name(s)"
+            onChange={(e) => handleChange("middleNames", e.target.value)}
+            type="text"
+            value={value.middleNames || ""}
+          />
 
-      {/* Last name (prefilled) */}
-      <Input
-        error={fieldErrors.lastName}
-        id="child-lastName"
-        label="Last name"
-        onChange={(e) => handleChange("lastName", e.target.value)}
-        type="text"
-        value={value.lastName || ""}
-      />
+          {/* Last name (prefilled) */}
+          <Input
+            error={fieldErrors.lastName}
+            id="child-lastName"
+            label="Last name"
+            onChange={(e) => handleChange("lastName", e.target.value)}
+            type="text"
+            value={value.lastName || ""}
+          />
 
-      {/* Date of birth */}
-      <DateInput
-        errors={dateFieldErrors.dateOfBirth}
-        hint="For example, 27 3 2007 or 27 Mar 2007"
-        id="child-dateOfBirth"
-        label="Date of birth"
-        onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
-        value={value.dateOfBirth || ""}
-      />
+          {/* Date of birth */}
+          <DateInput
+            errors={dateFieldErrors.dateOfBirth}
+            hint="For example, 27 3 2007 or 27 Mar 2007"
+            id="child-dateOfBirth"
+            label="Date of birth"
+            onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
+            value={value.dateOfBirth || ""}
+          />
 
-      {/* Sex at birth */}
-      <Select
-        description="We ask this so that we can monitor population trends."
-        error={fieldErrors.sexAtBirth}
-        id="child-sexAtBirth"
-        label="Sex at birth"
-        onChange={(e) => handleChange("sexAtBirth", e.target.value)}
-        value={value.sexAtBirth || ""}
-      >
-        <option value="">Select an option</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-      </Select>
+          {/* Sex at birth */}
+          <Select
+            description="We ask this so that we can monitor population trends."
+            error={fieldErrors.sexAtBirth}
+            id="child-sexAtBirth"
+            label="Sex at birth"
+            onChange={(e) => handleChange("sexAtBirth", e.target.value)}
+            value={value.sexAtBirth || ""}
+          >
+            <option value="">Select an option</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </Select>
 
-      {/* Place of birth */}
-      <div>
-        <label
-          className="block font-bold text-[20px] leading-[1.7]"
-          htmlFor="child-parishOfBirth"
-        >
-          Place of birth
-        </label>
-        <div className="mb-2 text-[20px] leading-[1.7]">
-          <p className="mb-4">Include the town and parish in your answer.</p>
-          <p>
-            For example, Queen Elizabeth Hospital, Bridgetown, St. Michael.
-            <br />
-            Or a home address if they were born at home.
-          </p>
+          {/* Place of birth */}
+          <div>
+            <label
+              className="block font-bold text-[20px] leading-[1.7]"
+              htmlFor="child-parishOfBirth"
+            >
+              Place of birth
+            </label>
+            <div className="mb-2 text-[20px] leading-[1.7]">
+              <p className="mb-4">
+                Include the town and parish in your answer.
+              </p>
+              <p>
+                For example, Queen Elizabeth Hospital, Bridgetown, St. Michael.
+                <br />
+                Or a home address if they were born at home.
+              </p>
+            </div>
+            <Input
+              error={fieldErrors.parishOfBirth}
+              id="child-parishOfBirth"
+              onChange={(e) => handleChange("parishOfBirth", e.target.value)}
+              type="text"
+              value={value.parishOfBirth || ""}
+            />
+          </div>
         </div>
-        <Input
-          error={fieldErrors.parishOfBirth}
-          id="child-parishOfBirth"
-          onChange={(e) => handleChange("parishOfBirth", e.target.value)}
-          type="text"
-          value={value.parishOfBirth || ""}
-        />
-      </div>
-
-      <div className="flex gap-4">
-        <Button onClick={onBack} type="button" variant="secondary">
-          Back
-        </Button>
-        <Button type="submit">Continue</Button>
+        <div className="flex gap-4">
+          <Button onClick={onBack} type="button" variant="secondary">
+            Back
+          </Button>
+          <Button type="submit">Continue</Button>
+        </div>
       </div>
     </form>
   );
