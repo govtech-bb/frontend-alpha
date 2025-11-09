@@ -97,20 +97,23 @@ export function MothersDetails({
           value={value.hadOtherSurname || ""}
         >
           <Radio id="mother-hadOtherSurname-yes" label="Yes" value="yes" />
+
+          {value.hadOtherSurname === "yes" && (
+            <div className="motion-safe:fade-in motion-safe:slide-in-from-top-2 pl-[20px] motion-safe:animate-in motion-safe:duration-200">
+              <div className="border-neutral-grey border-l-8 border-solid pb-4 pl-[52px]">
+                <Input
+                  className="w-80"
+                  id="mother-otherSurname"
+                  label="Previous last name"
+                  onChange={(e) => handleChange("otherSurname", e.target.value)}
+                  type="text"
+                  value={value.otherSurname || ""}
+                />
+              </div>
+            </div>
+          )}
           <Radio id="mother-hadOtherSurname-no" label="No" value="no" />
         </RadioGroup>
-
-        {value.hadOtherSurname === "yes" && (
-          <div className="mt-4">
-            <Input
-              id="mother-otherSurname"
-              label="What was it"
-              onChange={(e) => handleChange("otherSurname", e.target.value)}
-              type="text"
-              value={value.otherSurname || ""}
-            />
-          </div>
-        )}
       </div>
 
       {/* Date of birth */}
