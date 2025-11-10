@@ -31,6 +31,64 @@ src/components/forms/[form-name]/
         └── step-2.test.tsx
 ```
 
+## Available Utilities
+
+The codebase provides several utilities to eliminate boilerplate and ensure consistency across forms. **Use these utilities** instead of reimplementing common patterns:
+
+### Hooks
+
+1. **`useErrorSummary`** - Convert ValidationError[] to ErrorItem[] for GOV.BB ErrorSummary
+   - **Location**: `src/components/forms/common/hooks/use-error-summary.ts`
+   - **Eliminates**: ~50-70 lines of mapping/click handling per step
+   - **Use when**: Every step that displays validation errors
+
+2. **`useStepValidation`** - Generic validation hook for form steps
+   - **Location**: `src/components/forms/common/hooks/use-step-validation.ts`
+   - **Provides**: errors, fieldErrors, dateFieldErrors, handleChange, handleSubmit
+   - **Use when**: Every step needs validation
+
+3. **`useFormOrchestrator`** - Unified orchestration (form + storage + navigation + submission)
+   - **Location**: `src/components/forms/common/hooks/use-form-orchestrator.ts`
+   - **Eliminates**: ~130 lines of orchestrator setup
+   - **Use when**: Setting up the main form orchestrator
+
+4. **`useStepFocus`** - Accessible focus management when navigating between steps
+   - **Location**: `src/components/forms/common/hooks/use-step-focus.ts`
+   - **Use when**: Every step needs to announce title to screen readers
+
+5. **`useFormNavigation`** - Generic navigation between steps (no business logic)
+   - **Location**: `src/components/forms/common/hooks/use-form-navigation.ts`
+   - **Use when**: Called by useFormOrchestrator (rarely used directly)
+
+6. **`useFormStorage`** - SessionStorage persistence with versioning and expiry
+   - **Location**: `src/components/forms/common/hooks/use-form-storage.ts`
+   - **Use when**: Called by useFormOrchestrator (rarely used directly)
+
+### Components
+
+1. **`StepContainer`** - Standard container with title, error summary, and buttons
+   - **Location**: `src/components/forms/common/components/step-container.tsx`
+   - **Eliminates**: ~50-70 lines of container markup per step
+   - **Use when**: Every regular step (not check-answers or confirmation)
+
+2. **`SummarySection`** - Reusable section for check-answers pages
+   - **Location**: `src/components/forms/common/components/summary-section.tsx`
+   - **Eliminates**: ~40 lines per section
+   - **Use when**: Building check-answers pages with multiple sections
+
+3. **`ConfirmationTemplate`** - Standard confirmation page with green header
+   - **Location**: `src/components/forms/common/components/confirmation-template.tsx`
+   - **Eliminates**: ~140 lines of confirmation markup
+   - **Use when**: Building the confirmation/success page
+
+### Other Utilities
+
+- **`DateInput`** - Date input component with day/month/year fields
+  - **Location**: `src/components/forms/common/date-input.tsx`
+
+- **Date validation utilities** - `validateFields`, `formatForDisplay`, `formatForSubmission`
+  - **Location**: `src/lib/dates.ts`
+
 ## Step 1: Define Types (`types.ts`)
 
 ### Pattern: Discriminated Unions for Multiple Paths
@@ -326,6 +384,126 @@ export function useMyFormSteps(formData: PartialMyFormData): FormStep[] {
 
 The orchestrator coordinates all pieces.
 
+### Option A: Using useFormOrchestrator (Recommended)
+
+The `useFormOrchestrator` hook eliminates ~130 lines of boilerplate by combining TanStack Form, storage, navigation, and submission handling:
+
+```typescript
+"use client";
+
+import { useFormOrchestrator } from "../common/hooks/use-form-orchestrator";
+import { myFormStorageSchema } from "./schema";
+import { useMyFormSteps } from "./use-my-form-steps";
+import type { PartialMyFormData } from "./types";
+
+// Import step components
+import { Step1 } from "./steps/step-1";
+import { Step2 } from "./steps/step-2";
+import { ConditionalStep } from "./steps/conditional-step";
+import { CheckAnswers } from "./steps/check-answers";
+import { Confirmation } from "./steps/confirmation";
+
+const defaultValues: PartialMyFormData = {
+  field1: "",
+  field2: undefined,
+  decisionField: "",
+};
+
+export function MyForm() {
+  // All orchestration in one hook
+  const {
+    form,
+    formValues,
+    currentStep,
+    goNext,
+    goBack,
+    goToStep,
+    isDataLoaded,
+    isSubmitting,
+    submissionError,
+    handleSubmit,
+  } = useFormOrchestrator({
+    storageKey: "govbb_my_form_draft",
+    version: "my-form-v1.0.0",
+    storageSchema: myFormStorageSchema,
+    defaultValues,
+    expiryDays: 7,
+    useSteps: useMyFormSteps,
+    submitEndpoint: "/api/my-form",
+    syncWithUrl: true,
+  });
+
+  // Show skeleton loader until hydration completes
+  if (!isDataLoaded) {
+    return (
+      <div className="py-8">
+        <div className="container mx-auto max-w-2xl animate-pulse">
+          <div className="mb-6 h-12 w-3/4 rounded bg-gray-200" />
+          <div className="mb-4 h-32 w-full rounded bg-gray-200" />
+          <div className="mb-4 h-12 w-full rounded bg-gray-200" />
+          <div className="h-12 w-1/3 rounded bg-gray-200" />
+        </div>
+      </div>
+    );
+  }
+
+  // Render current step (EXPLICIT - no clever mapping)
+  return (
+    <>
+      {currentStep.id === "step-1" && (
+        <Step1
+          value={formValues.field1 || ""}
+          onChange={(value) => form.setFieldValue("field1", value)}
+          onNext={goNext}
+        />
+      )}
+
+      {currentStep.id === "step-2" && (
+        <Step2
+          value={formValues.decisionField || ""}
+          onChange={(value) => form.setFieldValue("decisionField", value)}
+          onNext={goNext}
+          onBack={goBack}
+        />
+      )}
+
+      {currentStep.id === "conditional-step" && (
+        <ConditionalStep
+          value={formValues.conditionalData}
+          onChange={(value) => form.setFieldValue("conditionalData", value)}
+          onNext={goNext}
+          onBack={goBack}
+        />
+      )}
+
+      {currentStep.id === "check-answers" && (
+        <CheckAnswers
+          formData={formValues}
+          onSubmit={handleSubmit}
+          onBack={goBack}
+          onEdit={goToStep}
+          submissionError={submissionError}
+          isSubmitting={isSubmitting}
+        />
+      )}
+
+      {currentStep.id === "confirmation" && <Confirmation />}
+    </>
+  );
+}
+```
+
+**Benefits of useFormOrchestrator:**
+- Eliminates form initialization boilerplate
+- Handles auto-save with debouncing automatically
+- Manages loading state and hydration
+- Provides submission error handling
+- Type-safe with full TypeScript support
+
+### Option B: Manual Setup (Advanced)
+
+If you need full control or custom submission logic, you can set up the orchestrator manually:
+
 ```typescript
 "use client";
 
@@ -539,9 +717,34 @@ export function MyForm() {
 
 ## Step 5: Step Components
 
-### Container Classes and Layout
+### Container and Layout
 
-All step components MUST use these exact container classes for proper GOV.BB styling:
+**Use the `StepContainer` component** for all regular steps. It provides:
+- Proper GOV.BB container classes and layout
+- Automatic error summary rendering
+- Consistent title and button placement
+- Focus management via `useStepFocus`
+
+```typescript
+import { StepContainer } from "../../common/components/step-container";
+
+<StepContainer
+  title="Step Title"
+  formTitle="Form Name"
+  errors={errors}
+  onBack={onBack}
+  onSubmit={handleSubmit}
+>
+  {/* Your form fields go here */}
+</StepContainer>
+```
+
+**When NOT to use StepContainer:**
+- Check-answers pages (use custom layout with SummarySection)
+- Confirmation pages (use ConfirmationTemplate)
+- Steps with highly custom layouts
+
+If you need manual layout control, use these exact container classes:
 
 ```typescript
 <form
@@ -573,19 +776,13 @@ All step components MUST use these exact container classes for proper GOV.BB sty
 </form>
 ```
 
-**Key classes:**
-- `container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16` - Main form container
-- `col-span-2 flex flex-col gap-6 lg:gap-8` - Content wrapper
-- `text-[56px] leading-[1.15]` - Required h1 size
-- `flex gap-4` - Button container spacing
-
-### Pattern 1: Simple Single-Field Step
+### Pattern 1: Simple Single-Field Step (with StepContainer)
 
 ```typescript
 "use client";
 
-import { Button, Radio, RadioGroup } from "@govtech-bb/react";
-import { useStepFocus } from "../../common/hooks/use-step-focus";
+import { Radio, RadioGroup } from "@govtech-bb/react";
+import { StepContainer } from "../../common/components/step-container";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { step2Validation } from "../schema";
 
@@ -597,8 +794,6 @@ type Step2Props = {
 };
 
 export function Step2({ value, onChange, onNext, onBack }: Step2Props) {
-  const titleRef = useStepFocus("Decision", "My Form");
-
   // Wrap value for validation hook (expects object)
   const formValue = { decisionField: value === "" ? undefined : value };
   const handleFormChange = (newValue: { decisionField?: "yes" | "no" }) => {
@@ -615,70 +810,25 @@ export function Step2({ value, onChange, onNext, onBack }: Step2Props) {
     fieldPrefix: "decision-",
   });
 
-  // Map ValidationError[] to ErrorItem[] for @govtech-bb/react ErrorSummary
-  const errorItems: ErrorItem[] = errors.map((error) => ({
-    text: error.message,
-    target: error.field,
-  }));
-
-  const handleErrorClick = (
-    error: ErrorItem,
-    event: React.MouseEvent<HTMLAnchorElement>
-  ) => {
-    event.preventDefault();
-    const element = document.getElementById(error.target);
-    if (element) {
-      element.focus();
-      element.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  };
-
   return (
-    <form
-      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
+    <StepContainer
+      title="Do you want to provide additional information?"
+      formTitle="My Form"
+      errors={errors}
+      onBack={onBack}
       onSubmit={handleSubmit}
-      noValidate
     >
-      <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
-        <div className="flex flex-col gap-4">
-          <div className="pt-2 lg:pt-0">
-            <h1
-              className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
-              ref={titleRef}
-              tabIndex={-1}
-            >
-              Do you want to provide additional information?
-            </h1>
-
-            {errorItems.length > 0 && (
-              <ErrorSummary
-                errors={errorItems}
-                onErrorClick={handleErrorClick}
-                title="There is a problem"
-              />
-            )}
-          </div>
-
-          <RadioGroup
-            aria-describedby={fieldErrors.decisionField ? "decision-decisionField-error" : undefined}
-            aria-invalid={!!fieldErrors.decisionField}
-            aria-label="Decision"
-            onValueChange={(val) => handleChange("decisionField", val as "yes" | "no")}
-            value={value || undefined}
-          >
-            <Radio id="decision-yes" label="Yes" value="yes" />
-            <Radio id="decision-no" label="No" value="no" />
-          </RadioGroup>
-        </div>
-
-        <div className="flex gap-4">
-          <Button type="button" variant="secondary" onClick={onBack}>
-            Back
-          </Button>
-          <Button type="submit">Continue</Button>
-        </div>
-      </div>
-    </form>
+      <RadioGroup
+        aria-describedby={fieldErrors.decisionField ? "decision-decisionField-error" : undefined}
+        aria-invalid={!!fieldErrors.decisionField}
+        aria-label="Decision"
+        onValueChange={(val) => handleChange("decisionField", val as "yes" | "no")}
+        value={value || undefined}
+      >
+        <Radio id="decision-yes" label="Yes" value="yes" />
+        <Radio id="decision-no" label="No" value="no" />
+      </RadioGroup>
+    </StepContainer>
   );
 }
 ```
