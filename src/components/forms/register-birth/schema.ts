@@ -235,30 +235,53 @@ export const contactInfoValidation = z.object({
  * Final submission schema for check-answers validation
  * Ensures all required data is present and valid before allowing submission
  */
-export const finalSubmissionSchema = z.object({
-  // Required: Mother's details
-  mother: motherDetailsValidation,
+export const finalSubmissionSchema = z
+  .object({
+    // Required: Mother's details
+    mother: motherDetailsValidation,
 
-  // Required: Child's details
-  child: childDetailsValidation,
+    // Required: Child's details
+    child: childDetailsValidation,
 
-  // Required: Email for confirmation
-  email: z.preprocess(
-    (val) => val ?? "",
-    z.string().email("Enter a valid email address")
-  ),
+    // Required: Email for confirmation
+    email: z.preprocess(
+      (val) => val ?? "",
+      z.string().email("Enter a valid email address")
+    ),
 
-  // Optional: Father's details (depends on marriage status or includeFatherDetails)
-  father: fatherDetailsValidation.optional(),
+    // Optional: Father's details (conditionally validated below)
+    father: personDetailsSchema.optional(),
 
-  // Optional: Marriage and father inclusion status
-  marriageStatus: z.enum(["yes", "no", ""]).optional(),
-  includeFatherDetails: z.enum(["yes", "no", ""]).optional(),
+    // Optional: Marriage and father inclusion status
+    marriageStatus: z.enum(["yes", "no", ""]).optional(),
+    includeFatherDetails: z.enum(["yes", "no", ""]).optional(),
 
-  // Optional: Number of certificates (defaults to 0)
-  numberOfCertificates: z.number().min(0).max(20).optional(),
+    // Optional: Number of certificates (defaults to 0)
+    numberOfCertificates: z.number().min(0).max(20).optional(),
 
-  // Optional: Phone contact
-  phoneNumber: z.string().optional(),
-  wantContact: z.enum(["yes", "no", ""]).optional(),
-});
+    // Optional: Phone contact
+    phoneNumber: z.string().optional(),
+    wantContact: z.enum(["yes", "no", ""]).optional(),
+  })
+  .superRefine((data, ctx) => {
+    // Father details are required when:
+    // 1. Parents were married when child was born, OR
+    // 2. User explicitly chose to include father details
+    const fatherRequired =
+      data.marriageStatus === "yes" || data.includeFatherDetails === "yes";
+
+    if (fatherRequired) {
+      // Validate father details if required
+      const fatherResult = fatherDetailsValidation.safeParse(data.father);
+      if (!fatherResult.success) {
+        // Add all father validation errors to the context
+        for (const issue of fatherResult.error.issues) {
+          ctx.addIssue({
+            ...issue,
+            path: ["father", ...issue.path],
+          });
+        }
+      }
+    }
+    // If father is not required, skip validation even if father object exists
+  });
