@@ -5,13 +5,15 @@ import { Typography } from "@/components/ui/typography";
 type StageBannerProps = {
   stage?: string;
   url?: string;
+  className?: string;
 };
 
 export const StageBanner = ({
   stage,
   url = "/what-we-mean-by-alpha",
+  className,
 }: StageBannerProps) => (
-  <StatusBanner variant={stage as "alpha" | "beta"}>
+  <StatusBanner className={className} variant={stage as "alpha" | "beta"}>
     <Typography variant="paragraph">
       This page is in{" "}
       <Link className="capitalize underline" href={url}>
