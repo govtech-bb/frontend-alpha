@@ -30,7 +30,8 @@ export const Footer = () => (
         <div className="flex flex-col items-start py-4 lg:items-end lg:py-8">
           <Image
             alt="Barbados Coat of Arms"
-            className="block"
+            className="block select-none"
+            draggable="false"
             height={104}
             src="/images/coat-of-arms.png"
             width={112}

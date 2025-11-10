@@ -10,14 +10,8 @@ export const metadata: Metadata = {
 
 export default function RegisterBirthPage() {
   return (
-    <div className="bg-yellow-bright">
-      <div className="overflow-hidden rounded-t-3xl bg-neutral-white">
-        <div className="container space-y-4">
-          <Suspense fallback={<div>Loading...</div>}>
-            <RegisterBirthForm />
-          </Suspense>
-        </div>
-      </div>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <RegisterBirthForm />
+    </Suspense>
   );
 }

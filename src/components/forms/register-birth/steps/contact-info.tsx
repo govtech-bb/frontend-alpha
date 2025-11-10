@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, Input } from "@govtech-bb/react";
-import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
+import type { ErrorItem } from "@govtech-bb/react";
+import { Button, ErrorSummary, Input } from "@govtech-bb/react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { contactInfoValidation } from "../schema";
@@ -58,6 +57,12 @@ export function ContactInfo({
     onNext: handleNext,
   });
 
+  // Convert ValidationError[] to ErrorItem[] for ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
   const handleChange = (field: "email" | "phoneNumber", value: string) => {
     handleChangeInternal(field, value);
   };
@@ -66,50 +71,78 @@ export function ContactInfo({
     handleBlurInternal(field);
   };
 
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
-      <h1
-        className="mb-6 font-bold text-5xl leading-tight focus:outline-none"
-        ref={titleRef}
-        tabIndex={-1}
-      >
-        Contact details
-      </h1>
+    <form
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
+      onSubmit={handleSubmit}
+    >
+      <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
+        <div className="flex flex-col gap-4">
+          <h1
+            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            ref={titleRef}
+            tabIndex={-1}
+          >
+            Contact details
+          </h1>
 
-      <ErrorSummary errors={errors} />
+          {errorItems.length > 0 && (
+            <ErrorSummary
+              errors={errorItems}
+              onErrorClick={handleErrorClick}
+              title="There is a problem"
+            />
+          )}
 
-      <Typography className="mb-4 leading-tight" variant="paragraph">
-        We ask for this information so we can send you confirmation and let you
-        know what to do next.
-      </Typography>
+          <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+            <p>
+              We ask for this information so we can send you confirmation and
+              let you know what to do next.
+            </p>
+          </div>
 
-      {/* Email address */}
-      <Input
-        error={fieldErrors.email}
-        id="email"
-        label="Email address"
-        onBlur={() => handleBlur("email")}
-        onChange={(e) => handleChange("email", e.target.value)}
-        type="email"
-        value={email || ""}
-      />
+          {/* Email address */}
+          <Input
+            className="lg:w-80"
+            error={fieldErrors.email}
+            id="email"
+            label="Email address"
+            onBlur={() => handleBlur("email")}
+            onChange={(e) => handleChange("email", e.target.value)}
+            type="email"
+            value={email || ""}
+          />
 
-      {/* Phone number */}
-      <Input
-        error={fieldErrors.phoneNumber}
-        id="phoneNumber"
-        label="Phone number"
-        onBlur={() => handleBlur("phoneNumber")}
-        onChange={(e) => handleChange("phoneNumber", e.target.value)}
-        type="tel"
-        value={phoneNumber || ""}
-      />
-
-      <div className="flex gap-4">
-        <Button onClick={onBack} type="button" variant="secondary">
-          Back
-        </Button>
-        <Button type="submit">Continue</Button>
+          {/* Phone number */}
+          <Input
+            className="lg:w-80"
+            error={fieldErrors.phoneNumber}
+            id="phoneNumber"
+            label="Phone number"
+            onBlur={() => handleBlur("phoneNumber")}
+            onChange={(e) => handleChange("phoneNumber", e.target.value)}
+            type="tel"
+            value={phoneNumber || ""}
+          />
+        </div>
+        <div className="flex gap-4">
+          <Button onClick={onBack} type="button" variant="secondary">
+            Back
+          </Button>
+          <Button type="submit">Continue</Button>
+        </div>
       </div>
     </form>
   );

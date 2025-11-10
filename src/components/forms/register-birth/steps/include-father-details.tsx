@@ -1,8 +1,7 @@
 "use client";
 
-import { Button, Radio, RadioGroup } from "@govtech-bb/react";
-import { Typography } from "@/components/ui/typography";
-import { ErrorSummary } from "../../common/error-summary";
+import type { ErrorItem } from "@govtech-bb/react";
+import { Button, ErrorSummary, Radio, RadioGroup } from "@govtech-bb/react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { includeFatherDetailsValidation } from "../schema";
@@ -54,61 +53,90 @@ export function IncludeFatherDetails({
     }
   );
 
+  // Convert ValidationError[] to ErrorItem[] for ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
-      <ErrorSummary errors={errors} />
+    <form
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
+      onSubmit={handleSubmit}
+    >
+      <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
+        <div className="flex flex-col gap-4">
+          <div className="pt-2 lg:pt-0">
+            <h1
+              className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+              ref={titleRef}
+              tabIndex={-1}
+            >
+              Do you want to include the father's details on the birth record?
+            </h1>
 
-      <div>
-        <h1
-          className="mb-4 font-bold text-5xl leading-tight focus:outline-none"
-          ref={titleRef}
-          tabIndex={-1}
-        >
-          Do you want to include the father's details on the birth record?
-        </h1>
+            {errorItems.length > 0 && (
+              <ErrorSummary
+                errors={errorItems}
+                onErrorClick={handleErrorClick}
+                title="There is a problem"
+              />
+            )}
+          </div>
 
-        <div className="mb-6 space-y-4">
-          <Typography className="leading-tight" variant="paragraph">
-            If you choose 'Yes', both parents must go to the Registration
-            Department and sign the official register together.
-          </Typography>
+          <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
+            <p>
+              If you choose ‘Yes’, both parents must go to the Registration
+              Department and sign the official register together.
+            </p>
+            <p>
+              If you choose ‘No’, the mother must go to the Registration
+              Department but it is not necessary for the father to attend.
+            </p>
+          </div>
 
-          <Typography className="leading-tight" variant="paragraph">
-            If you choose 'No', the mother must go to the Registration
-            Department but it is not necessary for the father to attend.
-          </Typography>
+          <RadioGroup
+            aria-describedby={
+              fieldErrors.includeFatherDetails
+                ? "includeFatherDetails-includeFatherDetails-error"
+                : undefined
+            }
+            aria-invalid={fieldErrors.includeFatherDetails ? "true" : undefined}
+            onValueChange={(val) =>
+              handleChange("includeFatherDetails", val as "yes" | "no")
+            }
+            value={value}
+          >
+            <Radio
+              id="include-father-yes"
+              label="Yes, include the father's details"
+              value="yes"
+            />
+            <Radio
+              id="include-father-no"
+              label="No, do not include the father's details"
+              value="no"
+            />
+          </RadioGroup>
         </div>
-      </div>
-
-      <RadioGroup
-        aria-describedby={
-          fieldErrors.includeFatherDetails
-            ? "includeFatherDetails-includeFatherDetails-error"
-            : undefined
-        }
-        aria-invalid={fieldErrors.includeFatherDetails ? "true" : undefined}
-        onValueChange={(val) =>
-          handleChange("includeFatherDetails", val as "yes" | "no")
-        }
-        value={value}
-      >
-        <Radio
-          id="include-father-yes"
-          label="Yes, include the father's details"
-          value="yes"
-        />
-        <Radio
-          id="include-father-no"
-          label="No, do not include the father's details"
-          value="no"
-        />
-      </RadioGroup>
-
-      <div className="flex gap-4">
-        <Button onClick={onBack} type="button" variant="secondary">
-          Back
-        </Button>
-        <Button type="submit">Continue</Button>
+        <div className="flex gap-4">
+          <Button onClick={onBack} type="button" variant="secondary">
+            Back
+          </Button>
+          <Button type="submit">Continue</Button>
+        </div>
       </div>
     </form>
   );
