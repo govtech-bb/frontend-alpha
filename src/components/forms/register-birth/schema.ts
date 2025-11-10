@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isValidBirthDate, isValidChildBirthDate } from "@/lib/date-validation";
+import { isValidBirthDate } from "@/lib/dates";
 
 /**
  * Zod schema for birth registration form data validation
@@ -32,7 +32,7 @@ const childDetailsSchema = z.object({
   middleNames: z.string().optional(),
   lastName: z.string().optional(),
   dateOfBirth: z.string().optional(),
-  sexAtBirth: z.enum(["Male", "Female", "Intersex"]).optional(),
+  sexAtBirth: z.enum(["Male", "Female"]).optional(),
   parishOfBirth: z.string().optional(),
 });
 
@@ -143,7 +143,7 @@ function createPersonDetailsSchema(personType: "father" | "mother") {
           .min(1, `Enter the ${personType}'s date of birth`)
           .refine((val) => isValidBirthDate(val), {
             message:
-              "Enter a valid date in MM/DD/YYYY format (for example, 07/30/1986)",
+              "Enter a valid date (for example, 27 3 2007 or 27 Mar 2007)",
           })
       ),
       address: z.preprocess(
@@ -182,12 +182,12 @@ export const childDetailsValidation = z.object({
     z
       .string()
       .min(1, "Enter the child's date of birth")
-      .refine((val) => isValidChildBirthDate(val), {
+      .refine((val) => isValidBirthDate(val), {
         message:
-          "Enter a valid date in MM/DD/YYYY format (for example, 10/22/2025). Date cannot be in the future",
+          "Enter a valid date (for example, 27 3 2007 or 27 Mar 2007). Date cannot be in the future",
       })
   ),
-  sexAtBirth: z.enum(["Male", "Female", "Intersex"], {
+  sexAtBirth: z.enum(["Male", "Female"], {
     message: "Select the child's sex at birth",
   }),
   parishOfBirth: z.preprocess(
@@ -235,30 +235,53 @@ export const contactInfoValidation = z.object({
  * Final submission schema for check-answers validation
  * Ensures all required data is present and valid before allowing submission
  */
-export const finalSubmissionSchema = z.object({
-  // Required: Mother's details
-  mother: motherDetailsValidation,
+export const finalSubmissionSchema = z
+  .object({
+    // Required: Mother's details
+    mother: motherDetailsValidation,
 
-  // Required: Child's details
-  child: childDetailsValidation,
+    // Required: Child's details
+    child: childDetailsValidation,
 
-  // Required: Email for confirmation
-  email: z.preprocess(
-    (val) => val ?? "",
-    z.string().email("Enter a valid email address")
-  ),
+    // Required: Email for confirmation
+    email: z.preprocess(
+      (val) => val ?? "",
+      z.string().email("Enter a valid email address")
+    ),
 
-  // Optional: Father's details (depends on marriage status or includeFatherDetails)
-  father: fatherDetailsValidation.optional(),
+    // Optional: Father's details (conditionally validated below)
+    father: personDetailsSchema.optional(),
 
-  // Optional: Marriage and father inclusion status
-  marriageStatus: z.enum(["yes", "no", ""]).optional(),
-  includeFatherDetails: z.enum(["yes", "no", ""]).optional(),
+    // Optional: Marriage and father inclusion status
+    marriageStatus: z.enum(["yes", "no", ""]).optional(),
+    includeFatherDetails: z.enum(["yes", "no", ""]).optional(),
 
-  // Optional: Number of certificates (defaults to 0)
-  numberOfCertificates: z.number().min(0).max(20).optional(),
+    // Optional: Number of certificates (defaults to 0)
+    numberOfCertificates: z.number().min(0).max(20).optional(),
 
-  // Optional: Phone contact
-  phoneNumber: z.string().optional(),
-  wantContact: z.enum(["yes", "no", ""]).optional(),
-});
+    // Optional: Phone contact
+    phoneNumber: z.string().optional(),
+    wantContact: z.enum(["yes", "no", ""]).optional(),
+  })
+  .superRefine((data, ctx) => {
+    // Father details are required when:
+    // 1. Parents were married when child was born, OR
+    // 2. User explicitly chose to include father details
+    const fatherRequired =
+      data.marriageStatus === "yes" || data.includeFatherDetails === "yes";
+
+    if (fatherRequired) {
+      // Validate father details if required
+      const fatherResult = fatherDetailsValidation.safeParse(data.father);
+      if (!fatherResult.success) {
+        // Add all father validation errors to the context
+        for (const issue of fatherResult.error.issues) {
+          ctx.addIssue({
+            ...issue,
+            path: ["father", ...issue.path],
+          });
+        }
+      }
+    }
+    // If father is not required, skip validation even if father object exists
+  });

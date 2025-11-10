@@ -3,6 +3,7 @@ import {
   childDetailsValidation,
   contactInfoValidation,
   fatherDetailsValidation,
+  finalSubmissionSchema,
   motherDetailsValidation,
 } from "../schema";
 
@@ -13,7 +14,7 @@ describe("fatherDetailsValidation", () => {
     lastName: "Smith",
     hadOtherSurname: "no" as const,
     otherSurname: "",
-    dateOfBirth: "07/30/1986",
+    dateOfBirth: "1986-07-30",
     address: "123 Main St",
     occupation: "Engineer",
   };
@@ -203,7 +204,7 @@ describe("motherDetailsValidation", () => {
     lastName: "Smith",
     hadOtherSurname: "no" as const,
     otherSurname: "",
-    dateOfBirth: "03/15/1990",
+    dateOfBirth: "1990-03-15",
     address: "123 Main St",
     occupation: "Teacher",
   };
@@ -271,7 +272,7 @@ describe("motherDetailsValidation", () => {
         firstName: undefined,
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
       };
@@ -292,7 +293,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: undefined,
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
       };
@@ -332,7 +333,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: undefined,
         nationalRegistrationNumber: "123456-7890",
       };
@@ -354,7 +355,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
         // occupation is missing
@@ -374,7 +375,7 @@ describe("motherDetailsValidation", () => {
         firstName: "Jane",
         middleName: "",
         lastName: "Smith",
-        dateOfBirth: "03/15/1990",
+        dateOfBirth: "1990-03-15",
         address: "123 Main St",
         nationalRegistrationNumber: "123456-7890",
         occupation: "",
@@ -398,7 +399,7 @@ describe("childDetailsValidation", () => {
         firstNames: undefined,
         middleNames: "",
         lastName: "Smith",
-        dateOfBirth: "10/22/2024",
+        dateOfBirth: "2024-10-22",
         sexAtBirth: "Male" as const,
         parishOfBirth: "St. Michael",
       };
@@ -419,7 +420,7 @@ describe("childDetailsValidation", () => {
         firstNames: "John",
         middleNames: "",
         lastName: undefined,
-        dateOfBirth: "10/22/2024",
+        dateOfBirth: "2024-10-22",
         sexAtBirth: "Male" as const,
         parishOfBirth: "St. Michael",
       };
@@ -459,7 +460,7 @@ describe("childDetailsValidation", () => {
         firstNames: "John",
         middleNames: "",
         lastName: "Smith",
-        dateOfBirth: "10/22/2024",
+        dateOfBirth: "2024-10-22",
         sexAtBirth: "Male" as const,
         parishOfBirth: undefined,
       };
@@ -528,6 +529,151 @@ describe("contactInfoValidation", () => {
   });
 });
 
+describe("finalSubmissionSchema", () => {
+  describe("when father details are included", () => {
+    it("should require valid father details when includeFatherDetails is yes", () => {
+      const data = {
+        includeFatherDetails: "yes",
+        mother: {
+          firstName: "Jane",
+          lastName: "Smith",
+          dateOfBirth: "1990-03-15",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          occupation: "Teacher",
+        },
+        child: {
+          firstNames: "John",
+          lastName: "Smith",
+          dateOfBirth: "2024-10-22",
+          sexAtBirth: "Male",
+          parishOfBirth: "St. Michael",
+        },
+        email: "test@example.com",
+        // father is missing but required
+      };
+      const result = finalSubmissionSchema.safeParse(data);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const fatherError = result.error.issues.find((e) =>
+          e.path.includes("father")
+        );
+        expect(fatherError).toBeDefined();
+      }
+    });
+
+    it("should require valid father details when marriageStatus is yes", () => {
+      const data = {
+        marriageStatus: "yes",
+        mother: {
+          firstName: "Jane",
+          lastName: "Smith",
+          dateOfBirth: "1990-03-15",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          occupation: "Teacher",
+        },
+        child: {
+          firstNames: "John",
+          lastName: "Smith",
+          dateOfBirth: "2024-10-22",
+          sexAtBirth: "Male",
+          parishOfBirth: "St. Michael",
+        },
+        email: "test@example.com",
+        // father is missing but required
+      };
+      const result = finalSubmissionSchema.safeParse(data);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const fatherError = result.error.issues.find((e) =>
+          e.path.includes("father")
+        );
+        expect(fatherError).toBeDefined();
+      }
+    });
+  });
+
+  describe("when father details are excluded", () => {
+    it("should accept valid data when includeFatherDetails is no", () => {
+      const data = {
+        includeFatherDetails: "no",
+        mother: {
+          firstName: "Jane",
+          lastName: "Smith",
+          dateOfBirth: "1990-03-15",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          occupation: "Teacher",
+        },
+        child: {
+          firstNames: "John",
+          lastName: "Smith",
+          dateOfBirth: "2024-10-22",
+          sexAtBirth: "Male",
+          parishOfBirth: "St. Michael",
+        },
+        email: "test@example.com",
+        // father is not provided and should not be required
+      };
+      const result = finalSubmissionSchema.safeParse(data);
+      expect(result.success).toBe(true);
+    });
+
+    it("should accept data with empty father object when includeFatherDetails is no", () => {
+      const data = {
+        includeFatherDetails: "no",
+        father: {
+          // Empty father object - should be ignored
+        },
+        mother: {
+          firstName: "Jane",
+          lastName: "Smith",
+          dateOfBirth: "1990-03-15",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          occupation: "Teacher",
+        },
+        child: {
+          firstNames: "John",
+          lastName: "Smith",
+          dateOfBirth: "2024-10-22",
+          sexAtBirth: "Male",
+          parishOfBirth: "St. Michael",
+        },
+        email: "test@example.com",
+      };
+      const result = finalSubmissionSchema.safeParse(data);
+      expect(result.success).toBe(true);
+    });
+
+    it("should accept valid data when marriageStatus is no", () => {
+      const data = {
+        marriageStatus: "no",
+        includeFatherDetails: "no",
+        mother: {
+          firstName: "Jane",
+          lastName: "Smith",
+          dateOfBirth: "1990-03-15",
+          address: "123 Main St",
+          nationalRegistrationNumber: "123456-7890",
+          occupation: "Teacher",
+        },
+        child: {
+          firstNames: "John",
+          lastName: "Smith",
+          dateOfBirth: "2024-10-22",
+          sexAtBirth: "Male",
+          parishOfBirth: "St. Michael",
+        },
+        email: "test@example.com",
+      };
+      const result = finalSubmissionSchema.safeParse(data);
+      expect(result.success).toBe(true);
+    });
+  });
+});
+
 describe("fatherDetailsValidation - undefined field handling", () => {
   it("should show custom error messages for all undefined required fields", () => {
     const data = {
@@ -588,7 +734,7 @@ describe("fatherDetailsValidation - undefined field handling", () => {
       firstName: "John",
       middleName: "Michael",
       lastName: "Smith",
-      dateOfBirth: "07/30/1986",
+      dateOfBirth: "1986-07-30",
       address: "123 Main St",
       nationalRegistrationNumber: "123456-7890",
       // occupation is missing
@@ -608,7 +754,7 @@ describe("fatherDetailsValidation - undefined field handling", () => {
       firstName: "John",
       middleName: "Michael",
       lastName: "Smith",
-      dateOfBirth: "07/30/1986",
+      dateOfBirth: "1986-07-30",
       address: "123 Main St",
       nationalRegistrationNumber: "123456-7890",
       occupation: "",

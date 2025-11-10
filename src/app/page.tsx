@@ -59,7 +59,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="bg-neutral-white">
+      <section>
         <div className="container">
           <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
             <Typography variant="h2">Find government services</Typography>

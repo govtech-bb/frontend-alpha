@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { z } from "zod";
+import { type DateFieldErrors, validateFields } from "@/lib/dates";
 import type { ValidationError } from "../error-summary";
 
 type UseStepValidationParams<T> = {
@@ -29,6 +30,9 @@ export function useStepValidation<T extends Record<string, unknown>>({
 }: UseStepValidationParams<T>) {
   const [errors, setErrors] = useState<ValidationError[]>([]);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [dateFieldErrors, setDateFieldErrors] = useState<
+    Record<string, DateFieldErrors | undefined>
+  >({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
   /**
@@ -99,6 +103,7 @@ export function useStepValidation<T extends Record<string, unknown>>({
    * Handle form submission
    * Validates all fields and proceeds to next step if valid
    */
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex validation logic with field-specific error handling
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setHasSubmitted(true);
@@ -108,11 +113,14 @@ export function useStepValidation<T extends Record<string, unknown>>({
     if (result.success) {
       setErrors([]);
       setFieldErrors({});
+      setDateFieldErrors({});
       onNext();
     } else {
       // Build error list for summary and field errors
       const validationErrors: ValidationError[] = [];
       const newFieldErrors: Record<string, string> = {};
+      const newDateFieldErrors: Record<string, DateFieldErrors | undefined> =
+        {};
 
       for (const error of result.error.issues) {
         const field = error.path[0] as string;
@@ -121,16 +129,27 @@ export function useStepValidation<T extends Record<string, unknown>>({
           message: error.message,
         });
         newFieldErrors[field] = error.message;
+
+        // For dateOfBirth fields, get per-field errors
+        if (field === "dateOfBirth" && typeof value[field] === "string") {
+          const dateValue = value[field] as string;
+          const perFieldErrors = validateFields(dateValue);
+          if (perFieldErrors) {
+            newDateFieldErrors[field] = perFieldErrors;
+          }
+        }
       }
 
       setErrors(validationErrors);
       setFieldErrors(newFieldErrors);
+      setDateFieldErrors(newDateFieldErrors);
     }
   };
 
   return {
     errors,
     fieldErrors,
+    dateFieldErrors,
     hasSubmitted,
     handleChange,
     handleBlur,

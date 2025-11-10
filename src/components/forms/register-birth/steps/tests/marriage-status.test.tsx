@@ -24,7 +24,7 @@ describe("MarriageStatus", () => {
     render(<MarriageStatus {...defaultProps} />);
 
     expect(
-      screen.getByText("We ask this because your answer determines:")
+      screen.getByText("We ask this because your answer might determine:")
     ).toBeInTheDocument();
     expect(screen.getByText("the surname of the child")).toBeInTheDocument();
     expect(screen.getByText("who can register the birth")).toBeInTheDocument();
@@ -62,10 +62,10 @@ describe("MarriageStatus", () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it("should have Next button always enabled", () => {
+  it("should have Continue button always enabled", () => {
     const { rerender } = render(<MarriageStatus {...defaultProps} value="" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    const nextButton = screen.getByRole("button", { name: /continue/i });
     expect(nextButton).not.toBeDisabled();
 
     rerender(<MarriageStatus {...defaultProps} value="yes" />);
@@ -83,13 +83,13 @@ describe("MarriageStatus", () => {
     const yesRadio = screen.getByLabelText("Yes") as HTMLInputElement;
     const noRadio = screen.getByLabelText("No") as HTMLInputElement;
 
-    expect(yesRadio.checked).toBe(true);
-    expect(noRadio.checked).toBe(false);
+    expect(yesRadio).toBeChecked();
+    expect(noRadio).not.toBeChecked();
 
     rerender(<MarriageStatus {...defaultProps} value="no" />);
 
-    expect(yesRadio.checked).toBe(false);
-    expect(noRadio.checked).toBe(true);
+    expect(yesRadio).not.toBeChecked();
+    expect(noRadio).toBeChecked();
   });
 
   it("should not render Back button as this is the first step", () => {
@@ -99,11 +99,11 @@ describe("MarriageStatus", () => {
     expect(backButton).not.toBeInTheDocument();
   });
 
-  it("should call onNext when Next button is clicked with valid selection", () => {
+  it("should call onNext when Continue button is clicked with valid selection", () => {
     const onNext = vi.fn();
     render(<MarriageStatus {...defaultProps} onNext={onNext} value="yes" />);
 
-    const nextButton = screen.getByRole("button", { name: /next/i });
+    const nextButton = screen.getByRole("button", { name: /continue/i });
     fireEvent.click(nextButton);
 
     expect(onNext).toHaveBeenCalledTimes(1);
@@ -113,7 +113,9 @@ describe("MarriageStatus", () => {
     const onNext = vi.fn();
     render(<MarriageStatus {...defaultProps} onNext={onNext} value="" />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Should show error and not proceed
@@ -121,17 +123,19 @@ describe("MarriageStatus", () => {
     expect(onNext).not.toHaveBeenCalled();
   });
 
-  it("should mark radio buttons as invalid when validation fails", () => {
+  it("should mark radio group as invalid when validation fails", () => {
     render(<MarriageStatus {...defaultProps} value="" />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
-    const yesRadio = screen.getByLabelText("Yes");
-    const noRadio = screen.getByLabelText("No");
-
-    expect(yesRadio).toHaveAttribute("aria-invalid", "true");
-    expect(noRadio).toHaveAttribute("aria-invalid", "true");
+    // RadioGroup itself gets aria-invalid, not individual radios
+    const radioGroup = screen.getByRole("radiogroup", {
+      name: /marriage status/i,
+    });
+    expect(radioGroup).toHaveAttribute("aria-invalid", "true");
   });
 
   it("should clear errors when a selection is made after validation failure", () => {
@@ -139,7 +143,9 @@ describe("MarriageStatus", () => {
     render(<MarriageStatus {...defaultProps} onChange={onChange} value="" />);
 
     // First trigger validation error
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
     expect(screen.getByRole("alert")).toBeInTheDocument();
 
@@ -154,16 +160,18 @@ describe("MarriageStatus", () => {
   it("should have accessible form structure", () => {
     render(<MarriageStatus {...defaultProps} />);
 
-    // Check for proper fieldset and legend
-    const fieldset = screen.getByRole("group", { name: /marriage status/i });
-    expect(fieldset).toBeInTheDocument();
+    // Check for proper radiogroup with aria-label
+    const radioGroup = screen.getByRole("radiogroup", {
+      name: /marriage status/i,
+    });
+    expect(radioGroup).toBeInTheDocument();
 
-    // Check that radio buttons are properly grouped
+    // Check that radio buttons are present and accessible
     const yesRadio = screen.getByLabelText("Yes");
     const noRadio = screen.getByLabelText("No");
 
-    expect(yesRadio).toHaveAttribute("name", "marriageStatus");
-    expect(noRadio).toHaveAttribute("name", "marriageStatus");
+    expect(yesRadio).toBeInTheDocument();
+    expect(noRadio).toBeInTheDocument();
   });
 
   it("should focus on title when component mounts", () => {

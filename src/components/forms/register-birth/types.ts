@@ -42,7 +42,7 @@ export type ChildDetails = {
   middleNames?: string;
   lastName: string;
   dateOfBirth: string;
-  sexAtBirth: "Male" | "Female" | "Intersex";
+  sexAtBirth: "Male" | "Female";
   parishOfBirth: string;
 };
 

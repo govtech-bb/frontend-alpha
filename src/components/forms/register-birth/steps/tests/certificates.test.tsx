@@ -115,7 +115,9 @@ describe("Certificates", () => {
     const onNext = vi.fn();
     render(<Certificates {...defaultProps} onNext={onNext} value={2} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalledTimes(1);
@@ -124,11 +126,13 @@ describe("Certificates", () => {
   it("should show validation errors after submission with invalid value", () => {
     render(<Certificates {...defaultProps} value={25} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Check for error summary
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should have accessible form structure", () => {
@@ -148,17 +152,21 @@ describe("Certificates", () => {
   it("should display error summary when validation fails", () => {
     render(<Certificates {...defaultProps} value={25} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Check for error summary component
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should mark input as invalid when there are errors", () => {
     render(<Certificates {...defaultProps} value={25} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     const input = screen.getByLabelText("Number of certificates required");
@@ -168,7 +176,9 @@ describe("Certificates", () => {
   it("should link error message to input with aria-describedby", () => {
     render(<Certificates {...defaultProps} value={25} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     const input = screen.getByLabelText("Number of certificates required");
@@ -182,6 +192,8 @@ describe("Certificates", () => {
     render(<Certificates {...defaultProps} />);
 
     expect(screen.getByRole("button", { name: /back/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /next/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /continue/i })
+    ).toBeInTheDocument();
   });
 });

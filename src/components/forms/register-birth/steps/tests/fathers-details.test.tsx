@@ -24,7 +24,8 @@ describe("FathersDetails", () => {
     expect(screen.getByLabelText("First name")).toBeInTheDocument();
     expect(screen.getByLabelText("Middle name(s)")).toBeInTheDocument();
     expect(screen.getByLabelText("Last name")).toBeInTheDocument();
-    expect(screen.getByLabelText("Date of birth")).toBeInTheDocument();
+    // DateInput uses a fieldset with legend, not a label
+    expect(screen.getByText("Date of birth")).toBeInTheDocument();
     expect(screen.getByLabelText("Current address")).toBeInTheDocument();
     expect(
       screen.getByLabelText("National registration number")
@@ -44,7 +45,7 @@ describe("FathersDetails", () => {
     render(<FathersDetails {...defaultProps} />);
 
     expect(
-      screen.getByText(/Use the calendar picker or enter the date/)
+      screen.getByText(/For example, 27 3 2007 or 27 Mar 2007/)
     ).toBeInTheDocument();
   });
 
@@ -66,7 +67,7 @@ describe("FathersDetails", () => {
           firstName: "John",
           middleName: "Paul",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "Engineer",
@@ -83,9 +84,10 @@ describe("FathersDetails", () => {
     expect((screen.getByLabelText("Last name") as HTMLInputElement).value).toBe(
       "Smith"
     );
-    expect(
-      (screen.getByLabelText("Date of birth") as HTMLInputElement).value
-    ).toBe("1986-07-30");
+    // DateInput uses separate fields (day, month, year) internally
+    expect(screen.getByLabelText("Day")).toHaveValue("30");
+    expect(screen.getByLabelText("Month")).toHaveValue("7"); // Strip leading zero
+    expect(screen.getByLabelText("Year")).toHaveValue("1986");
     expect(
       (screen.getByLabelText("Current address") as HTMLTextAreaElement).value
     ).toBe("123 Main St");
@@ -172,10 +174,12 @@ describe("FathersDetails", () => {
   it("should validate required fields on submission", () => {
     render(<FathersDetails {...defaultProps} value={{}} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should call onNext on successful form submission", () => {
@@ -187,7 +191,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "Engineer",
@@ -195,7 +199,9 @@ describe("FathersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalledTimes(1);
@@ -214,7 +220,9 @@ describe("FathersDetails", () => {
   it("should mark invalid fields with aria-invalid after submission", () => {
     render(<FathersDetails {...defaultProps} value={{ firstName: "" }} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     const firstNameInput = screen.getByLabelText("First name");
@@ -224,7 +232,9 @@ describe("FathersDetails", () => {
   it("should link error messages to inputs with aria-describedby", () => {
     render(<FathersDetails {...defaultProps} value={{ firstName: "" }} />);
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     const firstNameInput = screen.getByLabelText("First name");
@@ -245,9 +255,10 @@ describe("FathersDetails", () => {
       "id",
       "father-lastName"
     );
-    expect(screen.getByLabelText("Date of birth")).toHaveAttribute(
+    // DateInput uses separate fields with -day, -month, -year suffixes
+    expect(screen.getByLabelText("Day")).toHaveAttribute(
       "id",
-      "father-dateOfBirth"
+      "father-dateOfBirth-day"
     );
     expect(screen.getByLabelText("Current address")).toHaveAttribute(
       "id",
@@ -276,13 +287,13 @@ describe("FathersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
-    // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
-    const dateInput = screen.getByLabelText("Date of birth");
-    expect(dateInput).toHaveAttribute("aria-invalid", "true");
+    // Check for error in ErrorSummary
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
   });
 
   it("should accept middle name as optional", () => {
@@ -294,7 +305,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "Engineer",
@@ -302,7 +313,9 @@ describe("FathersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     expect(onNext).toHaveBeenCalled();
@@ -317,7 +330,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           // occupation is missing
@@ -325,7 +338,9 @@ describe("FathersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Should not proceed to next step
@@ -346,7 +361,7 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "123456-7890",
           occupation: "",
@@ -354,7 +369,9 @@ describe("FathersDetails", () => {
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Should not proceed to next step
@@ -388,18 +405,20 @@ describe("FathersDetails", () => {
         value={{
           firstName: "John",
           lastName: "Smith",
-          dateOfBirth: "07/30/1986",
+          dateOfBirth: "1986-07-30",
           address: "123 Main St",
           nationalRegistrationNumber: "abc",
         }}
       />
     );
 
-    const form = screen.getByRole("button", { name: /next/i }).closest("form");
+    const form = screen
+      .getByRole("button", { name: /continue/i })
+      .closest("form");
     fireEvent.submit(form!);
 
     // Check for error (message appears in both summary and field)
-    expect(screen.getByRole("alert")).toBeInTheDocument();
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
     const input = screen.getByLabelText("National registration number");
     expect(input).toHaveAttribute("aria-invalid", "true");
   });

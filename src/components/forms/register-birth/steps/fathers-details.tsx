@@ -1,15 +1,14 @@
 "use client";
 
+import type { ErrorItem } from "@govtech-bb/react";
 import {
-  convertFromInputFormat,
-  convertToInputFormat,
-} from "@/lib/date-format";
-import { ErrorSummary } from "../../common/error-summary";
-import { FormFieldError } from "../../common/form-field-error";
-import {
-  getFieldClassName,
-  getTextareaClassName,
-} from "../../common/form-utils";
+  Button,
+  ErrorSummary,
+  Input,
+  ShowHide,
+  TextArea,
+} from "@govtech-bb/react";
+import { DateInput } from "../../common/date-input";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { fatherDetailsValidation } from "../schema";
@@ -27,7 +26,6 @@ type FathersDetailsProps = {
  * Collects comprehensive information about the father
  * Based on PDF page 2
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity from JSX conditional rendering, validation logic extracted to hook
 export function FathersDetails({
   value,
   onChange,
@@ -39,7 +37,7 @@ export function FathersDetails({
     "Register a Birth"
   );
 
-  const { errors, fieldErrors, handleChange, handleBlur, handleSubmit } =
+  const { errors, fieldErrors, dateFieldErrors, handleChange, handleSubmit } =
     useStepValidation({
       schema: fatherDetailsValidation,
       value,
@@ -48,262 +46,148 @@ export function FathersDetails({
       fieldPrefix: "father-",
     });
 
+  // Convert ValidationError[] to ErrorItem[] for ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
-      <h1
-        className="mb-6 font-bold text-5xl leading-tight focus:outline-none"
-        ref={titleRef}
-        tabIndex={-1}
-      >
-        Tell us about the child's father
-      </h1>
+    <form
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
+      onSubmit={handleSubmit}
+    >
+      <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
+        <div className="flex flex-col gap-4">
+          <h1
+            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            ref={titleRef}
+            tabIndex={-1}
+          >
+            Tell us about the child's father
+          </h1>
 
-      <ErrorSummary errors={errors} />
-
-      {/* First name */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-firstName"
-        >
-          First name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.firstName ? "father-firstName-error" : undefined
-          }
-          aria-invalid={fieldErrors.firstName ? true : undefined}
-          className={getFieldClassName("firstName", fieldErrors)}
-          id="father-firstName"
-          onBlur={() => handleBlur("firstName")}
-          onChange={(e) => handleChange("firstName", e.target.value)}
-          type="text"
-          value={value.firstName || ""}
-        />
-        <FormFieldError id="father-firstName" message={fieldErrors.firstName} />
-      </div>
-
-      {/* Middle name */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-middleName"
-        >
-          Middle name(s)
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          If they have more than one, add them in order
-        </p>
-        <input
-          className={getFieldClassName("middleName", fieldErrors)}
-          id="father-middleName"
-          onChange={(e) => handleChange("middleName", e.target.value)}
-          type="text"
-          value={value.middleName || ""}
-        />
-      </div>
-
-      {/* Last name */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-lastName"
-        >
-          Last name
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.lastName ? "father-lastName-error" : undefined
-          }
-          aria-invalid={fieldErrors.lastName ? true : undefined}
-          className={getFieldClassName("lastName", fieldErrors)}
-          id="father-lastName"
-          onBlur={() => handleBlur("lastName")}
-          onChange={(e) => handleChange("lastName", e.target.value)}
-          type="text"
-          value={value.lastName || ""}
-        />
-        <FormFieldError id="father-lastName" message={fieldErrors.lastName} />
-      </div>
-
-      {/* Date of birth */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-dateOfBirth"
-        >
-          Date of birth
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          Use the calendar picker or enter the date
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.dateOfBirth ? "father-dateOfBirth-error" : undefined
-          }
-          aria-invalid={fieldErrors.dateOfBirth ? true : undefined}
-          className="w-full max-w-xs rounded-md border-2 border-gray-300 bg-white px-3 py-2 text-neutral-black transition-all focus:border-[#1E787D] focus:ring-2 focus:ring-[#1E787D]/20"
-          id="father-dateOfBirth"
-          lang="en-US"
-          onBlur={() => handleBlur("dateOfBirth")}
-          onChange={(e) =>
-            handleChange("dateOfBirth", convertFromInputFormat(e.target.value))
-          }
-          type="date"
-          value={convertToInputFormat(value.dateOfBirth || "")}
-        />
-        <FormFieldError
-          id="father-dateOfBirth"
-          message={fieldErrors.dateOfBirth}
-        />
-      </div>
-
-      {/* Address */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-address"
-        >
-          Current address
-        </label>
-        <textarea
-          aria-describedby={
-            fieldErrors.address ? "father-address-error" : undefined
-          }
-          aria-invalid={fieldErrors.address ? true : undefined}
-          className={getTextareaClassName("address", fieldErrors)}
-          id="father-address"
-          onBlur={() => handleBlur("address")}
-          onChange={(e) => handleChange("address", e.target.value)}
-          rows={3}
-          value={value.address || ""}
-        />
-        <FormFieldError id="father-address" message={fieldErrors.address} />
-      </div>
-
-      {/* National registration number */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-nationalRegistrationNumber"
-        >
-          National registration number
-        </label>
-        <input
-          aria-describedby={
-            fieldErrors.nationalRegistrationNumber
-              ? "father-nationalRegistrationNumber-error"
-              : undefined
-          }
-          aria-invalid={
-            fieldErrors.nationalRegistrationNumber ? true : undefined
-          }
-          className={getFieldClassName(
-            "nationalRegistrationNumber",
-            fieldErrors
+          {errorItems.length > 0 && (
+            <ErrorSummary
+              errors={errorItems}
+              onErrorClick={handleErrorClick}
+              title="There is a problem"
+            />
           )}
-          id="father-nationalRegistrationNumber"
-          onBlur={() => handleBlur("nationalRegistrationNumber")}
-          onChange={(e) =>
-            handleChange("nationalRegistrationNumber", e.target.value)
-          }
-          placeholder="123456-7890"
-          type="text"
-          value={value.nationalRegistrationNumber || ""}
-        />
-        <FormFieldError
-          id="father-nationalRegistrationNumber"
-          message={fieldErrors.nationalRegistrationNumber}
-        />
 
-        {/* Passport number disclosure */}
-        <details className="mt-4">
-          <summary className="cursor-pointer list-none text-[#1E787D] underline">
-            <span className="inline-flex items-center gap-1">
-              <span className="inline-block transition-transform [details[open]_&]:rotate-90">
-                ▸
-              </span>
-              Use passport number instead
-            </span>
-          </summary>
-          <div className="mt-4">
-            <p className="mb-4 text-base text-gray-600">
-              If you don't have a National Registration number, you can use your
-              passport number instead.
-            </p>
-            <label
-              className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-              htmlFor="father-passportNumber"
-            >
-              Passport number
-            </label>
-            <input
-              aria-describedby={
-                fieldErrors.passportNumber
-                  ? "father-passportNumber-error"
-                  : undefined
+          {/* First name */}
+          <Input
+            error={fieldErrors.firstName}
+            id="father-firstName"
+            label="First name"
+            onChange={(e) => handleChange("firstName", e.target.value)}
+            type="text"
+            value={value.firstName || ""}
+          />
+
+          {/* Middle name */}
+          <Input
+            description="If they have more than one, add them in order"
+            id="father-middleName"
+            label="Middle name(s)"
+            onChange={(e) => handleChange("middleName", e.target.value)}
+            type="text"
+            value={value.middleName || ""}
+          />
+
+          {/* Last name */}
+          <Input
+            error={fieldErrors.lastName}
+            id="father-lastName"
+            label="Last name"
+            onChange={(e) => handleChange("lastName", e.target.value)}
+            type="text"
+            value={value.lastName || ""}
+          />
+
+          {/* Date of birth */}
+          <DateInput
+            errors={dateFieldErrors.dateOfBirth}
+            hint="For example, 27 3 2007 or 27 Mar 2007"
+            id="father-dateOfBirth"
+            label="Date of birth"
+            onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
+            value={value.dateOfBirth || ""}
+          />
+
+          {/* Address */}
+          <TextArea
+            error={fieldErrors.address}
+            id="father-address"
+            label="Current address"
+            onChange={(e) => handleChange("address", e.target.value)}
+            rows={3}
+            value={value.address || ""}
+          />
+
+          {/* National registration number */}
+          <div>
+            <Input
+              error={fieldErrors.nationalRegistrationNumber}
+              id="father-nationalRegistrationNumber"
+              label="National registration number"
+              onChange={(e) =>
+                handleChange("nationalRegistrationNumber", e.target.value)
               }
-              aria-invalid={fieldErrors.passportNumber ? true : undefined}
-              className={getFieldClassName("passportNumber", fieldErrors)}
-              id="father-passportNumber"
-              onBlur={() => handleBlur("passportNumber")}
-              onChange={(e) => handleChange("passportNumber", e.target.value)}
+              placeholder="123456-7890"
               type="text"
-              value={value.passportNumber || ""}
+              value={value.nationalRegistrationNumber || ""}
             />
-            <FormFieldError
-              id="father-passportNumber"
-              message={fieldErrors.passportNumber}
-            />
+
+            {/* Passport number disclosure */}
+            <ShowHide summary="Use passport number instead">
+              <div>
+                <p className="mb-4 text-[20px] text-neutral-midgrey leading-[1.7]">
+                  If you don't have a National Registration number, you can use
+                  your passport number instead.
+                </p>
+                <Input
+                  error={fieldErrors.passportNumber}
+                  id="father-passportNumber"
+                  label="Passport number"
+                  onChange={(e) =>
+                    handleChange("passportNumber", e.target.value)
+                  }
+                  type="text"
+                  value={value.passportNumber || ""}
+                />
+              </div>
+            </ShowHide>
           </div>
-        </details>
-      </div>
 
-      {/* Occupation */}
-      <div>
-        <label
-          className="mb-2 block font-bold text-[20px] text-neutral-black leading-[150%]"
-          htmlFor="father-occupation"
-        >
-          Occupation
-        </label>
-        <p className="mb-2 text-base text-gray-600">
-          This will be included on the child's birth certificate and in official
-          records.
-        </p>
-        <input
-          aria-describedby={
-            fieldErrors.occupation ? "father-occupation-error" : undefined
-          }
-          aria-invalid={fieldErrors.occupation ? true : undefined}
-          className={getFieldClassName("occupation", fieldErrors)}
-          id="father-occupation"
-          onBlur={() => handleBlur("occupation")}
-          onChange={(e) => handleChange("occupation", e.target.value)}
-          type="text"
-          value={value.occupation || ""}
-        />
-        <FormFieldError
-          id="father-occupation"
-          message={fieldErrors.occupation}
-        />
-      </div>
-
-      <div className="flex gap-4">
-        <button
-          className="rounded bg-gray-300 px-6 py-3 font-normal text-neutral-black text-xl transition-all hover:bg-gray-400"
-          onClick={onBack}
-          type="button"
-        >
-          Back
-        </button>
-
-        <button
-          className="rounded bg-[#1E787D] px-6 py-3 font-normal text-neutral-white text-xl transition-all hover:bg-[#1E787D]/90"
-          type="submit"
-        >
-          Next
-        </button>
+          {/* Occupation */}
+          <Input
+            description="This will be included on the child's birth certificate and in official records."
+            id="father-occupation"
+            label="Occupation"
+            onChange={(e) => handleChange("occupation", e.target.value)}
+            type="text"
+            value={value.occupation || ""}
+          />
+        </div>
+        <div className="flex gap-4">
+          <Button onClick={onBack} type="button" variant="secondary">
+            Back
+          </Button>
+          <Button type="submit">Continue</Button>
+        </div>
       </div>
     </form>
   );
