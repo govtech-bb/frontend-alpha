@@ -57,6 +57,9 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       },
       {
         title: "Register a birth",
+        slug: "register-a-birth",
+        source_url: "",
+        description: "",
       },
     ],
   },
