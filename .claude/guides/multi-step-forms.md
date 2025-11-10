@@ -82,6 +82,52 @@ export type StepName =
 - Impossible states are unrepresentable
 - Self-documenting valid form states
 
+### Simple Linear Forms
+
+If your form has NO conditional paths (all users see the same steps), use a simpler structure:
+
+```typescript
+// No discriminated union needed
+export interface MyFormData {
+  field1: string;
+  field2: number;
+  field3: string;
+}
+
+// Partial version for progressive filling
+export type PartialMyFormData = Partial<MyFormData>;
+
+// Step identifiers
+export type StepName =
+  | "step-1"
+  | "step-2"
+  | "step-3"
+  | "check-answers"
+  | "confirmation";
+```
+
+And a simple linear hook with no dependencies:
+
+```typescript
+export function useMyFormSteps(): FormStep[] {
+  return useMemo<FormStep[]>(
+    () => [
+      { id: "step-1", title: "Step 1" },
+      { id: "step-2", title: "Step 2" },
+      { id: "step-3", title: "Step 3" },
+      { id: "check-answers", title: "Check your answers" },
+      { id: "confirmation", title: "Confirmation" },
+    ],
+    [] // No dependencies - steps never change
+  );
+}
+```
+
+**Use discriminated unions only when:**
+- Different user choices lead to different step sequences
+- Some fields are only required in certain paths
+- Form structure changes based on user input
+
 ## Step 2: Create Validation Schemas (`schema.ts`)
 
 ### Two-Layer Validation Strategy
@@ -129,6 +175,23 @@ export const conditionalStepValidation = z.object({
 });
 ```
 
+**Note on Number Fields:**
+
+Number inputs with `.min()` validation may show generic Zod errors like "Expected number, received nan" when the field is empty. Consider using custom error messages:
+
+```typescript
+export const myStepValidation = z.object({
+  numberOfItems: z
+    .number({
+      required_error: "Enter the number of items",
+      invalid_type_error: "Enter the number of items",
+    })
+    .int("Number must be a whole number")
+    .min(1, "You must request at least 1 item")
+    .max(10, "You can request a maximum of 10 items"),
+});
+```
+
 ### Pattern: Factory Functions to Avoid Duplication
 
 If you have similar validation for different entities:
@@ -169,6 +232,40 @@ export const finalSubmissionSchema = z.object({
   }
 });
 ```
+
+### Date Validation with Existing Utilities
+
+The project has existing date validation utilities in `@/lib/dates.ts`. Use these instead of creating new validation functions:
+
+```typescript
+import { validateFields } from "@/lib/dates";
+
+export const myStepValidation = z.object({
+  dateField: z
+    .string()
+    .min(1, "Enter the date")
+    .refine(
+      (val) => {
+        if (!val) return false;
+        const errors = validateFields(val);
+        return errors === null;
+      },
+      { message: "Enter a valid date" }
+    )
+    .refine(
+      (val) => {
+        const date = new Date(val);
+        return date <= new Date();
+      },
+      { message: "Date cannot be in the future" }
+    ),
+});
+```
+
+**Available utilities:**
+- `validateFields(dateString)` - Validates YYYY-MM-DD format
+- `formatForDisplay(dateString)` - Formats for check-answers page (e.g., "15 January 2024")
+- See `src/lib/dates.ts` for all available functions
 
 ## Step 3: Business Logic Hook (`use-[form-name]-steps.ts`)
 
@@ -442,6 +539,46 @@ export function MyForm() {
 
 ## Step 5: Step Components
 
+### Container Classes and Layout
+
+All step components MUST use these exact container classes for proper GOV.BB styling:
+
+```typescript
+<form
+  className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
+  onSubmit={handleSubmit}
+  noValidate
+>
+  <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
+    <div className="flex flex-col gap-4">
+      <div className="pt-2 lg:pt-0">
+        <h1
+          className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+          ref={titleRef}
+          tabIndex={-1}
+        >
+          {/* Step title */}
+        </h1>
+        {/* Form fields */}
+      </div>
+    </div>
+
+    <div className="flex gap-4">
+      <Button type="button" variant="secondary" onClick={onBack}>
+        Back
+      </Button>
+      <Button type="submit">Continue</Button>
+    </div>
+  </div>
+</form>
+```
+
+**Key classes:**
+- `container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16` - Main form container
+- `col-span-2 flex flex-col gap-6 lg:gap-8` - Content wrapper
+- `text-[56px] leading-[1.15]` - Required h1 size
+- `flex gap-4` - Button container spacing
+
 ### Pattern 1: Simple Single-Field Step
 
 ```typescript
@@ -478,34 +615,61 @@ export function Step2({ value, onChange, onNext, onBack }: Step2Props) {
     fieldPrefix: "decision-",
   });
 
+  // Map ValidationError[] to ErrorItem[] for @govtech-bb/react ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <form
-      className="container space-y-8 pt-8 pb-8"
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
       onSubmit={handleSubmit}
+      noValidate
     >
-      <div className="flex flex-col gap-6">
-        <h1
-          className="mb-4 font-bold text-[56px] leading-[1.15]"
-          ref={titleRef}
-          tabIndex={-1}
-        >
-          Do you want to provide additional information?
-        </h1>
+      <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
+        <div className="flex flex-col gap-4">
+          <div className="pt-2 lg:pt-0">
+            <h1
+              className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+              ref={titleRef}
+              tabIndex={-1}
+            >
+              Do you want to provide additional information?
+            </h1>
 
-        {errors.length > 0 && (
-          <ErrorSummary errors={errors} title="There is a problem" />
-        )}
+            {errorItems.length > 0 && (
+              <ErrorSummary
+                errors={errorItems}
+                onErrorClick={handleErrorClick}
+                title="There is a problem"
+              />
+            )}
+          </div>
 
-        <RadioGroup
-          aria-describedby={fieldErrors.decisionField ? "decision-decisionField-error" : undefined}
-          aria-invalid={!!fieldErrors.decisionField}
-          aria-label="Decision"
-          onValueChange={(val) => handleChange("decisionField", val as "yes" | "no")}
-          value={value || undefined}
-        >
-          <Radio id="decision-yes" label="Yes" value="yes" />
-          <Radio id="decision-no" label="No" value="no" />
-        </RadioGroup>
+          <RadioGroup
+            aria-describedby={fieldErrors.decisionField ? "decision-decisionField-error" : undefined}
+            aria-invalid={!!fieldErrors.decisionField}
+            aria-label="Decision"
+            onValueChange={(val) => handleChange("decisionField", val as "yes" | "no")}
+            value={value || undefined}
+          >
+            <Radio id="decision-yes" label="Yes" value="yes" />
+            <Radio id="decision-no" label="No" value="no" />
+          </RadioGroup>
+        </div>
 
         <div className="flex gap-4">
           <Button type="button" variant="secondary" onClick={onBack}>
@@ -518,6 +682,8 @@ export function Step2({ value, onChange, onNext, onBack }: Step2Props) {
   );
 }
 ```
+
+**Note:** Always import `ErrorItem` from `@govtech-bb/react` and map validation errors to this format. Do NOT pass raw errors directly to ErrorSummary.
 
 ### Pattern 2: Complex Multi-Field Step
 
@@ -554,60 +720,87 @@ export function ConditionalStep({
       fieldPrefix: "conditional-",
     });
 
+  // Map ValidationError[] to ErrorItem[] for @govtech-bb/react ErrorSummary
+  const errorItems: ErrorItem[] = errors.map((error) => ({
+    text: error.message,
+    target: error.field,
+  }));
+
+  const handleErrorClick = (
+    error: ErrorItem,
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) => {
+    event.preventDefault();
+    const element = document.getElementById(error.target);
+    if (element) {
+      element.focus();
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   return (
     <form
-      className="container space-y-8 pt-8 pb-8"
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
       onSubmit={handleSubmit}
+      noValidate
     >
-      <div className="flex flex-col gap-6">
-        <h1
-          className="mb-4 font-bold text-[56px] leading-[1.15]"
-          ref={titleRef}
-          tabIndex={-1}
-        >
-          Tell us more
-        </h1>
+      <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
+        <div className="flex flex-col gap-4">
+          <div className="pt-2 lg:pt-0">
+            <h1
+              className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+              ref={titleRef}
+              tabIndex={-1}
+            >
+              Tell us more
+            </h1>
 
-        {errors.length > 0 && (
-          <ErrorSummary errors={errors} title="There is a problem" />
-        )}
+            {errorItems.length > 0 && (
+              <ErrorSummary
+                errors={errorItems}
+                onErrorClick={handleErrorClick}
+                title="There is a problem"
+              />
+            )}
+          </div>
 
-        <Input
-          id="conditional-name"
-          label="Name"
-          value={value.name || ""}
-          onChange={(e) => handleChange("conditionalData.name", e.target.value)}
-          error={fieldErrors["conditionalData.name"]}
-        />
+          <Input
+            id="conditional-name"
+            label="Name"
+            value={value.name || ""}
+            onChange={(e) => handleChange("conditionalData.name", e.target.value)}
+            error={fieldErrors["conditionalData.name"]}
+          />
 
-        <Input
-          id="conditional-age"
-          label="Age"
-          type="number"
-          value={value.age || ""}
-          onChange={(e) => handleChange("conditionalData.age", Number(e.target.value))}
-          error={fieldErrors["conditionalData.age"]}
-        />
+          <Input
+            id="conditional-age"
+            label="Age"
+            type="number"
+            value={value.age || ""}
+            onChange={(e) => handleChange("conditionalData.age", Number(e.target.value))}
+            error={fieldErrors["conditionalData.age"]}
+          />
 
-        <DateInput
-          id="conditional-date"
-          label="Date"
-          value={value.date || ""}
-          onChange={(dateValue) => handleChange("conditionalData.date", dateValue)}
-          errors={dateFieldErrors["conditionalData.date"]}
-        />
+          <DateInput
+            id="conditional-date"
+            label="Date"
+            value={value.date || ""}
+            onChange={(dateValue) => handleChange("conditionalData.date", dateValue)}
+            errors={dateFieldErrors["conditionalData.date"]}
+          />
 
-        <Select
-          id="conditional-category"
-          label="Category"
-          value={value.category || ""}
-          onChange={(e) => handleChange("conditionalData.category", e.target.value)}
-          error={fieldErrors["conditionalData.category"]}
-        >
-          <option value="">Select an option</option>
-          <option value="A">Category A</option>
-          <option value="B">Category B</option>
-        </Select>
+          <Select
+            id="conditional-category"
+            label="Category"
+            value={value.category || ""}
+            onChange={(e) => handleChange("conditionalData.category", e.target.value)}
+            error={fieldErrors["conditionalData.category"]}
+          >
+            <option value="">Select an option</option>
+            <option value="A">Category A</option>
+            <option value="B">Category B</option>
+          </Select>
+        </div>
 
         <div className="flex gap-4">
           <Button type="button" variant="secondary" onClick={onBack}>
@@ -675,16 +868,17 @@ export function CheckAnswers({
 
   return (
     <form
-      className="container space-y-8 pt-8 pb-8"
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
       onSubmit={handleSubmit}
     >
-      <h1
-        className="mb-4 font-bold text-[56px] leading-[1.15]"
-        ref={titleRef}
-        tabIndex={-1}
-      >
-        Check your answers before submitting
-      </h1>
+      <div className="col-span-2">
+        <h1
+          className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+          ref={titleRef}
+          tabIndex={-1}
+        >
+          Check your answers before submitting
+        </h1>
 
       {/* Summary sections */}
       <div className="space-y-6">
@@ -740,13 +934,14 @@ export function CheckAnswers({
         </div>
       )}
 
-      <div className="flex gap-4">
-        <Button type="button" variant="secondary" onClick={onBack}>
-          Back
-        </Button>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Confirm and send"}
-        </Button>
+        <div className="flex gap-4">
+          <Button type="button" variant="secondary" onClick={onBack}>
+            Back
+          </Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Confirm and send"}
+          </Button>
+        </div>
       </div>
     </form>
   );
@@ -869,16 +1064,42 @@ Use components from `@govtech-bb/react`:
 ```
 
 ### ErrorSummary
+
+The ErrorSummary component requires `ErrorItem[]` format from `@govtech-bb/react`:
+
 ```tsx
-<ErrorSummary
-  errors={errors}
-  title="There is a problem"
-  onErrorClick={(error, e) => {
-    e.preventDefault();
-    document.getElementById(error.target)?.focus();
-  }}
-/>
+import type { ErrorItem } from "@govtech-bb/react";
+import { ErrorSummary } from "@govtech-bb/react";
+
+// Map ValidationError[] to ErrorItem[] for ErrorSummary
+const errorItems: ErrorItem[] = errors.map((error) => ({
+  text: error.message,
+  target: error.field,
+}));
+
+const handleErrorClick = (
+  error: ErrorItem,
+  event: React.MouseEvent<HTMLAnchorElement>
+) => {
+  event.preventDefault();
+  const element = document.getElementById(error.target);
+  if (element) {
+    element.focus();
+    element.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+};
+
+// In render:
+{errorItems.length > 0 && (
+  <ErrorSummary
+    errors={errorItems}
+    onErrorClick={handleErrorClick}
+    title="There is a problem"
+  />
+)}
 ```
+
+**IMPORTANT:** You MUST map validation errors to `ErrorItem[]` format. Do NOT pass raw errors directly to ErrorSummary.
 
 ### DateInput (Custom)
 ```tsx
@@ -1050,6 +1271,78 @@ describe("finalSubmissionSchema", () => {
 });
 ```
 
+## Common Test Issues and Solutions
+
+### Issue 1: Text Split Across Elements
+
+When testing error messages or labels that may be split across multiple DOM elements:
+
+```typescript
+// DON'T: Exact match may fail
+expect(screen.getByText("Date of birth")).toBeInTheDocument();
+
+// DO: Use flexible matchers
+expect(screen.getByText(/date of birth/i)).toBeInTheDocument();
+// OR search in specific elements
+expect(screen.getByRole("group", { name: /date of birth/i })).toBeInTheDocument();
+```
+
+### Issue 2: Multiple Alert Roles
+
+When testing forms with multiple validation errors:
+
+```typescript
+// DON'T: getByRole will fail with multiple alerts
+const alert = screen.getByRole("alert");
+
+// DO: Use getAllByRole
+const alerts = screen.getAllByRole("alert");
+expect(alerts).toHaveLength(2);
+expect(alerts[0]).toHaveTextContent(/enter your name/i);
+```
+
+### Issue 3: DateInput Component Structure
+
+DateInput renders three separate fields (Day, Month, Year), not a single input:
+
+```typescript
+// DON'T: Look for single date input
+const dateInput = screen.getByLabelText("Date of birth");
+
+// DO: Check for the date group or individual fields
+expect(screen.getByRole("group", { name: /date of birth/i })).toBeInTheDocument();
+// OR test individual fields
+expect(screen.getByLabelText(/day/i)).toBeInTheDocument();
+expect(screen.getByLabelText(/month/i)).toBeInTheDocument();
+expect(screen.getByLabelText(/year/i)).toBeInTheDocument();
+```
+
+### Issue 4: Flexible Error Message Matching
+
+Validation error messages may vary slightly from Zod defaults:
+
+```typescript
+// DON'T: Expect exact Zod default messages
+expect(result.error.issues[0].message).toBe("Required");
+
+// DO: Use flexible matching
+expect(result.error.issues[0].message).toContain("required");
+// OR use regex
+expect(result.error.issues[0].message).toMatch(/at least 1|must be 1 or greater/i);
+```
+
+### Issue 5: Date Format in Check Answers
+
+Dates are formatted using `formatForDisplay` utility:
+
+```typescript
+// DON'T: Expect ISO format
+expect(screen.getByText("2024-01-15")).toBeInTheDocument();
+
+// DO: Expect formatted display
+expect(screen.getByText("15 January 2024")).toBeInTheDocument();
+```
+
 ## Complete Checklist
 
 Use this checklist when creating a new form:
@@ -1100,6 +1393,10 @@ Use this checklist when creating a new form:
 - [ ] Use `useStepFocus` for accessibility
 - [ ] Use `useStepValidation` for errors
 - [ ] Use design system components
+- [ ] Add proper container classes (`container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16`)
+- [ ] Use correct h1 typography (`text-[56px] leading-[1.15]`)
+- [ ] Wrap content in `col-span-2` div
+- [ ] Map errors to `ErrorItem[]` format for ErrorSummary
 - [ ] Add Back button (except first step)
 - [ ] Add Continue/Submit button
 - [ ] Create check-answers summary component
