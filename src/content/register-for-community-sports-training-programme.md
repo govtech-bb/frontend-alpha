@@ -1,7 +1,7 @@
 ---
 title: "Register for a Youth Development Programme (YDP) Community Sports Training programme"
 stage: "alpha"
-featured: true
+featured: false
 publish_date: 2025-10-17
 ---
 

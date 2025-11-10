@@ -1,14 +1,13 @@
 ---
 title: "Get a death certificate"
-featured: true
+featured: false
 stage: "alpha"
 publish_date: 2025-10-10
 ---
 
-When someone dies and their death is registered in Barbados, their next of kin (the deceased’s closest living relative or relatives) can use this service to get a death certificate. 
+When someone dies and their death is registered in Barbados, their next of kin (the deceased’s closest living relative or relatives) can use this service to get a death certificate.
 
 Certificates for Barbadian citizens can be requested at any point. However, the Registration Department does not issue certificates for deaths which were registered before 1925.
-
 
 Most death certificates are requested at the same time a death is registered because a certificate is essential for things like closing the deceased’s bank accounts and getting a funeral grant.
 
@@ -22,7 +21,7 @@ The form asks for details including the name of the person who has died and thei
 
 ### Pay the fee
 
-You can pay in cash or by card at the Registration Department. You will need to keep your receipt for collection. 
+You can pay in cash or by card at the Registration Department. You will need to keep your receipt for collection.
 The original certificate costs BDS $5. Case of death certificate is BDS $10
 
 ### Submit your request
@@ -33,9 +32,9 @@ Submit your form and supporting information to the Registration Department to th
 
 A certificate is usually ready in 2 to 3 working days. You will need to show your receipt and collect your certification from the Registration Department. A certificate can sometimes be issued on the same day, in the case of a medical or travel emergency. You will need to show proof of the emergency.
 
-## Get a death certificate if you live overseas  
+## Get a death certificate if you live overseas
 
 Contact the Registration Department.  
 registrarsupremecourt@barbados.gov.bb  
 (246) 535-9700  
-+1 (246) 535-9751 (if you are calling from overseas)  
++1 (246) 535-9751 (if you are calling from overseas)

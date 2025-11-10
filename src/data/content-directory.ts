@@ -35,6 +35,29 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         description:
           "Information on how to register a marriage certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
+      {
+        title: "Apply for a place at a day nursery",
+        slug: "apply-for-a-place-at-a-day-nursery",
+        source_url: "",
+        description: "",
+      },
+      {
+        title: "Get a death certificate",
+        slug: "get-a-death-certificate",
+        source_url: "",
+        description:
+          "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
+      },
+      {
+        title: "Get a birth certificate",
+        slug: "get-a-birth-certificate",
+        source_url: "",
+        description:
+          "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
+      },
+      {
+        title: "Register a birth",
+      },
     ],
   },
   {
@@ -48,6 +71,28 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         source_url: "https://www.gov.bb/Citizens/job-seekers",
         description:
           "Information on overseas and public sector employment opportunities in Barbados.",
+      },
+      {
+        title: "Apply to be a Project Protégé mentor",
+        slug: "apply-to-be-a-project-protege-mentor",
+        description: "Apply to be a Project Protégé mentor",
+      },
+      {
+        title: "Apply to the Barbados YouthADVANCE Corps (BYAC)",
+        slug: "apply-to-the-barbados-youthadvance-corps",
+        description: "Apply to the Barbados YouthADVANCE Corps (BYAC)",
+      },
+      {
+        title:
+          "Register for a Youth Development Programme (YDP) Community Sports Training programme",
+        slug: "register-for-community-sports-training-programme",
+        description:
+          "Register for a Youth Development Programme (YDP) Community Sports Training programme",
+      },
+      {
+        title: "Register for a summer camp",
+        slug: "register-for-a-summer-camp",
+        description: "Register for a summer camp",
       },
     ],
   },
@@ -74,6 +119,13 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         source_url: "https://www.gov.bb/Citizens/tax-online",
         description:
           "TAMIS is an electronic platform that allows you to manage your taxes online, with features for viewing account information, filing returns, viewing statements, making online payments, and submitting inquiries.",
+      },
+      {
+        title: "Get disaster relief assistance",
+        slug: "get-disaster-relief-assistance",
+        source_url: "",
+        description:
+          "Information on how to apply for disaster relief assistance in Barbados, including eligibility criteria and required documentation.",
       },
     ],
   },
@@ -152,21 +204,15 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         description:
           "Information on the various ports of entry into Barbados, including the Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles.",
       },
+      {
+        title: "Get a document notarised",
+        slug: "get-a-document-notarised",
+        source_url: "https://www.gov.bb/Citizens/notarize-document",
+        description:
+          "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
+      },
     ],
   },
-  // {
-  //   title: "Community, culure and leisure",
-  //   slug: "community-culture-leisure",
-  //   description:
-  //     "Take part in local and national life including volunteering, sport and culture",
-  //   pages: [],
-  // },
-  // {
-  //   title: "Health, safety and emergencies",
-  //   slug: "health-safety-emergencies",
-  //   description: "Stay safe, access crisis help, and prepare for emergencies",
-  //   pages: [],
-  // },
   {
     title: "Business and trade",
     slug: "business-trade",
@@ -216,220 +262,33 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         description:
           "Information on corporation tax in Barbados, including rates, allowances, and loss considerations.",
       },
+      {
+        title: "Get a permit to play loud music",
+        slug: "loud-music-permit",
+        source_url: "",
+        description: "",
+      },
     ],
   },
-  // {
-  //   title: "Government, democracy and civic life",
-  //   slug: "government-democracy-civic-life",
-  //   description: "Apply for or manage education and youth opportunities",
-  //   pages: [
-  //     {
-  //       title: "President",
-  //       slug: "president",
-  //       source_url: "https://www.gov.bb/Visit-Barbados/president",
-  //       description:
-  //         "Information about the President of Barbados, including a biography of Her Excellency The Most Honourable Dame Sandra Prunella Mason.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Prime minister",
-  //       slug: "prime-minister",
-  //       source_url: "https://www.gov.bb/Government/prime-minister",
-  //       description:
-  //         "Profile of the Prime Minister of Barbados, the Honourable Mia Amor Mottley, including her roles and career highlights.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Cabinet",
-  //       slug: "cabinet",
-  //       source_url: "https://www.gov.bb/cabinet.php",
-  //       description:
-  //         "Profiles of the Cabinet members of the Government of Barbados, including their names, titles, and responsibilities.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "House of Assembly",
-  //       slug: "house-of-assembly",
-  //       source_url: "https://www.gov.bb/Government/house-of-assembly",
-  //       description:
-  //         "Information about the House of Assembly in Barbados, including its composition, highlights, and historical aspects.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Parliament",
-  //       slug: "parliament",
-  //       source_url: "https://www.gov.bb/Government/parliament",
-  //       description:
-  //         "Information on the Parliament of Barbados, its structure, functions, and procedures based on the Westminster system.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Senators",
-  //       slug: "senators",
-  //       source_url: "https://www.gov.bb/Government/senators",
-  //       description:
-  //         "Information about the Senate of Barbados, including its composition, appointment process, and historical highlights.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Permanent secretaries and related",
-  //       slug: "permanent-secretaries-and-related",
-  //       source_url: "https://www.gov.bb/Government/ps-related-grades",
-  //       description:
-  //         "A list of Permanent Secretaries and related grades within the Government of Barbados.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Political system",
-  //       slug: "political-system",
-  //       source_url: "https://www.gov.bb/Visit-Barbados/political-system",
-  //       description:
-  //         "Overview of Barbados' democratic government, key figures, economy, and currency.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "National pledge",
-  //       slug: "national-pledge",
-  //       source_url: "https://www.gov.bb/Visit-Barbados/national-pledge",
-  //       description:
-  //         "The National Pledge of Barbados is a solemn promise of allegiance to the country and its flag, written by Mr. Lester Vaughan.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Coat of arms",
-  //       slug: "coat-of-arms",
-  //       source_url: "https://www.gov.bb/Visit-Barbados/coat-of-arms",
-  //       description:
-  //         "The Barbados Coat of Arms, granted in 1966, features national symbols like the Pride of Barbados flowers and the Bearded Fig Tree, embodying the motto 'Pride and Industry'.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Demographics",
-  //       slug: "demographics",
-  //       source_url: "https://www.gov.bb/Visit-Barbados/demographics",
-  //       description:
-  //         "Information about the population, ethnic groups, languages, and religions of Barbados.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "History",
-  //       slug: "history",
-  //       source_url: "https://www.gov.bb/Visit-Barbados/history",
-  //       description:
-  //         "A summary of Barbados' archaeological history, indicating prior inhabitation by Arawaks and Caribs before English settlement and the subsequent shift to sugar production and the use of enslaved labor.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Ministry",
-  //       slug: "ministry",
-  //       source_url: "https://www.gov.bb/ministries",
-  //       description:
-  //         "A listing of all Government Ministries in Barbados with a search function.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Department",
-  //       slug: "department",
-  //       source_url: "https://www.gov.bb/departments",
-  //       description: "A listing of all government departments in Barbados.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Air Navigation Services Department",
-  //       slug: "air-navigation-services-department",
-  //       source_url: "https://www.gov.bb/Departments/air-navigation",
-  //       description:
-  //         "Contact information for the Air Navigation Services Department in Barbados, including phone numbers for various sections and offices.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Analytical Services",
-  //       slug: "analytical-services",
-  //       source_url: "https://www.gov.bb/Departments/analytical-services",
-  //       description:
-  //         "The Analytical Services department provides a timely and reliable analytical service committed to quality.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Department of Archives",
-  //       slug: "department-of-archives",
-  //       source_url: "https://www.gov.bb/Departments/archives",
-  //       description:
-  //         "Information about the Department of Archives in Barbados, including its role, contact information, and address.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Office of the Auditor General",
-  //       slug: "office-of-the-auditor-general",
-  //       source_url: "https://www.gov.bb/Departments/auditor-general",
-  //       description:
-  //         "Contact information and website link for the Office of the Auditor General in Barbados.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Barbados Building Standards Authority",
-  //       slug: "barbados-building-standards-authority",
-  //       source_url: "https://www.gov.bb/Departments/building-standards",
-  //       description:
-  //         "Information about the Barbados Building Standards Authority and its role in enforcing the Barbados National Building Code and the Building Act to facilitate cost-effective building construction.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Central Purchasing Department",
-  //       slug: "central-purchasing-department",
-  //       source_url: "https://www.gov.bb/Departments/central-purchasing",
-  //       description:
-  //         "The Central Purchasing Department provides quality goods from reliable sources at economical prices to government ministries and departments in Barbados.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Children's Development Centre",
-  //       slug: "childrens-development-centre",
-  //       source_url: "https://www.gov.bb/Departments/childrens-development",
-  //       description:
-  //         "The Children's Development Centre in Barbados protects the rights and enhances the quality of life for persons with physical and mental challenges.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Coastal Zone Management Unit",
-  //       slug: "coastal-zone-management-unit",
-  //       source_url: "https://www.gov.bb/Departments/coastal-zone",
-  //       description:
-  //         "The Coastal Zone Management Unit performs various coastal management functions including monitoring, consultation, and public education.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Department of Commerce and Consumer Affairs",
-  //       slug: "department-of-commerce-and-consumer-affairs",
-  //       source_url: "https://www.gov.bb/Departments/commerce",
-  //       description:
-  //         "The Department of Commerce and Consumer Affairs facilitates the development of commerce, enforces trading standards and protects consumers.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Consular and Diaspora Division",
-  //       slug: "consular-and-diaspora-division",
-  //       source_url: "https://www.gov.bb/Departments/consular-diaspora",
-  //       description:
-  //         "Information on the Consular and Diaspora Division, its core responsibilities, and the services it provides to Barbadian nationals and the diaspora community.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //     {
-  //       title: "Co-operatives Department",
-  //       slug: "co-operatives-department",
-  //       source_url: "https://www.gov.bb/Departments/cooperatives",
-  //       description:
-  //         "Information on the Co-operatives Department, including its mission, contact details, and registrar information.",
-  //       publish_date: "2025-10-13",
-  //     },
-  //   ],
-  // },
-  // {
-  //   title: "Education, youth and learning",
-  //   slug: "education-youth-learning",
-  //   description: "Learn how Barbados is governed and who represents you",
-  //   pages: [],
-  // },
+  {
+    title: "Public Safety",
+    slug: "public-safety",
+    description: "",
+    pages: [
+      {
+        title: "Report a concern about a child",
+        slug: "report-a-concern-about-a-child",
+        source_url: "",
+        description: "",
+      },
+      {
+        title: "Report elderly abuse",
+        slug: "report-elderly-abuse",
+        source_url: "",
+        description: "",
+      },
+    ],
+  },
 ];
 
 export const INFORMATION_SECTIONS = [

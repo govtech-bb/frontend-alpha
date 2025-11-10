@@ -37,11 +37,8 @@ export default async function Home() {
 
             <div className="flex flex-col gap-2">
               {featuredServices.map((service) => (
-                <div
-                  className="flex items-center lg:gap-x-3"
-                  key={service.slug}
-                >
-                  <ChevronLeftSVG className="hidden shrink-0 rotate-180 lg:inline-block" />
+                <div className="flex items-center gap-x-3" key={service.slug}>
+                  <ChevronLeftSVG className="inline-block shrink-0 rotate-180" />
 
                   <Link
                     as={NextLink}
@@ -54,6 +51,15 @@ export default async function Home() {
                   </Link>
                 </div>
               ))}
+
+              <Link
+                as={NextLink}
+                className="mt-4 text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                href="/what-we-mean-by-alpha"
+                variant={"secondary"}
+              >
+                Learn more about alpha
+              </Link>
             </div>
           </div>
         </div>

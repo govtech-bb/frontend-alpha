@@ -55,3 +55,36 @@ export async function getFeaturedServices() {
     return [];
   }
 }
+
+export async function getAlphaServices() {
+  try {
+    const contentDir = path.join(process.cwd(), "src", "content");
+    const files = await fs.readdir(contentDir);
+
+    const markdownFiles = files.filter((file) => file.endsWith(".md"));
+
+    const services: Array<{ title: string; slug: string; featured?: boolean }> =
+      [];
+
+    for (const file of markdownFiles) {
+      const filePath = path.join(contentDir, file);
+      const fileContents = await fs.readFile(filePath, "utf8");
+      const { data } = matter(fileContents);
+
+      // Check if the file has featured: true in frontmatter
+      if (data.stage === "alpha") {
+        const slug = file.replace(".md", "");
+        services.push({
+          title: data.title || slug,
+          slug,
+        });
+      }
+    }
+
+    return services;
+  } catch (_error) {
+    // biome-ignore lint/suspicious/noConsole: This is for debugging malformed markdown frontmatter data
+    console.log("error fetching markdown", _error);
+    return [];
+  }
+}

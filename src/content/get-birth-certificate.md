@@ -1,7 +1,7 @@
 ---
 title: "Get a birth certificate"
 stage: "alpha"
-featured: true
+featured: false
 publish_date: 2025-10-17
 ---
 
@@ -18,7 +18,7 @@ Supreme Court Complex
 Whitepark Road  
 St. Michael  
 (246) 535-9700  
-Open Monday to Friday: 8:30am and 3:15pm  
+Open Monday to Friday: 8:30am and 3:15pm
 
 ### Complete the form
 
@@ -27,12 +27,12 @@ The form asks for:
 - the child’s full name
 - the child’s date of birth
 - the child’s place of birth
-- the parents’ full names 
-- the mother’s maiden name 
+- the parents’ full names
+- the mother’s maiden name
 
 ### Pay the fee
 
-Each certified copy costs BDS $5.00. People aged 60 and over pay BDS $1.00 per certificate. You can pay in cash or by card at the Registration Department. You will need to keep your receipt for collection. 
+Each certified copy costs BDS $5.00. People aged 60 and over pay BDS $1.00 per certificate. You can pay in cash or by card at the Registration Department. You will need to keep your receipt for collection.
 
 ### Submit your request
 
@@ -50,4 +50,4 @@ Contact the Registration Department.
 
 registrarsupremecourt@barbados.gov.bb  
 (246) 535-9700  
-+1 (246) 535-9751 (if you are calling from overseas)  
++1 (246) 535-9751 (if you are calling from overseas)
