@@ -30,10 +30,10 @@ export function Confirmation({
   return (
     <>
       {/* Header section with breadcrumb and title */}
-      <div className="bg-green-40 pb-8">
-        <div className="container">
+      <div className="bg-green-40">
+        <div className="container pt-4 pb-8">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 py-4">
+          <div className="flex items-center">
             <div className="flex items-center gap-x-2">
               <ChevronLeftSVG className="shrink-0" />
 
@@ -49,16 +49,16 @@ export function Confirmation({
           </div>
 
           {/* Title section */}
-          <div className="flex flex-col gap-4 pt-16">
+          <div className="flex flex-col gap-4 pt-6 lg:pt-16">
             <h1
-              className="font-bold text-[56px] text-black leading-[1.15] focus:outline-none"
+              className="pt-2 font-bold text-[56px] text-black leading-[1.15] focus:outline-none"
               ref={titleRef}
               tabIndex={-1}
             >
               Pre-registration complete
             </h1>
 
-            <p className="font-normal text-[32px] text-black leading-[1.5]">
+            <p className="font-normal text-[20px] text-black leading-[1.7] lg:text-[32px] lg:leading-[1.5]">
               Your information has been sent to the Registration Department.
             </p>
           </div>
@@ -66,11 +66,11 @@ export function Confirmation({
       </div>
       {/* Main content */}
 
-      <div className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3">
-        <div className="col-span-2 flex flex-col gap-8">
-          <div className="flex flex-col gap-4">
-            {/* What you must do next */}
-            <h2 className="font-bold text-[40px] text-black leading-[1.25]">
+      <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:pt-8 lg:pb-16">
+        <div className="col-span-2 space-y-6 lg:space-y-8">
+          {/* What you must do next */}
+          <div className="pt-2">
+            <h2 className="mb-4 font-bold text-[40px] text-black leading-[1.25]">
               What you must do next
             </h2>
             <div className="font-normal text-[20px] text-black leading-[1.7]">
@@ -80,53 +80,51 @@ export function Confirmation({
               </p>
               <p>You do not need an appointment.</p>
             </div>
-            {/* Who must attend */}
-            <div className="flex flex-col items-start gap-4">
-              <h3 className="font-bold text-[24px] text-black leading-[1.25]">
-                Who must attend the appointment
-              </h3>
+          </div>
 
-              <p className="font-normal text-[20px] text-black leading-[1.7]">
-                {hasFatherDetails
-                  ? "Both the mother and father of the child must attend the appointment."
-                  : "The mother must attend the appointment."}
+          {/* Who must attend */}
+          <div className="pt-2">
+            <h3 className="mb-4 font-bold text-[24px] text-black leading-[1.25]">
+              Who must attend the appointment
+            </h3>
+            <p className="font-normal text-[20px] text-black leading-[1.7]">
+              {hasFatherDetails
+                ? "Both the mother and father of the child must attend the appointment."
+                : "The mother must attend the appointment."}
+            </p>
+            <Link
+              as={NextLink}
+              className="mt-4 inline-block text-[20px] leading-[1.7]"
+              href="#"
+            >
+              See what you need to bring with you
+            </Link>
+          </div>
+
+          {/* Location */}
+          <div className="mb-12 pt-2">
+            <h3 className="mb-4 font-bold text-[24px] text-black leading-[1.25]">
+              Location
+            </h3>
+            <address className="mb-4 font-normal text-[20px] text-black not-italic leading-[1.7]">
+              Registration Department
+              <br />
+              Supreme Court Complex
+              <br />
+              Whitepark Road
+              <br />
+              St. Michael
+            </address>
+            <div className="font-normal text-[20px] text-black leading-[1.7]">
+              <p className="mb-4">
+                The total cost for your requested certificates is{" "}
+                {totalCost === 0 ? "free" : `BBD $${totalCost.toFixed(2)}`}.
+                {totalCost > 0 && " Remember to bring payment with you."}
               </p>
-
-              <Link
-                as={NextLink}
-                className="text-[20px] leading-[1.7]"
-                href="#"
-              >
-                See what you need to bring with you
-              </Link>
-            </div>
-            {/* Location */}
-            <div className="flex flex-col gap-4">
-              <h3 className="font-bold text-[24px] text-black leading-[1.25]">
-                Location
-              </h3>
-
-              <address className="font-normal text-[20px] text-black not-italic leading-[1.7]">
-                Registration Department
-                <br />
-                Supreme Court Complex
-                <br />
-                Whitepark Road
-                <br />
-                St. Michael
-              </address>
-
-              <div className="space-y-4 font-normal text-[20px] text-black leading-[1.7]">
-                <p>
-                  The total cost for your requested certificates is{" "}
-                  {totalCost === 0 ? "free" : `BBD $${totalCost.toFixed(2)}`}.
-                  {totalCost > 0 && " Remember to bring payment with you."}
-                </p>
-                <p>
-                  You should also bring valid photo identification for the
-                  parent(s) attending.
-                </p>
-              </div>
+              <p>
+                You should also bring valid photo identification for the
+                parent(s) attending.
+              </p>
             </div>
           </div>
         </div>

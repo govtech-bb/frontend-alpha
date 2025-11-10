@@ -23,6 +23,8 @@ type SummarySectionProps = {
   children: React.ReactNode;
 };
 
+//? Is this duplicate button the best way to handle conditional viewport
+
 function SummarySection({
   title,
   stepName,
@@ -32,9 +34,11 @@ function SummarySection({
   return (
     <div className="border-neutral-grey border-b-4 pb-8">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="font-bold text-[40px] leading-[1.25]">{title}</h2>
+        <h2 className="mb-4 font-bold text-[40px] leading-[1.25] lg:mb-0">
+          {title}
+        </h2>
         <button
-          className="text-teal-dark underline hover:text-teal-dark/80"
+          className="hidden text-teal-dark underline hover:text-teal-dark/80 lg:inline"
           onClick={() => onEdit(stepName)}
           type="button"
         >
@@ -42,6 +46,13 @@ function SummarySection({
         </button>
       </div>
       {children}
+      <button
+        className="mt-2 font-normal text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:hidden"
+        onClick={() => onEdit(stepName)}
+        type="button"
+      >
+        Change
+      </button>
     </div>
   );
 }
@@ -51,7 +62,6 @@ function SummarySection({
  * Summary page showing all entered data with edit links
  * Based on PDF pages 8 and 18
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex form summary with conditional rendering
 export function CheckAnswers({
   formData,
   onSubmit,
@@ -134,13 +144,13 @@ export function CheckAnswers({
 
   return (
     <form
-      className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3"
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
       onSubmit={handleSubmit}
     >
-      <div className="col-span-2 flex flex-col gap-8">
+      <div className="flex flex-col gap-6 lg:col-span-2 lg:gap-8">
         <div className="flex flex-col gap-4">
           <h1
-            className="mb-2 font-bold text-[56px] leading-[1.15]"
+            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
             ref={titleRef}
             tabIndex={-1}
           >
@@ -162,29 +172,29 @@ export function CheckAnswers({
               stepName="father-details"
               title="Tell us about the child's father"
             >
-              <dl className="grid grid-cols-3 gap-4 font-normal text-[20px] leading-[1.7] [&_dt]:font-bold">
+              <dl className="flex flex-col gap-2 font-normal text-[20px] leading-[1.7] lg:grid lg:grid-cols-3 lg:gap-4 [&_dt]:font-bold">
                 <dt>First name</dt>
-                <dd className="col-span-2">{formData.father.firstName}</dd>
+                <dd className="lg:col-span-2">{formData.father.firstName}</dd>
 
                 <dt>Middle name(s)</dt>
-                <dd className="col-span-2">{formData.father.middleName}</dd>
+                <dd className="lg:col-span-2">{formData.father.middleName}</dd>
 
                 <dt>Last name</dt>
-                <dd className="col-span-2">{formData.father.lastName}</dd>
+                <dd className="lg:col-span-2">{formData.father.lastName}</dd>
 
                 <dt>Current address</dt>
-                <dd className="col-span-2 whitespace-pre-line">
+                <dd className="whitespace-pre-line lg:col-span-2">
                   {formData.father.address}
                 </dd>
 
                 <dt>National registration number</dt>
-                <dd className="col-span-2">
+                <dd className="lg:col-span-2">
                   {formData.father.nationalRegistrationNumber ||
                     formData.father.passportNumber}
                 </dd>
 
                 <dt>Occupation</dt>
-                <dd className="col-span-2">{formData.father.occupation}</dd>
+                <dd className="lg:col-span-2">{formData.father.occupation}</dd>
               </dl>
             </SummarySection>
           )}
@@ -195,39 +205,39 @@ export function CheckAnswers({
             stepName="mother-details"
             title="Tell us about the child's mother"
           >
-            <dl className="grid grid-cols-3 gap-4 font-normal text-[20px] leading-[1.7] [&_dt]:font-bold">
+            <dl className="flex flex-col gap-2 font-normal text-[20px] leading-[1.7] lg:grid lg:grid-cols-3 lg:gap-4 [&_dt]:font-bold">
               <dt>First name</dt>
-              <dd className="col-span-2">{formData.mother?.firstName}</dd>
+              <dd className="lg:col-span-2">{formData.mother?.firstName}</dd>
 
               <dt>Middle name(s)</dt>
-              <dd className="col-span-2">{formData.mother?.middleName}</dd>
+              <dd className="lg:col-span-2">{formData.mother?.middleName}</dd>
 
               <dt>Last name</dt>
-              <dd className="col-span-2">{formData.mother?.lastName}</dd>
+              <dd className="lg:col-span-2">{formData.mother?.lastName}</dd>
 
               {formData.mother?.hadOtherSurname === "yes" &&
                 formData.mother?.otherSurname && (
                   <>
                     <dt>Previous last name</dt>
-                    <dd className="col-span-2">
+                    <dd className="lg:col-span-2">
                       {formData.mother.otherSurname}
                     </dd>
                   </>
                 )}
 
               <dt>Current address</dt>
-              <dd className="col-span-2 whitespace-pre-line">
+              <dd className="whitespace-pre-line lg:col-span-2">
                 {formData.mother?.address}
               </dd>
 
               <dt>National registration number</dt>
-              <dd className="col-span-2">
+              <dd className="lg:col-span-2">
                 {formData.mother?.nationalRegistrationNumber ||
                   formData.mother?.passportNumber}
               </dd>
 
               <dt>Occupation</dt>
-              <dd className="col-span-2">{formData.mother?.occupation}</dd>
+              <dd className="lg:col-span-2">{formData.mother?.occupation}</dd>
             </dl>
           </SummarySection>
 
@@ -237,27 +247,27 @@ export function CheckAnswers({
             stepName="child-details"
             title="Tell us about the child"
           >
-            <dl className="grid grid-cols-3 gap-4 font-normal text-[20px] leading-[1.7] [&_dt]:font-bold">
+            <dl className="flex flex-col gap-2 font-normal text-[20px] leading-[1.7] lg:grid lg:grid-cols-3 lg:gap-4 [&_dt]:font-bold">
               <dt>First name</dt>
-              <dd className="col-span-2">{formData.child?.firstNames}</dd>
+              <dd className="lg:col-span-2">{formData.child?.firstNames}</dd>
 
               <dt>Middle name(s)</dt>
-              <dd className="col-span-2">{formData.child?.middleNames}</dd>
+              <dd className="lg:col-span-2">{formData.child?.middleNames}</dd>
 
               <dt>Last name</dt>
-              <dd className="col-span-2">{formData.child?.lastName}</dd>
+              <dd className="lg:col-span-2">{formData.child?.lastName}</dd>
 
               <dt>Date of birth</dt>
-              <dd className="col-span-2">
+              <dd className="lg:col-span-2">
                 {formData.child?.dateOfBirth &&
                   formatForDisplay(formData.child.dateOfBirth)}
               </dd>
 
               <dt>Sex at birth</dt>
-              <dd className="col-span-2">{formData.child?.sexAtBirth}</dd>
+              <dd className="lg:col-span-2">{formData.child?.sexAtBirth}</dd>
 
               <dt>Place of birth</dt>
-              <dd className="col-span-2">{formData.child?.parishOfBirth}</dd>
+              <dd className="lg:col-span-2">{formData.child?.parishOfBirth}</dd>
             </dl>
           </SummarySection>
 
@@ -267,14 +277,14 @@ export function CheckAnswers({
             stepName="certificates"
             title="Certificates"
           >
-            <dl className="grid grid-cols-3 gap-4 font-normal text-[20px] leading-[1.7] [&_dt]:font-bold">
+            <dl className="flex flex-col gap-2 font-normal text-[20px] leading-[1.7] lg:grid lg:grid-cols-3 lg:gap-4 [&_dt]:font-bold">
               <dt>Number ordered</dt>
-              <dd className="col-span-2">
+              <dd className="lg:col-span-2">
                 {formData.numberOfCertificates || 0}
               </dd>
 
               <dt>Total cost</dt>
-              <dd className="col-span-2">
+              <dd className="lg:col-span-2">
                 {totalCost === 0 ? "Free" : `BBD$${totalCost.toFixed(2)}`}
               </dd>
             </dl>
@@ -286,14 +296,14 @@ export function CheckAnswers({
             stepName="contact-info"
             title="Contact information"
           >
-            <dl className="grid grid-cols-3 gap-4 font-normal text-[20px] leading-[1.7] [&_dt]:font-bold">
+            <dl className="flex flex-col gap-2 font-normal text-[20px] leading-[1.7] lg:grid lg:grid-cols-3 lg:gap-4 [&_dt]:font-bold">
               <dt>Email address</dt>
-              <dd className="col-span-2">{formData.email}</dd>
+              <dd className="lg:col-span-2">{formData.email}</dd>
 
               {formData.wantContact === "yes" && formData.phoneNumber && (
                 <>
                   <dt>Phone number</dt>
-                  <dd className="col-span-2">{formData.phoneNumber}</dd>
+                  <dd className="lg:col-span-2">{formData.phoneNumber}</dd>
                 </>
               )}
             </dl>

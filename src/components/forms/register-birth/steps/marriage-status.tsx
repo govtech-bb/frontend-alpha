@@ -69,14 +69,14 @@ export function MarriageStatus({
 
   return (
     <form
-      className="container space-y-8 pt-8 pb-16 lg:grid lg:grid-cols-3"
+      className="container space-y-8 pt-8 pb-8 lg:grid lg:grid-cols-3 lg:pb-16"
       onSubmit={handleSubmit}
     >
-      <div className="col-span-2 flex flex-col gap-8">
+      <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
         <div className="flex flex-col gap-4">
-          <div>
+          <div className="pt-2 lg:pt-0">
             <h1
-              className="mb-2 font-bold text-[56px] leading-[1.15]"
+              className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
               ref={titleRef}
               tabIndex={-1}
             >
