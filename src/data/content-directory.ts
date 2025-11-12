@@ -274,7 +274,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
     ],
   },
   {
-    title: "Public Safety",
+    title: "Public safety",
     slug: "public-safety",
     description: "",
     pages: [
@@ -287,6 +287,12 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       {
         title: "Report elderly abuse",
         slug: "report-elderly-abuse",
+        source_url: "",
+        description: "",
+      },
+      {
+        title: "Get support for a victim of domestic abuse",
+        slug: "get-support-for-a-victim-of-domestic-abuse",
         source_url: "",
         description: "",
       },

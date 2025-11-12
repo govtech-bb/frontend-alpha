@@ -15,7 +15,7 @@ export default async function Home() {
         <div className="container">
           <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
             <Typography variant="h1">
-              How you find and use public services is changing
+              How you find and use government services is changing
             </Typography>
             <Typography variant="paragraph">
               It will be clearer, simpler and faster for citizens to get things
@@ -28,7 +28,7 @@ export default async function Home() {
       <section className="border-teal-40 border-b-4 bg-teal-10">
         <div className="container">
           <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
-            <Typography variant="h2">Alpha public services</Typography>
+            <Typography variant="h2">Alpha services</Typography>
 
             <Typography variant="paragraph">
               These services are new. We’re working on them and they are likely
