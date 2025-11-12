@@ -18,7 +18,7 @@ export default async function Home() {
               How you find and use public services is changing
             </Typography>
             <Typography variant="paragraph">
-              It will be clearer, simpler and faster for citizens get things
+              It will be clearer, simpler and faster for citizens to get things
               done.
             </Typography>
           </div>
