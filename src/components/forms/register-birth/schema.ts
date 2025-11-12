@@ -23,6 +23,7 @@ const personDetailsSchema = z.object({
   address: z.string().optional(),
   nationalRegistrationNumber: z.string().optional(),
   passportNumber: z.string().optional(),
+  passportPlaceOfIssue: z.string().optional(),
   occupation: z.string().optional(),
 });
 
@@ -112,6 +113,26 @@ function applyIdentifierValidation<T extends z.ZodTypeAny>(schema: T) {
           "Enter the National Registration Number in the format XXXXXX-XXXX (for example, 123456-7890)",
         path: ["nationalRegistrationNumber"],
       }
+    )
+    .refine(
+      // biome-ignore lint/suspicious/noExplicitAny: Zod refine callbacks require any for generic schemas
+      (data: any) => {
+        // If passport number is provided, place of issue must also be provided
+        const hasPassport =
+          data.passportNumber && data.passportNumber.trim().length > 0;
+        const hasPlaceOfIssue =
+          data.passportPlaceOfIssue &&
+          data.passportPlaceOfIssue.trim().length > 0;
+
+        if (hasPassport && !hasPlaceOfIssue) {
+          return false;
+        }
+        return true;
+      },
+      {
+        message: "Enter the passport place of issue",
+        path: ["passportPlaceOfIssue"],
+      }
     );
 }
 
@@ -152,6 +173,7 @@ function createPersonDetailsSchema(personType: "father" | "mother") {
       ),
       nationalRegistrationNumber: z.string().optional(),
       passportNumber: z.string().optional(),
+      passportPlaceOfIssue: z.string().optional(),
       occupation: z.preprocess(
         (val) => val ?? "",
         z.string().min(1, `Enter the ${personType}'s occupation`)

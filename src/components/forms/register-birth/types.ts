@@ -31,6 +31,7 @@ export type PersonDetails = {
   address: string;
   nationalRegistrationNumber?: string;
   passportNumber?: string;
+  passportPlaceOfIssue?: string;
   occupation?: string;
 };
 

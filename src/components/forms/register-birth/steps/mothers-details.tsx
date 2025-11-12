@@ -191,13 +191,23 @@ export function MothersDetails({
                 </p>
                 <Input
                   error={fieldErrors.passportNumber}
-                  id="father-passportNumber"
+                  id="mother-passportNumber"
                   label="Passport number"
                   onChange={(e) =>
                     handleChange("passportNumber", e.target.value)
                   }
                   type="text"
                   value={value.passportNumber || ""}
+                />
+                <Input
+                  error={fieldErrors.passportPlaceOfIssue}
+                  id="mother-passportPlaceOfIssue"
+                  label="Place of issue"
+                  onChange={(e) =>
+                    handleChange("passportPlaceOfIssue", e.target.value)
+                  }
+                  type="text"
+                  value={value.passportPlaceOfIssue || ""}
                 />
               </div>
             </ShowHide>

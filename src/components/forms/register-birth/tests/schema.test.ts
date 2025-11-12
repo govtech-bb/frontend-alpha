@@ -30,11 +30,12 @@ describe("fatherDetailsValidation", () => {
       expect(result.success).toBe(true);
     });
 
-    it("should accept valid passport number", () => {
+    it("should accept valid passport number with place of issue", () => {
       const data = {
         ...validBaseData,
         nationalRegistrationNumber: "",
         passportNumber: "P1234567",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = fatherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -45,6 +46,7 @@ describe("fatherDetailsValidation", () => {
         ...validBaseData,
         nationalRegistrationNumber: "123456-7890",
         passportNumber: "P1234567",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = fatherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -76,6 +78,35 @@ describe("fatherDetailsValidation", () => {
           "Enter either a National Registration Number or a Passport Number"
         );
       }
+    });
+
+    it("should reject passport number without place of issue", () => {
+      const data = {
+        ...validBaseData,
+        nationalRegistrationNumber: "",
+        passportNumber: "P1234567",
+      };
+      const result = fatherDetailsValidation.safeParse(data);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const placeOfIssueError = result.error.issues.find(
+          (e) => e.path[0] === "passportPlaceOfIssue"
+        );
+        expect(placeOfIssueError?.message).toBe(
+          "Enter the passport place of issue"
+        );
+      }
+    });
+
+    it("should accept passport number with place of issue", () => {
+      const data = {
+        ...validBaseData,
+        nationalRegistrationNumber: "",
+        passportNumber: "P1234567",
+        passportPlaceOfIssue: "Barbados",
+      };
+      const result = fatherDetailsValidation.safeParse(data);
+      expect(result.success).toBe(true);
     });
   });
 
@@ -154,6 +185,7 @@ describe("fatherDetailsValidation", () => {
       const data = {
         ...validBaseData,
         passportNumber: "P1234567",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = fatherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -163,6 +195,7 @@ describe("fatherDetailsValidation", () => {
       const data = {
         ...validBaseData,
         passportNumber: "AB12345678",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = fatherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -172,6 +205,7 @@ describe("fatherDetailsValidation", () => {
       const data = {
         ...validBaseData,
         passportNumber: "P 1234-5678",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = fatherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -181,6 +215,7 @@ describe("fatherDetailsValidation", () => {
       const data = {
         ...validBaseData,
         passportNumber: "ABC123",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = fatherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -190,6 +225,7 @@ describe("fatherDetailsValidation", () => {
       const data = {
         ...validBaseData,
         passportNumber: "ABCDEFGH123456789",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = fatherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -220,11 +256,12 @@ describe("motherDetailsValidation", () => {
       expect(result.success).toBe(true);
     });
 
-    it("should accept valid passport number", () => {
+    it("should accept valid passport number with place of issue", () => {
       const data = {
         ...validBaseData,
         nationalRegistrationNumber: "",
         passportNumber: "P1234567",
+        passportPlaceOfIssue: "Barbados",
       };
       const result = motherDetailsValidation.safeParse(data);
       expect(result.success).toBe(true);
@@ -241,6 +278,24 @@ describe("motherDetailsValidation", () => {
       if (!result.success) {
         expect(result.error.issues[0].message).toBe(
           "Enter either a National Registration Number or a Passport Number"
+        );
+      }
+    });
+
+    it("should reject passport number without place of issue", () => {
+      const data = {
+        ...validBaseData,
+        nationalRegistrationNumber: "",
+        passportNumber: "P1234567",
+      };
+      const result = motherDetailsValidation.safeParse(data);
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        const placeOfIssueError = result.error.issues.find(
+          (e) => e.path[0] === "passportPlaceOfIssue"
+        );
+        expect(placeOfIssueError?.message).toBe(
+          "Enter the passport place of issue"
         );
       }
     });
