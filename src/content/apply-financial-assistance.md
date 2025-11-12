@@ -1,7 +1,7 @@
 ---
 title: "Apply for financial assistance"
 stage: "alpha"
-featured: true
+featured: false
 publish_date: 2025-10-15
 ---
 

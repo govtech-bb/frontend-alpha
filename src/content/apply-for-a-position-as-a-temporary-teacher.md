@@ -1,6 +1,6 @@
 ---
 title: "Apply for a position as a temporary teacher"
-featured: true
+featured: false
 stage: "alpha"
 ---
 

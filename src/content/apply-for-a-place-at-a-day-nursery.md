@@ -1,7 +1,7 @@
 ---
 title: "Apply for a place at a day nursery"
 stage: "alpha"
-featured: true
+featured: false
 publish_date: 2025-10-17
 ---
 
@@ -9,9 +9,9 @@ Parents and guardians of children under the age of 5 can apply for them to go to
 
 ## When to apply
 
-You can apply for a place as soon as a child is born. However, if your application is successful, the child cannot start attending the nursery until they are 3 months old. 
+You can apply for a place as soon as a child is born. However, if your application is successful, the child cannot start attending the nursery until they are 3 months old.
 
-Applications are open all year round. 
+Applications are open all year round.
 
 ## How to apply
 
@@ -19,7 +19,7 @@ Applications are open all year round.
 
 This service is not available online yet so you must go to each nursery you want to apply to. (Three is recommended). A supervisor completes an application form for you, and will ask:
 
-- your name 
+- your name
 
 - your address
 
@@ -31,7 +31,7 @@ This service is not available online yet so you must go to each nursery you want
 
 - the child’s sex
 
-- if the child has allergies and/or medical conditions 
+- if the child has allergies and/or medical conditions
 
 - your relationship to the child
 

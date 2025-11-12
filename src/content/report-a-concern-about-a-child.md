@@ -1,7 +1,7 @@
 ---
 title: "Report a concern about a child"
 stage: "alpha"
-featured: true
+featured: false
 publish_date: 2025-10-08
 ---
 
@@ -24,20 +24,22 @@ You cannot report your concern online yet, so you need to do it in person, by em
 The Child Care Board and the police work together in this area so if you report a concern to one of them, they may share it with the other.
 
 ### Child Care Board
+
 Fred Edghill Building,  
 Cheapside  
 Bridgetown  
 St. Michael  
 (246) 535-2800  
-[childcareboard@barbados.gov.bb](mailto:childcareboard@barbados.gov.bb)  
+[childcareboard@barbados.gov.bb](mailto:childcareboard@barbados.gov.bb)
 
 ### Police
+
 Barbados Police Service  
 Roebuck Street  
 Bridgetown  
-St. Michael  
+St. Michael
 
-In an emergency, call (246) 211 
+In an emergency, call (246) 211
 
 ## How to report a concern
 
@@ -49,11 +51,11 @@ Child care officer will ask you for:
 
 3. The nature of your concern so they can determine the level of risk. For example, violence, neglect, abandonment, or exploitation.
 
-3. Evidence if it is available. For example, medical reports and/or photographs of injury. They will also ask the name of any witnesses so they can ask them for a statement.
+4. Evidence if it is available. For example, medical reports and/or photographs of injury. They will also ask the name of any witnesses so they can ask them for a statement.
 
-4. Information about the person or people who you suspect – or know to be – responsible.
+5. Information about the person or people who you suspect – or know to be – responsible.
 
-5. Your contact information and your relationship to the child. You can also remain anonymous.
+6. Your contact information and your relationship to the child. You can also remain anonymous.
 
 ## After you report a concern
 
