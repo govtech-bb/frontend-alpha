@@ -16,10 +16,7 @@ export default async function Page() {
       <MarkdownContent markdown={markdownContent} />
       <Typography variant="h2">Alpha services</Typography>
 
-      <Typography variant="paragraph">
-        These services are new. We’re working on them and they are likely to
-        change. That also means that they might break.
-      </Typography>
+      <Typography variant="paragraph">These services are in alpha.</Typography>
 
       <div className="flex flex-col gap-2">
         {alphaServices.map((service) => (
