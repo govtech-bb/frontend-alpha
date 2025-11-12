@@ -16,20 +16,22 @@ Often, notarisation is used for documents that need to be authenticated before f
 This service is not available online yet so you will need to visit a notary public in person. You can go to any of the following places to get a document notarised:
 
 #### Land Registry
+
 Ground Floor Warrens Office Complex  
 Warrens  
-St. Michael  
+St. Michael
 
 #### Supreme Court
+
 Whitepark Road  
 Bridgetown  
-Saint Michael  
+Saint Michael
 
 #### Intellectual Property Office
+
 Baobab Tower  
 Highway 2  
-Saint Michael  
-
+Saint Michael
 
 ### What to take
 
@@ -39,8 +41,7 @@ You will need:
 
 2. A photocopy of your original document.
 
-3. Valid photo ID. 
-
+3. Valid photo ID.
 
 ### The process
 
@@ -49,7 +50,7 @@ The notary will:
 1. Compare your original document and the photocopy.
 
 2. Sign and date the copy if they are happy it is a true copy.  
-If the original document is small (for example, your passport) the notary will issue a notarial certificate and attach it to the original instead.
+   If the original document is small (for example, your passport) the notary will issue a notarial certificate and attach it to the original instead.
 
 3. Return your original document and your notarised photocopy to you immediately afterwards.
 
@@ -78,7 +79,7 @@ Fees are standardised across notary publics and locations but they vary dependin
 
 - Notarial certificate (when a notary issues a statement to authenticate a document) BBD $50
 
-- Execution of a document (when a notary verifies someone’s identity and witnesses them signing a document) BBD $20 
+- Execution of a document (when a notary verifies someone’s identity and witnesses them signing a document) BBD $20
 
 ## Accessibility
 

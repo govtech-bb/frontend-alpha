@@ -1,7 +1,7 @@
 ---
 title: "Get disaster relief assistance"
 stage: "alpha"
-featured: true
+featured: false
 publish_date: 2025-10-17
 ---
 
@@ -21,16 +21,16 @@ Welfare Department.
 Perry Gap,  
 Bridgetown,  
 Saint Michael Barbados  
-[+1 246-535-1000](tel:+12465351000)  
+[+1 246-535-1000](tel:+12465351000)
 
-Depending on the scale and the severity of the incident, a social worker or a representative from the Department of Emergency Management (DEM) will travel to where you are. They will assess the situation and determine the most appropriate support. 
+Depending on the scale and the severity of the incident, a social worker or a representative from the Department of Emergency Management (DEM) will travel to where you are. They will assess the situation and determine the most appropriate support.
 
 If friends and family are unable to help you and you need:
 
-1. food, you can go to the Welfare Department. 
-2. shelter, speak to the social worker attending the incident about temporary accommodation. 
+1. food, you can go to the Welfare Department.
+2. shelter, speak to the social worker attending the incident about temporary accommodation.
 
-## How to apply for non-urgent support 
+## How to apply for non-urgent support
 
 ### Go to the Welfare Department
 
@@ -40,14 +40,13 @@ Welfare Department.
 Perry Gap,  
 Bridgetown,  
 Saint Michael  
-[+1 246-535-1000](tel:+12465351000)  
-
+[+1 246-535-1000](tel:+12465351000)
 
 ### Give details on the damage
 
 Complete a form which asks for information including:
 
-- the address or location of the damaged property 
+- the address or location of the damaged property
 - a description of the damage
 - how many vulnerable people live at a damaged property
 - your bank account details so that financial support could be sent if you are eligible
@@ -58,14 +57,14 @@ If the damage you are reporting is to a rented home, you will need to contact:
 National Housing Corporation  
 Country Road  
 Bridgetown  
-Saint Michael   
-[+1 246-536-5300](tel:+12465365300)   
+Saint Michael  
+[+1 246-536-5300](tel:+12465365300)
 
 ### What to bring
 
 If you have them, bring:
 
-1. Your ID. If not, you can share your national ID number. 
+1. Your ID. If not, you can share your national ID number.
 
 2. Photographs of the damage.
 
@@ -73,7 +72,7 @@ If you have them, bring:
 
 Submit your form and supporting information to either:
 
-1. The Welfare Department. 
+1. The Welfare Department.
 
 2. District Emergency Organisations.
 
@@ -81,7 +80,7 @@ Submit your form and supporting information to either:
 The George Greaves Building  
 24 Warrens Industrial Park  
 Warrens  
-St. Michael  
+St. Michael
 
 ## After you’ve applied for non-urgent support
 

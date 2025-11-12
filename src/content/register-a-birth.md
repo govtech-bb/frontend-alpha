@@ -25,7 +25,7 @@ Before a birth certificate can be issued, the birth must be registered. The cert
 
 ## Who should register a birth?
 
-You cannot register a birth online yet, so you need to do it in person in the district where the child was born. 
+You cannot register a birth online yet, so you need to do it in person in the district where the child was born.
 
 If the parents are:
 
@@ -46,7 +46,7 @@ You need to show:
 1. Your child’s Personal Child Health Record from the hospital or birthing centre (sometimes called the immunisation book or birth notification).
 
 2. A valid form of photo identification for each parent who will be named on the birth record.  
-For Barbadian citizens, your Barbados National ID card, valid passport or other government-issued ID is acceptable. Non-Barbadian nationals must show their valid passport.
+   For Barbadian citizens, your Barbados National ID card, valid passport or other government-issued ID is acceptable. Non-Barbadian nationals must show their valid passport.
 
 3. Your original marriage certificate if you are married to the child’s other parent.
 
@@ -64,7 +64,6 @@ If you have a valid passport, you must bring:
 
 You must be accompanied by your parent(s) or guardian(s).
 
-
 If you do not have a valid passport, you must bring:
 
 - your minor’s identification card
@@ -75,7 +74,7 @@ If you do not have a valid passport, you must bring:
 
 - an identification letter signed by a Justice of the Peace
 
-You must be accompanied by your parent(s) or guardian(s). 
+You must be accompanied by your parent(s) or guardian(s).
 
 If you don’t meet these criteria, contact the Registrations Department.
 
@@ -89,7 +88,7 @@ Registration Department
 Supreme Court Complex  
 Whitepark Road  
 St. Michael  
-(246) 535-9700  
+(246) 535-9700
 
 ---
 
@@ -109,7 +108,7 @@ Go to the Registration Department (Records Branch), in the Supreme Court Complex
 
 #### Born in Christ Church or St. George
 
-Go to the District B Magistrate’s Court, currently located at the Eric Holder Municipal Complex, Blackmans, St. Joseph 
+Go to the District B Magistrate’s Court, currently located at the Eric Holder Municipal Complex, Blackmans, St. Joseph
 
 #### Born in St. Philip or St. John
 
