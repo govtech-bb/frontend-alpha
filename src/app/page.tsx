@@ -32,7 +32,7 @@ export default async function Home() {
 
             <Typography variant="paragraph">
               These services are new. We’re working on them and they are likely
-              to change. That also means that they might break.
+              to change.
             </Typography>
 
             <div className="flex flex-col gap-2">
