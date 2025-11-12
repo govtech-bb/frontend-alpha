@@ -276,7 +276,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
   {
     title: "Public safety",
     slug: "public-safety",
-    description: "",
+    description: "Reporting crime, raising a concern and safeguarding",
     pages: [
       {
         title: "Report a concern about a child",
