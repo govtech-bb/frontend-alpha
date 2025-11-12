@@ -32,7 +32,7 @@ export default async function Home() {
 
             <Typography variant="paragraph">
               These services are new. We’re working on them and they are likely
-              to change.
+              to change as we learn more.
             </Typography>
 
             <div className="flex flex-col gap-2">
