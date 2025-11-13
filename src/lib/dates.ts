@@ -323,6 +323,66 @@ export function isValidBirthDate(dateString: string, minYear = 1900): boolean {
 }
 
 /**
+ * Calculates age in years from a birth date to today
+ * Handles edge cases like future dates and invalid dates
+ *
+ * @param dateString - Date string in YYYY-MM-DD or YYYY-<month>-DD format
+ * @returns Age in years, or 0 if date is invalid or in the future
+ *
+ * @example
+ * calculateAge("1990-03-15") // Age as of today
+ * calculateAge("") // 0
+ * calculateAge("invalid") // 0
+ */
+export function calculateAge(dateString: string): number {
+  if (!dateString || dateString.trim() === "") {
+    return 0;
+  }
+
+  // Validate the date is semantically correct
+  if (!isValidDateSemantically(dateString)) {
+    return 0;
+  }
+
+  const { year, month, day } = parseDate(dateString);
+  const yearNum = Number(year);
+  const monthNum = parseMonthToNumber(month);
+  const dayNum = Number(day);
+
+  // Ensure parsing succeeded
+  if (Number.isNaN(yearNum) || Number.isNaN(monthNum) || Number.isNaN(dayNum)) {
+    return 0;
+  }
+
+  // Create birth date using UTC to avoid timezone issues
+  const birthDate = new Date(Date.UTC(yearNum, monthNum - 1, dayNum));
+  const today = new Date(
+    Date.UTC(
+      new Date().getUTCFullYear(),
+      new Date().getUTCMonth(),
+      new Date().getUTCDate()
+    )
+  );
+
+  // Return 0 if birth date is in the future
+  if (isAfter(birthDate, today)) {
+    return 0;
+  }
+
+  // Calculate age
+  let age = today.getUTCFullYear() - birthDate.getUTCFullYear();
+  const monthDiff = today.getUTCMonth() - birthDate.getUTCMonth();
+  const dayDiff = today.getUTCDate() - birthDate.getUTCDate();
+
+  // Adjust age if birthday hasn't occurred yet this year
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+    age--;
+  }
+
+  return age;
+}
+
+/**
  * Formats a date from ISO 8601 (YYYY-MM-DD or YYYY-<month>-DD) to spelled-out format like "Jul 30, 2011"
  * Supports both numeric months (01-12) and text months (jan, July, etc.)
  *
