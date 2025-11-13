@@ -5,6 +5,7 @@ export type PageType = {
   slug: string;
   source_url?: string;
   description: string; // date when content was published, updated or migrated
+  subPages?: { slug: string; type: "markdown" | "component" }[];
 };
 
 export type ServiceCategoryType = {
