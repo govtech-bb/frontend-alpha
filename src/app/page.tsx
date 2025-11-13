@@ -54,7 +54,7 @@ export default async function Home() {
 
               <Link
                 as={NextLink}
-                className="mt-4 text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                className="mt-4 w-fit text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
                 href="/what-we-mean-by-alpha"
                 variant={"secondary"}
               >
