@@ -549,6 +549,126 @@ describe("CheckAnswers", () => {
     });
   });
 
+  describe("Passport vs National Registration Number display", () => {
+    it("should display passport number and place of issue for mother when passport is provided", () => {
+      const formDataWithMotherPassport: PartialBirthRegistrationFormData = {
+        ...completeFormData,
+        mother: {
+          ...completeFormData.mother!,
+          nationalRegistrationNumber: "",
+          passportNumber: "ABC123456",
+          passportPlaceOfIssue: "United Kingdom",
+        },
+      };
+
+      render(
+        <CheckAnswers
+          formData={formDataWithMotherPassport}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      // Should display "Passport number" label, not "National registration number"
+      const passportLabels = screen.getAllByText("Passport number");
+      expect(passportLabels.length).toBeGreaterThan(0);
+
+      // Should display the passport number value
+      expect(screen.getByText("ABC123456")).toBeInTheDocument();
+
+      // Should display "Place of issue" label
+      expect(screen.getByText("Place of issue")).toBeInTheDocument();
+
+      // Should display the place of issue value
+      expect(screen.getByText("United Kingdom")).toBeInTheDocument();
+
+      // Should NOT display mother's National registration number label when passport is used
+      expect(screen.queryByText("123456-7890")).not.toBeInTheDocument();
+    });
+
+    it("should display passport number and place of issue for father when passport is provided", () => {
+      const formDataWithFatherPassport: PartialBirthRegistrationFormData = {
+        ...completeFormData,
+        father: {
+          ...completeFormData.father!,
+          nationalRegistrationNumber: "",
+          passportNumber: "XYZ987654",
+          passportPlaceOfIssue: "Canada",
+        },
+      };
+
+      render(
+        <CheckAnswers
+          formData={formDataWithFatherPassport}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      // Should display "Passport number" label
+      const passportLabels = screen.getAllByText("Passport number");
+      expect(passportLabels.length).toBeGreaterThan(0);
+
+      // Should display the passport number value
+      expect(screen.getByText("XYZ987654")).toBeInTheDocument();
+
+      // Should display "Place of issue" label
+      expect(screen.getByText("Place of issue")).toBeInTheDocument();
+
+      // Should display the place of issue value
+      expect(screen.getByText("Canada")).toBeInTheDocument();
+
+      // Should NOT display father's National registration number when passport is used
+      expect(screen.queryByText("987654-3210")).not.toBeInTheDocument();
+    });
+
+    it("should display national registration number for mother when NRN is provided (no regression)", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      // Should display "National registration number" label
+      const nrnLabels = screen.getAllByText("National registration number");
+      expect(nrnLabels.length).toBeGreaterThan(0);
+
+      // Should display mother's NRN value
+      expect(screen.getByText("123456-7890")).toBeInTheDocument();
+
+      // Should NOT display passport-related labels when NRN is used
+      expect(screen.queryByText("Passport number")).not.toBeInTheDocument();
+      expect(screen.queryByText("Place of issue")).not.toBeInTheDocument();
+    });
+
+    it("should display national registration number for father when NRN is provided (no regression)", () => {
+      render(
+        <CheckAnswers
+          formData={completeFormData}
+          onBack={mockOnBack}
+          onEdit={mockOnEdit}
+          onSubmit={mockOnSubmit}
+        />
+      );
+
+      // Should display "National registration number" label
+      const nrnLabels = screen.getAllByText("National registration number");
+      expect(nrnLabels.length).toBeGreaterThan(0);
+
+      // Should display father's NRN value
+      expect(screen.getByText("987654-3210")).toBeInTheDocument();
+
+      // Should NOT display passport-related labels when NRN is used
+      expect(screen.queryByText("Passport number")).not.toBeInTheDocument();
+      expect(screen.queryByText("Place of issue")).not.toBeInTheDocument();
+    });
+  });
+
   describe("Submission state handling", () => {
     it("should disable buttons when isSubmitting is true", () => {
       render(
