@@ -1,15 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
-import { SERVICE_CATEGORIES } from "@/data/content-directory";
-import type { ServiceCategoryType } from "@/types/content";
-
-const findCategoryByPageSlug = (
-  slug: string
-): ServiceCategoryType | undefined =>
-  SERVICE_CATEGORIES.find((category) =>
-    category.pages.some((page) => page.slug === slug)
-  );
+import { findCategoryByPageSlug } from "./utils";
 
 const contentDirectory = path.join(process.cwd(), "src", "content");
 
@@ -133,7 +125,11 @@ export async function getAlphaServices() {
 
       // Check if the file has featured: true in frontmatter
       if (data.stage === "alpha") {
-        const slug = file.replace(".md", "");
+        let slug = file.replace(".md", "");
+        const category = findCategoryByPageSlug(slug);
+        if (category) {
+          slug = `${category.slug}/${slug}`;
+        }
         services.push({
           title: data.title || slug,
           slug,
