@@ -1,14 +1,12 @@
 ---
-title: "Pre-Register a birth"
+title: "Register a Birth"
 stage: "alpha"
 publish_date: 2025-11-03
 ---
 
-All births in Barbados (including stillbirths) must be registered within 28 days of the child being born. 
+You can pre-register the birth online. It should take around 10 minutes.
 
-You can pre-register the birth online but to complete the registration, the parent(s) or guardian(s) must go to the magistrates court in the district where the child was born. They will need to sign the birth register in person. 
-
-Pre-registering online takes around 10 minutes.
+To complete the registration, the parent(s) or guardian(s) must then visit the Registration Department to sign the birth register in person. 
 
 <!-- Add custom html button to allow necessary styling -->
 <!-- TODO: Make this file MDX so that the Button component can be imported -->
@@ -17,7 +15,7 @@ Pre-registering online takes around 10 minutes.
 
 ## Information you need for pre-registering a birth online
 
-When pre-registering the birth, you should know:
+You should know:
 
 - child’s place and date of the birth
 
@@ -36,41 +34,3 @@ When pre-registering the birth, you should know:
 - parents’ occupations
 
 - how many certified copies of the birth certificate you would like to buy
-
-> You might not need to give all of this information.
-
-## What to bring to the magistrates court to complete the registration
-
-You need to show:
-
-1. Your child’s Personal Child Health Record from the hospital or birthing centre (sometimes called the immunisation book or birth notification).
-
-2. A valid form of photo identification for each parent who will be named on the birth record.\
-   For Barbadian citizens, your Barbados National ID card, valid passport or other government-issued ID is acceptable. Non-Barbadian nationals must show their valid passport.
-
-3. Your original marriage certificate if you are married to the child’s other parent.
-
-**Parents who are minors**
-
-If you are a mother or a father and you are under 16 years old, you are considered a minor.\
-If you have a valid passport, you must bring:
-
-- your valid passport
-
-- your original birth certificate
-
-- the child’s medical book (green book)
-
-You must be accompanied by your parent(s) or guardian(s).
-
-If you do not have a valid passport, you must bring:
-
-- your minor’s identification card
-
-- your original birth certificate
-
-- the child’s medical book (green book)
-
-- an identification letter signed by a Justice of the Peace 
-
-> You must be accompanied by your parent(s) or guardian(s).
