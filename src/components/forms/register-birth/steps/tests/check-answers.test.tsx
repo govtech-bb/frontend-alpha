@@ -67,7 +67,7 @@ describe("CheckAnswers", () => {
       expect(smithElements.length).toBeGreaterThan(0);
     });
 
-    it("should display mother's date of birth", () => {
+    it("should display mother's date of birth with age", () => {
       render(
         <CheckAnswers
           formData={completeFormData}
@@ -77,8 +77,20 @@ describe("CheckAnswers", () => {
         />
       );
 
-      // ISO 8601 format: 1990-03-15 -> Display format: Mar 15, 1990
-      expect(screen.getByText("Mar 15, 1990")).toBeInTheDocument();
+      // ISO 8601 format: 1990-03-15 -> Display format: Mar 15, 1990 (XX years old)
+      // Calculate expected age
+      const today = new Date();
+      const birthDate = new Date(1990, 2, 15); // March 15, 1990
+      let expectedAge = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      const dayDiff = today.getDate() - birthDate.getDate();
+      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        expectedAge--;
+      }
+
+      expect(
+        screen.getByText(`Mar 15, 1990 (${expectedAge} years old)`)
+      ).toBeInTheDocument();
     });
 
     it("should display mother's address", () => {
@@ -178,7 +190,7 @@ describe("CheckAnswers", () => {
       expect(smithElements.length).toBeGreaterThan(0);
     });
 
-    it("should display father's date of birth", () => {
+    it("should display father's date of birth with age", () => {
       render(
         <CheckAnswers
           formData={completeFormData}
@@ -188,7 +200,20 @@ describe("CheckAnswers", () => {
         />
       );
 
-      expect(screen.getByText("May 20, 1988")).toBeInTheDocument();
+      // ISO 8601 format: 1988-05-20 -> Display format: May 20, 1988 (XX years old)
+      // Calculate expected age
+      const today = new Date();
+      const birthDate = new Date(1988, 4, 20); // May 20, 1988
+      let expectedAge = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      const dayDiff = today.getDate() - birthDate.getDate();
+      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        expectedAge--;
+      }
+
+      expect(
+        screen.getByText(`May 20, 1988 (${expectedAge} years old)`)
+      ).toBeInTheDocument();
     });
 
     it("should display father's address", () => {
@@ -268,17 +293,23 @@ describe("CheckAnswers", () => {
         />
       );
 
-      // Child's DOB: ISO 2024-01-01 should display as Jan 1, 2024
+      // Child's DOB: ISO 2024-01-01 should display as Jan 1, 2024 (no age for child)
       expect(screen.getByText("Jan 1, 2024")).toBeInTheDocument();
       expect(screen.queryByText("2024-01-01")).not.toBeInTheDocument();
 
-      // Mother's DOB: ISO 1990-03-15 should display as Mar 15, 1990
-      expect(screen.getByText("Mar 15, 1990")).toBeInTheDocument();
+      // Mother's DOB: ISO 1990-03-15 should display with age, not raw ISO format
       expect(screen.queryByText("1990-03-15")).not.toBeInTheDocument();
+      // Check for formatted date with age pattern (verified in dedicated test)
+      expect(
+        screen.getByText(/Mar 15, 1990 \(\d+ years old\)/)
+      ).toBeInTheDocument();
 
-      // Father's DOB: ISO 1988-05-20 should display as May 20, 1988
-      expect(screen.getByText("May 20, 1988")).toBeInTheDocument();
+      // Father's DOB: ISO 1988-05-20 should display with age, not raw ISO format
       expect(screen.queryByText("1988-05-20")).not.toBeInTheDocument();
+      // Check for formatted date with age pattern (verified in dedicated test)
+      expect(
+        screen.getByText(/May 20, 1988 \(\d+ years old\)/)
+      ).toBeInTheDocument();
     });
 
     it("should format dates consistently across all person details", () => {
@@ -308,9 +339,15 @@ describe("CheckAnswers", () => {
       );
 
       // Verify all dates use the same spelled-out format
+      // Child date has no age
       expect(screen.getByText("Dec 25, 2023")).toBeInTheDocument();
-      expect(screen.getByText("Jan 1, 1985")).toBeInTheDocument();
-      expect(screen.getByText("Jul 4, 1980")).toBeInTheDocument();
+      // Parent dates include age
+      expect(
+        screen.getByText(/Jan 1, 1985 \(\d+ years old\)/)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/Jul 4, 1980 \(\d+ years old\)/)
+      ).toBeInTheDocument();
     });
   });
 

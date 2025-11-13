@@ -2,7 +2,7 @@
 
 import { Button } from "@govtech-bb/react";
 import { Typography } from "@/components/ui/typography";
-import { formatForDisplay } from "@/lib/dates";
+import { calculateAge, formatForDisplay } from "@/lib/dates";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { finalSubmissionSchema } from "../schema";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
@@ -62,6 +62,7 @@ function SummarySection({
  * Summary page showing all entered data with edit links
  * Based on PDF pages 8 and 18
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity slightly increased by adding DOB fields; refactoring to be done separately
 export function CheckAnswers({
   formData,
   onSubmit,
@@ -182,6 +183,12 @@ export function CheckAnswers({
                 <dt>Last name</dt>
                 <dd className="lg:col-span-2">{formData.father.lastName}</dd>
 
+                <dt>Date of birth</dt>
+                <dd className="lg:col-span-2">
+                  {formData.father.dateOfBirth &&
+                    `${formatForDisplay(formData.father.dateOfBirth)} (${calculateAge(formData.father.dateOfBirth)} years old)`}
+                </dd>
+
                 <dt>Current address</dt>
                 <dd className="whitespace-pre-line lg:col-span-2">
                   {formData.father.address}
@@ -224,6 +231,12 @@ export function CheckAnswers({
                     </dd>
                   </>
                 )}
+
+              <dt>Date of birth</dt>
+              <dd className="lg:col-span-2">
+                {formData.mother?.dateOfBirth &&
+                  `${formatForDisplay(formData.mother.dateOfBirth)} (${calculateAge(formData.mother.dateOfBirth)} years old)`}
+              </dd>
 
               <dt>Current address</dt>
               <dd className="whitespace-pre-line lg:col-span-2">
