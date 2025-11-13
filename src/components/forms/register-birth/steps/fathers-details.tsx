@@ -168,6 +168,16 @@ export function FathersDetails({
                   type="text"
                   value={value.passportNumber || ""}
                 />
+                <Input
+                  error={fieldErrors.passportPlaceOfIssue}
+                  id="father-passportPlaceOfIssue"
+                  label="Place of issue"
+                  onChange={(e) =>
+                    handleChange("passportPlaceOfIssue", e.target.value)
+                  }
+                  type="text"
+                  value={value.passportPlaceOfIssue || ""}
+                />
               </div>
             </ShowHide>
           </div>
