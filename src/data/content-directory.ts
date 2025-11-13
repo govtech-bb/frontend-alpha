@@ -54,7 +54,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       },
       {
         title: "Get a birth certificate",
-        slug: "get-a-birth-certificate",
+        slug: "get-birth-certificate",
         source_url: "",
         description:
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
@@ -99,6 +99,11 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         title: "Apply to volunteer at a sports camp",
         slug: "apply-to-volunteer-at-a-sports-camp",
         description: "Apply to volunteer at a sports camp",
+      },
+      {
+        title: "Apply for a position as a temporary teacher",
+        slug: "apply-for-a-position-as-a-temporary-teacher",
+        description: "Apply for a position as a temporary teacher",
       },
     ],
   },
