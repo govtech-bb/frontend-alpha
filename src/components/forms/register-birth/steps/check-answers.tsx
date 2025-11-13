@@ -187,11 +187,26 @@ export function CheckAnswers({
                   {formData.father.address}
                 </dd>
 
-                <dt>National registration number</dt>
-                <dd className="lg:col-span-2">
-                  {formData.father.nationalRegistrationNumber ||
-                    formData.father.passportNumber}
-                </dd>
+                {formData.father.nationalRegistrationNumber ? (
+                  <>
+                    <dt>National registration number</dt>
+                    <dd className="lg:col-span-2">
+                      {formData.father.nationalRegistrationNumber}
+                    </dd>
+                  </>
+                ) : (
+                  <>
+                    <dt>Passport number</dt>
+                    <dd className="lg:col-span-2">
+                      {formData.father.passportNumber}
+                    </dd>
+
+                    <dt>Place of issue</dt>
+                    <dd className="lg:col-span-2">
+                      {formData.father.passportPlaceOfIssue}
+                    </dd>
+                  </>
+                )}
 
                 <dt>Occupation</dt>
                 <dd className="lg:col-span-2">{formData.father.occupation}</dd>
@@ -230,11 +245,26 @@ export function CheckAnswers({
                 {formData.mother?.address}
               </dd>
 
-              <dt>National registration number</dt>
-              <dd className="lg:col-span-2">
-                {formData.mother?.nationalRegistrationNumber ||
-                  formData.mother?.passportNumber}
-              </dd>
+              {formData.mother?.nationalRegistrationNumber ? (
+                <>
+                  <dt>National registration number</dt>
+                  <dd className="lg:col-span-2">
+                    {formData.mother.nationalRegistrationNumber}
+                  </dd>
+                </>
+              ) : (
+                <>
+                  <dt>Passport number</dt>
+                  <dd className="lg:col-span-2">
+                    {formData.mother?.passportNumber}
+                  </dd>
+
+                  <dt>Place of issue</dt>
+                  <dd className="lg:col-span-2">
+                    {formData.mother?.passportPlaceOfIssue}
+                  </dd>
+                </>
+              )}
 
               <dt>Occupation</dt>
               <dd className="lg:col-span-2">{formData.mother?.occupation}</dd>
