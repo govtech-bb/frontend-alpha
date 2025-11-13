@@ -5,6 +5,8 @@ import { MarkdownContent } from "@/components/markdown-content";
 import { Typography } from "@/components/ui/typography";
 import { getAlphaServices, getMarkdownContent } from "@/lib/markdown";
 
+// TODO: Consider using MDX for this page in the future.
+
 export default async function Page() {
   const alphaServices = await getAlphaServices();
   const markdownContent = await getMarkdownContent(["what-we-mean-by-alpha"]);
