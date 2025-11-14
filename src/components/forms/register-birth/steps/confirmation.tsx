@@ -80,8 +80,16 @@ export function Confirmation(_props: ConfirmationProps) {
               </p>
               <p className="font-bold">Find out about:</p>
               <ul className="ml-6 list-disc space-y-2">
-                <li>where you need to go to complete the registration</li>
-                <li>late registration fees</li>
+                <li>
+                  <Link href="https://alpha.gov.bb/register-a-birth#where-to-register">
+                    where you need to go to complete the registration
+                  </Link>
+                </li>
+                <li>
+                  <Link href="https://alpha.gov.bb/register-a-birth#late-registrations">
+                    late registration fees
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
