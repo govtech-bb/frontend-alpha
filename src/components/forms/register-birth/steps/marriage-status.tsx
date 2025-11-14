@@ -112,7 +112,7 @@ export function MarriageStatus({
             onValueChange={(val) =>
               handleChange("marriageStatus", val as "yes" | "no")
             }
-            value={value || undefined}
+            value={value}
           >
             <Radio id="married-yes" label="Yes" value="yes" />
             <Radio id="married-no" label="No" value="no" />

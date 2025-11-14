@@ -117,8 +117,8 @@ export function DateInput({
             id={errorId}
             role="alert"
           >
-            {errorMessages.map((msg, idx) => (
-              <p className="mb-1" key={idx}>
+            {errorMessages.map((msg) => (
+              <p className="mb-1" key={msg}>
                 <span className="govuk-visually-hidden">Error:</span> {msg}
               </p>
             ))}

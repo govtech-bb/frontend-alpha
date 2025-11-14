@@ -117,13 +117,23 @@ export function useStepValidation<T extends Record<string, unknown>>({
       onNext();
     } else {
       // Build error list for summary and field errors
+      // Deduplicate errors by field to avoid duplicate keys in error summary
+      const errorsByField = new Map<string, (typeof result.error.issues)[0]>();
+
+      for (const error of result.error.issues) {
+        const field = error.path[0] as string;
+        // Keep only the first error per field (typically the most relevant)
+        if (!errorsByField.has(field)) {
+          errorsByField.set(field, error);
+        }
+      }
+
       const validationErrors: ValidationError[] = [];
       const newFieldErrors: Record<string, string> = {};
       const newDateFieldErrors: Record<string, DateFieldErrors | undefined> =
         {};
 
-      for (const error of result.error.issues) {
-        const field = error.path[0] as string;
+      for (const [field, error] of errorsByField) {
         validationErrors.push({
           field: `${fieldPrefix}${field}`,
           message: error.message,
