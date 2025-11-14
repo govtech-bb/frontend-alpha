@@ -76,7 +76,7 @@ export function MarriageStatus({
         <div className="flex flex-col gap-4">
           <div className="pt-2 lg:pt-0">
             <h1
-              className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+              className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2"
               ref={titleRef}
               tabIndex={-1}
             >

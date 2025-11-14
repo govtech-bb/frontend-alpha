@@ -103,7 +103,7 @@ export function CheckAnswers({
     return (
       <div className="space-y-6">
         <h1
-          className="mb-2 font-bold text-[56px] leading-[1.15]"
+          className="mb-2 font-bold text-[56px] leading-[1.15] focus:outline-none"
           ref={titleRef}
           tabIndex={-1}
         >
@@ -151,7 +151,7 @@ export function CheckAnswers({
       <div className="flex flex-col gap-6 lg:col-span-2 lg:gap-8">
         <div className="flex flex-col gap-4">
           <h1
-            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2"
             ref={titleRef}
             tabIndex={-1}
           >
