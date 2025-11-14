@@ -1,0 +1,112 @@
+[
+  {
+    "scenario": "married-parents",
+    "marriageStatus": "yes",
+    "includeFatherDetails": "",
+    "father": {
+      "firstName": "Linnie",
+      "middleName": "Justus",
+      "lastName": "Halvorson",
+      "hadOtherSurname": "no",
+      "dateOfBirth": "12 Nov 2007",
+      "address": "1176 General Brooks",
+      "nationalRegistrationNumber": "655598-5031",
+      "occupation": "Investor Metrics Executive"
+    },
+    "mother": {
+      "firstName": "Rhiannon",
+      "middleName": "Jabari",
+      "lastName": "Monahan",
+      "hadOtherSurname": "yes",
+      "otherSurname": "Yundt",
+      "dateOfBirth": "08 Aug 1975",
+      "address": "57920 Gleichner Place",
+      "nationalRegistrationNumber": "496206-2001",
+      "occupation": "Product Integration Assistant"
+    },
+    "child": {
+      "firstNames": "Magnolia",
+      "middleNames": "Santa",
+      "lastName": "Rippin",
+      "dateOfBirth": "05 Jan 2022",
+      "sexAtBirth": "Female",
+      "parishOfBirth": "Saint Andrew"
+    },
+    "numberOfCertificates": 5,
+    "contact": {
+      "email": "Sunny.Waters@yahoo.com",
+      "phoneNumber": "+1-246-793-3194",
+      "wantContact": "no"
+    }
+  },
+  {
+    "scenario": "unmarried-without-father",
+    "marriageStatus": "no",
+    "includeFatherDetails": "no",
+    "mother": {
+      "firstName": "Marcella",
+      "middleName": "Alexandrine",
+      "lastName": "Waters",
+      "hadOtherSurname": "yes",
+      "otherSurname": "Harber",
+      "dateOfBirth": "17 Mar 1991",
+      "address": "9999 Howe Villages",
+      "nationalRegistrationNumber": "784619-4756",
+      "occupation": "Principal Accountability Manager"
+    },
+    "child": {
+      "firstNames": "Devon",
+      "middleNames": "Abdullah",
+      "lastName": "Sanford",
+      "dateOfBirth": "28 Jun 2015",
+      "sexAtBirth": "Female",
+      "parishOfBirth": "Christ Church"
+    },
+    "numberOfCertificates": 5,
+    "contact": {
+      "email": "Georgette15@hotmail.com",
+      "phoneNumber": "+1-246-689-7226",
+      "wantContact": "yes"
+    }
+  },
+  {
+    "scenario": "unmarried-with-father",
+    "marriageStatus": "no",
+    "includeFatherDetails": "yes",
+    "father": {
+      "firstName": "Clementine",
+      "middleName": "Baron",
+      "lastName": "Considine",
+      "hadOtherSurname": "yes",
+      "otherSurname": "Fritsch",
+      "dateOfBirth": "22 Apr 1965",
+      "address": "10130 Anderson Glen",
+      "nationalRegistrationNumber": "514887-5111",
+      "occupation": "Investor Optimization Agent"
+    },
+    "mother": {
+      "firstName": "Sydnie",
+      "middleName": "Genesis",
+      "lastName": "Mosciski",
+      "hadOtherSurname": "no",
+      "dateOfBirth": "16 Mar 1956",
+      "address": "7527 Wilkinson Junctions",
+      "nationalRegistrationNumber": "612891-7121",
+      "occupation": "National Applications Representative"
+    },
+    "child": {
+      "firstNames": "Vella",
+      "middleNames": "Beau",
+      "lastName": "Kirlin",
+      "dateOfBirth": "30 Apr 2009",
+      "sexAtBirth": "Male",
+      "parishOfBirth": "Saint Michael"
+    },
+    "numberOfCertificates": 1,
+    "contact": {
+      "email": "Claud36@yahoo.com",
+      "phoneNumber": "+1-246-923-3761",
+      "wantContact": "yes"
+    }
+  }
+]
