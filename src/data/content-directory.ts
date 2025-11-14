@@ -10,9 +10,13 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       {
         title: "Register a birth",
         slug: "register-a-birth",
-        source_url: "https://www.gov.bb/Citizens/register-birth",
+        source_url: "",
         description:
           "Information on how to register a birth in Barbados, including who can register, the required documents, and any associated fees.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          { slug: "form", type: "component" },
+        ],
       },
       {
         title: "Marriage licences",
@@ -50,16 +54,10 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       },
       {
         title: "Get a birth certificate",
-        slug: "get-a-birth-certificate",
+        slug: "get-birth-certificate",
         source_url: "",
         description:
-          "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
-      },
-      {
-        title: "Register a birth",
-        slug: "register-a-birth",
-        source_url: "",
-        description: "",
+          "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
     ],
   },
@@ -94,8 +92,18 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
       },
       {
         title: "Register for a summer camp",
-        slug: "register-for-a-summer-camp",
+        slug: "register-summer-camp",
         description: "Register for a summer camp",
+      },
+      {
+        title: "Apply to volunteer at a sports camp",
+        slug: "apply-to-volunteer-at-a-sports-camp",
+        description: "Apply to volunteer at a sports camp",
+      },
+      {
+        title: "Apply for a position as a temporary teacher",
+        slug: "apply-for-a-position-as-a-temporary-teacher",
+        description: "Apply for a position as a temporary teacher",
       },
     ],
   },

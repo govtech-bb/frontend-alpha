@@ -1,6 +1,7 @@
 import { Link } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
+import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { MarkdownContent } from "@/components/markdown-content";
 import { Typography } from "@/components/ui/typography";
 import { SERVICE_CATEGORIES } from "@/data/content-directory";
@@ -10,30 +11,28 @@ type ContentPageProps = {
   params: Promise<{ slug: string[] }>;
 };
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
 
-  //For a single slug, check if there's a matching category or a matching markdown file
+  // Single slug: Category page or standalone markdown
   if (slug.length === 1) {
     const [categorySlug] = slug;
     const category = SERVICE_CATEGORIES.find(
       (cat) => cat.slug === categorySlug
     );
-    // If category is not found
+
     if (!category) {
       const markdownContent = await getMarkdownContent([categorySlug]);
-      // If markdown content is not found
       if (!markdownContent) {
         notFound();
       }
-
       return <MarkdownContent markdown={markdownContent} />;
     }
 
     return (
       <>
         <Typography variant="h1">{category.title}</Typography>
-
         {category.description
           ?.split("\n")
           .map((line: string, _index: number) => (
@@ -41,7 +40,6 @@ export default async function Page({ params }: ContentPageProps) {
               {line}
             </p>
           ))}
-
         <div className="flex flex-col divide-y-2 divide-neutral-grey last:border-neutral-grey last:border-b-2">
           {category.pages.map((service) => (
             <div
@@ -62,7 +60,8 @@ export default async function Page({ params }: ContentPageProps) {
     );
   }
 
-  if (slug.length > 1) {
+  // Two slugs: Main service page
+  if (slug.length === 2) {
     const [categorySlug, pageSlug] = slug;
 
     const category = SERVICE_CATEGORIES.find(
@@ -85,27 +84,75 @@ export default async function Page({ params }: ContentPageProps) {
     return <MarkdownContent markdown={markdownContent} />;
   }
 
+  // Three slugs: Sub-pages (start, form, etc.)
+  if (slug.length === 3) {
+    const [categorySlug, pageSlug, subPageSlug] = slug;
+
+    const category = SERVICE_CATEGORIES.find(
+      (cat) => cat.slug === categorySlug
+    );
+    if (!category) {
+      notFound();
+    }
+
+    const page = category.pages.find((p) => p.slug === pageSlug);
+    if (!page) {
+      notFound();
+    }
+
+    // Handle form pages (JSX components)
+    if (subPageSlug === "form") {
+      // Dynamically import the form component based on the page slug
+      return <DynamicFormLoader formSlug={pageSlug} />;
+    }
+
+    // Handle other sub-pages (markdown)
+    const markdownContent = await getMarkdownContent([pageSlug, subPageSlug]);
+    if (!markdownContent) {
+      notFound();
+    }
+
+    return <MarkdownContent markdown={markdownContent} />;
+  }
+
   return notFound();
 }
 
 export async function generateMetadata({ params }: ContentPageProps) {
   const { slug } = await params;
 
-  // Determine which slug to use for content lookup
-  const contentSlug = slug.length > 1 ? [slug[1]] : slug;
-  const result = await getMarkdownContent(contentSlug);
+  // For sub-pages (3 slugs)
+  if (slug.length === 3) {
+    const [, pageSlug, subPageSlug] = slug;
+    const result = await getMarkdownContent([pageSlug, subPageSlug]);
 
-  if (result) {
-    return {
-      title: result.frontmatter.title || "The Government of Barbados",
-      description:
-        result.frontmatter.description ||
-        "The best place to access official government services",
-    };
+    if (result) {
+      return {
+        title: result.frontmatter.title || "The Government of Barbados",
+        description:
+          result.frontmatter.description ||
+          "The best place to access official government services",
+      };
+    }
   }
 
+  // For main pages (2 slugs)
+  if (slug.length === 2) {
+    const contentSlug = [slug[1]];
+    const result = await getMarkdownContent(contentSlug);
+
+    if (result) {
+      return {
+        title: result.frontmatter.title || "The Government of Barbados",
+        description:
+          result.frontmatter.description ||
+          "The best place to access official government services",
+      };
+    }
+  }
+
+  // For categories (1 slug)
   if (slug.length === 1) {
-    // Handle category fallback (only for single-slug case)
     const category = SERVICE_CATEGORIES.find((cat) => cat.slug === slug[0]);
     if (category) {
       return {
@@ -115,7 +162,6 @@ export async function generateMetadata({ params }: ContentPageProps) {
     }
   }
 
-  // Default fallback
   return {
     title: "Page not found",
   };

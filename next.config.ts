@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   // removes: x-powered-by: Next.js
   poweredByHeader: false,
-
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
