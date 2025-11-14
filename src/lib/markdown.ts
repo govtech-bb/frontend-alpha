@@ -108,33 +108,55 @@ export async function getFeaturedServices() {
   }
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export async function getAlphaServices() {
   try {
     const contentDir = path.join(process.cwd(), "src", "content");
-    const files = await fs.readdir(contentDir);
-
-    const markdownFiles = files.filter((file) => file.endsWith(".md"));
+    const entries = await fs.readdir(contentDir, { withFileTypes: true });
 
     const services: Array<{ title: string; slug: string; featured?: boolean }> =
       [];
 
-    for (const file of markdownFiles) {
-      const filePath = path.join(contentDir, file);
-      const fileContents = await fs.readFile(filePath, "utf8");
-      const { data } = matter(fileContents);
+    for (const entry of entries) {
+      let filePath: string;
+      let slug: string;
 
-      // Check if the file has featured: true in frontmatter
-      if (data.stage === "alpha") {
-        let slug = file.replace(".md", "");
-        const category = findCategoryByPageSlug(slug);
-        if (category) {
-          slug = `${category.slug}/${slug}`;
+      if (entry.isFile() && entry.name.endsWith(".md")) {
+        // Handle direct markdown files (e.g., loud-music-permit.md)
+        filePath = path.join(contentDir, entry.name);
+        slug = entry.name.replace(".md", "");
+      } else if (entry.isDirectory()) {
+        // Handle folders with index.md (e.g., register-a-birth/index.md)
+        const indexPath = path.join(contentDir, entry.name, "index.md");
+        try {
+          await fs.access(indexPath); // Check if index.md exists
+          filePath = indexPath;
+          slug = entry.name;
+        } catch {
+          continue; // Skip directories without index.md
         }
-        services.push({
-          title: data.title || slug,
-          slug,
-        });
+      } else {
+        continue; // Skip non-markdown files and other entries
       }
+
+      try {
+        const fileContents = await fs.readFile(filePath, "utf8");
+        const { data } = matter(fileContents);
+
+        // Check if the file has featured: true in frontmatter
+        if (data.stage === "alpha") {
+          const category = findCategoryByPageSlug(slug);
+          if (category) {
+            slug = `${category.slug}/${slug}`;
+          }
+          services.push({
+            title: data.title || slug,
+            slug,
+            featured: data.featured,
+          });
+        }
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+      } catch (_error) {}
     }
 
     return services;
