@@ -110,12 +110,12 @@ export function UserReceiptEmail({
             </Text>
             <ul style={{ margin: "0", paddingLeft: "20px" }}>
               <li>
-                <Link href="https://alpha.gov.bb/register-a-birth">
+                <Link href="https://alpha.gov.bb/register-a-birth#where-to-register">
                   where you need to go to complete the registration
                 </Link>
               </li>
               <li>
-                <Link href="https://alpha.gov.bb/register-a-birth">
+                <Link href="https://alpha.gov.bb/register-a-birth#late-registrations">
                   late registration fees
                 </Link>
               </li>
