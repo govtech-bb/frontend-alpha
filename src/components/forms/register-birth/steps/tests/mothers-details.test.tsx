@@ -159,7 +159,7 @@ describe("MothersDetails", () => {
       <MothersDetails {...defaultProps} value={{ hadOtherSurname: "yes" }} />
     );
 
-    expect(screen.getByLabelText("What was it")).toBeInTheDocument();
+    expect(screen.getByLabelText("Previous last name")).toBeInTheDocument();
   });
 
   it("should not show otherSurname field when hadOtherSurname is no", () => {
@@ -167,13 +167,17 @@ describe("MothersDetails", () => {
       <MothersDetails {...defaultProps} value={{ hadOtherSurname: "no" }} />
     );
 
-    expect(screen.queryByLabelText("What was it")).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("Previous last name")
+    ).not.toBeInTheDocument();
   });
 
   it("should not show otherSurname field when hadOtherSurname is not set", () => {
     render(<MothersDetails {...defaultProps} value={{}} />);
 
-    expect(screen.queryByLabelText("What was it")).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText("Previous last name")
+    ).not.toBeInTheDocument();
   });
 
   it("should call onChange when otherSurname changes", () => {
@@ -186,7 +190,7 @@ describe("MothersDetails", () => {
       />
     );
 
-    const input = screen.getByLabelText("What was it");
+    const input = screen.getByLabelText("Previous last name");
     fireEvent.change(input, { target: { value: "Johnson" } });
 
     expect(onChange).toHaveBeenCalledWith({

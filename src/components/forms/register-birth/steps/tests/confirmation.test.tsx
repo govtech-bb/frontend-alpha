@@ -6,7 +6,9 @@ describe("Confirmation", () => {
   it("should render the title", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
-    expect(screen.getByText("Pre-registration complete")).toBeInTheDocument();
+    expect(
+      screen.getByText("We have received your registration details")
+    ).toBeInTheDocument();
   });
 
   it("should render confirmation message", () => {
@@ -14,155 +16,159 @@ describe("Confirmation", () => {
 
     expect(
       screen.getByText(
-        "Your information has been sent to the Registration Department."
+        /Confirmation has been sent to the email address you provided/
       )
     ).toBeInTheDocument();
   });
 
-  it("should render next steps section", () => {
+  it("should render breadcrumb link", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
-    expect(screen.getByText("What you must do next")).toBeInTheDocument();
+    expect(
+      screen.getByText("Family, birth and relationships")
+    ).toBeInTheDocument();
+  });
+
+  it("should render 'What to do next' section", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(screen.getByText("What to do next")).toBeInTheDocument();
     expect(
       screen.getByText(
-        /You must now visit the Registration Department in person to sign the birth register/
+        /To finish registering the birth, you must go to the Registration Department/
       )
     ).toBeInTheDocument();
   });
 
-  it("should show mother-only attendance message when father details not included", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={2} />);
-
-    expect(
-      screen.getByText("The mother must attend the appointment.")
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByText(/both the mother and father/)
-    ).not.toBeInTheDocument();
-  });
-
-  it("should show both parents attendance message when father details included", () => {
-    render(<Confirmation hasFatherDetails={true} numberOfCertificates={2} />);
+  it("should render information about birth certificate collection", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
     expect(
       screen.getByText(
-        "Both the mother and father of the child must attend the appointment."
+        /The Registrations team will let you know when you can collect the child's birth certificate/
       )
     ).toBeInTheDocument();
-    expect(
-      screen.queryByText("The mother must attend")
-    ).not.toBeInTheDocument();
   });
 
-  it("should calculate certificate cost correctly for 1 certificate", () => {
+  it("should render 'Who should go to complete the registration' section", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
-    expect(screen.getByText(/BDD\$5\.00/)).toBeInTheDocument();
-    expect(screen.getByText(/Remember to bring payment/)).toBeInTheDocument();
-  });
-
-  it("should calculate certificate cost correctly for multiple certificates", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={3} />);
-
-    // 3 certificates at $5 each = $15.00
-    expect(screen.getByText(/BDD\$15\.00/)).toBeInTheDocument();
-    expect(screen.getByText(/Remember to bring payment/)).toBeInTheDocument();
-  });
-
-  it("should calculate certificate cost correctly for zero certificates", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={0} />);
-
-    expect(screen.getByText(/is free/)).toBeInTheDocument();
     expect(
-      screen.queryByText(/Remember to bring payment/)
-    ).not.toBeInTheDocument();
+      screen.getByText("Who should go to complete the registration")
+    ).toBeInTheDocument();
   });
 
-  it("should render location information", () => {
+  it("should render attendance requirements for married parents", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
-    expect(screen.getByText("Location")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /married to each other, the father must register and the mother can attend/
+      )
+    ).toBeInTheDocument();
+  });
 
-    // Check that all location details are present (Registration Department appears multiple times)
-    const allText = screen.getAllByText(/Registration Department/);
-    expect(allText.length).toBeGreaterThan(0);
+  it("should render attendance requirements for unmarried parents", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
+    expect(
+      screen.getByText(
+        /not married to each other, the mother must register the birth/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("should render attendance requirements when father wants to be named", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(
+      screen.getByText(/both parents must register the birth together/)
+    ).toBeInTheDocument();
+  });
+
+  it("should render note about not needing to bring baby", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(
+      screen.getByText("You do not need to take the baby.")
+    ).toBeInTheDocument();
+  });
+
+  it("should render 'What to bring' section", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(screen.getByText("What to bring")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Your child's medical book from the hospital or birthing centre/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("should render information about photo identification", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(
+      screen.getByText(
+        /A valid form of photo identification for each parent who will be named on the birth record/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("should render information about marriage certificate", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(
+      screen.getByText(
+        /Your original marriage certificate if you are married to the child's other parent/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("should render section for parents who are minors", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(screen.getByText("Parents who are minors")).toBeInTheDocument();
+    expect(screen.getByText(/you are considered a minor/)).toBeInTheDocument();
+  });
+
+  it("should render 'If you need support' section", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(screen.getByText("If you need support")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /If you need help registering a birth, for example, you are unable to sign the register in person/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("should render Registration Department contact information", () => {
+    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
+
+    expect(screen.getByText("Registration Department")).toBeInTheDocument();
     expect(screen.getByText(/Supreme Court Complex/)).toBeInTheDocument();
     expect(screen.getByText(/Whitepark Road/)).toBeInTheDocument();
     expect(screen.getByText(/St. Michael/)).toBeInTheDocument();
+    expect(screen.getByText(/\(246\) 535-9700/)).toBeInTheDocument();
   });
 
-  it("should render appointment information section", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
-
-    expect(
-      screen.getByText("Who must attend the appointment")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/You do not need an appointment/)
-    ).toBeInTheDocument();
-  });
-
-  it("should render payment reminder", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={2} />);
-
-    expect(
-      screen.getByText(/Remember to bring payment with you/)
-    ).toBeInTheDocument();
-  });
-
-  it("should render identification reminder", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
-
-    expect(
-      screen.getByText(
-        /You should also bring valid photo identification for the parent\(s\) attending/
-      )
-    ).toBeInTheDocument();
-  });
-
-  it("should render button for additional information", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
-
-    const button = screen.getByRole("button", {
-      name: /see what you need to bring with you/i,
-    });
-    expect(button).toBeInTheDocument();
-  });
-
-  it("should have blue background banner for confirmation message", () => {
+  it("should have green background banner for header section", () => {
     const { container } = render(
       <Confirmation hasFatherDetails={false} numberOfCertificates={1} />
     );
 
-    // Check for the blue banner container with bg-[#D4F1F4]
-    const banner = container.querySelector(".bg-\\[\\#D4F1F4\\]");
+    // Check for the green banner container with bg-green-40
+    const banner = container.querySelector(".bg-green-40");
     expect(banner).toBeInTheDocument();
   });
 
   it("should focus on title when component mounts", () => {
     render(<Confirmation hasFatherDetails={false} numberOfCertificates={1} />);
 
-    const title = screen.getByText("Pre-registration complete");
+    const title = screen.getByText(
+      "We have received your registration details"
+    );
     expect(title).toHaveAttribute("tabIndex", "-1");
-  });
-
-  it("should format currency with two decimal places", () => {
-    render(<Confirmation hasFatherDetails={false} numberOfCertificates={5} />);
-
-    // 5 certificates at $5 each = $25.00
-    expect(screen.getByText(/BDD\$25\.00/)).toBeInTheDocument();
-  });
-
-  it("should render all key information sections", () => {
-    render(<Confirmation hasFatherDetails={true} numberOfCertificates={2} />);
-
-    // Check all major sections are present
-    expect(screen.getByText("Pre-registration complete")).toBeInTheDocument();
-    expect(screen.getByText("What you must do next")).toBeInTheDocument();
-    expect(
-      screen.getByText("Who must attend the appointment")
-    ).toBeInTheDocument();
-    expect(screen.getByText("Location")).toBeInTheDocument();
   });
 });

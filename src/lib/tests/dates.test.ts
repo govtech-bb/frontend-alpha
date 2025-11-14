@@ -218,11 +218,18 @@ describe("validateFields", () => {
 
   describe("future dates", () => {
     it("should return error for future date on all fields", () => {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
-      const day = String(tomorrow.getDate()).padStart(2, "0");
-      const year = tomorrow.getFullYear();
+      // Use UTC dates to match validation logic
+      const today = new Date();
+      const tomorrow = new Date(
+        Date.UTC(
+          today.getUTCFullYear(),
+          today.getUTCMonth(),
+          today.getUTCDate() + 1
+        )
+      );
+      const month = String(tomorrow.getUTCMonth() + 1).padStart(2, "0");
+      const day = String(tomorrow.getUTCDate()).padStart(2, "0");
+      const year = tomorrow.getUTCFullYear();
 
       const result = validateFields(`${year}-${month}-${day}`);
       expect(result).toEqual({
@@ -375,11 +382,18 @@ describe("isValidBirthDate", () => {
   });
 
   it("should reject future dates (day level)", () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
-    const day = String(tomorrow.getDate()).padStart(2, "0");
-    const year = tomorrow.getFullYear();
+    // Use UTC dates to match validation logic
+    const today = new Date();
+    const tomorrow = new Date(
+      Date.UTC(
+        today.getUTCFullYear(),
+        today.getUTCMonth(),
+        today.getUTCDate() + 1
+      )
+    );
+    const month = String(tomorrow.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(tomorrow.getUTCDate()).padStart(2, "0");
+    const year = tomorrow.getUTCFullYear();
     expect(isValidBirthDate(`${year}-${month}-${day}`)).toBe(false);
   });
 
