@@ -8,6 +8,12 @@ import { Typography } from "@/components/ui/typography";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
 
+const generateId = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
 // Custom components for react-markdown
 const components: Components = {
   h1: ({ children, ...props }: any) => (
@@ -15,11 +21,14 @@ const components: Components = {
       {children}
     </Typography>
   ),
-  h2: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h2" {...props}>
-      {children}
-    </Typography>
-  ),
+  h2: ({ children, ...props }: any) => {
+    const id = typeof children === "string" ? generateId(children) : undefined;
+    return (
+      <Typography className="mt-8 mb-4" id={id} variant="h2" {...props}>
+        {children}
+      </Typography>
+    );
+  },
   h3: ({ children, ...props }: any) => (
     <Typography className="mt-8 mb-4" variant="h3" {...props}>
       {children}
@@ -52,7 +61,6 @@ const components: Components = {
   ),
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
   a: ({ href, children, target, ...props }: any) => {
-    // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
       ? "underline"
@@ -120,7 +128,7 @@ export const MarkdownContent = ({
   const { frontmatter, content } = markdown;
   return (
     <div className="space-y-8 overflow-hidden">
-      <div className="space-y-6">
+      <div className="space-y-6 pt-6 lg:space-y-6 lg:pt-16">
         {frontmatter.title && (
           <Typography variant="h1">{frontmatter.title}</Typography>
         )}
@@ -132,7 +140,7 @@ export const MarkdownContent = ({
           <MigrationBanner pageURL={frontmatter.source_url} />
         ) : null}
         {frontmatter.publish_date && (
-          <div className="border-blue-10 border-b-4 pb-4 text-[16px] text-neutral-midgrey leading-normal">
+          <div className="border-blue-10 border-b-4 pb-3 text-[16px] text-neutral-midgrey leading-normal">
             Last updated on{" "}
             {format(
               parseISO(frontmatter.publish_date.toISOString().split("T")[0]),

@@ -7,7 +7,7 @@ export default function EntryPointLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="container space-y-8 overflow-hidden pt-4">
+    <div className="container py-4 lg:pt-6">
       <BackButton />
       {children}
       <HelpfulBox />

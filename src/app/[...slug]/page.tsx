@@ -11,6 +11,24 @@ type ContentPageProps = {
   params: Promise<{ slug: string[] }>;
 };
 
+function extractHeadings(content: string) {
+  const headingRegex = /^##\s+(.+)$/gm;
+  const headings: { id: string; text: string }[] = [];
+
+  let match = headingRegex.exec(content);
+  while (match !== null) {
+    const text = match[1];
+    const id = text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+    headings.push({ id, text });
+    match = headingRegex.exec(content);
+  }
+
+  return headings;
+}
+
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
@@ -81,7 +99,35 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    return <MarkdownContent markdown={markdownContent} />;
+    // Extract table of contents from markdown
+    const tableOfContents = extractHeadings(markdownContent.content);
+
+    return (
+      <div className="lg:grid lg:grid-cols-3 lg:gap-16">
+        <div className="space-y-6 lg:col-span-2 lg:space-y-8">
+          <MarkdownContent markdown={markdownContent} />
+        </div>
+
+        {tableOfContents.length > 0 && (
+          <div className="hidden lg:col-span-1 lg:block lg:pt-16">
+            <nav className="sticky top-8">
+              <h3 className="mb-4 font-bold text-[24px] leading-[1.25]">
+                On this page
+              </h3>
+              <ul className="space-y-4 text-[20px] leading-[1.7]">
+                {tableOfContents.map((heading) => (
+                  <li key={heading.id}>
+                    <Link as={NextLink} href={`#${heading.id}`}>
+                      {heading.text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        )}
+      </div>
+    );
   }
 
   // Three slugs: Sub-pages (start, form, etc.)
