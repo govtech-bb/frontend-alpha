@@ -31,6 +31,10 @@
 }
 
 @layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
   body {
     /* Consistent font rendering across platforms */
     -webkit-font-smoothing: antialiased;

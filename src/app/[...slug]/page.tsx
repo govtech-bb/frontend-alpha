@@ -45,12 +45,15 @@ export default async function Page({ params }: ContentPageProps) {
       if (!markdownContent) {
         notFound();
       }
+
       return <MarkdownContent markdown={markdownContent} />;
     }
 
     return (
       <>
-        <Typography variant="h1">{category.title}</Typography>
+        <Typography className="pt-6 lg:pt-16" variant="h1">
+          {category.title}
+        </Typography>
         {category.description
           ?.split("\n")
           .map((line: string, _index: number) => (
