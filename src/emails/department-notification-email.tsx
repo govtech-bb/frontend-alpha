@@ -13,7 +13,7 @@ import type {
   PartialBirthRegistrationFormData,
   PersonDetails,
 } from "@/components/forms/register-birth/types";
-import { calculateAge, formatForDisplay } from "@/lib/dates";
+import { calculateAge, combineDate, formatForDisplay } from "@/lib/dates";
 
 type DepartmentNotificationEmailProps = {
   formData: PartialBirthRegistrationFormData;
@@ -88,22 +88,29 @@ function PersonDetailsSection({
               <td style={{ padding: "5px 10px" }}>{person.otherSurname}</td>
             </tr>
           )}
-          {person.dateOfBirth && (
-            <tr>
-              <td
-                style={{
-                  padding: "5px 10px",
-                  backgroundColor: "#f5f5f5",
-                }}
-              >
-                <strong>Date of birth:</strong>
-              </td>
-              <td style={{ padding: "5px 10px" }}>
-                {formatForDisplay(person.dateOfBirth)} (
-                {calculateAge(person.dateOfBirth)} years old)
-              </td>
-            </tr>
-          )}
+          {person.dateOfBirth && (() => {
+            const dateString = combineDate(
+              person.dateOfBirth.year,
+              person.dateOfBirth.month,
+              person.dateOfBirth.day
+            );
+            return (
+              <tr>
+                <td
+                  style={{
+                    padding: "5px 10px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  <strong>Date of birth:</strong>
+                </td>
+                <td style={{ padding: "5px 10px" }}>
+                  {formatForDisplay(dateString)} (
+                  {calculateAge(dateString)} years old)
+                </td>
+              </tr>
+            );
+          })()}
           {person.address && (
             <tr>
               <td
@@ -234,21 +241,28 @@ function ChildDetailsSection({
               <td style={{ padding: "5px 10px" }}>{child.lastName}</td>
             </tr>
           )}
-          {child.dateOfBirth && (
-            <tr>
-              <td
-                style={{
-                  padding: "5px 10px",
-                  backgroundColor: "#f5f5f5",
-                }}
-              >
-                <strong>Date of birth:</strong>
-              </td>
-              <td style={{ padding: "5px 10px" }}>
-                {formatForDisplay(child.dateOfBirth)}
-              </td>
-            </tr>
-          )}
+          {child.dateOfBirth && (() => {
+            const dateString = combineDate(
+              child.dateOfBirth.year,
+              child.dateOfBirth.month,
+              child.dateOfBirth.day
+            );
+            return (
+              <tr>
+                <td
+                  style={{
+                    padding: "5px 10px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  <strong>Date of birth:</strong>
+                </td>
+                <td style={{ padding: "5px 10px" }}>
+                  {formatForDisplay(dateString)}
+                </td>
+              </tr>
+            );
+          })()}
           {child.sexAtBirth && (
             <tr>
               <td

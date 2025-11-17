@@ -5,9 +5,9 @@ import {
 } from "@/lib/validation/date-validation";
 
 const dateInputValueSchema = z.object({
-  day: z.string(),
+  day: z.string().max(2),
   month: z.string(),
-  year: z.string(),
+  year: z.string().max(4),
 });
 
 /**
