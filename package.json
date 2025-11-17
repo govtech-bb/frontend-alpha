@@ -19,6 +19,7 @@
   "dependencies": {
     "@aws-sdk/client-sesv2": "^3.891.0",
     "@govtech-bb/design": "^1.0.0-alpha.5",
+    "@govtech-bb/forms": "github:govtech-bb/form-lib",
     "@govtech-bb/react": "^1.0.0-alpha.5",
     "@hookform/resolvers": "^5.2.1",
     "@mdx-js/loader": "^3.1.1",
