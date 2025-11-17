@@ -93,6 +93,10 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         slug: "register-for-community-sports-training-programme",
         description:
           "Register for a Youth Development Programme (YDP) Community Sports Training programme",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          { slug: "form", type: "component" },
+        ],
       },
       {
         title: "Register for a summer camp",

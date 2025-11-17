@@ -7,6 +7,9 @@ export const FORM_COMPONENTS = {
   "apply-to-be-a-project-protege-mentor": lazy(
     () => import("@/components/forms/mentorship-application-form")
   ),
+  "register-for-community-sports-training-programme": lazy(
+    () => import("@/components/forms/ydp-sports-training-form")
+  ),
   // Add other forms here
 } as const;
 
