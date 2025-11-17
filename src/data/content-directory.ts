@@ -77,6 +77,10 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         title: "Apply to be a Project Protégé mentor",
         slug: "apply-to-be-a-project-protege-mentor",
         description: "Apply to be a Project Protégé mentor",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          { slug: "form", type: "component" },
+        ],
       },
       {
         title: "Apply to the Barbados YouthADVANCE Corps (BYAC)",
@@ -89,6 +93,10 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         slug: "register-for-community-sports-training-programme",
         description:
           "Register for a Youth Development Programme (YDP) Community Sports Training programme",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          { slug: "form", type: "component" },
+        ],
       },
       {
         title: "Register for a summer camp",
