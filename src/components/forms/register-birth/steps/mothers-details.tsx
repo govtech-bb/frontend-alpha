@@ -3,6 +3,7 @@
 import type { ErrorItem } from "@govtech-bb/react";
 import {
   Button,
+  DateInput,
   ErrorSummary,
   Input,
   Radio,
@@ -10,7 +11,6 @@ import {
   ShowHide,
   TextArea,
 } from "@govtech-bb/react";
-import { DateInput } from "../../common/date-input";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
@@ -150,12 +150,13 @@ export function MothersDetails({
 
           {/* Date of birth */}
           <DateInput
-            errors={dateFieldErrors.dateOfBirth}
-            hint="For example, 27 3 2007 or 27 Mar 2007"
+            description="For example, 27 3 2007"
+            error={dateFieldErrors.dateOfBirth || fieldErrors.dateOfBirth}
             id="mother-dateOfBirth"
             label="Date of birth"
+            name="mother-dateOfBirth"
             onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
-            value={value.dateOfBirth || ""}
+            value={value.dateOfBirth}
           />
 
           {/* Address */}
