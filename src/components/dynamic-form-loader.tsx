@@ -1,30 +1,22 @@
-// components/dynamic-form-loader.tsx
 "use client";
 
-import dynamic from "next/dynamic";
-import type { ComponentType } from "react";
+import { Suspense } from "react";
+import { FORM_COMPONENTS, type FormSlug } from "@/lib/form-registry";
 
 type DynamicFormLoaderProps = {
   formSlug: string;
 };
 
-const Fallback = () => <div>Form not found</div>;
-
 export function DynamicFormLoader({ formSlug }: DynamicFormLoaderProps) {
-  const FormComponent = dynamic<Record<string, never>>(
-    () =>
-      import(`@/components/forms/${formSlug}-form`)
-        .then((mod) => mod.default as ComponentType<Record<string, never>>)
-        .catch(() => {
-          // Return a fallback component if import fails
+  const FormComponent = FORM_COMPONENTS[formSlug as FormSlug];
 
-          return Fallback as ComponentType<Record<string, never>>;
-        }),
-    {
-      loading: () => <div>Loading form...</div>,
-      ssr: false, // Optional: disable SSR for the form if needed
-    }
+  if (!FormComponent) {
+    return <div>Form not found</div>;
+  }
+
+  return (
+    <Suspense fallback={<div>Loading form...</div>}>
+      <FormComponent />
+    </Suspense>
   );
-
-  return <FormComponent />;
 }
