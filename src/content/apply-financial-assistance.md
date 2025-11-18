@@ -29,7 +29,7 @@ You can apply for assistance for a range of reasons, including if you:
 
 - are the victim of a disaster or an accident
 
-## How to apply for financial assitance
+## How to apply for financial assistance
 
 ### Apply online or in person
 
