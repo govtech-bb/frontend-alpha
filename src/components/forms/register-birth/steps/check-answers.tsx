@@ -2,7 +2,7 @@
 
 import { Button } from "@govtech-bb/react";
 import { Typography } from "@/components/ui/typography";
-import { calculateAge, formatForDisplay } from "@/lib/dates";
+import { calculateAge, combineDate, formatForDisplay } from "@/lib/dates";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { finalSubmissionSchema } from "../schema";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
@@ -185,8 +185,14 @@ export function CheckAnswers({
 
                 <dt>Date of birth</dt>
                 <dd className="lg:col-span-2">
-                  {formData.father.dateOfBirth &&
-                    `${formatForDisplay(formData.father.dateOfBirth)} (${calculateAge(formData.father.dateOfBirth)} years old)`}
+                  {formData.father.dateOfBirth && (() => {
+                    const dateString = combineDate(
+                      formData.father.dateOfBirth.year,
+                      formData.father.dateOfBirth.month,
+                      formData.father.dateOfBirth.day
+                    );
+                    return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                  })()}
                 </dd>
 
                 <dt>Current address</dt>
@@ -249,8 +255,14 @@ export function CheckAnswers({
 
               <dt>Date of birth</dt>
               <dd className="lg:col-span-2">
-                {formData.mother?.dateOfBirth &&
-                  `${formatForDisplay(formData.mother.dateOfBirth)} (${calculateAge(formData.mother.dateOfBirth)} years old)`}
+                {formData.mother?.dateOfBirth && (() => {
+                  const dateString = combineDate(
+                    formData.mother.dateOfBirth.year,
+                    formData.mother.dateOfBirth.month,
+                    formData.mother.dateOfBirth.day
+                  );
+                  return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                })()}
               </dd>
 
               <dt>Current address</dt>
@@ -302,8 +314,14 @@ export function CheckAnswers({
 
               <dt>Date of birth</dt>
               <dd className="lg:col-span-2">
-                {formData.child?.dateOfBirth &&
-                  formatForDisplay(formData.child.dateOfBirth)}
+                {formData.child?.dateOfBirth && (() => {
+                  const dateString = combineDate(
+                    formData.child.dateOfBirth.year,
+                    formData.child.dateOfBirth.month,
+                    formData.child.dateOfBirth.day
+                  );
+                  return formatForDisplay(dateString);
+                })()}
               </dd>
 
               <dt>Sex at birth</dt>

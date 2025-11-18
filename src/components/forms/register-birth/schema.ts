@@ -1,5 +1,14 @@
 import { z } from "zod";
-import { isValidBirthDate } from "@/lib/dates";
+import {
+  createDateSchema,
+  dateValidation,
+} from "@/lib/validation/date-validation";
+
+const dateInputValueSchema = z.object({
+  day: z.string().max(2),
+  month: z.string(),
+  year: z.string().max(4),
+});
 
 /**
  * Zod schema for birth registration form data validation
@@ -19,7 +28,7 @@ const personDetailsSchema = z.object({
   lastName: z.string().optional(),
   hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
   otherSurname: z.string().optional(),
-  dateOfBirth: z.string().optional(),
+  dateOfBirth: dateInputValueSchema.optional(),
   address: z.string().optional(),
   nationalRegistrationNumber: z.string().optional(),
   passportNumber: z.string().optional(),
@@ -32,7 +41,7 @@ const childDetailsSchema = z.object({
   firstNames: z.string().optional(),
   middleNames: z.string().optional(),
   lastName: z.string().optional(),
-  dateOfBirth: z.string().optional(),
+  dateOfBirth: dateInputValueSchema.optional(),
   sexAtBirth: z.enum(["Male", "Female"]).optional(),
   parishOfBirth: z.string().optional(),
 });
@@ -157,16 +166,14 @@ function createPersonDetailsSchema(personType: "father" | "mother") {
       ),
       hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
       otherSurname: z.string().optional(),
-      dateOfBirth: z.preprocess(
-        (val) => val ?? "",
-        z
-          .string()
-          .min(1, `Enter the ${personType}'s date of birth`)
-          .refine((val) => isValidBirthDate(val), {
-            message:
-              "Enter a valid date (for example, 27 3 2007 or 27 Mar 2007)",
-          })
+      dateOfBirth: dateValidation.past(
+        dateValidation.required(
+          createDateSchema(`${personType}'s date of birth`),
+          `${personType}'s date of birth`
+        ),
+        `${personType}'s date of birth`
       ),
+
       address: z.preprocess(
         (val) => val ?? "",
         z.string().min(1, `Enter the ${personType}'s current address`)
@@ -199,15 +206,12 @@ export const childDetailsValidation = z.object({
     (val) => val ?? "",
     z.string().min(1, "Enter the child's last name")
   ),
-  dateOfBirth: z.preprocess(
-    (val) => val ?? "",
-    z
-      .string()
-      .min(1, "Enter the child's date of birth")
-      .refine((val) => isValidBirthDate(val), {
-        message:
-          "Enter a valid date (for example, 27 3 2007 or 27 Mar 2007). Date cannot be in the future",
-      })
+  dateOfBirth: dateValidation.past(
+    dateValidation.required(
+      createDateSchema("child's date of birth"),
+      "child's date of birth"
+    ),
+    "child's date of birth"
   ),
   sexAtBirth: z.enum(["Male", "Female"], {
     message: "Select the child's sex at birth",
