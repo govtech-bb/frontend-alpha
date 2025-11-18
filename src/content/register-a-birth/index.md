@@ -9,8 +9,6 @@ It is a legal requirement that all births in Barbados (including stillbirths) ar
 
 Before a birth certificate can be issued, the birth must be registered. The certificate is essential for access to public services including school enrollment and certain health services.
 
----
-
 ## How to register a birth
 
 1. Take your documents (listed below) to the registry office in the district where the child was born. You cannot book an appointment but lunchtime is typically busy.
@@ -20,8 +18,6 @@ Before a birth certificate can be issued, the birth must be registered. The cert
 3. When you have reviewed and confirmed the details, the registration clerk will ask you to sign the official register.
 
 4. The clerk will begin the process of issuing a birth certificate which will be ready to collect in 2 to 3 days. Each certified copy costs BDS $5.00.
-
----
 
 ## Who should register a birth?
 
@@ -36,8 +32,6 @@ If the parents are:
 - not married to each other but the father wants to be named on the birth record, both parents must register the birth together
 
 You do not need to take the baby.
-
----
 
 ## What to bring
 
@@ -78,8 +72,6 @@ You must be accompanied by your parent(s) or guardian(s).
 
 If you don’t meet these criteria, contact the Registrations Department.
 
----
-
 ## If you are unable to register the birth in person
 
 If you are unable to attend in person, contact the Registration Department in Bridgetown as soon as possible after the child is born.
@@ -90,39 +82,35 @@ Whitepark Road
 St. Michael  
 (246) 535-9700
 
----
-
 ## Late registrations
 
 Births must be registered within 28 days of the child being born. There is a grace period of 1 year but after this point, the parent or guardian must engage a legal assistant from the Registrations Department to help with the late registration process. You will need to pay a late registration fee of BDS $20.00.
-
----
 
 ## Where to register
 
 You cannot register a birth online yet, so you need to do it in person in the district where the child was born. Even if this is not the closest magistrate’s court to where you live.
 
-#### Born in St. Michael (District A)
+### Born in St. Michael (District A)
 
 Go to the Registration Department (Records Branch), in the Supreme Court Complex, Whitepark Road, St. Michael
 
-#### Born in Christ Church or St. George
+### Born in Christ Church or St. George
 
 Go to the District B Magistrate’s Court, currently located at the Eric Holder Municipal Complex, Blackmans, St. Joseph
 
-#### Born in St. Philip or St. John
+### Born in St. Philip or St. John
 
 Normally located at the District C Magistrate’s Court, St. Matthias, Christ Church, currently located at the Registration Department, in the Supreme Court Complex, Whitepark Road, St. Michael
 
-#### Born in St. Thomas
+### Born in St. Thomas
 
 Go to the District D Magistrate’s Court, Cane Carden St. Thomas
 
-#### Born in St. Peter, St. James, or St. Lucy
+### Born in St. Peter, St. James, or St. Lucy
 
 Go to the District E Magistrate’s Court, Holetown, St. James
 
-#### Born in St. Joseph or St. Andrew
+### Born in St. Joseph or St. Andrew
 
 Go to the District F Magistrate’s Court, Eric Holder Municipal Complex, Blackmans, Saint Joseph
 
