@@ -1,39 +1,53 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
+import { Heading, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { Typography } from "@/components/ui/typography";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
 
-// Custom components for react-markdown
 const components: Components = {
   h1: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h1" {...props}>
+    <Heading as="h1" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
+    // <Typography className="mt-8 mb-4" variant="h1" {...props}>
+    //   {children}
+    // </Typography>
   ),
   h2: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h2" {...props}>
+    <Heading as="h2" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
+    // <Typography className="mt-8 mb-4" variant="h2" {...props}>
+    //   {children}
+    // </Typography>
   ),
   h3: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h3" {...props}>
+    <Heading as="h3" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
+    // <Typography className="mt-8 mb-4" variant="h3" {...props}>
+    //   {children}
+    // </Typography>
   ),
   h4: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h4" {...props}>
+    // <Typography className="mt-8 mb-4" variant="h4" {...props}>
+    //   {children}
+    // </Typography>
+    <Heading as="h4" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
   p: ({ children, ...props }: any) => (
-    <Typography variant="paragraph" {...props}>
+    <Text as="p" size="body" {...props}>
       {children}
-    </Typography>
+    </Text>
+    // <Typography variant="paragraph" {...props}>
+    //   {children}
+    // </Typography>
   ),
   ul: ({ children, ...props }: any) => (
     <ul className="mb-4 list-disc pl-6 text-[20px]" {...props}>
@@ -121,9 +135,7 @@ export const MarkdownContent = ({
   return (
     <div className="space-y-8 overflow-hidden">
       <div className="space-y-6">
-        {frontmatter.title && (
-          <Typography variant="h1">{frontmatter.title}</Typography>
-        )}
+        {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
 
         {frontmatter.stage?.length > 0 ? (
           <StageBanner stage={frontmatter.stage} />
@@ -132,12 +144,14 @@ export const MarkdownContent = ({
           <MigrationBanner pageURL={frontmatter.source_url} />
         ) : null}
         {frontmatter.publish_date && (
-          <div className="border-blue-10 border-b-4 pb-4 text-[16px] text-neutral-midgrey leading-normal">
-            Last updated on{" "}
-            {format(
-              parseISO(frontmatter.publish_date.toISOString().split("T")[0]),
-              "PPP"
-            )}
+          <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
+            <Text as="p" size="caption">
+              Last updated on{" "}
+              {format(
+                parseISO(frontmatter.publish_date.toISOString().split("T")[0]),
+                "PPP"
+              )}
+            </Text>
           </div>
         )}
       </div>
