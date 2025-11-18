@@ -2,70 +2,60 @@
 
 import { Heading, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
+import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import rehypeSectionize from "@/lib/rehype-sectionize";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
 
+type HeadingProps = ComponentPropsWithoutRef<"h1">;
+type ParagraphProps = ComponentPropsWithoutRef<"p">;
+type ListProps = ComponentPropsWithoutRef<"ul">;
+type ListItemProps = ComponentPropsWithoutRef<"li">;
+type AnchorProps = ComponentPropsWithoutRef<"a">;
+type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
+
 const components: Components = {
-  h1: ({ children, ...props }: any) => (
-    <Heading as="h1" className="mt-8 mb-4" {...props}>
-      {children}
-    </Heading>
-    // <Typography className="mt-8 mb-4" variant="h1" {...props}>
-    //   {children}
-    // </Typography>
-  ),
-  h2: ({ children, ...props }: any) => (
-    <Heading as="h2" className="mt-8 mb-4" {...props}>
-      {children}
-    </Heading>
-    // <Typography className="mt-8 mb-4" variant="h2" {...props}>
-    //   {children}
-    // </Typography>
-  ),
-  h3: ({ children, ...props }: any) => (
-    <Heading as="h3" className="mt-8 mb-4" {...props}>
-      {children}
-    </Heading>
-    // <Typography className="mt-8 mb-4" variant="h3" {...props}>
-    //   {children}
-    // </Typography>
-  ),
-  h4: ({ children, ...props }: any) => (
-    // <Typography className="mt-8 mb-4" variant="h4" {...props}>
-    //   {children}
-    // </Typography>
-    <Heading as="h4" className="mt-8 mb-4" {...props}>
+  h1: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h1" {...props}>
       {children}
     </Heading>
   ),
-  p: ({ children, ...props }: any) => (
+  h2: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h2" {...props}>
+      {children}
+    </Heading>
+  ),
+  h3: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h3" {...props}>
+      {children}
+    </Heading>
+  ),
+  h4: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h4" {...props}>
+      {children}
+    </Heading>
+  ),
+  p: ({ children, ...props }: ParagraphProps) => (
     <Text as="p" size="body" {...props}>
       {children}
     </Text>
-    // <Typography variant="paragraph" {...props}>
-    //   {children}
-    // </Typography>
   ),
-  ul: ({ children, ...props }: any) => (
-    <ul className="mb-4 list-disc pl-6 text-[20px]" {...props}>
+  ul: ({ children, ...props }: ListProps) => (
+    <ul className="list-disc pl-7" {...props}>
       {children}
     </ul>
   ),
-  ol: ({ children, ...props }: any) => (
-    <ol className="mb-4 list-decimal pl-6 text-[20px]" {...props}>
+  ol: ({ children, ...props }: ListProps) => (
+    <ol className="list-decimal space-y-4 pl-7" {...props}>
       {children}
     </ol>
   ),
-  li: ({ children, ...props }: any) => (
-    <li className="mb-2" {...props}>
-      {children}
-    </li>
-  ),
+  li: ({ children, ...props }: ListItemProps) => <li {...props}>{children}</li>,
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
-  a: ({ href, children, target, ...props }: any) => {
+  a: ({ href, children, target, ...props }: AnchorProps) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
@@ -84,7 +74,7 @@ const components: Components = {
       </a>
     );
   },
-  blockquote: (props: any) => (
+  blockquote: (props: BlockquoteProps) => (
     <blockquote
       className="ml-[0.075em] border-gray-300 border-l-3 pl-4 text-gray-700 dark:border-zinc-400 dark:text-zinc-400"
       {...props}
@@ -133,35 +123,39 @@ export const MarkdownContent = ({
 }) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="space-y-8 overflow-hidden">
-      <div className="space-y-6">
-        {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
+    <div className="lg:grid lg:grid-cols-3 lg:gap-16">
+      <div className="space-y-6 lg:col-span-2 lg:space-y-8">
+        <div className="space-y-4 pt-6 lg:space-y-6 lg:pt-16">
+          {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
 
-        {frontmatter.stage?.length > 0 ? (
-          <StageBanner stage={frontmatter.stage} />
-        ) : null}
-        {frontmatter.source_url ? (
-          <MigrationBanner pageURL={frontmatter.source_url} />
-        ) : null}
-        {frontmatter.publish_date && (
-          <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
-            <Text as="p" size="caption">
-              Last updated on{" "}
-              {format(
-                parseISO(frontmatter.publish_date.toISOString().split("T")[0]),
-                "PPP"
-              )}
-            </Text>
-          </div>
-        )}
+          {frontmatter.stage?.length > 0 ? (
+            <StageBanner stage={frontmatter.stage} />
+          ) : null}
+          {frontmatter.source_url ? (
+            <MigrationBanner pageURL={frontmatter.source_url} />
+          ) : null}
+          {frontmatter.publish_date && (
+            <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
+              <Text as="p" size="caption">
+                Last updated on{" "}
+                {format(
+                  parseISO(
+                    frontmatter.publish_date.toISOString().split("T")[0]
+                  ),
+                  "PPP"
+                )}
+              </Text>
+            </div>
+          )}
+        </div>
+        <ReactMarkdown
+          components={components}
+          rehypePlugins={[rehypeRaw, rehypeSectionize]}
+          remarkPlugins={[remarkGfm]}
+        >
+          {content}
+        </ReactMarkdown>
       </div>
-      <ReactMarkdown
-        components={components}
-        rehypePlugins={[rehypeRaw]}
-        remarkPlugins={[remarkGfm]}
-      >
-        {content}
-      </ReactMarkdown>
     </div>
   );
 };
