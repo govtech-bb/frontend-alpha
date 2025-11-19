@@ -88,29 +88,30 @@ function PersonDetailsSection({
               <td style={{ padding: "5px 10px" }}>{person.otherSurname}</td>
             </tr>
           )}
-          {person.dateOfBirth && (() => {
-            const dateString = combineDate(
-              person.dateOfBirth.year,
-              person.dateOfBirth.month,
-              person.dateOfBirth.day
-            );
-            return (
-              <tr>
-                <td
-                  style={{
-                    padding: "5px 10px",
-                    backgroundColor: "#f5f5f5",
-                  }}
-                >
-                  <strong>Date of birth:</strong>
-                </td>
-                <td style={{ padding: "5px 10px" }}>
-                  {formatForDisplay(dateString)} (
-                  {calculateAge(dateString)} years old)
-                </td>
-              </tr>
-            );
-          })()}
+          {person.dateOfBirth &&
+            (() => {
+              const dateString = combineDate(
+                person.dateOfBirth.year,
+                person.dateOfBirth.month,
+                person.dateOfBirth.day
+              );
+              return (
+                <tr>
+                  <td
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
+                    <strong>Date of birth:</strong>
+                  </td>
+                  <td style={{ padding: "5px 10px" }}>
+                    {formatForDisplay(dateString)} ({calculateAge(dateString)}{" "}
+                    years old)
+                  </td>
+                </tr>
+              );
+            })()}
           {person.address && (
             <tr>
               <td
@@ -241,28 +242,29 @@ function ChildDetailsSection({
               <td style={{ padding: "5px 10px" }}>{child.lastName}</td>
             </tr>
           )}
-          {child.dateOfBirth && (() => {
-            const dateString = combineDate(
-              child.dateOfBirth.year,
-              child.dateOfBirth.month,
-              child.dateOfBirth.day
-            );
-            return (
-              <tr>
-                <td
-                  style={{
-                    padding: "5px 10px",
-                    backgroundColor: "#f5f5f5",
-                  }}
-                >
-                  <strong>Date of birth:</strong>
-                </td>
-                <td style={{ padding: "5px 10px" }}>
-                  {formatForDisplay(dateString)}
-                </td>
-              </tr>
-            );
-          })()}
+          {child.dateOfBirth &&
+            (() => {
+              const dateString = combineDate(
+                child.dateOfBirth.year,
+                child.dateOfBirth.month,
+                child.dateOfBirth.day
+              );
+              return (
+                <tr>
+                  <td
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
+                    <strong>Date of birth:</strong>
+                  </td>
+                  <td style={{ padding: "5px 10px" }}>
+                    {formatForDisplay(dateString)}
+                  </td>
+                </tr>
+              );
+            })()}
           {child.sexAtBirth && (
             <tr>
               <td

@@ -185,14 +185,15 @@ export function CheckAnswers({
 
                 <dt>Date of birth</dt>
                 <dd className="lg:col-span-2">
-                  {formData.father.dateOfBirth && (() => {
-                    const dateString = combineDate(
-                      formData.father.dateOfBirth.year,
-                      formData.father.dateOfBirth.month,
-                      formData.father.dateOfBirth.day
-                    );
-                    return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
-                  })()}
+                  {formData.father.dateOfBirth &&
+                    (() => {
+                      const dateString = combineDate(
+                        formData.father.dateOfBirth.year,
+                        formData.father.dateOfBirth.month,
+                        formData.father.dateOfBirth.day
+                      );
+                      return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                    })()}
                 </dd>
 
                 <dt>Current address</dt>
@@ -255,14 +256,15 @@ export function CheckAnswers({
 
               <dt>Date of birth</dt>
               <dd className="lg:col-span-2">
-                {formData.mother?.dateOfBirth && (() => {
-                  const dateString = combineDate(
-                    formData.mother.dateOfBirth.year,
-                    formData.mother.dateOfBirth.month,
-                    formData.mother.dateOfBirth.day
-                  );
-                  return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
-                })()}
+                {formData.mother?.dateOfBirth &&
+                  (() => {
+                    const dateString = combineDate(
+                      formData.mother.dateOfBirth.year,
+                      formData.mother.dateOfBirth.month,
+                      formData.mother.dateOfBirth.day
+                    );
+                    return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                  })()}
               </dd>
 
               <dt>Current address</dt>
@@ -314,14 +316,15 @@ export function CheckAnswers({
 
               <dt>Date of birth</dt>
               <dd className="lg:col-span-2">
-                {formData.child?.dateOfBirth && (() => {
-                  const dateString = combineDate(
-                    formData.child.dateOfBirth.year,
-                    formData.child.dateOfBirth.month,
-                    formData.child.dateOfBirth.day
-                  );
-                  return formatForDisplay(dateString);
-                })()}
+                {formData.child?.dateOfBirth &&
+                  (() => {
+                    const dateString = combineDate(
+                      formData.child.dateOfBirth.year,
+                      formData.child.dateOfBirth.month,
+                      formData.child.dateOfBirth.day
+                    );
+                    return formatForDisplay(dateString);
+                  })()}
               </dd>
 
               <dt>Sex at birth</dt>
