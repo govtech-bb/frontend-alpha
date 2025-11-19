@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
+import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { FORM_COMPONENTS, type FormSlug } from "@/lib/form-registry";
 
 type DynamicFormLoaderProps = {
@@ -15,7 +16,7 @@ export function DynamicFormLoader({ formSlug }: DynamicFormLoaderProps) {
   }
 
   return (
-    <Suspense fallback={<div>Loading form...</div>}>
+    <Suspense fallback={<FormSkeleton />}>
       <FormComponent />
     </Suspense>
   );
