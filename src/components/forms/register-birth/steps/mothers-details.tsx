@@ -3,6 +3,7 @@
 import type { ErrorItem } from "@govtech-bb/react";
 import {
   Button,
+  DateInput,
   ErrorSummary,
   Input,
   Radio,
@@ -10,7 +11,6 @@ import {
   ShowHide,
   TextArea,
 } from "@govtech-bb/react";
-import { DateInput } from "../../common/date-input";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
@@ -73,7 +73,7 @@ export function MothersDetails({
       <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
         <div className="flex flex-col gap-4">
           <h1
-            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2"
             ref={titleRef}
             tabIndex={-1}
           >
@@ -150,12 +150,13 @@ export function MothersDetails({
 
           {/* Date of birth */}
           <DateInput
-            errors={dateFieldErrors.dateOfBirth}
-            hint="For example, 27 3 2007 or 27 Mar 2007"
+            description="For example, 27 3 2007"
+            error={dateFieldErrors.dateOfBirth || fieldErrors.dateOfBirth}
             id="mother-dateOfBirth"
             label="Date of birth"
+            name="mother-dateOfBirth"
             onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
-            value={value.dateOfBirth || ""}
+            value={value.dateOfBirth}
           />
 
           {/* Address */}
@@ -191,13 +192,23 @@ export function MothersDetails({
                 </p>
                 <Input
                   error={fieldErrors.passportNumber}
-                  id="father-passportNumber"
+                  id="mother-passportNumber"
                   label="Passport number"
                   onChange={(e) =>
                     handleChange("passportNumber", e.target.value)
                   }
                   type="text"
                   value={value.passportNumber || ""}
+                />
+                <Input
+                  error={fieldErrors.passportPlaceOfIssue}
+                  id="mother-passportPlaceOfIssue"
+                  label="Place of issue"
+                  onChange={(e) =>
+                    handleChange("passportPlaceOfIssue", e.target.value)
+                  }
+                  type="text"
+                  value={value.passportPlaceOfIssue || ""}
                 />
               </div>
             </ShowHide>

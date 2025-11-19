@@ -21,45 +21,43 @@ describe("Certificates", () => {
 
     expect(
       screen.getByText(
-        /A birth certificate is essential for access to some public services/
+        /Each certificate costs BDS \$5 and you can pay when you collect it in person/
       )
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        /Each certificate costs BDD\$5\.00 when you collect them/
+        /A birth certificate is essential for the parent or guardian to access many public services on the child's behalf/
       )
     ).toBeInTheDocument();
   });
 
-  it("should render information about keeping originals", () => {
+  it("should render information about ordering certificates later", () => {
     render(<Certificates {...defaultProps} />);
 
     expect(
-      screen.getByText(/We keep the original so you can order a certified copy/)
+      screen.getByText(
+        /You can order certified copies at a later date if the birth was registered in Barbados/
+      )
     ).toBeInTheDocument();
   });
 
-  it("should render information about free registration", () => {
+  it("should render text input with numeric pattern and correct label", () => {
     render(<Certificates {...defaultProps} />);
 
-    expect(
-      screen.getByText(/The birth registration is free of charge/)
-    ).toBeInTheDocument();
-  });
-
-  it("should render number input with correct label", () => {
-    render(<Certificates {...defaultProps} />);
-
-    const label = screen.getByLabelText("Number of certificates required");
+    const label = screen.getByLabelText(
+      "How many certificates would you like?"
+    );
     expect(label).toBeInTheDocument();
-    expect(label).toHaveAttribute("type", "number");
+    expect(label).toHaveAttribute("type", "text");
+    expect(label).toHaveAttribute("pattern", "[0-9]*");
+    expect(label).toHaveAttribute("inputMode", "numeric");
   });
 
   it("should display the current value", () => {
     render(<Certificates {...defaultProps} value={3} />);
 
     const input = screen.getByLabelText(
-      "Number of certificates required"
+      "How many certificates would you like?"
     ) as HTMLInputElement;
     expect(input.value).toBe("3");
   });
@@ -68,7 +66,9 @@ describe("Certificates", () => {
     const onChange = vi.fn();
     render(<Certificates {...defaultProps} onChange={onChange} />);
 
-    const input = screen.getByLabelText("Number of certificates required");
+    const input = screen.getByLabelText(
+      "How many certificates would you like?"
+    );
     fireEvent.change(input, { target: { value: "2" } });
 
     expect(onChange).toHaveBeenCalledWith(2);
@@ -78,7 +78,7 @@ describe("Certificates", () => {
     render(<Certificates {...defaultProps} value={0} />);
 
     const input = screen.getByLabelText(
-      "Number of certificates required"
+      "How many certificates would you like?"
     ) as HTMLInputElement;
     expect(input.value).toBe("0");
   });
@@ -87,7 +87,9 @@ describe("Certificates", () => {
     const onChange = vi.fn();
     render(<Certificates {...defaultProps} onChange={onChange} />);
 
-    const input = screen.getByLabelText("Number of certificates required");
+    const input = screen.getByLabelText(
+      "How many certificates would you like?"
+    );
     fireEvent.change(input, { target: { value: "" } });
 
     expect(onChange).toHaveBeenCalledWith(0);
@@ -96,7 +98,9 @@ describe("Certificates", () => {
   it("should have min and max attributes", () => {
     render(<Certificates {...defaultProps} />);
 
-    const input = screen.getByLabelText("Number of certificates required");
+    const input = screen.getByLabelText(
+      "How many certificates would you like?"
+    );
     expect(input).toHaveAttribute("min", "0");
     expect(input).toHaveAttribute("max", "20");
   });
@@ -138,7 +142,9 @@ describe("Certificates", () => {
   it("should have accessible form structure", () => {
     render(<Certificates {...defaultProps} />);
 
-    const input = screen.getByLabelText("Number of certificates required");
+    const input = screen.getByLabelText(
+      "How many certificates would you like?"
+    );
     expect(input).toHaveAttribute("id", "numberOfCertificates");
   });
 
@@ -169,7 +175,9 @@ describe("Certificates", () => {
       .closest("form");
     fireEvent.submit(form!);
 
-    const input = screen.getByLabelText("Number of certificates required");
+    const input = screen.getByLabelText(
+      "How many certificates would you like?"
+    );
     expect(input).toHaveAttribute("aria-invalid", "true");
   });
 
@@ -181,7 +189,9 @@ describe("Certificates", () => {
       .closest("form");
     fireEvent.submit(form!);
 
-    const input = screen.getByLabelText("Number of certificates required");
+    const input = screen.getByLabelText(
+      "How many certificates would you like?"
+    );
     expect(input).toHaveAttribute(
       "aria-describedby",
       "numberOfCertificates-error"

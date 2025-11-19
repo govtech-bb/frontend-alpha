@@ -35,6 +35,11 @@ export const BackButton = ({
     return null;
   }
 
+  const pathSegments = pathname.split("/").filter(Boolean);
+  if (pathSegments.includes("form")) {
+    return null;
+  }
+
   return (
     <nav
       aria-label={mode === "breadcrumbs" ? "Breadcrumbs" : "Backbutton"}

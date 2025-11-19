@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { z } from "zod";
-import { type DateFieldErrors, validateFields } from "@/lib/dates";
+import type { DateFieldErrors } from "@/lib/dates";
 import type { ValidationError } from "../error-summary";
 
 type UseStepValidationParams<T> = {
@@ -83,8 +83,7 @@ export function useStepValidation<T extends Record<string, unknown>>({
   const handleChange = (field: keyof T, fieldValue: unknown) => {
     onChange({ ...value, [field]: fieldValue } as Partial<T>);
 
-    // Clear error when user starts typing (after first submit)
-    if (hasSubmitted) {
+    if (hasSubmitted && field !== "dateOfBirth") {
       validateField(field, fieldValue);
     }
   };
@@ -94,7 +93,7 @@ export function useStepValidation<T extends Record<string, unknown>>({
    * Validates field if form has been submitted at least once
    */
   const handleBlur = (field: keyof T) => {
-    if (hasSubmitted) {
+    if (hasSubmitted && field !== "dateOfBirth") {
       validateField(field, value[field]);
     }
   };
@@ -117,25 +116,58 @@ export function useStepValidation<T extends Record<string, unknown>>({
       onNext();
     } else {
       // Build error list for summary and field errors
+      // Deduplicate errors by field to avoid duplicate keys in error summary
+      const errorsByField = new Map<string, (typeof result.error.issues)[0]>();
+
+      for (const error of result.error.issues) {
+        const field = error.path[0] as string;
+        // Keep only the first error per field (typically the most relevant)
+        if (!errorsByField.has(field)) {
+          errorsByField.set(field, error);
+        }
+      }
+
       const validationErrors: ValidationError[] = [];
       const newFieldErrors: Record<string, string> = {};
       const newDateFieldErrors: Record<string, DateFieldErrors | undefined> =
         {};
 
-      for (const error of result.error.issues) {
-        const field = error.path[0] as string;
+      for (const [field, error] of errorsByField) {
         validationErrors.push({
           field: `${fieldPrefix}${field}`,
           message: error.message,
         });
         newFieldErrors[field] = error.message;
 
+        // For dateOfBirth fields, extract per-field errors from Zod issues
         // For dateOfBirth fields, get per-field errors
-        if (field === "dateOfBirth" && typeof value[field] === "string") {
-          const dateValue = value[field] as string;
-          const perFieldErrors = validateFields(dateValue);
-          if (perFieldErrors) {
-            newDateFieldErrors[field] = perFieldErrors;
+        // if (field === "dateOfBirth" && typeof value[field] === "string") {
+        //   const dateValue = value[field] as string;
+        //   const perFieldErrors = validateFields(dateValue);
+        //   if (perFieldErrors) {
+        //     newDateFieldErrors[field] = perFieldErrors;
+        //   }
+        // }
+
+        if (field === "dateOfBirth") {
+          const dateFieldErrorsForField: DateFieldErrors = {};
+
+          // Find all issues related to this date field's subfields
+          for (const issue of result.error.issues) {
+            if (
+              issue.path[0] === field &&
+              issue.path.length === 2 &&
+              (issue.path[1] === "day" ||
+                issue.path[1] === "month" ||
+                issue.path[1] === "year")
+            ) {
+              const subField = issue.path[1] as "day" | "month" | "year";
+              dateFieldErrorsForField[subField] = issue.message;
+            }
+          }
+
+          if (Object.keys(dateFieldErrorsForField).length > 0) {
+            newDateFieldErrors[field] = dateFieldErrorsForField;
           }
         }
       }

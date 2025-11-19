@@ -13,7 +13,7 @@ import type {
   PartialBirthRegistrationFormData,
   PersonDetails,
 } from "@/components/forms/register-birth/types";
-import { formatForDisplay } from "@/lib/dates";
+import { calculateAge, combineDate, formatForDisplay } from "@/lib/dates";
 
 type DepartmentNotificationEmailProps = {
   formData: PartialBirthRegistrationFormData;
@@ -57,7 +57,7 @@ function PersonDetailsSection({
                   backgroundColor: "#f5f5f5",
                 }}
               >
-                <strong>Middle name:</strong>
+                <strong>Middle name(s):</strong>
               </td>
               <td style={{ padding: "5px 10px" }}>{person.middleName}</td>
             </tr>
@@ -83,26 +83,34 @@ function PersonDetailsSection({
                   backgroundColor: "#f5f5f5",
                 }}
               >
-                <strong>Previous surname:</strong>
+                <strong>Previous last name:</strong>
               </td>
               <td style={{ padding: "5px 10px" }}>{person.otherSurname}</td>
             </tr>
           )}
-          {person.dateOfBirth && (
-            <tr>
-              <td
-                style={{
-                  padding: "5px 10px",
-                  backgroundColor: "#f5f5f5",
-                }}
-              >
-                <strong>Date of birth:</strong>
-              </td>
-              <td style={{ padding: "5px 10px" }}>
-                {formatForDisplay(person.dateOfBirth)}
-              </td>
-            </tr>
-          )}
+          {person.dateOfBirth && (() => {
+            const dateString = combineDate(
+              person.dateOfBirth.year,
+              person.dateOfBirth.month,
+              person.dateOfBirth.day
+            );
+            return (
+              <tr>
+                <td
+                  style={{
+                    padding: "5px 10px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  <strong>Date of birth:</strong>
+                </td>
+                <td style={{ padding: "5px 10px" }}>
+                  {formatForDisplay(dateString)} (
+                  {calculateAge(dateString)} years old)
+                </td>
+              </tr>
+            );
+          })()}
           {person.address && (
             <tr>
               <td
@@ -132,17 +140,34 @@ function PersonDetailsSection({
             </tr>
           )}
           {person.passportNumber && (
-            <tr>
-              <td
-                style={{
-                  padding: "5px 10px",
-                  backgroundColor: "#f5f5f5",
-                }}
-              >
-                <strong>Passport number:</strong>
-              </td>
-              <td style={{ padding: "5px 10px" }}>{person.passportNumber}</td>
-            </tr>
+            <>
+              <tr>
+                <td
+                  style={{
+                    padding: "5px 10px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  <strong>Passport number:</strong>
+                </td>
+                <td style={{ padding: "5px 10px" }}>{person.passportNumber}</td>
+              </tr>
+              {person.passportPlaceOfIssue && (
+                <tr>
+                  <td
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
+                    <strong>Passport place of issue:</strong>
+                  </td>
+                  <td style={{ padding: "5px 10px" }}>
+                    {person.passportPlaceOfIssue}
+                  </td>
+                </tr>
+              )}
+            </>
           )}
           {person.occupation && (
             <tr>
@@ -185,7 +210,7 @@ function ChildDetailsSection({
                   backgroundColor: "#f5f5f5",
                 }}
               >
-                <strong>First name(s):</strong>
+                <strong>First name:</strong>
               </td>
               <td style={{ padding: "5px 10px" }}>{child.firstNames}</td>
             </tr>
@@ -216,21 +241,28 @@ function ChildDetailsSection({
               <td style={{ padding: "5px 10px" }}>{child.lastName}</td>
             </tr>
           )}
-          {child.dateOfBirth && (
-            <tr>
-              <td
-                style={{
-                  padding: "5px 10px",
-                  backgroundColor: "#f5f5f5",
-                }}
-              >
-                <strong>Date of birth:</strong>
-              </td>
-              <td style={{ padding: "5px 10px" }}>
-                {formatForDisplay(child.dateOfBirth)}
-              </td>
-            </tr>
-          )}
+          {child.dateOfBirth && (() => {
+            const dateString = combineDate(
+              child.dateOfBirth.year,
+              child.dateOfBirth.month,
+              child.dateOfBirth.day
+            );
+            return (
+              <tr>
+                <td
+                  style={{
+                    padding: "5px 10px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  <strong>Date of birth:</strong>
+                </td>
+                <td style={{ padding: "5px 10px" }}>
+                  {formatForDisplay(dateString)}
+                </td>
+              </tr>
+            );
+          })()}
           {child.sexAtBirth && (
             <tr>
               <td
@@ -252,7 +284,7 @@ function ChildDetailsSection({
                   backgroundColor: "#f5f5f5",
                 }}
               >
-                <strong>Parish of birth:</strong>
+                <strong>Place of birth:</strong>
               </td>
               <td style={{ padding: "5px 10px" }}>{child.parishOfBirth}</td>
             </tr>
@@ -331,10 +363,38 @@ export function DepartmentNotificationEmail({
             <Heading as="h3" style={{ color: "#003087", fontSize: "18px" }}>
               Certificates Requested
             </Heading>
-            <Text>
-              <strong>Number of certificates:</strong>{" "}
-              {formData.numberOfCertificates ?? 0}
-            </Text>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <tbody>
+                <tr>
+                  <td
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
+                    <strong>Number of certificates:</strong>
+                  </td>
+                  <td style={{ padding: "5px 10px" }}>
+                    {formData.numberOfCertificates ?? 0}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style={{
+                      padding: "5px 10px",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  >
+                    <strong>Total cost:</strong>
+                  </td>
+                  <td style={{ padding: "5px 10px" }}>
+                    {(formData.numberOfCertificates ?? 0) === 0
+                      ? "Free"
+                      : `BBD$${((formData.numberOfCertificates ?? 0) * 5).toFixed(2)}`}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </Section>
 
           <Section style={{ marginTop: "20px" }}>
@@ -351,7 +411,7 @@ export function DepartmentNotificationEmail({
                         backgroundColor: "#f5f5f5",
                       }}
                     >
-                      <strong>Email:</strong>
+                      <strong>Email address:</strong>
                     </td>
                     <td style={{ padding: "5px 10px" }}>{formData.email}</td>
                   </tr>
@@ -368,21 +428,6 @@ export function DepartmentNotificationEmail({
                     </td>
                     <td style={{ padding: "5px 10px" }}>
                       {formData.phoneNumber}
-                    </td>
-                  </tr>
-                )}
-                {formData.wantContact && (
-                  <tr>
-                    <td
-                      style={{
-                        padding: "5px 10px",
-                        backgroundColor: "#f5f5f5",
-                      }}
-                    >
-                      <strong>Wants phone contact:</strong>
-                    </td>
-                    <td style={{ padding: "5px 10px" }}>
-                      {formData.wantContact === "yes" ? "Yes" : "No"}
                     </td>
                   </tr>
                 )}

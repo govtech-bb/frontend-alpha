@@ -24,10 +24,10 @@ describe("IncludeFatherDetails", () => {
     render(<IncludeFatherDetails {...defaultProps} />);
 
     expect(
-      screen.getByText(/If you choose 'Yes', both parents must go/)
+      screen.getByText(/both parents must go to the Registration Department/)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/If you choose 'No', the mother must go/)
+      screen.getByText(/the mother must go to the Registration Department/)
     ).toBeInTheDocument();
   });
 

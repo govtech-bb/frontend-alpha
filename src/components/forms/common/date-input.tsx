@@ -32,7 +32,6 @@ export type DateInputProps = {
  *   error={errors.dateOfBirth}
  * />
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex form input handling with multiple states
 export function DateInput({
   id,
   label,
@@ -85,11 +84,13 @@ export function DateInput({
   const errorId = `${id}-error`;
   const hintId = `${id}-hint`;
 
-  // Collect all error messages
-  const errorMessages: string[] = [];
-  if (fieldErrors.day) errorMessages.push(fieldErrors.day);
-  if (fieldErrors.month) errorMessages.push(fieldErrors.month);
-  if (fieldErrors.year) errorMessages.push(fieldErrors.year);
+  // Collect all error messages and deduplicate
+  // (e.g., "Date cannot be in the future" appears on all three fields)
+  const errorMessages = Array.from(
+    new Set(
+      [fieldErrors.day, fieldErrors.month, fieldErrors.year].filter(Boolean)
+    )
+  );
 
   // Build describedby attribute
   const describedby = [hint ? hintId : null, hasAnyError ? errorId : null]
@@ -117,8 +118,8 @@ export function DateInput({
             id={errorId}
             role="alert"
           >
-            {errorMessages.map((msg, idx) => (
-              <p className="mb-1" key={idx}>
+            {errorMessages.map((msg) => (
+              <p className="mb-1" key={msg}>
                 <span className="govuk-visually-hidden">Error:</span> {msg}
               </p>
             ))}

@@ -91,9 +91,9 @@ describe("ChildDetails", () => {
     expect(screen.getByLabelText("Day")).toHaveValue("22");
     expect(screen.getByLabelText("Month")).toHaveValue("10");
     expect(screen.getByLabelText("Year")).toHaveValue("2025");
-    expect(
-      (screen.getByLabelText("Sex at birth") as HTMLSelectElement).value
-    ).toBe("Male");
+    // Radio button - check that Male is selected
+    expect(screen.getByLabelText("Male")).toBeChecked();
+    expect(screen.getByLabelText("Female")).not.toBeChecked();
     expect(
       (screen.getByLabelText("Place of birth") as HTMLInputElement).value
     ).toBe("St. Michael");
@@ -123,8 +123,8 @@ describe("ChildDetails", () => {
     const onChange = vi.fn();
     render(<ChildDetails {...defaultProps} onChange={onChange} />);
 
-    const select = screen.getByLabelText("Sex at birth");
-    fireEvent.change(select, { target: { value: "Female" } });
+    const femaleRadio = screen.getByLabelText("Female");
+    fireEvent.click(femaleRadio);
 
     expect(onChange).toHaveBeenCalledWith({ sexAtBirth: "Female" });
   });
@@ -132,13 +132,18 @@ describe("ChildDetails", () => {
   it("should render sex at birth options", () => {
     render(<ChildDetails {...defaultProps} />);
 
-    const select = screen.getByLabelText("Sex at birth") as HTMLSelectElement;
-    const options = Array.from(select.options).map((opt) => opt.value);
+    // Check that both radio buttons are present
+    const maleRadio = screen.getByLabelText("Male");
+    const femaleRadio = screen.getByLabelText("Female");
 
-    expect(options).toContain("");
-    expect(options).toContain("Male");
-    expect(options).toContain("Female");
-    expect(options).not.toContain("Intersex");
+    expect(maleRadio).toBeInTheDocument();
+    expect(femaleRadio).toBeInTheDocument();
+
+    // Verify they have correct values and role
+    expect(maleRadio).toHaveAttribute("value", "Male");
+    expect(femaleRadio).toHaveAttribute("value", "Female");
+    expect(maleRadio).toHaveAttribute("role", "radio");
+    expect(femaleRadio).toHaveAttribute("role", "radio");
   });
 
   it("should validate required fields on submission", () => {

@@ -91,7 +91,7 @@ export function ContactInfo({
       <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
         <div className="flex flex-col gap-4">
           <h1
-            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2"
             ref={titleRef}
             tabIndex={-1}
           >

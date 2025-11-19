@@ -2,7 +2,7 @@
 
 import { Button } from "@govtech-bb/react";
 import { Typography } from "@/components/ui/typography";
-import { formatForDisplay } from "@/lib/dates";
+import { calculateAge, combineDate, formatForDisplay } from "@/lib/dates";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { finalSubmissionSchema } from "../schema";
 import type { PartialBirthRegistrationFormData, StepName } from "../types";
@@ -62,6 +62,7 @@ function SummarySection({
  * Summary page showing all entered data with edit links
  * Based on PDF pages 8 and 18
  */
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity slightly increased by adding DOB fields; refactoring to be done separately
 export function CheckAnswers({
   formData,
   onSubmit,
@@ -102,7 +103,7 @@ export function CheckAnswers({
     return (
       <div className="space-y-6">
         <h1
-          className="mb-2 font-bold text-[56px] leading-[1.15]"
+          className="mb-2 font-bold text-[56px] leading-[1.15] focus:outline-none"
           ref={titleRef}
           tabIndex={-1}
         >
@@ -150,7 +151,7 @@ export function CheckAnswers({
       <div className="flex flex-col gap-6 lg:col-span-2 lg:gap-8">
         <div className="flex flex-col gap-4">
           <h1
-            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2"
             ref={titleRef}
             tabIndex={-1}
           >
@@ -182,16 +183,43 @@ export function CheckAnswers({
                 <dt>Last name</dt>
                 <dd className="lg:col-span-2">{formData.father.lastName}</dd>
 
+                <dt>Date of birth</dt>
+                <dd className="lg:col-span-2">
+                  {formData.father.dateOfBirth && (() => {
+                    const dateString = combineDate(
+                      formData.father.dateOfBirth.year,
+                      formData.father.dateOfBirth.month,
+                      formData.father.dateOfBirth.day
+                    );
+                    return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                  })()}
+                </dd>
+
                 <dt>Current address</dt>
                 <dd className="whitespace-pre-line lg:col-span-2">
                   {formData.father.address}
                 </dd>
 
-                <dt>National registration number</dt>
-                <dd className="lg:col-span-2">
-                  {formData.father.nationalRegistrationNumber ||
-                    formData.father.passportNumber}
-                </dd>
+                {formData.father.nationalRegistrationNumber ? (
+                  <>
+                    <dt>National registration number</dt>
+                    <dd className="lg:col-span-2">
+                      {formData.father.nationalRegistrationNumber}
+                    </dd>
+                  </>
+                ) : (
+                  <>
+                    <dt>Passport number</dt>
+                    <dd className="lg:col-span-2">
+                      {formData.father.passportNumber}
+                    </dd>
+
+                    <dt>Place of issue</dt>
+                    <dd className="lg:col-span-2">
+                      {formData.father.passportPlaceOfIssue}
+                    </dd>
+                  </>
+                )}
 
                 <dt>Occupation</dt>
                 <dd className="lg:col-span-2">{formData.father.occupation}</dd>
@@ -225,16 +253,43 @@ export function CheckAnswers({
                   </>
                 )}
 
+              <dt>Date of birth</dt>
+              <dd className="lg:col-span-2">
+                {formData.mother?.dateOfBirth && (() => {
+                  const dateString = combineDate(
+                    formData.mother.dateOfBirth.year,
+                    formData.mother.dateOfBirth.month,
+                    formData.mother.dateOfBirth.day
+                  );
+                  return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                })()}
+              </dd>
+
               <dt>Current address</dt>
               <dd className="whitespace-pre-line lg:col-span-2">
                 {formData.mother?.address}
               </dd>
 
-              <dt>National registration number</dt>
-              <dd className="lg:col-span-2">
-                {formData.mother?.nationalRegistrationNumber ||
-                  formData.mother?.passportNumber}
-              </dd>
+              {formData.mother?.nationalRegistrationNumber ? (
+                <>
+                  <dt>National registration number</dt>
+                  <dd className="lg:col-span-2">
+                    {formData.mother.nationalRegistrationNumber}
+                  </dd>
+                </>
+              ) : (
+                <>
+                  <dt>Passport number</dt>
+                  <dd className="lg:col-span-2">
+                    {formData.mother?.passportNumber}
+                  </dd>
+
+                  <dt>Place of issue</dt>
+                  <dd className="lg:col-span-2">
+                    {formData.mother?.passportPlaceOfIssue}
+                  </dd>
+                </>
+              )}
 
               <dt>Occupation</dt>
               <dd className="lg:col-span-2">{formData.mother?.occupation}</dd>
@@ -259,8 +314,14 @@ export function CheckAnswers({
 
               <dt>Date of birth</dt>
               <dd className="lg:col-span-2">
-                {formData.child?.dateOfBirth &&
-                  formatForDisplay(formData.child.dateOfBirth)}
+                {formData.child?.dateOfBirth && (() => {
+                  const dateString = combineDate(
+                    formData.child.dateOfBirth.year,
+                    formData.child.dateOfBirth.month,
+                    formData.child.dateOfBirth.day
+                  );
+                  return formatForDisplay(dateString);
+                })()}
               </dd>
 
               <dt>Sex at birth</dt>

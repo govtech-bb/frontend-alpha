@@ -1,19 +1,13 @@
 import { Link } from "@govtech-bb/react";
 import NextLink from "next/link";
-import { notFound } from "next/navigation";
-import { MarkdownContent } from "@/components/markdown-content";
 import { Typography } from "@/components/ui/typography";
-import { getAlphaServices, getMarkdownContent } from "@/lib/markdown";
+import { getAlphaServices } from "@/lib/markdown";
 
-export default async function Page() {
+export const AlphaServicesList = async () => {
   const alphaServices = await getAlphaServices();
-  const markdownContent = await getMarkdownContent(["what-we-mean-by-alpha"]);
-  if (!markdownContent) {
-    notFound();
-  }
+
   return (
     <section className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
-      <MarkdownContent markdown={markdownContent} />
       <Typography variant="h2">Alpha services</Typography>
 
       <Typography variant="paragraph">These services are in alpha.</Typography>
@@ -34,4 +28,4 @@ export default async function Page() {
       </div>
     </section>
   );
-}
+};

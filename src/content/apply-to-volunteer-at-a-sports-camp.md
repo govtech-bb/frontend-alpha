@@ -1,7 +1,7 @@
 ---
 title: "Apply to volunteer at a sports camp"
 stage: "alpha"
-featured: true
+featured: false
 publish_date: 2025-11-10
 ---
 

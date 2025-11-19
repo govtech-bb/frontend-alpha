@@ -1,8 +1,14 @@
 "use client";
 
 import type { ErrorItem } from "@govtech-bb/react";
-import { Button, ErrorSummary, Input, Select } from "@govtech-bb/react";
-import { DateInput } from "../../common/date-input";
+import {
+  Button,
+  DateInput,
+  ErrorSummary,
+  Input,
+  Radio,
+  RadioGroup,
+} from "@govtech-bb/react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { childDetailsValidation } from "../schema";
@@ -63,7 +69,7 @@ export function ChildDetails({
       <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
         <div className="flex flex-col gap-4">
           <h1
-            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2"
             ref={titleRef}
             tabIndex={-1}
           >
@@ -110,27 +116,45 @@ export function ChildDetails({
 
           {/* Date of birth */}
           <DateInput
-            errors={dateFieldErrors.dateOfBirth}
-            hint="For example, 27 3 2007 or 27 Mar 2007"
+            description="For example, 27 3 2007"
+            error={dateFieldErrors.dateOfBirth || fieldErrors.dateOfBirth}
             id="child-dateOfBirth"
             label="Date of birth"
+            name="child-dateOfBirth"
             onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
-            value={value.dateOfBirth || ""}
+            value={value.dateOfBirth}
           />
 
           {/* Sex at birth */}
-          <Select
-            description="We ask this so that we can monitor population trends."
-            error={fieldErrors.sexAtBirth}
-            id="child-sexAtBirth"
-            label="Sex at birth"
-            onChange={(e) => handleChange("sexAtBirth", e.target.value)}
-            value={value.sexAtBirth || ""}
-          >
-            <option value="">Select an option</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Select>
+          <fieldset>
+            <legend className="font-bold text-[24px]">Sex at birth</legend>
+            <p className="mb-4 text-[20px] leading-[1.7]">
+              We ask this so that we can monitor population trends.
+            </p>
+            {fieldErrors.sexAtBirth && (
+              <p className="mb-4 text-red-600" id="child-sexAtBirth-error">
+                {fieldErrors.sexAtBirth}
+              </p>
+            )}
+            <RadioGroup
+              aria-describedby={
+                fieldErrors.sexAtBirth ? "child-sexAtBirth-error" : undefined
+              }
+              aria-invalid={!!fieldErrors.sexAtBirth}
+              aria-label="Sex at birth"
+              onValueChange={(val) =>
+                handleChange("sexAtBirth", val as "Male" | "Female")
+              }
+              value={value.sexAtBirth || undefined}
+            >
+              <Radio id="child-sexAtBirth-male" label="Male" value="Male" />
+              <Radio
+                id="child-sexAtBirth-female"
+                label="Female"
+                value="Female"
+              />
+            </RadioGroup>
+          </fieldset>
 
           {/* Place of birth */}
           <div>

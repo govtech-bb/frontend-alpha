@@ -77,7 +77,7 @@ export function Certificates({
       <div className="col-span-2 flex flex-col gap-6 lg:gap-8">
         <div className="flex flex-col gap-4">
           <h1
-            className="mb-4 font-bold text-[56px] leading-[1.15] lg:mb-2"
+            className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2"
             ref={titleRef}
             tabIndex={-1}
           >
@@ -94,29 +94,33 @@ export function Certificates({
 
           <div className="space-y-4 font-normal text-[20px] leading-[1.7]">
             <p>
-              A birth certificate is essential for access to some public
-              services. You wil need to pay BDD$5.00 for each certificate when
-              you collect them.
+              Each certificate costs BDS $5 and you can pay when you collect it
+              in person.
             </p>
             <p>
-              We keep the original so you can order a certified copy at any
-              point.
+              A birth certificate is essential for the parent or guardian to
+              access many public services on the child's behalf.
             </p>
-            <p>The birth registration is free of charge.</p>
+            <p>
+              You can order certified copies at a later date if the birth was
+              registered in Barbados.
+            </p>
           </div>
 
           <Input
             className="lg:w-80"
             error={fieldErrors.numberOfCertificates}
             id="numberOfCertificates"
-            label="Number of certificates required"
+            inputMode="numeric"
+            label="How many certificates would you like?"
             max="20"
             min="0"
             onBlur={handleBlur}
             onChange={(e) =>
               handleChange(Number.parseInt(e.target.value, 10) || 0)
             }
-            type="number"
+            pattern="[0-9]*"
+            type="text"
             value={value || 0}
           />
         </div>

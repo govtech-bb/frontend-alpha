@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  calculateAge,
   combineDate,
   formatForDisplay,
   isValidBirthDate,
@@ -217,11 +218,18 @@ describe("validateFields", () => {
 
   describe("future dates", () => {
     it("should return error for future date on all fields", () => {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
-      const day = String(tomorrow.getDate()).padStart(2, "0");
-      const year = tomorrow.getFullYear();
+      // Use UTC dates to match validation logic
+      const today = new Date();
+      const tomorrow = new Date(
+        Date.UTC(
+          today.getUTCFullYear(),
+          today.getUTCMonth(),
+          today.getUTCDate() + 1
+        )
+      );
+      const month = String(tomorrow.getUTCMonth() + 1).padStart(2, "0");
+      const day = String(tomorrow.getUTCDate()).padStart(2, "0");
+      const year = tomorrow.getUTCFullYear();
 
       const result = validateFields(`${year}-${month}-${day}`);
       expect(result).toEqual({
@@ -374,11 +382,18 @@ describe("isValidBirthDate", () => {
   });
 
   it("should reject future dates (day level)", () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
-    const day = String(tomorrow.getDate()).padStart(2, "0");
-    const year = tomorrow.getFullYear();
+    // Use UTC dates to match validation logic
+    const today = new Date();
+    const tomorrow = new Date(
+      Date.UTC(
+        today.getUTCFullYear(),
+        today.getUTCMonth(),
+        today.getUTCDate() + 1
+      )
+    );
+    const month = String(tomorrow.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(tomorrow.getUTCDate()).padStart(2, "0");
+    const year = tomorrow.getUTCFullYear();
     expect(isValidBirthDate(`${year}-${month}-${day}`)).toBe(false);
   });
 
@@ -490,6 +505,148 @@ describe("formatForDisplay", () => {
       expect(formatForDisplay("2019-02-29")).toBe(""); // Non-leap year
       expect(formatForDisplay("2011-13-01")).toBe("");
       expect(formatForDisplay("2011-01-32")).toBe("");
+    });
+  });
+});
+
+describe("calculateAge", () => {
+  describe("valid birth dates", () => {
+    it("should calculate age for someone born exactly one year ago", () => {
+      const today = new Date();
+      const oneYearAgo = new Date(
+        today.getFullYear() - 1,
+        today.getMonth(),
+        today.getDate()
+      );
+      const dateString = oneYearAgo.toISOString().split("T")[0];
+      expect(calculateAge(dateString)).toBe(1);
+    });
+
+    it("should calculate age for someone born 30 years ago", () => {
+      const today = new Date();
+      const thirtyYearsAgo = new Date(
+        today.getFullYear() - 30,
+        today.getMonth(),
+        today.getDate()
+      );
+      const dateString = thirtyYearsAgo.toISOString().split("T")[0];
+      expect(calculateAge(dateString)).toBe(30);
+    });
+
+    it("should handle birthday not yet reached this year", () => {
+      const today = new Date();
+      // Create a date that's in the future this year (if today is before Dec 31)
+      // or in the past (if today is Dec 31)
+      const futureMonth = (today.getMonth() + 1) % 12;
+      const futureYear =
+        futureMonth === 0 ? today.getFullYear() : today.getFullYear() - 1;
+      const birthdayNotYetReached = new Date(
+        futureYear - 25,
+        futureMonth,
+        Math.min(28, today.getDate() + 1)
+      );
+
+      // Only test if the birthday truly hasn't occurred yet this year
+      const thisYearBirthday = new Date(
+        today.getFullYear(),
+        birthdayNotYetReached.getMonth(),
+        birthdayNotYetReached.getDate()
+      );
+
+      if (thisYearBirthday > today) {
+        const dateString = birthdayNotYetReached.toISOString().split("T")[0];
+        const age = calculateAge(dateString);
+        const expectedAge =
+          today.getFullYear() - birthdayNotYetReached.getFullYear() - 1;
+        expect(age).toBe(expectedAge);
+      }
+    });
+
+    it("should calculate age for someone born on Jan 1, 1990", () => {
+      const age = calculateAge("1990-01-01");
+      const today = new Date();
+      const expectedAge = today.getFullYear() - 1990;
+      const thisYearBirthday = new Date(today.getFullYear(), 0, 1);
+
+      // Adjust if birthday hasn't occurred yet this year
+      if (today < thisYearBirthday) {
+        expect(age).toBe(expectedAge - 1);
+      } else {
+        expect(age).toBe(expectedAge);
+      }
+    });
+
+    it("should calculate age for someone born on Dec 31", () => {
+      const age = calculateAge("1985-12-31");
+      const today = new Date();
+      const expectedAge = today.getFullYear() - 1985;
+      const thisYearBirthday = new Date(today.getFullYear(), 11, 31);
+
+      // Adjust if birthday hasn't occurred yet this year
+      if (today < thisYearBirthday) {
+        expect(age).toBe(expectedAge - 1);
+      } else {
+        expect(age).toBe(expectedAge);
+      }
+    });
+
+    it("should return 0 for someone born today", () => {
+      const today = new Date();
+      const dateString = today.toISOString().split("T")[0];
+      expect(calculateAge(dateString)).toBe(0);
+    });
+  });
+
+  describe("edge cases", () => {
+    it("should return 0 for empty string", () => {
+      expect(calculateAge("")).toBe(0);
+    });
+
+    it("should return 0 for whitespace only", () => {
+      expect(calculateAge("   ")).toBe(0);
+    });
+
+    it("should return 0 for invalid date format", () => {
+      expect(calculateAge("invalid")).toBe(0);
+      expect(calculateAge("07-30-2011")).toBe(0);
+      expect(calculateAge("07/30/2011")).toBe(0);
+    });
+
+    it("should return 0 for semantically invalid dates", () => {
+      expect(calculateAge("2011-02-30")).toBe(0);
+      expect(calculateAge("2019-02-29")).toBe(0); // Non-leap year
+      expect(calculateAge("2011-13-01")).toBe(0);
+      expect(calculateAge("2011-01-32")).toBe(0);
+    });
+
+    it("should return 0 for future dates", () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dateString = tomorrow.toISOString().split("T")[0];
+      expect(calculateAge(dateString)).toBe(0);
+
+      const nextYear = new Date();
+      nextYear.setFullYear(nextYear.getFullYear() + 1);
+      const nextYearString = nextYear.toISOString().split("T")[0];
+      expect(calculateAge(nextYearString)).toBe(0);
+    });
+  });
+
+  describe("leap year handling", () => {
+    it("should handle leap year birth dates", () => {
+      const age = calculateAge("2000-02-29");
+      const today = new Date();
+      const expectedAge = today.getFullYear() - 2000;
+
+      // Check if birthday has occurred (use Feb 28 for non-leap years)
+      if (
+        today.getMonth() < 1 ||
+        (today.getMonth() === 1 && today.getDate() < 28)
+      ) {
+        expect(age).toBe(expectedAge - 1);
+      } else {
+        expect(age).toBe(expectedAge);
+      }
     });
   });
 });

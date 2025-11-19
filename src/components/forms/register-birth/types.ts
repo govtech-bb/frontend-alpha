@@ -6,6 +6,8 @@
  * - Path C: Unmarried, with father details
  */
 
+import type { DateInputValue } from "@govtech-bb/react";
+
 /**
  * Common fields across all form paths
  */
@@ -27,10 +29,11 @@ export type PersonDetails = {
   lastName: string;
   hadOtherSurname?: "yes" | "no" | "";
   otherSurname?: string;
-  dateOfBirth: string;
+  dateOfBirth: DateInputValue;
   address: string;
   nationalRegistrationNumber?: string;
   passportNumber?: string;
+  passportPlaceOfIssue?: string;
   occupation?: string;
 };
 
@@ -41,7 +44,7 @@ export type ChildDetails = {
   firstNames: string;
   middleNames?: string;
   lastName: string;
-  dateOfBirth: string;
+  dateOfBirth: DateInputValue;
   sexAtBirth: "Male" | "Female";
   parishOfBirth: string;
 };

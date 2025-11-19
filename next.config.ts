@@ -1,4 +1,7 @@
+import createMDX from "@next/mdx";
 import type { NextConfig } from "next";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
 const securityHeaders = [
   {
@@ -18,7 +21,7 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   // removes: x-powered-by: Next.js
   poweredByHeader: false,
-
+  pageExtensions: ["md", "mdx", "ts", "tsx"],
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
@@ -31,4 +34,26 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  extension: /\.(md|mdx)$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      [
+        rehypeRaw,
+        {
+          passThrough: [
+            "mdxFlowExpression",
+            "mdxJsxFlowElement",
+            "mdxJsxTextElement",
+            "mdxTextExpression",
+            "mdxjsEsm",
+          ],
+        },
+      ],
+    ],
+  },
+});
+
+// Merge MDX config with Next.js config
+export default withMDX(nextConfig);

@@ -3,7 +3,7 @@
 import type { ErrorItem } from "@govtech-bb/react";
 import { Button, ErrorSummary, TextArea } from "@govtech-bb/react";
 import { useEffect, useRef, useState } from "react";
-import { Typography } from "../ui/typography";
+import { Typography } from "@/components/ui/typography";
 
 type FormErrors = {
   visitReason?: string;
