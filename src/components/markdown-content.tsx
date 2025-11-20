@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
-import { Heading, Text } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
 import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
@@ -63,15 +63,14 @@ const components: Components = {
       : "text-teal-dark underline leading-normal";
 
     return (
-      <a
+      <Link
         className={linkClass}
-        href={href}
+        href={href as string}
         {...props}
-        rel="noopener noreferrer"
         target={target || "_blank"}
       >
         {children}
-      </a>
+      </Link>
     );
   },
   blockquote: (props: BlockquoteProps) => (
@@ -125,7 +124,7 @@ export const MarkdownContent = ({
   return (
     <div className="lg:grid lg:grid-cols-3 lg:gap-16">
       <div className="space-y-6 lg:col-span-2 lg:space-y-8">
-        <div className="space-y-4 pt-6 lg:space-y-6 lg:pt-16">
+        <div className="space-y-4 lg:space-y-6">
           {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
 
           {frontmatter.stage?.length > 0 ? (
