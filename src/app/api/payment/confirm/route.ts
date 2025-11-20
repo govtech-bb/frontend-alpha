@@ -2,11 +2,11 @@ export const runtime = "nodejs";
 
 import { render } from "@react-email/render";
 import { type NextRequest, NextResponse } from "next/server";
-import { getPaymentProvider } from "@/lib/payment";
 import { passportReplacementSchema } from "@/components/forms/passport-replacement/schema";
 import { PassportReplacementEmail } from "@/emails/passport-replacement-email";
 import { sendEmail } from "@/lib/email/email-service";
 import { logError } from "@/lib/logger";
+import { getPaymentProvider } from "@/lib/payment";
 
 // Get required environment variables
 const passportDepartmentEmail =
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     const { transactionId, referenceId, formData } = body;
 
     // Validate required fields
-    if (!transactionId || !referenceId || !formData) {
+    if (!(transactionId && referenceId && formData)) {
       return NextResponse.json(
         {
           message:

@@ -5,7 +5,7 @@
 
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { createTransport, type Transporter } from "nodemailer";
-import { logDev, logError, logWarn } from "@/lib/logger";
+import { logDev, logError } from "@/lib/logger";
 
 interface EmailOptions {
   to: string | string[];
@@ -122,7 +122,7 @@ class EmailService {
         html: options.html,
       });
 
-      logDev(`[Email Service] Email sent successfully via SMTP`);
+      logDev("[Email Service] Email sent successfully via SMTP");
       logDev(`[Email Service] Message ID: ${info.messageId}`);
 
       // For MailHog/Mailpit, provide a link to view the email

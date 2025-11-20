@@ -1,8 +1,8 @@
 "use client";
 
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import { Button } from "@govtech-bb/react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { Typography } from "@/components/ui/typography";
 
 /**
@@ -31,11 +31,11 @@ function MockPaymentContent() {
 
   return (
     <div className="container mx-auto max-w-2xl py-8">
-      <div className="rounded-md border-4 border-amber-500 bg-amber-50 p-6 mb-8">
+      <div className="mb-8 rounded-md border-4 border-amber-500 bg-amber-50 p-6">
         <Typography className="font-bold text-amber-800" variant="h2">
           ⚠️ Mock Payment Gateway
         </Typography>
-        <Typography className="text-amber-800 mt-2" variant="paragraph">
+        <Typography className="mt-2 text-amber-800" variant="paragraph">
           This is a development testing page. In production, users are
           redirected to the real EZPay gateway.
         </Typography>

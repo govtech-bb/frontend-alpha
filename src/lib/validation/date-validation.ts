@@ -17,23 +17,22 @@ const stripTime = (date: Date): Date =>
 // https://design-system.service.gov.uk/components/date-input/
 // Vlaidation rules for date input
 export const createDateSchema = (label = "Date") => {
-  return z
-    .preprocess(
-      (val) => {
-        // Convert undefined to empty object
-        if (val === undefined || val === null) {
-          return { day: "", month: "", year: "" };
-        }
-        return val;
-      },
-      z
-        .object({
-          day: z.string(),
-          month: z.string(),
-          year: z.string(),
-        })
-        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-        .superRefine((value, ctx) => {
+  return z.preprocess(
+    (val) => {
+      // Convert undefined to empty object
+      if (val === undefined || val === null) {
+        return { day: "", month: "", year: "" };
+      }
+      return val;
+    },
+    z
+      .object({
+        day: z.string(),
+        month: z.string(),
+        year: z.string(),
+      })
+      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+      .superRefine((value, ctx) => {
         const { day, month, year } = value;
 
         // Check if empty
@@ -143,7 +142,7 @@ export const createDateSchema = (label = "Date") => {
           });
         }
       })
-    );
+  );
 };
 
 export const dateValidation = {

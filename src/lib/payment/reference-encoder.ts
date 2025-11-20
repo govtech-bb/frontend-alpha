@@ -12,16 +12,17 @@
 /**
  * Generate an encoded reference ID containing the return URL
  *
+ * @param uuid - Optional UUID to use (if not provided, generates a new one)
  * @returns Encoded reference ID in format: base64url(url).uuid
  */
-export function generateEncodedReferenceId(): string {
+export function generateEncodedReferenceId(uuid?: string): string {
   const returnUrl = getBaseUrl();
-  const uuid = crypto.randomUUID();
+  const id = uuid || crypto.randomUUID();
 
   // Use base64url encoding (URL-safe, no padding)
   const encodedUrl = Buffer.from(returnUrl).toString("base64url");
 
-  return `${encodedUrl}.${uuid}`;
+  return `${encodedUrl}.${id}`;
 }
 
 /**
@@ -43,7 +44,7 @@ export function decodeReferenceId(
     const encodedUrl = referenceId.substring(0, dotIndex);
     const uuid = referenceId.substring(dotIndex + 1);
 
-    if (!encodedUrl || !uuid) {
+    if (!(encodedUrl && uuid)) {
       return null;
     }
 

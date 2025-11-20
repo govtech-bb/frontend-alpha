@@ -70,19 +70,20 @@ export function UserReceiptEmail({
             <Text>
               <strong>Date submitted:</strong> {submittedAt}
             </Text>
-            {formData.child?.dateOfBirth && (() => {
-              const dateString = combineDate(
-                formData.child.dateOfBirth.year,
-                formData.child.dateOfBirth.month,
-                formData.child.dateOfBirth.day
-              );
-              return (
-                <Text>
-                  <strong>Child's date of birth:</strong>{" "}
-                  {formatForDisplay(dateString)}
-                </Text>
-              );
-            })()}
+            {formData.child?.dateOfBirth &&
+              (() => {
+                const dateString = combineDate(
+                  formData.child.dateOfBirth.year,
+                  formData.child.dateOfBirth.month,
+                  formData.child.dateOfBirth.day
+                );
+                return (
+                  <Text>
+                    <strong>Child's date of birth:</strong>{" "}
+                    {formatForDisplay(dateString)}
+                  </Text>
+                );
+              })()}
             <Text>
               <strong>Certificates requested:</strong>{" "}
               {formData.numberOfCertificates ?? 0}

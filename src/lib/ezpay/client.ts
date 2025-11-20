@@ -4,18 +4,18 @@
  * Note: This is now an internal implementation detail used by EzPayProvider
  */
 
+import { logDev, logWarn } from "@/lib/logger";
 import type {
   EzPayCartItem,
   EzPayInitResponse,
   EzPayTransactionStatus,
 } from "./types";
-import { logDev, logWarn } from "@/lib/logger";
 
 // Get EZPay configuration from environment
 const EZPAY_API_URL = process.env.EZPAY_API_URL || "";
 const EZPAY_API_KEY = process.env.EZPAY_API_KEY || "";
 
-if (!EZPAY_API_URL || !EZPAY_API_KEY) {
+if (!(EZPAY_API_URL && EZPAY_API_KEY)) {
   logWarn(
     "EZPay environment variables not configured. Payment features will not work."
   );
@@ -82,7 +82,7 @@ export async function verifyPayment(params: {
 }): Promise<EzPayTransactionStatus> {
   const { transactionNumber, reference } = params;
 
-  if (!transactionNumber && !reference) {
+  if (!(transactionNumber || reference)) {
     throw new Error(
       "Either transactionNumber or reference must be provided for verification"
     );

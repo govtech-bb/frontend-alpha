@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Typography } from "@/components/ui/typography";
 import type { PaymentVerificationResult } from "@/lib/payment";
+import { extractUuid } from "@/lib/payment/reference-encoder";
 
 type PaymentCallbackHandlerProps = {
   paymentStatus: PaymentVerificationResult;
@@ -22,9 +23,11 @@ export function PaymentCallbackHandler({
       return;
     }
 
-    // Retrieve form data from sessionStorage
+    // Extract UUID from encoded reference ID for sessionStorage lookup
+    // The reference ID may be encoded (base64url.uuid) or plain (uuid)
     const referenceId = paymentStatus.referenceId;
-    const storedData = sessionStorage.getItem(referenceId);
+    const uuid = extractUuid(referenceId);
+    const storedData = sessionStorage.getItem(uuid);
 
     if (!storedData) {
       setError(
@@ -64,7 +67,7 @@ export function PaymentCallbackHandler({
         }
 
         // Clear sessionStorage after successful email send
-        sessionStorage.removeItem(referenceId);
+        sessionStorage.removeItem(uuid);
         setEmailSent(true);
       } catch (err) {
         setError(

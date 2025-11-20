@@ -3,14 +3,14 @@ import {
   initiatePayment,
   verifyPayment,
 } from "@/lib/ezpay/client";
+import { getPaymentConfig } from "../config";
 import type {
-  PaymentProvider,
   PaymentInitiationRequest,
   PaymentInitiationResult,
+  PaymentProvider,
   PaymentVerificationRequest,
   PaymentVerificationResult,
 } from "../types";
-import { getPaymentConfig } from "../config";
 
 /**
  * EZPay+ Payment Gateway Provider

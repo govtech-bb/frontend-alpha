@@ -1,10 +1,10 @@
-import type { PaymentProvider } from "./types";
 import { EzPayProvider } from "./providers/ezpay-provider";
 import { MockPaymentProvider } from "./providers/mock-provider";
+import type { PaymentProvider } from "./types";
 
+export * from "./config";
 // Re-export all types and utilities for convenience
 export * from "./types";
-export * from "./config";
 
 /**
  * Payment Provider Factory

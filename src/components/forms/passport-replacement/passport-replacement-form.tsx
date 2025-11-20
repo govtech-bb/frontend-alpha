@@ -10,9 +10,9 @@ import {
 } from "@govtech-bb/react";
 import { useEffect, useRef, useState } from "react";
 import { Typography } from "@/components/ui/typography";
+import { getPublicPaymentConfig } from "@/lib/payment/client-config";
 import type { PassportReplacementFormData } from "./schema";
 import { passportReplacementSchema } from "./schema";
-import { getPublicPaymentConfig } from "@/lib/payment/client-config";
 
 // Get payment configuration from client-safe config
 const config = getPublicPaymentConfig("passport-replacement");

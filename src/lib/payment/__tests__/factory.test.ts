@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { getPaymentProvider } from "../index";
 import { EzPayProvider } from "../providers/ezpay-provider";
 import { MockPaymentProvider } from "../providers/mock-provider";

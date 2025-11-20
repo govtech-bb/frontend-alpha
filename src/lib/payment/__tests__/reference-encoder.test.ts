@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
-  generateEncodedReferenceId,
   decodeReferenceId,
-  getBaseUrl,
   extractUuid,
+  generateEncodedReferenceId,
+  getBaseUrl,
 } from "../reference-encoder";
 
 describe("reference-encoder", () => {

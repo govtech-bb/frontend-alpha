@@ -1,11 +1,11 @@
+import { getPaymentConfig } from "../config";
 import type {
-  PaymentProvider,
   PaymentInitiationRequest,
   PaymentInitiationResult,
+  PaymentProvider,
   PaymentVerificationRequest,
   PaymentVerificationResult,
 } from "../types";
-import { getPaymentConfig } from "../config";
 
 /**
  * Mock Payment Provider for Development

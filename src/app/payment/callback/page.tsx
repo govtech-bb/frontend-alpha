@@ -1,12 +1,19 @@
 import { Typography } from "@/components/ui/typography";
-import { PaymentCallbackHandler } from "./payment-callback-handler";
-import { getPaymentProvider } from "@/lib/payment";
 import { logError } from "@/lib/logger";
+import { getPaymentProvider } from "@/lib/payment";
+import { decodeReferenceId, getBaseUrl } from "@/lib/payment/reference-encoder";
+import { redirect } from "next/navigation";
+import { PaymentCallbackHandler } from "./payment-callback-handler";
 
 /**
  * Payment Callback Page
  * User is redirected here after completing payment on EZPay
  * URL params: tx (transaction ID), rid (reference ID)
+ *
+ * Multi-Environment Support:
+ * The reference ID contains an encoded return URL. If the callback arrives
+ * at a different environment (e.g., staging when it should go to localhost),
+ * we redirect to the correct environment automatically.
  */
 export default async function PaymentCallbackPage({
   searchParams,
@@ -17,7 +24,7 @@ export default async function PaymentCallbackPage({
   const { tx: transactionId, rid: referenceId } = params;
 
   // Validate URL parameters
-  if (!transactionId || !referenceId) {
+  if (!(transactionId && referenceId)) {
     return (
       <div className="container mx-auto max-w-2xl py-8">
         <div className="rounded-md border border-red-100 bg-red-10 p-6">
@@ -31,6 +38,19 @@ export default async function PaymentCallbackPage({
         </div>
       </div>
     );
+  }
+
+  // Decode reference ID to check if we need to redirect to a different environment
+  const decoded = decodeReferenceId(referenceId);
+  if (decoded) {
+    const currentBaseUrl = getBaseUrl();
+    const targetBaseUrl = decoded.returnUrl;
+
+    // If callback arrived at wrong environment, redirect to correct one
+    if (currentBaseUrl !== targetBaseUrl) {
+      const targetUrl = `${targetBaseUrl}/payment/callback?tx=${encodeURIComponent(transactionId)}&rid=${encodeURIComponent(referenceId)}`;
+      redirect(targetUrl);
+    }
   }
 
   try {

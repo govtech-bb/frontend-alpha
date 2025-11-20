@@ -1,4 +1,9 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import {
+  generateEncodedReferenceId,
+  decodeReferenceId,
+  extractUuid,
+} from "@/lib/payment/reference-encoder";
 
 describe("Payment Flow Integration", () => {
   const originalMockMode = process.env.EZPAY_MOCK_MODE;
@@ -15,6 +20,70 @@ describe("Payment Flow Integration", () => {
     } else {
       delete process.env.EZPAY_MOCK_MODE;
     }
+  });
+
+  describe("URL-in-Reference Flow", () => {
+    it("should encode and decode reference ID with client UUID", () => {
+      const clientUuid = "passport-abc-123";
+
+      // Server generates encoded reference ID using client's UUID
+      const encodedReferenceId = generateEncodedReferenceId(clientUuid);
+
+      // Verify format: should contain a dot separator
+      expect(encodedReferenceId).toContain(".");
+
+      // Decode the reference ID
+      const decoded = decodeReferenceId(encodedReferenceId);
+
+      // Should successfully decode
+      expect(decoded).not.toBeNull();
+      expect(decoded?.uuid).toBe(clientUuid);
+      expect(decoded?.returnUrl).toBeTruthy();
+    });
+
+    it("should extract UUID for sessionStorage lookup", () => {
+      const clientUuid = "passport-abc-123";
+      const encodedReferenceId = generateEncodedReferenceId(clientUuid);
+
+      // Extract UUID from encoded reference
+      const extractedUuid = extractUuid(encodedReferenceId);
+
+      // Should match the original client UUID
+      expect(extractedUuid).toBe(clientUuid);
+    });
+
+    it("should handle legacy non-encoded reference IDs", () => {
+      const legacyReferenceId = "passport-xyz-789";
+
+      // extractUuid should return the whole ID if decoding fails
+      const extractedUuid = extractUuid(legacyReferenceId);
+
+      // Should return the full legacy ID
+      expect(extractedUuid).toBe(legacyReferenceId);
+    });
+
+    it("should maintain sessionStorage compatibility", () => {
+      // Simulate the full flow:
+      const clientUuid = "passport-test-456";
+
+      // 1. Client stores form data with their UUID
+      const mockFormData = {
+        fullName: "Test User",
+        email: "test@example.com",
+      };
+
+      // 2. Server generates encoded reference ID
+      const encodedReferenceId = generateEncodedReferenceId(clientUuid);
+
+      // 3. EZPay callback returns encoded reference ID
+      // 4. Handler extracts UUID for sessionStorage lookup
+      const extractedUuid = extractUuid(encodedReferenceId);
+
+      // 5. Verify we can retrieve the original UUID
+      expect(extractedUuid).toBe(clientUuid);
+
+      // This would allow sessionStorage.getItem(extractedUuid) to work
+    });
   });
 
   describe("Payment Initiation", () => {
