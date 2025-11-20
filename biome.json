@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
   "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
   "linter": {
     "rules": {
@@ -16,7 +16,13 @@
       "suspicious": {
         "noUnknownAtRules": "off",
         "noArrayIndexKey": "off"
+      },
+      "nursery": {
+        "noIncrementDecrement": "warn"
       }
     }
+  },
+  "files": {
+    "includes": ["!!**/*.test.tsx", "!!**/*.test.ts"]
   }
 }
