@@ -1,0 +1,81 @@
+[2025-11-14T12:56:26.743Z] [INFO] Test Scenario: unmarried-with-father
+[2025-11-14T12:56:26.743Z] [INFO] Headless: false, Max Actions: 100
+[2025-11-14T12:56:26.743Z] [INFO] Initializing browser...
+[2025-11-14T12:56:27.963Z] [INFO] Browser initialized successfully
+[2025-11-14T12:56:28.636Z] [INFO] Navigated to: http://localhost:3000/register-birth
+[2025-11-14T12:56:28.636Z] [INFO] Waiting for form to hydrate...
+[2025-11-14T12:56:36.401Z] [INFO] Action 1/100: click
+[2025-11-14T12:56:42.845Z] [WARN] Anomaly detected (high): The radio button selection did not register visually. The last action was clicking 'No', but neither 'Yes' nor 'No' appears selected (checked) in the UI.
+[2025-11-14T12:56:59.577Z] [WARN] Bug confirmed (1.00 confidence): Radio button selection does not update visually after being clicked
+[2025-11-14T12:56:59.577Z] [INFO] Confirmed bug recorded: Radio button selection does not update visually after being clicked
+[2025-11-14T12:56:59.577Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T12:57:03.064Z] [INFO] Action 2/100: click
+[2025-11-14T12:57:10.050Z] [WARN] Anomaly detected (high): The validation error message is overly prescriptive, instructing the user to 'Select yes' specifically, rather than informing them that a selection is required (Yes or No). This suggests a potential bug in the validation logic or error message handling, where the error text is hardcoded to demand a specific answer despite 'No' being an available radio option.
+[2025-11-14T12:57:28.551Z] [WARN] Bug confirmed (1.00 confidence): Incorrect validation message for mandatory marriage status question
+[2025-11-14T12:57:28.551Z] [INFO] Confirmed bug recorded: Incorrect validation message for mandatory marriage status question
+[2025-11-14T12:57:28.551Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T12:57:40.875Z] [INFO] Action 3/100: click
+[2025-11-14T12:57:46.826Z] [WARN] Anomaly detected (critical): Contradictory validation error. The user selected 'No' for the marital status question, but the system displays an error message demanding that the user 'Select yes', effectively blocking the 'No' path and preventing registration of an unmarried birth.
+[2025-11-14T12:58:02.724Z] [WARN] Bug confirmed (1.00 confidence): Contradictory validation error blocks birth registration for unmarried parents
+[2025-11-14T12:58:02.724Z] [INFO] Confirmed bug recorded: Contradictory validation error blocks birth registration for unmarried parents
+[2025-11-14T12:58:02.724Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T12:58:11.833Z] [INFO] Action 4/100: click
+[2025-11-14T12:58:17.415Z] [WARN] Anomaly detected (high): The form is unresponsive to user input. After clicking the 'No' radio button, the selection was not registered in the form state (Form Values is empty), and the required field validation error persists, preventing the user from proceeding.
+[2025-11-14T12:58:33.255Z] [WARN] Bug confirmed (1.00 confidence): Radio button for 'married' status is unresponsive, blocking form submission
+[2025-11-14T12:58:33.255Z] [INFO] Confirmed bug recorded: Radio button for 'married' status is unresponsive, blocking form submission
+[2025-11-14T12:58:33.255Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T12:58:38.716Z] [INFO] Action 5/100: click
+[2025-11-14T12:58:55.750Z] [INFO] Action 6/100: click
+[2025-11-14T12:59:02.600Z] [WARN] Anomaly detected (high): The click action on the 'No' radio button failed to register the selection. The UI shows both radio buttons are unchecked, and the page remains in an error state requiring a selection, preventing progression.
+[2025-11-14T12:59:18.923Z] [WARN] Bug confirmed (1.00 confidence): Unable to select 'No' for the 'parents married' question
+[2025-11-14T12:59:18.923Z] [INFO] Confirmed bug recorded: Unable to select 'No' for the 'parents married' question
+[2025-11-14T12:59:18.923Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T12:59:21.772Z] [INFO] Action 7/100: click
+[2025-11-14T12:59:28.288Z] [INFO] Action 8/100: click
+[2025-11-14T12:59:34.278Z] [INFO] Action 9/100: click
+[2025-11-14T12:59:41.939Z] [INFO] Action 10/100: click
+[2025-11-14T12:59:48.703Z] [INFO] Action 11/100: fill
+[2025-11-14T12:59:55.587Z] [INFO] Action 12/100: fill
+[2025-11-14T13:00:04.001Z] [INFO] Action 13/100: fill
+[2025-11-14T13:00:11.933Z] [INFO] Action 14/100: fill
+[2025-11-14T13:00:20.016Z] [INFO] Action 15/100: fill
+[2025-11-14T13:00:27.038Z] [INFO] Action 16/100: fill
+[2025-11-14T13:00:34.573Z] [INFO] Action 17/100: fill
+[2025-11-14T13:00:44.027Z] [ERROR] Failed to get next action: Unexpected non-whitespace character after JSON at position 236 (line 6 column 4)
+[2025-11-14T13:00:44.028Z] [WARN] Failed to get next action (attempt 1/3), retrying...
+[2025-11-14T13:00:49.457Z] [INFO] Action 18/100: fill
+[2025-11-14T13:00:56.643Z] [INFO] Action 19/100: fill
+[2025-11-14T13:01:04.409Z] [INFO] Action 20/100: click
+[2025-11-14T13:01:11.524Z] [INFO] Action 21/100: fill
+[2025-11-14T13:01:19.994Z] [INFO] Action 22/100: fill
+[2025-11-14T13:01:26.629Z] [INFO] Action 23/100: click
+[2025-11-14T13:01:34.458Z] [INFO] Action 24/100: fill
+[2025-11-14T13:01:42.745Z] [INFO] Action 25/100: fill
+[2025-11-14T13:01:50.408Z] [INFO] Action 26/100: fill
+[2025-11-14T13:01:58.248Z] [INFO] Action 27/100: fill
+[2025-11-14T13:02:07.729Z] [INFO] Action 28/100: fill
+[2025-11-14T13:02:21.265Z] [INFO] Action 29/100: click
+[2025-11-14T13:02:28.041Z] [WARN] Anomaly detected (high): Data synchronization error: The 'National registration number' input field visually contains the value '123456-7890', but the reported Form Values state shows this field as empty.
+[2025-11-14T13:02:47.123Z] [INFO] Anomaly validated as false positive
+[2025-11-14T13:02:51.432Z] [INFO] Action 30/100: fill
+[2025-11-14T13:03:01.334Z] [INFO] Action 31/100: fill
+[2025-11-14T13:03:08.414Z] [INFO] Action 32/100: click
+[2025-11-14T13:03:16.349Z] [INFO] Action 33/100: fill
+[2025-11-14T13:03:23.980Z] [INFO] Action 34/100: fill
+[2025-11-14T13:03:31.568Z] [INFO] Action 35/100: fill
+[2025-11-14T13:03:39.454Z] [INFO] Action 36/100: fill
+[2025-11-14T13:03:46.098Z] [INFO] Action 37/100: fill
+[2025-11-14T13:03:52.849Z] [INFO] Action 38/100: fill
+[2025-11-14T13:03:59.452Z] [INFO] Action 39/100: click
+[2025-11-14T13:04:07.338Z] [INFO] Action 40/100: fill
+[2025-11-14T13:04:14.130Z] [WARN] Anomaly detected (medium): The 'Sex at birth' radio button field is visually selected ('Female' is checked in the UI), but the corresponding key/value pair (`child-sexAtBirth`) is missing entirely from the reported Form Values object. This indicates a discrepancy between the visual state and the application state, which will likely lead to a validation error if the user attempts to continue.
+[2025-11-14T13:04:17.540Z] [INFO] Action 41/100: click
+[2025-11-14T13:04:24.219Z] [INFO] Action 42/100: fill
+[2025-11-14T13:04:30.105Z] [INFO] Action 43/100: click
+[2025-11-14T13:04:35.920Z] [INFO] Action 44/100: fill
+[2025-11-14T13:04:42.768Z] [INFO] Action 45/100: fill
+[2025-11-14T13:04:48.274Z] [INFO] Action 46/100: click
+[2025-11-14T13:04:58.703Z] [INFO] Verifying data on check answers page...
+[2025-11-14T13:05:14.266Z] [ERROR] Failed to verify data: Unexpected end of JSON input
+[2025-11-14T13:05:14.266Z] [INFO] ✓ All data verified correctly on check answers page
+[2025-11-14T13:05:14.413Z] [INFO] Browser closed

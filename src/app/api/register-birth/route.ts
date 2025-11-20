@@ -1,70 +1,19 @@
 export const runtime = "nodejs";
 
-import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { render } from "@react-email/render";
 import { type NextRequest, NextResponse } from "next/server";
 import { birthRegistrationSchema } from "@/components/forms/register-birth/schema";
 import { DepartmentNotificationEmail } from "@/emails/department-notification-email";
 import { UserReceiptEmail } from "@/emails/user-receipt-email";
+import { sendEmail } from "@/lib/email/email-service";
 
-// Get required environment variables with explicit error handling
-const region = process.env.SES_REGION ?? "us-east-1";
-
-const mailFrom = process.env.MAIL_FROM as string;
-if (!mailFrom) {
-  throw new Error("MAIL_FROM environment variable is required");
-}
-
-// Hardcoded recipient for birth registration submissions
-const birthRegistrationToEmail = "testing@govtech.bb";
-
-// Optional CloudWatch telemetry configuration
-const configurationSet = process.env.SES_CONFIGURATION_SET;
-const tagKey = process.env.SES_TAG_KEY ?? "ses:configuration-set";
-const tagValue = process.env.SES_TAG_VALUE ?? "prod";
-
-// Create AWS SES v2 client
-const sesClient = new SESv2Client({
-  region,
-});
+// Recipient for birth registration submissions
+const birthRegistrationToEmail =
+  process.env.BIRTH_REGISTRATION_TO_EMAIL || "matt@dharach.com";
 
 // Helper to get formatted Barbados datetime
 function getBarbadosDateTime(): string {
   return new Date().toLocaleString("en-BB", { timeZone: "America/Barbados" });
-}
-
-// Send email using SES
-async function sendEmail({
-  to,
-  subject,
-  html,
-}: {
-  to: string;
-  subject: string;
-  html: string;
-}) {
-  const from = mailFrom;
-
-  const cmd = new SendEmailCommand({
-    FromEmailAddress: from,
-    Destination: { ToAddresses: [to] },
-    ...(configurationSet && {
-      ConfigurationSetName: configurationSet,
-      EmailTags: [
-        {
-          Name: tagKey,
-          Value: tagValue,
-        },
-      ],
-    }),
-    Content: {
-      Simple: {
-        Subject: { Data: subject },
-        Body: { Html: { Data: html } },
-      },
-    },
-  });
-  await sesClient.send(cmd);
 }
 
 export async function POST(request: NextRequest) {
@@ -135,8 +84,8 @@ export async function POST(request: NextRequest) {
         })
       );
       await sendEmail({
-        // TEMPORARY OVERRIDE FOR TESTING: Sending to testing@govtech.bb instead of user's email
-        to: "testing@govtech.bb",
+        // TEMPORARY OVERRIDE FOR TESTING: Sending to configured email instead of user's email
+        to: birthRegistrationToEmail,
         // to: formData.email.trim(), // Original - commented out for testing
         subject: userSubject,
         html: userHtml,
