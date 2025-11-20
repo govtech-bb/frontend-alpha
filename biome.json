@@ -16,9 +16,6 @@
       "suspicious": {
         "noUnknownAtRules": "off",
         "noArrayIndexKey": "off"
-      },
-      "nursery": {
-        "noIncrementDecrement": "warn"
       }
     }
   },
