@@ -43,7 +43,10 @@ export const BackButton = ({
   return (
     <nav
       aria-label={mode === "breadcrumbs" ? "Breadcrumbs" : "Backbutton"}
-      className={cn("flex items-center space-x-2 text-sm", className)}
+      className={cn(
+        "flex items-center space-x-2 py-4 text-sm lg:py-6",
+        className
+      )}
     >
       {mode === "breadcrumbs" ? (
         breadcrumbs.map((crumb, index) => (
@@ -59,7 +62,7 @@ export const BackButton = ({
         ))
       ) : (
         <Link
-          className="lg-[170%] flex cursor-pointer items-center text-teal-dark text-xl leading-[150%] underline"
+          className="flex cursor-pointer items-center text-teal-dark text-xl leading-[150%] underline"
           href={breadcrumbs.at(-1)?.href || "/"}
           type="button"
         >
