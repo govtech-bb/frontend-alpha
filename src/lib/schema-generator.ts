@@ -29,9 +29,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     (field.name === "disciplineExperience" ||
       field.name === "belongsToOrganizations")
   ) {
-    schema = z.enum(["true", "false"], {
-      required_error: validation.required || "This field is required",
-    });
+    schema = z.enum(["true", "false"]); //TODO: Fix validation message
     return schema;
   }
 
@@ -41,9 +39,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
       string,
       ...string[],
     ];
-    schema = z.enum(values, {
-      required_error: validation.required || "This field is required",
-    });
+    schema = z.enum(values); //TODO: Fix validation message
     return schema;
   }
 
@@ -78,9 +74,9 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
   }
 
   if (field.type === "email") {
-    schema = z.string().email("Invalid email address");
+    schema = z.email("Invalid email address");
     if (validation.required) {
-      schema = schema.min(1, validation.required);
+      schema = (schema as z.ZodString).min(1, validation.required);
     }
   }
 
