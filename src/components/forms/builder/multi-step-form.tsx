@@ -57,7 +57,7 @@ export default function DynamicMultiStepForm({
   });
 
   // Update URL when step changes
-  // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable and doesn't need to be in deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable, searchParams intentionally omitted to prevent circular updates
   useEffect(() => {
     if (!(_hasHydrated && isFormReady)) return;
 
@@ -68,7 +68,7 @@ export default function DynamicMultiStepForm({
       params.set("step", stepName);
       router.push(`?${params.toString()}`, { scroll: false });
     }
-  }, [currentStep, _hasHydrated, isFormReady, router, searchParams]);
+  }, [currentStep, _hasHydrated, isFormReady, router]);
 
   // Initialize step from URL on mount
   // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable and doesn't need to be in deps
