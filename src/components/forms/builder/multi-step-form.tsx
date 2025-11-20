@@ -47,7 +47,7 @@ export default function DynamicMultiStepForm({
 
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    mode: "onChange",
+    mode: "onSubmit",
     defaultValues: formSteps.reduce((acc, step) => {
       for (const field of step.fields) {
         acc[field.name as keyof FormData] = "" as FormData[keyof FormData];
