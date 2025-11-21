@@ -1,16 +1,25 @@
 import type { PaymentServiceConfig } from "./types";
 
 /**
+ * Payment Service Type Constants
+ * Use these constants instead of string literals
+ */
+export const SERVICE_TYPES = {
+  PASSPORT_REPLACEMENT: "passport-replacement",
+} as const;
+
+/**
  * Payment Configuration Registry
  * SINGLE SOURCE OF TRUTH for all payment services
  *
  * To add a new payment-enabled service:
- * 1. Add entry here with code, amount, description
- * 2. Set environment variable for payment code (optional)
- * 3. Service is immediately available
+ * 1. Add entry to SERVICE_TYPES constant above
+ * 2. Add entry here with code, amount, description
+ * 3. Set environment variable for payment code (optional)
+ * 4. Service is immediately available
  */
 export const PAYMENT_CONFIGS: Record<string, PaymentServiceConfig> = {
-  "passport-replacement": {
+  [SERVICE_TYPES.PASSPORT_REPLACEMENT]: {
     code: process.env.EZPAY_PASSPORT_CODE || "PASSPORT001",
     amount: 150.0,
     description: "Passport Replacement",

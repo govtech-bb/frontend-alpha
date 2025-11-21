@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import { SERVICE_TYPES } from "../config";
 import { MockPaymentProvider } from "../providers/mock-provider";
 
 describe("MockPaymentProvider", () => {
@@ -12,7 +13,7 @@ describe("MockPaymentProvider", () => {
     it("should return payment initiation result", async () => {
       const request = {
         referenceId: "test-ref-123",
-        serviceType: "passport-replacement",
+        serviceType: SERVICE_TYPES.PASSPORT_REPLACEMENT,
         email: "test@example.com",
         customerName: "Test User",
       };

@@ -11,11 +11,12 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { Typography } from "@/components/ui/typography";
 import { getPublicPaymentConfig } from "@/lib/payment/client-config";
+import { SERVICE_TYPES } from "@/lib/payment/config";
 import type { PassportReplacementFormData } from "./schema";
 import { passportReplacementSchema } from "./schema";
 
 // Get payment configuration from client-safe config
-const config = getPublicPaymentConfig("passport-replacement");
+const config = getPublicPaymentConfig(SERVICE_TYPES.PASSPORT_REPLACEMENT);
 if (!config) {
   throw new Error("Payment configuration not found for passport replacement");
 }
@@ -116,7 +117,7 @@ export function PassportReplacementForm() {
         },
         body: JSON.stringify({
           referenceNumber,
-          serviceType: "passport-replacement",
+          serviceType: SERVICE_TYPES.PASSPORT_REPLACEMENT,
           email: formData.email,
           name: formData.fullName,
         }),

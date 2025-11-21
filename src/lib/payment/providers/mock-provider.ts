@@ -1,4 +1,4 @@
-import { getPaymentConfig } from "../config";
+import { getPaymentConfig, SERVICE_TYPES } from "../config";
 import type {
   PaymentInitiationRequest,
   PaymentInitiationResult,
@@ -57,7 +57,8 @@ export class MockPaymentProvider implements PaymentProvider {
     // Get amount from config
     // Real payment gateways return the actual amount, but mock needs to look it up
     // If serviceType provided, use it; otherwise assume passport-replacement
-    const serviceType = request.serviceType || "passport-replacement";
+    const serviceType =
+      request.serviceType || SERVICE_TYPES.PASSPORT_REPLACEMENT;
     const config = getPaymentConfig(serviceType);
     const amount = config ? config.amount.toFixed(2) : "0.00";
 

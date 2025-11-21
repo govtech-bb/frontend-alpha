@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { getPaymentConfig, isValidServiceType } from "../config";
+import { getPaymentConfig, isValidServiceType, SERVICE_TYPES } from "../config";
 
 describe("Payment Configuration", () => {
   describe("getPaymentConfig", () => {
     it("should return config for valid service type", () => {
-      const config = getPaymentConfig("passport-replacement");
+      const config = getPaymentConfig(SERVICE_TYPES.PASSPORT_REPLACEMENT);
 
       expect(config).toBeDefined();
       expect(config?.amount).toBe(150.0);
@@ -28,7 +28,7 @@ describe("Payment Configuration", () => {
 
   describe("isValidServiceType", () => {
     it("should return true for valid service type", () => {
-      expect(isValidServiceType("passport-replacement")).toBe(true);
+      expect(isValidServiceType(SERVICE_TYPES.PASSPORT_REPLACEMENT)).toBe(true);
     });
 
     it("should return false for invalid service type", () => {
