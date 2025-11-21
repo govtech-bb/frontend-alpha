@@ -12,7 +12,6 @@ type PaymentCallbackHandlerProps = {
 export function PaymentCallbackHandler({
   paymentStatus,
 }: PaymentCallbackHandlerProps) {
-  const [, setEmailSent] = useState(false);
   const [isProcessing, setIsProcessing] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -70,8 +69,7 @@ export function PaymentCallbackHandler({
 
         // Clear sessionStorage after successful email send
         sessionStorage.removeItem(uuid);
-        setEmailSent(true);
-      } catch (err) {
+      } catch (_err) {
         setError(
           "Your payment was successful, but we encountered an error sending the confirmation. Please contact support with your transaction ID."
         );

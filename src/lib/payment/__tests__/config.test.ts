@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  getAvailableServices,
-  getPaymentConfig,
-  isValidServiceType,
-} from "../config";
+import { getPaymentConfig, isValidServiceType } from "../config";
 
 describe("Payment Configuration", () => {
   describe("getPaymentConfig", () => {
@@ -41,16 +37,6 @@ describe("Payment Configuration", () => {
 
     it("should return false for empty string", () => {
       expect(isValidServiceType("")).toBe(false);
-    });
-  });
-
-  describe("getAvailableServices", () => {
-    it("should return array of service types", () => {
-      const services = getAvailableServices();
-
-      expect(Array.isArray(services)).toBe(true);
-      expect(services.length).toBeGreaterThan(0);
-      expect(services).toContain("passport-replacement");
     });
   });
 });

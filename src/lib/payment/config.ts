@@ -52,10 +52,3 @@ export function isValidServiceType(
 ): serviceType is ServiceType {
   return serviceType in PAYMENT_CONFIGS;
 }
-
-/**
- * Get list of all configured payment services
- */
-export function getAvailableServices(): ServiceType[] {
-  return Object.keys(PAYMENT_CONFIGS) as ServiceType[];
-}
