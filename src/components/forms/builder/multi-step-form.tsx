@@ -173,18 +173,19 @@ export default function DynamicMultiStepForm({
       isProgrammaticNavigation.current = true;
       nextStepStore();
     } else {
-      // Scroll to first error if validation fails
-      const firstErrorField = currentFields.find(
-        (field) => methods.formState.errors[field]
-      );
-      if (firstErrorField) {
-        const element = document.querySelector(
-          `[name="${String(firstErrorField)}"]`
+      // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
+      const errorSummary = document.querySelector("#error-summary");
+      if (errorSummary) {
+        errorSummary.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        // Fallback to first error field if ErrorSummary not found
+        const firstErrorField = currentFields.find(
+          (field) => methods.formState.errors[field]
         );
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
-          if (element instanceof HTMLElement) {
-            element.focus();
+        if (firstErrorField) {
+          const element = document.querySelector(`#${String(firstErrorField)}`);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "center" });
           }
         }
       }
