@@ -54,15 +54,19 @@ export class MockPaymentProvider implements PaymentProvider {
       status = "Initiated";
     }
 
-    // TODO: Amount is hardcoded because verifyPayment doesn't know the serviceType.
-    // In a real implementation, the payment gateway returns the actual amount paid.
-    // For now, this matches the only configured service (passport-replacement: $150)
+    // Get amount from config
+    // Real payment gateways return the actual amount, but mock needs to look it up
+    // If serviceType provided, use it; otherwise assume passport-replacement
+    const serviceType = request.serviceType || "passport-replacement";
+    const config = getPaymentConfig(serviceType);
+    const amount = config ? config.amount.toFixed(2) : "0.00";
+
     return {
       success: status === "Success",
       status,
       transactionId: request.transactionId,
       referenceId: request.referenceId,
-      amount: "150.00", // Matches PAYMENT_CONFIGS["passport-replacement"].amount
+      amount,
       processor: "Mock Credit Card",
       settlementDate: new Date().toISOString(),
     };

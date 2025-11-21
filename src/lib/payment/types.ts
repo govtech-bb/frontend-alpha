@@ -41,6 +41,7 @@ export interface PaymentInitiationResult {
 export interface PaymentVerificationRequest {
   transactionId: string; // From payment gateway callback
   referenceId: string; // Our original reference
+  serviceType?: string; // Optional: for mock provider amount lookup
 }
 
 /**
