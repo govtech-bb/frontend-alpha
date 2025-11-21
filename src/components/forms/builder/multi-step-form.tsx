@@ -3,7 +3,7 @@
 import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
@@ -43,7 +43,7 @@ export default function DynamicMultiStepForm({
   const [isFormReady, setIsFormReady] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
-  const [isNavigating, setIsNavigating] = useState(false);
+  const isProgrammaticNavigation = useRef(false);
 
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -70,10 +70,16 @@ export default function DynamicMultiStepForm({
     }
   }, [currentStep, _hasHydrated, isFormReady, router]);
 
-  // Initialize step from URL on mount
+  // Initialize step from URL on mount and handle browser back/forward
   // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable and doesn't need to be in deps
   useEffect(() => {
-    if (!_hasHydrated || isNavigating) return;
+    if (!_hasHydrated) return;
+
+    // Skip if this is a programmatic navigation
+    if (isProgrammaticNavigation.current) {
+      isProgrammaticNavigation.current = false;
+      return;
+    }
 
     const urlStep = searchParams?.get("step"); // App Router
     // For Pages Router: const urlStep = router.query.step as string;
@@ -89,14 +95,7 @@ export default function DynamicMultiStepForm({
         setCurrentStep(stepIndex);
       }
     }
-  }, [
-    _hasHydrated,
-    searchParams,
-    completedSteps,
-    currentStep,
-    setCurrentStep,
-    isNavigating,
-  ]);
+  }, [_hasHydrated, searchParams, completedSteps, currentStep, setCurrentStep]);
 
   // Load saved form data on mount
   useEffect(() => {
@@ -160,10 +159,8 @@ export default function DynamicMultiStepForm({
     if (isReviewStep) {
       // No validation needed for review step, just proceed
       markStepComplete(currentStep);
-      setIsNavigating(true);
+      isProgrammaticNavigation.current = true;
       nextStepStore();
-      // Reset navigation flag after URL updates
-      setTimeout(() => setIsNavigating(false), 100);
       return;
     }
     const currentFields = formSteps[currentStep].fields.map((f) => f.name);
@@ -173,10 +170,8 @@ export default function DynamicMultiStepForm({
       // Mark current step as complete
       markStepComplete(currentStep);
       // Move to next step
-      setIsNavigating(true);
+      isProgrammaticNavigation.current = true;
       nextStepStore();
-      // Reset navigation flag after URL updates
-      setTimeout(() => setIsNavigating(false), 100);
     } else {
       // Scroll to first error if validation fails
       const firstErrorField = currentFields.find(
@@ -197,14 +192,13 @@ export default function DynamicMultiStepForm({
   };
 
   const handleEditFromReview = (stepIndex: number) => {
+    isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
   };
 
   const prevStep = () => {
-    setIsNavigating(true);
+    isProgrammaticNavigation.current = true;
     prevStepStore();
-    // Reset navigation flag after URL updates
-    setTimeout(() => setIsNavigating(false), 100);
   };
 
   const isReviewStep = formSteps[currentStep]?.fields.length === 0;
