@@ -28,15 +28,7 @@ export function PaymentCallbackHandler({
     const referenceId = paymentStatus.referenceId;
     const uuid = extractUuid(referenceId);
 
-    // Debug logging
-    console.log("🔍 Callback Handler Debug:");
-    console.log("  Reference ID:", referenceId);
-    console.log("  Extracted UUID:", uuid);
-    console.log("  SessionStorage length:", sessionStorage.length);
-    console.log("  SessionStorage keys:", Object.keys(sessionStorage));
-
     const storedData = sessionStorage.getItem(uuid);
-    console.log("  Stored data found:", storedData !== null);
 
     if (!storedData) {
       console.error("❌ Session data not found for UUID:", uuid);
