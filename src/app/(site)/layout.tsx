@@ -16,7 +16,7 @@ export default function EntryPointLayout({
   const searchParams = useSearchParams();
   const pathSegments = pathname.split("/").filter(Boolean);
   const isFormPage = pathSegments.includes("form");
-  const isConfirmationPage = searchParams.get("step") === "confirmation";
+  const isConfirmationPage = searchParams.get("step") === "check-answers";
 
   return (
     <>
@@ -25,14 +25,25 @@ export default function EntryPointLayout({
           <BackButton />
         </div>
       )}
-      <div
-        className={
-          isFormPage ? "container py-8 lg:py-16" : "container pt-4 pb-8 lg:py-8"
-        }
-      >
-        {children}
-        {(!isFormPage || isConfirmationPage) && <HelpfulBox />}
-      </div>
+      {isConfirmationPage ? (
+        <div className="pb-8 lg:pb-8">
+          {children}
+          <div className="container">
+            <HelpfulBox />
+          </div>
+        </div>
+      ) : (
+        <div
+          className={
+            isFormPage
+              ? "container py-8 lg:py-16"
+              : "container pt-4 pb-8 lg:py-8"
+          }
+        >
+          {children}
+          {!isFormPage && <HelpfulBox />}
+        </div>
+      )}
     </>
   );
 }
