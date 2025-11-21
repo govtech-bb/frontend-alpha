@@ -1,0 +1,40 @@
+[2025-11-14T05:07:08.796Z] [INFO] Test Scenario: married-with-father
+[2025-11-14T05:07:08.796Z] [INFO] Headless: false, Max Actions: 100
+[2025-11-14T05:07:08.796Z] [INFO] Initializing browser...
+[2025-11-14T05:07:09.401Z] [INFO] Browser initialized successfully
+[2025-11-14T05:07:10.066Z] [INFO] Navigated to: http://localhost:3000/register-birth
+[2025-11-14T05:07:10.067Z] [INFO] Waiting for form to hydrate...
+[2025-11-14T05:07:19.706Z] [INFO] Action 1/100: click
+[2025-11-14T05:07:24.588Z] [WARN] Anomaly detected (high): The 'Yes' radio button was clicked, but the current visual state shows that neither 'Yes' nor 'No' is selected. The click action failed to register the selection.
+[2025-11-14T05:07:41.521Z] [WARN] Bug confirmed (1.00 confidence): Radio button for 'married' status is not selectable
+[2025-11-14T05:07:41.521Z] [INFO] Confirmed bug recorded: Radio button for 'married' status is not selectable
+[2025-11-14T05:07:41.522Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T05:07:43.863Z] [INFO] Action 2/100: click
+[2025-11-14T05:07:52.025Z] [WARN] Anomaly detected (high): The structured page state report is inaccurate. Although the screenshot and the elements list confirm a visible validation error message ('There is a problem' header and 'Select yes...' link), the reported state indicates "Has Errors: false" and an empty "Error Messages" list.
+[2025-11-14T05:08:10.495Z] [WARN] Bug confirmed (1.00 confidence): Page state report fails to detect visible validation errors
+[2025-11-14T05:08:10.495Z] [INFO] Confirmed bug recorded: Page state report fails to detect visible validation errors
+[2025-11-14T05:08:10.495Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T05:08:19.726Z] [INFO] Action 3/100: click
+[2025-11-14T05:08:27.101Z] [WARN] Anomaly detected (high): The page displays a validation error requiring the user to make a selection, even though the last action was clicking the 'Yes' radio button. This indicates that the selection was not registered correctly by the form validation logic, or the UI failed to update, leaving the form in a stuck error state.
+[2025-11-14T05:08:49.768Z] [ERROR] Failed to validate anomaly: Unterminated string in JSON at position 1078 (line 14 column 172)
+[2025-11-14T05:08:53.474Z] [INFO] Action 4/100: click
+[2025-11-14T05:09:10.217Z] [INFO] Action 5/100: click
+[2025-11-14T05:09:17.024Z] [WARN] Anomaly detected (high): A validation error is displayed and persists even though the user successfully selected the 'Yes' radio button. The error message suggests the field is incomplete or requires selection, which contradicts the current state.
+[2025-11-14T05:09:36.241Z] [ERROR] Failed to validate anomaly: Unterminated string in JSON at position 1416 (line 15 column 197)
+[2025-11-14T05:09:39.564Z] [INFO] Action 6/100: click
+[2025-11-14T05:09:45.469Z] [WARN] Anomaly detected (high): Critical discrepancy: The page visually displays a validation error banner ('There is a problem' and an associated error link) indicating that a selection must be made, but the provided Current Page State metadata reports 'Has Errors: false' and an empty 'Error Messages' list. The 'Continue' action failed validation and did not navigate.
+[2025-11-14T05:10:03.101Z] [WARN] Bug confirmed (1.00 confidence): Validation error state is not reflected in page metadata
+[2025-11-14T05:10:03.101Z] [INFO] Confirmed bug recorded: Validation error state is not reflected in page metadata
+[2025-11-14T05:10:03.101Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T05:10:13.502Z] [INFO] Action 7/100: click
+[2025-11-14T05:10:20.522Z] [WARN] Anomaly detected (high): The last action (clicking the 'Yes' radio button) failed to register. The radio button is not selected in the UI (it remains unchecked), and the page displays a validation error requiring a selection, preventing the user from proceeding.
+[2025-11-14T05:10:35.899Z] [WARN] Bug confirmed (1.00 confidence): Cannot select an option for the 'parents married' question, blocking birth registration
+[2025-11-14T05:10:35.899Z] [INFO] Confirmed bug recorded: Cannot select an option for the 'parents married' question, blocking birth registration
+[2025-11-14T05:10:35.899Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T05:10:39.547Z] [INFO] Action 8/100: click
+[2025-11-14T05:10:45.738Z] [WARN] Anomaly detected (high): The page is clearly displaying a validation error (error summary box and error message text), indicating that a required field was missed, yet the reported system state flags `Has Errors: false` and lists no `Error Messages`. This is a critical mismatch between the visual UI state and the structured state reporting.
+[2025-11-14T05:11:03.382Z] [WARN] Bug confirmed (1.00 confidence): UI validation error is displayed but not reflected in the application's internal state
+[2025-11-14T05:11:03.382Z] [INFO] Confirmed bug recorded: UI validation error is displayed but not reflected in the application's internal state
+[2025-11-14T05:11:03.382Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T05:11:03.884Z] [ERROR] Test failed: page.title: Target page, context or browser has been closed
+[2025-11-14T05:11:03.886Z] [INFO] Browser closed

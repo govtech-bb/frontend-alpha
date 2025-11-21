@@ -159,6 +159,17 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to apply for a passport in Barbados, including forms, fees, and the collection process.",
       },
       {
+        title: "Replace a passport",
+        slug: "replace-a-passport",
+        source_url: "",
+        description:
+          "Apply for a passport replacement if your Barbados passport is lost, stolen, damaged, or expired.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          { slug: "form", type: "component" },
+        ],
+      },
+      {
         title: "Visa information",
         slug: "visa-information",
         source_url: "https://www.gov.bb/Visit-Barbados/visa-information",

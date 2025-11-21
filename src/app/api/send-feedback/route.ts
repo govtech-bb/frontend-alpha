@@ -1,63 +1,11 @@
 export const runtime = "nodejs";
 
-import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { type NextRequest, NextResponse } from "next/server";
-
-// Get required environment variables with explicit error handling
-const region = process.env.SES_REGION ?? "us-east-1";
-
-const mailFrom = process.env.MAIL_FROM as string;
-if (!mailFrom) {
-  throw new Error("MAIL_FROM environment variable is required");
-}
+import { sendEmail } from "@/lib/email/email-service";
 
 const feedbackToEmail = process.env.FEEDBACK_TO_EMAIL as string;
 if (!feedbackToEmail) {
   throw new Error("FEEDBACK_TO_EMAIL environment variable is required");
-}
-
-// Optional CloudWatch telemetry configuration
-const configurationSet = process.env.SES_CONFIGURATION_SET;
-const tagKey = process.env.SES_TAG_KEY ?? "ses:configuration-set";
-const tagValue = process.env.SES_TAG_VALUE ?? "prod";
-
-// Create AWS SES v2 client using Amplify's SSR compute role
-const sesClient = new SESv2Client({
-  region,
-});
-
-// Send email using SES directly
-async function sendEmail({
-  to,
-  subject,
-  html,
-}: {
-  to: string;
-  subject: string;
-  html: string;
-}) {
-  const from = mailFrom;
-
-  const cmd = new SendEmailCommand({
-    FromEmailAddress: from,
-    Destination: { ToAddresses: [to] },
-    ...(configurationSet && {
-      ConfigurationSetName: configurationSet,
-      EmailTags: [
-        {
-          Name: tagKey,
-          Value: tagValue,
-        },
-      ],
-    }),
-    Content: {
-      Simple: {
-        Subject: { Data: subject },
-        Body: { Html: { Data: html } },
-      },
-    },
-  });
-  await sesClient.send(cmd);
 }
 
 export async function POST(request: NextRequest) {

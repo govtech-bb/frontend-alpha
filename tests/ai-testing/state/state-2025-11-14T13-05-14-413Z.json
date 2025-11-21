@@ -1,0 +1,676 @@
+{
+  "scenario": "unmarried-with-father",
+  "actions": [
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Testing the scenario for unmarried parents, selecting 'No' for marriage status as per the test plan.",
+      "timestamp": "2025-11-14T12:56:31.243Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "The previous action selected 'No' for married parents. Now clicking 'Continue' to advance to the next step, likely related to including the father's details.",
+      "timestamp": "2025-11-14T12:57:02.886Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Re-selecting 'No' for marital status, assuming the previous selection or navigation failed, as the system appears to have returned to this initial marital status question. We are testing the path for unmarried parents.",
+      "timestamp": "2025-11-14T12:57:35.745Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Re-selecting 'No' for married status, as the previous attempt failed validation based on the error message displayed. The test plan requires testing the path for unmarried parents.",
+      "timestamp": "2025-11-14T12:58:06.686Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "The testing strategy dictates selecting 'No' (unmarried parents). Previous actions show 'No' was selected, but the page is displaying validation errors, suggesting the form needs resubmitting. Clicking 'Continue' to proceed to the next step based on the 'No' selection.",
+      "timestamp": "2025-11-14T12:58:38.536Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "The test context requires selecting 'No' as the parents were unmarried. Repeating selection as the previous navigation failed and the page reverted/shows validation errors related to this question.",
+      "timestamp": "2025-11-14T12:58:50.610Z"
+    },
+    {
+      "action": "click",
+      "selector": "#married-no",
+      "reasoning": "The test scenario requires testing unmarried parents, so selecting 'No' for the marriage status question.",
+      "timestamp": "2025-11-14T12:59:21.590Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "The parents' marital status has been set to 'No' (unmarried). Proceeding to the next step of the form.",
+      "timestamp": "2025-11-14T12:59:28.106Z"
+    },
+    {
+      "action": "click",
+      "selector": "#include-father-yes",
+      "reasoning": "Test plan requires including the father's details, so selecting 'Yes'. This follows the previous step where the parents were identified as unmarried.",
+      "timestamp": "2025-11-14T12:59:34.100Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "I have selected 'Yes' to include the father's details, which aligns with the testing strategy for unmarried parents including the father. Now proceeding to the next step, likely the father's information input.",
+      "timestamp": "2025-11-14T12:59:41.772Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-firstName",
+      "value": "Richard",
+      "reasoning": "Filling the father's first name with realistic test data.",
+      "timestamp": "2025-11-14T12:59:48.575Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-lastName",
+      "value": "Green",
+      "reasoning": "Filling the father's last name with realistic data. First name is already 'Richard'.",
+      "timestamp": "2025-11-14T12:59:55.447Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-middleName",
+      "value": "Andrew",
+      "reasoning": "Filling father's middle name for complete record keeping.",
+      "timestamp": "2025-11-14T13:00:03.872Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-dateOfBirth-day",
+      "value": "15",
+      "reasoning": "Filling in the father's date of birth day (15).",
+      "timestamp": "2025-11-14T13:00:11.803Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-dateOfBirth-month",
+      "value": "07",
+      "reasoning": "Completing the father's Date of Birth by filling in the month (July).",
+      "timestamp": "2025-11-14T13:00:19.903Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-dateOfBirth-year",
+      "value": "1985",
+      "reasoning": "Completing the father's Date of Birth. Using 1985 ensures the father is of age.",
+      "timestamp": "2025-11-14T13:00:26.909Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-address",
+      "value": "Lot 4, Green Gardens, St. Michael, Barbados",
+      "reasoning": "Filling the father's current address with realistic Barbados data. This is typically a required field.",
+      "timestamp": "2025-11-14T13:00:34.438Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-nationalRegistrationNumber",
+      "value": "150785-0010",
+      "reasoning": "Filling the father's National Registration Number (NRN) with realistic test data, as this is a primary form of identification in Barbados.",
+      "timestamp": "2025-11-14T13:00:49.322Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#father-occupation",
+      "value": "Civil Engineer",
+      "reasoning": "Filling the Father's occupation field with realistic data. This is typically a required or highly relevant field for government documentation.",
+      "timestamp": "2025-11-14T13:00:56.511Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "All required fields for the father's details (Name, DOB, Address, NRN, Occupation) have been filled with realistic data. Passport details are optional since the NRN is provided. Proceeding to the next step.",
+      "timestamp": "2025-11-14T13:01:04.239Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-firstName",
+      "value": "Shari",
+      "reasoning": "Filling in the mother's first name with realistic Barbados data.",
+      "timestamp": "2025-11-14T13:01:11.396Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-lastName",
+      "value": "Alleyne",
+      "reasoning": "Filling the mother's last name with realistic Barbados data.",
+      "timestamp": "2025-11-14T13:01:19.855Z"
+    },
+    {
+      "action": "click",
+      "selector": "#mother-hadOtherSurname-no",
+      "reasoning": "Selecting 'No' for whether the mother had another surname, simplifying the initial happy path test case.",
+      "timestamp": "2025-11-14T13:01:26.471Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-middleName",
+      "value": "Renee",
+      "reasoning": "Filling in the mother's middle name for completeness.",
+      "timestamp": "2025-11-14T13:01:34.324Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-dateOfBirth-day",
+      "value": "15",
+      "reasoning": "Filling the Mother's date of birth day (May 15th, 1990) with realistic data.",
+      "timestamp": "2025-11-14T13:01:42.605Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-dateOfBirth-month",
+      "value": "08",
+      "reasoning": "Completing the Mother's Date of Birth by filling in the month (August).",
+      "timestamp": "2025-11-14T13:01:50.288Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-dateOfBirth-year",
+      "value": "1990",
+      "reasoning": "Completing the mother's date of birth. Using a realistic birth year (1990) for a mother registering a child.",
+      "timestamp": "2025-11-14T13:01:58.111Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-address",
+      "value": "Lot 4, Green Hill Drive, St. Michael, BB12003",
+      "reasoning": "Filling mother's current address with realistic Barbados data.",
+      "timestamp": "2025-11-14T13:02:07.588Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' for 'Has mother had other surname?' to proceed with the primary name provided.",
+      "timestamp": "2025-11-14T13:02:16.117Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-nationalRegistrationNumber",
+      "value": "081990-1508",
+      "reasoning": "Filling the mother's National Registration Number (NRN). Assuming NRN is optional but providing it for a complete happy path test case, using a plausible format.",
+      "timestamp": "2025-11-14T13:02:51.299Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#mother-occupation",
+      "value": "Accountant",
+      "reasoning": "Filling in the mother's occupation, which is generally a required or mandatory field for government registration forms. Leaving passport fields blank to test optionality.",
+      "timestamp": "2025-11-14T13:03:01.191Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "All mandatory mother details have been filled (Name, DOB, Address, NR, Occupation, and indicated no previous surnames). Proceeding to the next section of the form.",
+      "timestamp": "2025-11-14T13:03:08.240Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#child-firstNames",
+      "value": "Ava",
+      "reasoning": "Filling in the child's first name with realistic test data.",
+      "timestamp": "2025-11-14T13:03:16.215Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#child-middleNames",
+      "value": "Rihanna",
+      "reasoning": "Filling the child's middle name(s) to ensure the field handles data correctly, even though it is often optional.",
+      "timestamp": "2025-11-14T13:03:23.862Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#child-lastName",
+      "value": "Browne",
+      "reasoning": "Filling the child's last name with a realistic Barbados surname.",
+      "timestamp": "2025-11-14T13:03:31.434Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#child-dateOfBirth-day",
+      "value": "05",
+      "reasoning": "Filling in the day component of the child's date of birth (05).",
+      "timestamp": "2025-11-14T13:03:39.313Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#child-dateOfBirth-month",
+      "value": "05",
+      "reasoning": "Filling in the month of birth (May) for the child. Testing date format with leading zero.",
+      "timestamp": "2025-11-14T13:03:45.981Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#child-dateOfBirth-year",
+      "value": "2024",
+      "reasoning": "Completing the Date of Birth field with a realistic recent year (2024) for the child.",
+      "timestamp": "2025-11-14T13:03:52.732Z"
+    },
+    {
+      "action": "click",
+      "selector": "#child-sexAtBirth-female",
+      "reasoning": "Selecting the child's sex at birth as Female, consistent with the name 'Ava'.",
+      "timestamp": "2025-11-14T13:03:59.263Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#child-parishOfBirth",
+      "value": "St. Michael",
+      "reasoning": "Filling in the required Parish of Birth (Place of birth) field with a realistic Barbados location.",
+      "timestamp": "2025-11-14T13:04:07.200Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "All required child details (name, DOB, sex, parish) are filled based on the current form state. Proceeding to the next step, likely parent details.",
+      "timestamp": "2025-11-14T13:04:17.381Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#numberOfCertificates",
+      "value": "3",
+      "reasoning": "Setting the requested number of birth certificates to 3, which is a common and realistic number for government forms.",
+      "timestamp": "2025-11-14T13:04:24.075Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "The number of certificates requested (3) has been entered in the previous step, proceeding to the next step of the registration process.",
+      "timestamp": "2025-11-14T13:04:29.930Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#email",
+      "value": "terry.gittens@gov.bb",
+      "reasoning": "Filling the required email address field with realistic data for the primary contact.",
+      "timestamp": "2025-11-14T13:04:35.790Z"
+    },
+    {
+      "action": "fill",
+      "selector": "#phoneNumber",
+      "value": "246-555-9876",
+      "reasoning": "Filling the required phone number field with a realistic Barbados number (246 area code).",
+      "timestamp": "2025-11-14T13:04:42.641Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Contact information (Email and Phone Number) is already filled with realistic data. Proceeding to the next step of the form.",
+      "timestamp": "2025-11-14T13:04:48.101Z"
+    },
+    {
+      "action": "verify_data",
+      "reasoning": "We are on the Check Answers page. Before confirming submission, we must verify that all previously entered data (Child details, Mother details, Father details, Marriage Status: No, Contact info) are correctly displayed, ensuring consistency and accuracy for the happy path test case.",
+      "timestamp": "2025-11-14T13:04:58.703Z"
+    }
+  ],
+  "formData": [
+    {
+      "field": "#father-firstName",
+      "value": "Richard",
+      "timestamp": "2025-11-14T12:59:48.703Z"
+    },
+    {
+      "field": "#father-lastName",
+      "value": "Green",
+      "timestamp": "2025-11-14T12:59:55.587Z"
+    },
+    {
+      "field": "#father-middleName",
+      "value": "Andrew",
+      "timestamp": "2025-11-14T13:00:04.001Z"
+    },
+    {
+      "field": "#father-dateOfBirth-day",
+      "value": "15",
+      "timestamp": "2025-11-14T13:00:11.933Z"
+    },
+    {
+      "field": "#father-dateOfBirth-month",
+      "value": "07",
+      "timestamp": "2025-11-14T13:00:20.016Z"
+    },
+    {
+      "field": "#father-dateOfBirth-year",
+      "value": "1985",
+      "timestamp": "2025-11-14T13:00:27.038Z"
+    },
+    {
+      "field": "#father-address",
+      "value": "Lot 4, Green Gardens, St. Michael, Barbados",
+      "timestamp": "2025-11-14T13:00:34.573Z"
+    },
+    {
+      "field": "#father-nationalRegistrationNumber",
+      "value": "150785-0010",
+      "timestamp": "2025-11-14T13:00:49.457Z"
+    },
+    {
+      "field": "#father-occupation",
+      "value": "Civil Engineer",
+      "timestamp": "2025-11-14T13:00:56.642Z"
+    },
+    {
+      "field": "#mother-firstName",
+      "value": "Shari",
+      "timestamp": "2025-11-14T13:01:11.524Z"
+    },
+    {
+      "field": "#mother-lastName",
+      "value": "Alleyne",
+      "timestamp": "2025-11-14T13:01:19.994Z"
+    },
+    {
+      "field": "#mother-middleName",
+      "value": "Renee",
+      "timestamp": "2025-11-14T13:01:34.458Z"
+    },
+    {
+      "field": "#mother-dateOfBirth-day",
+      "value": "15",
+      "timestamp": "2025-11-14T13:01:42.745Z"
+    },
+    {
+      "field": "#mother-dateOfBirth-month",
+      "value": "08",
+      "timestamp": "2025-11-14T13:01:50.408Z"
+    },
+    {
+      "field": "#mother-dateOfBirth-year",
+      "value": "1990",
+      "timestamp": "2025-11-14T13:01:58.248Z"
+    },
+    {
+      "field": "#mother-address",
+      "value": "Lot 4, Green Hill Drive, St. Michael, BB12003",
+      "timestamp": "2025-11-14T13:02:07.729Z"
+    },
+    {
+      "field": "#mother-nationalRegistrationNumber",
+      "value": "081990-1508",
+      "timestamp": "2025-11-14T13:02:51.432Z"
+    },
+    {
+      "field": "#mother-occupation",
+      "value": "Accountant",
+      "timestamp": "2025-11-14T13:03:01.334Z"
+    },
+    {
+      "field": "#child-firstNames",
+      "value": "Ava",
+      "timestamp": "2025-11-14T13:03:16.349Z"
+    },
+    {
+      "field": "#child-middleNames",
+      "value": "Rihanna",
+      "timestamp": "2025-11-14T13:03:23.980Z"
+    },
+    {
+      "field": "#child-lastName",
+      "value": "Browne",
+      "timestamp": "2025-11-14T13:03:31.568Z"
+    },
+    {
+      "field": "#child-dateOfBirth-day",
+      "value": "05",
+      "timestamp": "2025-11-14T13:03:39.454Z"
+    },
+    {
+      "field": "#child-dateOfBirth-month",
+      "value": "05",
+      "timestamp": "2025-11-14T13:03:46.098Z"
+    },
+    {
+      "field": "#child-dateOfBirth-year",
+      "value": "2024",
+      "timestamp": "2025-11-14T13:03:52.849Z"
+    },
+    {
+      "field": "#child-parishOfBirth",
+      "value": "St. Michael",
+      "timestamp": "2025-11-14T13:04:07.338Z"
+    },
+    {
+      "field": "#numberOfCertificates",
+      "value": "3",
+      "timestamp": "2025-11-14T13:04:24.219Z"
+    },
+    {
+      "field": "#email",
+      "value": "terry.gittens@gov.bb",
+      "timestamp": "2025-11-14T13:04:35.920Z"
+    },
+    {
+      "field": "#phoneNumber",
+      "value": "246-555-9876",
+      "timestamp": "2025-11-14T13:04:42.768Z"
+    }
+  ],
+  "anomaliesDetected": [
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Testing the scenario for unmarried parents, selecting 'No' for marriage status as per the test plan.",
+        "timestamp": "2025-11-14T12:56:42.846Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The radio button selection did not register visually. The last action was clicking 'No', but neither 'Yes' nor 'No' appears selected (checked) in the UI.",
+        "evidence": "The image shows both radio buttons as unchecked (empty circles), indicating the click action failed to update the UI state as expected for a radio button selection."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "The previous action selected 'No' for married parents. Now clicking 'Continue' to advance to the next step, likely related to including the father's details.",
+        "timestamp": "2025-11-14T12:57:10.050Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The validation error message is overly prescriptive, instructing the user to 'Select yes' specifically, rather than informing them that a selection is required (Yes or No). This suggests a potential bug in the validation logic or error message handling, where the error text is hardcoded to demand a specific answer despite 'No' being an available radio option.",
+        "evidence": "Error Messages include: 'Select yes if the mother and father were married when the child was born'. The question is a binary choice, and validation should prompt the user to choose 'Yes' or 'No', not mandate 'Yes'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Re-selecting 'No' for marital status, assuming the previous selection or navigation failed, as the system appears to have returned to this initial marital status question. We are testing the path for unmarried parents.",
+        "timestamp": "2025-11-14T12:57:46.826Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "critical",
+        "description": "Contradictory validation error. The user selected 'No' for the marital status question, but the system displays an error message demanding that the user 'Select yes', effectively blocking the 'No' path and preventing registration of an unmarried birth.",
+        "evidence": "Last action was selecting 'No'. Current state shows input[value='no'] is selected. Error message is 'Select yes if the mother and father were married when the child was born'. Additionally, the error message prefix is duplicated: 'There is a problem; There is a problem'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Re-selecting 'No' for married status, as the previous attempt failed validation based on the error message displayed. The test plan requires testing the path for unmarried parents.",
+        "timestamp": "2025-11-14T12:58:17.415Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The form is unresponsive to user input. After clicking the 'No' radio button, the selection was not registered in the form state (Form Values is empty), and the required field validation error persists, preventing the user from proceeding.",
+        "evidence": "Last action was clicking 'No' radio button, but 'Has Errors' is still true, the error message 'Select yes if the mother and father were married when the child was born' remains (implying no selection was made), and 'Form Values' is empty ({}) confirming the input failed to register."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "The test context requires selecting 'No' as the parents were unmarried. Repeating selection as the previous navigation failed and the page reverted/shows validation errors related to this question.",
+        "timestamp": "2025-11-14T12:59:02.600Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The click action on the 'No' radio button failed to register the selection. The UI shows both radio buttons are unchecked, and the page remains in an error state requiring a selection, preventing progression.",
+        "evidence": "Last action was click on input[type='radio'][value='no']. Current state reports Has Errors: true, Form Values: {}, and the visual state confirms neither 'Yes' nor 'No' is selected."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' for 'Has mother had other surname?' to proceed with the primary name provided.",
+        "timestamp": "2025-11-14T13:02:28.041Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "Data synchronization error: The 'National registration number' input field visually contains the value '123456-7890', but the reported Form Values state shows this field as empty.",
+        "evidence": "Visual input for National registration number: '123456-7890'. Reported Form Values state: {\"mother-nationalRegistrationNumber\":\"\"}"
+      }
+    },
+    {
+      "action": {
+        "action": "fill",
+        "selector": "#child-parishOfBirth",
+        "value": "St. Michael",
+        "reasoning": "Filling in the required Parish of Birth (Place of birth) field with a realistic Barbados location.",
+        "timestamp": "2025-11-14T13:04:14.130Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The 'Sex at birth' radio button field is visually selected ('Female' is checked in the UI), but the corresponding key/value pair (`child-sexAtBirth`) is missing entirely from the reported Form Values object. This indicates a discrepancy between the visual state and the application state, which will likely lead to a validation error if the user attempts to continue.",
+        "evidence": "Form Values: {\"child-firstNames\":\"Ava\",\"child-middleNames\":\"Rihanna\",\"child-lastName\":\"Browne\",\"child-dateOfBirth-day\":\"5\",\"child-dateOfBirth-month\":\"5\",\"child-dateOfBirth-year\":\"2024\",\"child-parishOfBirth\":\"St. Michael\"}. The key 'child-sexAtBirth' is absent, despite the image showing 'Female' selected."
+      }
+    }
+  ],
+  "confirmedBugs": [
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Radio button selection does not update visually after being clicked",
+      "description": "When a user clicks on a radio button for the 'married to each other' question, the UI does not update to show the button as selected. The evidence shows a click event was registered for the 'No' option, but both 'Yes' and 'No' radio buttons remain visually unchecked. This prevents the user from confirming their selection and proceeding with the form.",
+      "reproduction_steps": [
+        "Navigate to the '/register-birth' page.",
+        "Locate the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click on either the 'Yes' or 'No' radio button."
+      ],
+      "expected_behavior": "The clicked radio button should immediately appear as selected (e.g., with a dot inside the circle).",
+      "actual_behavior": "After clicking a radio button, neither option appears selected. Both radio buttons remain in their default, unchecked state."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Incorrect validation message for mandatory marriage status question",
+      "description": "When a user fails to select an option for the mandatory question 'When the child was born, were the mother and father married to each other?', the system displays an overly prescriptive and incorrect error message. Instead of a generic prompt like 'Please select an option', the error message instructs the user specifically to 'Select yes...'. This is misleading as 'No' is a valid option and can cause user confusion or lead to incorrect data submission.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the validation error message at the top of the page."
+      ],
+      "expected_behavior": "The validation error message should be generic, prompting the user to make a selection from the available options. For example: 'Select if the mother and father were married' or 'This field is required'.",
+      "actual_behavior": "The validation error message is 'Select yes if the mother and father were married when the child was born', which incorrectly instructs the user to select a specific option rather than simply prompting for any required selection."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "critical",
+      "title": "Contradictory validation error blocks birth registration for unmarried parents",
+      "description": "When a user follows the flow for unmarried parents by selecting 'No' to the marital status question, the system displays a validation error demanding they 'Select yes'. This effectively blocks the entire user journey for unmarried parents, making it impossible to register a birth. This is a critical functional defect. A secondary, minor UI bug is also present where the error summary prefix 'There is a problem;' is duplicated.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "For the question 'When the child was born, were the mother and father married to each other?', select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The system should accept the 'No' selection and proceed to the next step in the registration process for unmarried parents.",
+      "actual_behavior": "The system displays a validation error: 'Select yes if the mother and father were married when the child was born', preventing the user from continuing."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Radio button for 'married' status is unresponsive, blocking form submission",
+      "description": "When a user attempts to select an option for whether the parents were married, the click event does not register in the form's state. The 'Form Values' object remains empty, and the required field validation error persists, making it impossible for the user to proceed with the form. This blocks a critical user path.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Locate the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click on the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "Clicking the 'No' radio button should update the form's state to reflect the selection. The validation error should be cleared, and the user should be able to proceed to the next step.",
+      "actual_behavior": "The click on the 'No' radio button is not registered. The form's state remains empty ('Form Values': {}), and the validation error 'Select yes if the mother and father were married when the child was born' persists, preventing the user from continuing."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Unable to select 'No' for the 'parents married' question",
+      "description": "On the birth registration page, the radio button for 'No' in response to the question 'were the mother and father married' is unresponsive to click events. The UI does not update to show the selection, and the form state remains empty. This prevents users who need to select 'No' from proceeding with the form, effectively blocking a key user journey.",
+      "reproduction_steps": [
+        "Navigate to the birth registration page at http://localhost:3000/register-birth.",
+        "Locate the question 'When the child was born, were the mother and father married to each other?'.",
+        "Attempt to click on the 'No' radio button."
+      ],
+      "expected_behavior": "When the user clicks the 'No' radio button, it should become visually selected (checked), and its value should be registered in the form state, allowing the user to continue.",
+      "actual_behavior": "Clicking the 'No' radio button has no effect. The button remains unselected, the form state is not updated, and the user is blocked by a validation error if they try to continue."
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "anomaly-0",
+      "path": "screenshots/anomaly-0-high.png",
+      "timestamp": "2025-11-14T12:56:42.902Z"
+    },
+    {
+      "name": "anomaly-1",
+      "path": "screenshots/anomaly-1-high.png",
+      "timestamp": "2025-11-14T12:57:10.114Z"
+    },
+    {
+      "name": "anomaly-2",
+      "path": "screenshots/anomaly-2-critical.png",
+      "timestamp": "2025-11-14T12:57:46.894Z"
+    },
+    {
+      "name": "anomaly-3",
+      "path": "screenshots/anomaly-3-high.png",
+      "timestamp": "2025-11-14T12:58:17.481Z"
+    },
+    {
+      "name": "anomaly-5",
+      "path": "screenshots/anomaly-5-high.png",
+      "timestamp": "2025-11-14T12:59:02.674Z"
+    },
+    {
+      "name": "anomaly-28",
+      "path": "screenshots/anomaly-28-high.png",
+      "timestamp": "2025-11-14T13:02:28.116Z"
+    },
+    {
+      "name": "anomaly-39",
+      "path": "screenshots/anomaly-39-medium.png",
+      "timestamp": "2025-11-14T13:04:14.194Z"
+    }
+  ],
+  "currentUrl": "http://localhost:3000/register-birth?step=check-answers",
+  "startTime": "2025-11-14T12:56:26.743Z",
+  "endTime": "2025-11-14T13:05:14.413Z"
+}

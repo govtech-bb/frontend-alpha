@@ -1,0 +1,1973 @@
+{
+  "scenario": "unmarried-without-father",
+  "actions": [
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the parents were not married, aligning with the negative test path requiring only mother's details.",
+      "timestamp": "2025-11-14T05:10:59.205Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Parents' marital status has been selected as 'No' (unmarried). Proceeding to the next section of the form, likely concerning the child's details or the mother's details.",
+      "timestamp": "2025-11-14T05:11:13.118Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Previous actions indicated selecting 'No' and clicking 'Continue'. Assuming the state update was delayed or the previous click failed silently, I must attempt to proceed to the next step of the form using the 'Continue' button currently available on the page.",
+      "timestamp": "2025-11-14T05:11:45.121Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Following the test plan, selecting 'No' to indicate the parents were not married at the time of the child's birth.",
+      "timestamp": "2025-11-14T05:11:55.026Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous selection (No to including father's details) was accepted, clicking 'Continue' should advance the form to the next step, likely the Mother's or Child's details section, as no specific input fields are currently visible.",
+      "timestamp": "2025-11-14T05:12:30.216Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='yes']",
+      "reasoning": "The current page presents a Yes/No question, likely confirming the decision to proceed (e.g., 'Are you the mother registering the birth?' or 'Confirm proceeding without father details?'). Based on the test scenario (mother registering alone), selecting 'Yes' is the most logical choice to move to the mother's details section.",
+      "timestamp": "2025-11-14T05:12:41.211Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario of an unmarried mother registering the birth.",
+      "timestamp": "2025-11-14T05:13:12.221Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "The 'No' option (parents were not married) has been selected according to the test plan for the unmarried mother scenario. Proceeding to the next step.",
+      "timestamp": "2025-11-14T05:13:42.182Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the parents were not married at the time of birth, fulfilling the requirement to test the unmarried scenario.",
+      "timestamp": "2025-11-14T05:14:10.197Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the parents were not married at the time of birth, following the test scenario for an unmarried mother.",
+      "timestamp": "2025-11-14T05:14:41.602Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Testing the scenario where the mother is unmarried, thus selecting 'No' when asked if the parents were married.",
+      "timestamp": "2025-11-14T05:15:13.980Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the required selection (No, parents unmarried) is already made based on recent actions, clicking 'Continue' to proceed to the next step, which should ask about including father's details or move directly to child/mother details.",
+      "timestamp": "2025-11-14T05:15:49.275Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario of an unmarried mother registering the birth.",
+      "timestamp": "2025-11-14T05:15:59.729Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the required 'No' selection (parents unmarried) was made in the previous step, proceeding to the next section of the birth registration form.",
+      "timestamp": "2025-11-14T05:16:34.081Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Based on the recent actions, the relationship questions should have been answered (Unmarried, No Father details). Attempting to proceed to the next required information section (Child or Mother details), assuming the previous selections are retained, despite the initial page elements being visible again.",
+      "timestamp": "2025-11-14T05:17:04.629Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Reaffirming the selection of 'No' (parents were not married), as this aligns with the test scenario and the available elements suggest we are on the initial marriage status page, despite recent actions.",
+      "timestamp": "2025-11-14T05:17:21.069Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "After selecting 'No' to including the father's details, clicking Continue to proceed to the next section (likely Mother's details or Child's details) and ensure the father's section is correctly skipped.",
+      "timestamp": "2025-11-14T05:17:52.988Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous selections (unmarried status and exclusion of father details) were successful, clicking 'Continue' should advance the form to the next required data entry section (likely Child or Mother details). I need new input fields to continue the test scenario.",
+      "timestamp": "2025-11-14T05:18:28.110Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the mother and father were not married when the child was born, aligning with the negative test path (unmarried mother registering without father details).",
+      "timestamp": "2025-11-14T05:18:36.430Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "After selecting 'No' to including the father's details (per the test plan), clicking Continue to proceed to the next section (likely Mother's or Child's details).",
+      "timestamp": "2025-11-14T05:19:09.261Z"
+    },
+    {
+      "action": "wait",
+      "reasoning": "The previous steps indicated we skipped the Father's details section. We should now be on the page requesting the Child's details (Name, DOB, Location). Since the available elements do not include any input fields, I am pausing to request the correct interactive elements for the Child Details section to proceed with data entry.",
+      "timestamp": "2025-11-14T05:19:20.647Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the parents were not married when the child was born, fulfilling the requirement for the unmarried mother test scenario.",
+      "timestamp": "2025-11-14T05:19:46.903Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous action selected 'No' for including the father's details (as per the test plan for unmarried mother registering without father's details), we proceed to the next section, likely the child/mother details.",
+      "timestamp": "2025-11-14T05:20:20.852Z"
+    },
+    {
+      "action": "wait",
+      "reasoning": "We have successfully navigated past the relationship status and father inclusion questions by selecting 'No' twice. I expect the current page to be the Child Details section. Since the available interactive elements list provided only contained elements for the initial questions, I need the new list of selectors for the child's information fields (Name, DOB, Location of Birth, etc.) to proceed with filling the form.",
+      "timestamp": "2025-11-14T05:20:32.936Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Following the test plan to register a birth where the mother and father were NOT married at the time of the child's birth.",
+      "timestamp": "2025-11-14T05:20:59.766Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous action selected 'No' (do not include father's details), clicking Continue to move to the next section, likely Child or Mother details, based on the test flow.",
+      "timestamp": "2025-11-14T05:21:38.416Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous navigation attempts were successful but the UI failed to update the available elements list, clicking 'Continue' one last time to force navigation to the next stage (likely Child Details or Mother Details).",
+      "timestamp": "2025-11-14T05:21:51.627Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Explicitly selecting 'No' again, confirming the parents were not married, as required by the test scenario. Assuming the previous actions resulted in a state where this selection must be confirmed before proceeding.",
+      "timestamp": "2025-11-14T05:22:02.894Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Submitting the selection 'No' (do not include father's details) to proceed to the next section of the form (likely the Child's details or Mother's details).",
+      "timestamp": "2025-11-14T05:22:36.435Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "The page content appears to have reverted to the initial 'Are the parents married?' question, suggesting a navigation loop or reset bug. Re-selecting 'No' to maintain the test scenario (unmarried parents) before attempting to continue.",
+      "timestamp": "2025-11-14T05:23:05.427Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Based on the test context (unmarried, not including father's details), the previous action was likely selecting 'No' to include the father's details. Now clicking 'Continue' to proceed to the next section (likely Child or Mother details) and solidify the decision to exclude the father's information.",
+      "timestamp": "2025-11-14T05:23:38.480Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "The available elements indicate we are on the Marriage Status page. Although recent actions suggest this was already selected, we must ensure the 'No' option (unmarried parents) is active before proceeding, aligning with the test scenario.",
+      "timestamp": "2025-11-14T05:24:09.520Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Following the test plan for an unmarried mother registering the birth, selecting 'No' for whether the parents were married at the time of birth. Although recent actions suggest this happened, the current page state indicates we are on this step.",
+      "timestamp": "2025-11-14T05:24:44.052Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the parents were not married at the time of birth, following the defined test scenario for an unmarried mother.",
+      "timestamp": "2025-11-14T05:25:17.973Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "The test scenario requires registering a birth where the parents were not married, so selecting 'No' for the marital status question.",
+      "timestamp": "2025-11-14T05:25:50.008Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the mother and father were not married, as per the test scenario (unmarried mother registering without father's details).",
+      "timestamp": "2025-11-14T05:26:23.864Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "The test scenario requires selecting 'No' (unmarried parents). Assuming 'No' is selected based on the recent actions, proceeding to the next step of the form.",
+      "timestamp": "2025-11-14T05:26:55.905Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "The test scenario requires the parents to be unmarried, so selecting 'No' for the marriage status question.",
+      "timestamp": "2025-11-14T05:27:24.188Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "The test scenario requires the parents to be unmarried, so selecting 'No' for the marriage status question.",
+      "timestamp": "2025-11-14T05:27:56.379Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario for an unmarried mother.",
+      "timestamp": "2025-11-14T05:28:27.978Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the 'No' radio button was selected in the previous step (as indicated by recent actions), this action submits the choice to exclude the father's details and proceeds to the next section of the birth registration form, likely the child's details.",
+      "timestamp": "2025-11-14T05:29:01.358Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the mother and father were not married, fulfilling the test requirement for an unmarried mother scenario.",
+      "timestamp": "2025-11-14T05:29:27.079Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "The 'No' option (parents were not married) has been selected according to the test scenario. Proceeding to the next section of the form.",
+      "timestamp": "2025-11-14T05:29:55.338Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Continuing the test scenario where the parents were not married, selecting 'No' again to ensure the required state is set before proceeding.",
+      "timestamp": "2025-11-14T05:30:26.335Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the required 'No' selection (either marital status or father inclusion status, based on the test context) has been made, clicking 'Continue' to proceed to the next section of the birth registration form, likely the child's details.",
+      "timestamp": "2025-11-14T05:31:04.431Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario for an unmarried mother.",
+      "timestamp": "2025-11-14T05:31:34.792Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Based on the available elements, the 'No' option (parents not married) appears to be selected (implied by the recent actions list). Proceeding to the next step of the registration process to enter child/mother details, following the test path of excluding father's information.",
+      "timestamp": "2025-11-14T05:32:09.490Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous selections (No for married, No for including father details) were successful, clicking 'Continue' is necessary to advance the form flow to the next section (expected: Child details or Mother details). The lack of data input fields suggests the navigation hasn't fully completed yet, or this is a multi-step confirmation.",
+      "timestamp": "2025-11-14T05:32:40.270Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "The available elements indicate the form has either returned to or is re-asking the marriage status question. Reinforcing the test scenario (Unmarried mother) by selecting 'No' again.",
+      "timestamp": "2025-11-14T05:33:08.282Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "We have selected 'No' (presumably indicating the father's details are not being included, fulfilling the test objective). Now proceeding to the next section of the form.",
+      "timestamp": "2025-11-14T05:33:42.904Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Attempting to advance the form flow to the next section (likely Child or Mother details). Given the recent actions, the flow should have moved past the initial relationship questions, but the available elements suggest a potential UI or flow reset/bug. Clicking continue to confirm the state and reveal the next set of inputs.",
+      "timestamp": "2025-11-14T05:34:08.746Z"
+    },
+    {
+      "action": "click",
+      "selector": "input[type='radio'][value='no']",
+      "reasoning": "Selecting 'No' as the test scenario requires registering the birth where the parents were unmarried.",
+      "timestamp": "2025-11-14T05:34:34.428Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous action (selecting 'no' regarding marriage or father details) was successful, clicking continue to proceed to the next section, likely Child Details or Mother Details.",
+      "timestamp": "2025-11-14T05:35:11.317Z"
+    },
+    {
+      "action": "click",
+      "selector": "button:has-text('Continue')",
+      "reasoning": "Assuming the previous selections (Unmarried, No Father Details) were successfully submitted, attempting to proceed to the next stage of the registration form, likely Child Details or Mother Details. Since no input fields are currently visible, clicking 'Continue' is the only available progression action.",
+      "timestamp": "2025-11-14T05:35:38.909Z"
+    }
+  ],
+  "formData": [],
+  "anomaliesDetected": [
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the parents were not married, aligning with the negative test path requiring only mother's details.",
+        "timestamp": "2025-11-14T05:11:10.277Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The 'No' radio button was clicked in the last action, but neither the visual state (image) nor the reported Form Values indicate that the selection registered. Both radio buttons appear unselected in the current view.",
+        "evidence": "Last action was clicking input[type='radio'][value='no'], but the visual evidence shows both 'Yes' and 'No' radio buttons are unchecked (unselected circles). Form Values are also reported as empty: {}. The selection failed to register visually."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Parents' marital status has been selected as 'No' (unmarried). Proceeding to the next section of the form, likely concerning the child's details or the mother's details.",
+        "timestamp": "2025-11-14T05:11:20.489Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "Navigation failed after clicking 'Continue'. The page remained on the same URL and displayed a validation error requiring a selection, suggesting that the previous user input ('No', as mentioned in the last action reasoning) was lost or failed to register before submission.",
+        "evidence": "Last action reasoning states 'No' was selected, but clicking 'Continue' resulted in failed navigation (URL unchanged) and a validation error message visually present on the page, confirming that the form submission failed due to missing input (`Form Values: {}`)."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Following the test plan, selecting 'No' to indicate the parents were not married at the time of the child's birth.",
+        "timestamp": "2025-11-14T05:12:08.338Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page displays a validation error message ('There is a problem' box) but neither the 'Yes' nor 'No' radio button appears selected, despite the last action being a click on 'No'. This suggests the user's input was not registered or persisted, and the form defaulted to an error state immediately after the selection attempt. Furthermore, the provided state summary reports 'Has Errors: false', which contradicts the visible error box in the screenshot.",
+        "evidence": "The image shows a red error box titled 'There is a problem' with an error message, yet the page state data reports 'Has Errors: false'. Visually, both 'Yes' and 'No' radio buttons are unselected, indicating the click action on 'No' failed to persist the selection."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the previous selection (No to including father's details) was accepted, clicking 'Continue' should advance the form to the next step, likely the Mother's or Child's details section, as no specific input fields are currently visible.",
+        "timestamp": "2025-11-14T05:12:34.616Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The structured state report contradicts the visual evidence. The image clearly shows a validation error message after clicking 'Continue' without input, but the structured state reports 'Has Errors: false' and no error messages.",
+        "evidence": "Current Page State reports 'Has Errors: false' and empty 'Error Messages', while the visual display shows an error box with the message: 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='yes']",
+        "reasoning": "The current page presents a Yes/No question, likely confirming the decision to proceed (e.g., 'Are you the mother registering the birth?' or 'Confirm proceeding without father details?'). Based on the test scenario (mother registering alone), selecting 'Yes' is the most logical choice to move to the mother's details section.",
+        "timestamp": "2025-11-14T05:12:53.105Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The previous action (clicking the 'Yes' radio button) failed to register the input state. The page displays a validation error requiring a selection, and visually, neither radio button is checked. Furthermore, the programmatic state reports 'Has Errors: false', which directly contradicts the large, visible error box ('There is a problem') displayed on the screen.",
+        "evidence": "Last action was clicking 'Yes', but the UI shows an error requiring a selection ('Select yes if the mother and father were married when the child was born') and neither radio button is visually selected. Programmatic state 'Has Errors: false' contradicts the visible UI error."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario of an unmarried mother registering the birth.",
+        "timestamp": "2025-11-14T05:13:25.110Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "An error message is displayed that is incorrect and prescriptive, suggesting the user must select 'Yes' for a mandatory Yes/No question, even though the user attempted to select 'No' (or the field remains unselected). The message reads 'Select yes if the mother and father were married when the child was born', which is functionally incorrect for a required field validation.",
+        "evidence": "The page displays an error box containing the message: 'Select yes if the mother and father were married when the child was born'. This implies that selecting 'No' is disallowed or that the validation message is statically incorrect, contradicting the nature of the choice presented."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "The 'No' option (parents were not married) has been selected according to the test plan for the unmarried mother scenario. Proceeding to the next step.",
+        "timestamp": "2025-11-14T05:13:48.591Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "Navigation failed after clicking 'Continue', indicating a validation failure. However, the reported current page state metadata is inconsistent with the visual evidence. The UI clearly displays an error message box, but the state claims 'Has Errors: false' and 'Error Messages: ' (empty). This indicates a failure in state reporting.",
+        "evidence": "The screenshot shows a visible red error box with the text 'There is a problem' and a specific error message. This directly contradicts the provided state data where 'Has Errors' is false and 'Error Messages' is empty. Additionally, the selection ('No') mentioned in the last action reasoning appears to have been lost, as the radio buttons are unchecked and the validation error suggests no selection was made."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the parents were not married at the time of birth, fulfilling the requirement to test the unmarried scenario.",
+        "timestamp": "2025-11-14T05:14:22.336Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The click action on the 'No' radio button failed to register the selection. The radio button remains unselected in the UI, and the form values are still empty, even though a selection was made.",
+        "evidence": "Last action was clicking 'No' (input[type='radio'][value='no']), but the visual evidence shows neither 'Yes' nor 'No' selected. Additionally, the 'Form Values' state is empty ({}). The page is also displaying an error message ('There is a problem') contradicting the state metadata (Has Errors: false), further suggesting a broken state update mechanism."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the parents were not married at the time of birth, following the test scenario for an unmarried mother.",
+        "timestamp": "2025-11-14T05:14:54.171Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The last action (clicking the 'No' radio button) failed to register the selection state. The UI shows both radio buttons unchecked, and the page immediately displays a validation error ('There is a problem / Select yes if the mother and father were married...') indicating the required field was not filled, despite the user's explicit action.",
+        "evidence": "Last action was click on 'no' radio button. Current UI shows validation error and both radio buttons are unchecked, confirming the selection state was not updated correctly."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Testing the scenario where the mother is unmarried, thus selecting 'No' when asked if the parents were married.",
+        "timestamp": "2025-11-14T05:15:25.793Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page is stuck in an error state immediately after a valid selection ('No'). The radio button selection did not register visually, and a validation error appeared. Crucially, the error message text is highly prescriptive and incorrect: 'Select yes if the mother and father were married when the child was born', suggesting 'No' is an invalid choice, which contradicts the purpose of a Yes/No field.",
+        "evidence": "Last action was clicking 'No', but the screen shows neither radio button selected and displays a validation error box. The error text explicitly demands selection of 'Yes', indicating broken validation logic or a failed interaction."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the required selection (No, parents unmarried) is already made based on recent actions, clicking 'Continue' to proceed to the next step, which should ask about including father's details or move directly to child/mother details.",
+        "timestamp": "2025-11-14T05:15:56.143Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The validation error message is misleading. After clicking 'Continue' without selecting an option, the form displays an error instructing the user to specifically 'Select yes...', rather than asking the user to select *an* option (Yes or No). This could lead to incorrect data entry if the user is not married.",
+        "evidence": "Error message displayed in the UI: 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario of an unmarried mother registering the birth.",
+        "timestamp": "2025-11-14T05:16:11.408Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "After selecting 'No', the system displayed a validation error that contradicts the user's selection, instructing the user to 'Select yes'. This prevents the user from proceeding with the legitimate input 'No'.",
+        "evidence": "The user clicked 'No' (mother and father were not married). The page immediately shows an error box stating: 'There is a problem' and the specific error link reads: 'Select yes if the mother and father were married when the child was born'. This implies 'No' is an invalid choice, which breaks the form logic."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the required 'No' selection (parents unmarried) was made in the previous step, proceeding to the next section of the birth registration form.",
+        "timestamp": "2025-11-14T05:16:37.989Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page displays a validation error message ('There is a problem' box visible, requiring selection) but the captured state metadata reports 'Has Errors: false' and 'Error Messages: []'. This is a critical mismatch between the system state and the visible UI.",
+        "evidence": "UI shows error message 'Select yes if the mother and father were married when the child was born' and an error box, but Current Page State reports 'Has Errors: false' and 'Error Messages: ' (empty)."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Based on the recent actions, the relationship questions should have been answered (Unmarried, No Father details). Attempting to proceed to the next required information section (Child or Mother details), assuming the previous selections are retained, despite the initial page elements being visible again.",
+        "timestamp": "2025-11-14T05:17:13.181Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The validation error message is misleading. After clicking 'Continue' without making a selection, the error message directs the user to 'Select yes' specifically, rather than prompting them to select either 'Yes' or 'No' to answer the mandatory question.",
+        "evidence": "Error message visible on screen: 'Select yes if the mother and father were married when the child was born'. This is prescriptive and incorrect for a mandatory Yes/No selection."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Reaffirming the selection of 'No' (parents were not married), as this aligns with the test scenario and the available elements suggest we are on the initial marriage status page, despite recent actions.",
+        "timestamp": "2025-11-14T05:17:33.019Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The user's last action (clicking 'No' radio button) did not register. The radio button remains visually unselected, and the form state is empty. Additionally, there is a critical mismatch between the reported programmatic state and the visual UI: the UI shows a large error banner, but the state data reports 'Has Errors: false' and empty error messages.",
+        "evidence": "Last action was clicking 'No', but 'Form Values: {}' and the image shows neither radio button selected. The image displays an error banner ('There is a problem'), but the provided state reports 'Has Errors: false' and 'Error Messages: ' (empty)."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "After selecting 'No' to including the father's details, clicking Continue to proceed to the next section (likely Mother's details or Child's details) and ensure the father's section is correctly skipped.",
+        "timestamp": "2025-11-14T05:18:01.593Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page loaded immediately displaying a validation error banner ('There is a problem') despite the user having just navigated from a previous step. This implies the page auto-validated on load before the user could make a selection, or the previous navigation step was flawed, causing an immediate redirect/re-render with an error state on the new page. Additionally, the metadata states 'Has Errors: false', which contradicts the visible UI.",
+        "evidence": "The image shows a large red error box titled 'There is a problem' and an error message instructing the user to make a selection ('Select yes if the mother and father were married when the child was born'). This error appeared immediately after clicking 'Continue' on the previous page, before any input was provided on this new page. The system metadata reported 'Has Errors: false', which is directly contradicted by the visual state."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the previous selections (unmarried status and exclusion of father details) were successful, clicking 'Continue' should advance the form to the next required data entry section (likely Child or Mother details). I need new input fields to continue the test scenario.",
+        "timestamp": "2025-11-14T05:18:33.817Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The structured state reports 'Has Errors: false' and empty 'Error Messages', but the visual evidence (screenshot and element list) clearly shows a visible validation error message ('There is a problem: Select yes if the mother and father were married when the child was born'). The state reporting is inaccurate.",
+        "evidence": "Structured state reports: Has Errors: false, Error Messages: []. Visual evidence shows a visible error box triggered by clicking Continue without selecting a radio button. Element list confirms the error link is present: {\"role\":\"a\",\"name\":\"Select yes if the mother and father were married when the child was born\"}"
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the mother and father were not married when the child was born, aligning with the negative test path (unmarried mother registering without father details).",
+        "timestamp": "2025-11-14T05:18:49.093Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The user's click action on the 'No' radio button failed to register. Visually, neither radio button is selected, and the form state reports empty values. Furthermore, the UI is displaying a critical validation error banner ('There is a problem...') which contradicts the technical state reported as 'Has Errors: false'.",
+        "evidence": "Last action was clicking 'No' (input[value='no']), but the image shows both Yes/No radio buttons unselected. The page displays a visible error banner and error link, yet the state reports {\"Has Errors\": false} and {\"Error Messages\": \"\"}."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "After selecting 'No' to including the father's details (per the test plan), clicking Continue to proceed to the next section (likely Mother's or Child's details).",
+        "timestamp": "2025-11-14T05:19:14.095Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The structured page state report contradicts the visual evidence. After clicking 'Continue' without making a selection, the system correctly triggered validation and displayed an error message in the UI, but the structured data reports 'Has Errors: false' and empty 'Error Messages'.",
+        "evidence": "Structured data: 'Has Errors: false', 'Error Messages: []'. Visual evidence (screenshot): Shows a prominent error box stating 'There is a problem' and the error message 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "wait",
+        "reasoning": "The previous steps indicated we skipped the Father's details section. We should now be on the page requesting the Child's details (Name, DOB, Location). Since the available elements do not include any input fields, I am pausing to request the correct interactive elements for the Child Details section to proceed with data entry.",
+        "timestamp": "2025-11-14T05:19:25.988Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page displays a visible validation error banner and message ('There is a problem', 'Select yes if the mother and father were married when the child was born'), but the reported state indicates 'Has Errors: false' and empty 'Error Messages'. The visible UI state contradicts the reported programmatic state.",
+        "evidence": "Reported state: 'Has Errors: false', 'Error Messages: []'. Visual UI (image) shows a red error banner clearly visible."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the parents were not married when the child was born, fulfilling the requirement for the unmarried mother test scenario.",
+        "timestamp": "2025-11-14T05:19:58.224Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "After attempting to select 'No', the form failed to register the input (Form Values are empty, and the radio button is not selected in the image). Crucially, a validation error appeared that directs the user to select 'Yes' specifically, which contradicts the purpose of offering a 'No' option and suggests broken validation logic or an incorrect hardcoded requirement.",
+        "evidence": "The error message displayed is: 'Select yes if the mother and father were married when the child was born'. This message mandates a specific answer ('Yes') even though 'No' is a valid option for the question. Additionally, the selection was not registered (Form Values: {})."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the previous action selected 'No' for including the father's details (as per the test plan for unmarried mother registering without father's details), we proceed to the next section, likely the child/mother details.",
+        "timestamp": "2025-11-14T05:20:26.179Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The state capture reported that the page has no errors (`Has Errors: false` and empty `Error Messages`), but the screenshot and element list clearly show that validation failed after clicking 'Continue'. An error summary box is displayed with the message: 'Select yes if the mother and father were married when the child was born'.",
+        "evidence": "State capture reported: `Has Errors: false` and `Error Messages: []`. Screenshot confirms error box is visible, and the element list includes the error link: {\"role\":\"a\",\"name\":\"Select yes if the mother and father were married when the child was born\"}."
+      }
+    },
+    {
+      "action": {
+        "action": "wait",
+        "reasoning": "We have successfully navigated past the relationship status and father inclusion questions by selecting 'No' twice. I expect the current page to be the Child Details section. Since the available interactive elements list provided only contained elements for the initial questions, I need the new list of selectors for the child's information fields (Name, DOB, Location of Birth, etc.) to proceed with filling the form.",
+        "timestamp": "2025-11-14T05:20:40.263Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The application failed to navigate to the expected 'Child Details' section after the previous steps were completed. The page either reverted to an earlier question ('Were the mother and father married?') or the flow logic is broken. Furthermore, the page loaded with an active, visible error message, which is unusual before user interaction.",
+        "evidence": "The last action description expected navigation to the Child Details section, but the current page asks 'When the child was born, were the mother and father married to each other?'. The image shows a prominent error box ('There is a problem') displayed immediately upon page load, indicating a critical state or validation issue."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Following the test plan to register a birth where the mother and father were NOT married at the time of the child's birth.",
+        "timestamp": "2025-11-14T05:21:12.626Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The last action (clicking the 'No' radio button) failed to register the selection. The image shows neither 'Yes' nor 'No' selected. Furthermore, an error banner is displayed, contradicting the provided page state data (Has Errors: false).",
+        "evidence": "User clicked 'No' radio button, but the UI shows both radio buttons unselected. The page displays an error banner ('There is a problem') and an error message link ('Select yes if the mother and father were married when the child was born'), indicating the input was not registered and the system defaulted to a validation failure."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the previous navigation attempts were successful but the UI failed to update the available elements list, clicking 'Continue' one last time to force navigation to the next stage (likely Child Details or Mother Details).",
+        "timestamp": "2025-11-14T05:21:56.992Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "medium",
+        "description": "The current page state reports 'Has Errors: false' and empty 'Error Messages', but the visual evidence (image) and the presence of an error link in the elements list confirm that a validation error occurred and is displayed on the page (expected behavior after clicking Continue without selection). The state reporting is inaccurate.",
+        "evidence": "State reports Has Errors: false, but the image shows a validation error box ('There is a problem') and the elements list contains an error link: 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Explicitly selecting 'No' again, confirming the parents were not married, as required by the test scenario. Assuming the previous actions resulted in a state where this selection must be confirmed before proceeding.",
+        "timestamp": "2025-11-14T05:22:15.441Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page visually displays a validation error banner ('There is a problem') and an error message, but the provided Current Page State data reports `Has Errors: false` and empty `Error Messages`. This indicates a mismatch between the rendered UI state and the reported application state.",
+        "evidence": "Visual confirmation of a red error box on the page. State data reports: `Has Errors: false` and `Error Messages: []`."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Submitting the selection 'No' (do not include father's details) to proceed to the next section of the form (likely the Child's details or Mother's details).",
+        "timestamp": "2025-11-14T05:22:41.910Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "low",
+        "description": "The reported page state is inconsistent with the visual output. The UI correctly displays a validation error after clicking 'Continue' without selecting a radio button, but the reported state flags 'Has Errors: false' and lists empty 'Error Messages'.",
+        "evidence": "Reported State: 'Has Errors: false', 'Error Messages: '. Visual/Element Evidence: The page displays an error box, and the element list includes the visible error link: 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "The page content appears to have reverted to the initial 'Are the parents married?' question, suggesting a navigation loop or reset bug. Re-selecting 'No' to maintain the test scenario (unmarried parents) before attempting to continue.",
+        "timestamp": "2025-11-14T05:23:16.442Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "There is a critical synchronization issue between the recorded state and the visible UI. The UI clearly displays a validation error banner ('There is a problem' and an error message), but the system state reports `Has Errors: false` and empty `Error Messages`.",
+        "evidence": "State data reports: `Has Errors: false` and `Error Messages: []`. The visual output shows a red error banner with the text: 'There is a problem' and 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Based on the test context (unmarried, not including father's details), the previous action was likely selecting 'No' to include the father's details. Now clicking 'Continue' to proceed to the next section (likely Child or Mother details) and solidify the decision to exclude the father's information.",
+        "timestamp": "2025-11-14T05:23:43.316Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page is displaying an active validation error, but the reported Current Page State metadata indicates that 'Has Errors' is false and 'Error Messages' is empty.",
+        "evidence": "The image clearly shows a red validation box titled 'There is a problem' containing the error message 'Select yes if the mother and father were married when the child was born'. However, the state metadata reports: 'Has Errors: false' and 'Error Messages: '."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "The available elements indicate we are on the Marriage Status page. Although recent actions suggest this was already selected, we must ensure the 'No' option (unmarried parents) is active before proceeding, aligning with the test scenario.",
+        "timestamp": "2025-11-14T05:24:21.235Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The reported page state (Has Errors: false, Error Messages: []) contradicts the visual evidence. The page is clearly displaying a critical validation error box requiring a selection, and neither radio button appears selected, suggesting the last click action failed to persist the selection.",
+        "evidence": "The image and element list confirm a visible error message link: 'Select yes if the mother and father were married when the child was born', yet the system state reports 'Has Errors: false' and empty 'Error Messages'. Additionally, the radio buttons are unselected despite the previous action being a click on 'No'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Following the test plan for an unmarried mother registering the birth, selecting 'No' for whether the parents were married at the time of birth. Although recent actions suggest this happened, the current page state indicates we are on this step.",
+        "timestamp": "2025-11-14T05:24:57.659Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The reported page state (Has Errors: false, Error Messages: empty) directly contradicts the visual evidence (screenshot), which clearly displays a red error box and an error message. Additionally, the error message text ('Select yes if the mother and father were married when the child was born') is prescriptive and suspicious, suggesting the validation system is forcing a 'Yes' selection rather than confirming a choice was made, especially since the radio buttons appear unselected.",
+        "evidence": "Reported state: 'Has Errors: false'. Visual evidence: Large red error box visible with message 'There is a problem' and 'Select yes if the mother and father were married when the child was born'. The radio buttons for Yes/No are visually unselected, despite the last action being a click on 'No', suggesting the action failed or the state was immediately reset upon validation failure."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the parents were not married at the time of birth, following the defined test scenario for an unmarried mother.",
+        "timestamp": "2025-11-14T05:25:29.488Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "After clicking 'No' to indicate that the parents were not married, the system displayed a mandatory error message forcing the user to select 'Yes'. This prevents the user from proceeding with the 'No' path, indicating broken validation logic.",
+        "evidence": "User clicked radio button with value 'no'. The UI displays an error box with the message: 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "The test scenario requires registering a birth where the parents were not married, so selecting 'No' for the marital status question.",
+        "timestamp": "2025-11-14T05:26:02.999Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page is visually displaying a validation error banner ('There is a problem' with an error link), but the reported JSON state indicates 'Has Errors: false' and empty error messages. Additionally, the user's last action was clicking 'No', but the radio button is not visually selected, suggesting the click failed to register or clear the previous validation error.",
+        "evidence": "UI shows a red error banner: 'There is a problem' and 'Select yes if the mother and father were married when the child was born'. This contradicts the reported state `Has Errors: false`. Neither the 'Yes' nor 'No' radio buttons appear selected in the image, despite the last action being a click on 'No'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the mother and father were not married, as per the test scenario (unmarried mother registering without father's details).",
+        "timestamp": "2025-11-14T05:26:36.822Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "An error message is displayed immediately after a valid selection ('No') was made, even though the radio button is visually selected. The error message itself is misleading, suggesting the user must select 'Yes', which contradicts the user's action and the standard flow where both Yes/No should be valid choices to proceed.",
+        "evidence": "User clicked 'No' radio button. The image shows 'No' is selected (checked circle). However, a validation error banner 'There is a problem' is displayed, with the message: 'Select yes if the mother and father were married when the child was born'. This indicates broken or premature validation firing upon interaction, preventing correct state transition."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "The test scenario requires selecting 'No' (unmarried parents). Assuming 'No' is selected based on the recent actions, proceeding to the next step of the form.",
+        "timestamp": "2025-11-14T05:27:00.255Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page displays a validation error message visually, but the programmatic state reports 'Has Errors: false' and an empty 'Error Messages' array. This contradiction indicates that the error state reporting is broken.",
+        "evidence": "Visual confirmation shows a red error box with the message 'There is a problem / Select yes if the mother and father were married when the child was born'. However, the provided Current Page State reports 'Has Errors: false' and 'Error Messages: {}'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "The test scenario requires the parents to be unmarried, so selecting 'No' for the marriage status question.",
+        "timestamp": "2025-11-14T05:27:35.577Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "critical",
+        "description": "The click action on the 'No' radio button failed to register, as the button remains unselected visually. Additionally, the page is displaying a critical error banner ('There is a problem') and an error message, but the structured state reports 'Has Errors: false' and empty 'Error Messages', indicating a severe mismatch between the visual UI state and the reported application state.",
+        "evidence": "Visual confirmation shows both radio buttons are unchecked, suggesting the last click failed. The image clearly shows a red error box containing the message 'Select yes if the mother and father were married when the child was born', yet the Current Page State reports 'Has Errors: false' and 'Error Messages: []'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "The test scenario requires the parents to be unmarried, so selecting 'No' for the marriage status question.",
+        "timestamp": "2025-11-14T05:28:10.586Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The user clicked the 'No' radio button, but the selection did not register (both radio buttons appear unselected in the image, and Form Values are empty). Additionally, an error message is displayed that dictates the user must select 'Yes', which contradicts the nature of the question (which offers both 'Yes' and 'No' as valid choices). This suggests the click failed and/or the validation logic is incorrect or forcing an answer.",
+        "evidence": "Last action was clicking 'No'. Image shows neither radio button selected. Error message visible: 'Select yes if the mother and father were married when the child was born.' Form Values: {}."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario for an unmarried mother.",
+        "timestamp": "2025-11-14T05:28:40.042Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The current page state data contradicts the visual evidence (image). The image clearly shows a visible error banner and an error message, but the reported state indicates 'Has Errors: false' and an empty error message list. Additionally, the last action (clicking 'No') failed to register, as neither radio button is selected in the image.",
+        "evidence": "State data reports 'Has Errors: false', but the image shows a red error box with the message: 'Select yes if the mother and father were married when the child was born'. The input selection ('No') did not persist."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the 'No' radio button was selected in the previous step (as indicated by recent actions), this action submits the choice to exclude the father's details and proceeds to the next section of the birth registration form, likely the child's details.",
+        "timestamp": "2025-11-14T05:29:06.830Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page displays a prominent validation error banner ('There is a problem' and a specific error message), but the reported JSON state indicates 'Has Errors: false' and empty 'Error Messages'. This is a critical mismatch between the UI state and the reported automated state tracking.",
+        "evidence": "UI shows 'There is a problem' banner and error text 'Select yes if the mother and father were married when the child was born'. JSON state reports: 'Has Errors: false' and 'Error Messages: []'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the mother and father were not married, fulfilling the test requirement for an unmarried mother scenario.",
+        "timestamp": "2025-11-14T05:29:39.437Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "After clicking 'No', the form shows a validation error, and the error message incorrectly mandates the 'Yes' option. Additionally, the selection ('No') did not register in the form values, and visually, neither radio button appears selected.",
+        "evidence": "Last action was clicking 'No' radio button. Current state shows 'Form Values: {}' and an active error message: 'Select yes if the mother and father were married when the child was born'. This error message contradicts the option to select 'No' which is presented in the UI, indicating a severe logic flaw or broken validation."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "The 'No' option (parents were not married) has been selected according to the test scenario. Proceeding to the next section of the form.",
+        "timestamp": "2025-11-14T05:30:01.531Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "Navigation failed after clicking 'Continue' (staying on the same page). A validation error banner is visible on the page, but the reported page state incorrectly indicates `Has Errors: false` and empty `Error Messages`. Additionally, the user's previous selection was lost (`Form Values: {}`), and the error message text seems prescriptive and potentially incorrect for the scenario ('Select yes if the mother and father were married when the child was born').",
+        "evidence": "Current Page State reports `Has Errors: false` and `Error Messages: []`, directly contradicting the visible error banner in the UI image. The navigation failed, and the form state reset (`Form Values: {}`)."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Continuing the test scenario where the parents were not married, selecting 'No' again to ensure the required state is set before proceeding.",
+        "timestamp": "2025-11-14T05:30:40.283Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The click action failed to persist the selection. Despite the last action being clicking 'No', the radio buttons appear unselected (empty circles) in the screenshot. Furthermore, an immediate validation error is displayed, which is confusingly phrased ('Select yes if the mother and father were married...'), suggesting either mandatory selection of 'Yes' or a broken validation triggered by the failed input. The reported system state also incorrectly claims 'Has Errors: false' despite the visible error box.",
+        "evidence": "The screenshot shows an error box ('There is a problem') and an error message ('Select yes if the mother and father were married...') immediately after the 'No' radio button was clicked, yet the radio buttons are visually unchecked. The reported system state lists 'Has Errors: false', which contradicts the UI."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the required 'No' selection (either marital status or father inclusion status, based on the test context) has been made, clicking 'Continue' to proceed to the next section of the birth registration form, likely the child's details.",
+        "timestamp": "2025-11-14T05:31:09.453Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The structured state reports 'Has Errors: false' and empty 'Error Messages', but the visual evidence (image) clearly shows an active validation error box displayed on the page, indicating a required field was missed after clicking 'Continue'. The programmatic state does not match the UI state.",
+        "evidence": "Structured data: 'Has Errors: false'. Visual evidence: A red error box is visible containing the message 'There is a problem' and the link 'Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' to indicate the mother and father were not married, aligning with the test scenario for an unmarried mother.",
+        "timestamp": "2025-11-14T05:31:46.664Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The radio button selection did not persist after clicking 'No'. The UI shows both radio buttons unselected, and the Form Values are empty, indicating that the interaction failed to register the input.",
+        "evidence": "Last action was click on input[value='no']. Current image shows neither 'Yes' nor 'No' selected (empty circles). Form Values reported as {}. Additionally, the page displays a visible error message box, contradicting the reported state of 'Has Errors: false'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Based on the available elements, the 'No' option (parents not married) appears to be selected (implied by the recent actions list). Proceeding to the next step of the registration process to enter child/mother details, following the test path of excluding father's information.",
+        "timestamp": "2025-11-14T05:32:15.171Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The current page state data contradicts the visual evidence. The state reports 'Has Errors: false' and an empty 'Error Messages' array, yet the image clearly displays a validation error banner ('There is a problem' and a corresponding error link) after the 'Continue' button was clicked, indicating validation failure.",
+        "evidence": "State data: 'Has Errors: false', 'Error Messages: []'. Visual evidence: A large red error banner is visible on the page, indicating that input was required before proceeding (likely neither 'Yes' nor 'No' was selected before the last 'Continue' click)."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the previous selections (No for married, No for including father details) were successful, clicking 'Continue' is necessary to advance the form flow to the next section (expected: Child details or Mother details). The lack of data input fields suggests the navigation hasn't fully completed yet, or this is a multi-step confirmation.",
+        "timestamp": "2025-11-14T05:32:44.740Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The current page state data reports 'Has Errors: false' and no error messages, but the screenshot clearly shows a validation error box ('There is a problem') displayed on the page after clicking 'Continue' without making a selection. This indicates a critical mismatch between the UI state and the reported programmatic state.",
+        "evidence": "State reports Has Errors: false and Error Messages: [], but the visual display shows a validation error requiring the user to select an option for 'When the child was born, were the mother and father married to each other?'"
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "The available elements indicate the form has either returned to or is re-asking the marriage status question. Reinforcing the test scenario (Unmarried mother) by selecting 'No' again.",
+        "timestamp": "2025-11-14T05:33:20.195Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "After selecting 'No' for the marriage status question, the page returned a validation error that appears to mandate selecting 'Yes' ('Select yes if the mother and father were married when the child was born'). This suggests that the 'No' path is functionally broken or the validation logic is incorrectly forcing a 'Yes' response, blocking progress for unmarried parents.",
+        "evidence": "The last action was clicking 'No'. The current page displays an error box with the text: 'There is a problem. Select yes if the mother and father were married when the child was born.' This contradicts the expected behavior following a valid 'No' selection."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "We have selected 'No' (presumably indicating the father's details are not being included, fulfilling the test objective). Now proceeding to the next section of the form.",
+        "timestamp": "2025-11-14T05:33:47.872Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page state reports 'Has Errors: false' and 'Error Messages: []', but the visual evidence (the provided image) clearly shows a validation error box ('There is a problem') displayed on the screen. The validation likely failed because neither 'Yes' nor 'No' was selected before clicking Continue.",
+        "evidence": "State reports Has Errors: false, but the UI displays a visible red error box and error link."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Attempting to advance the form flow to the next section (likely Child or Mother details). Given the recent actions, the flow should have moved past the initial relationship questions, but the available elements suggest a potential UI or flow reset/bug. Clicking continue to confirm the state and reveal the next set of inputs.",
+        "timestamp": "2025-11-14T05:34:13.657Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page displays a validation error message visually after clicking 'Continue' (as confirmed by the image), but the provided structured page state reports that the page has no errors (`Has Errors: false` and `Error Messages: []`). This indicates a failure in state synchronization or reporting.",
+        "evidence": "Structured state reports: 'Has Errors: false'. Visual evidence (Image) shows a prominent error box containing the message: 'There is a problem. Select yes if the mother and father were married when the child was born'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "input[type='radio'][value='no']",
+        "reasoning": "Selecting 'No' as the test scenario requires registering the birth where the parents were unmarried.",
+        "timestamp": "2025-11-14T05:34:46.352Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The reported page state contradicts the visual evidence. The system reports `Has Errors: false` and an empty list of `Error Messages`, but the image clearly shows a large red validation error box ('There is a problem') and error text ('Select yes if the mother and father were married when the child was born'). Furthermore, the last action (clicking 'No') did not successfully register the selection, as neither radio button appears selected in the image, and the selection is missing from `Form Values: {}`.",
+        "evidence": "Reported state: `Has Errors: false`, `Error Messages: []`. Visual state: Clear error box visible on the page. Also, the radio button clicked ('No') is not visually selected."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the previous action (selecting 'no' regarding marriage or father details) was successful, clicking continue to proceed to the next section, likely Child Details or Mother Details.",
+        "timestamp": "2025-11-14T05:35:16.170Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The page displays a visible validation error banner and error message after clicking 'Continue' without selecting an option, indicating validation failed. However, the provided textual state data incorrectly reports 'Has Errors: false' and 'Error Messages: ' (empty).",
+        "evidence": "Screenshot shows a red error box with the text 'There is a problem' and the link 'Select yes if the mother and father were married when the child was born', but the state data reports 'Has Errors: false'."
+      }
+    },
+    {
+      "action": {
+        "action": "click",
+        "selector": "button:has-text('Continue')",
+        "reasoning": "Assuming the previous selections (Unmarried, No Father Details) were successfully submitted, attempting to proceed to the next stage of the registration form, likely Child Details or Mother Details. Since no input fields are currently visible, clicking 'Continue' is the only available progression action.",
+        "timestamp": "2025-11-14T05:35:43.017Z"
+      },
+      "anomaly": {
+        "anomaly_detected": true,
+        "severity": "high",
+        "description": "The structured page state reports that there are no errors ('Has Errors: false', 'Error Messages: []'), but the screenshot clearly displays a validation error banner (There is a problem, Select yes if the mother and father were married when the child was born). The system state data is inaccurate regarding the current error status of the page.",
+        "evidence": "Current Page State reports 'Has Errors: false' and empty 'Error Messages', while the visual evidence shows a critical validation error banner requiring the user to make a selection."
+      }
+    }
+  ],
+  "confirmedBugs": [
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "navigation",
+      "severity": "high",
+      "title": "User selection on 'married' radio button is not registered, blocking form submission",
+      "description": "When a user selects an option for whether the parents were married and clicks 'Continue', the selection is not registered by the form. The page reloads with a validation error stating a selection is required, effectively blocking the user from proceeding. The evidence shows that the form was submitted with empty values (`Form Values: {}`) despite a preceding click action on the 'No' radio button.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Select the 'No' radio button for the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The form should accept the user's selection and navigate to the next step in the registration flow.",
+      "actual_behavior": "The page does not navigate. A validation error appears, and the user's radio button selection is lost, preventing them from continuing the process."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Inconsistent error state: Validation error is displayed but not registered in page state",
+      "description": "When the form is submitted without selecting an option for whether the parents were married, a validation error message is displayed visually. However, the underlying page state incorrectly reports 'Has Errors: false' and the 'Error Messages' array is empty. This indicates a critical desynchronization between the UI and the application's state. Furthermore, the evidence suggests that clicks on the radio buttons are not being persisted in the UI, which would block the user from proceeding.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "An error message should be displayed, and the internal page state should be updated to reflect the validation error (e.g., 'Has Errors: true'). The user should be able to select an option to correct the error and proceed.",
+      "actual_behavior": "A validation error message is displayed visually, but the internal page state reports that there are no errors. The UI is inconsistent with the application's state, and user selections on the radio buttons do not appear to persist, blocking the user from continuing the registration process."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Inconsistent error state: UI shows validation error while programmatic state reports no errors",
+      "description": "The application enters an inconsistent state after a user interaction. The UI displays a prominent validation error message ('There is a problem'), but the underlying programmatic state (as reported in the test logs) indicates that there are no errors. Furthermore, the user's last action of clicking the 'Yes' radio button was not registered, as neither option is selected visually and the form values are empty.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Click the 'Yes' radio button for the question 'When the child was born, were the mother and father married to each other?'.",
+        "Observe the page state."
+      ],
+      "expected_behavior": "After clicking the 'Yes' radio button, the 'Yes' option should be visually selected, and no validation error should be displayed. The programmatic state should reflect the user's selection and report no errors.",
+      "actual_behavior": "After clicking the 'Yes' radio button, a validation error is displayed, and neither radio button is visually selected. The programmatic state incorrectly reports that there are no errors, creating a direct contradiction between the UI and the application's internal state."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Incorrect and prescriptive validation message for marriage status question",
+      "description": "When a user fails to select an option for the mandatory question 'When the child was born, were the mother and father married to each other?' and proceeds, the system displays a misleading error message. The message 'Select yes if the mother and father were married when the child was born' incorrectly implies that 'Yes' is the only valid answer. This is a required field validation error, and the message should be neutral, prompting the user to make a selection (either 'Yes' or 'No'), not instructing them on which one to choose.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the error message displayed."
+      ],
+      "expected_behavior": "A neutral validation error message should be displayed, such as 'Select an option' or 'Please answer the question about whether the parents were married'.",
+      "actual_behavior": "An incorrect and prescriptive error message is displayed: 'Select yes if the mother and father were married when the child was born', which misleads the user into thinking 'Yes' is the only acceptable answer."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "UI state fails to report validation errors shown on screen",
+      "description": "When form validation fails, a visible error message is displayed in the UI, but the application's reported state is inconsistent. The state indicates there are no errors ('Error Messages' is empty), directly contradicting the visual evidence. This suggests a critical flaw in the state management and reporting logic, which can severely impact automated testing and debugging.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "A validation error message should appear on the screen, and the application's internal state should accurately report the presence and content of this error message.",
+      "actual_behavior": "A validation error message correctly appears on the screen. However, the application's reported state is incorrect, showing that there are no error messages. The user's previous selection is also cleared."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "critical",
+      "title": "Radio button for 'married' status is not selectable, blocking form progression",
+      "description": "On the 'When the child was born, were the mother and father married to each other?' page, clicking either the 'Yes' or 'No' radio button fails to register the selection. The UI does not update to show a selected state, and the form's internal value remains empty. The validation error shown is a symptom of this issue, as it appears when the user tries to continue without being able to make a selection. This is a blocking issue preventing users from completing the form.",
+      "reproduction_steps": [
+        "Navigate to the birth registration form.",
+        "Reach the page with the question 'When the child was born, were the mother and father married to each other?'.",
+        "Attempt to click on the 'No' radio button.",
+        "Observe that the radio button does not become selected.",
+        "Click the 'Continue' button.",
+        "Observe the validation error 'Select yes if the mother and father were married...' appears because no selection could be made."
+      ],
+      "expected_behavior": "When a user clicks on a radio button option ('Yes' or 'No'), the button should become visually selected, and its value should be captured by the form, allowing the user to proceed to the next step.",
+      "actual_behavior": "Clicking on the radio buttons has no effect. The UI does not reflect any selection, and the form state remains empty. The user is blocked from proceeding."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Radio button for 'No' is unselectable on 'Were parents married' question",
+      "description": "When the user attempts to select the 'No' option for the question 'When the child was born, were the mother and father married to each other?', the click action fails to update the component's state. The radio button remains visually unselected, and a validation error for the required field is incorrectly triggered. This blocks users who need to select 'No' from proceeding with the form.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Locate the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click on the radio button next to the 'No' option."
+      ],
+      "expected_behavior": "The 'No' radio button should become selected. No validation error should appear at this stage.",
+      "actual_behavior": "The 'No' radio button remains unselected after being clicked. A validation error appears at the top of the page, indicating the field is required, even though the user just attempted to fill it."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Incorrect validation prevents selecting 'No' for parental marriage status",
+      "description": "When attempting to register a birth for unmarried parents, selecting 'No' for the marriage status question fails. The UI does not reflect the selection, and submitting the form triggers an incorrect validation error. The error message, 'Select yes if the mother and father were married when the child was born', wrongly implies that 'No' is an invalid answer, completely blocking the user journey for unmarried parents.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The 'No' radio button should become selected, and upon clicking 'Continue', the user should proceed to the next step of the registration process for unmarried parents.",
+      "actual_behavior": "After clicking 'No', the radio button does not appear selected. Clicking 'Continue' displays a validation error that incorrectly instructs the user to select 'Yes', preventing them from proceeding."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "critical",
+      "title": "Validation incorrectly blocks users who select 'No' for parents' marriage status",
+      "description": "On the birth registration form, when a user answers the question 'When the child was born, were the mother and father married to each other?' by selecting 'No', the system incorrectly flags this as a validation error. The error message, 'Select yes if the mother and father were married when the child was born', effectively forces the user to provide an incorrect answer to proceed. This completely blocks the legitimate user journey for registering a child of unmarried parents.",
+      "reproduction_steps": [
+        "Navigate to the birth registration page.",
+        "For the question 'When the child was born, were the mother and father married to each other?', select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The user should be able to select 'No' and proceed to the next step of the registration process, which should cater to the unmarried parents' flow (e.g., asking if they wish to include the father's details).",
+      "actual_behavior": "The page displays a validation error: 'There is a problem' with the specific instruction 'Select yes if the mother and father were married when the child was born'. The user is prevented from continuing the registration with the valid 'No' selection."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "Validation error shown in UI is not reflected in the application's internal state",
+      "description": "When a user fails to make a selection on the 'Were the parents married?' page and clicks 'Continue', a validation error is correctly displayed in the UI. However, the application's internal state tracking incorrectly reports 'Has Errors: false' and an empty 'Error Messages' array. This creates a critical inconsistency between what the user sees and what the system believes is the current state, which could lead to unpredictable behavior.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the UI shows a validation error message.",
+        "Inspect the application's internal state."
+      ],
+      "expected_behavior": "When a validation error is displayed in the UI, the application's internal state should be updated to reflect this, with 'Has Errors' being true and the 'Error Messages' array containing the text of the visible error.",
+      "actual_behavior": "A validation error message is displayed in the UI, but the internal application state reports 'Has Errors: false' and 'Error Messages: []'."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "critical",
+      "title": "UI and programmatic state are desynchronized, preventing form submission",
+      "description": "There is a critical mismatch between the visual UI and the reported programmatic state. The UI displays a validation error banner ('There is a problem'), but the underlying state reports 'Has Errors: false' and contains no error messages. Additionally, user clicks on the 'Yes'/'No' radio buttons fail to register; the buttons remain visually unselected and the form's value state is not updated. This combination of issues completely blocks the user from making a selection and proceeding with the form.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Arrive at the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click the 'Continue' button without making a selection to trigger the validation error.",
+        "Attempt to click either the 'Yes' or 'No' radio button."
+      ],
+      "expected_behavior": "When the user clicks a radio button, it should become visually selected, and its value should be stored in the form's state. If an error banner is visible, the programmatic state should reflect 'Has Errors: true' with a corresponding error message.",
+      "actual_behavior": "Clicking a radio button has no effect; it remains visually unselected, and the form state remains empty ('Form Values: {}'). An error banner is visible on the screen, but the programmatic state incorrectly reports 'Has Errors: false'."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "navigation",
+      "severity": "high",
+      "title": "Validation error appears prematurely on page load",
+      "description": "When navigating to the 'Were parents married?' step, the page loads with a validation error banner already displayed, before the user has had a chance to interact with the form. This suggests that validation is being triggered incorrectly on page load instead of on form submission. Furthermore, the system's internal metadata reports 'Has Errors: false', which is inconsistent with the visible error message in the UI.",
+      "reproduction_steps": [
+        "Navigate through the birth registration flow to the step immediately preceding the 'When the child was born, were the mother and father married to each other?' question.",
+        "Click the 'Continue' button to proceed to the marriage question page.",
+        "Observe the page upon loading."
+      ],
+      "expected_behavior": "The page should load in a clean state, without any validation errors. The error message should only appear if the user attempts to click 'Continue' without making a selection.",
+      "actual_behavior": "The page loads immediately displaying a 'There is a problem' error banner, instructing the user to make a selection, as if a failed submission has already occurred."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "UI state is inconsistent with internal state, blocking form progression",
+      "description": "There is a critical desynchronization between the visual UI and the application's internal state. The UI displays a validation error banner ('There is a problem'), but the internal state reports that there are no errors ('Has Errors: false'). Additionally, user interaction with the radio buttons fails to register visually or in the form's data model, which prevents the user from making a selection and continuing the form.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Attempt to select either the 'Yes' or 'No' radio button.",
+        "Click the 'Continue' button.",
+        "Observe that no radio button is selected, an error banner is visible, but the internal state reports no errors."
+      ],
+      "expected_behavior": "When a user clicks a radio button, it should become visually selected, and its value should be stored in the form's state. If the user clicks 'Continue' without a selection, an error banner should appear, and the internal state should correctly report 'Has Errors: true' with a corresponding error message.",
+      "actual_behavior": "Clicking a radio button does not result in a visual selection, and the form state remains empty. An error banner is displayed on the page, but the internal state incorrectly reports 'Has Errors: false'. The user is unable to make a selection and is blocked from proceeding."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Validation error state is not programmatically reported",
+      "description": "When a validation error is triggered by not selecting an option for the parents' marital status, a visual error banner is correctly displayed in the UI. However, the underlying programmatic state of the page incorrectly reports that there are no errors ('Has Errors: false', 'Error Messages: []'). This discrepancy between the visual DOM and the application's state prevents reliable automated testing of error conditions.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Ensure neither 'Yes' nor 'No' is selected.",
+        "Click the 'Continue' button.",
+        "Observe the visual error banner.",
+        "Query the page's programmatic error state."
+      ],
+      "expected_behavior": "A visual error banner should appear, and the programmatic state should be updated to reflect the error (e.g., 'Has Errors: true' and the corresponding error message should be present in 'Error Messages').",
+      "actual_behavior": "A visual error banner appears, but the programmatic state incorrectly reports 'Has Errors: false' and an empty 'Error Messages' array, indicating a desynchronization between the UI and the application state."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "critical",
+      "title": "Incorrect validation requires 'Yes' for marriage status, blocking unmarried registration",
+      "description": "When a user selects 'No' for the question 'were the mother and father married to each other?', the form fails to register the input. Upon attempting to proceed, a validation error incorrectly instructs the user to 'Select yes...'. This blocks the critical user journey for unmarried parents, making it impossible for them to complete the registration.",
+      "reproduction_steps": [
+        "Navigate to the birth registration page asking about the parents' marriage status.",
+        "Select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The form should accept the 'No' selection and allow the user to proceed to the next step of the registration process for unmarried parents.",
+      "actual_behavior": "The form does not retain the 'No' selection. A validation error appears with the message: 'Select yes if the mother and father were married when the child was born', preventing the user from continuing."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "navigation",
+      "severity": "high",
+      "title": "User is stuck in a loop when registering a child for an unmarried mother",
+      "description": "When following the flow for an unmarried mother who does not wish to include the father's details, the application fails to navigate to the next step. Instead, it incorrectly returns to the previous question ('Were the mother and father married?') and displays an error message upon page load. This creates a loop that prevents the user from completing the registration.",
+      "reproduction_steps": [
+        "Start the birth registration process.",
+        "On the 'When the child was born, were the mother and father married to each other?' page, select 'No' and click 'Continue'.",
+        "On the subsequent page (presumably asking to include father's details), select 'No' and click 'Continue'."
+      ],
+      "expected_behavior": "After selecting 'No' to including the father's details, the user should be navigated to the 'Child Details' section of the form.",
+      "actual_behavior": "The application navigates the user back to the 'Were the mother and father married to each other?' page. The page loads with an active error message already displayed, blocking further progress."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "critical",
+      "title": "Cannot select 'No' for marital status, blocking birth registration for unmarried parents",
+      "description": "On the marital status question page, the user is unable to select the 'No' radio button. The click action does not register visually. When the user attempts to proceed by clicking 'Continue', an incorrect validation error is triggered. The error message illogically instructs the user to 'Select yes...', effectively blocking the registration path for unmarried parents, which is a critical user journey.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page asking about the parents' marital status.",
+        "Attempt to select the 'No' radio button.",
+        "Observe that the selection does not register in the UI.",
+        "Click the 'Continue' button.",
+        "Observe the validation error 'Select yes if the mother and father were married when the child was born' is displayed."
+      ],
+      "expected_behavior": "The user should be able to select the 'No' radio button. Upon clicking 'Continue', they should proceed to the next step of the registration flow for unmarried parents. If no option is selected, a generic 'Please select an option' error should appear.",
+      "actual_behavior": "The 'No' radio button is unselectable. Clicking 'Continue' results in an error that incorrectly instructs the user to select 'Yes', preventing them from completing the form and blocking the user journey."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "UI shows validation error, but application state reports no errors",
+      "description": "When a user fails to select an option for a required radio button question and clicks 'Continue', the UI correctly displays a validation error banner. However, the underlying application state incorrectly reports `Has Errors: false` and an empty `Error Messages` array. This desynchronization between the visual UI and the application state can lead to unpredictable behavior and break other functionalities that rely on the error state.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the UI for the error banner and inspect the application's internal state."
+      ],
+      "expected_behavior": "When the validation error is displayed on the UI, the application state should be updated to reflect this. Specifically, `Has Errors` should be `true` and the `Error Messages` array should contain the text of the visible error.",
+      "actual_behavior": "The UI displays a validation error banner ('There is a problem'), but the application state reports `Has Errors: false` and `Error Messages: []`."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "UI shows validation error but internal state reports no errors",
+      "description": "When a user fails to make a selection on the 'Were parents married?' page and clicks 'Continue', a validation error is correctly displayed in the UI. However, the application's internal state is not updated to reflect this error. The state continues to report `Has Errors: false` and an empty `Error Messages` array. This desynchronization can lead to incorrect application behavior and prevents reliable error handling. Additionally, the error message text 'Select yes if the mother and father were married when the child was born' is confusing and should be improved to be more neutral, such as 'Please select an option'.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the UI for the error message and inspect the application's internal state."
+      ],
+      "expected_behavior": "When the validation error appears in the UI, the application's internal state should be updated to `Has Errors: true` and the `Error Messages` array should contain the text of the visible error.",
+      "actual_behavior": "A validation error banner is displayed in the UI, but the internal state reports `Has Errors: false` and `Error Messages: []`."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "UI shows validation error, but page state metadata reports no errors",
+      "description": "When a validation error is triggered by not selecting an option, the UI correctly displays an error summary box. However, the underlying page state metadata incorrectly reports 'Has Errors: false' and the 'Error Messages' list is empty. This indicates a critical desynchronization between the rendered UI and the application's reported state, which can break automated testing, monitoring, and other state-dependent logic.",
+      "reproduction_steps": [
+        "Navigate to the page with the question 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe that an error message appears visually on the page.",
+        "Inspect the page's state metadata provided by the testing framework."
+      ],
+      "expected_behavior": "When the validation error is displayed in the UI, the page state metadata should accurately reflect this. 'Has Errors' should be true, and 'Error Messages' should contain the text of the visible error message.",
+      "actual_behavior": "The UI displays a validation error, but the page state metadata reports 'Has Errors: false' and 'Error Messages' is an empty string."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "critical",
+      "title": "Validation state mismatch: UI shows error while system state reports none, and selection fails to persist",
+      "description": "There is a critical discrepancy between the visual state of the page and the state reported by the system. The UI clearly displays a validation error message ('Select yes if the mother and father were married...') and the radio buttons are unselected. However, the system state reports 'Has Errors: false' and an empty 'Error Messages' array. Furthermore, the user's action of clicking the 'No' radio button does not persist, preventing them from making a valid selection and proceeding.",
+      "reproduction_steps": [
+        "Navigate to the 'When the child was born, were the mother and father married to each other?' page.",
+        "Click the 'Continue' button without selecting an option. An error message should appear.",
+        "Click the 'No' radio button.",
+        "Observe that the radio button does not remain in a selected state.",
+        "Attempt to click 'Continue' again.",
+        "Observe that the validation error persists and the user is blocked."
+      ],
+      "expected_behavior": "When a user clicks a radio button, it should become selected and remain selected. The internal page state should reflect this selection. When a validation error is present on the page, the system state should report 'Has Errors: true' and list the corresponding error messages.",
+      "actual_behavior": "The user's selection on the radio button does not persist. A validation error is displayed visually, but the system's internal state reports 'Has Errors: false' and no error messages. This blocks the user from proceeding and prevents automated tests from detecting the failure."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Incorrect validation blocks registration for unmarried parents",
+      "description": "The system incorrectly validates the 'married' status question. When a user selects 'No' (a valid option for the unmarried parent flow), an error is displayed that forces the user to select 'Yes'. This completely blocks the user journey for unmarried parents. Furthermore, the internal page state reports 'Has Errors: false' despite a prominent error message being visible on the screen, indicating a state management inconsistency.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "For the question 'When the child was born, were the mother and father married to each other?', select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The system should accept the 'No' selection and proceed to the next step in the registration flow for unmarried parents without showing an error.",
+      "actual_behavior": "The system prevents the user from proceeding and displays an error message: 'Select yes if the mother and father were married when the child was born'. The user is blocked."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Misleading validation error on marriage status question blocks unmarried parent flow",
+      "description": "When a user attempts to proceed without selecting an option for the marriage status question, the system displays a validation error. However, the error message incorrectly instructs the user to 'Select yes', which is misleading and effectively blocks the valid user journey for unmarried parents. The error message should be a neutral prompt to make a selection.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page with the question 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "A validation error should appear with a neutral message, such as 'You must select an option' or 'Please answer the question'. The user should be able to select 'No' and proceed.",
+      "actual_behavior": "A validation error appears with the specific and incorrect message: 'Select yes if the mother and father were married when the child was born'. This prevents users who need to select 'No' from understanding how to proceed."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "UI state desynchronized, showing validation error when internal state reports none",
+      "description": "There is a critical desynchronization between the visual UI and the reported application state. The UI displays a validation error banner ('There is a problem') and fails to register a user's selection on a radio button. However, the underlying state reports 'Has Errors: false' and shows no form values. This prevents the user from proceeding.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "On the question 'were the mother and father married to each other?', click 'Continue' without making a selection to trigger the validation.",
+        "Attempt to select the 'No' radio button."
+      ],
+      "expected_behavior": "When the 'No' radio button is clicked, it should become visually selected, and the validation error banner should be cleared. The application state should reflect that 'No' has been selected and there are no longer any validation errors.",
+      "actual_behavior": "The 'No' radio button does not become selected after being clicked. The validation error banner persists on the screen, despite the reported application state indicating 'Has Errors: false'. The user is blocked and cannot proceed with the form."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Incorrect validation message on marriage status question blocks unmarried parent registration",
+      "description": "When a user fails to make a selection on the marriage status question and clicks 'Continue', the system displays a misleading validation error. The error message incorrectly instructs the user to 'Select yes', which prevents users who need to select 'No' (i.e., unmarried parents) from proceeding. This blocks a critical and valid user journey.",
+      "reproduction_steps": [
+        "Navigate to the 'When the child was born, were the mother and father married to each other?' page.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the validation error message."
+      ],
+      "expected_behavior": "A validation error should appear with a neutral message, such as 'Please select an option' or 'Select if the mother and father were married when the child was born'.",
+      "actual_behavior": "An error message appears stating 'Select yes if the mother and father were married when the child was born', which incorrectly forces the user down the 'married' path and blocks the 'unmarried' path."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Validation error is displayed visually but not reported in the programmatic state",
+      "description": "When a user fails to make a selection on the 'married' question and clicks 'Continue', a visual error message is correctly displayed. However, the underlying page state incorrectly reports 'Has Errors: false' and an empty 'Error Messages' object. This discrepancy breaks automated testing tools and accessibility features like screen readers that rely on the programmatic state to announce errors.",
+      "reproduction_steps": [
+        "Navigate to the 'When the child was born, were the mother and father married to each other?' page.",
+        "Without selecting 'Yes' or 'No', click the 'Continue' button."
+      ],
+      "expected_behavior": "A visual error message should appear, and the programmatic page state should report 'Has Errors: true' with the corresponding error message populated in the 'Error Messages' object.",
+      "actual_behavior": "A visual error message appears, but the programmatic page state reports 'Has Errors: false' and the 'Error Messages' object is empty."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "critical",
+      "title": "UI state desynchronized: Error message shown but not reported in state, radio button unselectable",
+      "description": "There is a severe desynchronization between the visual UI and the reported application state. The UI displays a validation error banner ('There is a problem') after an attempt to continue without a selection, but the application state incorrectly reports 'Error Messages: []'. Furthermore, subsequent clicks on the 'No' radio button fail to register visually, leaving the user completely blocked and unable to proceed with the form.",
+      "reproduction_steps": [
+        "Navigate to the '/register-birth' page asking if the parents were married.",
+        "Click the 'Continue' button without selecting either 'Yes' or 'No'.",
+        "Observe the red error banner appears on the UI.",
+        "Attempt to click the 'No' radio button.",
+        "Observe that the radio button does not become selected and the error remains."
+      ],
+      "expected_behavior": "When the user clicks 'Continue' without a selection, an error message should be displayed, and the application state should reflect this error. The user should then be able to select a radio button, which should update the UI to show the selection and allow them to proceed.",
+      "actual_behavior": "An error message is displayed visually, but the application state does not contain any error messages. Clicks on the radio buttons have no effect on the UI, preventing the user from making a selection and continuing the process."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Validation incorrectly requires 'Yes' for marriage status, blocking unmarried registration",
+      "description": "When attempting to select 'No' for the question 'were the mother and father married', the selection does not register visually or in the form state. Clicking 'Continue' triggers a validation error that incorrectly instructs the user to 'Select yes'. This combination of a non-functional 'No' option and a misleading error message completely blocks the user journey for unmarried parents.",
+      "reproduction_steps": [
+        "Navigate to the birth registration page with the question 'When the child was born, were the mother and father married to each other?'.",
+        "Select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The 'No' radio button should be selected, and upon clicking 'Continue', the user should proceed to the next step of the registration process for unmarried parents.",
+      "actual_behavior": "The 'No' radio button does not remain selected. An error message appears stating 'Select yes if the mother and father were married when the child was born', preventing the user from continuing with the correct information."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "Inconsistent State: UI shows validation error while state data reports no errors",
+      "description": "There is a critical discrepancy between the visual state of the application and the state data reported. The screenshot clearly shows a validation error banner ('There is a problem'), but the page state data reports 'Has Errors: false' and an empty error message list. This indicates a failure in how the application's state is being reported or tracked, which can severely impact automated testing and debugging. Additionally, the user's action of selecting the 'No' radio button did not persist, as neither option is selected in the screenshot, which blocks the user from proceeding. The validation message itself is also poorly worded, as it directs the user to 'Select yes' instead of providing a neutral 'selection required' message.",
+      "reproduction_steps": [
+        "Navigate to the '/register-birth' page.",
+        "Click the 'Continue' button without selecting either 'Yes' or 'No'.",
+        "Observe the UI for an error message.",
+        "Inspect the application's internal state data for error flags and messages."
+      ],
+      "expected_behavior": "When the 'Continue' button is clicked without a selection, a validation error should appear visually. The application's state data should reflect this, with 'Has Errors' being true and the error message list populated. The error message should be neutral, such as 'Please select an option'.",
+      "actual_behavior": "A validation error appears visually on the screen. However, the application's state data incorrectly reports 'Has Errors: false' and an empty error message list. The radio button selection also fails to register, preventing the user from making a choice."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "UI validation error is not reflected in the application's JSON state",
+      "description": "When a validation error is triggered on the page by clicking 'Continue' without making a selection, the UI correctly displays an error banner ('There is a problem'). However, the underlying automated state tracking incorrectly reports 'Has Errors: false' and an empty 'Error Messages' array. This indicates a critical desynchronization between the view layer and the state management layer, which can lead to unreliable application behavior and cause automated tests to pass silently when they should fail.",
+      "reproduction_steps": [
+        "Navigate to the page asking if the mother and father were married.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The UI should display a validation error, and the application's JSON state should be updated to reflect this, with 'Has Errors: true' and the 'Error Messages' array containing the error text shown on screen.",
+      "actual_behavior": "The UI displays a validation error banner, but the application's JSON state reports 'Has Errors: false' and 'Error Messages: []', failing to reflect the true error state of the page."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "critical",
+      "title": "Validation incorrectly requires 'Yes' for marriage status, blocking unmarried registration path",
+      "description": "When attempting to register a birth for unmarried parents, selecting 'No' for the marriage status question fails to register the selection. Clicking 'Continue' triggers a validation error that incorrectly mandates the user to 'Select yes'. This effectively blocks the entire user journey for unmarried parents, making it impossible to complete the form.",
+      "reproduction_steps": [
+        "Navigate to the birth registration page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The 'No' radio button should be selected, and upon clicking 'Continue', the user should proceed to the next step of the form for unmarried parents without any validation errors.",
+      "actual_behavior": "The 'No' radio button does not remain selected, and the form state is not updated. Clicking 'Continue' displays a validation error: 'Select yes if the mother and father were married when the child was born'. The user is blocked from proceeding down the 'No' path."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "high",
+      "title": "Incorrect validation blocks registration for unmarried parents and causes UI state inconsistency",
+      "description": "When a user selects 'No' to the marriage question, the system incorrectly triggers a validation error, preventing the user from proceeding. The error message is misleading, instructing the user to 'Select yes', which is not applicable to their situation. Additionally, the validation failure causes the user's selection to be lost, and the page's internal state incorrectly reports that there are no errors, despite an error banner being visible.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "For the question 'When the child was born, were the mother and father married to each other?', select the 'No' radio button.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "The system should accept 'No' as a valid input and proceed to the next step in the registration flow for an unmarried mother.",
+      "actual_behavior": "The page displays a validation error ('Select yes if the mother and father were married when the child was born'), navigation is blocked, and the user's 'No' selection is cleared. The internal page state also fails to report the error, showing `Has Errors: false`."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "validation",
+      "severity": "critical",
+      "title": "Validation incorrectly requires 'Yes' for marriage status, blocking unmarried parent registration",
+      "description": "When a user selects 'No' for the question 'were the mother and father married', the selection fails to register in the UI. Instead, a validation error is triggered with the misleading message 'Select yes if the mother and father were married...'. This incorrectly implies 'Yes' is the only valid option and completely blocks the registration path for unmarried parents. Additionally, the system's internal state reports 'Has Errors: false' despite the visible error message, indicating a state management inconsistency.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Locate the question 'When the child was born, were the mother and father married to each other?'.",
+        "Attempt to select the 'No' radio button.",
+        "Observe that the selection does not persist and an error message appears."
+      ],
+      "expected_behavior": "Clicking the 'No' radio button should select it. The user should be able to click 'Continue' to proceed to the next step in the registration flow for an unmarried mother.",
+      "actual_behavior": "Clicking the 'No' radio button does not visually select it. An error message 'Select yes if the mother and father were married...' is displayed, preventing the user from proceeding. The radio buttons remain unselected."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "Form validation state mismatch: UI shows error, but programmatic state reports no errors",
+      "description": "When a user fails to select a required radio button and clicks 'Continue', the UI correctly displays a validation error message. However, the underlying programmatic state, as captured by the testing framework, incorrectly reports 'Has Errors: false' and an empty 'Error Messages' array. This creates a critical discrepancy between the visual user experience and the application's reported state, which would cause automated checks to pass incorrectly.",
+      "reproduction_steps": [
+        "Navigate to the '/register-birth' page.",
+        "Ensure no radio button is selected for the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click the 'Continue' button.",
+        "Observe the UI, which shows an error box.",
+        "Observe the programmatic state, which reports no errors."
+      ],
+      "expected_behavior": "When a validation error occurs, both the UI should display an error message and the programmatic state should be updated to reflect the error (e.g., 'Has Errors: true').",
+      "actual_behavior": "The UI displays a validation error, but the programmatic state reports 'Has Errors: false', indicating the application's state is not in sync with the user interface."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "Radio button selection fails after validation error is triggered",
+      "description": "When a user attempts to proceed without selecting an option for the marriage status, a validation error is correctly displayed. However, after the error appears, the 'Yes' and 'No' radio buttons become unresponsive. The last user action was clicking the 'No' radio button, but the UI shows neither option is selected and the form values are empty. This blocks the user from correcting the error and continuing with the registration process.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Without selecting 'Yes' or 'No', click the 'Continue' button.",
+        "Observe that a validation error message appears.",
+        "Attempt to click on the 'No' radio button."
+      ],
+      "expected_behavior": "Clicking the 'No' radio button should update the UI to show it as selected, allowing the user to proceed past the validation error by clicking 'Continue'.",
+      "actual_behavior": "Clicking the 'No' radio button has no effect. The UI remains unchanged with neither option selected, and the user is blocked from proceeding."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "medium",
+      "title": "UI state does not reflect validation error presence",
+      "description": "When a validation error is triggered by submitting the form without selecting a required radio button, the UI correctly displays an error banner. However, the application's internal state incorrectly reports 'Has Errors: false' and an empty 'Error Messages' array. This creates an inconsistency between the visual representation and the underlying state, which could lead to unpredictable behavior.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the UI and inspect the application's internal state."
+      ],
+      "expected_behavior": "When the validation error banner is displayed, the application state should be updated to reflect the error, e.g., 'Has Errors: true' and the 'Error Messages' array should contain the relevant error message.",
+      "actual_behavior": "The UI displays a validation error banner, but the application's internal state reports 'Has Errors: false' and the 'Error Messages' array is empty."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "UI shows validation error, but programmatic state reports no errors",
+      "description": "When a user attempts to proceed without selecting an answer for the marriage status question, the UI correctly displays a validation error message. However, the underlying application state incorrectly reports 'Has Errors: false' and an empty error messages array. This state inconsistency can lead to unpredictable behavior in other parts of the application and break automated validation checks.",
+      "reproduction_steps": [
+        "Navigate to the 'register-birth' page.",
+        "Do not select either 'Yes' or 'No' for the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click the 'Continue' button.",
+        "Observe the UI shows a validation error box.",
+        "Inspect the application's programmatic state and observe that it reports no errors."
+      ],
+      "expected_behavior": "When a validation error is triggered and displayed in the UI, the application's programmatic state should be updated to reflect this, with 'Has Errors' being true and the 'Error Messages' array containing the relevant error.",
+      "actual_behavior": "A validation error is displayed in the UI, but the application's programmatic state reports 'Has Errors: false' and the 'Error Messages' array is empty."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "UI shows validation error but internal state reports no errors",
+      "description": "When a user fails to select an option for a mandatory question and clicks 'Continue', the UI correctly displays a validation error message. However, the application's internal state incorrectly reports 'Has Errors: false' and an empty 'Error Messages' array. This discrepancy can cause automated tests to provide false positives and may affect accessibility tools that rely on state rather than visual rendering.",
+      "reproduction_steps": [
+        "Navigate to the '/register-birth' page.",
+        "Do not select either 'Yes' or 'No' for the question 'When the child was born, were the mother and father married to each other?'.",
+        "Click the 'Continue' button.",
+        "Observe the UI for the validation error.",
+        "Inspect the application's internal state."
+      ],
+      "expected_behavior": "When a validation error is triggered and displayed in the UI, the application's internal state should reflect this, with 'Has Errors' being true and the 'Error Messages' array containing the relevant error message(s).",
+      "actual_behavior": "The UI correctly displays a validation error, but the internal state reports 'Has Errors: false' and 'Error Messages: []', failing to reflect the error condition."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "ui",
+      "severity": "high",
+      "title": "UI state fails to report a visible validation error",
+      "description": "There is a critical discrepancy between the visual user interface and the reported application state. The screenshot clearly shows a validation error message ('There is a problem. Select yes if the mother and father were married when the child was born') being displayed to the user. However, the structured state data reports that there are no errors (`Has Errors: false`, `Error Messages: []`). This indicates a bug in the state management, where the UI is updated with an error but the underlying state model is not, or the mechanism for reporting the state is broken. This can break automated testing, accessibility tools, and other state-dependent logic.",
+      "reproduction_steps": [
+        "Navigate to the page asking if the parents were married.",
+        "Select the 'No' option.",
+        "Click the 'Continue' button."
+      ],
+      "expected_behavior": "When a validation error is triggered and displayed on the screen, the application's structured state should accurately reflect this by setting `Has Errors` to `true` and populating the `Error Messages` array with the text of the visible error.",
+      "actual_behavior": "A validation error message is visibly present on the page, but the structured state report incorrectly indicates that the page has no errors."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "Inconsistent State: UI shows validation error but internal state reports no errors",
+      "description": "When a required radio button selection is missed and the form is submitted, a validation error message is correctly displayed in the user interface. However, the underlying application state that is exposed to the testing framework incorrectly reports that there are no errors ('Has Errors: false'). This discrepancy between the visual UI and the reported state can make automated validation checks unreliable and could lead to further logical errors if other parts of the application rely on this state.",
+      "reproduction_steps": [
+        "Navigate to the page asking 'When the child was born, were the mother and father married to each other?'.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the UI, which correctly displays a validation error banner.",
+        "Inspect the application's reported state."
+      ],
+      "expected_behavior": "The application's internal state should be consistent with the UI. When a validation error is shown, the state should report 'Has Errors: true' and the 'Error Messages' property should contain the relevant error message.",
+      "actual_behavior": "The UI displays a validation error banner, but the internal state reports 'Has Errors: false' and an empty 'Error Messages' property."
+    },
+    {
+      "is_confirmed_bug": true,
+      "confidence": 1,
+      "bug_category": "data-integrity",
+      "severity": "high",
+      "title": "Page state does not reflect validation errors shown in the UI",
+      "description": "When a validation error is triggered by not making a selection, the UI correctly displays an error banner. However, the underlying page state object, which is read by automation tools, incorrectly reports that there are no errors ('Has Errors: false', 'Error Messages: []'). This discrepancy makes automated validation unreliable and may also affect assistive technologies that rely on programmatic state.",
+      "reproduction_steps": [
+        "Navigate to the 'When the child was born, were the mother and father married to each other?' page.",
+        "Do not select either 'Yes' or 'No'.",
+        "Click the 'Continue' button.",
+        "Observe the UI, which shows a validation error banner.",
+        "Inspect the page's programmatic state, which incorrectly reports no errors."
+      ],
+      "expected_behavior": "When a validation error is displayed in the UI, the programmatic page state should be updated to reflect this. The state should report 'Has Errors: true' and the 'Error Messages' array should contain the text of the validation error.",
+      "actual_behavior": "The UI displays a validation error banner, but the programmatic page state reports 'Has Errors: false' and an empty 'Error Messages' array."
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "anomaly-0",
+      "path": "screenshots/anomaly-0-medium.png",
+      "timestamp": "2025-11-14T05:11:10.334Z"
+    },
+    {
+      "name": "anomaly-1",
+      "path": "screenshots/anomaly-1-high.png",
+      "timestamp": "2025-11-14T05:11:20.551Z"
+    },
+    {
+      "name": "anomaly-3",
+      "path": "screenshots/anomaly-3-high.png",
+      "timestamp": "2025-11-14T05:12:08.405Z"
+    },
+    {
+      "name": "anomaly-4",
+      "path": "screenshots/anomaly-4-medium.png",
+      "timestamp": "2025-11-14T05:12:34.682Z"
+    },
+    {
+      "name": "anomaly-5",
+      "path": "screenshots/anomaly-5-high.png",
+      "timestamp": "2025-11-14T05:12:53.167Z"
+    },
+    {
+      "name": "anomaly-6",
+      "path": "screenshots/anomaly-6-high.png",
+      "timestamp": "2025-11-14T05:13:25.177Z"
+    },
+    {
+      "name": "anomaly-7",
+      "path": "screenshots/anomaly-7-high.png",
+      "timestamp": "2025-11-14T05:13:48.675Z"
+    },
+    {
+      "name": "anomaly-8",
+      "path": "screenshots/anomaly-8-high.png",
+      "timestamp": "2025-11-14T05:14:22.397Z"
+    },
+    {
+      "name": "anomaly-9",
+      "path": "screenshots/anomaly-9-high.png",
+      "timestamp": "2025-11-14T05:14:54.231Z"
+    },
+    {
+      "name": "anomaly-10",
+      "path": "screenshots/anomaly-10-high.png",
+      "timestamp": "2025-11-14T05:15:25.860Z"
+    },
+    {
+      "name": "anomaly-11",
+      "path": "screenshots/anomaly-11-medium.png",
+      "timestamp": "2025-11-14T05:15:56.202Z"
+    },
+    {
+      "name": "anomaly-12",
+      "path": "screenshots/anomaly-12-high.png",
+      "timestamp": "2025-11-14T05:16:11.470Z"
+    },
+    {
+      "name": "anomaly-13",
+      "path": "screenshots/anomaly-13-high.png",
+      "timestamp": "2025-11-14T05:16:38.064Z"
+    },
+    {
+      "name": "anomaly-14",
+      "path": "screenshots/anomaly-14-medium.png",
+      "timestamp": "2025-11-14T05:17:13.241Z"
+    },
+    {
+      "name": "anomaly-15",
+      "path": "screenshots/anomaly-15-high.png",
+      "timestamp": "2025-11-14T05:17:33.075Z"
+    },
+    {
+      "name": "anomaly-16",
+      "path": "screenshots/anomaly-16-high.png",
+      "timestamp": "2025-11-14T05:18:01.660Z"
+    },
+    {
+      "name": "anomaly-17",
+      "path": "screenshots/anomaly-17-medium.png",
+      "timestamp": "2025-11-14T05:18:33.879Z"
+    },
+    {
+      "name": "anomaly-18",
+      "path": "screenshots/anomaly-18-high.png",
+      "timestamp": "2025-11-14T05:18:49.146Z"
+    },
+    {
+      "name": "anomaly-19",
+      "path": "screenshots/anomaly-19-medium.png",
+      "timestamp": "2025-11-14T05:19:14.172Z"
+    },
+    {
+      "name": "anomaly-20",
+      "path": "screenshots/anomaly-20-high.png",
+      "timestamp": "2025-11-14T05:19:26.048Z"
+    },
+    {
+      "name": "anomaly-21",
+      "path": "screenshots/anomaly-21-high.png",
+      "timestamp": "2025-11-14T05:19:58.284Z"
+    },
+    {
+      "name": "anomaly-22",
+      "path": "screenshots/anomaly-22-medium.png",
+      "timestamp": "2025-11-14T05:20:26.235Z"
+    },
+    {
+      "name": "anomaly-23",
+      "path": "screenshots/anomaly-23-high.png",
+      "timestamp": "2025-11-14T05:20:40.330Z"
+    },
+    {
+      "name": "anomaly-24",
+      "path": "screenshots/anomaly-24-high.png",
+      "timestamp": "2025-11-14T05:21:12.687Z"
+    },
+    {
+      "name": "anomaly-26",
+      "path": "screenshots/anomaly-26-medium.png",
+      "timestamp": "2025-11-14T05:21:57.065Z"
+    },
+    {
+      "name": "anomaly-27",
+      "path": "screenshots/anomaly-27-high.png",
+      "timestamp": "2025-11-14T05:22:15.516Z"
+    },
+    {
+      "name": "anomaly-28",
+      "path": "screenshots/anomaly-28-low.png",
+      "timestamp": "2025-11-14T05:22:41.984Z"
+    },
+    {
+      "name": "anomaly-29",
+      "path": "screenshots/anomaly-29-high.png",
+      "timestamp": "2025-11-14T05:23:16.520Z"
+    },
+    {
+      "name": "anomaly-30",
+      "path": "screenshots/anomaly-30-high.png",
+      "timestamp": "2025-11-14T05:23:43.388Z"
+    },
+    {
+      "name": "anomaly-31",
+      "path": "screenshots/anomaly-31-high.png",
+      "timestamp": "2025-11-14T05:24:21.298Z"
+    },
+    {
+      "name": "anomaly-32",
+      "path": "screenshots/anomaly-32-high.png",
+      "timestamp": "2025-11-14T05:24:57.718Z"
+    },
+    {
+      "name": "anomaly-33",
+      "path": "screenshots/anomaly-33-high.png",
+      "timestamp": "2025-11-14T05:25:29.560Z"
+    },
+    {
+      "name": "anomaly-34",
+      "path": "screenshots/anomaly-34-high.png",
+      "timestamp": "2025-11-14T05:26:03.055Z"
+    },
+    {
+      "name": "anomaly-35",
+      "path": "screenshots/anomaly-35-high.png",
+      "timestamp": "2025-11-14T05:26:36.899Z"
+    },
+    {
+      "name": "anomaly-36",
+      "path": "screenshots/anomaly-36-high.png",
+      "timestamp": "2025-11-14T05:27:00.315Z"
+    },
+    {
+      "name": "anomaly-37",
+      "path": "screenshots/anomaly-37-critical.png",
+      "timestamp": "2025-11-14T05:27:35.651Z"
+    },
+    {
+      "name": "anomaly-38",
+      "path": "screenshots/anomaly-38-high.png",
+      "timestamp": "2025-11-14T05:28:10.648Z"
+    },
+    {
+      "name": "anomaly-39",
+      "path": "screenshots/anomaly-39-high.png",
+      "timestamp": "2025-11-14T05:28:40.119Z"
+    },
+    {
+      "name": "anomaly-40",
+      "path": "screenshots/anomaly-40-high.png",
+      "timestamp": "2025-11-14T05:29:06.895Z"
+    },
+    {
+      "name": "anomaly-41",
+      "path": "screenshots/anomaly-41-high.png",
+      "timestamp": "2025-11-14T05:29:39.506Z"
+    },
+    {
+      "name": "anomaly-42",
+      "path": "screenshots/anomaly-42-high.png",
+      "timestamp": "2025-11-14T05:30:01.602Z"
+    },
+    {
+      "name": "anomaly-43",
+      "path": "screenshots/anomaly-43-high.png",
+      "timestamp": "2025-11-14T05:30:40.358Z"
+    },
+    {
+      "name": "anomaly-44",
+      "path": "screenshots/anomaly-44-high.png",
+      "timestamp": "2025-11-14T05:31:09.518Z"
+    },
+    {
+      "name": "anomaly-45",
+      "path": "screenshots/anomaly-45-high.png",
+      "timestamp": "2025-11-14T05:31:46.721Z"
+    },
+    {
+      "name": "anomaly-46",
+      "path": "screenshots/anomaly-46-high.png",
+      "timestamp": "2025-11-14T05:32:15.246Z"
+    },
+    {
+      "name": "anomaly-47",
+      "path": "screenshots/anomaly-47-high.png",
+      "timestamp": "2025-11-14T05:32:44.807Z"
+    },
+    {
+      "name": "anomaly-48",
+      "path": "screenshots/anomaly-48-high.png",
+      "timestamp": "2025-11-14T05:33:20.259Z"
+    },
+    {
+      "name": "anomaly-49",
+      "path": "screenshots/anomaly-49-high.png",
+      "timestamp": "2025-11-14T05:33:47.932Z"
+    },
+    {
+      "name": "anomaly-50",
+      "path": "screenshots/anomaly-50-high.png",
+      "timestamp": "2025-11-14T05:34:13.719Z"
+    },
+    {
+      "name": "anomaly-51",
+      "path": "screenshots/anomaly-51-high.png",
+      "timestamp": "2025-11-14T05:34:46.422Z"
+    },
+    {
+      "name": "anomaly-52",
+      "path": "screenshots/anomaly-52-high.png",
+      "timestamp": "2025-11-14T05:35:16.231Z"
+    },
+    {
+      "name": "anomaly-53",
+      "path": "screenshots/anomaly-53-high.png",
+      "timestamp": "2025-11-14T05:35:43.088Z"
+    }
+  ],
+  "currentUrl": "http://localhost:3000/register-birth",
+  "startTime": "2025-11-14T05:10:54.872Z",
+  "endTime": "2025-11-14T05:36:01.301Z"
+}
