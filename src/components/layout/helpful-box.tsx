@@ -1,8 +1,18 @@
 import { FeedbackLink } from "@/components/feedback-link";
 import { Typography } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 
-export const HelpfulBox = () => (
-  <div className="my-4 space-y-2 border-4 border-yellow-100 bg-yellow-40 px-4 py-6 lg:mb-16 lg:gap-2 lg:space-y-0 lg:p-6">
+type HelpfulBoxProps = {
+  className?: string;
+};
+
+export const HelpfulBox = ({ className = "" }: HelpfulBoxProps) => (
+  <div
+    className={cn(
+      "mt-3 space-y-2 border-4 border-yellow-100 bg-yellow-40 px-4 py-6 lg:gap-2 lg:space-y-0 lg:p-6",
+      className
+    )}
+  >
     <Typography className="mb-4" variant="h3">
       Was this helpful?
     </Typography>

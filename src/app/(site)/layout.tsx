@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { BackButton } from "@/components/layout/back-button";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 
@@ -13,8 +13,10 @@ export default function EntryPointLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const pathSegments = pathname.split("/").filter(Boolean);
   const isFormPage = pathSegments.includes("form");
+  const isConfirmationPage = searchParams.get("step") === "confirmation";
 
   return (
     <>
@@ -28,7 +30,8 @@ export default function EntryPointLayout({
           isFormPage ? "container py-8 lg:py-16" : "container pt-4 pb-8 lg:py-8"
         }
       >
-        {children} <HelpfulBox />
+        {children}
+        {(!isFormPage || isConfirmationPage) && <HelpfulBox />}
       </div>
     </>
   );
