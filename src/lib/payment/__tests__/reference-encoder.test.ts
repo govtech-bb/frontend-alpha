@@ -297,5 +297,21 @@ describe("reference-encoder", () => {
         expect(result).toBeNull();
       }
     });
+
+    it("should reject subdomain attacks on whitelisted domains", () => {
+      // Critical security test: prevent open redirect via subdomain spoofing
+      const subdomainAttacks = [
+        "https://gov.bb.evil.com",
+        "https://alpha.gov.bb.attacker.com",
+        "https://staging.gov.bb.malicious.site",
+      ];
+
+      for (const url of subdomainAttacks) {
+        const encoded = Buffer.from(url).toString("base64url");
+        const referenceId = `${encoded}.test-uuid`;
+        const result = decodeReferenceId(referenceId);
+        expect(result, `URL should be rejected: ${url}`).toBeNull();
+      }
+    });
   });
 });

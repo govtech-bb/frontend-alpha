@@ -1,8 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
-  generateEncodedReferenceId,
   decodeReferenceId,
   extractUuid,
+  generateEncodedReferenceId,
 } from "@/lib/payment/reference-encoder";
 
 describe("Payment Flow Integration", () => {

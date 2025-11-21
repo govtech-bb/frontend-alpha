@@ -68,7 +68,7 @@ export class EzPayProvider implements PaymentProvider {
       success: status._status === "Success",
       status: status._status,
       transactionId: status._transaction_number,
-      referenceId: status._reference,
+      referenceId: request.referenceId, // Use request reference ID (EZPay doesn't reliably return _reference)
       amount: status._amount,
       processor: status._processor,
       settlementDate: status._datesettled,

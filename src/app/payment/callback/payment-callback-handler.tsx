@@ -27,9 +27,19 @@ export function PaymentCallbackHandler({
     // The reference ID may be encoded (base64url.uuid) or plain (uuid)
     const referenceId = paymentStatus.referenceId;
     const uuid = extractUuid(referenceId);
+
+    // Debug logging
+    console.log("🔍 Callback Handler Debug:");
+    console.log("  Reference ID:", referenceId);
+    console.log("  Extracted UUID:", uuid);
+    console.log("  SessionStorage length:", sessionStorage.length);
+    console.log("  SessionStorage keys:", Object.keys(sessionStorage));
+
     const storedData = sessionStorage.getItem(uuid);
+    console.log("  Stored data found:", storedData !== null);
 
     if (!storedData) {
+      console.error("❌ Session data not found for UUID:", uuid);
       setError(
         "Session data not found. Your payment was successful, but we couldn't retrieve your application details. Please contact support with your transaction ID."
       );

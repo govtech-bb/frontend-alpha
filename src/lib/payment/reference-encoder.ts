@@ -26,6 +26,32 @@ export function generateEncodedReferenceId(uuid?: string): string {
 }
 
 /**
+ * Decode base64url string (works in both browser and Node.js)
+ *
+ * @param str - base64url encoded string
+ * @returns decoded string
+ */
+function decodeBase64Url(str: string): string {
+  // Convert base64url to base64 (replace URL-safe chars)
+  const base64 = str.replace(/-/g, "+").replace(/_/g, "/");
+
+  // Add padding if needed
+  const padded = base64 + "=".repeat((4 - (base64.length % 4)) % 4);
+
+  // Decode using appropriate method for environment
+  if (typeof window !== "undefined") {
+    // Browser environment - use atob
+    return decodeURIComponent(
+      Array.from(atob(padded))
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+  }
+  // Node.js environment - use Buffer
+  return Buffer.from(padded, "base64").toString("utf-8");
+}
+
+/**
  * Decode a reference ID to extract the return URL and UUID
  *
  * @param referenceId - Encoded reference ID from EZPay callback
@@ -48,8 +74,8 @@ export function decodeReferenceId(
       return null;
     }
 
-    // Decode base64url
-    const returnUrl = Buffer.from(encodedUrl, "base64url").toString("utf-8");
+    // Decode base64url (works in both browser and Node.js)
+    const returnUrl = decodeBase64Url(encodedUrl);
 
     // Validate it's a proper URL
     new URL(returnUrl);
@@ -72,42 +98,45 @@ export function decodeReferenceId(
  * Check if a URL is allowed based on whitelist
  *
  * Security: Only approved domains can be used as return URLs
+ * Uses strict hostname validation to prevent open redirect vulnerabilities
  *
  * @param url - URL to validate
  * @returns True if URL matches allowed patterns
  */
 function isReturnUrlAllowed(url: string): boolean {
-  const allowedPatterns = [
-    "https://gov.bb",
-    "https://staging.gov.bb",
-    "https://alpha.gov.bb",
-    "http://localhost:",
-    "http://127.0.0.1:",
-  ];
+  try {
+    const urlObj = new URL(url);
+    const { hostname, protocol, port } = urlObj;
 
-  // Check standard patterns with startsWith
-  for (const pattern of allowedPatterns) {
-    if (url.startsWith(pattern)) {
+    // Production & Staging domains (HTTPS only)
+    if (
+      (hostname === "gov.bb" ||
+        hostname === "staging.gov.bb" ||
+        hostname === "alpha.gov.bb") &&
+      protocol === "https:"
+    ) {
       return true;
     }
-  }
 
-  // Special handling for Vercel preview deployments
-  // Format: https://preview-xyz.vercel.app or https://project-name-preview.vercel.app
-  if (url.includes(".vercel.app")) {
-    // Must be HTTPS and contain .vercel.app domain
-    if (url.startsWith("https://") && url.includes(".vercel.app")) {
-      // Additional validation: ensure .vercel.app is actually part of the domain
-      try {
-        const urlObj = new URL(url);
-        return urlObj.hostname.endsWith(".vercel.app");
-      } catch {
-        return false;
-      }
+    // Vercel preview deployments (HTTPS only)
+    if (hostname.endsWith(".vercel.app") && protocol === "https:") {
+      return true;
     }
-  }
 
-  return false;
+    // Local development (HTTP only, with a valid port)
+    if (
+      (hostname === "localhost" || hostname === "127.0.0.1") &&
+      protocol === "http:" &&
+      port !== ""
+    ) {
+      return true;
+    }
+
+    return false;
+  } catch {
+    // The URL is malformed and cannot be parsed
+    return false;
+  }
 }
 
 /**
@@ -154,6 +183,12 @@ export function getBaseUrl(env?: {
  * @returns UUID portion, or the full referenceId if no encoding detected
  */
 export function extractUuid(referenceId: string): string {
+  // Safety check for undefined/null
+  if (!referenceId) {
+    console.warn("extractUuid called with undefined/null referenceId");
+    return "";
+  }
+
   const decoded = decodeReferenceId(referenceId);
   if (decoded) {
     return decoded.uuid;

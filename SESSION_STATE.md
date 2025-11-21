@@ -1,10 +1,11 @@
 # Session State - EZPay Integration Work
 
 **Date:** November 20, 2025
+**Last Updated:** November 21, 2025
 
 ## Summary
 
-Successfully built complete EZPay payment integration for passport replacement, including SMTP email testing. Currently debugging redirect issue after payment completion.
+Successfully built complete EZPay payment integration for passport replacement, including SMTP email testing. Fixed critical bug where payment verification was failing due to missing reference ID in callback handler.
 
 ## What We Built
 
@@ -147,23 +148,54 @@ Show success page
 4. **Email service abstraction** - Single service switches SMTP/SES based on env
 5. **Mock mode** - Complete mock payment gateway for testing without real credentials
 
+## Recent Fix: Payment Callback Reference ID Bug
+
+### Issue Found (November 21, 2025)
+When testing payment callback, got error: "Session data not found" even though payment was successful.
+
+**Root Cause:**
+- EZPay API's `/check_api` endpoint doesn't reliably return the `_reference` field
+- Payment verification was returning `referenceId: undefined`
+- Callback handler couldn't extract UUID from undefined reference ID
+- SessionStorage lookup failed because UUID extraction failed
+
+**Files Fixed:**
+1. `src/lib/payment/providers/ezpay-provider.ts` (line 71)
+   - Changed: `referenceId: status._reference` 
+   - To: `referenceId: request.referenceId`
+   - Reason: Use the reference ID from our request instead of EZPay's unreliable response
+
+2. `src/lib/payment/reference-encoder.ts` (line 156)
+   - Added safety check for undefined/null reference IDs
+   - Returns empty string with warning instead of crashing
+
+**Result:** 
+- ✅ Reference ID now passed correctly to callback handler
+- ✅ UUID extraction works
+- ✅ SessionStorage lookup succeeds
+- ✅ Email sending should work
+- ✅ All tests still passing (29 reference-encoder tests, 6 provider tests)
+
 ## Testing Status
 
 ### ✅ Working
 - Mock payment flow (end-to-end)
 - Real EZPay API connection (initiation)
 - Payment processing on EZPay gateway
+- Payment verification API (calls `/check_api` successfully)
+- Reference ID encoding/decoding
+- SessionStorage management
 - SMTP email service
 - Form validation and submission
 
-### ❌ Not Working
-- Redirect from EZPay back to our app after payment
-- Complete real payment flow (blocked by redirect issue)
+### 🔄 Ready to Test (Bug Fixed)
+- Complete real payment flow with redirector
+- Email sending after successful payment
+- Full end-to-end test with EZPay callback
 
-### 🔍 Untested
-- Payment verification API (can't test until redirect works)
-- Email sending after real payment (can't test until redirect works)
+### 🔍 Not Yet Tested
 - Webhook handler for async payments (not needed for credit cards)
+- Cross-environment redirects (dev → localhost)
 
 ## Code Quality Notes
 

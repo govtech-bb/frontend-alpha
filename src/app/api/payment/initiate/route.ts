@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         paymentUrl: result.redirectUrl,
-        referenceNumber: referenceNumber, // Return client's UUID for sessionStorage lookup
+        referenceNumber, // Return client's UUID for sessionStorage lookup
       },
       { status: 200 }
     );

@@ -1,8 +1,8 @@
+import { redirect } from "next/navigation";
 import { Typography } from "@/components/ui/typography";
 import { logError } from "@/lib/logger";
 import { getPaymentProvider } from "@/lib/payment";
 import { decodeReferenceId, getBaseUrl } from "@/lib/payment/reference-encoder";
-import { redirect } from "next/navigation";
 import { PaymentCallbackHandler } from "./payment-callback-handler";
 
 /**
