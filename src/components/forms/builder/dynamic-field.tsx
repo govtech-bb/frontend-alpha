@@ -13,7 +13,7 @@ export function DynamicField({ field }: { field: FormField }) {
   const error = errors[field.name as keyof FormData];
 
   return (
-    <div>
+    <div id={field.name}>
       {/* TODO: Display custom date input if field.type === "date" */}
       {field.type === "select" ? (
         <Select
