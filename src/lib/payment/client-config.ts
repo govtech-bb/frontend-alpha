@@ -9,7 +9,12 @@
  *
  * This file is imported by client components and will be bundled
  * in the browser JavaScript.
+ *
+ * NOTE: Configuration is derived from server-side config at build time
+ * to maintain a single source of truth.
  */
+
+import { PAYMENT_CONFIGS } from "./config";
 
 export interface PublicPaymentConfig {
   amount: number;
@@ -18,24 +23,22 @@ export interface PublicPaymentConfig {
 }
 
 /**
- * Public payment configurations safe for client-side use
- * Only includes display information
- */
-export const PUBLIC_PAYMENT_CONFIGS: Record<string, PublicPaymentConfig> = {
-  "passport-replacement": {
-    amount: 150.0,
-    description: "Passport Replacement",
-    currency: "BBD",
-  },
-  // Future services can be added here
-} as const;
-
-/**
  * Get public payment configuration for display in client components
+ * Derives safe configuration from server-side config
  * Returns null if service type doesn't exist
  */
 export function getPublicPaymentConfig(
   serviceType: string
 ): PublicPaymentConfig | null {
-  return PUBLIC_PAYMENT_CONFIGS[serviceType] || null;
+  const serverConfig = PAYMENT_CONFIGS[serviceType];
+  if (!serverConfig) {
+    return null;
+  }
+
+  // Extract only public-safe information
+  return {
+    amount: serverConfig.amount,
+    description: serverConfig.description,
+    currency: "BBD", // Default currency for Barbados
+  };
 }
