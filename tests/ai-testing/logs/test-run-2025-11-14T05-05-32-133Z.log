@@ -1,0 +1,21 @@
+[2025-11-14T05:05:32.134Z] [INFO] Test Scenario: unmarried-with-father
+[2025-11-14T05:05:32.134Z] [INFO] Headless: false, Max Actions: 100
+[2025-11-14T05:05:32.134Z] [INFO] Initializing browser...
+[2025-11-14T05:05:33.194Z] [INFO] Browser initialized successfully
+[2025-11-14T05:05:33.865Z] [INFO] Navigated to: http://localhost:3000/register-birth
+[2025-11-14T05:05:33.865Z] [INFO] Waiting for form to hydrate...
+[2025-11-14T05:05:35.421Z] [INFO] Action 1/100: click
+[2025-11-14T05:05:42.994Z] [INFO] Action 2/100: click
+[2025-11-14T05:05:51.966Z] [INFO] Action 3/100: click
+[2025-11-14T05:06:01.215Z] [INFO] Action 4/100: click
+[2025-11-14T05:06:10.268Z] [INFO] Action 5/100: click
+[2025-11-14T05:06:18.550Z] [INFO] Action 6/100: click
+[2025-11-14T05:06:27.269Z] [INFO] Action 7/100: click
+[2025-11-14T05:06:35.336Z] [INFO] Action 8/100: click
+[2025-11-14T05:06:44.322Z] [INFO] Action 9/100: click
+[2025-11-14T05:06:52.818Z] [INFO] Action 10/100: click
+[2025-11-14T05:07:01.086Z] [INFO] Action 11/100: click
+[2025-11-14T05:07:06.349Z] [ERROR] Click failed on input[type='radio'][value='no']: locator.click: Target page, context or browser has been closed
+[2025-11-14T05:07:06.350Z] [WARN] Action failed: locator.click: Target page, context or browser has been closed
+[2025-11-14T05:07:06.350Z] [ERROR] Test failed: locator.click: Target page, context or browser has been closed
+[2025-11-14T05:07:06.394Z] [INFO] Browser closed

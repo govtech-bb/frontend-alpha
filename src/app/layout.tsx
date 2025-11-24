@@ -4,6 +4,11 @@ import "./globals.css";
 import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { validateEnvironment } from "@/lib/env-validation";
+
+// Validate environment variables at application startup
+// This will throw an error if critical configuration is missing
+validateEnvironment();
 
 export const metadata: Metadata = {
   title: "The Government of Barbados",

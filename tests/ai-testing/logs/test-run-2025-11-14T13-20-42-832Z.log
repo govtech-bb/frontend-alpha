@@ -1,0 +1,149 @@
+[2025-11-14T13:20:42.834Z] [INFO] Test Scenario: married-without-father
+[2025-11-14T13:20:42.834Z] [INFO] Headless: false, Max Actions: 100
+[2025-11-14T13:20:42.834Z] [INFO] Initializing browser...
+[2025-11-14T13:20:43.989Z] [INFO] Browser initialized successfully
+[2025-11-14T13:20:44.673Z] [INFO] Navigated to: http://localhost:3000/register-birth
+[2025-11-14T13:20:44.673Z] [INFO] Waiting for form to hydrate...
+[2025-11-14T13:20:52.531Z] [INFO] Action 1/100: click
+[2025-11-14T13:20:58.876Z] [WARN] Anomaly detected (medium): The previous action was clicking the 'Yes' radio button, but the UI has not updated to reflect this selection. Both the 'Yes' and 'No' radio buttons appear visually unchecked, indicating the click failed to register or update the component state.
+[2025-11-14T13:21:02.238Z] [INFO] Action 2/100: click
+[2025-11-14T13:21:08.126Z] [WARN] Anomaly detected (medium): The reported error message state shows significant redundancy and poor concatenation, indicating an issue with how validation messages are aggregated or formatted internally. The phrase 'There is a problem' is repeated and merged with the subsequent error text.
+[2025-11-14T13:21:20.054Z] [INFO] Action 3/100: click
+[2025-11-14T13:21:26.464Z] [WARN] Anomaly detected (high): User selection is not being registered in the form state, leading to persistent validation errors despite input being provided.
+[2025-11-14T13:21:43.334Z] [WARN] Bug confirmed (1.00 confidence): Radio button selection for parental marriage status is not registered in form state
+[2025-11-14T13:21:43.335Z] [INFO] Confirmed bug recorded: Radio button selection for parental marriage status is not registered in form state
+[2025-11-14T13:21:43.335Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:21:49.073Z] [INFO] Action 4/100: click
+[2025-11-14T13:21:54.729Z] [WARN] Anomaly detected (low): The error message text is duplicated and poorly formatted, showing the generic error header ('There is a problem') twice, suggesting a concatenation error in the validation summary.
+[2025-11-14T13:22:04.258Z] [INFO] Action 5/100: click
+[2025-11-14T13:22:09.403Z] [WARN] Anomaly detected (high): The user clicked the 'Yes' radio button, but the form state did not register the selection (Form Values are empty: {}). The page immediately shows an error indicating that a selection must be made, suggesting the click action failed to update the application state.
+[2025-11-14T13:22:28.816Z] [WARN] Bug confirmed (1.00 confidence): Radio button selection for marriage status does not register
+[2025-11-14T13:22:28.816Z] [INFO] Confirmed bug recorded: Radio button selection for marriage status does not register
+[2025-11-14T13:22:28.816Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:22:33.424Z] [INFO] Action 6/100: click
+[2025-11-14T13:22:47.060Z] [INFO] Action 7/100: click
+[2025-11-14T13:22:53.035Z] [WARN] Anomaly detected (critical): The 'Yes' radio button was clicked, but the selection did not register in the form state (Form Values is empty), and the mandatory field error was not cleared. The form is unresponsive to user input.
+[2025-11-14T13:23:12.415Z] [WARN] Bug confirmed (1.00 confidence): Radio button for 'married' status is unresponsive, blocking form progression
+[2025-11-14T13:23:12.415Z] [INFO] Confirmed bug recorded: Radio button for 'married' status is unresponsive, blocking form progression
+[2025-11-14T13:23:12.415Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:23:16.511Z] [INFO] Action 8/100: click
+[2025-11-14T13:23:23.055Z] [WARN] Anomaly detected (high): Data loss occurred. The user claims to have selected the 'Yes' option in the previous step, but the form state is empty, and validation failed, requiring a selection again.
+[2025-11-14T13:23:40.174Z] [WARN] Bug confirmed (1.00 confidence): Radio button selection for 'married parents' is not saved, preventing form progression
+[2025-11-14T13:23:40.175Z] [INFO] Confirmed bug recorded: Radio button selection for 'married parents' is not saved, preventing form progression
+[2025-11-14T13:23:40.175Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:23:48.478Z] [INFO] Action 9/100: click
+[2025-11-14T13:23:53.432Z] [WARN] Anomaly detected (high): The click action on the 'Yes' radio button failed to update the form state. The form values remain empty, and validation errors persist, indicating the input is unresponsive.
+[2025-11-14T13:24:11.610Z] [WARN] Bug confirmed (1.00 confidence): Radio button for 'Parents Married' question is unresponsive, blocking form progression
+[2025-11-14T13:24:11.610Z] [INFO] Confirmed bug recorded: Radio button for 'Parents Married' question is unresponsive, blocking form progression
+[2025-11-14T13:24:11.610Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:24:21.980Z] [INFO] Action 10/100: click
+[2025-11-14T13:24:30.579Z] [WARN] Anomaly detected (high): The last recorded action (clicking the 'Yes' radio button) failed to update the form state. The 'Yes' option is not selected visually, Form Values remain empty ({}), and the page is still displaying the validation error requiring a selection, meaning the input was ignored or dropped.
+[2025-11-14T13:24:46.920Z] [WARN] Bug confirmed (1.00 confidence): Radio button for 'married' status is not selectable, blocking form progression
+[2025-11-14T13:24:46.920Z] [INFO] Confirmed bug recorded: Radio button for 'married' status is not selectable, blocking form progression
+[2025-11-14T13:24:46.920Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:24:57.267Z] [INFO] Action 11/100: click
+[2025-11-14T13:25:03.019Z] [WARN] Anomaly detected (high): The user clicked the 'Yes' radio button, and it is visually selected, but the input was not registered in the form state. The 'Form Values' object is empty, and the mandatory selection error remains visible, preventing the user from continuing.
+[2025-11-14T13:25:21.010Z] [WARN] Bug confirmed (1.00 confidence): Marital status radio button selection is not registered, blocking form submission
+[2025-11-14T13:25:21.010Z] [INFO] Confirmed bug recorded: Marital status radio button selection is not registered, blocking form submission
+[2025-11-14T13:25:21.010Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:25:31.187Z] [INFO] Action 12/100: click
+[2025-11-14T13:25:37.415Z] [WARN] Anomaly detected (high): The form is displaying a validation error requiring a selection, even though the user successfully selected 'Yes' in the previous step. The element state confirms the 'Yes' radio button is selected, but the error state remains active.
+[2025-11-14T13:25:57.306Z] [WARN] Bug confirmed (1.00 confidence): Validation error persists after selecting marriage status, blocking form progression
+[2025-11-14T13:25:57.306Z] [INFO] Confirmed bug recorded: Validation error persists after selecting marriage status, blocking form progression
+[2025-11-14T13:25:57.306Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:26:01.014Z] [INFO] Action 13/100: click
+[2025-11-14T13:26:07.207Z] [INFO] Action 14/100: click
+[2025-11-14T13:26:19.246Z] [ERROR] Failed to get next action: Unexpected non-whitespace character after JSON at position 161 (line 6 column 4)
+[2025-11-14T13:26:19.246Z] [WARN] Failed to get next action (attempt 1/3), retrying...
+[2025-11-14T13:26:27.576Z] [INFO] Action 15/100: click
+[2025-11-14T13:26:42.313Z] [INFO] Action 16/100: fill
+[2025-11-14T13:26:47.533Z] [WARN] Anomaly detected (high): The validation error for 'First name' (Enter the father's first name) is still present and displayed on the page, even though the field was successfully filled with the value 'Richard' in the last action.
+[2025-11-14T13:27:11.503Z] [WARN] Bug confirmed (1.00 confidence): Validation error message persists after the input field has been filled
+[2025-11-14T13:27:11.503Z] [INFO] Confirmed bug recorded: Validation error message persists after the input field has been filled
+[2025-11-14T13:27:11.503Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:27:18.395Z] [INFO] Action 17/100: fill
+[2025-11-14T13:27:23.342Z] [WARN] Anomaly detected (critical): Form validation is incorrectly flagging fields as missing even though data is present in the form values and displayed in the input fields.
+[2025-11-14T13:27:44.258Z] [WARN] Bug confirmed (1.00 confidence): Validation errors persist after input fields are corrected
+[2025-11-14T13:27:44.259Z] [INFO] Confirmed bug recorded: Validation errors persist after input fields are corrected
+[2025-11-14T13:27:44.259Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:27:47.778Z] [INFO] Action 18/100: fill
+[2025-11-14T13:27:53.985Z] [WARN] Anomaly detected (high): The form is displaying validation errors for 'First name' and 'Last name' despite both fields containing user-entered data ('Richard' and 'Alleyne', respectively). The error messages instruct the user to enter data into fields that are already populated.
+[2025-11-14T13:28:11.851Z] [WARN] Bug confirmed (1.00 confidence): Validation incorrectly flags populated 'First name' and 'Last name' fields as empty
+[2025-11-14T13:28:11.851Z] [INFO] Confirmed bug recorded: Validation incorrectly flags populated 'First name' and 'Last name' fields as empty
+[2025-11-14T13:28:11.852Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:28:16.814Z] [INFO] Action 19/100: fill
+[2025-11-14T13:28:25.562Z] [WARN] Anomaly detected (high): Validation error messages persist for fields that have already been filled and contain data (First name and Last name). This prevents the user from progressing even though the required data is present.
+[2025-11-14T13:28:44.903Z] [WARN] Bug confirmed (1.00 confidence): Validation errors persist on fields after they have been filled
+[2025-11-14T13:28:44.903Z] [INFO] Confirmed bug recorded: Validation errors persist on fields after they have been filled
+[2025-11-14T13:28:44.903Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:28:49.847Z] [INFO] Action 20/100: fill
+[2025-11-14T13:28:55.991Z] [WARN] Anomaly detected (critical): The validation logic is broken. The page is showing error messages for fields that are clearly filled out and contain valid data (First Name, Last Name, and Date of Birth). This suggests the form state is not being correctly interpreted or processed by the validation engine.
+[2025-11-14T13:29:17.397Z] [INFO] Anomaly validated as false positive
+[2025-11-14T13:29:21.616Z] [INFO] Action 21/100: fill
+[2025-11-14T13:29:30.017Z] [WARN] Anomaly detected (high): The form is incorrectly flagging several filled fields as empty and requiring input. First Name, Last Name, and Current Address fields all contain data, but the validation errors state that the user must 'Enter' these values.
+[2025-11-14T13:29:50.996Z] [WARN] Bug confirmed (1.00 confidence): Validation incorrectly flags populated fields as empty on father's details page
+[2025-11-14T13:29:50.996Z] [INFO] Confirmed bug recorded: Validation incorrectly flags populated fields as empty on father's details page
+[2025-11-14T13:29:50.996Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:29:56.216Z] [INFO] Action 22/100: fill
+[2025-11-14T13:30:04.022Z] [WARN] Anomaly detected (high): Validation errors are incorrectly displayed for multiple required fields (First Name, Last Name, Address, Occupation, Date of Birth) that have valid data entered in the form state. This indicates a severe failure in data validation or state persistence.
+[2025-11-14T13:30:20.684Z] [WARN] Bug confirmed (1.00 confidence): Validation incorrectly flags populated fields as empty on Father's Details step
+[2025-11-14T13:30:20.684Z] [INFO] Confirmed bug recorded: Validation incorrectly flags populated fields as empty on Father's Details step
+[2025-11-14T13:30:20.684Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:30:26.858Z] [INFO] Action 23/100: fill
+[2025-11-14T13:30:35.145Z] [WARN] Anomaly detected (high): Validation errors are persisting for fields that have been clearly filled with data, preventing the user from proceeding. The system claims fields are empty or invalid when they contain data in the correct format.
+[2025-11-14T13:30:56.442Z] [WARN] Bug confirmed (1.00 confidence): Validation fails on Father's Details page despite all required fields being filled
+[2025-11-14T13:30:56.442Z] [INFO] Confirmed bug recorded: Validation fails on Father's Details page despite all required fields being filled
+[2025-11-14T13:30:56.442Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:31:01.728Z] [INFO] Action 24/100: click
+[2025-11-14T13:31:10.123Z] [INFO] Action 25/100: fill
+[2025-11-14T13:31:20.576Z] [ERROR] Failed to get next action: Unexpected non-whitespace character after JSON at position 163 (line 6 column 4)
+[2025-11-14T13:31:20.576Z] [WARN] Failed to get next action (attempt 1/3), retrying...
+[2025-11-14T13:31:25.910Z] [INFO] Action 26/100: fill
+[2025-11-14T13:31:39.458Z] [INFO] Action 27/100: click
+[2025-11-14T13:31:48.625Z] [INFO] Action 28/100: fill
+[2025-11-14T13:31:59.311Z] [ERROR] Failed to get next action: Unexpected non-whitespace character after JSON at position 166 (line 6 column 4)
+[2025-11-14T13:31:59.312Z] [WARN] Failed to get next action (attempt 1/3), retrying...
+[2025-11-14T13:32:06.179Z] [INFO] Action 29/100: fill
+[2025-11-14T13:32:14.033Z] [INFO] Action 30/100: fill
+[2025-11-14T13:32:21.379Z] [INFO] Action 31/100: fill
+[2025-11-14T13:32:32.361Z] [INFO] Action 32/100: fill
+[2025-11-14T13:32:40.958Z] [INFO] Action 33/100: click
+[2025-11-14T13:32:49.284Z] [INFO] Action 34/100: fill
+[2025-11-14T13:32:56.820Z] [INFO] Action 35/100: click
+[2025-11-14T13:33:04.998Z] [INFO] Action 36/100: fill
+[2025-11-14T13:33:11.934Z] [INFO] Action 37/100: fill
+[2025-11-14T13:33:20.662Z] [ERROR] Failed to get next action: Unexpected non-whitespace character after JSON at position 161 (line 6 column 4)
+[2025-11-14T13:33:20.662Z] [WARN] Failed to get next action (attempt 1/3), retrying...
+[2025-11-14T13:33:25.721Z] [INFO] Action 38/100: fill
+[2025-11-14T13:33:32.904Z] [INFO] Action 39/100: fill
+[2025-11-14T13:33:39.585Z] [INFO] Action 40/100: fill
+[2025-11-14T13:33:52.452Z] [INFO] Action 41/100: click
+[2025-11-14T13:34:01.852Z] [INFO] Action 42/100: fill
+[2025-11-14T13:34:12.390Z] [INFO] Action 43/100: click
+[2025-11-14T13:34:19.245Z] [WARN] Anomaly detected (low): The list of error messages contains duplicate entries and a concatenated string, suggesting an issue with error message aggregation, although the UI displays the intended errors correctly.
+[2025-11-14T13:34:29.102Z] [INFO] Action 44/100: click
+[2025-11-14T13:34:34.686Z] [WARN] Anomaly detected (high): The 'Male' radio button was clicked in the last action to satisfy the required 'Sex at birth' field, but the validation error persists, and the form state (Form Values) does not show the selection. The UI also shows neither radio button is selected.
+[2025-11-14T13:34:53.589Z] [WARN] Bug confirmed (1.00 confidence): 'Sex at birth' radio button is unresponsive and blocks form submission
+[2025-11-14T13:34:53.589Z] [INFO] Confirmed bug recorded: 'Sex at birth' radio button is unresponsive and blocks form submission
+[2025-11-14T13:34:53.589Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:34:59.206Z] [INFO] Action 45/100: click
+[2025-11-14T13:35:05.879Z] [WARN] Anomaly detected (high): The form is repeatedly failing validation for 'Sex at birth'. The radio button selection (Male) made in the previous step was not registered or persisted in the form state upon submission, leading to a validation error that prevents progression.
+[2025-11-14T13:35:23.506Z] [WARN] Bug confirmed (1.00 confidence): Sex at birth selection is not saved, blocking form submission
+[2025-11-14T13:35:23.506Z] [INFO] Confirmed bug recorded: Sex at birth selection is not saved, blocking form submission
+[2025-11-14T13:35:23.506Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:35:29.744Z] [INFO] Action 46/100: click
+[2025-11-14T13:35:35.588Z] [WARN] Anomaly detected (high): The value for the 'Sex at birth' radio button, which was just clicked and is visually selected on the page, failed to register in the reported Form Values state. This likely means the form will fail validation upon submission because the required field is missing from the payload.
+[2025-11-14T13:35:57.461Z] [WARN] Bug confirmed (1.00 confidence): Sex at birth selection is not saved in the form state
+[2025-11-14T13:35:57.462Z] [INFO] Confirmed bug recorded: Sex at birth selection is not saved in the form state
+[2025-11-14T13:35:57.462Z] [WARN] GitHub token not configured, skipping issue creation
+[2025-11-14T13:36:01.875Z] [INFO] Action 47/100: click
+[2025-11-14T13:36:08.383Z] [INFO] Action 48/100: fill
+[2025-11-14T13:36:14.287Z] [INFO] Action 49/100: click
+[2025-11-14T13:36:20.347Z] [INFO] Action 50/100: fill
+[2025-11-14T13:36:25.780Z] [WARN] Anomaly detected (medium): The text content within the 'Email address' input field is visually clipped on the left side, obscuring the first character ('s' of 'sharon').
+[2025-11-14T13:36:29.552Z] [INFO] Action 51/100: fill
+[2025-11-14T13:36:36.224Z] [INFO] Action 52/100: click
+[2025-11-14T13:36:46.109Z] [INFO] Verifying data on check answers page...
+[2025-11-14T13:37:02.334Z] [ERROR] Failed to verify data: Expected ',' or '}' after property value in JSON at position 1465 (line 67 column 21)
+[2025-11-14T13:37:02.334Z] [INFO] ✓ All data verified correctly on check answers page
+[2025-11-14T13:37:02.481Z] [INFO] Browser closed
