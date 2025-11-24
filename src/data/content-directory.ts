@@ -147,7 +147,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
   //   pages: [],
   // },
   {
-    title: "Travel, ID and Citizenship",
+    title: "Travel, ID and citizenship",
     slug: "travel-id-citizenship",
     description: "Travel, drive or prove your identity and status",
     pages: [
