@@ -1,57 +1,61 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
+import { Heading, Link, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
+import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { Typography } from "@/components/ui/typography";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
 
+type HeadingProps = ComponentPropsWithoutRef<"h1">;
+type ParagraphProps = ComponentPropsWithoutRef<"p">;
+type ListProps = ComponentPropsWithoutRef<"ul">;
+type ListItemProps = ComponentPropsWithoutRef<"li">;
+type AnchorProps = ComponentPropsWithoutRef<"a">;
+type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
+
 // Custom components for react-markdown
 const components: Components = {
-  h1: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h1" {...props}>
+  h1: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h1" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
-  h2: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h2" {...props}>
+  h2: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h2" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
-  h3: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h3" {...props}>
+  h3: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h3" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
-  h4: ({ children, ...props }: any) => (
-    <Typography className="mt-8 mb-4" variant="h4" {...props}>
+  h4: ({ children, ...props }: HeadingProps) => (
+    <Heading as="h4" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
-  p: ({ children, ...props }: any) => (
-    <Typography variant="paragraph" {...props}>
+  p: ({ children, ...props }: ParagraphProps) => (
+    <Text as="p" size="body" {...props}>
       {children}
-    </Typography>
+    </Text>
   ),
-  ul: ({ children, ...props }: any) => (
-    <ul className="mb-4 list-disc pl-6 text-[20px]" {...props}>
+  ul: ({ children, ...props }: ListProps) => (
+    <ul className="list-disc pl-7" {...props}>
       {children}
     </ul>
   ),
-  ol: ({ children, ...props }: any) => (
-    <ol className="mb-4 list-decimal pl-6 text-[20px]" {...props}>
+  ol: ({ children, ...props }: ListProps) => (
+    <ol className="list-decimal space-y-4 pl-7" {...props}>
       {children}
     </ol>
   ),
-  li: ({ children, ...props }: any) => (
-    <li className="mb-2" {...props}>
-      {children}
-    </li>
-  ),
+  li: ({ children, ...props }: ListItemProps) => <li {...props}>{children}</li>,
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
-  a: ({ href, children, target, ...props }: any) => {
+  a: ({ href, children, target, ...props }: AnchorProps) => {
     // Check if link starts with # (internal link) to determine if it's likely in a list
     const isInternalLink = href?.startsWith("#");
     const linkClass = isInternalLink
@@ -59,18 +63,17 @@ const components: Components = {
       : "text-teal-dark underline leading-normal";
 
     return (
-      <a
+      <Link
         className={linkClass}
-        href={href}
+        href={href as string}
         {...props}
-        rel="noopener noreferrer"
         target={target || "_blank"}
       >
         {children}
-      </a>
+      </Link>
     );
   },
-  blockquote: (props: any) => (
+  blockquote: (props: BlockquoteProps) => (
     <blockquote
       className="ml-[0.075em] border-gray-300 border-l-3 pl-4 text-gray-700 dark:border-zinc-400 dark:text-zinc-400"
       {...props}
@@ -121,9 +124,7 @@ export const MarkdownContent = ({
   return (
     <div className="space-y-8 overflow-hidden">
       <div className="space-y-6">
-        {frontmatter.title && (
-          <Typography variant="h1">{frontmatter.title}</Typography>
-        )}
+        {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
 
         {frontmatter.stage?.length > 0 ? (
           <StageBanner stage={frontmatter.stage} />
