@@ -1,13 +1,10 @@
 import { SimpleFeedbackForm } from "@/components/forms/simple-feedback-form";
-import { BackButton } from "@/components/layout/back-button";
-import { HelpfulBox } from "@/components/layout/helpful-box";
 import { Typography } from "@/components/ui/typography";
 
 export default function FeedbackPage() {
   return (
-    <div className="container overflow-hidden pt-4">
+    <>
       <div className="mb-6 space-y-6">
-        <BackButton />
         <Typography variant="h1">Help us improve alpha.gov.bb</Typography>
         <div className="space-y-3 text-[20px] leading-[1.7]">
           <p>
@@ -18,7 +15,6 @@ export default function FeedbackPage() {
         </div>
       </div>
       <SimpleFeedbackForm />
-      <HelpfulBox />
-    </div>
+    </>
   );
 }
