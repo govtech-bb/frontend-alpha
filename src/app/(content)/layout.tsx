@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { EntryPointWrapper } from "@/components/layout/entry-point-wrapper";
 
 export default function EntryPointLayout({
@@ -5,5 +6,9 @@ export default function EntryPointLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <EntryPointWrapper>{children}</EntryPointWrapper>;
+  return (
+    <Suspense fallback={<main>{children}</main>}>
+      <EntryPointWrapper>{children}</EntryPointWrapper>
+    </Suspense>
+  );
 }
