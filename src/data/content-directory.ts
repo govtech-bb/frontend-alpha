@@ -113,9 +113,9 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
     description: "Get help with money, benefits, taxes or government payments",
     pages: [
       {
-        title: "Apply for Financial Assistance",
+        title: "Apply for financial assistance",
         slug: "apply-financial-assistance",
-        description: "Apply for Financial Assistance",
+        description: "Apply for financial assistance",
       },
       {
         title: "EZPay",
