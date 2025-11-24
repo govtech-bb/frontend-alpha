@@ -63,6 +63,12 @@ function discoverAllRoutes(): string[] {
   // Add known static routes that may not be in content directory
   const staticRoutes = [
     "/",
+    "/family-birth-relationships",
+    "/work-employment",
+    "/money-financial-support",
+    "/travel-id-citizenship",
+    "/business-trade",
+    "/public-safety",
     // Add any other known routes here (404 pages, dynamic routes, etc.)
   ];
 
