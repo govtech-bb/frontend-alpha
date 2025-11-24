@@ -90,7 +90,7 @@ export default async function Home() {
               ))}
             </div>
           </div>
-          <HelpfulBox />
+          <HelpfulBox className="mb-4 lg:mb-16" />
         </div>
       </section>
     </>
