@@ -6,6 +6,7 @@ import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import rehypeSectionise from "@/lib/rehype-sectionise";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
 
@@ -122,33 +123,39 @@ export const MarkdownContent = ({
 }) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="space-y-8 overflow-hidden">
-      <div className="space-y-6">
-        {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
+    <div className="lg:grid lg:grid-cols-3 lg:gap-16">
+      <div className="space-y-6 lg:col-span-2 lg:space-y-8">
+        <div className="space-y-4 lg:space-y-6">
+          {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
 
-        {frontmatter.stage?.length > 0 ? (
-          <StageBanner stage={frontmatter.stage} />
-        ) : null}
-        {frontmatter.source_url ? (
-          <MigrationBanner pageURL={frontmatter.source_url} />
-        ) : null}
-        {frontmatter.publish_date && (
-          <div className="border-blue-10 border-b-4 pb-4 text-[16px] text-neutral-midgrey leading-normal">
-            Last updated on{" "}
-            {format(
-              parseISO(frontmatter.publish_date.toISOString().split("T")[0]),
-              "PPP"
-            )}
-          </div>
-        )}
+          {frontmatter.stage?.length > 0 ? (
+            <StageBanner stage={frontmatter.stage} />
+          ) : null}
+          {frontmatter.source_url ? (
+            <MigrationBanner pageURL={frontmatter.source_url} />
+          ) : null}
+          {frontmatter.publish_date && (
+            <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
+              <Text as="p" size="caption">
+                Last updated on{" "}
+                {format(
+                  parseISO(
+                    frontmatter.publish_date.toISOString().split("T")[0]
+                  ),
+                  "PPP"
+                )}
+              </Text>
+            </div>
+          )}
+        </div>
+        <ReactMarkdown
+          components={components}
+          rehypePlugins={[rehypeRaw, rehypeSectionise]}
+          remarkPlugins={[remarkGfm]}
+        >
+          {content}
+        </ReactMarkdown>
       </div>
-      <ReactMarkdown
-        components={components}
-        rehypePlugins={[rehypeRaw]}
-        remarkPlugins={[remarkGfm]}
-      >
-        {content}
-      </ReactMarkdown>
     </div>
   );
 };
