@@ -9,18 +9,26 @@ import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { type FormData, formSchema } from "@/lib/schema-generator";
 import { submitFormData } from "@/services/api";
-import { useFormStore } from "@/store/form-store";
+import { createFormStore } from "@/store/form-store";
 import type { FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DynamicStep } from "./dynamic-step";
 
+type DynamicMultiStepFormProps = {
+  formSteps: FormStep[];
+  storageKey?: string;
+};
+
 export default function DynamicMultiStepForm({
   formSteps,
-}: {
-  formSteps: FormStep[];
-}) {
+  storageKey = "multi-step-form-storage",
+}: DynamicMultiStepFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  // Get store hook (uses singleton cache internally)
+  const useFormStore = createFormStore(storageKey);
+
   const {
     currentStep,
     completedSteps,

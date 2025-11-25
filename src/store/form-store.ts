@@ -1,3 +1,4 @@
+import type { StoreApi, UseBoundStore } from "zustand";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { FormData } from "@/lib/schema-generator";
@@ -46,76 +47,112 @@ const initialState: FormProgress = {
   totalSteps: 1,
 };
 
-export const useFormStore = create<FormStore>()(
-  persist(
-    (set, get) => ({
-      ...initialState,
-      _hasHydrated: false,
+// Store cache to ensure singleton pattern per storage key
+const storeCache = new Map<string, UseBoundStore<StoreApi<FormStore>>>();
 
-      setCurrentStep: (step: number) => {
-        set({ currentStep: step });
-      },
+/**
+ * Creates or retrieves a cached form store with a custom storage key
+ * This allows multiple forms to maintain separate storage while ensuring
+ * each storage key maps to a single store instance (singleton pattern)
+ *
+ * @param storageKey - Unique identifier for the form storage (e.g., "sports-training-form")
+ * @returns Zustand store hook with persist middleware
+ *
+ * @example
+ * const useFormStore = createFormStore("sports-training-form");
+ * const useBirthRegistrationStore = createFormStore("birth-registration-form");
+ */
+export function createFormStore(
+  storageKey: string
+): UseBoundStore<StoreApi<FormStore>> {
+  // Return cached store if it exists
+  if (storeCache.has(storageKey)) {
+    return storeCache.get(storageKey)!;
+  }
 
-      setTotalSteps: (total: number) => {
-        set({ totalSteps: total });
-      },
+  // Create new store
+  const store = create<FormStore>()(
+    persist(
+      (set, get) => ({
+        ...initialState,
+        _hasHydrated: false,
 
-      nextStep: () => {
-        set((state) => {
-          const nextStep = state.currentStep + 1;
-          return {
-            currentStep: nextStep,
-          };
-        });
-      },
+        setCurrentStep: (step: number) => {
+          set({ currentStep: step });
+        },
 
-      prevStep: () => {
-        set((state) => ({
-          currentStep: Math.max(0, state.currentStep - 1),
-        }));
-      },
+        setTotalSteps: (total: number) => {
+          set({ totalSteps: total });
+        },
 
-      markStepComplete: (step: number) => {
-        set((state) => ({
-          completedSteps: [...new Set([...state.completedSteps, step])],
-          lastSaved: new Date().toISOString(),
-        }));
-      },
+        nextStep: () => {
+          set((state) => {
+            const nextStep = state.currentStep + 1;
+            return {
+              currentStep: nextStep,
+            };
+          });
+        },
 
-      updateFormData: (data: Partial<FormData>) => {
-        set((state) => ({
-          formData: { ...state.formData, ...data },
-          lastSaved: new Date().toISOString(),
-        }));
-      },
+        prevStep: () => {
+          set((state) => ({
+            currentStep: Math.max(0, state.currentStep - 1),
+          }));
+        },
 
-      resetForm: () => {
-        set({ ...initialState, _hasHydrated: true });
-      },
+        markStepComplete: (step: number) => {
+          set((state) => ({
+            completedSteps: [...new Set([...state.completedSteps, step])],
+            lastSaved: new Date().toISOString(),
+          }));
+        },
 
-      getProgress: () => {
-        const state = get();
-        const totalSteps = state.totalSteps || 1;
-        return Math.round((state.completedSteps.length / totalSteps) * 100);
-      },
+        updateFormData: (data: Partial<FormData>) => {
+          set((state) => ({
+            formData: { ...state.formData, ...data },
+            lastSaved: new Date().toISOString(),
+          }));
+        },
 
-      setHasHydrated: (state: boolean) => {
-        set({ _hasHydrated: state });
-      },
+        resetForm: () => {
+          set({ ...initialState, _hasHydrated: true });
+        },
 
-      markAsSubmitted: (referenceNumber: string) => {
-        set({
-          isSubmitted: true,
-          referenceNumber,
-        });
-      },
-    }),
-    {
-      name: "multi-step-form-storage",
-      storage: createJSONStorage(() => sessionStorage),
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
-      },
-    }
-  )
-);
+        getProgress: () => {
+          const state = get();
+          const totalSteps = state.totalSteps || 1;
+          return Math.round((state.completedSteps.length / totalSteps) * 100);
+        },
+
+        setHasHydrated: (state: boolean) => {
+          set({ _hasHydrated: state });
+        },
+
+        markAsSubmitted: (referenceNumber: string) => {
+          set({
+            isSubmitted: true,
+            referenceNumber,
+          });
+        },
+      }),
+      {
+        name: storageKey,
+        storage: createJSONStorage(() => sessionStorage),
+        onRehydrateStorage: () => (state) => {
+          state?.setHasHydrated(true);
+        },
+      }
+    )
+  );
+
+  // Cache the store
+  storeCache.set(storageKey, store);
+
+  return store;
+}
+
+/**
+ * Default form store instance
+ * For backwards compatibility with existing code
+ */
+export const useFormStore = createFormStore("multi-step-form-storage");
