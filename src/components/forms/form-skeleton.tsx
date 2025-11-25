@@ -1,5 +1,5 @@
 export const FormSkeleton = () => (
-  <div className="mx-auto w-full max-w-2xl p-8">
+  <div className="mx-auto w-full p-8">
     <div className="mb-8">
       <div className="h-10 w-64 animate-pulse rounded-lg bg-gray-200" />
     </div>
