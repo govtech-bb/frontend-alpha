@@ -163,6 +163,58 @@ export const formSteps: FormStep[] = [
           { label: "Other", value: "other" },
         ],
       },
+      {
+        name: "institutionName",
+        label: "Name of institution",
+        type: "text",
+        placeholder: "e.g., University of the West Indies",
+        validation: {
+          required: "Institution name is required",
+          minLength: {
+            value: 2,
+            message: "Institution name must be at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "employmentStatus",
+          value: "studying",
+        },
+      },
+      {
+        name: "employerName",
+        label: "Name of company or organisation",
+        type: "text",
+        placeholder: "e.g., ABC Company Ltd",
+        validation: {
+          required: "Company or organisation name is required",
+          minLength: {
+            value: 2,
+            message:
+              "Company or organisation name must be at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "employmentStatus",
+          value: "employed",
+        },
+      },
+      {
+        name: "otherEmploymentDetails",
+        label: "Please give details",
+        type: "text",
+        placeholder: "Describe your employment status",
+        validation: {
+          required: "Employment details are required",
+          minLength: {
+            value: 2,
+            message: "Details must be at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "employmentStatus",
+          value: "other",
+        },
+      },
     ],
   },
   {
@@ -181,6 +233,28 @@ export const formSteps: FormStep[] = [
           { label: "Yes", value: "true" },
           { label: "No", value: "false" },
         ],
+      },
+      {
+        name: "organizationNames",
+        label: "Organizations",
+        type: "fieldArray",
+        placeholder: "Enter organisation name",
+        validation: {
+          required: "Organisation name is required",
+          minLength: {
+            value: 2,
+            message: "Organisation name must be at least 2 characters",
+          },
+        },
+        fieldArray: {
+          itemLabel: "Name of the organisation",
+          addButtonText: "Add another",
+          minItems: 1,
+        },
+        conditionalOn: {
+          field: "belongsToOrganizations",
+          value: "true",
+        },
       },
     ],
   },

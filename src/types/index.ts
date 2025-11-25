@@ -7,7 +7,8 @@ export type FieldType =
   | "date"
   | "select"
   | "textarea"
-  | "radio";
+  | "radio"
+  | "fieldArray";
 
 export type ValidationRule = {
   required?: string;
@@ -28,6 +29,13 @@ export type ConditionalRule = {
   value: string; // The value that triggers this field to show
 };
 
+export type FieldArrayConfig = {
+  itemLabel: string; // Label for each item (e.g., "Name of the organisation")
+  addButtonText: string; // Text for the "Add another" button
+  removeButtonText?: string; // Text for remove button (defaults to "Remove")
+  minItems?: number; // Minimum number of items (defaults to 1)
+};
+
 export type FormField = {
   name: string;
   label: string;
@@ -37,6 +45,7 @@ export type FormField = {
   options?: SelectOption[]; // For select and radio fields
   rows?: number; // For textarea
   conditionalOn?: ConditionalRule; // For conditional fields
+  fieldArray?: FieldArrayConfig; // For fieldArray type
 };
 
 export type FormStep = {

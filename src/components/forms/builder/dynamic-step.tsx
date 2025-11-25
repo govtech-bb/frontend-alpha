@@ -56,9 +56,21 @@ export function DynamicStep({ step }: { step: FormStep }) {
       )}
 
       <div className="space-y-4">
-        {step.fields.map((field) => (
-          <DynamicField field={field} key={field.name} />
-        ))}
+        {step.fields
+          .filter((field) => !field.conditionalOn)
+          .map((field) => {
+            // Find conditional fields that depend on this field
+            const conditionalFields = step.fields.filter(
+              (f) => f.conditionalOn?.field === field.name
+            );
+            return (
+              <DynamicField
+                conditionalFields={conditionalFields}
+                field={field}
+                key={field.name}
+              />
+            );
+          })}
       </div>
     </div>
   );

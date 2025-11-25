@@ -42,6 +42,20 @@ export function ReviewStep({ onEdit }: ReviewStepProps) {
           // Format the value based on field type
           let displayValue = value as unknown;
 
+          // Handle field arrays
+          if (field.type === "fieldArray" && Array.isArray(value)) {
+            const arrayValues = value as Array<{ value: string }>;
+            if (arrayValues.length === 0) return null;
+
+            // Join array values with comma
+            displayValue = arrayValues
+              .map((item) => item.value)
+              .filter((v) => v && v !== "")
+              .join(", ");
+
+            if (!displayValue) return null;
+          }
+
           if (field.type === "select" && field.options) {
             const option = field.options.find((opt) => opt.value === value);
             displayValue = option?.label || value;

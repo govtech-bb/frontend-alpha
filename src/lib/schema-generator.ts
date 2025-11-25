@@ -9,6 +9,46 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
 
   const validation = field.validation;
 
+  // Handle field arrays
+  if (field.type === "fieldArray") {
+    let itemSchema: z.ZodTypeAny = z.string();
+
+    if (validation.required) {
+      itemSchema = z.string().min(1, validation.required);
+    }
+
+    if (validation.minLength) {
+      itemSchema = (itemSchema as z.ZodString).min(
+        validation.minLength.value,
+        validation.minLength.message
+      );
+    }
+
+    if (validation.maxLength) {
+      itemSchema = (itemSchema as z.ZodString).max(
+        validation.maxLength.value,
+        validation.maxLength.message
+      );
+    }
+
+    if (validation.pattern) {
+      itemSchema = (itemSchema as z.ZodString).regex(
+        new RegExp(validation.pattern.value),
+        validation.pattern.message
+      );
+    }
+
+    // Create array schema with object wrapper for each item
+    const arraySchema = z.array(z.object({ value: itemSchema }));
+
+    // If conditional, make it optional (allows undefined or array)
+    if (field.conditionalOn) {
+      return arraySchema.optional();
+    }
+
+    return arraySchema;
+  }
+
   // Handle conditional fields - make them optional at the schema level
   // Validation will only apply when the field is visible
   if (field.conditionalOn) {
