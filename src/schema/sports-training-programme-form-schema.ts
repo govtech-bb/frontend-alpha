@@ -36,14 +36,10 @@ export const formSteps: FormStep[] = [
       {
         name: "dateOfBirth",
         label: "Date of Birth",
-        type: "text", //TODO: change to "date" to display custom date input
-        placeholder: "mm/dd/yyyy",
+        type: "date",
+        placeholder: "For example, 27 3 2007",
         validation: {
           required: "Date of birth is required",
-          pattern: {
-            value: "^(0[1-9]|1[0-2])\\/(0[1-9]|[12][0-9]|3[01])\\/\\d{4}$",
-            message: "Date must be in MM/DD/YYYY format",
-          },
         },
       },
       {

@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/complexity/noForEach: <explanation> */
 import { z } from "zod";
+import { isValidBirthDate } from "@/lib/dates";
 import { formSteps } from "@/schema/sports-training-programme-form-schema";
 import type { FormField } from "@/types";
 
@@ -85,16 +86,18 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     return conditionalSchema.optional().or(z.literal(""));
   }
 
-  // Handle date fields
+  // Handle date fields (YYYY-MM-DD format)
   if (field.type === "date") {
     schema = z.string().min(1, validation.required || "Date is required");
+    // Use isValidBirthDate for proper validation (checks format, range, and not future)
     schema = (schema as z.ZodString).refine(
       (val) => {
         if (!val) return false;
-        const date = new Date(val);
-        return !Number.isNaN(date.getTime());
+        // Ensure val is a string before validation
+        if (typeof val !== "string") return false;
+        return isValidBirthDate(val);
       },
-      { message: "Invalid date" }
+      { message: "Enter a valid date of birth" }
     );
     return schema;
   }

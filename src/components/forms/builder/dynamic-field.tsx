@@ -1,6 +1,8 @@
 import { Input, Radio, RadioGroup, Select, TextArea } from "@govtech-bb/react";
 import { Fragment, useEffect } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { DateInput } from "@/components/forms/common/date-input";
+import type { DateFieldErrors } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
 import type { FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
@@ -84,6 +86,39 @@ export function DynamicField({
         <div className="border-neutral-grey border-l-8 border-solid pb-4 pl-[52px]">
           {conditionalField.type === "fieldArray" ? (
             <DynamicFieldArray field={conditionalField} />
+          ) : conditionalField.type === "date" ? (
+            <Controller
+              control={control}
+              name={conditionalField.name as keyof FormData}
+              render={({ field: controllerField }) => {
+                // Ensure we always have a string value (handle undefined/null)
+                const stringValue =
+                  typeof controllerField.value === "string"
+                    ? controllerField.value
+                    : "";
+
+                // Parse error message into DateFieldErrors format if needed
+                const dateErrors: DateFieldErrors | undefined =
+                  conditionalError?.message
+                    ? {
+                        day: conditionalError.message,
+                        month: conditionalError.message,
+                        year: conditionalError.message,
+                      }
+                    : undefined;
+
+                return (
+                  <DateInput
+                    errors={dateErrors}
+                    hint={conditionalField.placeholder}
+                    id={conditionalField.name}
+                    label={conditionalField.label}
+                    onChange={controllerField.onChange}
+                    value={stringValue}
+                  />
+                );
+              }}
+            />
           ) : (
             <Input
               error={conditionalError?.message}
@@ -101,8 +136,39 @@ export function DynamicField({
 
   return (
     <div id={field.name}>
-      {/* TODO: Display custom date input if field.type === "date" */}
-      {field.type === "select" ? (
+      {field.type === "date" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: controllerField }) => {
+            // Ensure we always have a string value (handle undefined/null)
+            const stringValue =
+              typeof controllerField.value === "string"
+                ? controllerField.value
+                : "";
+
+            // Parse error message into DateFieldErrors format if needed
+            const dateErrors: DateFieldErrors | undefined = error?.message
+              ? {
+                  day: error.message,
+                  month: error.message,
+                  year: error.message,
+                }
+              : undefined;
+
+            return (
+              <DateInput
+                errors={dateErrors}
+                hint={field.placeholder}
+                id={field.name}
+                label={field.label}
+                onChange={controllerField.onChange}
+                value={stringValue}
+              />
+            );
+          }}
+        />
+      ) : field.type === "select" ? (
         <Select
           error={error?.message}
           label={field.label}

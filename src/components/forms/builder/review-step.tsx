@@ -1,6 +1,7 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
+import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
 import { formSteps } from "@/schema/sports-training-programme-form-schema";
 
@@ -67,15 +68,9 @@ export function ReviewStep({ onEdit }: ReviewStepProps) {
           }
 
           if (field.type === "date" && value) {
-            // Format date to readable format
-            displayValue = new Date(value as string).toLocaleDateString(
-              "en-US",
-              {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }
-            );
+            // Format date to readable format (e.g., "Jul 30, 2011")
+            displayValue = formatForDisplay(value as string);
+            if (!displayValue) return null; // Invalid date
           }
 
           return {
