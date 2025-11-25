@@ -1,6 +1,6 @@
-import type { ServiceCategoryType } from "@/types/content";
+import type { InformationContent } from "@/types/content";
 
-export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
+export const INFORMATION_ARCHITECTURE: InformationContent[] = [
   {
     title: "Family, birth and relationships",
     slug: "family-birth-relationships",
@@ -15,7 +15,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to register a birth in Barbados, including who can register, the required documents, and any associated fees.",
         subPages: [
           { slug: "start", type: "markdown" },
-          { slug: "form", type: "component" },
+          { slug: "form", title: "Register a Birth form", type: "component" },
         ],
       },
       {
@@ -89,6 +89,14 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         slug: "register-for-community-sports-training-programme",
         description:
           "Register for a Youth Development Programme (YDP) Community Sports Training programme",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Register for Training Form",
+            type: "component",
+          },
+        ],
       },
       {
         title: "Register for a summer camp",
