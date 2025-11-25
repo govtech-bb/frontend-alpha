@@ -69,6 +69,7 @@ function discoverAllRoutes(): string[] {
     "/travel-id-citizenship",
     "/business-trade",
     "/public-safety",
+    "/feedback",
     // Add any other known routes here (404 pages, dynamic routes, etc.)
   ];
 
