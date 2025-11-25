@@ -6,7 +6,10 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
 export const metadata: Metadata = {
-  title: "The Government of Barbados",
+  title: {
+    template: "%s | The Government Of Barbados",
+    default: "The Government Of Barbados", // a default is required when creating a template
+  },
   description: "The best place to access official government services",
   robots: {
     index: false,
