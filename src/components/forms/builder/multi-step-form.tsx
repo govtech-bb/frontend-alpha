@@ -263,11 +263,7 @@ export default function DynamicMultiStepForm({
           )} */}
 
           {isLastStep ? (
-            <Button
-              // className="ml-auto flex items-center gap-2 rounded bg-green-600 px-6 py-2 text-white transition-colors hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50"
-              disabled={isSubmitting}
-              type="submit"
-            >
+            <Button disabled={isSubmitting} type="submit">
               {isSubmitting ? (
                 <>
                   <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
@@ -278,12 +274,7 @@ export default function DynamicMultiStepForm({
               )}
             </Button>
           ) : (
-            <Button
-              // className="ml-auto rounded bg-blue-500 px-6 py-2 text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
-              disabled={isSubmitting}
-              onClick={nextStep}
-              type="button"
-            >
+            <Button disabled={isSubmitting} onClick={nextStep} type="button">
               {isReviewStep ? "Continue" : "Next"}
             </Button>
           )}
