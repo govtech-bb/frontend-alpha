@@ -27,6 +27,15 @@ export function ReviewStep({ onEdit }: ReviewStepProps) {
         .map((field) => {
           const value = formValues[field.name as keyof FormData];
 
+          // Skip conditional fields that shouldn't be shown
+          if (field.conditionalOn) {
+            const watchedValue =
+              formValues[field.conditionalOn.field as keyof FormData];
+            if (watchedValue !== field.conditionalOn.value) {
+              return null; // Don't show if condition not met
+            }
+          }
+
           // Skip empty optional fields
           if (!value || value === "") return null;
 

@@ -7,6 +7,7 @@ import { DynamicField } from "./dynamic-field";
 export function DynamicStep({ step }: { step: FormStep }) {
   const {
     formState: { errors },
+    watch,
   } = useFormContext<FormData>();
 
   // Get errors for the current step's fields
@@ -15,6 +16,14 @@ export function DynamicStep({ step }: { step: FormStep }) {
     .map((fieldName) => {
       const error = errors[fieldName as keyof FormData];
       const field = step.fields.find((f) => f.name === fieldName);
+
+      // Skip errors for fields that are conditionally hidden
+      if (field?.conditionalOn) {
+        const watchedValue = watch(field.conditionalOn.field as keyof FormData);
+        if (watchedValue !== field.conditionalOn.value) {
+          return null; // Don't show error if field is hidden
+        }
+      }
 
       if (error?.message && field) {
         return {

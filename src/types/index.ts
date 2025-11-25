@@ -23,6 +23,11 @@ export type SelectOption = {
   value: string;
 };
 
+export type ConditionalRule = {
+  field: string; // The field name to watch
+  value: string; // The value that triggers this field to show
+};
+
 export type FormField = {
   name: string;
   label: string;
@@ -31,6 +36,7 @@ export type FormField = {
   validation: ValidationRule;
   options?: SelectOption[]; // For select and radio fields
   rows?: number; // For textarea
+  conditionalOn?: ConditionalRule; // For conditional fields
 };
 
 export type FormStep = {

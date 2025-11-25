@@ -9,6 +9,42 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
 
   const validation = field.validation;
 
+  // Handle conditional fields - make them optional at the schema level
+  // Validation will only apply when the field is visible
+  if (field.conditionalOn) {
+    // For conditional fields, we make the base schema optional
+    // but still apply the validation rules when the field is shown
+    let conditionalSchema: z.ZodTypeAny = z.string();
+
+    if (validation.required) {
+      conditionalSchema = z.string().min(1, validation.required);
+    }
+
+    if (validation.minLength) {
+      conditionalSchema = (conditionalSchema as z.ZodString).min(
+        validation.minLength.value,
+        validation.minLength.message
+      );
+    }
+
+    if (validation.maxLength) {
+      conditionalSchema = (conditionalSchema as z.ZodString).max(
+        validation.maxLength.value,
+        validation.maxLength.message
+      );
+    }
+
+    if (validation.pattern) {
+      conditionalSchema = (conditionalSchema as z.ZodString).regex(
+        new RegExp(validation.pattern.value),
+        validation.pattern.message
+      );
+    }
+
+    // Make it optional - validation only applies when field is visible
+    return conditionalSchema.optional().or(z.literal(""));
+  }
+
   // Handle date fields
   if (field.type === "date") {
     schema = z.string().min(1, validation.required || "Date is required");

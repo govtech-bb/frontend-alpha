@@ -163,7 +163,21 @@ export default function DynamicMultiStepForm({
       await methods.handleSubmit(onSubmit)();
       return;
     }
-    const currentFields = formSteps[currentStep].fields.map((f) => f.name);
+
+    // Filter out fields that are conditionally hidden
+    const currentFields = formSteps[currentStep].fields
+      .filter((field) => {
+        // Include field if it has no conditional rule
+        if (!field.conditionalOn) return true;
+
+        // Check if conditional field should be visible
+        const watchedValue = methods.watch(
+          field.conditionalOn.field as keyof FormData
+        );
+        return watchedValue === field.conditionalOn.value;
+      })
+      .map((f) => f.name);
+
     const isValid = await methods.trigger(currentFields as (keyof FormData)[]);
 
     if (isValid) {

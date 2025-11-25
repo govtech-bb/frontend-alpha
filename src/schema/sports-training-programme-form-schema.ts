@@ -113,6 +113,23 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
+        name: "otherExperienceLevel",
+        label: "Please specify",
+        type: "text",
+        placeholder: "e.g., Professional, Amateur, etc.",
+        validation: {
+          required: "Please specify your experience level",
+          minLength: {
+            value: 2,
+            message: "Experience level must be at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "experienceLevel",
+          value: "other",
+        },
+      },
+      {
         name: "yearsOfExperience",
         label: "Years of Experience",
         type: "number",
