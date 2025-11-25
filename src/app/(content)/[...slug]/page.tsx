@@ -4,8 +4,9 @@ import { notFound } from "next/navigation";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { MarkdownContent } from "@/components/markdown-content";
 import { Typography } from "@/components/ui/typography";
-import { SERVICE_CATEGORIES } from "@/data/content-directory";
+import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
+import { findSubPageTitleFromPath } from "@/lib/utils";
 
 type ContentPageProps = {
   params: Promise<{ slug: string[] }>;
@@ -18,7 +19,7 @@ export default async function Page({ params }: ContentPageProps) {
   // Single slug: Category page or standalone markdown
   if (slug.length === 1) {
     const [categorySlug] = slug;
-    const category = SERVICE_CATEGORIES.find(
+    const category = INFORMATION_ARCHITECTURE.find(
       (cat) => cat.slug === categorySlug
     );
 
@@ -64,7 +65,7 @@ export default async function Page({ params }: ContentPageProps) {
   if (slug.length === 2) {
     const [categorySlug, pageSlug] = slug;
 
-    const category = SERVICE_CATEGORIES.find(
+    const category = INFORMATION_ARCHITECTURE.find(
       (cat) => cat.slug === categorySlug
     );
     if (!category) {
@@ -88,7 +89,7 @@ export default async function Page({ params }: ContentPageProps) {
   if (slug.length === 3) {
     const [categorySlug, pageSlug, subPageSlug] = slug;
 
-    const category = SERVICE_CATEGORIES.find(
+    const category = INFORMATION_ARCHITECTURE.find(
       (cat) => cat.slug === categorySlug
     );
     if (!category) {
@@ -124,14 +125,22 @@ export async function generateMetadata({ params }: ContentPageProps) {
   // For sub-pages (3 slugs)
   if (slug.length === 3) {
     const [, pageSlug, subPageSlug] = slug;
+    if (subPageSlug === "form") {
+      const subPageTitle = findSubPageTitleFromPath(
+        INFORMATION_ARCHITECTURE,
+        slug.join("/")
+      );
+      return {
+        title: subPageTitle,
+        description: "",
+      };
+    }
     const result = await getMarkdownContent([pageSlug, subPageSlug]);
 
     if (result) {
       return {
-        title: result.frontmatter.title || "The Government of Barbados",
-        description:
-          result.frontmatter.description ||
-          "The best place to access official government services",
+        title: result.frontmatter.title,
+        description: result.frontmatter.description,
       };
     }
   }
@@ -143,17 +152,17 @@ export async function generateMetadata({ params }: ContentPageProps) {
 
     if (result) {
       return {
-        title: result.frontmatter.title || "The Government of Barbados",
-        description:
-          result.frontmatter.description ||
-          "The best place to access official government services",
+        title: result.frontmatter.title,
+        description: result.frontmatter.description,
       };
     }
   }
 
   // For categories (1 slug)
   if (slug.length === 1) {
-    const category = SERVICE_CATEGORIES.find((cat) => cat.slug === slug[0]);
+    const category = INFORMATION_ARCHITECTURE.find(
+      (cat) => cat.slug === slug[0]
+    );
     if (category) {
       return {
         title: category.title,

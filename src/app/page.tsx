@@ -4,7 +4,7 @@ import NextLink from "next/link";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { Typography } from "@/components/ui/typography";
-import { SERVICE_CATEGORIES } from "@/data/content-directory";
+import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
 
 export default async function Home() {
@@ -71,7 +71,7 @@ export default async function Home() {
             <Typography variant="h2">Find government services</Typography>
 
             <div className="flex flex-col">
-              {SERVICE_CATEGORIES.map((service) => (
+              {INFORMATION_ARCHITECTURE.map((service) => (
                 <div
                   className="border-neutral-grey border-t-2 py-4 first:border-0 lg:py-8"
                   key={service.title}
