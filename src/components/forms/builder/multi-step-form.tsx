@@ -34,7 +34,7 @@ export default function DynamicMultiStepForm({
     prevStep: prevStepStore,
     markStepComplete,
     updateFormData,
-    // resetForm,
+    resetForm,
     // getProgress,
     markAsSubmitted,
   } = useFormStore();
@@ -202,12 +202,22 @@ export default function DynamicMultiStepForm({
     prevStepStore();
   };
 
+  const handleReset = () => {
+    resetForm();
+    methods.reset();
+  };
+
   const isReviewStep = formSteps[currentStep]?.fields.length === 0;
   const isLastStep = currentStep === formSteps.length - 1;
 
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
-    return <ConfirmationPage referenceNumber={referenceNumber} />;
+    return (
+      <ConfirmationPage
+        onReset={handleReset}
+        referenceNumber={referenceNumber}
+      />
+    );
   }
 
   if (!_hasHydrated) {
@@ -244,12 +254,7 @@ export default function DynamicMultiStepForm({
         {/* Navigation Buttons */}
         <div className="mt-8 flex gap-4">
           {currentStep > 0 && !isSubmitting && (
-            <Button
-              //   className="rounded bg-gray-200 px-6 py-2 text-gray-700 hover:bg-gray-300"
-              onClick={prevStep}
-              type="button"
-              variant="secondary"
-            >
+            <Button onClick={prevStep} type="button" variant="secondary">
               Previous
             </Button>
           )}

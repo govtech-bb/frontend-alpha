@@ -1,28 +1,18 @@
 "use client";
 import { Button, Link } from "@govtech-bb/react";
 import NextLink from "next/link";
-import { useRouter } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
-import { useFormStore } from "@/store/form-store";
 
 type ConfirmationPageProps = {
   referenceNumber?: string;
   submittedTo?: string;
+  onReset: () => void;
 };
 
 export function ConfirmationPage({
   submittedTo = "the Registration Department",
+  onReset,
 }: ConfirmationPageProps) {
-  const router = useRouter();
-  const resetForm = useFormStore((state) => state.resetForm);
-
-  const handleStartOver = () => {
-    // Reset the Zustand store
-    resetForm();
-
-    // Navigate back to the form (removing query params forces a fresh start)
-    router.push(window.location.pathname);
-  };
   return (
     <>
       {/* Header section with breadcrumb and title */}
@@ -73,7 +63,7 @@ export function ConfirmationPage({
               <p>Content</p>
             </div>
           </div>
-          <Button onClick={handleStartOver}>Start Over</Button>
+          <Button onClick={onReset}>Start Over</Button>
         </div>
       </div>
     </>
