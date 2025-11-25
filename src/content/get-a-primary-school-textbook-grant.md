@@ -1,6 +1,5 @@
 ---
 title: "Get a Primary School Textbook Grant"
-featured: true
 stage: "alpha"
 publish_date: 2025-11-21
 ---
