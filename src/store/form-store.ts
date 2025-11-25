@@ -9,6 +9,7 @@ type FormProgress = {
   lastSaved: string | null;
   isSubmitted: boolean;
   referenceNumber: string | null;
+  totalSteps: number;
 };
 
 type FormStore = {
@@ -19,10 +20,12 @@ type FormStore = {
   lastSaved: string | null;
   isSubmitted: boolean;
   referenceNumber: string | null;
+  totalSteps: number;
   _hasHydrated: boolean;
 
   // Actions
   setCurrentStep: (step: number) => void;
+  setTotalSteps: (total: number) => void;
   nextStep: () => void;
   prevStep: () => void;
   markStepComplete: (step: number) => void;
@@ -40,6 +43,7 @@ const initialState: FormProgress = {
   lastSaved: null,
   isSubmitted: false,
   referenceNumber: null,
+  totalSteps: 1,
 };
 
 export const useFormStore = create<FormStore>()(
@@ -50,6 +54,10 @@ export const useFormStore = create<FormStore>()(
 
       setCurrentStep: (step: number) => {
         set({ currentStep: step });
+      },
+
+      setTotalSteps: (total: number) => {
+        set({ totalSteps: total });
       },
 
       nextStep: () => {
@@ -87,7 +95,7 @@ export const useFormStore = create<FormStore>()(
 
       getProgress: () => {
         const state = get();
-        const totalSteps = 8;
+        const totalSteps = state.totalSteps || 1;
         return Math.round((state.completedSteps.length / totalSteps) * 100);
       },
 
