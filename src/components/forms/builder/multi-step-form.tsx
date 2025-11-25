@@ -157,10 +157,10 @@ export default function DynamicMultiStepForm({
     const isReviewStep = formSteps[currentStep].fields.length === 0;
 
     if (isReviewStep) {
-      // No validation needed for review step, just proceed
+      // Review step complete, trigger form submission
       markStepComplete(currentStep);
-      isProgrammaticNavigation.current = true;
-      nextStepStore();
+      // Trigger the form submission
+      await methods.handleSubmit(onSubmit)();
       return;
     }
     const currentFields = formSteps[currentStep].fields.map((f) => f.name);
@@ -254,15 +254,12 @@ export default function DynamicMultiStepForm({
             </Button>
           )}
 
-          {/* {currentStep < formSteps.length - 1 ? (
-            <Button onClick={nextStep} type="button">
-              Continue
+          {/* Show Continue button on review step, even if it's technically the last step */}
+          {isReviewStep ? (
+            <Button disabled={isSubmitting} onClick={nextStep} type="button">
+              Continue to submit
             </Button>
-          ) : (
-            <Button type="submit">Submit</Button>
-          )} */}
-
-          {isLastStep ? (
+          ) : isLastStep ? (
             <Button disabled={isSubmitting} type="submit">
               {isSubmitting ? (
                 <>
@@ -275,7 +272,7 @@ export default function DynamicMultiStepForm({
             </Button>
           ) : (
             <Button disabled={isSubmitting} onClick={nextStep} type="button">
-              {isReviewStep ? "Continue" : "Next"}
+              Next
             </Button>
           )}
         </div>
