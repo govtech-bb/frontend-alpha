@@ -84,7 +84,7 @@ export const formSteps: FormStep[] = [
         label: "Do you have experience in this discipline?",
         type: "radio",
         validation: {
-          required: "Please select an option",
+          required: "Experience in this discipline is required",
         },
         options: [
           { label: "Yes", value: "true" },
@@ -103,7 +103,7 @@ export const formSteps: FormStep[] = [
         label: "What level of experience do you have?",
         type: "radio",
         validation: {
-          required: "Please select your experience level",
+          required: "Experience level is required",
         },
         options: [
           { label: "School", value: "school" },
@@ -137,7 +137,7 @@ export const formSteps: FormStep[] = [
         label: "What is your employment status?",
         type: "radio",
         validation: {
-          required: "Please select your employment status",
+          required: "Employment status is required",
         },
         options: [
           { label: "Studying", value: "studying" },
@@ -158,7 +158,7 @@ export const formSteps: FormStep[] = [
         label: "Do you belong to any organizations?",
         type: "radio",
         validation: {
-          required: "Please select an option",
+          required: "Organizational membership is required",
         },
         options: [
           { label: "Yes", value: "true" },

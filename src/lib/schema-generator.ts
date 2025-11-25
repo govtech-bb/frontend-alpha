@@ -29,7 +29,10 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     (field.name === "disciplineExperience" ||
       field.name === "belongsToOrganizations")
   ) {
-    schema = z.enum(["true", "false"]); //TODO: Fix validation message
+    // schema = z.enum(["true", "false"]); //TODO: Fix validation message
+    schema = z.enum(["true", "false"], {
+      message: validation.required || "This field is required",
+    });
     return schema;
   }
 
@@ -39,7 +42,12 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
       string,
       ...string[],
     ];
-    schema = z.enum(values); //TODO: Fix validation message
+    // schema = z.enum(values); //TODO: Fix validation message
+    schema = z.enum(values, {
+      error: () => ({
+        message: validation.required || "This field is required",
+      }),
+    });
     return schema;
   }
 
