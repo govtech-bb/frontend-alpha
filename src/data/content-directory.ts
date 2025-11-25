@@ -138,6 +138,13 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         description:
           "Information on how to apply for disaster relief assistance in Barbados, including eligibility criteria and required documentation.",
       },
+      {
+        title: "Get a Primary School Textbook Grant",
+        slug: "get-a-primary-school-textbook-grant",
+        source_url: "",
+        description:
+          "Each year, every child is entitled to a BDS $100 textbook grant while they are a student at a public or private primary school.",
+      },
     ],
   },
   // {
