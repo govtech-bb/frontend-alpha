@@ -19,11 +19,11 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         ],
       },
       {
-        title: "Marriage licences",
-        slug: "marriage-licences",
-        source_url: "https://www.gov.bb/Citizens/marriage-licence",
+        title: "Get a birth certificate",
+        slug: "get-birth-certificate",
+        source_url: "",
         description:
-          "Information on the requirements and procedures for obtaining a marriage license in Barbados.",
+          "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
       {
         title: "Register a death",
@@ -33,19 +33,6 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to register a death and obtain a death certificate in Barbados.",
       },
       {
-        title: "Register a marriage",
-        slug: "register-a-marriage",
-        source_url: "https://www.gov.bb/Citizens/register-marriage",
-        description:
-          "Information on how to register a marriage certificate in Barbados, including required documents and contact details for the Registration Department.",
-      },
-      {
-        title: "Apply for a place at a day nursery",
-        slug: "apply-for-a-place-at-a-day-nursery",
-        source_url: "",
-        description: "",
-      },
-      {
         title: "Get a death certificate",
         slug: "get-a-death-certificate",
         source_url: "",
@@ -53,11 +40,24 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
       {
-        title: "Get a birth certificate",
-        slug: "get-birth-certificate",
-        source_url: "",
+        title: "Register a marriage",
+        slug: "register-a-marriage",
+        source_url: "https://www.gov.bb/Citizens/register-marriage",
         description:
-          "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
+          "Information on how to register a marriage certificate in Barbados, including required documents and contact details for the Registration Department.",
+      },
+      {
+        title: "Marriage licences",
+        slug: "marriage-licences",
+        source_url: "https://www.gov.bb/Citizens/marriage-licence",
+        description:
+          "Information on the requirements and procedures for obtaining a marriage license in Barbados.",
+      },
+      {
+        title: "Apply for a place at a day nursery",
+        slug: "apply-for-a-place-at-a-day-nursery",
+        source_url: "",
+        description: "",
       },
     ],
   },
