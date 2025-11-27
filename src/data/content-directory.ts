@@ -1,6 +1,6 @@
-import type { ServiceCategoryType } from "@/types/content";
+import type { InformationContent } from "@/types/content";
 
-export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
+export const INFORMATION_ARCHITECTURE: InformationContent[] = [
   {
     title: "Family, birth and relationships",
     slug: "family-birth-relationships",
@@ -15,15 +15,15 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to register a birth in Barbados, including who can register, the required documents, and any associated fees.",
         subPages: [
           { slug: "start", type: "markdown" },
-          { slug: "form", type: "component" },
+          { slug: "form", title: "Register a Birth form", type: "component" },
         ],
       },
       {
-        title: "Marriage licences",
-        slug: "marriage-licences",
-        source_url: "https://www.gov.bb/Citizens/marriage-licence",
+        title: "Get a birth certificate",
+        slug: "get-birth-certificate",
+        source_url: "",
         description:
-          "Information on the requirements and procedures for obtaining a marriage license in Barbados.",
+          "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
       {
         title: "Register a death",
@@ -33,19 +33,6 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to register a death and obtain a death certificate in Barbados.",
       },
       {
-        title: "Register a marriage",
-        slug: "register-a-marriage",
-        source_url: "https://www.gov.bb/Citizens/register-marriage",
-        description:
-          "Information on how to register a marriage certificate in Barbados, including required documents and contact details for the Registration Department.",
-      },
-      {
-        title: "Apply for a place at a day nursery",
-        slug: "apply-for-a-place-at-a-day-nursery",
-        source_url: "",
-        description: "",
-      },
-      {
         title: "Get a death certificate",
         slug: "get-a-death-certificate",
         source_url: "",
@@ -53,11 +40,24 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
           "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
       {
-        title: "Get a birth certificate",
-        slug: "get-birth-certificate",
-        source_url: "",
+        title: "Register a marriage",
+        slug: "register-a-marriage",
+        source_url: "https://www.gov.bb/Citizens/register-marriage",
         description:
-          "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
+          "Information on how to register a marriage certificate in Barbados, including required documents and contact details for the Registration Department.",
+      },
+      {
+        title: "Marriage licences",
+        slug: "marriage-licences",
+        source_url: "https://www.gov.bb/Citizens/marriage-licence",
+        description:
+          "Information on the requirements and procedures for obtaining a marriage license in Barbados.",
+      },
+      {
+        title: "Apply for a place at a day nursery",
+        slug: "apply-for-a-place-at-a-day-nursery",
+        source_url: "",
+        description: "",
       },
     ],
   },
@@ -77,6 +77,14 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         title: "Apply to be a Project Protégé mentor",
         slug: "apply-to-be-a-project-protege-mentor",
         description: "Apply to be a Project Protégé mentor",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Apply to be a Project Protégé mentor",
+            type: "component",
+          },
+        ],
       },
       {
         title: "Apply to the Barbados YouthADVANCE Corps (BYAC)",
@@ -89,6 +97,14 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         slug: "register-for-community-sports-training-programme",
         description:
           "Register for a Youth Development Programme (YDP) Community Sports Training programme",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Register for Training Form",
+            type: "component",
+          },
+        ],
       },
       {
         title: "Register for a summer camp",
@@ -113,9 +129,9 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
     description: "Get help with money, benefits, taxes or government payments",
     pages: [
       {
-        title: "Apply for Financial Assistance",
+        title: "Apply for financial assistance",
         slug: "apply-financial-assistance",
-        description: "Apply for Financial Assistance",
+        description: "Apply for financial assistance",
       },
       {
         title: "EZPay",
@@ -138,6 +154,13 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
         description:
           "Information on how to apply for disaster relief assistance in Barbados, including eligibility criteria and required documentation.",
       },
+      {
+        title: "Get a Primary School Textbook Grant",
+        slug: "get-a-primary-school-textbook-grant",
+        source_url: "",
+        description:
+          "Each year, every child is entitled to a BDS $100 textbook grant while they are a student at a public or private primary school.",
+      },
     ],
   },
   // {
@@ -147,7 +170,7 @@ export const SERVICE_CATEGORIES: ServiceCategoryType[] = [
   //   pages: [],
   // },
   {
-    title: "Travel, ID and Citizenship",
+    title: "Travel, ID and citizenship",
     slug: "travel-id-citizenship",
     description: "Travel, drive or prove your identity and status",
     pages: [

@@ -22,16 +22,24 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Pull Requests
 
-We utilize [trunk-based development](https://trunkbaseddevelopment.com/) whereby all changes are submitted as a Pull Request to the `main` (base) branch. Each PR is then automatically tested using Github CI/CD and AWS Inspector. PRs are also reviewed manually and if approved, are merged.
+We utilize [trunk-based development](https://trunkbaseddevelopment.com/) whereby all changes are submitted as a Pull Request to the `main` (base) branch. Each PR is then automatically tested using Github CI/CD and AWS Code Inspection Tools. PRs are also reviewed manually and if approved, are merged.
 
 PRs are not merged if the build or tests are failing. 
 
-### Add new Markdown Content
+### Add new Entry Points
 
-New markdown content must be added to `/src/content` folder. Note that the code uses frontmatter to identify the following about the content:
+New Entry Points must be added to `/src/content` folder as markdown files. 
 
-- Display "alpha" banner depending on the value of the "stage" attribute
-- Add a link from the homepage to an entry point if the "featured" attribute is set to `true`
+Each markdown file must have one or more of the following attributes in its frontmatter:
+
+- Title (mandatory)
+- Description 
+- Stage: used to display a banner
+- Source_url: used to identify where the content was sourced/migrated from
+- Featured: used to add a link on the homepage to the entry point
+- Publish_date (mandatory)
+
+Additionally, the `content-directory.ts` must be updated to list the new entry point in the respective category
 
 > When adding new markdown content, make sure that you update the test snapshots. See below for instructions
 

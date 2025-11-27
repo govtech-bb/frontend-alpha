@@ -34,6 +34,7 @@ export function useStepFocus(stepTitle: string, formName: string) {
     }
 
     // Update document title for browser tabs and screen readers
+    // NOTE: This conflicts with the generateMetadata()
     document.title = `${stepTitle} - ${formName} - Government of Barbados`;
   }, [stepTitle, formName]);
 
