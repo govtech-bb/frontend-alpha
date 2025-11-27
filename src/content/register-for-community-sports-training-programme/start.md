@@ -1,5 +1,5 @@
 ---
-title: "YDP Community Sports - Start"
+title: "Register for a Youth Development Programme (YDP) Community Sports Training Programme"
 stage: "beta"
 ---
 
