@@ -77,6 +77,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Apply to be a Project Protégé mentor",
         slug: "apply-to-be-a-project-protege-mentor",
         description: "Apply to be a Project Protégé mentor",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Apply to be a Project Protégé mentor",
+            type: "component",
+          },
+        ],
       },
       {
         title: "Apply to the Barbados YouthADVANCE Corps (BYAC)",
