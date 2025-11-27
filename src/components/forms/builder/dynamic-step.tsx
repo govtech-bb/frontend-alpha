@@ -1,5 +1,6 @@
 import { ErrorSummary, Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
+import { StageBanner } from "@/components/stage-banner";
 import type { FormData } from "@/lib/schema-generator";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
@@ -39,6 +40,7 @@ export function DynamicStep({ step }: { step: FormStep }) {
 
   return (
     <div className="space-y-8">
+      <StageBanner stage="alpha" />
       <div>
         <Heading as="h1" className="mb-4 focus:outline-none lg:mb-2">
           {step.title}
