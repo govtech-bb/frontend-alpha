@@ -5,7 +5,7 @@ featured: false
 publish_date: 2025-10-17
 ---
 
-Anyone aged 18 and over is eligible to apply to mentor a young person between the age of 13 and 17 in the [Project Protege programme](https://www.mysce.gov.bb/event_detail/5). Mentors are volunteers who are able to commit regular time to support and inspire their mentee.
+Anyone aged 18 and over is eligible to apply to mentor a young person between the age of 13 and 17 in the Project Protege programme. Mentors are volunteers who are able to commit regular time to support and inspire their mentee.
 
 Applications are accepted all year round.
 
@@ -13,9 +13,9 @@ Applications are accepted all year round.
 
 ### Complete an application form
 
-An application form is available to download on the [Project Protégé website](https://www.mysce.gov.bb/event_detail/5).
+You can [download an application form](/NEW_Mentor_Application_-_2024_2025.pdf).
 
-Paper forms are available from:
+Or you can collect a paper form from:
 
 Ministry of Youth, Sports and Community Empowerment  
 Sky Mall  
