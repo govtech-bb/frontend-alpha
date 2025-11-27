@@ -249,7 +249,7 @@ export default function DynamicMultiStepForm({
 
   return (
     <FormProvider {...methods}>
-      <form className="p-6" onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
         {/* Error Message */}
         {submissionError && (
           <div className="mb-6 border-red-500 border-l-4 bg-red-50 p-4">

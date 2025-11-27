@@ -1,5 +1,6 @@
 "use client";
 
+import { Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
@@ -91,27 +92,28 @@ export function ReviewStep({ onEdit }: ReviewStepProps) {
     .filter((section) => section.items.length > 0); // Only show sections with data
 
   return (
-    <div className="space-y-8">
-      <div className="mb-6">
-        <h1 className="mb-4 font-bold text-[56px] leading-[1.15] focus:outline-none lg:mb-2">
+    <div className="space-y-6 lg:w-2/3 lg:space-y-8">
+      <div>
+        <Heading className="mb-4 focus:outline-none" size="h1">
           Check your answers
-        </h1>
-        <p className="mt-1 text-gray-600">
-          Review the answers you've given carefully.
-        </p>
-        <p className="mt-1 text-gray-600">
+        </Heading>
+        <Text as="p">Review the answers you&apos;ve given carefully.</Text>
+
+        <Text as="p" className="hidden lg:block">
           Incorrect information may be difficult to change after registration.
-        </p>
+        </Text>
       </div>
 
       {sections.map((section) => (
-        <div className="border-gray-200 border-b pb-6" key={section.title}>
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-800 text-lg">
-              {section.title}
-            </h3>
+        <div
+          className="border-neutral-grey border-b-4 pb-7"
+          key={section.title}
+        >
+          <div className="mb-4 flex items-center justify-between lg:gap-x-2">
+            <Heading as="h2">{section.title}</Heading>
+            {/* !!! To replace with the link variant on button component */}
             <button
-              className="font-medium text-blue-600 text-sm underline hover:text-blue-800"
+              className="hidden text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:inline"
               onClick={() => onEdit(section.stepIndex)}
               type="button"
             >
@@ -119,18 +121,22 @@ export function ReviewStep({ onEdit }: ReviewStepProps) {
             </button>
           </div>
 
-          <dl className="grid grid-cols-1 gap-4">
+          <dl className="grid grid-cols-1 gap-2 font-normal text-[20px] leading-[1.7] lg:gap-4">
             {section.items.map((item, index) => (
-              <div className="flex flex-col sm:flex-row sm:gap-4" key={index}>
-                <dt className="font-medium text-gray-500 text-sm sm:w-1/3">
-                  {item.label}
-                </dt>
-                <dd className="mt-1 text-gray-900 text-sm sm:mt-0 sm:w-2/3">
-                  {item.value}
-                </dd>
+              <div className="flex flex-col sm:flex-row lg:gap-x-2" key={index}>
+                <dt className="font-bold sm:w-1/3">{item.label}</dt>
+                <dd className="sm:w-2/3">{item.value}</dd>
               </div>
             ))}
           </dl>
+          {/* !!! To replace with the link variant on button component */}
+          <button
+            className="py-2 font-normal text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:hidden"
+            onClick={() => onEdit(section.stepIndex)}
+            type="button"
+          >
+            Change
+          </button>
         </div>
       ))}
     </div>
