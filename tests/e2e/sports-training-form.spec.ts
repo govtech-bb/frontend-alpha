@@ -22,15 +22,31 @@ function generateBarbadosPhoneNumber(): string {
 }
 
 /**
- * Helper function to generate a date in MM/DD/YYYY format
+ * Helper function to generate date parts for the custom date input
  * Generates dates for people aged 18-35 (typical sports programme participants)
  */
-function generateDateOfBirth(): string {
+function generateDateOfBirth(): { day: string; month: string; year: string } {
   const date = faker.date.birthdate({ min: 18, max: 35, mode: "age" });
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const year = date.getFullYear();
-  return `${month}/${day}/${year}`;
+  const day = String(date.getDate());
+  const month = String(date.getMonth() + 1);
+  const year = String(date.getFullYear());
+  return { day, month, year };
+}
+
+/**
+ * Helper function to fill the three-part date input field
+ * @param page - Playwright page object
+ * @param fieldId - The base ID of the date field (e.g., "dateOfBirth")
+ * @param date - Object containing day, month, and year strings
+ */
+async function fillDateField(
+  page: any,
+  fieldId: string,
+  date: { day: string; month: string; year: string }
+) {
+  await page.locator(`#${fieldId}-day`).fill(date.day);
+  await page.locator(`#${fieldId}-month`).fill(date.month);
+  await page.locator(`#${fieldId}-year`).fill(date.year);
 }
 
 test.describe("Community Sports Training Programme Form", () => {
@@ -75,6 +91,7 @@ test.describe("Community Sports Training Programme Form", () => {
 
       // Step 5: Organizations
       belongsToOrganizations: faker.datatype.boolean(),
+      organizationNames: [faker.company.name()],
 
       // Step 6: Contact Details
       addressLine1: faker.location.streetAddress(),
@@ -143,7 +160,7 @@ test.describe("Community Sports Training Programme Form", () => {
 
     await page.getByLabel("First Name").fill(testData.firstName);
     await page.getByLabel("Last Name").fill(testData.lastName);
-    await page.getByLabel("Date of Birth").fill(testData.dateOfBirth);
+    await fillDateField(page, "dateOfBirth", testData.dateOfBirth);
     await page.getByLabel("Gender").selectOption(testData.gender);
 
     // Click Next button
@@ -205,6 +222,43 @@ test.describe("Community Sports Training Programme Form", () => {
     // Click the radio button - each step only has its own radiogroup visible
     if (testData.belongsToOrganizations) {
       await page.locator('button[role="radio"][value="true"]').first().click();
+
+      // Fill in the first organization name (field array appears after selecting "Yes")
+      // Wait for the conditional field to appear
+      await page.waitForSelector(
+        'input[placeholder="Enter organisation name"]'
+      );
+      await page
+        .locator('input[placeholder="Enter organisation name"]')
+        .first()
+        .fill(testData.organizationNames[0]);
+
+      // Remove any extra empty organization entries that may exist
+      // Wait a moment for the form state to update
+      await page.waitForTimeout(100);
+
+      // Find all Remove buttons and check for empty inputs
+      // Click Remove for any entry that still has empty input
+      const removeButtons = page.locator('button:has-text("Remove")');
+      const buttonCount = await removeButtons.count();
+
+      // Go through in reverse to avoid index shifting when removing
+      for (let i = buttonCount - 1; i >= 0; i--) {
+        const removeBtn = removeButtons.nth(i);
+        // Get the container div that holds both input and button
+        const container = removeBtn.locator("..");
+        const input = container.locator(
+          'input[placeholder="Enter organisation name"]'
+        );
+        if ((await input.count()) > 0) {
+          const value = await input.inputValue();
+          if (!value) {
+            await removeBtn.click();
+            // Wait for UI to update
+            await page.waitForTimeout(100);
+          }
+        }
+      }
     } else {
       await page.locator('button[role="radio"][value="false"]').first().click();
     }
@@ -268,8 +322,8 @@ test.describe("Community Sports Training Programme Form", () => {
     await expect(page.getByText(testData.lastName)).toBeVisible();
     await expect(page.getByText(testData.disciplineOfInterest)).toBeVisible();
 
-    // Click Continue to submit
-    await page.getByRole("button", { name: "Continue to submit" }).click();
+    // Click Submit button
+    await page.getByRole("button", { name: "Submit" }).click();
 
     // Wait for submission (you may need to adjust this based on your actual implementation)
     // This assumes the form navigates to a confirmation page or shows a success message
@@ -312,10 +366,11 @@ test.describe("Community Sports Training Programme Form", () => {
         .filter({ hasText: /last name is required/i })
         .first()
     ).toBeVisible();
+    // Date field errors will appear in the dateOfBirth error element
     await expect(
       page
         .locator('p[role="alert"]')
-        .filter({ hasText: /date of birth is required/i })
+        .filter({ hasText: /date of birth|required/i })
         .first()
     ).toBeVisible();
     await expect(
@@ -337,7 +392,11 @@ test.describe("Community Sports Training Programme Form", () => {
     // Fill first step
     await page.getByLabel("First Name").fill("John");
     await page.getByLabel("Last Name").fill("Doe");
-    await page.getByLabel("Date of Birth").fill("01/15/1995");
+    await fillDateField(page, "dateOfBirth", {
+      day: "15",
+      month: "1",
+      year: "1995",
+    });
     await page.getByLabel("Gender").selectOption("male");
 
     // Move to next step
@@ -361,6 +420,9 @@ test.describe("Community Sports Training Programme Form", () => {
     // Verify data is still there
     await expect(page.getByLabel("First Name")).toHaveValue("John");
     await expect(page.getByLabel("Last Name")).toHaveValue("Doe");
+    await expect(page.locator("#dateOfBirth-day")).toHaveValue("15");
+    await expect(page.locator("#dateOfBirth-month")).toHaveValue("1");
+    await expect(page.locator("#dateOfBirth-year")).toHaveValue("1995");
   });
 
   test("should validate phone number format", async ({ page }) => {
@@ -375,7 +437,11 @@ test.describe("Community Sports Training Programme Form", () => {
     // Fill minimum required fields to get through previous steps
     await page.getByLabel("First Name").fill("John");
     await page.getByLabel("Last Name").fill("Doe");
-    await page.getByLabel("Date of Birth").fill("01/15/1995");
+    await fillDateField(page, "dateOfBirth", {
+      day: "15",
+      month: "1",
+      year: "1995",
+    });
     await page.getByLabel("Gender").selectOption("male");
     await page.getByRole("button", { name: "Next" }).click();
 
@@ -418,18 +484,22 @@ test.describe("Community Sports Training Programme Form", () => {
 
     await page.waitForLoadState("domcontentloaded");
 
-    // Fill with invalid date
+    // Fill with invalid date (invalid day)
     await page.getByLabel("First Name").fill("John");
     await page.getByLabel("Last Name").fill("Doe");
-    await page.getByLabel("Date of Birth").fill("invalid-date");
+    await fillDateField(page, "dateOfBirth", {
+      day: "32", // Invalid day
+      month: "1",
+      year: "1995",
+    });
     await page.getByLabel("Gender").selectOption("male");
     await page.getByRole("button", { name: "Next" }).click();
 
-    // Should show date validation error
+    // Should show date validation error (use first() since there are two alert elements)
     await expect(
       page
-        .locator('p[role="alert"]')
-        .filter({ hasText: /date must be in MM\/DD\/YYYY format/i })
+        .getByRole("alert")
+        .filter({ hasText: /enter a valid date/i })
         .first()
     ).toBeVisible();
   });
