@@ -140,13 +140,18 @@ export default function DynamicMultiStepForm({
 
     try {
       // Submit to API
-      const result = await submitFormData(data);
+      const result = await submitFormData({ data, formKey: storageKey });
 
       if (result.success) {
         // Mark as submitted in store
-        markAsSubmitted(result.referenceNumber || "N/A");
+        markAsSubmitted(result.data?.submissionId || "N/A");
       } else {
-        throw new Error(result.error || "Submission failed");
+        const errorMessage = result.errors
+          ? result.errors[0]?.message
+          : "An unexpected error occurred";
+        // biome-ignore lint/suspicious/noConsole: <explanation>
+        console.error(`Submission failed: ${errorMessage}`);
+        // throw new Error("Submission failed");
       }
     } catch (error) {
       setSubmissionError(
@@ -275,8 +280,13 @@ export default function DynamicMultiStepForm({
 
         {/* Navigation Buttons */}
         <div className="mt-8 flex gap-4">
-          {currentStep > 0 && !isSubmitting && (
-            <Button onClick={prevStep} type="button" variant="secondary">
+          {currentStep > 0 && (
+            <Button
+              disabled={isSubmitting}
+              onClick={prevStep}
+              type="button"
+              variant="secondary"
+            >
               Previous
             </Button>
           )}
@@ -284,7 +294,14 @@ export default function DynamicMultiStepForm({
           {/* Show Continue button on review step, even if it's technically the last step */}
           {isReviewStep ? (
             <Button disabled={isSubmitting} onClick={nextStep} type="button">
-              Continue to submit
+              {isSubmitting ? (
+                <>
+                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
+                  Submitting...
+                </>
+              ) : (
+                "Submit"
+              )}
             </Button>
           ) : isLastStep ? (
             <Button disabled={isSubmitting} type="submit">
