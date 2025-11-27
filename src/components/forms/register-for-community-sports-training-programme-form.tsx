@@ -7,7 +7,7 @@ export default function RegisterForCommunitySportsTrainingProgrammeForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      storageKey="sports-training-programme-form"
+      storageKey="community-sports-programme"
     />
   );
 }
