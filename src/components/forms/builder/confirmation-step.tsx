@@ -1,8 +1,10 @@
 "use client";
 import { Button, Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 
 type ConfirmationPageProps = {
   referenceNumber?: string;
@@ -10,44 +12,52 @@ type ConfirmationPageProps = {
   onReset: () => void;
 };
 
+//TODO: This confirmation page should be dynamic based on the form schema
 export function ConfirmationPage({
-  submittedTo = "the Registration Department",
+  submittedTo = "the Youth Development Programme",
   onReset,
 }: ConfirmationPageProps) {
+  const pathname = usePathname();
+  const pathSegments = pathname.split("/").filter(Boolean);
+  const categorySlug = pathSegments[0];
+  const category = INFORMATION_ARCHITECTURE.find(
+    (cat) => cat.slug === categorySlug
+  );
+
   return (
     <>
       {/* Header section with breadcrumb and title */}
       <div className="bg-green-40">
         <div className="container pt-4 pb-8 lg:pt-0">
           {/* Breadcrumb */}
-          <div className="container lg:py-4">
-            <div className="flex items-center">
-              <div className="flex items-center gap-x-2">
-                <ChevronLeftSVG className="shrink-0" />
+          {category ? (
+            <div className="container lg:py-4">
+              <div className="flex items-center">
+                <div className="flex items-center gap-x-2">
+                  <ChevronLeftSVG className="shrink-0" />
 
-                <Link
-                  as={NextLink}
-                  className="text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
-                  href="#"
-                  variant={"secondary"}
-                >
-                  Family, birth and relationships
-                </Link>
+                  <Link
+                    as={NextLink}
+                    className="text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                    href={`/${categorySlug}`}
+                    variant={"secondary"}
+                  >
+                    {category.title}
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
 
           {/* Title section */}
           <div className="flex flex-col gap-4 pt-6 lg:pt-16">
             <Heading className="focus:outline-none" size="h1" tabIndex={-1}>
-              Application submitted
+              Thank you for registering
             </Heading>
-            {/* <h1 className="pt-2 font-bold text-[56px] text-black leading-[1.15]">
-              Application submitted
-            </h1> */}
 
             <p className="font-normal text-[32px] text-neutral-black leading-[1.7] lg:leading-[1.5]">
-              Your information has been sent to {submittedTo}.
+              Your information has been sent to the {submittedTo}, the
+              coordinating programme in the Division of Youth Affairs
             </p>
           </div>
         </div>
@@ -60,15 +70,16 @@ export function ConfirmationPage({
 
           <div>
             <Heading as="h2" className="pb-4 lg:pb-2">
-              Sub heading
+              What happens next?
             </Heading>
-            <Text as="p">Content</Text>
-          </div>
-          <div>
-            <Heading as="h3" className="pb-4 lg:pb-2">
-              Sub heading
-            </Heading>
-            <Text as="p">Content</Text>
+            <Text as="p">
+              The Youth Commissioner will be in touch shortly to confirm:
+            </Text>
+            <ul className="list-disc pl-7 text-[20px] leading-[1.5]">
+              <li>the location of the programme</li>
+              <li>the start date and times</li>
+              <li>what you will need to bring</li>
+            </ul>
           </div>
 
           <Button onClick={onReset}>Start Over</Button>
