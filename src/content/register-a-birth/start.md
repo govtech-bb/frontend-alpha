@@ -1,6 +1,6 @@
 ---
 title: "Register a Birth"
-stage: "beta"
+stage: "alpha"
 publish_date: 2025-11-03
 ---
 
