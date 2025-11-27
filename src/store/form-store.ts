@@ -150,9 +150,3 @@ export function createFormStore(
 
   return store;
 }
-
-/**
- * Default form store instance
- * For backwards compatibility with existing code
- */
-export const useFormStore = createFormStore("multi-step-form-storage");

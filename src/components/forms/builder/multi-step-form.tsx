@@ -46,7 +46,6 @@ export default function DynamicMultiStepForm({
     // getProgress,
     markAsSubmitted,
   } = useFormStore();
-  // console.log(formData);
 
   const [isFormReady, setIsFormReady] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
