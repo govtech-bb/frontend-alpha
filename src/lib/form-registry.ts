@@ -10,6 +10,9 @@ export const FORM_COMPONENTS = {
         "@/components/forms/register-for-community-sports-training-programme-form"
       )
   ),
+  "apply-to-be-a-project-protege-mentor": lazy(
+    () => import("@/components/forms/project-protege-mentor")
+  ),
   // Add other forms here
 } as const;
 

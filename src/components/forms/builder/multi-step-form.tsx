@@ -3,11 +3,11 @@
 import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
-import { type FormData, formSchema } from "@/lib/schema-generator";
+import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormStep } from "@/types";
@@ -51,6 +51,9 @@ export default function DynamicMultiStepForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const isProgrammaticNavigation = useRef(false);
+
+  // Generate schema dynamically from the formSteps prop
+  const formSchema = useMemo(() => generateFormSchema(formSteps), [formSteps]);
 
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -177,20 +180,62 @@ export default function DynamicMultiStepForm({
     }
 
     // Filter out fields that are conditionally hidden
-    const currentFields = formSteps[currentStep].fields
-      .filter((field) => {
-        // Include field if it has no conditional rule
-        if (!field.conditionalOn) return true;
+    const visibleFields = formSteps[currentStep].fields.filter((field) => {
+      // Include field if it has no conditional rule
+      if (!field.conditionalOn) return true;
 
-        // Check if conditional field should be visible
-        const watchedValue = methods.watch(
-          field.conditionalOn.field as keyof FormData
-        );
-        return watchedValue === field.conditionalOn.value;
-      })
-      .map((f) => f.name);
+      // Check if conditional field should be visible
+      const watchedValue = methods.watch(
+        field.conditionalOn.field as keyof FormData
+      );
+      return watchedValue === field.conditionalOn.value;
+    });
 
-    const isValid = await methods.trigger(currentFields as (keyof FormData)[]);
+    const currentFieldNames = visibleFields.map((f) => f.name);
+
+    // Trigger standard validation first
+    let isValid = await methods.trigger(
+      currentFieldNames as (keyof FormData)[]
+    );
+
+    // Manually validate conditional fields (required and pattern)
+    for (const field of visibleFields) {
+      if (field.conditionalOn) {
+        const fieldValue = methods.getValues(field.name as keyof FormData);
+        const stringValue = typeof fieldValue === "string" ? fieldValue : "";
+
+        // Check required validation
+        if (field.validation.required) {
+          const isEmpty =
+            fieldValue === undefined ||
+            fieldValue === null ||
+            fieldValue === "" ||
+            (typeof fieldValue === "string" && fieldValue.trim() === "") ||
+            (typeof fieldValue === "number" && Number.isNaN(fieldValue));
+
+          if (isEmpty) {
+            methods.setError(field.name as keyof FormData, {
+              type: "required",
+              message: field.validation.required,
+            });
+            isValid = false;
+            continue; // Skip pattern check if empty
+          }
+        }
+
+        // Check pattern validation
+        if (field.validation.pattern && stringValue) {
+          const regex = new RegExp(field.validation.pattern.value);
+          if (!regex.test(stringValue)) {
+            methods.setError(field.name as keyof FormData, {
+              type: "pattern",
+              message: field.validation.pattern.message,
+            });
+            isValid = false;
+          }
+        }
+      }
+    }
 
     if (isValid) {
       // Mark current step as complete
@@ -205,7 +250,7 @@ export default function DynamicMultiStepForm({
         errorSummary.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
         // Fallback to first error field if ErrorSummary not found
-        const firstErrorField = currentFields.find(
+        const firstErrorField = currentFieldNames.find(
           (field) => methods.formState.errors[field]
         );
         if (firstErrorField) {
@@ -272,7 +317,7 @@ export default function DynamicMultiStepForm({
         )}
         {/* Current Step - Show Review or Regular Step */}
         {isReviewStep ? (
-          <ReviewStep onEdit={handleEditFromReview} />
+          <ReviewStep formSteps={formSteps} onEdit={handleEditFromReview} />
         ) : (
           <DynamicStep step={formSteps[currentStep]} />
         )}

@@ -41,6 +41,7 @@ export type FormField = {
   label: string;
   type: FieldType;
   placeholder?: string;
+  hint?: string; // Description text displayed below the label
   validation: ValidationRule;
   options?: SelectOption[]; // For select and radio fields
   rows?: number; // For textarea

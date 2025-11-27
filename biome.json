@@ -16,6 +16,9 @@
       "suspicious": {
         "noUnknownAtRules": "off",
         "noArrayIndexKey": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off"
       }
     }
   },
