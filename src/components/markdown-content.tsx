@@ -126,7 +126,11 @@ export const MarkdownContent = ({
     <div className="lg:grid lg:grid-cols-3 lg:gap-16">
       <div className="space-y-6 lg:col-span-2 lg:space-y-8">
         <div className="space-y-4 lg:space-y-6">
-          {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
+          {frontmatter.title && (
+            <Heading as="h1" className="break-anywhere">
+              {frontmatter.title}
+            </Heading>
+          )}
 
           {frontmatter.stage?.length > 0 ? (
             <StageBanner stage={frontmatter.stage} />
