@@ -1,9 +1,68 @@
-/** biome-ignore-all lint/complexity/noForEach: <explanation> */
 import { z } from "zod";
 import { isValidBirthDate } from "@/lib/dates";
 import type { FormField, FormStep } from "@/types";
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
+/**
+ * Sets a nested value in an object using dot notation path
+ * Creates intermediate objects as needed
+ * @example setNestedValue({}, "guardian.firstName", schema) -> { guardian: { firstName: schema } }
+ */
+function setNestedValue<T>(
+  obj: Record<string, unknown>,
+  path: string,
+  value: T
+): void {
+  const keys = path.split(".");
+  let current = obj;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!(key in current) || typeof current[key] !== "object") {
+      current[key] = {};
+    }
+    current = current[key] as Record<string, unknown>;
+  }
+
+  const lastKey = keys.at(-1);
+  if (lastKey) {
+    current[lastKey] = value;
+  }
+}
+
+/**
+ * Gets a nested value from an object using dot notation path
+ */
+function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
+  const keys = path.split(".");
+  let current: unknown = obj;
+
+  for (const key of keys) {
+    if (current === null || current === undefined) return;
+    current = (current as Record<string, unknown>)[key];
+  }
+
+  return current;
+}
+
+/**
+ * Converts a nested plain object of schemas into a nested Zod object schema
+ */
+function objectToZodSchema(
+  obj: Record<string, unknown>
+): z.ZodObject<Record<string, z.ZodTypeAny>> {
+  const shape: Record<string, z.ZodTypeAny> = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (value instanceof z.ZodType) {
+      shape[key] = value;
+    } else if (typeof value === "object" && value !== null) {
+      shape[key] = objectToZodSchema(value as Record<string, unknown>);
+    }
+  }
+
+  return z.object(shape);
+}
+
 function createFieldSchema(field: FormField): z.ZodTypeAny {
   let schema: z.ZodTypeAny = z.string();
 
@@ -164,16 +223,16 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
   return schema;
 }
 
-// Generate schemas for each step dynamically
+// Generate schemas for each step dynamically (supports nested field names)
 export function generateStepSchemas(formSteps: FormStep[]) {
   return formSteps.map((step) => {
-    const schemaShape: Record<string, z.ZodTypeAny> = {};
+    const schemaShape: Record<string, unknown> = {};
 
-    step.fields.forEach((field) => {
-      schemaShape[field.name] = createFieldSchema(field);
-    });
+    for (const field of step.fields) {
+      setNestedValue(schemaShape, field.name, createFieldSchema(field));
+    }
 
-    return z.object(schemaShape);
+    return objectToZodSchema(schemaShape);
   });
 }
 
@@ -184,19 +243,17 @@ function getConditionalFields(formSteps: FormStep[]): FormField[] {
   );
 }
 
-// Generate combined schema for the entire form dynamically
+// Generate combined schema for the entire form dynamically (supports nested field names)
 export function generateFormSchema(formSteps: FormStep[]) {
-  const baseSchema = z.object(
-    formSteps.reduce(
-      (acc, step) => {
-        step.fields.forEach((field) => {
-          acc[field.name] = createFieldSchema(field);
-        });
-        return acc;
-      },
-      {} as Record<string, z.ZodTypeAny>
-    )
-  );
+  const schemaShape: Record<string, unknown> = {};
+
+  for (const step of formSteps) {
+    for (const field of step.fields) {
+      setNestedValue(schemaShape, field.name, createFieldSchema(field));
+    }
+  }
+
+  const baseSchema = objectToZodSchema(schemaShape);
 
   const conditionalFields = getConditionalFields(formSteps);
 
@@ -205,8 +262,15 @@ export function generateFormSchema(formSteps: FormStep[]) {
     for (const field of conditionalFields) {
       if (!field.conditionalOn) continue;
 
-      const parentValue = data[field.conditionalOn.field];
-      const fieldValue = data[field.name];
+      // Use nested value access for both parent and field values
+      const parentValue = getNestedValue(
+        data as Record<string, unknown>,
+        field.conditionalOn.field
+      );
+      const fieldValue = getNestedValue(
+        data as Record<string, unknown>,
+        field.name
+      );
       const isVisible = parentValue === field.conditionalOn.value;
 
       // Only validate if the field is visible
@@ -220,21 +284,25 @@ export function generateFormSchema(formSteps: FormStep[]) {
             fieldValue === null ||
             fieldValue === "" ||
             (typeof fieldValue === "number" && Number.isNaN(fieldValue)) ||
-            (typeof fieldValue === "string" && fieldValue.trim() === "");
+            (typeof fieldValue === "string" &&
+              (fieldValue as string).trim() === "");
         } else {
           // For other fields: undefined, null, or empty string
           isEmpty =
             fieldValue === undefined ||
             fieldValue === null ||
             fieldValue === "" ||
-            (typeof fieldValue === "string" && fieldValue.trim() === "");
+            (typeof fieldValue === "string" &&
+              (fieldValue as string).trim() === "");
         }
 
         if (isEmpty) {
+          // Split path for nested field names
+          const pathParts = field.name.split(".");
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             message: field.validation.required,
-            path: [field.name],
+            path: pathParts,
           });
         }
       }

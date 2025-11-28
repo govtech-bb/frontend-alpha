@@ -14,6 +14,32 @@ import type { FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DynamicStep } from "./dynamic-step";
 
+/**
+ * Sets a nested value in an object using dot notation path
+ * Creates intermediate objects as needed
+ */
+function setNestedValue(
+  obj: Record<string, unknown>,
+  path: string,
+  value: unknown
+): void {
+  const keys = path.split(".");
+  let current = obj;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!(key in current) || typeof current[key] !== "object") {
+      current[key] = {};
+    }
+    current = current[key] as Record<string, unknown>;
+  }
+
+  const lastKey = keys.at(-1);
+  if (lastKey) {
+    current[lastKey] = value;
+  }
+}
+
 type DynamicMultiStepFormProps = {
   formSteps: FormStep[];
   storageKey?: string;
@@ -55,15 +81,21 @@ export default function DynamicMultiStepForm({
   // Generate schema dynamically from the formSteps prop
   const formSchema = useMemo(() => generateFormSchema(formSteps), [formSteps]);
 
+  // Generate default values with support for nested field names
+  const defaultValues = useMemo(() => {
+    const values: Record<string, unknown> = {};
+    for (const step of formSteps) {
+      for (const field of step.fields) {
+        setNestedValue(values, field.name, "");
+      }
+    }
+    return values as FormData;
+  }, [formSteps]);
+
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onSubmit",
-    defaultValues: formSteps.reduce((acc, step) => {
-      for (const field of step.fields) {
-        acc[field.name as keyof FormData] = "" as FormData[keyof FormData];
-      }
-      return acc;
-    }, {} as FormData),
+    defaultValues,
   });
 
   // Update URL when step changes
@@ -151,7 +183,7 @@ export default function DynamicMultiStepForm({
         const errorMessage = result.errors
           ? result.errors[0]?.message
           : "An unexpected error occurred";
-        // biome-ignore lint/suspicious/noConsole: <explanation>
+        // biome-ignore lint/suspicious/noConsole: Intentionally logging form submission errors
         console.error(`Submission failed: ${errorMessage}`);
         // throw new Error("Submission failed");
       }
@@ -166,7 +198,6 @@ export default function DynamicMultiStepForm({
     }
   };
 
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: validation and navigation logic requires conditional checks
   const nextStep = async () => {
     // Check if current step is the review step
     const isReviewStep = formSteps[currentStep].fields.length === 0;

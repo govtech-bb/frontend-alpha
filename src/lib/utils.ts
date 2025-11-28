@@ -7,6 +7,27 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/**
+ * Get a nested value from an object using dot notation path
+ * @example getNestedValue({ guardian: { firstName: "John" } }, "guardian.firstName") // "John"
+ */
+export function getNestedValue<T>(
+  obj: Record<string, unknown>,
+  path: string
+): T | undefined {
+  const keys = path.split(".");
+  let result: unknown = obj;
+
+  for (const key of keys) {
+    if (result === null || result === undefined) {
+      return;
+    }
+    result = (result as Record<string, unknown>)[key];
+  }
+
+  return result as T | undefined;
+}
+
 export function findSubPageTitleFromPath(
   data: InformationContent[],
   path: string

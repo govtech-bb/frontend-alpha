@@ -1,7 +1,8 @@
 import { ErrorSummary, Heading, Text } from "@govtech-bb/react";
-import { useFormContext } from "react-hook-form";
+import { type FieldError, useFormContext } from "react-hook-form";
 import { StageBanner } from "@/components/stage-banner";
 import type { FormData } from "@/lib/schema-generator";
+import { getNestedValue } from "@/lib/utils";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
@@ -11,11 +12,14 @@ export function DynamicStep({ step }: { step: FormStep }) {
     watch,
   } = useFormContext<FormData>();
 
-  // Get errors for the current step's fields
+  // Get errors for the current step's fields (supports nested field names)
   const stepFieldNames = step.fields.map((f) => f.name);
   const stepErrors = stepFieldNames
     .map((fieldName) => {
-      const error = errors[fieldName as keyof FormData];
+      const error = getNestedValue<FieldError>(
+        errors as Record<string, unknown>,
+        fieldName
+      );
       const field = step.fields.find((f) => f.name === fieldName);
 
       // Skip errors for fields that are conditionally hidden
