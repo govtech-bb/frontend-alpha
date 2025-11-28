@@ -1,4 +1,4 @@
-import { type FormData, formSchema } from "@/lib/schema-generator";
+import type { FormData } from "@/lib/schema-generator";
 
 type ApiResponse = {
   success: boolean;
@@ -19,16 +19,7 @@ export async function submitFormData({
   data: FormData;
   formKey: string;
 }): Promise<ApiResponse> {
-  const validatedData = formSchema.safeParse(data);
-
-  if (!validatedData.success) {
-    const errors = validatedData.error.issues.map((issue) => ({
-      field: issue.path.join("."),
-      message: issue.message,
-      code: issue.code,
-    }));
-    return { success: false, errors };
-  }
+  // Form data is already validated by the form component before submission
   //TODO: Validate env variables using zod
   const PROCESSING_API = process.env.NEXT_PUBLIC_PROCESSING_API;
 

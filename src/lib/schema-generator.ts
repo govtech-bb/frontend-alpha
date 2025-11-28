@@ -1,8 +1,7 @@
 /** biome-ignore-all lint/complexity/noForEach: <explanation> */
 import { z } from "zod";
 import { isValidBirthDate } from "@/lib/dates";
-import { formSteps } from "@/schema/sports-training-programme-form-schema";
-import type { FormField } from "@/types";
+import type { FormField, FormStep } from "@/types";
 
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 function createFieldSchema(field: FormField): z.ZodTypeAny {
@@ -50,40 +49,12 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     return arraySchema;
   }
 
-  // Handle conditional fields - make them optional at the schema level
-  // Validation will only apply when the field is visible
+  // Handle conditional fields - make them optional at schema level
+  // Conditional validation is handled by superRefine in generateFormSchema
   if (field.conditionalOn) {
-    // For conditional fields, we make the base schema optional
-    // but still apply the validation rules when the field is shown
-    let conditionalSchema: z.ZodTypeAny = z.string();
-
-    if (validation.required) {
-      conditionalSchema = z.string().min(1, validation.required);
-    }
-
-    if (validation.minLength) {
-      conditionalSchema = (conditionalSchema as z.ZodString).min(
-        validation.minLength.value,
-        validation.minLength.message
-      );
-    }
-
-    if (validation.maxLength) {
-      conditionalSchema = (conditionalSchema as z.ZodString).max(
-        validation.maxLength.value,
-        validation.maxLength.message
-      );
-    }
-
-    if (validation.pattern) {
-      conditionalSchema = (conditionalSchema as z.ZodString).regex(
-        new RegExp(validation.pattern.value),
-        validation.pattern.message
-      );
-    }
-
-    // Make it optional - validation only applies when field is visible
-    return conditionalSchema.optional().or(z.literal(""));
+    // For all conditional fields, accept string or undefined
+    // Number validation is handled in superRefine
+    return z.union([z.string(), z.number(), z.undefined()]);
   }
 
   // Handle date fields (YYYY-MM-DD format)
@@ -135,6 +106,17 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     return z.string().optional();
   }
 
+  // Handle email type first to avoid pattern overwriting
+  if (field.type === "email") {
+    // Chain validations: first check required (min length), then email format
+    schema = z.string();
+    if (validation.required) {
+      schema = (schema as z.ZodString).min(1, validation.required);
+    }
+    schema = (schema as z.ZodString).email("Email address is invalid");
+    return schema;
+  }
+
   if (validation.required) {
     schema = z.string().min(1, validation.required);
   }
@@ -160,13 +142,6 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     );
   }
 
-  if (field.type === "email") {
-    schema = z.email("Invalid email address");
-    if (validation.required) {
-      schema = (schema as z.ZodString).min(1, validation.required);
-    }
-  }
-
   if (field.type === "number") {
     schema = z.coerce.number();
     if (validation.required) {
@@ -189,28 +164,83 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
   return schema;
 }
 
-// Generate schemas for each step
-export const stepSchemas = formSteps.map((step) => {
-  const schemaShape: Record<string, z.ZodTypeAny> = {};
+// Generate schemas for each step dynamically
+export function generateStepSchemas(formSteps: FormStep[]) {
+  return formSteps.map((step) => {
+    const schemaShape: Record<string, z.ZodTypeAny> = {};
 
-  step.fields.forEach((field) => {
-    schemaShape[field.name] = createFieldSchema(field);
+    step.fields.forEach((field) => {
+      schemaShape[field.name] = createFieldSchema(field);
+    });
+
+    return z.object(schemaShape);
   });
+}
 
-  return z.object(schemaShape);
-});
+// Collect all conditional fields from form steps for validation
+function getConditionalFields(formSteps: FormStep[]): FormField[] {
+  return formSteps.flatMap((step) =>
+    step.fields.filter((field) => field.conditionalOn)
+  );
+}
 
-// Combined schema for the entire form
-export const formSchema = z.object(
-  formSteps.reduce(
-    (acc, step) => {
-      step.fields.forEach((field) => {
-        acc[field.name] = createFieldSchema(field);
-      });
-      return acc;
-    },
-    {} as Record<string, z.ZodTypeAny>
-  )
-);
+// Generate combined schema for the entire form dynamically
+export function generateFormSchema(formSteps: FormStep[]) {
+  const baseSchema = z.object(
+    formSteps.reduce(
+      (acc, step) => {
+        step.fields.forEach((field) => {
+          acc[field.name] = createFieldSchema(field);
+        });
+        return acc;
+      },
+      {} as Record<string, z.ZodTypeAny>
+    )
+  );
 
-export type FormData = z.infer<typeof formSchema>;
+  const conditionalFields = getConditionalFields(formSteps);
+
+  // Add conditional field validation via superRefine
+  return baseSchema.superRefine((data, ctx) => {
+    for (const field of conditionalFields) {
+      if (!field.conditionalOn) continue;
+
+      const parentValue = data[field.conditionalOn.field];
+      const fieldValue = data[field.name];
+      const isVisible = parentValue === field.conditionalOn.value;
+
+      // Only validate if the field is visible
+      if (isVisible && field.validation.required) {
+        let isEmpty = false;
+
+        if (field.type === "number") {
+          // For number fields: empty string, undefined, null, or NaN are empty
+          isEmpty =
+            fieldValue === undefined ||
+            fieldValue === null ||
+            fieldValue === "" ||
+            (typeof fieldValue === "number" && Number.isNaN(fieldValue)) ||
+            (typeof fieldValue === "string" && fieldValue.trim() === "");
+        } else {
+          // For other fields: undefined, null, or empty string
+          isEmpty =
+            fieldValue === undefined ||
+            fieldValue === null ||
+            fieldValue === "" ||
+            (typeof fieldValue === "string" && fieldValue.trim() === "");
+        }
+
+        if (isEmpty) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: field.validation.required,
+            path: [field.name],
+          });
+        }
+      }
+    }
+  });
+}
+
+// Type helper for form data
+export type FormData = Record<string, unknown>;

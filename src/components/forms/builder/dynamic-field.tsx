@@ -12,6 +12,7 @@ type DynamicFieldProps = {
   conditionalFields?: FormField[];
 };
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: field type rendering requires multiple conditional branches
 export function DynamicField({
   field,
   conditionalFields = [],
@@ -185,32 +186,57 @@ export function DynamicField({
           control={control}
           name={field.name as keyof FormData}
           render={({ field: controllerField }) => (
-            <RadioGroup
-              error={error?.message}
-              label={field.label}
-              onValueChange={controllerField.onChange}
-              value={controllerField.value as string}
-            >
-              {field.options?.map((option) => (
-                <Fragment key={option.value}>
-                  <Radio label={option.label} value={option.value} />
-                  {/* Render conditional fields that match this option */}
-                  {conditionalFields
-                    .filter((cf) => cf.conditionalOn?.value === option.value)
-                    .map((cf) => renderConditionalField(cf))}
-                </Fragment>
-              ))}
-            </RadioGroup>
+            <div className="flex flex-col gap-1">
+              <fieldset>
+                <legend className="font-bold text-lg">{field.label}</legend>
+                {field.hint && <p className="text-neutral-600">{field.hint}</p>}
+              </fieldset>
+              <RadioGroup
+                error={error?.message}
+                onValueChange={controllerField.onChange}
+                value={controllerField.value as string}
+              >
+                {field.options?.map((option) => (
+                  <Fragment key={option.value}>
+                    <Radio label={option.label} value={option.value} />
+                    {/* Render conditional fields that match this option */}
+                    {conditionalFields
+                      .filter((cf) => cf.conditionalOn?.value === option.value)
+                      .map((cf) => renderConditionalField(cf))}
+                  </Fragment>
+                ))}
+              </RadioGroup>
+            </div>
           )}
         />
       ) : field.type === "textarea" ? (
-        <TextArea
-          {...register(field.name as keyof FormData)}
-          error={error?.message}
-          label={field.label}
-          placeholder={field.placeholder}
-          rows={field.rows || 4}
-        />
+        <div className="flex flex-col gap-1">
+          <label className="font-bold text-lg" htmlFor={field.name}>
+            {field.label}
+          </label>
+          {field.hint && <p className="text-neutral-600">{field.hint}</p>}
+          <TextArea
+            {...register(field.name as keyof FormData)}
+            error={error?.message}
+            id={field.name}
+            placeholder={field.placeholder}
+            rows={field.rows || 4}
+          />
+        </div>
+      ) : field.hint ? (
+        <div className="flex flex-col gap-1">
+          <label className="font-bold text-lg" htmlFor={field.name}>
+            {field.label}
+          </label>
+          <p className="text-neutral-600">{field.hint}</p>
+          <Input
+            error={error?.message}
+            id={field.name}
+            type={field.type}
+            {...register(field.name as keyof FormData)}
+            placeholder={field.placeholder}
+          />
+        </div>
       ) : (
         <Input
           error={error?.message}
