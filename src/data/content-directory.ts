@@ -164,7 +164,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           { slug: "start", type: "markdown" },
           {
             slug: "form",
-            title: "Apply to be a Project Protégé mentor",
+            title: "Get a Primary School Textbook Grant",
             type: "component",
           },
         ],

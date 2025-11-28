@@ -8,7 +8,7 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "firstName",
+        name: "personal.firstName",
         label: "First Name",
         type: "text",
         placeholder: "John",
@@ -21,7 +21,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "lastName",
+        name: "personal.lastName",
         label: "Last Name",
         type: "text",
         placeholder: "Doe",
@@ -34,7 +34,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfBirth",
+        name: "personal.dateOfBirth",
         label: "Date of Birth",
         type: "date",
         placeholder: "For example, 27 3 2007",
@@ -43,7 +43,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "employmentStatus",
+        name: "personal.employmentStatus",
         label: "What is your employment status?",
         type: "radio",
         validation: {
@@ -57,7 +57,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "institutionName",
+        name: "personal.institutionName",
         label: "Name of institution",
         type: "text",
         placeholder: "e.g., University of the West Indies",
@@ -69,12 +69,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "personal.employmentStatus",
           value: "studying",
         },
       },
       {
-        name: "employerName",
+        name: "personal.employerName",
         label: "Name of company or organisation",
         type: "text",
         placeholder: "e.g., ABC Company Ltd",
@@ -87,12 +87,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "personal.employmentStatus",
           value: "employed",
         },
       },
       {
-        name: "otherEmploymentDetails",
+        name: "personal.otherEmploymentDetails",
         label: "Please give details",
         type: "text",
         placeholder: "Describe your employment status",
@@ -104,7 +104,7 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "personal.employmentStatus",
           value: "other",
         },
       },
@@ -117,7 +117,7 @@ export const formSteps: FormStep[] = [
     description: "Your contact information",
     fields: [
       {
-        name: "addressLine1",
+        name: "contact.addressLine1",
         label: "Address Line 1",
         type: "text",
         placeholder: "123 Main Street",
@@ -130,14 +130,14 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "addressLine2",
+        name: "contact.addressLine2",
         label: "Address Line 2",
         type: "text",
         placeholder: "Apt 4B (Optional)",
         validation: {},
       },
       {
-        name: "parish",
+        name: "contact.parish",
         label: "Parish",
         type: "select",
         validation: {
@@ -146,7 +146,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "email",
+        name: "contact.email",
         label: "Email Address",
         type: "email",
         placeholder: "john.doe@example.com",
@@ -155,7 +155,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "telephoneNumber",
+        name: "contact.telephoneNumber",
         label: "Telephone Number",
         type: "tel",
         placeholder: "+1 (246) 234-5678",
@@ -177,32 +177,44 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "whyMentor",
+        name: "mentorship.whyMentor",
         label: "Why do you want to be a mentor?",
         type: "textarea",
         rows: 5,
         validation: {
           required: "Tell us why you want to be a mentor",
+          minLength: {
+            value: 5,
+            message: "This must be at least 5 characters",
+          },
         },
       },
       {
-        name: "strengths",
+        name: "mentorship.strengths",
         label: "What are your strengths?",
         type: "textarea",
         hint: "What qualities, knowledge or skills do you have that would make you a good mentor?",
         rows: 5,
         validation: {
           required: "Tell us about your strengths",
+          minLength: {
+            value: 5,
+            message: "Strength must be at least 5 characters",
+          },
         },
       },
       {
-        name: "menteeLearn",
+        name: "mentorship.menteeLearn",
         label: "What do you think a mentee could learn from you?",
         type: "textarea",
         hint: "You might describe an experience you've had or a challenge you've overcome that shows an admirable quality",
         rows: 5,
         validation: {
           required: "Tell us what a mentee could learn from you",
+          minLength: {
+            value: 5,
+            message: "This must be at least 5 characters",
+          },
         },
       },
     ],
@@ -214,7 +226,7 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "menteeGenderPreference",
+        name: "preferences.menteeGenderPreference",
         label: "Would you prefer a male or female mentee?",
         type: "radio",
         hint: "We ask this so we can find the best mentee/mentor match and both can thrive",
@@ -228,7 +240,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "sharePhoneNumber",
+        name: "preferences.sharePhoneNumber",
         label:
           "Would you be happy for your personal phone number to be given to your mentee?",
         type: "radio",
@@ -241,7 +253,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "menteePhoneNumber",
+        name: "preferences.menteePhoneNumber",
         label: "What is your phone number?",
         type: "tel",
         placeholder: "+1 (246) 234-5678",
@@ -254,12 +266,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "sharePhoneNumber",
+          field: "preferences.sharePhoneNumber",
           value: "yes",
         },
       },
       {
-        name: "hasMenteeInMind",
+        name: "preferences.hasMenteeInMind",
         label: "Do you have someone in mind that you'd like to mentor?",
         type: "radio",
         validation: {
@@ -271,7 +283,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "menteeInMindName",
+        name: "preferences.menteeInMindName",
         label: "What is their name?",
         type: "text",
         placeholder: "Enter their name",
@@ -279,7 +291,7 @@ export const formSteps: FormStep[] = [
           required: "Enter the name of the person you have in mind",
         },
         conditionalOn: {
-          field: "hasMenteeInMind",
+          field: "preferences.hasMenteeInMind",
           value: "yes",
         },
       },
@@ -292,7 +304,7 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "hasMentorExperience",
+        name: "experience.hasMentorExperience",
         label: "Do you have experience as a mentor?",
         type: "radio",
         hint: "Previous experience is not mandatory",
@@ -305,7 +317,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "yearsOfExperience",
+        name: "experience.yearsOfExperience",
         label: "How many years of experience?",
         type: "number",
         placeholder: "e.g., 3",
@@ -313,7 +325,7 @@ export const formSteps: FormStep[] = [
           required: "Enter your years of experience",
         },
         conditionalOn: {
-          field: "hasMentorExperience",
+          field: "experience.hasMentorExperience",
           value: "yes",
         },
       },
@@ -321,13 +333,13 @@ export const formSteps: FormStep[] = [
   },
 
   {
-    id: "professional-referee",
+    id: "professionalReferee",
     title: "Tell us about your professional referee",
     description:
       "This can be someone more senior who you've worked with, or a teacher or lecturer.",
     fields: [
       {
-        name: "professionalRefereeFirstName",
+        name: "professionalReferee.firstName",
         label: "First name",
         type: "text",
         placeholder: "John",
@@ -336,7 +348,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "professionalRefereeLastName",
+        name: "professionalReferee.lastName",
         label: "Last name",
         type: "text",
         placeholder: "Smith",
@@ -345,7 +357,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "professionalRefereeRelationship",
+        name: "professionalReferee.relationship",
         label: "Relationship",
         type: "text",
         placeholder: "e.g., Former manager, Lecturer",
@@ -354,7 +366,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "professionalRefereeEmail",
+        name: "professionalReferee.email",
         label: "Email address",
         type: "email",
         placeholder: "john.smith@example.com",
@@ -363,7 +375,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "professionalRefereePhone",
+        name: "professionalReferee.phone",
         label: "Phone number",
         type: "tel",
         placeholder: "+1 (246) 234-5678",
@@ -380,13 +392,13 @@ export const formSteps: FormStep[] = [
   },
 
   {
-    id: "personal-referee",
+    id: "personalReferee",
     title: "Tell us about your personal referee",
     description:
       "This can be someone who can speak about your character. For example, a community leader or mentor.",
     fields: [
       {
-        name: "personalRefereeFirstName",
+        name: "personalReferee.firstName",
         label: "First name",
         type: "text",
         placeholder: "Jane",
@@ -395,7 +407,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personalRefereeLastName",
+        name: "personalReferee.lastName",
         label: "Last name",
         type: "text",
         placeholder: "Doe",
@@ -404,7 +416,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personalRefereeRelationship",
+        name: "personalReferee.relationship",
         label: "Relationship",
         type: "text",
         placeholder: "e.g., Family friend, Neighbour",
@@ -413,7 +425,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personalRefereeEmail",
+        name: "personalReferee.email",
         label: "Email address",
         type: "email",
         placeholder: "jane.doe@example.com",
@@ -422,7 +434,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personalRefereePhone",
+        name: "personalReferee.phone",
         label: "Phone number",
         type: "tel",
         placeholder: "+1 (246) 234-5678",
@@ -443,6 +455,6 @@ export const formSteps: FormStep[] = [
     title: "Check your answers",
     description:
       "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
-    fields: [], // Empty fields array for review step
+    fields: [],
   },
 ];

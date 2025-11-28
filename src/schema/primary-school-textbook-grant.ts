@@ -36,7 +36,7 @@ export const formSteps: FormStep[] = [
       {
         name: "beneficiaries.idNumber",
         label: "ID Number",
-        type: "number",
+        type: "text",
         placeholder: "",
         validation: {
           required: "ID Number is required",
@@ -130,7 +130,7 @@ export const formSteps: FormStep[] = [
       {
         name: "guardian.idNumber",
         label: "ID Number",
-        type: "number",
+        type: "text",
         placeholder: "",
         validation: {
           required: "ID Number is required",
@@ -350,7 +350,7 @@ export const formSteps: FormStep[] = [
       {
         name: "bankAccount.accountNumber",
         label: "Account number",
-        type: "number",
+        type: "text",
         placeholder: "",
         validation: {
           required: "Account number is required",
