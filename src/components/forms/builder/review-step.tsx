@@ -4,6 +4,7 @@ import { Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
+import { getNestedValue } from "@/lib/utils";
 import type { FormStep } from "@/types";
 
 type ReviewStepProps = {
@@ -26,14 +27,19 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
     .filter((step) => step.fields.length > 0) // Exclude review step
     .map((step, index) => {
       const items = step.fields
-        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
         .map((field) => {
-          const value = formValues[field.name as keyof FormData];
+          // Support nested field names (e.g., "guardian.firstName")
+          const value = getNestedValue<unknown>(
+            formValues as Record<string, unknown>,
+            field.name
+          );
 
           // Skip conditional fields that shouldn't be shown
           if (field.conditionalOn) {
-            const watchedValue =
-              formValues[field.conditionalOn.field as keyof FormData];
+            const watchedValue = getNestedValue<unknown>(
+              formValues as Record<string, unknown>,
+              field.conditionalOn.field
+            );
             if (watchedValue !== field.conditionalOn.value) {
               return null; // Don't show if condition not met
             }

@@ -1,9 +1,10 @@
 import { Input, Radio, RadioGroup, Select, TextArea } from "@govtech-bb/react";
 import { Fragment, useEffect } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import { DateInput } from "@/components/forms/common/date-input";
 import type { DateFieldErrors } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
+import { getNestedValue } from "@/lib/utils";
 import type { FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
@@ -12,7 +13,6 @@ type DynamicFieldProps = {
   conditionalFields?: FormField[];
 };
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: field type rendering requires multiple conditional branches
 export function DynamicField({
   field,
   conditionalFields = [],
@@ -26,14 +26,17 @@ export function DynamicField({
     getValues,
   } = useFormContext<FormData>();
 
-  const error = errors[field.name as keyof FormData];
+  // Support nested field names (e.g., "guardian.firstName")
+  const error = getNestedValue<FieldError>(
+    errors as Record<string, unknown>,
+    field.name
+  );
 
   // Watch the current field value for conditional logic
   const currentFieldValue = watch(field.name as keyof FormData);
 
   // Clear conditional field values when they shouldn't be shown
   // biome-ignore lint/correctness/useExhaustiveDependencies: conditionalFields is derived from static schema and causes infinite loop if included
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: conditional logic requires nested checks for different field types
   useEffect(() => {
     for (const conditionalField of conditionalFields) {
       if (
@@ -46,23 +49,35 @@ export function DynamicField({
 
         // Only clear if field should be hidden AND has a value
         if (!shouldShow && currentValue) {
-          // Check if value is non-empty
-          const hasValue =
-            conditionalField.type === "fieldArray"
-              ? Array.isArray(currentValue) && currentValue.length > 0
-              : currentValue !== "";
+          // Check if another conditional field with the same name IS being shown
+          // This handles cases where multiple conditional fields share a name (e.g., bank branches)
+          const anotherFieldWithSameNameIsShown = conditionalFields.some(
+            (cf) =>
+              cf.name === conditionalField.name &&
+              cf.conditionalOn?.field === field.name &&
+              currentFieldValue === cf.conditionalOn?.value
+          );
 
-          if (hasValue) {
-            // Set appropriate empty value based on field type
-            const emptyValue =
+          // Only clear if no other conditional field with this name is visible
+          if (!anotherFieldWithSameNameIsShown) {
+            // Check if value is non-empty
+            const hasValue =
               conditionalField.type === "fieldArray"
-                ? ([] as FormData[keyof FormData])
-                : ("" as FormData[keyof FormData]);
+                ? Array.isArray(currentValue) && currentValue.length > 0
+                : currentValue !== "";
 
-            setValue(conditionalField.name as keyof FormData, emptyValue, {
-              shouldValidate: false,
-              shouldDirty: false,
-            });
+            if (hasValue) {
+              // Set appropriate empty value based on field type
+              const emptyValue =
+                conditionalField.type === "fieldArray"
+                  ? ([] as FormData[keyof FormData])
+                  : ("" as FormData[keyof FormData]);
+
+              setValue(conditionalField.name as keyof FormData, emptyValue, {
+                shouldValidate: false,
+                shouldDirty: false,
+              });
+            }
           }
         }
       }
@@ -71,7 +86,10 @@ export function DynamicField({
 
   // Helper to render a conditional field
   const renderConditionalField = (conditionalField: FormField) => {
-    const conditionalError = errors[conditionalField.name as keyof FormData];
+    const conditionalError = getNestedValue<FieldError>(
+      errors as Record<string, unknown>,
+      conditionalField.name
+    );
     const watchedValue = conditionalField.conditionalOn
       ? watch(conditionalField.conditionalOn.field as keyof FormData)
       : null;
@@ -81,8 +99,8 @@ export function DynamicField({
 
     return (
       <div
-        className="motion-safe:fade-in motion-safe:slide-in-from-top-2 pl-[20px] motion-safe:animate-in motion-safe:duration-200"
-        key={conditionalField.name}
+        className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-[20px] motion-safe:animate-in motion-safe:duration-200"
+        key={`${conditionalField.name}-${conditionalField.conditionalOn?.value}`}
       >
         <div className="border-neutral-grey border-l-8 border-solid pb-4 pl-[52px]">
           {conditionalField.type === "fieldArray" ? (
@@ -120,6 +138,18 @@ export function DynamicField({
                 );
               }}
             />
+          ) : conditionalField.type === "select" ? (
+            <Select
+              error={conditionalError?.message}
+              label={conditionalField.label}
+              {...register(conditionalField.name as keyof FormData)}
+            >
+              {conditionalField.options?.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
           ) : (
             <Input
               error={conditionalError?.message}
@@ -170,17 +200,21 @@ export function DynamicField({
           }}
         />
       ) : field.type === "select" ? (
-        <Select
-          error={error?.message}
-          label={field.label}
-          {...register(field.name as keyof FormData)}
-        >
-          {field.options?.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </Select>
+        <>
+          <Select
+            error={error?.message}
+            label={field.label}
+            {...register(field.name as keyof FormData)}
+          >
+            {field.options?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
+          {/* Render conditional fields for select */}
+          {conditionalFields.map((cf) => renderConditionalField(cf))}
+        </>
       ) : field.type === "radio" ? (
         <Controller
           control={control}
