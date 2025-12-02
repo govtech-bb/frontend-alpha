@@ -79,6 +79,7 @@ test.describe("Community Sports Training Programme Form", () => {
         "national",
         "other",
       ]),
+      otherExperienceLevel: faker.lorem.word(), // for "other" experience level
       yearsOfExperience: faker.number.int({ min: 0, max: 20 }).toString(),
 
       // Step 4: Employment
@@ -88,6 +89,10 @@ test.describe("Community Sports Training Programme Form", () => {
         "unemployed",
         "other",
       ]),
+      // Conditional fields for employment status
+      institutionName: faker.company.name(), // for "studying"
+      employerName: faker.company.name(), // for "employed"
+      otherEmploymentDetails: faker.lorem.sentence(), // for "other"
 
       // Step 5: Organizations
       belongsToOrganizations: faker.datatype.boolean(),
@@ -197,6 +202,13 @@ test.describe("Community Sports Training Programme Form", () => {
       .locator(`button[role="radio"][value="${testData.experienceLevel}"]`)
       .click();
 
+    // Fill conditional field if "other" is selected
+    if (testData.experienceLevel === "other") {
+      await page
+        .getByLabel("Please specify")
+        .fill(testData.otherExperienceLevel);
+    }
+
     await page
       .getByLabel("Years of Experience")
       .fill(testData.yearsOfExperience);
@@ -211,6 +223,21 @@ test.describe("Community Sports Training Programme Form", () => {
     await page
       .locator(`button[role="radio"][value="${testData.employmentStatus}"]`)
       .click();
+
+    // Fill conditional fields based on employment status
+    if (testData.employmentStatus === "studying") {
+      await page
+        .getByLabel("Name of institution")
+        .fill(testData.institutionName);
+    } else if (testData.employmentStatus === "employed") {
+      await page
+        .getByLabel("Name of company or organisation")
+        .fill(testData.employerName);
+    } else if (testData.employmentStatus === "other") {
+      await page
+        .getByLabel("Please give details")
+        .fill(testData.otherEmploymentDetails);
+    }
 
     await page.getByRole("button", { name: "Next" }).click();
 
@@ -454,6 +481,7 @@ test.describe("Community Sports Training Programme Form", () => {
     await page.getByRole("button", { name: "Next" }).click();
 
     await page.locator('button[role="radio"][value="studying"]').click();
+    await page.getByLabel("Name of institution").fill("University of Test");
     await page.getByRole("button", { name: "Next" }).click();
 
     await page.locator('button[role="radio"][value="false"]').first().click();
