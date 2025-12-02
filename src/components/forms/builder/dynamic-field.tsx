@@ -220,27 +220,27 @@ export function DynamicField({
           control={control}
           name={field.name as keyof FormData}
           render={({ field: controllerField }) => (
-            <div className="flex flex-col gap-1">
-              <fieldset>
-                <legend className="font-bold text-lg">{field.label}</legend>
-                {field.hint && <p className="text-neutral-600">{field.hint}</p>}
-              </fieldset>
-              <RadioGroup
-                error={error?.message}
-                onValueChange={controllerField.onChange}
-                value={controllerField.value as string}
-              >
-                {field.options?.map((option) => (
-                  <Fragment key={option.value}>
-                    <Radio label={option.label} value={option.value} />
-                    {/* Render conditional fields that match this option */}
-                    {conditionalFields
-                      .filter((cf) => cf.conditionalOn?.value === option.value)
-                      .map((cf) => renderConditionalField(cf))}
-                  </Fragment>
-                ))}
-              </RadioGroup>
-            </div>
+            <RadioGroup
+              description={field.hint}
+              error={error?.message}
+              label={field.label}
+              onValueChange={controllerField.onChange}
+              value={controllerField.value as string}
+            >
+              {field.options?.map((option) => (
+                <Fragment key={option.value}>
+                  <Radio
+                    id={option.value}
+                    label={option.label}
+                    value={option.value}
+                  />
+                  {/* Render conditional fields that match this option */}
+                  {conditionalFields
+                    .filter((cf) => cf.conditionalOn?.value === option.value)
+                    .map((cf) => renderConditionalField(cf))}
+                </Fragment>
+              ))}
+            </RadioGroup>
           )}
         />
       ) : field.type === "textarea" ? (
