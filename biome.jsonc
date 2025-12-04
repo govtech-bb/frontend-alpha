@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
   "linter": {
     "rules": {
@@ -19,6 +19,10 @@
       },
       "complexity": {
         "noExcessiveCognitiveComplexity": "off"
+      },
+      "nursery": {
+        "noLeakedRender": "off",
+        "noIncrementDecrement": "warn"
       }
     }
   },
