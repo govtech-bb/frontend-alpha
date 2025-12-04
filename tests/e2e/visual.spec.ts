@@ -1,6 +1,5 @@
-import fs from "node:fs";
-import path from "node:path";
 import { expect, type Page, test } from "@playwright/test";
+import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 
 // Visual comparisons across all routes and device sizes to catch unintended changes.
 // If a change is intentional, run: npm run test:e2e:update
@@ -12,141 +11,209 @@ const DEVICES = [
   { name: "mobile", width: 375, height: 667 },
 ] as const;
 
-// Regex patterns for file processing
-const MARKDOWN_EXTENSION = /\.md$/;
+type RouteInfo = {
+  path: string;
+  type: "static" | "category" | "page" | "subpage-markdown" | "subpage-form";
+};
 
 /**
  * Recursively discover all markdown files in the content directory
  * and convert them to route paths
  */
-function discoverContentRoutes(): string[] {
-  const contentDir = path.join(process.cwd(), "src", "content");
-  const routes: string[] = [];
+function discoverAllRoutes(): RouteInfo[] {
+  const routes: RouteInfo[] = [];
 
-  function scanDirectory(dir: string, basePath = ""): void {
-    const items = fs.readdirSync(dir, { withFileTypes: true });
+  // Static routes not defined in INFORMATION_ARCHITECTURE
+  const staticRoutes = ["/", "/feedback"];
+  for (const path of staticRoutes) {
+    routes.push({ path, type: "static" });
+  }
 
-    for (const item of items) {
-      if (item.isDirectory()) {
-        // Recursively scan subdirectories
-        scanDirectory(
-          path.join(dir, item.name),
-          basePath ? `${basePath}/${item.name}` : item.name
-        );
-      } else if (item.isFile() && item.name.endsWith(".md")) {
-        // Convert markdown file to route path
-        const routePath = basePath
-          ? `/${basePath}/${item.name.replace(MARKDOWN_EXTENSION, "")}`
-          : `/${item.name.replace(MARKDOWN_EXTENSION, "")}`;
-        routes.push(routePath);
+  // Routes from INFORMATION_ARCHITECTURE
+  for (const category of INFORMATION_ARCHITECTURE) {
+    // Category pages: /family-birth-relationships
+    routes.push({
+      path: `/${category.slug}`,
+      type: "category",
+    });
+
+    for (const page of category.pages) {
+      // Main service pages: /family-birth-relationships/register-a-birth
+      routes.push({
+        path: `/${category.slug}/${page.slug}`,
+        type: "page",
+      });
+
+      // Sub-pages if they exist
+      if (page.subPages) {
+        for (const subPage of page.subPages) {
+          const isForm =
+            subPage.type === "component" || subPage.slug === "form";
+          routes.push({
+            path: `/${category.slug}/${page.slug}/${subPage.slug}`,
+            type: isForm ? "subpage-form" : "subpage-markdown",
+          });
+        }
       }
     }
   }
 
-  try {
-    scanDirectory(contentDir);
-  } catch (error) {
-    console.warn("Could not scan content directory:", error);
-    return [];
-  }
-
-  return routes;
-}
-
-/**
- * Discover all routes by combining content and static routes
- * This finds routes beyond just markdown content pages
- */
-function discoverAllRoutes(): string[] {
-  const contentRoutes = discoverContentRoutes();
-
-  // Add known static routes that may not be in content directory
-  const staticRoutes = [
-    "/",
-    "/family-birth-relationships",
-    "/work-employment",
-    "/money-financial-support",
-    "/travel-id-citizenship",
-    "/business-trade",
-    "/public-safety",
-    "/feedback",
-    // Add any other known routes here (404 pages, dynamic routes, etc.)
-  ];
-
-  // Combine and deduplicate
-  const allRoutes = [...new Set([...staticRoutes, ...contentRoutes])];
-
-  return allRoutes.sort();
+  return routes.sort((a, b) => a.path.localeCompare(b.path));
 }
 
 /**
  * Wait for page to be ready for screenshot
  */
-async function waitForPageReady(page: Page): Promise<void> {
-  await page.goto(page.url(), { waitUntil: "domcontentloaded" });
+async function waitForPageReady(
+  page: Page,
+  routeType: RouteInfo["type"]
+): Promise<void> {
+  await page.waitForLoadState("load");
+  await page.waitForSelector("body", { state: "visible" });
 
-  // Wait for hydration with graceful fallback
-  try {
-    await page.waitForLoadState("networkidle", { timeout: 8000 });
-  } catch {
-    // Fallback for routes that don't reach networkidle
-    await page.waitForTimeout(2000);
+  if (routeType === "subpage-form") {
+    try {
+      await page.waitForSelector("form", { state: "visible", timeout: 5000 });
+      await page.waitForTimeout(300);
+    } catch {
+      // Form might not exist on all form pages, continue
+    }
   }
 
-  // Ensure page is hydrated - check for any title
-  await expect(page).toHaveTitle(/.+/);
+  // Wait for web fonts with timeout
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+  await page.evaluate(() => document.fonts.ready).catch(() => {});
+
+  // Wait for images with 5 second timeout
+  await page.evaluate(() => {
+    const images = Array.from(document.images);
+    const imagePromises = images
+      .filter((img) => !img.complete)
+      .map(
+        (img) =>
+          new Promise<void>((resolve) => {
+            img.onload = () => resolve();
+            img.onerror = () => resolve();
+          })
+      );
+
+    const timeout = new Promise<void>((resolve) => setTimeout(resolve, 5000));
+    return Promise.race([Promise.all(imagePromises), timeout]);
+  });
+
+  await page.waitForTimeout(100);
 }
 
-// Discover all available routes synchronously
+/**
+ * Create a safe filename from route path
+ */
+function createSafeFilename(routePath: string): string {
+  return (
+    routePath
+      .replace(/^\//, "")
+      .replace(/\//g, "-")
+      .replace(/[^a-zA-Z0-9-]/g, "_") || "home"
+  );
+}
+
+// Discover all routes
 const allRoutes = discoverAllRoutes();
 
-// Validate we have routes to test
-if (!allRoutes || allRoutes.length === 0) {
-  console.error("No routes discovered! Check content directory structure.");
-  throw new Error("No routes found to test");
+if (allRoutes.length === 0) {
+  throw new Error("No routes discovered! Check INFORMATION_ARCHITECTURE.");
 }
 
-console.log(`Found ${allRoutes.length} routes to test:`, allRoutes);
+console.log(`Discovered ${allRoutes.length} routes to test`);
+console.log("Route breakdown:");
 console.log(
-  `Testing across ${DEVICES.length} device sizes:`,
-  DEVICES.map((d) => d.name).join(", ")
+  `  - Static: ${allRoutes.filter((r) => r.type === "static").length}`
+);
+console.log(
+  `  - Category: ${allRoutes.filter((r) => r.type === "category").length}`
+);
+console.log(`  - Page: ${allRoutes.filter((r) => r.type === "page").length}`);
+console.log(
+  `  - Subpage (markdown): ${allRoutes.filter((r) => r.type === "subpage-markdown").length}`
+);
+console.log(
+  `  - Subpage (form): ${allRoutes.filter((r) => r.type === "subpage-form").length}`
+);
+console.log(
+  `Testing across ${DEVICES.length} devices: ${DEVICES.map((d) => d.name).join(", ")}`
 );
 
 // Generate tests for each route and device combination
-for (const routePath of allRoutes) {
-  test.describe(`visual: ${routePath}`, () => {
+for (const route of allRoutes) {
+  test.describe(`visual: ${route.path}`, () => {
     for (const device of DEVICES) {
       test(`${device.name} - full page snapshot`, async ({ page }) => {
-        // Set viewport for current device
+        // Set viewport
         await page.setViewportSize({
           width: device.width,
           height: device.height,
         });
 
-        await page.goto(routePath);
-        await waitForPageReady(page);
+        // Navigate and check response
+        const response = await page.goto(route.path, {
+          waitUntil: "domcontentloaded",
+        });
 
-        // Create a safe filename from the route path
-        const safeRouteName =
-          routePath
-            .replace(/^\//, "") // Remove leading slash
-            .replace(/\//g, "-") // Replace slashes with dashes
-            .replace(/[^a-zA-Z0-9-]/g, "_") || "home"; // Replace special chars, use 'home' for root
+        // Verify successful response
+        if (!response) {
+          throw new Error(`No response received for ${route.path}`);
+        }
 
-        // Take screenshot with route and device name in filename
-        await expect(page).toHaveScreenshot(
-          `${safeRouteName}-${device.name}.png`,
-          {
-            fullPage: true,
-            animations: "disabled",
-            caret: "hide",
-            scale: "css",
-            // Allow some variance for cross-platform and responsive design differences
-            threshold: 0.3,
-            maxDiffPixelRatio: 0.05,
-          }
-        );
+        const status = response.status();
+        if (status >= 400) {
+          throw new Error(`Route ${route.path} returned HTTP ${status}`);
+        }
+
+        // Wait for page to be fully ready
+        await waitForPageReady(page, route.type);
+
+        // Verify page has a title
+        await expect(page).toHaveTitle(/.+/);
+
+        // Take screenshot
+        const filename = `${createSafeFilename(route.path)}-${device.name}.png`;
+
+        await expect(page).toHaveScreenshot(filename, {
+          fullPage: true,
+          animations: "disabled",
+          caret: "hide",
+          scale: "css",
+          // Thresholds for cross-platform tolerance
+          threshold: 0.2,
+          maxDiffPixelRatio: 0.03,
+        });
       });
     }
   });
 }
+
+// Separate test for 404 page
+test.describe("visual: 404 page", () => {
+  for (const device of DEVICES) {
+    test(`${device.name} - 404 page snapshot`, async ({ page }) => {
+      await page.setViewportSize({
+        width: device.width,
+        height: device.height,
+      });
+
+      const response = await page.goto("/this-route-should-not-exist-12345");
+
+      expect(response?.status()).toBe(404);
+
+      await page.waitForLoadState("networkidle");
+
+      await expect(page).toHaveScreenshot(`404-${device.name}.png`, {
+        fullPage: true,
+        animations: "disabled",
+        caret: "hide",
+        scale: "css",
+        threshold: 0.2,
+        maxDiffPixelRatio: 0.03,
+      });
+    });
+  }
+});
