@@ -16,6 +16,9 @@ export const FORM_COMPONENTS = {
   "get-a-primary-school-textbook-grant": lazy(
     () => import("@/components/forms/primary-school-textbook-grant-form")
   ),
+  "apply-to-jobstart-plus-programme": lazy(
+    () => import("@/components/forms/apply-to-jobstart-plus-programme-form")
+  ),
   // Add other forms here
 } as const;
 
