@@ -121,6 +121,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         slug: "apply-for-a-position-as-a-temporary-teacher",
         description: "Apply for a position as a temporary teacher",
       },
+      {
+        title: "Apply to the JobSTART Plus Programme",
+        slug: "apply-to-jobstart-plus-programme",
+        description: "Apply to the JobSTART Plus Programme",
+      },
     ],
   },
   {
