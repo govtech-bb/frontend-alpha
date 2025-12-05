@@ -102,7 +102,6 @@ export function useStepValidation<T extends Record<string, unknown>>({
    * Handle form submission
    * Validates all fields and proceeds to next step if valid
    */
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex validation logic with field-specific error handling
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setHasSubmitted(true);

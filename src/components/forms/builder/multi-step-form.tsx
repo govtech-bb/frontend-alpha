@@ -183,7 +183,6 @@ export default function DynamicMultiStepForm({
         const errorMessage = result.errors
           ? result.errors[0]?.message
           : "An unexpected error occurred";
-        // biome-ignore lint/suspicious/noConsole: Intentionally logging form submission errors
         console.error(`Submission failed: ${errorMessage}`);
         // throw new Error("Submission failed");
       }

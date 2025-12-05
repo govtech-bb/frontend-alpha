@@ -189,7 +189,6 @@ function isValidDateSemantically(dateString: string): boolean {
  * @param dateString - Date string in YYYY-MM-DD format
  * @returns DateFieldErrors object with specific errors, or null if valid
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complex validation logic with multiple error checks
 export function validateFields(dateString: string): DateFieldErrors | null {
   const { year, month, day } = parseDate(dateString);
   const errors: DateFieldErrors = {};

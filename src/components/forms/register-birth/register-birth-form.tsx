@@ -28,7 +28,6 @@ import { useRegisterBirthSteps } from "./use-register-birth-steps";
  * - Accessibility-compliant focus management
  * - GOV.BB styling
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Main form orchestrator needs to handle all step rendering. Will be refactored when extracting step rendering logic.
 export function RegisterBirthForm() {
   // Storage with versioning and Zod validation
   const { saveFormData, loadFormData, clearFormData } = useFormStorage({
@@ -81,7 +80,6 @@ export function RegisterBirthForm() {
         goNext();
         clearFormData();
       } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: needed for debugging submission errors
         console.error("Error submitting birth registration:", error);
 
         // Set error message for user

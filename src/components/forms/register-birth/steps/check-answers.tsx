@@ -62,7 +62,6 @@ function SummarySection({
  * Summary page showing all entered data with edit links
  * Based on PDF pages 8 and 18
  */
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Complexity slightly increased by adding DOB fields; refactoring to be done separately
 export function CheckAnswers({
   formData,
   onSubmit,

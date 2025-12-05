@@ -1,7 +1,6 @@
 import type { Element, ElementContent, Root } from "hast";
 
 function rehypeSectionise() {
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: This function is a simple wrapper around a for loop
   return (tree: Root) => {
     const wrapSection = (
       children: ElementContent[],

@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/style/useTemplate: <explanation> */
 "use client";
 
 import { useState } from "react";
@@ -29,7 +28,7 @@ export default function CheckoutPage() {
       ];
 
       setDebugInfo(
-        (prev) => prev + `Cart items: ${JSON.stringify(cartItems, null, 2)}\n`
+        (prev) => `${prev}Cart items: ${JSON.stringify(cartItems, null, 2)}\n`
       );
 
       // Call create payment API
@@ -45,13 +44,13 @@ export default function CheckoutPage() {
 
       const result = await response.json();
       setDebugInfo(
-        (prev) => prev + `API Response: ${JSON.stringify(result, null, 2)}\n`
+        (prev) => `${prev}API Response: ${JSON.stringify(result, null, 2)}\n`
       );
 
       if (result.success && result.paymentUrl) {
         setDebugInfo(
           (prev) =>
-            prev + `\n✅ Success! Redirecting to: ${result.paymentUrl}\n`
+            `${prev}\n✅ Success! Redirecting to: ${result.paymentUrl}\n`
         );
 
         // Store reference for verification later
@@ -63,12 +62,12 @@ export default function CheckoutPage() {
         }, 1500);
       } else {
         setError(result.error || "Failed to create payment");
-        setDebugInfo((prev) => prev + `\n❌ Error: ${result.error}\n`);
+        setDebugInfo((prev) => `${prev}\n❌ Error: ${result.error}\n`);
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Unknown error";
       setError(errorMessage);
-      setDebugInfo((prev) => prev + `\n❌ Exception: ${errorMessage}\n`);
+      setDebugInfo((prev) => `${prev}\n❌ Exception: ${errorMessage}\n`);
     } finally {
       setLoading(false);
     }

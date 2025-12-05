@@ -34,7 +34,6 @@ const handleValidationError = (error: z.ZodError) =>
   );
 
 const handleServerError = (error: unknown) => {
-  // biome-ignore lint/suspicious/noConsole: <explanation>
   console.error("EZPay create payment error:", error);
   return NextResponse.json(
     { success: false, error: "Internal server error" },

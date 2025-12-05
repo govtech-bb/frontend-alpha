@@ -31,7 +31,6 @@ export const createDateSchema = (label = "Date") => {
         month: z.string(),
         year: z.string(),
       })
-      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
       .superRefine((value, ctx) => {
         const { day, month, year } = value;
 

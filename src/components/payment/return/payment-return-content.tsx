@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/style/useTemplate: <explanation> */
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -42,7 +41,7 @@ export function PaymentReturnContent() {
       }
 
       try {
-        setDebugInfo((prev) => prev + "Calling verify API...\n");
+        setDebugInfo((prev) => `${prev}Calling verify API...\n`);
 
         const response = await fetch("/api/ezpay/verify", {
           method: "POST",
@@ -56,13 +55,13 @@ export function PaymentReturnContent() {
         const data = await response.json();
         setDebugInfo(
           (prev) =>
-            prev + `Verify Response:\n${JSON.stringify(data, null, 2)}\n`
+            `${prev}Verify Response:\n${JSON.stringify(data, null, 2)}\n`
         );
         setResult(data);
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : "Unknown error";
-        setDebugInfo((prev) => prev + `Error: ${errorMessage}\n`);
+        setDebugInfo((prev) => `${prev}Error: ${errorMessage}\n`);
         setResult({ success: false, error: errorMessage });
       } finally {
         setLoading(false);

@@ -119,7 +119,6 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
     console.error("Error sending feedback:", error);
     return NextResponse.json(
       { error: "Failed to send feedback" },

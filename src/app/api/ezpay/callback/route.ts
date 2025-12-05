@@ -1,5 +1,3 @@
-/** biome-ignore-all lint/suspicious/noConsole: <explanation> */
-/** biome-ignore-all lint/style/useTemplate: <explanation> */
 import { type NextRequest, NextResponse } from "next/server";
 import type {
   EZPayCallbackPayload,
@@ -21,12 +19,12 @@ const parseCallbackData = (formData: FormData): EZPayCallbackPayload => ({
 // Log with timestamp and formatting
 const logCallback = (message: string, data?: unknown): void => {
   const timestamp = new Date().toISOString();
-  console.log("\n" + "=".repeat(60));
+  console.log(`\n${"=".repeat(60)}`);
   console.log(`[${timestamp}] EZPAY CALLBACK: ${message}`);
   if (data) {
     console.log(JSON.stringify(data, null, 2));
   }
-  console.log("=".repeat(60) + "\n");
+  console.log(`${"=".repeat(60)}\n`);
 };
 
 export async function POST(request: NextRequest) {
