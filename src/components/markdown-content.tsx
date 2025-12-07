@@ -2,6 +2,7 @@
 
 import { Heading, Link, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
+import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
@@ -56,19 +57,19 @@ const components: Components = {
   ),
   li: ({ children, ...props }: ListItemProps) => <li {...props}>{children}</li>,
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
-  a: ({ href, children, target, ...props }: AnchorProps) => {
-    // Check if link starts with # (internal link) to determine if it's likely in a list
-    const isInternalLink = href?.startsWith("#");
-    const linkClass = isInternalLink
-      ? "underline"
-      : "text-teal-dark underline leading-normal";
+  a: ({ href, children, ...props }: AnchorProps) => {
+    const isRouteLink = href?.startsWith("/");
+    const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
 
     return (
       <Link
-        className={linkClass}
+        as={isRouteLink ? NextLink : "a"}
         href={href as string}
+        {...(isExternal && {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        })}
         {...props}
-        target={target || "_blank"}
       >
         {children}
       </Link>
