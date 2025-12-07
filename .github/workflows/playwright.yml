@@ -11,7 +11,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.55.1-jammy
+      # Keep in sync with package.json playwright version
+      image: mcr.microsoft.com/playwright:v1.57.0-jammy
     env:
       MAIL_FROM: 'no-reply@notify.dev.alpha.gov.bb'
       SES_REGION: 'region'
