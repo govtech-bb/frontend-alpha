@@ -3,10 +3,15 @@ import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
-import type { FormField } from "@/types";
+import type { FieldArrayConfig, FormField } from "@/types";
+
+type FieldArrayField = FormField & {
+  type: "fieldArray";
+  fieldArray: FieldArrayConfig;
+};
 
 type DynamicFieldArrayProps = {
-  field: FormField;
+  field: FieldArrayField;
 };
 
 export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {

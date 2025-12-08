@@ -15,139 +15,99 @@ const stripTime = (date: Date): Date =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
 // https://design-system.service.gov.uk/components/date-input/
-// Vlaidation rules for date input
+// Validation rules for date input
 export const createDateSchema = (label = "Date") => {
-  return z.preprocess(
-    (val) => {
-      // Convert undefined to empty object
-      if (val === undefined || val === null) {
-        return { day: "", month: "", year: "" };
+  return z
+    .object({
+      day: z.string(),
+      month: z.string(),
+      year: z.string(),
+    })
+    .superRefine((value, ctx) => {
+      const { day, month, year } = value ?? { day: "", month: "", year: "" };
+
+      const hasDay = day && day.trim() !== "";
+      const hasMonth = month && month.trim() !== "";
+      const hasYear = year && year.trim() !== "";
+
+      // All empty - let required() handle this
+      if (!(hasDay || hasMonth || hasYear)) {
+        return;
       }
-      return val;
-    },
-    z
-      .object({
-        day: z.string(),
-        month: z.string(),
-        year: z.string(),
-      })
-      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-      .superRefine((value, ctx) => {
-        const { day, month, year } = value;
 
-        // Check if empty
-        const isEmpty = !(day || month || year);
-        if (isEmpty) {
-          return;
-        }
+      // Check for missing parts
+      const missing: string[] = [];
+      if (!hasDay) missing.push("day");
+      if (!hasMonth) missing.push("month");
+      if (!hasYear) missing.push("year");
 
-        // Track missing/invalid parts
-        const missingParts: string[] = [];
-        const invalidParts: Array<{ field: string; message: string }> = [];
+      if (missing.length > 0) {
+        const message =
+          missing.length === 1
+            ? `${label} must include a ${missing[0]}`
+            : missing.length === 2
+              ? `${label} must include a ${missing[0]} and ${missing[1]}`
+              : `Enter ${label}`;
+        ctx.addIssue({ code: "custom", message });
+        return;
+      }
 
-        // Validate day
-        if (!day) {
-          missingParts.push("day");
-        } else if (!/^\d+$/.test(day)) {
-          invalidParts.push({ field: "day", message: "Day must be a number" });
-        }
+      // Validate formats
+      if (!/^\d+$/.test(day)) {
+        ctx.addIssue({ code: "custom", message: "Day must be a number" });
+        return;
+      }
+      if (!/^\d+$/.test(month)) {
+        ctx.addIssue({ code: "custom", message: "Month must be a number" });
+        return;
+      }
+      if (!/^\d{4}$/.test(year)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Year must include 4 numbers",
+        });
+        return;
+      }
 
-        // Validate month
-        if (!month) {
-          missingParts.push("month");
-        } else if (!/^\d+$/.test(month)) {
-          invalidParts.push({
-            field: "month",
-            message: "Month must be a number",
-          });
-        }
+      // Validate ranges
+      const dayNum = Number.parseInt(day, 10);
+      const monthNum = Number.parseInt(month, 10);
+      const yearNum = Number.parseInt(year, 10);
 
-        // Validate year
-        if (!year) {
-          missingParts.push("year");
-        } else if (year.length !== 4 || !/^\d{4}$/.test(year)) {
-          invalidParts.push({
-            field: "year",
-            message: "Year must include 4 numbers",
-          });
-        }
+      if (dayNum < 1 || dayNum > 31) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Day must be between 1 and 31",
+        });
+        return;
+      }
+      if (monthNum < 1 || monthNum > 12) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Month must be between 1 and 12",
+        });
+        return;
+      }
 
-        // Handle missing parts
-        if (missingParts.length > 0) {
-          let message: string;
-          if (missingParts.length === 1) {
-            message = `${capitalize(label)} must include a ${missingParts[0]}`;
-          } else if (missingParts.length === 2) {
-            message = `${capitalize(label)} must include a ${missingParts[0]} and ${missingParts[1]}`;
-          } else {
-            message = `Enter ${label}`;
-          }
+      // Validate real date
+      const date = new Date(yearNum, monthNum - 1, dayNum);
+      const isValid =
+        date.getDate() === dayNum &&
+        date.getMonth() === monthNum - 1 &&
+        date.getFullYear() === yearNum;
 
-          for (const part of missingParts) {
-            ctx.addIssue({
-              code: "custom",
-              path: [part],
-              message,
-            });
-          }
-          return;
-        }
-
-        // Handle invalid formats
-        if (invalidParts.length > 0) {
-          for (const { field, message } of invalidParts) {
-            ctx.addIssue({
-              code: "custom",
-              path: [field],
-              message,
-            });
-          }
-          return;
-        }
-
-        // Validate numeric ranges
-        const dayNum = Number.parseInt(day, 10);
-        const monthNum = Number.parseInt(month, 10);
-        const yearNum = Number.parseInt(year, 10);
-
-        if (dayNum < 1 || dayNum > 31) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["day"],
-            message: "Day must be between 1 and 31",
-          });
-        }
-
-        if (monthNum < 1 || monthNum > 12) {
-          ctx.addIssue({
-            code: "custom",
-            path: ["month"],
-            message: "Month must be between 1 and 12",
-          });
-        }
-
-        if (ctx.issues.length > 0) return;
-
-        // Validate real date
-        const date = new Date(yearNum, monthNum - 1, dayNum);
-        const isValidDate =
-          date.getDate() === dayNum &&
-          date.getMonth() === monthNum - 1 &&
-          date.getFullYear() === yearNum;
-
-        if (!isValidDate) {
-          ctx.addIssue({
-            code: "custom",
-            message: `${capitalize(label)} must be a real date`,
-          });
-        }
-      })
-  );
+      if (!isValid) {
+        ctx.addIssue({
+          code: "custom",
+          message: `${label} must be a real date`,
+        });
+      }
+    });
 };
 
 export const dateValidation = {
   required: (schema: ReturnType<typeof createDateSchema>, label: string) =>
-    schema.refine((value) => !!(value.day || value.month || value.year), {
+    schema.refine((value) => !!(value?.day || value?.month || value?.year), {
       message: `Enter ${label}`,
     }),
 

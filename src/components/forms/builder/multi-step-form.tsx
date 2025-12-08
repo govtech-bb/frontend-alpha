@@ -86,7 +86,10 @@ export default function DynamicMultiStepForm({
     const values: Record<string, unknown> = {};
     for (const step of formSteps) {
       for (const field of step.fields) {
-        setNestedValue(values, field.name, "");
+        // Date fields need object default, all others get empty string
+        const defaultValue =
+          field.type === "date" ? { day: "", month: "", year: "" } : "";
+        setNestedValue(values, field.name, defaultValue);
       }
     }
     return values as FormData;

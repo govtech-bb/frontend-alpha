@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { isValidBirthDate } from "@/lib/dates";
+import {
+  createDateSchema,
+  dateValidation,
+} from "@/lib/validation/date-validation";
 import type { FormField, FormStep } from "@/types";
 
 /**
@@ -111,25 +114,93 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
   // Handle conditional fields - make them optional at schema level
   // Conditional validation is handled by superRefine in generateFormSchema
   if (field.conditionalOn) {
-    // For all conditional fields, accept string or undefined
+    // Date fields need the DateInputValue object schema
+    if (field.type === "date") {
+      return createDateSchema(field.label.toLowerCase()).optional();
+    }
+    // For all other conditional fields, accept string, number or undefined
     // Number validation is handled in superRefine
     return z.union([z.string(), z.number(), z.undefined()]);
   }
 
-  // Handle date fields (YYYY-MM-DD format)
+  // Handle date fields (DateInputValue object: { day, month, year })
   if (field.type === "date") {
-    schema = z.string().min(1, validation.required || "Date is required");
-    // Use isValidBirthDate for proper validation (checks format, range, and not future)
-    schema = (schema as z.ZodString).refine(
-      (val) => {
-        if (!val) return false;
-        // Ensure val is a string before validation
-        if (typeof val !== "string") return false;
-        return isValidBirthDate(val);
-      },
-      { message: "Enter a valid date of birth" }
-    );
-    return schema;
+    const label = field.label;
+    const dateFieldValidation = field.validation;
+    let dateSchema = createDateSchema(label);
+
+    // Apply required validation if specified
+    if (dateFieldValidation.required) {
+      dateSchema = dateValidation.required(dateSchema, label);
+    }
+
+    // Apply date-specific validation based on config
+    if (dateFieldValidation.date) {
+      const rule = dateFieldValidation.date;
+      switch (rule.type) {
+        case "past":
+          dateSchema = dateValidation.past(dateSchema, label);
+          break;
+        case "pastOrToday":
+          dateSchema = dateValidation.pastOrToday(dateSchema, label);
+          break;
+        case "future":
+          dateSchema = dateValidation.future(dateSchema, label);
+          break;
+        case "futureOrToday":
+          dateSchema = dateValidation.futureOrToday(dateSchema, label);
+          break;
+        case "after":
+          dateSchema = dateValidation.after(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "before":
+          dateSchema = dateValidation.before(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "onOrAfter":
+          dateSchema = dateValidation.onOrAfter(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "onOrBefore":
+          dateSchema = dateValidation.onOrBefore(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "between":
+          dateSchema = dateValidation.between(
+            dateSchema,
+            { start: new Date(rule.start), end: new Date(rule.end) },
+            label,
+            rule.description
+          );
+          break;
+        case "minYear":
+          dateSchema = dateValidation.minYear(dateSchema, rule.year, label);
+          break;
+        default: {
+          const _exhaustiveCheck: never = rule;
+          throw new Error(`Unknown date validation type: ${_exhaustiveCheck}`);
+        }
+      }
+    }
+
+    return dateSchema;
   }
 
   // Handle radio buttons with boolean values
