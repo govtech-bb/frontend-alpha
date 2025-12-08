@@ -150,15 +150,11 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
         return (
           <div className="flex flex-col gap-2" key={item.id}>
             <div className="flex items-end gap-2">
-              <div className="flex-1">
+              <div className={`flex-1 ${index > 0 ? "[&_label]:sr-only" : ""}`}>
                 <Input
                   error={itemError?.message}
                   id={`${field.name}-${index}`}
-                  label={
-                    index === 0
-                      ? fieldArrayConfig?.itemLabel || field.label
-                      : undefined
-                  }
+                  label={fieldArrayConfig?.itemLabel || field.label}
                   placeholder={field.placeholder}
                   type="text"
                   {...register(fieldName)}
