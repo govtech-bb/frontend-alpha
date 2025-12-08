@@ -106,8 +106,8 @@ function PersonDetailsSection({
                     <strong>Date of birth:</strong>
                   </td>
                   <td style={{ padding: "5px 10px" }}>
-                    {formatForDisplay(dateString)} ({calculateAge(dateString)}{" "}
-                    years old)
+                    {formatForDisplay(person.dateOfBirth)} (
+                    {calculateAge(dateString)} years old)
                   </td>
                 </tr>
               );
@@ -243,28 +243,21 @@ function ChildDetailsSection({
             </tr>
           )}
           {child.dateOfBirth &&
-            (() => {
-              const dateString = combineDate(
-                child.dateOfBirth.year,
-                child.dateOfBirth.month,
-                child.dateOfBirth.day
-              );
-              return (
-                <tr>
-                  <td
-                    style={{
-                      padding: "5px 10px",
-                      backgroundColor: "#f5f5f5",
-                    }}
-                  >
-                    <strong>Date of birth:</strong>
-                  </td>
-                  <td style={{ padding: "5px 10px" }}>
-                    {formatForDisplay(dateString)}
-                  </td>
-                </tr>
-              );
-            })()}
+            (() => (
+              <tr>
+                <td
+                  style={{
+                    padding: "5px 10px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  <strong>Date of birth:</strong>
+                </td>
+                <td style={{ padding: "5px 10px" }}>
+                  {formatForDisplay(child.dateOfBirth)}
+                </td>
+              </tr>
+            ))()}
           {child.sexAtBirth && (
             <tr>
               <td
