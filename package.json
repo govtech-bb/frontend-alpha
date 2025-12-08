@@ -11,8 +11,8 @@
     "test:unit": "vitest",
     "test:unit:run": "vitest run",
     "test:e2e": "npx playwright test",
-    "docker:build-and-test": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy sh -c 'npm ci --platform=linux --arch=x64 && npm run build && npx playwright test visual --update-snapshots'",
-    "test:e2e:update:linux": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npm run build && docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.55.1-jammy npx playwright test visual --update-snapshots",
+    "docker:build-and-test": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.57.0-jammy sh -c 'npm ci --platform=linux --arch=x64 && npm run build && npx playwright test visual --update-snapshots'",
+    "test:e2e:update:linux": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.57.0-jammy sh -c 'npm ci --platform=linux --arch=x64 && npm run build && npx playwright test visual --update-snapshots'",
     "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:report": "playwright show-report",
     "prepare": "husky"
@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
-    "@playwright/test": "^1.55.1",
+    "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
