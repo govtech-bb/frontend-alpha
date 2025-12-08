@@ -32,9 +32,10 @@ export const Footer = () => (
             alt="Barbados Coat of Arms"
             className="block select-none"
             draggable="false"
-            height={104}
+            height={150}
+            priority
             src="/images/coat-of-arms.png"
-            width={112}
+            width={150}
           />
           <Typography className="text-white" variant="paragraph">
             &copy; 2025 Government of Barbados
