@@ -1,8 +1,14 @@
-import { Input, Radio, RadioGroup, Select, TextArea } from "@govtech-bb/react";
+import {
+  DateInput,
+  type DateInputValue,
+  Input,
+  Radio,
+  RadioGroup,
+  Select,
+  TextArea,
+} from "@govtech-bb/react";
 import { Fragment, useEffect } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
-import { DateInput } from "@/components/forms/common/date-input";
-import type { DateFieldErrors } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import type { FormField } from "@/types";
@@ -99,7 +105,7 @@ export function DynamicField({
 
     return (
       <div
-        className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-[20px] motion-safe:animate-in motion-safe:duration-200"
+        className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-5 motion-safe:animate-in motion-safe:duration-200"
         key={`${conditionalField.name}-${conditionalField.conditionalOn?.value}`}
       >
         <div className="border-neutral-grey border-l-8 border-solid pb-4 pl-[52px]">
@@ -110,30 +116,21 @@ export function DynamicField({
               control={control}
               name={conditionalField.name as keyof FormData}
               render={({ field: controllerField }) => {
-                // Ensure we always have a string value (handle undefined/null)
-                const stringValue =
-                  typeof controllerField.value === "string"
-                    ? controllerField.value
-                    : "";
-
-                // Parse error message into DateFieldErrors format if needed
-                const dateErrors: DateFieldErrors | undefined =
-                  conditionalError?.message
-                    ? {
-                        day: conditionalError.message,
-                        month: conditionalError.message,
-                        year: conditionalError.message,
-                      }
-                    : undefined;
+                const dateValue: DateInputValue =
+                  controllerField.value &&
+                  typeof controllerField.value === "object"
+                    ? (controllerField.value as DateInputValue)
+                    : { day: "", month: "", year: "" };
 
                 return (
                   <DateInput
-                    errors={dateErrors}
-                    hint={conditionalField.placeholder}
+                    description={conditionalField.placeholder}
+                    error={conditionalError?.message}
                     id={conditionalField.name}
                     label={conditionalField.label}
+                    name={conditionalField.name}
                     onChange={controllerField.onChange}
-                    value={stringValue}
+                    value={dateValue}
                   />
                 );
               }}
@@ -172,29 +169,21 @@ export function DynamicField({
           control={control}
           name={field.name as keyof FormData}
           render={({ field: controllerField }) => {
-            // Ensure we always have a string value (handle undefined/null)
-            const stringValue =
-              typeof controllerField.value === "string"
-                ? controllerField.value
-                : "";
-
-            // Parse error message into DateFieldErrors format if needed
-            const dateErrors: DateFieldErrors | undefined = error?.message
-              ? {
-                  day: error.message,
-                  month: error.message,
-                  year: error.message,
-                }
-              : undefined;
+            // Ensure we always have a DateInputValue object
+            const dateValue: DateInputValue =
+              controllerField.value && typeof controllerField.value === "object"
+                ? (controllerField.value as DateInputValue)
+                : { day: "", month: "", year: "" };
 
             return (
               <DateInput
-                errors={dateErrors}
-                hint={field.placeholder}
+                description={field.placeholder}
+                error={error?.message}
                 id={field.name}
                 label={field.label}
+                name={field.name}
                 onChange={controllerField.onChange}
-                value={stringValue}
+                value={dateValue}
               />
             );
           }}
