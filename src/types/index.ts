@@ -119,3 +119,26 @@ export type FormStep = {
   description?: string;
   fields: FormField[];
 };
+
+export type ApiResponse = {
+  success: boolean;
+  data?: {
+    submissionId: string;
+    formId: string;
+    status: string;
+    processedAt: string;
+  };
+  errors?: { field: string; message: string; code: string }[];
+  message?: string;
+};
+
+export type JsonPrimitive = string | number | boolean | null;
+export type JsonObject = { [key: string]: JsonValue };
+export type JsonArray = JsonValue[];
+export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+
+export type DateObject = {
+  day: string;
+  month: string;
+  year: string;
+};
