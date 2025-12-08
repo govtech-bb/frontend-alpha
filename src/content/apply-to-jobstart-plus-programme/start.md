@@ -4,11 +4,11 @@ stage: "alpha"
 publish_date: 2025-12-05
 ---
 
-Lorem ipsum dolor
+You should complete your registration in one go. At the moment, it is not possible to save your answers and come back to them later.
 
-## How long the applications takes
+## How long does it take? 
 
-Lorem ipsum dolor.
+It should not take more than 20 minutes
 
 <!-- Add custom html button to allow necessary styling -->
 <!-- TODO: Make this file MDX so that the Button component can be imported -->
@@ -19,7 +19,10 @@ Lorem ipsum dolor.
 
 As well as your contact details, the application form asks about:
 
-- one
-- two
-- three
+- any access or support needs so they can be accommodated
+- your education, training and qualifications
+- your skills, interests and community groups
+- your availability
+- your short-term, work-related goals
+
 
