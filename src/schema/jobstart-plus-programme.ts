@@ -1,3 +1,4 @@
+import { barbadosParishes } from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -44,11 +45,15 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "name.gender",
-        label: "Gender",
-        type: "text",
+        label: "Sex",
+        type: "radio",
         validation: {
-          required: "Gender is required",
+          required: "Sex is required",
         },
+        options: [
+          { label: "Male", value: "male" },
+          { label: "Female", value: "female" },
+        ],
       },
       {
         name: "personal.dateOfBirth",
@@ -103,20 +108,27 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "address.address",
-        label: "Address",
+        name: "address.addressLine1",
+        label: "Address Line 1",
         type: "text",
         validation: {
-          required: "Address is required",
+          required: "Address line 1 is required",
         },
+      },
+      {
+        name: "address.addressLine2",
+        label: "Address Line 2",
+        type: "text",
+        validation: {},
       },
       {
         name: "address.parish",
         label: "Parish",
-        type: "text",
+        type: "select",
         validation: {
           required: "Parish is required",
         },
+        options: barbadosParishes,
       },
     ],
   },
