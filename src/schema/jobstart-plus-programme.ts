@@ -460,6 +460,82 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "post-secondary-education-training",
+    title: "Name of institution for Post-Secondary Education or Training",
+    description:
+      "Add information about college, university and training courses you have completed",
+    fields: [
+      {
+        name: "postSecondaryEducation.institutionName",
+        label: "Name of Institution",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Name of Instituion is required",
+          minLength: {
+            value: 5,
+            message: "Name of Institution must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "postSecondaryEducation.startYear",
+        label: "Start Year",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Start Year is required",
+          minLength: {
+            value: 4,
+            message: "Start Year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "Start Year must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "postSecondaryEducation.endYear",
+        label: "End Year",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "End Year is required",
+          minLength: {
+            value: 4,
+            message: "End Year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "End Year must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "postSecondaryEducation.coursesOrSubjects",
+        label: "What courses or subjects did you study?",
+        type: "textarea",
+        placeholder: "",
+        validation: {},
+      },
+      {
+        name: "postSecondaryEducation.qualificationsObtained",
+        label: "What are your qualifications?",
+        type: "textarea",
+        placeholder: "",
+        validation: {},
+      },
+      {
+        name: "postSecondaryEducation.gradesObtained",
+        label: "What are your grades?",
+        type: "textarea",
+        placeholder: "",
+        validation: {},
+      },
+    ],
+  },
+  {
     id: "eligibility-questions",
     title: "Your eligibility",
     description: "",
