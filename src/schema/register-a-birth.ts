@@ -27,6 +27,10 @@ export const formSteps: FormStep[] = [
     title: "Do you want to include the father's details on the birth record?",
     description:
       "If you choose 'Yes', both parents must go to the Registration Department and sign the official register together",
+    conditionalOn: {
+      field: "marriageStatus",
+      value: "no",
+    },
     fields: [
       {
         name: "includeFatherDetails",
@@ -47,6 +51,12 @@ export const formSteps: FormStep[] = [
     id: "father-details",
     title: "Tell us about the child's father",
     description: "",
+    conditionalOn: {
+      or: [
+        { field: "marriageStatus", value: "yes" },
+        { field: "includeFatherDetails", value: "yes" },
+      ],
+    },
     fields: [
       {
         name: "father.firstName",
