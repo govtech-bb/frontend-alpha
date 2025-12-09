@@ -7,7 +7,8 @@ export type FieldType =
   | "select"
   | "textarea"
   | "radio"
-  | "fieldArray";
+  | "fieldArray"
+  | "showHide";
 
 // Date-specific validation rules (only applicable when type === "date")
 export type DateValidationRule =
@@ -32,7 +33,7 @@ type BaseValidationRule = {
   max?: { value: number; message: string };
 };
 
-type DateFieldValidation = BaseValidationRule & {
+export type DateFieldValidation = BaseValidationRule & {
   date?: DateValidationRule;
 };
 
@@ -51,7 +52,7 @@ export type ConditionalRule = {
 export type NestedFormField = {
   name: string;
   label: string;
-  type: Exclude<FieldType, "fieldArray">;
+  type: Exclude<FieldType, "fieldArray" | "showHide">;
   placeholder?: string;
   hint?: string;
   validation: NonDateFieldValidation | DateFieldValidation;
@@ -68,12 +69,28 @@ export type FieldArrayConfig = {
   fields?: NestedFormField[];
 };
 
-type BaseFormField = {
+export type ShowHideConfig = {
+  summary: string; // The clickable text to expand/collapse (e.g., "Use passport number instead")
+  description?: string; // Optional description text shown inside the disclosure
+  /** Field name to store the open/closed state (value will be "open" or "closed") */
+  stateFieldName: string;
+  /** Fields to render inside the ShowHide disclosure */
+  fields: NestedFormField[];
+};
+
+export type BaseFormField = {
   name: string;
   label: string;
   placeholder?: string;
-  hint?: string;
-  conditionalOn?: ConditionalRule;
+  hint?: string; // Description text displayed below the label
+  validation: ValidationRule;
+  options?: SelectOption[]; // For select and radio fields
+  rows?: number; // For textarea
+  conditionalOn?: ConditionalRule; // For conditional fields
+  fieldArray?: FieldArrayConfig; // For fieldArray type
+  showHide?: ShowHideConfig; // For showHide type (collapsible disclosure)
+  /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
+  skipValidationWhenShowHideOpen?: string;
 };
 
 type DateFormField = BaseFormField & {
@@ -104,14 +121,21 @@ type TextFormField = BaseFormField & {
   validation: NonDateFieldValidation;
 };
 
+type ShowHideFormField = BaseFormField & {
+  type: "showHide";
+  validation: NonDateFieldValidation;
+  showHide: ShowHideConfig;
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
   | TextareaFormField
   | FieldArrayFormField
-  | TextFormField;
+  | TextFormField
+  | ShowHideFormField;
 
-export type ValidationRule = DateFieldValidation;
+export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
 export type FormStep = {
   id: string;

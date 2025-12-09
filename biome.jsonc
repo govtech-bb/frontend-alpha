@@ -22,7 +22,8 @@
       },
       "nursery": {
         "noLeakedRender": "off",
-        "noIncrementDecrement": "warn"
+        "noIncrementDecrement": "warn",
+        "noShadow": "off"
       }
     }
   },
