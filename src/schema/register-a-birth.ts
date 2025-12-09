@@ -95,6 +95,47 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "father.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "ID Number is required",
+          minLength: {
+            value: 2,
+            message: "ID Number must be at least 2 characters",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "father.usePassportInstead",
+      },
+      {
+        name: "father.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: {},
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "father.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "father.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
         name: "father.currentAddress",
         label: "Current Address",
         type: "textarea",
@@ -213,6 +254,47 @@ export const formSteps: FormStep[] = [
             value: 5,
             message: "Address must be at least 5 characters",
           },
+        },
+      },
+      {
+        name: "mother.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "ID Number is required",
+          minLength: {
+            value: 2,
+            message: "ID Number must be at least 2 characters",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "mother.usePassportInstead",
+      },
+      {
+        name: "mother.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: {},
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "mother.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "mother.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
         },
       },
       {
