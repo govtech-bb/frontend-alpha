@@ -1,7 +1,7 @@
-import Link from "next/link";
+import { Heading, Link, Text } from "@govtech-bb/react";
+import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 import type { Components } from "react-markdown";
-import { Typography } from "@/components/ui/typography";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -12,29 +12,29 @@ type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
 
 const components: Components = {
   h1: ({ children, ...props }: HeadingProps) => (
-    <Typography className="mt-8 mb-4" variant="h1" {...props}>
+    <Heading as="h1" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
   h2: ({ children, ...props }: HeadingProps) => (
-    <Typography className="mt-8 mb-4" variant="h2" {...props}>
+    <Heading as="h2" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
   h3: ({ children, ...props }: HeadingProps) => (
-    <Typography className="mt-8 mb-4" variant="h3" {...props}>
+    <Heading as="h3" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
   h4: ({ children, ...props }: HeadingProps) => (
-    <Typography className="mt-8 mb-4" variant="h4" {...props}>
+    <Heading as="h4" className="mt-8 mb-4" {...props}>
       {children}
-    </Typography>
+    </Heading>
   ),
   p: ({ children, ...props }: ParagraphProps) => (
-    <Typography variant="paragraph" {...props}>
+    <Text as="p" size="body" {...props}>
       {children}
-    </Typography>
+    </Text>
   ),
   ol: (props: ListProps) => (
     <ol className="mb-4 list-decimal pl-6 text-[20px]" {...props} />
@@ -52,33 +52,22 @@ const components: Components = {
   hr: (props: ComponentPropsWithoutRef<"hr">) => (
     <hr className="my-8 border border-gray-100" {...props} />
   ),
-  a: ({ href, children, ...props }: AnchorProps) => {
-    const className =
-      "text-blue-500 hover:text-blue-700 dark:text-gray-400 hover:dark:text-gray-300 dark:underline dark:underline-offset-2 dark:decoration-gray-800";
-    if (href?.startsWith("/")) {
-      return (
-        <Link className={className} href={href} {...props}>
-          {children}
-        </Link>
-      );
-    }
-    if (href?.startsWith("#")) {
-      return (
-        <a className={className} href={href} {...props}>
-          {children}
-        </a>
-      );
-    }
+  a: ({ node, href, children, ...props }: AnchorProps & { node?: unknown }) => {
+    const isRouteLink = href?.startsWith("/");
+    const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
+
     return (
-      <a
-        className={className}
-        href={href}
-        rel="noopener noreferrer"
-        target="_blank"
+      <Link
+        as={isRouteLink ? NextLink : "a"}
+        href={href as string}
+        {...(isExternal && {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        })}
         {...props}
       >
         {children}
-      </a>
+      </Link>
     );
   },
   // code: ({ children, ...props }: ComponentPropsWithoutRef<"code">) => {
