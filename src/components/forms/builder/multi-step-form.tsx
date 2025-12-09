@@ -41,6 +41,37 @@ function setNestedValue(
   }
 }
 
+/**
+ * Checks if a step should be visible based on its conditional rule
+ */
+function isStepVisible(step: FormStep, formValues: FormData): boolean {
+  if (!step.conditionalOn) return true;
+
+  // Handle OR logic
+  if ("or" in step.conditionalOn) {
+    return step.conditionalOn.or.some((condition) => {
+      const fieldValue = getNestedValue(
+        formValues as Record<string, unknown>,
+        condition.field
+      );
+      const expectedValues = Array.isArray(condition.value)
+        ? condition.value
+        : [condition.value];
+      return expectedValues.includes(fieldValue as string);
+    });
+  }
+
+  // Handle simple field/value check
+  const fieldValue = getNestedValue(
+    formValues as Record<string, unknown>,
+    step.conditionalOn.field
+  );
+  const expectedValues = Array.isArray(step.conditionalOn.value)
+    ? step.conditionalOn.value
+    : [step.conditionalOn.value];
+  return expectedValues.includes(fieldValue as string);
+}
+
 type DynamicMultiStepFormProps = {
   formSteps: FormStep[];
   serviceTitle: string;
@@ -92,7 +123,8 @@ export default function DynamicMultiStepForm({
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
 
-  // Generate schema dynamically from the formSteps prop
+  // Generate schema dynamically from all formSteps (not filtered by visibility)
+  // This ensures validation rules exist for all fields, even if conditionally hidden
   const formSchema = useMemo(() => generateFormSchema(formSteps), [formSteps]);
 
   // Generate default values with support for nested field names
@@ -133,14 +165,55 @@ export default function DynamicMultiStepForm({
     defaultValues,
   });
 
+  // Extract fields that affect step visibility (memoized to prevent unnecessary re-renders)
+  const conditionalFields = useMemo(() => {
+    const fields = new Set<string>();
+    for (const step of formSteps) {
+      if (step.conditionalOn) {
+        if ("or" in step.conditionalOn) {
+          for (const condition of step.conditionalOn.or) {
+            fields.add(condition.field);
+          }
+        } else {
+          fields.add(step.conditionalOn.field);
+        }
+      }
+    }
+    return Array.from(fields);
+  }, [formSteps]);
+
+  // Compute visible steps based on current form values
+  const computeVisibleSteps = useCallback(() => {
+    const currentValues = methods.getValues();
+    return formSteps.filter((step) => isStepVisible(step, currentValues));
+  }, [formSteps, methods]);
+
+  // Track visible steps in state
+  const [visibleSteps, setVisibleSteps] = useState<FormStep[]>(() =>
+    computeVisibleSteps()
+  );
+
+  // Update visible steps only when conditional fields change
+  useEffect(() => {
+    if (!conditionalFields.length) return;
+
+    const subscription = methods.watch((_value, { name }) => {
+      // Only recompute if a conditional field changed
+      if (name && conditionalFields.includes(name)) {
+        setVisibleSteps(computeVisibleSteps());
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [conditionalFields, computeVisibleSteps, methods]);
+
   // Update URL when step changes
-  // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable, searchParams intentionally omitted to prevent circular updates
+  // biome-ignore lint/correctness/useExhaustiveDependencies: visibleSteps is memoized, searchParams intentionally omitted to prevent circular updates
   useEffect(() => {
     if (!(_hasHydrated && isFormReady)) return;
     // Skip URL update if form is submitted (confirmation page handles its own URL)
     if (isSubmitted && referenceNumber) return;
 
-    const stepName = formSteps[currentStep]?.id;
+    const stepName = visibleSteps[currentStep]?.id;
     if (stepName) {
       // App Router approach
       const params = new URLSearchParams(searchParams?.toString());
@@ -157,7 +230,6 @@ export default function DynamicMultiStepForm({
   ]);
 
   // Initialize step from URL on mount and handle browser back/forward
-  // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable and doesn't need to be in deps
   useEffect(() => {
     if (!_hasHydrated) return;
 
@@ -194,7 +266,14 @@ export default function DynamicMultiStepForm({
         setCurrentStep(stepIndex);
       }
     }
-  }, [_hasHydrated, searchParams, completedSteps, currentStep, setCurrentStep]);
+  }, [
+    _hasHydrated,
+    searchParams,
+    completedSteps,
+    currentStep,
+    setCurrentStep,
+    visibleSteps,
+  ]);
 
   // Load saved form data on mount
   useEffect(() => {
@@ -483,7 +562,13 @@ export default function DynamicMultiStepForm({
     const allValues = methods.getValues();
 
     // Filter out fields that are conditionally hidden
-    const visibleFields = formSteps[currentStep].fields.filter((field) => {
+    const currentStepFields = visibleSteps[currentStep]?.fields;
+    if (!currentStepFields) {
+      // No current step (shouldn't happen, but handle gracefully)
+      return;
+    }
+
+    const visibleFields = currentStepFields.filter((field) => {
       // Include field if it has no conditional rule
       if (!field.conditionalOn) return true;
 
@@ -794,7 +879,7 @@ export default function DynamicMultiStepForm({
         )}
         {/* Current Step - Show Review or Regular Step */}
         {isReviewStep ? (
-          <ReviewStep formSteps={formSteps} onEdit={handleEditFromReview} />
+          <ReviewStep formSteps={visibleSteps} onEdit={handleEditFromReview} />
         ) : (
           <DynamicStep
             serviceTitle={serviceTitle}
