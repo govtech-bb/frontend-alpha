@@ -64,7 +64,6 @@ export const formSteps: FormStep[] = [
               type: "text",
               placeholder: "",
               validation: {
-                required: "Passport number is required",
                 minLength: {
                   value: 6,
                   message: "Passport number must be at least 6 characters",

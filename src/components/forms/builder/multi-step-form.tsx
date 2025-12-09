@@ -253,7 +253,10 @@ export default function DynamicMultiStepForm({
 
     for (const field of visibleFields) {
       // Check if this field should skip validation when ShowHide is open
-      if (field.skipValidationWhenShowHideOpen) {
+      if (
+        "skipValidationWhenShowHideOpen" in field &&
+        field.skipValidationWhenShowHideOpen
+      ) {
         const showHideState = getNestedValue(
           allValues as Record<string, unknown>,
           field.skipValidationWhenShowHideOpen
@@ -319,59 +322,6 @@ export default function DynamicMultiStepForm({
               message: field.validation.pattern.message,
             });
             isValid = false;
-          }
-        }
-      }
-
-      // Validate requiredUnless - field is required UNLESS another field has a specific value
-      if (field.validation.requiredUnless) {
-        // Get all form values and extract nested value
-        const allValues = methods.getValues();
-        const conditionValue = getNestedValue(
-          allValues as Record<string, unknown>,
-          field.validation.requiredUnless.field
-        );
-        const fieldValue = getNestedValue(
-          allValues as Record<string, unknown>,
-          field.name
-        );
-        // Field is required unless the condition field has the specified value
-        // Treat undefined/empty condition value as "closed" (not open)
-        const isRequired =
-          conditionValue !== field.validation.requiredUnless.value;
-
-        if (isRequired && isFieldEmpty(fieldValue)) {
-          methods.setError(field.name as keyof FormData, {
-            type: "required",
-            message: field.validation.requiredUnless.message,
-          });
-          isValid = false;
-        }
-      }
-
-      // Validate ShowHide child fields with requiredWhen
-      if (field.type === "showHide" && field.showHide?.fields) {
-        const allValues = methods.getValues();
-        for (const childField of field.showHide.fields) {
-          if (childField.validation.requiredWhen) {
-            const conditionValue = getNestedValue(
-              allValues as Record<string, unknown>,
-              childField.validation.requiredWhen.field
-            );
-            const fieldValue = getNestedValue(
-              allValues as Record<string, unknown>,
-              childField.name
-            );
-            const isRequired =
-              conditionValue === childField.validation.requiredWhen.value;
-
-            if (isRequired && isFieldEmpty(fieldValue)) {
-              methods.setError(childField.name as keyof FormData, {
-                type: "required",
-                message: childField.validation.requiredWhen.message,
-              });
-              isValid = false;
-            }
           }
         }
       }

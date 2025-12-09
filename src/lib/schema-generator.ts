@@ -3,7 +3,13 @@ import {
   createDateSchema,
   dateValidation,
 } from "@/lib/validation/date-validation";
-import type { FormField, FormStep } from "@/types";
+import type {
+  DateFieldValidation,
+  FormField,
+  FormStep,
+  NestedFormField,
+  NonDateFieldValidation,
+} from "@/types";
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -66,24 +72,19 @@ function objectToZodSchema(
   return z.object(shape);
 }
 
-function createFieldSchema(field: FormField): z.ZodTypeAny {
+function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
   let schema: z.ZodTypeAny = z.string();
 
-  const validation = field.validation;
+  const validation = field.validation as NonDateFieldValidation &
+    DateFieldValidation;
 
   // Handle showHide fields - the state field needs to be optional string
   if (field.type === "showHide") {
     return z.string().optional();
   }
 
-  // Handle fields with conditional required validation
-  // These are made optional at schema level and validated in superRefine
-  if (validation.requiredUnless || validation.requiredWhen) {
-    return z.string().optional();
-  }
-
   // Handle field arrays
-  if (field.type === "fieldArray") {
+  if (field.type === "fieldArray" && "fieldArray" in field) {
     let itemSchema: z.ZodTypeAny = z.string();
 
     if (validation.required) {
@@ -115,7 +116,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     const arraySchema = z.array(z.object({ value: itemSchema }));
 
     // If conditional, make it optional (allows undefined or array)
-    if (field.conditionalOn) {
+    if ("conditionalOn" in field && field.conditionalOn) {
       return arraySchema.optional();
     }
 
@@ -124,7 +125,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
 
   // Handle conditional fields - make them optional at schema level
   // Conditional validation is handled by superRefine in generateFormSchema
-  if (field.conditionalOn) {
+  if ("conditionalOn" in field && field.conditionalOn) {
     // Date fields need the DateInputValue object schema
     if (field.type === "date") {
       return createDateSchema(field.label.toLowerCase()).optional();
@@ -146,7 +147,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     }
 
     // Apply date-specific validation based on config
-    if (dateFieldValidation.date) {
+    if ("date" in dateFieldValidation && dateFieldValidation.date) {
       const rule = dateFieldValidation.date;
       switch (rule.type) {
         case "past":
@@ -205,7 +206,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
           dateSchema = dateValidation.minYear(dateSchema, rule.year, label);
           break;
         default: {
-          const _exhaustiveCheck: never = rule;
+          const _exhaustiveCheck: never = rule as never;
           throw new Error(`Unknown date validation type: ${_exhaustiveCheck}`);
         }
       }
@@ -325,32 +326,6 @@ function getConditionalFields(formSteps: FormStep[]): FormField[] {
   );
 }
 
-// Collect all fields with conditional required validation (requiredUnless/requiredWhen)
-function getConditionalRequiredFields(formSteps: FormStep[]): FormField[] {
-  const fields: FormField[] = [];
-
-  for (const step of formSteps) {
-    for (const field of step.fields) {
-      if (field.validation.requiredUnless || field.validation.requiredWhen) {
-        fields.push(field);
-      }
-      // Also check ShowHide child fields
-      if (field.type === "showHide" && field.showHide?.fields) {
-        for (const childField of field.showHide.fields) {
-          if (
-            childField.validation.requiredUnless ||
-            childField.validation.requiredWhen
-          ) {
-            fields.push(childField as FormField);
-          }
-        }
-      }
-    }
-  }
-
-  return fields;
-}
-
 // Generate combined schema for the entire form dynamically (supports nested field names)
 export function generateFormSchema(formSteps: FormStep[]) {
   const schemaShape: Record<string, unknown> = {};
@@ -383,7 +358,6 @@ export function generateFormSchema(formSteps: FormStep[]) {
   const baseSchema = objectToZodSchema(schemaShape);
 
   const conditionalFields = getConditionalFields(formSteps);
-  const conditionalRequiredFields = getConditionalRequiredFields(formSteps);
 
   // Add conditional field validation via superRefine
   return baseSchema.superRefine((data, ctx) => {
@@ -432,52 +406,6 @@ export function generateFormSchema(formSteps: FormStep[]) {
           message: field.validation.required,
           path: pathParts,
         });
-      }
-    }
-
-    // Validate requiredUnless fields
-    for (const field of conditionalRequiredFields) {
-      const fieldValue = getNestedValue(
-        data as Record<string, unknown>,
-        field.name
-      );
-
-      // Handle requiredUnless - field is required UNLESS another field has a specific value
-      if (field.validation.requiredUnless) {
-        const conditionValue = getNestedValue(
-          data as Record<string, unknown>,
-          field.validation.requiredUnless.field
-        );
-        const isRequired =
-          conditionValue !== field.validation.requiredUnless.value;
-
-        if (isRequired && isFieldEmpty(fieldValue, field.type)) {
-          const pathParts = field.name.split(".");
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: field.validation.requiredUnless.message,
-            path: pathParts,
-          });
-        }
-      }
-
-      // Handle requiredWhen - field is required WHEN another field has a specific value
-      if (field.validation.requiredWhen) {
-        const conditionValue = getNestedValue(
-          data as Record<string, unknown>,
-          field.validation.requiredWhen.field
-        );
-        const isRequired =
-          conditionValue === field.validation.requiredWhen.value;
-
-        if (isRequired && isFieldEmpty(fieldValue, field.type)) {
-          const pathParts = field.name.split(".");
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: field.validation.requiredWhen.message,
-            path: pathParts,
-          });
-        }
       }
     }
   });
