@@ -40,6 +40,9 @@ export const formSteps: FormStep[] = [
         placeholder: "For example, 27 3 2007",
         validation: {
           required: "Date of birth is required",
+          date: {
+            type: "past",
+          },
         },
       },
       {
