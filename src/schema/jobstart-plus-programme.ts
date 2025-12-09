@@ -7,6 +7,20 @@ export const formSteps: FormStep[] = [
     title: "Tell us about yourself",
     fields: [
       {
+        name: "applicant.title",
+        label: "Title",
+        type: "select",
+        validation: {
+          required: "Title is required",
+        },
+        options: [
+          { label: "Select title", value: "" },
+          { label: "Mr", value: "mr" },
+          { label: "Ms", value: "ms" },
+          { label: "Mrs", value: "mrs" },
+        ],
+      },
+      {
         name: "applicant.firstName",
         label: "First Name",
         type: "text",
