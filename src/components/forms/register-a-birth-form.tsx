@@ -1,10 +1,10 @@
-import { Suspense } from "react";
-import { RegisterBirthForm } from "./register-birth/register-birth-form";
+"use client";
 
-export default function RegisterBirthPage() {
+import DynamicMultiStepForm from "@/components/forms/builder/multi-step-form";
+import { formSteps } from "@/schema/register-a-birth";
+
+export default function RegisterBirthForm() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <RegisterBirthForm />
-    </Suspense>
+    <DynamicMultiStepForm formSteps={formSteps} storageKey="register-a-birth" />
   );
 }
