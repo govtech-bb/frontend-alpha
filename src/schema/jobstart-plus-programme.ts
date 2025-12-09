@@ -29,6 +29,9 @@ export const formSteps: FormStep[] = [
         type: "date",
         validation: {
           required: "Date of birth is required",
+          date: {
+            type: "past",
+          },
         },
       },
 
