@@ -44,6 +44,35 @@ export const formSteps: FormStep[] = [
             message: "ID Number must be at least 2 characters",
           },
         },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+      {
+        name: "applicant.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: {},
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
       },
       {
         name: "applicant.hasNisNumber",
@@ -91,7 +120,7 @@ export const formSteps: FormStep[] = [
         label: "Marital Status",
         type: "select",
         validation: {
-          required: "Relationship is required",
+          required: "Marital Status is required",
         },
         options: [
           { label: "Select marital status", value: "" },
@@ -118,7 +147,7 @@ export const formSteps: FormStep[] = [
         type: "textarea",
         placeholder: "",
         validation: {
-          required: "Field is required",
+          required: "Disability is required",
           minLength: {
             value: 2,
             message: "Field must be at least 2 characters",

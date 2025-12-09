@@ -71,6 +71,17 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
 
   const validation = field.validation;
 
+  // Handle showHide fields - the state field needs to be optional string
+  if (field.type === "showHide") {
+    return z.string().optional();
+  }
+
+  // Handle fields with conditional required validation
+  // These are made optional at schema level and validated in superRefine
+  if (validation.requiredUnless || validation.requiredWhen) {
+    return z.string().optional();
+  }
+
   // Handle field arrays
   if (field.type === "fieldArray") {
     let itemSchema: z.ZodTypeAny = z.string();
@@ -314,6 +325,32 @@ function getConditionalFields(formSteps: FormStep[]): FormField[] {
   );
 }
 
+// Collect all fields with conditional required validation (requiredUnless/requiredWhen)
+function getConditionalRequiredFields(formSteps: FormStep[]): FormField[] {
+  const fields: FormField[] = [];
+
+  for (const step of formSteps) {
+    for (const field of step.fields) {
+      if (field.validation.requiredUnless || field.validation.requiredWhen) {
+        fields.push(field);
+      }
+      // Also check ShowHide child fields
+      if (field.type === "showHide" && field.showHide?.fields) {
+        for (const childField of field.showHide.fields) {
+          if (
+            childField.validation.requiredUnless ||
+            childField.validation.requiredWhen
+          ) {
+            fields.push(childField as FormField);
+          }
+        }
+      }
+    }
+  }
+
+  return fields;
+}
+
 // Generate combined schema for the entire form dynamically (supports nested field names)
 export function generateFormSchema(formSteps: FormStep[]) {
   const schemaShape: Record<string, unknown> = {};
@@ -321,19 +358,59 @@ export function generateFormSchema(formSteps: FormStep[]) {
   for (const step of formSteps) {
     for (const field of step.fields) {
       setNestedValue(schemaShape, field.name, createFieldSchema(field));
+
+      // Also add schemas for ShowHide child fields
+      if (field.type === "showHide" && field.showHide) {
+        // Add the state field
+        setNestedValue(
+          schemaShape,
+          field.showHide.stateFieldName,
+          z.string().optional()
+        );
+
+        // Add child field schemas
+        for (const childField of field.showHide.fields) {
+          setNestedValue(
+            schemaShape,
+            childField.name,
+            createFieldSchema(childField as FormField)
+          );
+        }
+      }
     }
   }
 
   const baseSchema = objectToZodSchema(schemaShape);
 
   const conditionalFields = getConditionalFields(formSteps);
+  const conditionalRequiredFields = getConditionalRequiredFields(formSteps);
 
   // Add conditional field validation via superRefine
   return baseSchema.superRefine((data, ctx) => {
+    // Helper to check if a field value is empty
+    const isFieldEmpty = (fieldValue: unknown, fieldType: string): boolean => {
+      if (fieldType === "number") {
+        return (
+          fieldValue === undefined ||
+          fieldValue === null ||
+          fieldValue === "" ||
+          (typeof fieldValue === "number" && Number.isNaN(fieldValue)) ||
+          (typeof fieldValue === "string" &&
+            (fieldValue as string).trim() === "")
+        );
+      }
+      return (
+        fieldValue === undefined ||
+        fieldValue === null ||
+        fieldValue === "" ||
+        (typeof fieldValue === "string" && (fieldValue as string).trim() === "")
+      );
+    };
+
+    // Validate conditional fields (conditionalOn)
     for (const field of conditionalFields) {
       if (!field.conditionalOn) continue;
 
-      // Use nested value access for both parent and field values
       const parentValue = getNestedValue(
         data as Record<string, unknown>,
         field.conditionalOn.field
@@ -344,35 +421,60 @@ export function generateFormSchema(formSteps: FormStep[]) {
       );
       const isVisible = parentValue === field.conditionalOn.value;
 
-      // Only validate if the field is visible
-      if (isVisible && field.validation.required) {
-        let isEmpty = false;
+      if (
+        isVisible &&
+        field.validation.required &&
+        isFieldEmpty(fieldValue, field.type)
+      ) {
+        const pathParts = field.name.split(".");
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: field.validation.required,
+          path: pathParts,
+        });
+      }
+    }
 
-        if (field.type === "number") {
-          // For number fields: empty string, undefined, null, or NaN are empty
-          isEmpty =
-            fieldValue === undefined ||
-            fieldValue === null ||
-            fieldValue === "" ||
-            (typeof fieldValue === "number" && Number.isNaN(fieldValue)) ||
-            (typeof fieldValue === "string" &&
-              (fieldValue as string).trim() === "");
-        } else {
-          // For other fields: undefined, null, or empty string
-          isEmpty =
-            fieldValue === undefined ||
-            fieldValue === null ||
-            fieldValue === "" ||
-            (typeof fieldValue === "string" &&
-              (fieldValue as string).trim() === "");
-        }
+    // Validate requiredUnless fields
+    for (const field of conditionalRequiredFields) {
+      const fieldValue = getNestedValue(
+        data as Record<string, unknown>,
+        field.name
+      );
 
-        if (isEmpty) {
-          // Split path for nested field names
+      // Handle requiredUnless - field is required UNLESS another field has a specific value
+      if (field.validation.requiredUnless) {
+        const conditionValue = getNestedValue(
+          data as Record<string, unknown>,
+          field.validation.requiredUnless.field
+        );
+        const isRequired =
+          conditionValue !== field.validation.requiredUnless.value;
+
+        if (isRequired && isFieldEmpty(fieldValue, field.type)) {
           const pathParts = field.name.split(".");
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: field.validation.required,
+            message: field.validation.requiredUnless.message,
+            path: pathParts,
+          });
+        }
+      }
+
+      // Handle requiredWhen - field is required WHEN another field has a specific value
+      if (field.validation.requiredWhen) {
+        const conditionValue = getNestedValue(
+          data as Record<string, unknown>,
+          field.validation.requiredWhen.field
+        );
+        const isRequired =
+          conditionValue === field.validation.requiredWhen.value;
+
+        if (isRequired && isFieldEmpty(fieldValue, field.type)) {
+          const pathParts = field.name.split(".");
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: field.validation.requiredWhen.message,
             path: pathParts,
           });
         }

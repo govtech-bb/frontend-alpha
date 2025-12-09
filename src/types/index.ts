@@ -7,7 +7,8 @@ export type FieldType =
   | "select"
   | "textarea"
   | "radio"
-  | "fieldArray";
+  | "fieldArray"
+  | "showHide";
 
 // Date-specific validation rules (only applicable when type === "date")
 export type DateValidationRule =
@@ -25,6 +26,18 @@ export type DateValidationRule =
 // Base validation rules (all fields can use these)
 type BaseValidationRule = {
   required?: string;
+  /** Field is required UNLESS another field has a specific value */
+  requiredUnless?: {
+    field: string; // The field to check
+    value: string; // If this field has this value, the current field is NOT required
+    message: string; // Error message when validation fails
+  };
+  /** Field is required WHEN another field has a specific value (for ShowHide child fields) */
+  requiredWhen?: {
+    field: string; // The field to check
+    value: string; // If this field has this value, the current field IS required
+    message: string; // Error message when validation fails
+  };
   minLength?: { value: number; message: string };
   maxLength?: { value: number; message: string };
   pattern?: { value: string; message: string };
@@ -68,12 +81,28 @@ export type FieldArrayConfig = {
   fields?: NestedFormField[];
 };
 
-type BaseFormField = {
+export type ShowHideConfig = {
+  summary: string; // The clickable text to expand/collapse (e.g., "Use passport number instead")
+  description?: string; // Optional description text shown inside the disclosure
+  /** Field name to store the open/closed state (value will be "open" or "closed") */
+  stateFieldName: string;
+  /** Fields to render inside the ShowHide disclosure */
+  fields: Omit<FormField, "conditionalOn" | "showHide">[];
+};
+
+export type BaseFormField = {
   name: string;
   label: string;
   placeholder?: string;
-  hint?: string;
-  conditionalOn?: ConditionalRule;
+  hint?: string; // Description text displayed below the label
+  validation: ValidationRule;
+  options?: SelectOption[]; // For select and radio fields
+  rows?: number; // For textarea
+  conditionalOn?: ConditionalRule; // For conditional fields
+  fieldArray?: FieldArrayConfig; // For fieldArray type
+  showHide?: ShowHideConfig; // For showHide type (collapsible disclosure)
+  /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
+  skipValidationWhenShowHideOpen?: string;
 };
 
 type DateFormField = BaseFormField & {
