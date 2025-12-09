@@ -198,9 +198,13 @@ export const formSteps: FormStep[] = [
       {
         name: "contact.postalCode",
         label: "Postal Code",
-        type: "number",
-        placeholder: "",
-        validation: {},
+        type: "text",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
       },
       {
         name: "contact.isMailingAddressSame",
@@ -215,10 +219,66 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
+        name: "mailing.addressLine1",
+        label: "Mailing Address Line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Mailing address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+        conditionalOn: {
+          field: "contact.isMailingAddressSame",
+          value: "no",
+        },
+      },
+      {
+        name: "mailing.addressLine2",
+        label: "Mailing Address Line 2",
+        type: "text",
+        placeholder: "",
+        validation: {},
+        conditionalOn: {
+          field: "contact.isMailingAddressSame",
+          value: "no",
+        },
+      },
+      {
+        name: "mailing.parish",
+        label: "Mailing Parish",
+        type: "select",
+        validation: {
+          required: "Mailing parish is required",
+        },
+        options: barbadosParishes,
+        conditionalOn: {
+          field: "contact.isMailingAddressSame",
+          value: "no",
+        },
+      },
+      {
+        name: "mailing.postalCode",
+        label: "Mailing Postal Code",
+        type: "text",
+        placeholder: "BB17004",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+        conditionalOn: {
+          field: "contact.isMailingAddressSame",
+          value: "no",
+        },
+      },
+      {
         name: "contact.email",
         label: "Email Address",
         type: "email",
-        placeholder: "john.doe@example.com",
         validation: {
           required: "Email address is required",
         },
@@ -227,7 +287,6 @@ export const formSteps: FormStep[] = [
         name: "contact.telephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "+1 (246) 234-5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
