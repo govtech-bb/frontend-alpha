@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { figtree } from "@/lib/fonts";
 import "./globals.css";
 import { Analytics } from "@/components/analytics";
-import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
 export const metadata: Metadata = {
@@ -38,7 +37,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
       <Analytics />
     </html>
