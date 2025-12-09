@@ -14,7 +14,7 @@ export const formSteps: FormStep[] = [
           required: "Title is required",
         },
         options: [
-          { label: "Select title", value: "" },
+          { label: "", value: "" },
           { label: "Mr", value: "mr" },
           { label: "Ms", value: "ms" },
           { label: "Mrs", value: "mrs" },
@@ -28,7 +28,12 @@ export const formSteps: FormStep[] = [
           required: "First name is required",
         },
       },
-
+      {
+        name: "applicant.middleName",
+        label: "Middle Name",
+        type: "text",
+        validation: {},
+      },
       {
         name: "applicant.lastName",
         label: "Last Name",
@@ -48,10 +53,35 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-
+      {
+        name: "applicant.gender",
+        label: "Sex",
+        type: "radio",
+        validation: {
+          required: "Sex is required",
+        },
+        options: [
+          { label: "Male", value: "male" },
+          { label: "Female", value: "female" },
+        ],
+      },
+      {
+        name: "applicant.maritalStatus",
+        label: "Marital Status",
+        type: "select",
+        validation: {
+          required: "Marital Status is required",
+        },
+        options: [
+          { label: "Select marital status", value: "" },
+          { label: "Single", value: "single" },
+          { label: "Married", value: "married" },
+          { label: "Divorced", value: "divorced" },
+        ],
+      },
       {
         name: "applicant.idNumber",
-        label: "ID Number",
+        label: "National Identification (ID) Number",
         type: "text",
         placeholder: "",
         validation: {
@@ -119,35 +149,17 @@ export const formSteps: FormStep[] = [
           value: "yes",
         },
       },
-      {
-        name: "applicant.gender",
-        label: "Sex",
-        type: "radio",
-        validation: {
-          required: "Sex is required",
-        },
-        options: [
-          { label: "Male", value: "male" },
-          { label: "Female", value: "female" },
-        ],
-      },
-      {
-        name: "applicant.maritalStatus",
-        label: "Marital Status",
-        type: "select",
-        validation: {
-          required: "Marital Status is required",
-        },
-        options: [
-          { label: "Select marital status", value: "" },
-          { label: "Single", value: "single" },
-          { label: "Married", value: "married" },
-          { label: "Divorced", value: "divorced" },
-        ],
-      },
+    ],
+  },
+  {
+    id: "disability-support",
+    title: "Do you have a disability?",
+    description:
+      "We ask you this so we can accomodate accessibility or support needs.",
+    fields: [
       {
         name: "applicant.hasDisability",
-        label: "Do you have a disability?",
+        label: "",
         type: "radio",
         validation: {
           required: "Disability status is required",
@@ -222,75 +234,75 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      {
-        name: "contact.isMailingAddressSame",
-        label: "Is your mailing address the same as above?",
-        type: "radio",
-        validation: {
-          required: "Field is required",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-      {
-        name: "mailing.addressLine1",
-        label: "Mailing Address Line 1",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Mailing address line 1 is required",
-          minLength: {
-            value: 5,
-            message: "Address must be at least 5 characters",
-          },
-        },
-        conditionalOn: {
-          field: "contact.isMailingAddressSame",
-          value: "no",
-        },
-      },
-      {
-        name: "mailing.addressLine2",
-        label: "Mailing Address Line 2",
-        type: "text",
-        placeholder: "",
-        validation: {},
-        conditionalOn: {
-          field: "contact.isMailingAddressSame",
-          value: "no",
-        },
-      },
-      {
-        name: "mailing.parish",
-        label: "Mailing Parish",
-        type: "select",
-        validation: {
-          required: "Mailing parish is required",
-        },
-        options: barbadosParishes,
-        conditionalOn: {
-          field: "contact.isMailingAddressSame",
-          value: "no",
-        },
-      },
-      {
-        name: "mailing.postalCode",
-        label: "Mailing Postal Code",
-        type: "text",
-        placeholder: "BB17004",
-        validation: {
-          pattern: {
-            value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
-          },
-        },
-        conditionalOn: {
-          field: "contact.isMailingAddressSame",
-          value: "no",
-        },
-      },
+      // {
+      //   name: "contact.isMailingAddressSame",
+      //   label: "Is your mailing address the same as above?",
+      //   type: "radio",
+      //   validation: {
+      //     required: "Field is required",
+      //   },
+      //   options: [
+      //     { label: "Yes", value: "yes" },
+      //     { label: "No", value: "no" },
+      //   ],
+      // },
+      // {
+      //   name: "mailing.addressLine1",
+      //   label: "Mailing Address Line 1",
+      //   type: "text",
+      //   placeholder: "",
+      //   validation: {
+      //     required: "Mailing address line 1 is required",
+      //     minLength: {
+      //       value: 5,
+      //       message: "Address must be at least 5 characters",
+      //     },
+      //   },
+      //   conditionalOn: {
+      //     field: "contact.isMailingAddressSame",
+      //     value: "no",
+      //   },
+      // },
+      // {
+      //   name: "mailing.addressLine2",
+      //   label: "Mailing Address Line 2",
+      //   type: "text",
+      //   placeholder: "",
+      //   validation: {},
+      //   conditionalOn: {
+      //     field: "contact.isMailingAddressSame",
+      //     value: "no",
+      //   },
+      // },
+      // {
+      //   name: "mailing.parish",
+      //   label: "Mailing Parish",
+      //   type: "select",
+      //   validation: {
+      //     required: "Mailing parish is required",
+      //   },
+      //   options: barbadosParishes,
+      //   conditionalOn: {
+      //     field: "contact.isMailingAddressSame",
+      //     value: "no",
+      //   },
+      // },
+      // {
+      //   name: "mailing.postalCode",
+      //   label: "Mailing Postal Code",
+      //   type: "text",
+      //   placeholder: "BB17004",
+      //   validation: {
+      //     pattern: {
+      //       value: "^BB\\d{5}$",
+      //       message: "Enter a valid postal code (e.g., BB17004)",
+      //     },
+      //   },
+      //   conditionalOn: {
+      //     field: "contact.isMailingAddressSame",
+      //     value: "no",
+      //   },
+      // },
       {
         name: "contact.email",
         label: "Email Address",
@@ -319,6 +331,20 @@ export const formSteps: FormStep[] = [
     title: "Emergency Contact Details",
     description: "Description",
     fields: [
+      {
+        name: "emergency.title",
+        label: "Title",
+        type: "select",
+        validation: {
+          required: "Title is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Mr", value: "mr" },
+          { label: "Ms", value: "ms" },
+          { label: "Mrs", value: "mrs" },
+        ],
+      },
       {
         name: "emergency.firstName",
         label: "First Name",
@@ -406,8 +432,21 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "education.secondarySchoolName",
-        label: "Name of Secondary School",
+        name: "education.level",
+        label: "Education Level",
+        type: "radio",
+        validation: {
+          required: "Education Level is required",
+        },
+        options: [
+          { label: "Primary", value: "primary" },
+          { label: "Secondary", value: "secondary" },
+          { label: "Tertiary", value: "tertiary" },
+        ],
+      },
+      {
+        name: "education.institutionName",
+        label: "Name of Institution",
         type: "text",
         placeholder: "",
         validation: {
@@ -452,26 +491,38 @@ export const formSteps: FormStep[] = [
           },
         },
       },
+      // {
+      //   name: "education.coursesOrSubjects",
+      //   label: "What courses or subjects did you study?",
+      //   type: "textarea",
+      //   placeholder: "",
+      //   validation: {},
+      // },
+      // {
+      //   name: "education.qualificationsObtained",
+      //   label: "What are your qualifications?",
+      //   type: "textarea",
+      //   placeholder: "",
+      //   validation: {},
+      // },
+      // {
+      //   name: "education.gradesObtained",
+      //   label: "What are your grades?",
+      //   type: "textarea",
+      //   placeholder: "",
+      //   validation: {},
+      // },
       {
-        name: "education.coursesOrSubjects",
-        label: "What courses or subjects did you study?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-      {
-        name: "education.qualificationsObtained",
-        label: "What are your qualifications?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-      {
-        name: "education.gradesObtained",
-        label: "What are your grades?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
+        name: "education.addanother",
+        label: "Do you want to add another experience?",
+        type: "radio",
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
       },
     ],
   },
