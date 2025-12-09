@@ -490,6 +490,47 @@ export default function DynamicMultiStepForm({
     defaultValues,
   });
 
+  // Extract fields that affect step visibility (memoized to prevent unnecessary re-renders)
+  const conditionalFields = useMemo(() => {
+    const fields = new Set<string>();
+    for (const step of formSteps) {
+      if (step.conditionalOn) {
+        if ("or" in step.conditionalOn) {
+          for (const condition of step.conditionalOn.or) {
+            fields.add(condition.field);
+          }
+        } else {
+          fields.add(step.conditionalOn.field);
+        }
+      }
+    }
+    return Array.from(fields);
+  }, [formSteps]);
+
+  // Compute visible steps based on current form values
+  const computeVisibleSteps = useCallback(() => {
+    const currentValues = methods.getValues();
+    return formSteps.filter((step) => isStepVisible(step, currentValues));
+  }, [formSteps, methods]);
+
+  // Track visible steps in state
+  const [visibleSteps, setVisibleSteps] = useState<FormStep[]>(() =>
+    computeVisibleSteps()
+  );
+
+  // Update visible steps only when conditional fields change
+  useEffect(() => {
+    if (!conditionalFields.length) return;
+
+    const subscription = methods.watch((_value, { name }) => {
+      // Only recompute if a conditional field changed
+      if (name && conditionalFields.includes(name)) {
+        setVisibleSteps(computeVisibleSteps());
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [conditionalFields, computeVisibleSteps, methods]);
+
   // Update URL when step changes
   // biome-ignore lint/correctness/useExhaustiveDependencies: expandedFormSteps changes are tracked, searchParams intentionally omitted to prevent circular updates
   useEffect(() => {
@@ -554,7 +595,14 @@ export default function DynamicMultiStepForm({
         setCurrentStep(stepIndex);
       }
     }
-  }, [_hasHydrated, searchParams, completedSteps, currentStep, setCurrentStep]);
+  }, [
+    _hasHydrated,
+    searchParams,
+    completedSteps,
+    currentStep,
+    setCurrentStep,
+    visibleSteps,
+  ]);
 
   // Load saved form data on mount
   useEffect(() => {
