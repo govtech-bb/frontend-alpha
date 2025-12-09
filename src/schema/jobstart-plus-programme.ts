@@ -112,6 +112,23 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
+      {
+        name: "applicant.disabilityDetails",
+        label: "What is your disability?",
+        type: "textarea",
+        placeholder: "",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 2,
+            message: "Field must be at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "applicant.hasDisability",
+          value: "yes",
+        },
+      },
     ],
   },
   {
@@ -167,6 +184,29 @@ export const formSteps: FormStep[] = [
           { label: "Yes", value: "yes" },
           { label: "No", value: "no" },
         ],
+      },
+      {
+        name: "contact.email",
+        label: "Email Address",
+        type: "email",
+        placeholder: "john.doe@example.com",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "contact.telephoneNumber",
+        label: "Telephone Number",
+        type: "tel",
+        placeholder: "+1 (246) 234-5678",
+        validation: {
+          required: "Telephone number is required",
+          pattern: {
+            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            message:
+              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+          },
+        },
       },
     ],
   },
@@ -251,6 +291,143 @@ export const formSteps: FormStep[] = [
             value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
             message:
               "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "education-training",
+    title: "Tell us about your education and training",
+    description: "",
+    fields: [
+      {
+        name: "education.secondarySchoolName",
+        label: "Name of Secondary School",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Name of Secondary School is required",
+          minLength: {
+            value: 5,
+            message: "Name of Secondary School must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "education.startYear",
+        label: "Start Year",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Start Year is required",
+          minLength: {
+            value: 4,
+            message: "Start Year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "Start Year must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "education.endYear",
+        label: "End Year",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "End Year is required",
+          minLength: {
+            value: 4,
+            message: "End Year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "End Year must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "education.coursesOrSubjects",
+        label: "What courses or subjects did you study?",
+        type: "textarea",
+        placeholder: "",
+        validation: {},
+      },
+      {
+        name: "education.qualificationsObtained",
+        label: "What are your qualifications?",
+        type: "textarea",
+        placeholder: "",
+        validation: {},
+      },
+      {
+        name: "education.gradesObtained",
+        label: "What are your grades?",
+        type: "textarea",
+        placeholder: "",
+        validation: {},
+      },
+    ],
+  },
+  {
+    id: "eligibility-questions",
+    title: "Your eligibility",
+    description: "",
+    fields: [
+      {
+        name: "eligibility.skillsAndInterests",
+        label: "Tell us about your skills and interests",
+        hint: "For example, which trades are you skilled in? Which hobbies do you enjoy? Are you part of any community groups",
+        type: "textarea",
+        rows: 5,
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "This must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "eligibility.areasOfInterest",
+        label: "What type of jobs or trades are you interested in?",
+        type: "textarea",
+        rows: 5,
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "This must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "eligibility.availabilityToWork",
+        label: "Tell us when you are available to work",
+        hint: "If you are 18 and over you are eligible to work at night. Might you be willing to work between 6pm and 7am?",
+        type: "radio",
+        rows: 5,
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+      {
+        name: "eligibility.shortTermGoals",
+        label: "Tell us about your short-term goals",
+        hint: " This helps us understand the kinds of opportunities that will support your growth. For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills.",
+        type: "textarea",
+        rows: 5,
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "This must be at least 5 characters",
           },
         },
       },
