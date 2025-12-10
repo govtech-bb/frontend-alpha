@@ -2,7 +2,7 @@
 title: "Apply to the JobSTART Plus Programm"
 stage: "alpha"
 featured: false
-publish_date: 2025-12-08
+publish_date: 2025-12-10
 ---
 
 [Job Start Plus](https://labour.gov.bb/jobstartplus/) is a training programme for young people aimed at preparing them for the workplace. It offers tailored training to develop relevant skills and build confidence, as well as career guidance, and direct placement opportunities. 
