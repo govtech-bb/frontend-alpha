@@ -5,7 +5,12 @@ export type PageType = {
   slug: string;
   source_url?: string;
   description: string; // date when content was published, updated or migrated
-  subPages?: { slug: string; title?: string; type: "markdown" | "component" }[];
+  subPages?: {
+    slug: string;
+    title?: string;
+    type: "markdown" | "component";
+    protected?: boolean;
+  }[];
 };
 
 export type InformationContent = {
