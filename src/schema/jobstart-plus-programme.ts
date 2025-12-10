@@ -134,7 +134,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.nisNumber",
-        label: "What is your National Insurance Number (NIS)?",
+        label: "Provide your National Insurance Number (NIS)?",
         type: "number",
         placeholder: "",
         validation: {
@@ -491,27 +491,7 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      // {
-      //   name: "education.coursesOrSubjects",
-      //   label: "What courses or subjects did you study?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.qualificationsObtained",
-      //   label: "What are your qualifications?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.gradesObtained",
-      //   label: "What are your grades?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
+
       {
         name: "education.addanother",
         label: "Do you want to add another experience?",
@@ -526,7 +506,182 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
-
+  {
+    id: "share-employment",
+    title: "Do you want to add your employment history?",
+    description: "",
+    fields: [
+      {
+        name: "employment.shareEmploymentHistory",
+        label: "",
+        type: "radio",
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "previous-job",
+    title: "Tell us about your previous job",
+    description: "",
+    fields: [
+      {
+        name: "employment.employerName",
+        label: "Name of employer or organization",
+        type: "text",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "Please provide more details (at least 5 characters)",
+          },
+        },
+      },
+      {
+        name: "employment.jobTitle",
+        label: "Occupation",
+        hint: "Job Title",
+        type: "text",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "Please provide more details (at least 5 characters)",
+          },
+        },
+      },
+      {
+        name: "employment.startDate",
+        label: "When did you start this job?",
+        type: "date",
+        validation: {
+          required: "Date is required",
+        },
+      },
+      {
+        name: "employment.endDate",
+        label: "When did you end this job?",
+        type: "date",
+        validation: {
+          required: "Date is required",
+        },
+      },
+      {
+        name: "employment.currentlyWorkingHere",
+        label: "I am currently working here",
+        type: "checkbox",
+        validation: {},
+      },
+      {
+        name: "employment.jobDuties",
+        label: "Your main tasks",
+        hint: "Provide a brief description of what you did in your role",
+        type: "textarea",
+        placeholder: "",
+        validation: {
+          required: "This field is required",
+          minLength: {
+            value: 10,
+            message: "Please provide more details (at least 10 characters)",
+          },
+        },
+      },
+      {
+        name: "employment.addanother",
+        label: "Do you want to add another experience?",
+        type: "radio",
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "areas-of-interest",
+    title: "Tell us your areas of interest",
+    description: "",
+    fields: [
+      {
+        name: "goals.interestInJobsAndTrades",
+        label: "What type of jobs or trades are you interested in?",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "This field is required",
+          minLength: {
+            value: 10,
+            message: "Please provide more details (at least 10 characters)",
+          },
+        },
+      },
+      {
+        name: "education.18andOver",
+        label: "Are you 18 and over?",
+        type: "radio",
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "short-term-goals",
+    title: "Tell us about your short-term goals",
+    description:
+      "This helps us understand the kinds of opportunities that will support your growth. For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills",
+    fields: [
+      {
+        name: "goals.shortTermGoals",
+        label: "",
+        type: "textarea",
+        placeholder: "",
+        validation: {
+          required: "This field is required",
+          minLength: {
+            value: 10,
+            message: "Please provide more details (at least 10 characters)",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "confirmation",
+    title: "Confirmation",
+    description:
+      "I certify that all information given herein on this application are true and complete. By submitting this application, I authorize any investigation that the statements made. I understand that if any false information, omissions or misrepresentations are discovered, my registration may not be accepted and if I am employed, my employment may be terminated at any time. I also note that the Government of Barbados will treat my information as Confidential",
+    fields: [
+      {
+        name: "confirmation.agree",
+        label: "All information is correct and true",
+        type: "checkbox",
+        validation: {
+          required: "You must agree before submitting",
+        },
+      },
+      {
+        name: "confirmation.date",
+        label: "Date",
+        type: "date",
+        validation: {
+          required: "Date is required",
+        },
+      },
+    ],
+  },
   {
     id: "check-your-answers",
     title: "Check Your Answers",

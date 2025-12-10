@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   DateInput,
   type DateInputValue,
   Input,
@@ -165,6 +166,35 @@ export function DynamicField({
                 />
               )}
             />
+          ) : conditionalField.type === "checkbox" ? (
+            <Controller
+              control={control}
+              name={conditionalField.name as keyof FormData}
+              render={({ field: { value, ...controllerField } }) => (
+                <div className="flex flex-col gap-1">
+                  <Checkbox
+                    {...controllerField}
+                    aria-describedby={
+                      conditionalError?.message
+                        ? `${conditionalField.name}-error`
+                        : undefined
+                    }
+                    aria-invalid={!!conditionalError?.message}
+                    checked={value as boolean}
+                    id={conditionalField.name}
+                    label={conditionalField.label}
+                  />
+                  {conditionalError?.message && (
+                    <p
+                      className="text-error text-sm"
+                      id={`${conditionalField.name}-error`}
+                    >
+                      {conditionalError.message}
+                    </p>
+                  )}
+                </div>
+              )}
+            />
           ) : (
             <Input
               error={conditionalError?.message}
@@ -250,6 +280,30 @@ export function DynamicField({
             </RadioGroup>
           )}
         />
+      ) : field.type === "checkbox" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: { value, ...controllerField } }) => (
+            <div className="flex flex-col gap-1">
+              <Checkbox
+                {...controllerField}
+                aria-describedby={
+                  error?.message ? `${field.name}-error` : undefined
+                }
+                aria-invalid={!!error?.message}
+                checked={value as boolean}
+                id={field.name}
+                label={field.label}
+              />
+              {error?.message && (
+                <p className="text-error text-sm" id={`${field.name}-error`}>
+                  {error.message}
+                </p>
+              )}
+            </div>
+          )}
+        />
       ) : field.type === "showHide" && field.showHide ? (
         (() => {
           // Extract showHide config to help TypeScript narrow the type
@@ -333,6 +387,37 @@ export function DynamicField({
                                 controllerField.value as number | undefined
                               }
                             />
+                          )}
+                        />
+                      ) : childField.type === "checkbox" ? (
+                        <Controller
+                          control={control}
+                          name={childField.name as keyof FormData}
+                          render={({
+                            field: { value, ...controllerField },
+                          }) => (
+                            <div className="flex flex-col gap-1">
+                              <Checkbox
+                                {...controllerField}
+                                aria-describedby={
+                                  childError?.message
+                                    ? `${childField.name}-error`
+                                    : undefined
+                                }
+                                aria-invalid={!!childError?.message}
+                                checked={value as boolean}
+                                id={childField.name}
+                                label={childField.label}
+                              />
+                              {childError?.message && (
+                                <p
+                                  className="text-error text-sm"
+                                  id={`${childField.name}-error`}
+                                >
+                                  {childError.message}
+                                </p>
+                              )}
+                            </div>
                           )}
                         />
                       ) : (
