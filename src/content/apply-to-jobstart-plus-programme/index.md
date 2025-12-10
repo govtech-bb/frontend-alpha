@@ -30,7 +30,9 @@ You are eligible to sign up if you meet both of the 2 criteria:
 
 ### How to register 
 
-Registration is open between March and April each year. The training begins in May.
+Registration is open between March and April each year. The training begins in May. When registration is open, you will be able to register here.
+
+[Button to start page] Register now -->
 
 <!-- Registration is open now. The deadline is [date] and the training will begin in May.
 
