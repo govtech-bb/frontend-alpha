@@ -412,21 +412,15 @@ export function DynamicField({
                           name={childField.name as keyof FormData}
                           render={({ field: controllerField }) => (
                             <NumberInput
-                              description={childField.hint}
                               error={childError?.message}
-                              label={childField.hidden ? "" : childField.label}
+                              id={childField.name}
+                              label={childField.label}
                               name={controllerField.name}
-                              onBlur={controllerField.onBlur}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                const value = e.target.value;
-                                controllerField.onChange(
-                                  value === "" ? "" : Number(value)
-                                );
-                              }}
+                              onChange={controllerField.onChange}
                               placeholder={childField.placeholder}
-                              value={controllerField.value as number | ""}
+                              value={
+                                controllerField.value as number | undefined
+                              }
                             />
                           )}
                         />
@@ -471,21 +465,33 @@ export function DynamicField({
         <Controller
           control={control}
           name={field.name as keyof FormData}
-          render={({ field: controllerField }) => (
-            <NumberInput
-              description={field.hint}
-              error={error?.message}
-              label={field.hidden ? "" : field.label}
-              name={controllerField.name}
-              onBlur={controllerField.onBlur}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const value = e.target.value;
-                controllerField.onChange(value === "" ? "" : Number(value));
-              }}
-              placeholder={field.placeholder}
-              value={controllerField.value as number | ""}
-            />
-          )}
+          render={({ field: controllerField }) =>
+            field.hint ? (
+              <div className="flex flex-col gap-1">
+                <label className="font-bold text-lg" htmlFor={field.name}>
+                  {field.label}
+                </label>
+                <p className="text-neutral-600">{field.hint}</p>
+                <NumberInput
+                  error={error?.message}
+                  id={field.name}
+                  name={controllerField.name}
+                  onChange={controllerField.onChange}
+                  placeholder={field.placeholder}
+                  value={controllerField.value as number | undefined}
+                />
+              </div>
+            ) : (
+              <NumberInput
+                error={error?.message}
+                label={field.label}
+                name={controllerField.name}
+                onChange={controllerField.onChange}
+                placeholder={field.placeholder}
+                value={controllerField.value as number | undefined}
+              />
+            )
+          }
         />
       ) : field.hint ? (
         <div className="flex flex-col gap-1">

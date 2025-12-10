@@ -135,7 +135,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.nisNumber",
         label: "What is your National Insurance Number (NIS)?",
-        type: "text",
+        type: "number",
         placeholder: "",
         validation: {
           required: "NIS Number is required",
@@ -460,7 +460,7 @@ export const formSteps: FormStep[] = [
       {
         name: "education.startYear",
         label: "Start Year",
-        type: "text",
+        type: "number",
         placeholder: "",
         validation: {
           required: "Start Year is required",
@@ -477,7 +477,7 @@ export const formSteps: FormStep[] = [
       {
         name: "education.endYear",
         label: "End Year",
-        type: "text",
+        type: "number",
         placeholder: "",
         validation: {
           required: "End Year is required",
