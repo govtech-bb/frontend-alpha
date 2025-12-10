@@ -22,7 +22,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "First name is required",
@@ -30,13 +30,13 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.middleName",
-        label: "Middle Name",
+        label: "Middle name",
         type: "text",
         validation: { required: false },
       },
       {
         name: "applicant.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
@@ -44,7 +44,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.dateOfBirth",
-        label: "Date of Birth",
+        label: "Date of birth",
         type: "date",
         validation: {
           required: "Date of birth is required",
@@ -67,7 +67,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.maritalStatus",
-        label: "Marital Status",
+        label: "Marital status",
         type: "select",
         validation: {
           required: "Marital Status is required",
@@ -81,7 +81,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.idNumber",
-        label: "National Identification (ID) Number",
+        label: "National identification (ID) number",
         type: "text",
         placeholder: "",
         validation: {
@@ -122,7 +122,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.hasNisNumber",
-        label: "Do you have a National Insurance Number (NIS)?",
+        label: "Do you have a national insurance number (NIS)?",
         type: "radio",
         validation: {
           required: "NIS Number is required",
@@ -134,7 +134,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.nisNumber",
-        label: "Provide your National Insurance Number (NIS)?",
+        label: "Provide your national insurance number (NIS)?",
         type: "number",
         placeholder: "",
         validation: {
@@ -195,7 +195,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "contact.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -208,7 +208,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -225,7 +225,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.postalCode",
-        label: "Postal Code",
+        label: "Postal code",
         type: "text",
         validation: {
           pattern: {
@@ -305,7 +305,7 @@ export const formSteps: FormStep[] = [
       // },
       {
         name: "contact.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         validation: {
           required: "Email address is required",
@@ -313,7 +313,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
@@ -347,7 +347,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "First name is required",
@@ -355,7 +355,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
@@ -382,7 +382,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -395,7 +395,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -412,7 +412,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.telephoneNumber",
-        label: "Phone Number",
+        label: "Phone number",
         type: "tel",
         placeholder: "246 234 5678",
         validation: {
@@ -446,7 +446,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "education.institutionName",
-        label: "Name of Institution",
+        label: "Name of institution",
         type: "text",
         placeholder: "",
         validation: {
@@ -459,7 +459,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "education.startYear",
-        label: "Start Year",
+        label: "Start year",
         type: "number",
         placeholder: "",
         validation: {
@@ -476,7 +476,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "education.endYear",
-        label: "End Year",
+        label: "End year",
         type: "number",
         placeholder: "",
         validation: {
