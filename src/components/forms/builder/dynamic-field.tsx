@@ -424,6 +424,37 @@ export function DynamicField({
                             />
                           )}
                         />
+                      ) : childField.type === "checkbox" ? (
+                        <Controller
+                          control={control}
+                          name={childField.name as keyof FormData}
+                          render={({
+                            field: { value, ...controllerField },
+                          }) => (
+                            <div className="flex flex-col gap-1">
+                              <Checkbox
+                                {...controllerField}
+                                aria-describedby={
+                                  childError?.message
+                                    ? `${childField.name}-error`
+                                    : undefined
+                                }
+                                aria-invalid={!!childError?.message}
+                                checked={value as boolean}
+                                id={childField.name}
+                                label={childField.label}
+                              />
+                              {childError?.message && (
+                                <p
+                                  className="text-error text-sm"
+                                  id={`${childField.name}-error`}
+                                >
+                                  {childError.message}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        />
                       ) : (
                         <Input
                           error={childError?.message}

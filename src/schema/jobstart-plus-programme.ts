@@ -134,7 +134,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.nisNumber",
-        label: "What is your National Insurance Number (NIS)?",
+        label: "Provide your National Insurance Number (NIS)?",
         type: "number",
         placeholder: "",
         validation: {
@@ -491,27 +491,7 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      // {
-      //   name: "education.coursesOrSubjects",
-      //   label: "What courses or subjects did you study?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.qualificationsObtained",
-      //   label: "What are your qualifications?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.gradesObtained",
-      //   label: "What are your grades?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
+
       {
         name: "education.addanother",
         label: "Do you want to add another experience?",
