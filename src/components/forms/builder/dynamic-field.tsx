@@ -2,6 +2,7 @@ import {
   DateInput,
   type DateInputValue,
   Input,
+  NumberInput,
   Radio,
   RadioGroup,
   Select,
@@ -148,6 +149,22 @@ export function DynamicField({
                 </option>
               ))}
             </Select>
+          ) : conditionalField.type === "number" ? (
+            <Controller
+              control={control}
+              name={conditionalField.name as keyof FormData}
+              render={({ field: controllerField }) => (
+                <NumberInput
+                  error={conditionalError?.message}
+                  id={conditionalField.name}
+                  label={conditionalField.label}
+                  name={controllerField.name}
+                  onChange={controllerField.onChange}
+                  placeholder={conditionalField.placeholder}
+                  value={controllerField.value as number | undefined}
+                />
+              )}
+            />
           ) : (
             <Input
               error={conditionalError?.message}
@@ -300,6 +317,24 @@ export function DynamicField({
                             rows={childField.rows || 4}
                           />
                         </div>
+                      ) : childField.type === "number" ? (
+                        <Controller
+                          control={control}
+                          name={childField.name as keyof FormData}
+                          render={({ field: controllerField }) => (
+                            <NumberInput
+                              error={childError?.message}
+                              id={childField.name}
+                              label={childField.label}
+                              name={controllerField.name}
+                              onChange={controllerField.onChange}
+                              placeholder={childField.placeholder}
+                              value={
+                                controllerField.value as number | undefined
+                              }
+                            />
+                          )}
+                        />
                       ) : (
                         <Input
                           error={childError?.message}
@@ -331,6 +366,38 @@ export function DynamicField({
             rows={field.rows || 4}
           />
         </div>
+      ) : field.type === "number" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: controllerField }) =>
+            field.hint ? (
+              <div className="flex flex-col gap-1">
+                <label className="font-bold text-lg" htmlFor={field.name}>
+                  {field.label}
+                </label>
+                <p className="text-neutral-600">{field.hint}</p>
+                <NumberInput
+                  error={error?.message}
+                  id={field.name}
+                  name={controllerField.name}
+                  onChange={controllerField.onChange}
+                  placeholder={field.placeholder}
+                  value={controllerField.value as number | undefined}
+                />
+              </div>
+            ) : (
+              <NumberInput
+                error={error?.message}
+                label={field.label}
+                name={controllerField.name}
+                onChange={controllerField.onChange}
+                placeholder={field.placeholder}
+                value={controllerField.value as number | undefined}
+              />
+            )
+          }
+        />
       ) : field.hint ? (
         <div className="flex flex-col gap-1">
           <label className="font-bold text-lg" htmlFor={field.name}>

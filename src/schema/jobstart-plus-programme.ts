@@ -135,7 +135,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.nisNumber",
         label: "What is your National Insurance Number (NIS)?",
-        type: "text",
+        type: "number",
         placeholder: "",
         validation: {
           required: "NIS Number is required",
@@ -318,9 +318,9 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\+?1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid 11-digit Barbados phone number (e.g., 1 246 234 5678 or +1 246 234 5678)",
           },
         },
       },
@@ -418,9 +418,9 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\+?1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid 11-digit Barbados phone number (e.g., 1 246 234 5678 or +1 246 234 5678)",
           },
         },
       },
@@ -460,7 +460,7 @@ export const formSteps: FormStep[] = [
       {
         name: "education.startYear",
         label: "Start Year",
-        type: "text",
+        type: "number",
         placeholder: "",
         validation: {
           required: "Start Year is required",
@@ -477,7 +477,7 @@ export const formSteps: FormStep[] = [
       {
         name: "education.endYear",
         label: "End Year",
-        type: "text",
+        type: "number",
         placeholder: "",
         validation: {
           required: "End Year is required",
@@ -526,144 +526,7 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
-  {
-    id: "post-secondary-education-training",
-    title: "Name of institution for Post-Secondary Education or Training",
-    description:
-      "Add information about college, university and training courses you have completed",
-    fields: [
-      {
-        name: "postSecondaryEducation.institutionName",
-        label: "Name of Institution",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Name of Instituion is required",
-          minLength: {
-            value: 5,
-            message: "Name of Institution must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.startYear",
-        label: "Start Year",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Start Year is required",
-          minLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.endYear",
-        label: "End Year",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "End Year is required",
-          minLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.coursesOrSubjects",
-        label: "What courses or subjects did you study?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-      {
-        name: "postSecondaryEducation.qualificationsObtained",
-        label: "What are your qualifications?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-      {
-        name: "postSecondaryEducation.gradesObtained",
-        label: "What are your grades?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-    ],
-  },
-  {
-    id: "eligibility-questions",
-    title: "Your eligibility",
-    description: "",
-    fields: [
-      {
-        name: "eligibility.skillsAndInterests",
-        label: "Tell us about your skills and interests",
-        hint: "For example, which trades are you skilled in? Which hobbies do you enjoy? Are you part of any community groups",
-        type: "textarea",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "This must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "eligibility.areasOfInterest",
-        label: "What type of jobs or trades are you interested in?",
-        type: "textarea",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "This must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "eligibility.availabilityToWork",
-        label: "Tell us when you are available to work",
-        hint: "If you are 18 and over you are eligible to work at night. Might you be willing to work between 6pm and 7am?",
-        type: "radio",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-      {
-        name: "eligibility.shortTermGoals",
-        label: "Tell us about your short-term goals",
-        hint: " This helps us understand the kinds of opportunities that will support your growth. For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills.",
-        type: "textarea",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "This must be at least 5 characters",
-          },
-        },
-      },
-    ],
-  },
+
   {
     id: "check-your-answers",
     title: "Check Your Answers",
