@@ -24,7 +24,6 @@ export const Footer = () => (
             className="block select-none"
             draggable="false"
             height={104}
-            priority
             src="/images/coat-of-arms.png"
             width={112}
           />
