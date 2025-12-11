@@ -251,16 +251,19 @@ export default function DynamicMultiStepForm({
     try {
       // Submit to API
       const result = await submitFormData({ data, formKey: storageKey });
-
-      if (result.success) {
-        // Mark as submitted in store
-        markAsSubmitted(result.data?.submissionId || "N/A");
-      } else {
-        const errorMessage = result.errors
-          ? result.errors[0]?.message
-          : "An unexpected error occurred";
-        console.error(`Submission failed: ${errorMessage}`);
-      }
+      markAsSubmitted(result.data?.submissionId || "N/A");
+      //NOTE: Temporarily disabling
+      // if (result.success) {
+      //   // Mark as submitted in store
+      //   markAsSubmitted(result.data?.submissionId || "N/A");
+      // } else {
+      //   const errorMessage = result.errors
+      //     ? result.errors[0]?.message
+      //     : "An unexpected error occurred";
+      //   // biome-ignore lint/suspicious/noConsole: Intentionally logging form submission errors
+      //   console.error(`Submission failed: ${errorMessage}`);
+      //   // throw new Error("Submission failed");
+      // }
     } catch (error) {
       setSubmissionError(
         error instanceof Error
