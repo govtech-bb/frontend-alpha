@@ -1,3 +1,4 @@
+import { barbadosParishes } from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -42,7 +43,47 @@ export const formSteps: FormStep[] = [
           required: "Last name is required",
         },
       },
+      {
+        name: "applicant.addressLine1",
+        label: "Address Line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "applicant.addressLine2",
+        label: "Address Line 2",
+        type: "text",
+        placeholder: "",
+        validation: {},
+      },
 
+      {
+        name: "applicant.parish",
+        label: "Parish",
+        type: "select",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "applicant.postalCode",
+        label: "Postal Code",
+        type: "text",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
       {
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
@@ -86,145 +127,6 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
-
-  //   {
-  //     id: "contact-details",
-  //     title: "Your Contact Details",
-  //     description: "Description",
-  //     fields: [
-  //       {
-  //         name: "contact.addressLine1",
-  //         label: "Address Line 1",
-  //         type: "text",
-  //         placeholder: "",
-  //         validation: {
-  //           required: "Address line 1 is required",
-  //           minLength: {
-  //             value: 5,
-  //             message: "Address must be at least 5 characters",
-  //           },
-  //         },
-  //       },
-  //       {
-  //         name: "contact.addressLine2",
-  //         label: "Address Line 2",
-  //         type: "text",
-  //         placeholder: "",
-  //         validation: {},
-  //       },
-
-  //       {
-  //         name: "contact.parish",
-  //         label: "Parish",
-  //         type: "select",
-  //         validation: {
-  //           required: "Parish is required",
-  //         },
-  //         options: barbadosParishes,
-  //       },
-  //       {
-  //         name: "contact.postalCode",
-  //         label: "Postal Code",
-  //         type: "text",
-  //         validation: {
-  //           pattern: {
-  //             value: "^BB\\d{5}$",
-  //             message: "Enter a valid postal code (e.g., BB17004)",
-  //           },
-  //         },
-  //       },
-  //       // {
-  //       //   name: "contact.isMailingAddressSame",
-  //       //   label: "Is your mailing address the same as above?",
-  //       //   type: "radio",
-  //       //   validation: {
-  //       //     required: "Field is required",
-  //       //   },
-  //       //   options: [
-  //       //     { label: "Yes", value: "yes" },
-  //       //     { label: "No", value: "no" },
-  //       //   ],
-  //       // },
-  //       // {
-  //       //   name: "mailing.addressLine1",
-  //       //   label: "Mailing Address Line 1",
-  //       //   type: "text",
-  //       //   placeholder: "",
-  //       //   validation: {
-  //       //     required: "Mailing address line 1 is required",
-  //       //     minLength: {
-  //       //       value: 5,
-  //       //       message: "Address must be at least 5 characters",
-  //       //     },
-  //       //   },
-  //       //   conditionalOn: {
-  //       //     field: "contact.isMailingAddressSame",
-  //       //     value: "no",
-  //       //   },
-  //       // },
-  //       // {
-  //       //   name: "mailing.addressLine2",
-  //       //   label: "Mailing Address Line 2",
-  //       //   type: "text",
-  //       //   placeholder: "",
-  //       //   validation: {},
-  //       //   conditionalOn: {
-  //       //     field: "contact.isMailingAddressSame",
-  //       //     value: "no",
-  //       //   },
-  //       // },
-  //       // {
-  //       //   name: "mailing.parish",
-  //       //   label: "Mailing Parish",
-  //       //   type: "select",
-  //       //   validation: {
-  //       //     required: "Mailing parish is required",
-  //       //   },
-  //       //   options: barbadosParishes,
-  //       //   conditionalOn: {
-  //       //     field: "contact.isMailingAddressSame",
-  //       //     value: "no",
-  //       //   },
-  //       // },
-  //       // {
-  //       //   name: "mailing.postalCode",
-  //       //   label: "Mailing Postal Code",
-  //       //   type: "text",
-  //       //   placeholder: "BB17004",
-  //       //   validation: {
-  //       //     pattern: {
-  //       //       value: "^BB\\d{5}$",
-  //       //       message: "Enter a valid postal code (e.g., BB17004)",
-  //       //     },
-  //       //   },
-  //       //   conditionalOn: {
-  //       //     field: "contact.isMailingAddressSame",
-  //       //     value: "no",
-  //       //   },
-  //       // },
-  //       {
-  //         name: "contact.email",
-  //         label: "Email Address",
-  //         type: "email",
-  //         validation: {
-  //           required: "Email address is required",
-  //         },
-  //       },
-  //       {
-  //         name: "contact.telephoneNumber",
-  //         label: "Telephone Number",
-  //         type: "tel",
-  //         validation: {
-  //           required: "Telephone number is required",
-  //           pattern: {
-  //             value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
-  //             message:
-  //               "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
-  //           },
-  //         },
-  //       },
-  //     ],
-  //   },
   {
     id: "applying-for-yourself",
     title: "Are you applying for your own birth certificate?",
