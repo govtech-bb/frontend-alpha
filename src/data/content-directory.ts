@@ -24,6 +24,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description:
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Get a Birth Certificate form",
+            type: "component",
+          },
+        ],
       },
       {
         title: "Register a death",

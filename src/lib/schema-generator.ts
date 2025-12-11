@@ -343,13 +343,10 @@ export function generateFormSchema(formSteps: FormStep[]) {
           z.string().optional()
         );
 
-        // Add child field schemas
+        // Add child field schemas as optional - they'll be validated conditionally via superRefine
         for (const childField of field.showHide.fields) {
-          setNestedValue(
-            schemaShape,
-            childField.name,
-            createFieldSchema(childField as FormField)
-          );
+          // Make child fields optional at schema level
+          setNestedValue(schemaShape, childField.name, z.string().optional());
         }
       }
     }
@@ -406,6 +403,76 @@ export function generateFormSchema(formSteps: FormStep[]) {
           message: field.validation.required,
           path: pathParts,
         });
+      }
+    }
+
+    // Validate ShowHide child fields when ShowHide is open
+    for (const step of formSteps) {
+      for (const field of step.fields) {
+        if (field.type === "showHide" && field.showHide) {
+          const showHideState = getNestedValue(
+            data as Record<string, unknown>,
+            field.showHide.stateFieldName
+          );
+
+          // Only validate child fields when ShowHide is open
+          if (showHideState === "open") {
+            for (const childField of field.showHide.fields) {
+              const childValue = getNestedValue(
+                data as Record<string, unknown>,
+                childField.name
+              );
+
+              // Validate required
+              if (
+                childField.validation.required &&
+                isFieldEmpty(childValue, childField.type)
+              ) {
+                const pathParts = childField.name.split(".");
+                ctx.addIssue({
+                  code: z.ZodIssueCode.custom,
+                  message: childField.validation.required,
+                  path: pathParts,
+                });
+              }
+
+              // Validate minLength
+              if (
+                childField.validation.minLength &&
+                !isFieldEmpty(childValue, childField.type) &&
+                typeof childValue === "string" &&
+                childValue.length < childField.validation.minLength.value
+              ) {
+                const pathParts = childField.name.split(".");
+                ctx.addIssue({
+                  code: z.ZodIssueCode.too_small,
+                  minimum: childField.validation.minLength.value,
+                  type: "string",
+                  inclusive: true,
+                  message: childField.validation.minLength.message,
+                  path: pathParts,
+                });
+              }
+
+              // Validate pattern
+              if (
+                childField.validation.pattern &&
+                !isFieldEmpty(childValue, childField.type) &&
+                typeof childValue === "string"
+              ) {
+                const regex = new RegExp(childField.validation.pattern.value);
+                if (!regex.test(childValue)) {
+                  const pathParts = childField.name.split(".");
+                  ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: childField.validation.pattern.message,
+                    path: pathParts,
+                  });
+                }
+              }
+            }
+          }
+        }
       }
     }
   });
