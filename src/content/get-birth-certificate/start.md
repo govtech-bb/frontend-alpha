@@ -13,10 +13,10 @@ You can request a certified copy of a birth record registered in Barbados from 1
  
 To complete this application, you may need:
 
-• the national identification number of the person named on the certificate
-• their date of birth or a search range
-• your relationship to the person named
-• the reason you need the certificate
-• the date of death (if the person is deceased)
+- the national identification number of the person named on the certificate
+- their date of birth or a search range
+- your relationship to the person named
+- the reason you need the certificate
+- the date of death (if the person is deceased)
  
 A search may take longer if the information provided is incomplete.
