@@ -85,12 +85,7 @@ async function waitForPageReady(
   await page.evaluate(() => document.fonts.ready).catch(() => {});
 
   // Load all lazy-loaded Next.js images by scrolling to them
-  // TODO: Potential refinements to test:
-  // - Add `:visible` to selector to only load visible images
-  // - Add `{ timeout: 5000 }` to the expect to prevent hanging on failed images
-  // - Only scroll back to top if lazyImages.length > 0
-  // - Add small wait after scroll back to top for layout to settle
-  const lazyImages = await page.locator("img[loading='lazy']").all();
+  const lazyImages = await page.locator("img[loading='lazy']:visible").all();
   for (const lazyImage of lazyImages) {
     await lazyImage.scrollIntoViewIfNeeded();
     await expect(lazyImage).not.toHaveJSProperty("naturalWidth", 0);
@@ -98,23 +93,6 @@ async function waitForPageReady(
 
   // Scroll back to top after loading lazy images
   await page.evaluate(() => window.scrollTo(0, 0));
-
-  // Wait for any remaining images with 5 second timeout
-  await page.evaluate(() => {
-    const images = Array.from(document.images);
-    const imagePromises = images
-      .filter((img) => !img.complete)
-      .map(
-        (img) =>
-          new Promise<void>((resolve) => {
-            img.onload = () => resolve();
-            img.onerror = () => resolve();
-          })
-      );
-
-    const timeout = new Promise<void>((resolve) => setTimeout(resolve, 5000));
-    return Promise.race([Promise.all(imagePromises), timeout]);
-  });
 
   await page.waitForTimeout(100);
 }
