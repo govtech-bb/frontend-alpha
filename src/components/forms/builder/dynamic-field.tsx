@@ -5,6 +5,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  ShowHide,
   TextArea,
 } from "@govtech-bb/react";
 import { Fragment, useEffect } from "react";
@@ -232,6 +233,90 @@ export function DynamicField({
             </RadioGroup>
           )}
         />
+      ) : field.type === "showHide" && field.showHide ? (
+        (() => {
+          // Extract showHide config to help TypeScript narrow the type
+          const showHideConfig = field.showHide;
+          // Watch the state field to control open/closed state
+          const stateValue = watch(
+            showHideConfig.stateFieldName as keyof FormData
+          );
+          const isOpen = stateValue === "open";
+          return (
+            <ShowHide
+              onToggle={(event) => {
+                const newIsOpen = (event.target as HTMLDetailsElement).open;
+                setValue(
+                  showHideConfig.stateFieldName as keyof FormData,
+                  (newIsOpen ? "open" : "closed") as FormData[keyof FormData],
+                  { shouldValidate: false }
+                );
+
+                // Clear passport number field when closing ShowHide
+                if (!newIsOpen) {
+                  for (const childField of showHideConfig.fields) {
+                    setValue(
+                      childField.name as keyof FormData,
+                      "" as FormData[keyof FormData],
+                      { shouldValidate: false }
+                    );
+                  }
+                }
+              }}
+              open={isOpen}
+              summary={showHideConfig.summary}
+            >
+              <div className="flex flex-col gap-6">
+                {showHideConfig.description && (
+                  <p className="text-[20px] text-neutral-midgrey leading-[1.7]">
+                    {showHideConfig.description}
+                  </p>
+                )}
+                {showHideConfig.fields.map((childField) => {
+                  const childError = getNestedValue<FieldError>(
+                    errors as Record<string, unknown>,
+                    childField.name
+                  );
+                  return (
+                    <div key={childField.name}>
+                      {childField.type === "textarea" ? (
+                        <div className="flex flex-col gap-1">
+                          <label
+                            className="font-bold text-lg"
+                            htmlFor={childField.name}
+                          >
+                            {childField.label}
+                          </label>
+                          {childField.hint && (
+                            <p className="text-neutral-600">
+                              {childField.hint}
+                            </p>
+                          )}
+                          <TextArea
+                            {...register(childField.name as keyof FormData)}
+                            error={childError?.message}
+                            id={childField.name}
+                            placeholder={childField.placeholder}
+                            rows={childField.rows || 4}
+                          />
+                        </div>
+                      ) : (
+                        <Input
+                          error={childError?.message}
+                          id={childField.name}
+                          label={childField.label}
+                          placeholder={childField.placeholder}
+                          type={childField.type}
+                          {...register(childField.name as keyof FormData)}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </ShowHide>
+          );
+        })()
       ) : field.type === "textarea" ? (
         <div className="flex flex-col gap-1">
           <label className="font-bold text-lg" htmlFor={field.name}>

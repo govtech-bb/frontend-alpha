@@ -3,7 +3,13 @@ import {
   createDateSchema,
   dateValidation,
 } from "@/lib/validation/date-validation";
-import type { FormField, FormStep } from "@/types";
+import type {
+  DateFieldValidation,
+  FormField,
+  FormStep,
+  NestedFormField,
+  NonDateFieldValidation,
+} from "@/types";
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -66,13 +72,19 @@ function objectToZodSchema(
   return z.object(shape);
 }
 
-function createFieldSchema(field: FormField): z.ZodTypeAny {
+function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
   let schema: z.ZodTypeAny = z.string();
 
-  const validation = field.validation;
+  const validation = field.validation as NonDateFieldValidation &
+    DateFieldValidation;
+
+  // Handle showHide fields - the state field needs to be optional string
+  if (field.type === "showHide") {
+    return z.string().optional();
+  }
 
   // Handle field arrays
-  if (field.type === "fieldArray") {
+  if (field.type === "fieldArray" && "fieldArray" in field) {
     let itemSchema: z.ZodTypeAny = z.string();
 
     if (validation.required) {
@@ -104,7 +116,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     const arraySchema = z.array(z.object({ value: itemSchema }));
 
     // If conditional, make it optional (allows undefined or array)
-    if (field.conditionalOn) {
+    if ("conditionalOn" in field && field.conditionalOn) {
       return arraySchema.optional();
     }
 
@@ -113,7 +125,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
 
   // Handle conditional fields - make them optional at schema level
   // Conditional validation is handled by superRefine in generateFormSchema
-  if (field.conditionalOn) {
+  if ("conditionalOn" in field && field.conditionalOn) {
     // Date fields need the DateInputValue object schema
     if (field.type === "date") {
       return createDateSchema(field.label.toLowerCase()).optional();
@@ -135,7 +147,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     }
 
     // Apply date-specific validation based on config
-    if (dateFieldValidation.date) {
+    if ("date" in dateFieldValidation && dateFieldValidation.date) {
       const rule = dateFieldValidation.date;
       switch (rule.type) {
         case "past":
@@ -194,7 +206,7 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
           dateSchema = dateValidation.minYear(dateSchema, rule.year, label);
           break;
         default: {
-          const _exhaustiveCheck: never = rule;
+          const _exhaustiveCheck: never = rule as never;
           throw new Error(`Unknown date validation type: ${_exhaustiveCheck}`);
         }
       }
@@ -321,6 +333,25 @@ export function generateFormSchema(formSteps: FormStep[]) {
   for (const step of formSteps) {
     for (const field of step.fields) {
       setNestedValue(schemaShape, field.name, createFieldSchema(field));
+
+      // Also add schemas for ShowHide child fields
+      if (field.type === "showHide" && field.showHide) {
+        // Add the state field
+        setNestedValue(
+          schemaShape,
+          field.showHide.stateFieldName,
+          z.string().optional()
+        );
+
+        // Add child field schemas
+        for (const childField of field.showHide.fields) {
+          setNestedValue(
+            schemaShape,
+            childField.name,
+            createFieldSchema(childField as FormField)
+          );
+        }
+      }
     }
   }
 
@@ -330,10 +361,30 @@ export function generateFormSchema(formSteps: FormStep[]) {
 
   // Add conditional field validation via superRefine
   return baseSchema.superRefine((data, ctx) => {
+    // Helper to check if a field value is empty
+    const isFieldEmpty = (fieldValue: unknown, fieldType: string): boolean => {
+      if (fieldType === "number") {
+        return (
+          fieldValue === undefined ||
+          fieldValue === null ||
+          fieldValue === "" ||
+          (typeof fieldValue === "number" && Number.isNaN(fieldValue)) ||
+          (typeof fieldValue === "string" &&
+            (fieldValue as string).trim() === "")
+        );
+      }
+      return (
+        fieldValue === undefined ||
+        fieldValue === null ||
+        fieldValue === "" ||
+        (typeof fieldValue === "string" && (fieldValue as string).trim() === "")
+      );
+    };
+
+    // Validate conditional fields (conditionalOn)
     for (const field of conditionalFields) {
       if (!field.conditionalOn) continue;
 
-      // Use nested value access for both parent and field values
       const parentValue = getNestedValue(
         data as Record<string, unknown>,
         field.conditionalOn.field
@@ -344,38 +395,17 @@ export function generateFormSchema(formSteps: FormStep[]) {
       );
       const isVisible = parentValue === field.conditionalOn.value;
 
-      // Only validate if the field is visible
-      if (isVisible && field.validation.required) {
-        let isEmpty = false;
-
-        if (field.type === "number") {
-          // For number fields: empty string, undefined, null, or NaN are empty
-          isEmpty =
-            fieldValue === undefined ||
-            fieldValue === null ||
-            fieldValue === "" ||
-            (typeof fieldValue === "number" && Number.isNaN(fieldValue)) ||
-            (typeof fieldValue === "string" &&
-              (fieldValue as string).trim() === "");
-        } else {
-          // For other fields: undefined, null, or empty string
-          isEmpty =
-            fieldValue === undefined ||
-            fieldValue === null ||
-            fieldValue === "" ||
-            (typeof fieldValue === "string" &&
-              (fieldValue as string).trim() === "");
-        }
-
-        if (isEmpty) {
-          // Split path for nested field names
-          const pathParts = field.name.split(".");
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: field.validation.required,
-            path: pathParts,
-          });
-        }
+      if (
+        isVisible &&
+        field.validation.required &&
+        isFieldEmpty(fieldValue, field.type)
+      ) {
+        const pathParts = field.name.split(".");
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: field.validation.required,
+          path: pathParts,
+        });
       }
     }
   });

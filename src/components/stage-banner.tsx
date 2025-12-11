@@ -1,6 +1,5 @@
-import { StatusBanner } from "@govtech-bb/react";
-import Link from "next/link";
-import { Typography } from "@/components/ui/typography";
+import { Link, StatusBanner, Text } from "@govtech-bb/react";
+import NextLink from "next/link";
 
 type StageBannerProps = {
   stage?: string;
@@ -14,11 +13,17 @@ export const StageBanner = ({
   className,
 }: StageBannerProps) => (
   <StatusBanner className={className} variant={stage as "alpha" | "beta"}>
-    <Typography variant="paragraph">
+    <Text as="p">
       This page is in{" "}
-      <Link className="capitalize underline" href={url}>
+      <Link
+        as={NextLink}
+        className="capitalize"
+        href={url}
+        variant={"secondary"}
+      >
         {stage}
       </Link>
-    </Typography>
+      .
+    </Text>
   </StatusBanner>
 );

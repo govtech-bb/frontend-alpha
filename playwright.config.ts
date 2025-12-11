@@ -11,9 +11,10 @@ export default defineConfig({
   // retries: process.env.CI ? 2 : 0,
   // fullyParallel: false,
   // workers: process.env.CI ? 2 : undefined,
-  workers: process.env.CI ? 2 : undefined, // Use 2 workers in CI, auto-detect locally
+  workers: 2, // Use 2 workers in CI, auto-detect locally
   fullyParallel: true,
   retries: process.env.CI ? 2 : 0, // Retry flaky tests in CI
+  timeout: 60_000,
 
   use: {
     baseURL: "http://localhost:3000",

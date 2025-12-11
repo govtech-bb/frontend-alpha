@@ -7,20 +7,11 @@ export const Footer = () => (
   <footer className="bg-blue-100">
     <div className="container">
       <div className="grid lg:grid-cols-2 lg:gap-8">
-        <div className="flex flex-col items-start gap-2 py-8 text-neutral-white lg:pb-0">
-          {/* this needs to become a link component variant */}
-          <Link
-            as={NextLink}
-            className="cursor-pointer font-normal text-[20px] text-neutral-white leading-normal underline visited:text-[#7F92BF] hover:bg-[#EAF9F9] hover:text-[#083A3D] focus-visible:text-neutral-black active:text-neutral-black"
-            href="/"
-          >
+        <div className="flex flex-col items-start gap-2 py-8 lg:pb-0">
+          <Link as={NextLink} href="/" variant={"tertiary"}>
             Home
           </Link>
-          <Link
-            as={NextLink}
-            className="cursor-pointer font-normal text-[20px] text-neutral-white leading-normal underline visited:text-[#7F92BF] hover:bg-[#EAF9F9] hover:text-[#083A3D] focus-visible:text-neutral-black active:text-neutral-black"
-            href="/terms-conditions"
-          >
+          <Link as={NextLink} href="/terms-conditions" variant={"tertiary"}>
             Terms &amp; Conditions
           </Link>
         </div>

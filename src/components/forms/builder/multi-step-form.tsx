@@ -8,6 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
+import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormStep } from "@/types";
@@ -90,6 +91,16 @@ export default function DynamicMultiStepForm({
         const defaultValue =
           field.type === "date" ? { day: "", month: "", year: "" } : "";
         setNestedValue(values, field.name, defaultValue);
+
+        // Add default values for ShowHide child fields and state field
+        if (field.type === "showHide" && field.showHide) {
+          // Initialize state field to "closed"
+          setNestedValue(values, field.showHide.stateFieldName, "closed");
+          // Initialize child fields
+          for (const childField of field.showHide.fields) {
+            setNestedValue(values, childField.name, "");
+          }
+        }
       }
     }
     return values as FormData;
@@ -213,6 +224,17 @@ export default function DynamicMultiStepForm({
       return;
     }
 
+    // Helper to check if a field value is empty
+    const isFieldEmpty = (fieldValue: unknown): boolean =>
+      fieldValue === undefined ||
+      fieldValue === null ||
+      fieldValue === "" ||
+      (typeof fieldValue === "string" && fieldValue.trim() === "") ||
+      (typeof fieldValue === "number" && Number.isNaN(fieldValue));
+
+    // Get all form values for checking ShowHide states
+    const allValues = methods.getValues();
+
     // Filter out fields that are conditionally hidden
     const visibleFields = formSteps[currentStep].fields.filter((field) => {
       // Include field if it has no conditional rule
@@ -225,9 +247,52 @@ export default function DynamicMultiStepForm({
       return watchedValue === field.conditionalOn.value;
     });
 
-    const currentFieldNames = visibleFields.map((f) => f.name);
+    // Collect field names, handling ShowHide state for conditional validation
+    const currentFieldNames: string[] = [];
+    const fieldsToSkipValidation: string[] = [];
 
-    // Trigger standard validation first
+    for (const field of visibleFields) {
+      // Check if this field should skip validation when ShowHide is open
+      if (
+        "skipValidationWhenShowHideOpen" in field &&
+        field.skipValidationWhenShowHideOpen
+      ) {
+        const showHideState = getNestedValue(
+          allValues as Record<string, unknown>,
+          field.skipValidationWhenShowHideOpen
+        );
+        if (showHideState === "open") {
+          // Skip validation for this field - add to skip list and clear any existing errors
+          fieldsToSkipValidation.push(field.name);
+          methods.clearErrors(field.name as keyof FormData);
+        } else {
+          currentFieldNames.push(field.name);
+        }
+      } else {
+        currentFieldNames.push(field.name);
+      }
+
+      // Add ShowHide child fields only when ShowHide is open
+      if (field.type === "showHide" && field.showHide?.fields) {
+        const showHideState = getNestedValue(
+          allValues as Record<string, unknown>,
+          field.showHide.stateFieldName
+        );
+        if (showHideState === "open") {
+          // ShowHide is open - validate child fields
+          for (const childField of field.showHide.fields) {
+            currentFieldNames.push(childField.name);
+          }
+        } else {
+          // ShowHide is closed - clear child field errors
+          for (const childField of field.showHide.fields) {
+            methods.clearErrors(childField.name as keyof FormData);
+          }
+        }
+      }
+    }
+
+    // Trigger standard validation
     let isValid = await methods.trigger(
       currentFieldNames as (keyof FormData)[]
     );
@@ -239,22 +304,13 @@ export default function DynamicMultiStepForm({
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
         // Check required validation
-        if (field.validation.required) {
-          const isEmpty =
-            fieldValue === undefined ||
-            fieldValue === null ||
-            fieldValue === "" ||
-            (typeof fieldValue === "string" && fieldValue.trim() === "") ||
-            (typeof fieldValue === "number" && Number.isNaN(fieldValue));
-
-          if (isEmpty) {
-            methods.setError(field.name as keyof FormData, {
-              type: "required",
-              message: field.validation.required,
-            });
-            isValid = false;
-            continue; // Skip pattern check if empty
-          }
+        if (field.validation.required && isFieldEmpty(fieldValue)) {
+          methods.setError(field.name as keyof FormData, {
+            type: "required",
+            message: field.validation.required,
+          });
+          isValid = false;
+          continue; // Skip pattern check if empty
         }
 
         // Check pattern validation
