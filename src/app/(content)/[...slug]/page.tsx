@@ -83,7 +83,12 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    return <MarkdownContent markdown={markdownContent} />;
+    // Check if user has research access cookie to show/hide start page links
+    const hasAccess = await hasResearchAccess();
+
+    return (
+      <MarkdownContent hideStartLinks={!hasAccess} markdown={markdownContent} />
+    );
   }
 
   // Three slugs: Sub-pages (start, form, etc.)
@@ -102,12 +107,12 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    // Check research access once for both protected pages and hiding start links
+    const hasAccess = await hasResearchAccess();
+
     // Protected subpages require research access
-    if (isProtectedSubpage(page, subPageSlug)) {
-      const hasAccess = await hasResearchAccess();
-      if (!hasAccess) {
-        notFound();
-      }
+    if (isProtectedSubpage(page, subPageSlug) && !hasAccess) {
+      notFound();
     }
 
     // Handle form pages (JSX components)
@@ -122,7 +127,9 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    return <MarkdownContent markdown={markdownContent} />;
+    return (
+      <MarkdownContent hideStartLinks={!hasAccess} markdown={markdownContent} />
+    );
   }
 
   return notFound();

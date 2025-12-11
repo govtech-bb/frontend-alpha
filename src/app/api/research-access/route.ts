@@ -2,6 +2,17 @@ import { type NextRequest, NextResponse } from "next/server";
 import { COOKIE_NAME, isValidToken } from "@/lib/research-access";
 
 /**
+ * Validate redirect URL to prevent open redirect attacks.
+ * Only allows relative paths starting with /
+ */
+function getSafeRedirect(url: string | null): string {
+  if (url?.startsWith("/") && !url.startsWith("//")) {
+    return url;
+  }
+  return "/";
+}
+
+/**
  * GET /api/research-access?token=SECRET_TOKEN
  *
  * Grants research access by setting a session cookie.
@@ -15,7 +26,7 @@ import { COOKIE_NAME, isValidToken } from "@/lib/research-access";
 export function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const token = searchParams.get("token");
-  const redirectTo = searchParams.get("redirect") || "/";
+  const redirectTo = getSafeRedirect(searchParams.get("redirect"));
   const revoke = searchParams.get("revoke");
 
   // Handle revoke request
@@ -37,13 +48,13 @@ export function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid token" }, { status: 403 });
   }
 
-  // Grant access - session cookie clears when browser closes
   const response = NextResponse.redirect(new URL(redirectTo, request.url));
   response.cookies.set(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
+    maxAge: 86_400, // 24 hours
   });
 
   return response;

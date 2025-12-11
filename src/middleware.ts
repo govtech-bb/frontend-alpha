@@ -12,12 +12,12 @@ export function middleware(request: NextRequest) {
     url.searchParams.delete("p");
 
     const response = NextResponse.redirect(url);
-    // Session cookie - no maxAge means it clears when browser closes
     response.cookies.set(COOKIE_NAME, token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
+      maxAge: 86_400, // 24 hours
     });
 
     return response;
