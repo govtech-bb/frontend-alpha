@@ -258,6 +258,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
       },
+      {
+        title: "POST Office Redirection Notice",
+        slug: "post-office-redirection-notice",
+        description: "POST Office Redirection Notice",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "POST Office Redirection Notice form",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {

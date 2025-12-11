@@ -10,7 +10,7 @@ import {
   Text,
 } from "@react-email/components";
 import type { PartialBirthRegistrationFormData } from "@/components/forms/register-birth/types";
-import { combineDate, formatForDisplay } from "@/lib/dates";
+import { formatForDisplay } from "@/lib/dates";
 
 type UserReceiptEmailProps = {
   formData: PartialBirthRegistrationFormData;
@@ -71,19 +71,12 @@ export function UserReceiptEmail({
               <strong>Date submitted:</strong> {submittedAt}
             </Text>
             {formData.child?.dateOfBirth &&
-              (() => {
-                const dateString = combineDate(
-                  formData.child.dateOfBirth.year,
-                  formData.child.dateOfBirth.month,
-                  formData.child.dateOfBirth.day
-                );
-                return (
-                  <Text>
-                    <strong>Child's date of birth:</strong>{" "}
-                    {formatForDisplay(dateString)}
-                  </Text>
-                );
-              })()}
+              (() => (
+                <Text>
+                  <strong>Child's date of birth:</strong>{" "}
+                  {formatForDisplay(formData.child?.dateOfBirth)}
+                </Text>
+              ))()}
             <Text>
               <strong>Certificates requested:</strong>{" "}
               {formData.numberOfCertificates ?? 0}

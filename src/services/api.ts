@@ -1,16 +1,6 @@
+import { convertDateObjects } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
-
-type ApiResponse = {
-  success: boolean;
-  data?: {
-    submissionId: string;
-    formId: string;
-    status: string;
-    processedAt: string;
-  };
-  errors?: { field: string; message: string; code: string }[];
-  message?: string;
-};
+import type { ApiResponse, JsonValue } from "@/types";
 
 export async function submitFormData({
   data,
@@ -26,9 +16,12 @@ export async function submitFormData({
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
+  // Convert DateObject instances to ISO date strings
+  const convertedData = convertDateObjects(data as JsonValue);
+
   const response = await fetch(`${PROCESSING_API}/forms/${formKey}/submit`, {
     method: "POST",
-    body: JSON.stringify(data),
+    body: JSON.stringify(convertedData),
     headers: myHeaders,
   });
 
