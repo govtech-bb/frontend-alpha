@@ -1,5 +1,5 @@
 ---
-title: "Get a birth certificate"
+title: "Get a copy of a birth certificate"
 stage: "alpha"
 featured: false
 publish_date: 2025-10-17
