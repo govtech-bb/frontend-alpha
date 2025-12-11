@@ -1,5 +1,5 @@
 ---
-title: "Apply to the JobSTART Plus Programme"
+title: "Register for Job Start Plus"
 stage: "alpha"
 publish_date: 2025-12-05
 ---
