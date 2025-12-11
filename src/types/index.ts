@@ -137,9 +137,26 @@ export type FormField =
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
+export type StepConditionalRule =
+  | {
+      /** The field name to watch */
+      field: string;
+      /** Single value or array of values that trigger this step to show */
+      value: string | string[];
+    }
+  | {
+      /** Array of conditions - step shows if ANY condition is met (OR logic) */
+      or: Array<{
+        field: string;
+        value: string | string[];
+      }>;
+    };
+
 export type FormStep = {
   id: string;
   title: string;
   description?: string;
   fields: FormField[];
+  /** Optional conditional rule to determine if step should be displayed */
+  conditionalOn?: StepConditionalRule;
 };
