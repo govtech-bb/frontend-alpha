@@ -167,11 +167,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Each year, every child is entitled to a BDS $100 textbook grant while they are a student at a public or private primary school.",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Primary School Textbook Grant",
             type: "component",
+            protected: true,
           },
         ],
       },
