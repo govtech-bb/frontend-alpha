@@ -34,10 +34,35 @@ export const generateProcessId = (): string =>
   Date.now().toString() + Math.random().toString(36).substring(2, 12);
 
 /**
- * Generate a unique reference number
+ * Generate a unique reference number with optional form ID
+ * Format: REF-{formId}-{timestamp}-{random} or REF-{timestamp}-{random}
  */
-export const generateReferenceNumber = (): string =>
-  `REF-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+export const generateReferenceNumber = (formId?: string): string => {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  if (formId) {
+    // Encode form ID in reference: REF-{formId}-{timestamp}-{random}
+    return `REF-${formId}-${timestamp}-${random}`;
+  }
+
+  return `REF-${timestamp}-${random}`;
+};
+
+/**
+ * Parse form ID from reference number
+ * Returns null if no form ID is encoded
+ */
+export const parseFormIdFromReference = (reference: string): string | null => {
+  // Reference format: REF-{formId}-{timestamp}-{random}
+  const parts = reference.split("-");
+
+  if (parts.length >= 4 && parts[0] === "REF") {
+    return parts[1]; // Return the form ID
+  }
+
+  return null;
+};
 
 /**
  * Get the payment page URL for a token

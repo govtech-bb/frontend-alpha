@@ -20,6 +20,7 @@ const createPaymentSchema = z.object({
     .min(1, "At least one cart item is required"),
   customerEmail: z.string().email("Valid email is required"),
   customerName: z.string().min(1, "Customer name is required"),
+  formId: z.string().optional(),
   allowCredit: z.boolean().optional(),
   allowDebit: z.boolean().optional(),
   allowPayce: z.boolean().optional(),
@@ -34,7 +35,6 @@ const handleValidationError = (error: z.ZodError) =>
   );
 
 const handleServerError = (error: unknown) => {
-  // biome-ignore lint/suspicious/noConsole: <explanation>
   console.error("EZPay create payment error:", error);
   return NextResponse.json(
     { success: false, error: "Internal server error" },
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     const validatedData = parseResult.data;
-    const referenceNumber = generateReferenceNumber();
+    const referenceNumber = generateReferenceNumber(validatedData.formId);
 
     const result = await createPayment({
       cartItems: validatedData.cartItems,

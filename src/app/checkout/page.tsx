@@ -18,6 +18,9 @@ export default function CheckoutPage() {
     setDebugInfo("Starting payment...\n");
 
     try {
+      // Example form ID - in production, this would come from your form context
+      const formId = "register-a-birth"; // Must match a slug from FORM_COMPONENTS
+
       // Create cart items
       const cartItems: EZPayCartItem[] = [
         {
@@ -29,10 +32,13 @@ export default function CheckoutPage() {
       ];
 
       setDebugInfo(
-        (prev) => prev + `Cart items: ${JSON.stringify(cartItems, null, 2)}\n`
+        (prev) =>
+          prev +
+          `Form ID: ${formId}\n` +
+          `Cart items: ${JSON.stringify(cartItems, null, 2)}\n`
       );
 
-      // Call create payment API
+      // Call create payment API with formId
       const response = await fetch("/api/ezpay/create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,6 +46,7 @@ export default function CheckoutPage() {
           cartItems,
           customerEmail: "test@example.com",
           customerName: "Test User",
+          formId, // This will be encoded in the reference number
         }),
       });
 
