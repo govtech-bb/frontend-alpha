@@ -19,6 +19,24 @@ export async function GET(request: NextRequest) {
   console.log("EZPay Redirect - Transaction:", transactionNumber);
   console.log("EZPay Redirect - Reference:", referenceNumber);
 
+  // Get the correct origin from request headers
+  const host = request.headers.get("host") || request.nextUrl.host;
+
+  // Determine protocol: localhost should always use http, otherwise use x-forwarded-proto or default protocol
+  let protocol: string;
+  if (host.includes("localhost") || host.startsWith("127.0.0.1")) {
+    protocol = "http";
+  } else {
+    protocol =
+      request.headers.get("x-forwarded-proto") ||
+      request.nextUrl.protocol.replace(":", "");
+  }
+
+  const origin = `${protocol}://${host}`;
+  console.log("EZPay Redirect - Host:", host);
+  console.log("EZPay Redirect - Protocol:", protocol);
+  console.log("EZPay Redirect - Origin:", origin);
+
   // Extract form ID from reference number
   let formId: string | null = null;
   if (referenceNumber) {
@@ -51,8 +69,7 @@ export async function GET(request: NextRequest) {
     console.error("EZPay Redirect - Critical error:", errorDetails);
 
     // Redirect to home with alert parameters
-    // Use request.nextUrl.origin to preserve the correct domain (localhost, vercel, production)
-    const homeUrl = new URL("/", request.nextUrl.origin);
+    const homeUrl = new URL("/", origin);
     homeUrl.searchParams.set("payment_error", "true");
     homeUrl.searchParams.set(
       "error_message",
@@ -60,6 +77,7 @@ export async function GET(request: NextRequest) {
         ? "Missing payment information"
         : `Form not found for ID: ${formId}`
     );
+    console.log("EZPay Redirect - Home URL:", homeUrl.toString());
     return NextResponse.redirect(homeUrl);
   }
 
@@ -77,8 +95,7 @@ export async function GET(request: NextRequest) {
     console.log("EZPay Redirect - Payment status:", status);
 
     // Build redirect URL to form with payment status parameters
-    // Use request.nextUrl.origin to preserve the correct domain (localhost, vercel, production)
-    const redirectUrl = new URL(formUrl, request.nextUrl.origin);
+    const redirectUrl = new URL(formUrl, origin);
     redirectUrl.searchParams.set("payment_status", status);
     redirectUrl.searchParams.set("tx", transactionNumber || "");
     redirectUrl.searchParams.set("ref", referenceNumber || "");
@@ -109,8 +126,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Redirect to form with error status
-    // Use request.nextUrl.origin to preserve the correct domain (localhost, vercel, production)
-    const redirectUrl = new URL(formUrl, request.nextUrl.origin);
+    const redirectUrl = new URL(formUrl, origin);
     redirectUrl.searchParams.set("payment_status", "error");
     redirectUrl.searchParams.set(
       "payment_error",
@@ -119,6 +135,7 @@ export async function GET(request: NextRequest) {
     redirectUrl.searchParams.set("tx", transactionNumber || "");
     redirectUrl.searchParams.set("ref", referenceNumber || "");
 
+    console.log("EZPay Redirect - Error redirect URL:", redirectUrl.toString());
     return NextResponse.redirect(redirectUrl);
   }
 }
