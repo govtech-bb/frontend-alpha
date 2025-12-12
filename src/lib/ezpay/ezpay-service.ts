@@ -35,30 +35,66 @@ export const generateProcessId = (): string =>
 
 /**
  * Generate a unique reference number with optional form ID
- * Format: REF-{formId}-{timestamp}-{random} or REF-{timestamp}-{random}
+ * Format: REF_{formId}_{timestamp}_{random} or REF_{timestamp}_{random}
+ * Using underscores to avoid conflicts with hyphens in form IDs
  */
 export const generateReferenceNumber = (formId?: string): string => {
   const timestamp = Date.now();
   const random = Math.random().toString(36).substring(2, 8).toUpperCase();
 
   if (formId) {
-    // Encode form ID in reference: REF-{formId}-{timestamp}-{random}
-    return `REF-${formId}-${timestamp}-${random}`;
+    // Encode form ID in reference: REF_{formId}_{timestamp}_{random}
+    return `REF_${formId}_${timestamp}_${random}`;
   }
 
-  return `REF-${timestamp}-${random}`;
+  return `REF_${timestamp}_${random}`;
 };
 
 /**
  * Parse form ID from reference number
  * Returns null if no form ID is encoded
+ * Supports both new (underscore) and old (hyphen) formats for backward compatibility
  */
 export const parseFormIdFromReference = (reference: string): string | null => {
-  // Reference format: REF-{formId}-{timestamp}-{random}
-  const parts = reference.split("-");
+  // Try new format first: REF_{formId}_{timestamp}_{random}
+  if (reference.startsWith("REF_")) {
+    const parts = reference.split("_");
 
-  if (parts.length >= 4 && parts[0] === "REF") {
-    return parts[1]; // Return the form ID
+    if (parts.length >= 4 && parts[0] === "REF") {
+      // Form ID is everything between REF_ and the last two underscore-separated parts
+      const formIdParts = parts.slice(1, parts.length - 2);
+      return formIdParts.join("_");
+    }
+
+    // Handle format without form ID: REF_{timestamp}_{random}
+    if (parts.length === 3 && parts[0] === "REF") {
+      return null;
+    }
+  }
+
+  // Fall back to old format: REF-{formId}-{timestamp}-{random}
+  // This is less reliable for form IDs with hyphens, but provides backward compatibility
+  if (reference.startsWith("REF-")) {
+    const parts = reference.split("-");
+
+    if (parts.length >= 4 && parts[0] === "REF") {
+      // For backward compatibility, try to reconstruct the form ID
+      // Assume last two parts are timestamp (13 digits) and random (6 chars)
+      // Everything in between is the form ID
+      const secondLastPart = parts.at(-2); // timestamp
+
+      // Check if second last part looks like a timestamp (13 digits)
+      if (secondLastPart?.match(/^\d{13}$/)) {
+        // Join everything between REF and timestamp as the form ID
+        const formIdParts = parts.slice(1, parts.length - 2);
+        return formIdParts.join("-");
+      }
+    }
+
+    // Handle old format without form ID: REF-{timestamp}-{random}
+    if (parts.length === 3 && parts[0] === "REF") {
+      return null;
+    }
   }
 
   return null;
@@ -136,20 +172,22 @@ export const verifyPayment = async (
     throw new Error("Either transactionNumber or reference is required");
   }
 
-  const formData = new FormData();
+  // Build JSON body based on which parameter is provided
+  const requestBody: Record<string, string> = {};
 
   if (params.transactionNumber) {
-    formData.append("transaction_number", params.transactionNumber);
+    requestBody.transaction_number = params.transactionNumber;
   } else if (params.reference) {
-    formData.append("reference", params.reference);
+    requestBody.reference = params.reference;
   }
 
   const response = await fetch(`${baseUrl}/check_api`, {
     method: "POST",
     headers: {
       EZPluginKey: apiKey,
+      "Content-Type": "application/json",
     },
-    body: formData,
+    body: JSON.stringify(requestBody),
   });
 
   return response.json();

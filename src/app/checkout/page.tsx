@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/style/useTemplate: <explanation> */
+/** biome-ignore-all lint/style/useTemplate: String concatenation needed for dynamic debug messages */
 "use client";
 
 import { useState } from "react";
@@ -156,7 +156,9 @@ export default function CheckoutPage() {
             <li>You'll be redirected to EZPay+ payment page</li>
             <li>Use test card 4111 1111 1111 1111 for success</li>
             <li>Complete the payment</li>
-            <li>You'll be redirected back to /payment/return</li>
+            <li>
+              You'll be redirected back to the form with a payment status banner
+            </li>
             <li>Check your terminal for callback logs</li>
           </ol>
         </div>
