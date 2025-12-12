@@ -1,5 +1,5 @@
 ---
-title: "Get a copy of a death certificate"
+title: "Register a death"
 description: "This article provides information on how to apply for and obtain a death certificate in Barbados, including fees and contact details."
 source_url: https://www.gov.bb/Citizens/register-death
 publish_date: 2025-10-15
