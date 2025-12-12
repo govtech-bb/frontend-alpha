@@ -1,18 +1,16 @@
 import type { Element, Root } from "hast";
 
 type Options = {
-  hideStartLinks?: boolean;
+  hasResearchAccess?: boolean;
 };
 
 function rehypeHideStartLinks(options: Options = {}) {
-  const { hideStartLinks = false } = options;
+  const { hasResearchAccess = false } = options;
 
   return (tree: Root) => {
-    if (!hideStartLinks) {
-      return;
-    }
-
-    // Recursively filter out <a> elements with href ending in "/start"
+    // Recursively filter links based on access
+    // - Has cookie: show /start links, hide external form links (marked with data-external-form)
+    // - No cookie: show external form links, hide /start links
     const filterChildren = (children: Root["children"]): Root["children"] =>
       children
         .filter((node) => {
@@ -20,8 +18,14 @@ function rehypeHideStartLinks(options: Options = {}) {
             const element = node as Element;
             if (element.tagName === "a") {
               const href = element.properties?.href;
-              if (typeof href === "string" && href.endsWith("/start")) {
-                return false;
+              const isExternalForm =
+                element.properties?.dataExternalForm !== undefined;
+              if (typeof href === "string") {
+                const isStartLink = href.endsWith("/start");
+                // Has cookie: hide external form links
+                if (hasResearchAccess && isExternalForm) return false;
+                // No cookie: hide /start links
+                if (!hasResearchAccess && isStartLink) return false;
               }
             }
           }

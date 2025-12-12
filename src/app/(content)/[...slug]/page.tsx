@@ -13,7 +13,6 @@ type ContentPageProps = {
   params: Promise<{ slug: string[] }>;
 };
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
 
@@ -87,7 +86,10 @@ export default async function Page({ params }: ContentPageProps) {
     const hasAccess = await hasResearchAccess();
 
     return (
-      <MarkdownContent hideStartLinks={!hasAccess} markdown={markdownContent} />
+      <MarkdownContent
+        hasResearchAccess={hasAccess}
+        markdown={markdownContent}
+      />
     );
   }
 
@@ -128,7 +130,10 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     return (
-      <MarkdownContent hideStartLinks={!hasAccess} markdown={markdownContent} />
+      <MarkdownContent
+        hasResearchAccess={hasAccess}
+        markdown={markdownContent}
+      />
     );
   }
 

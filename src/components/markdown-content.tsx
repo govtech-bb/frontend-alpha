@@ -120,12 +120,12 @@ type MarkdownContentProps = {
     };
     content: string;
   };
-  hideStartLinks?: boolean;
+  hasResearchAccess?: boolean;
 };
 
 export const MarkdownContent = ({
   markdown,
-  hideStartLinks = false,
+  hasResearchAccess = false,
 }: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
@@ -162,7 +162,7 @@ export const MarkdownContent = ({
           components={components}
           rehypePlugins={[
             rehypeRaw,
-            [rehypeHideStartLinks, { hideStartLinks }],
+            [rehypeHideStartLinks, { hasResearchAccess }],
             rehypeSectionise,
           ]}
           remarkPlugins={[remarkGfm]}
