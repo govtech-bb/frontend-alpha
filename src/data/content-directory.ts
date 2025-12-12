@@ -98,11 +98,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Register for a Youth Development Programme (YDP) Community Sports Training programme",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Register for Training Form",
             type: "component",
+            protected: true,
           },
         ],
       },

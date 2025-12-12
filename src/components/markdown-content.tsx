@@ -7,6 +7,7 @@ import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import rehypeHideStartLinks from "@/lib/rehype-hide-start-links";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
@@ -112,16 +113,20 @@ const components: Components = {
   ),
 };
 
-export const MarkdownContent = ({
-  markdown,
-}: {
+type MarkdownContentProps = {
   markdown: {
     frontmatter: {
       [key: string]: any;
     };
     content: string;
   };
-}) => {
+  hasResearchAccess?: boolean;
+};
+
+export const MarkdownContent = ({
+  markdown,
+  hasResearchAccess = false,
+}: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
     <div className="lg:grid lg:grid-cols-3 lg:gap-16">
@@ -155,7 +160,11 @@ export const MarkdownContent = ({
         </div>
         <ReactMarkdown
           components={components}
-          rehypePlugins={[rehypeRaw, rehypeSectionise]}
+          rehypePlugins={[
+            rehypeRaw,
+            [rehypeHideStartLinks, { hasResearchAccess }],
+            rehypeSectionise,
+          ]}
           remarkPlugins={[remarkGfm]}
         >
           {content}
