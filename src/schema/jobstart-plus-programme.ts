@@ -22,7 +22,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "First name is required",
@@ -30,13 +30,13 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.middleName",
-        label: "Middle Name",
+        label: "Middle name",
         type: "text",
         validation: {},
       },
       {
         name: "applicant.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
@@ -44,7 +44,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.dateOfBirth",
-        label: "Date of Birth",
+        label: "Date of birth",
         type: "date",
         validation: {
           required: "Date of birth is required",
@@ -67,7 +67,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.maritalStatus",
-        label: "Marital Status",
+        label: "Marital status",
         type: "select",
         validation: {
           required: "Marital Status is required",
@@ -81,7 +81,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.idNumber",
-        label: "National Identification (ID) Number",
+        label: "National identification (ID) number",
         type: "text",
         placeholder: "",
         validation: {
@@ -122,7 +122,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.hasNisNumber",
-        label: "Do you have a National Insurance Number (NIS)?",
+        label: "Do you have a national insurance number (NIS)?",
         type: "radio",
         validation: {
           required: "NIS Number is required",
@@ -134,8 +134,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.nisNumber",
-        label: "What is your National Insurance Number (NIS)?",
-        type: "text",
+        label: "Provide your national insurance number (NIS)?",
+        type: "number",
         placeholder: "",
         validation: {
           required: "NIS Number is required",
@@ -190,12 +190,12 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "contact-details",
-    title: "Your Contact Details",
+    title: "Your contact details",
     description: "Description",
     fields: [
       {
         name: "contact.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -208,7 +208,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: {},
@@ -225,7 +225,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.postalCode",
-        label: "Postal Code",
+        label: "Postal code",
         type: "text",
         validation: {
           pattern: {
@@ -305,7 +305,7 @@ export const formSteps: FormStep[] = [
       // },
       {
         name: "contact.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         validation: {
           required: "Email address is required",
@@ -313,14 +313,14 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\+?1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid 11-digit Barbados phone number (e.g., 1 246 234 5678 or +1 246 234 5678)",
           },
         },
       },
@@ -328,7 +328,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "emergency-contact",
-    title: "Emergency Contact Details",
+    title: "Emergency contact details",
     description: "Description",
     fields: [
       {
@@ -347,7 +347,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "First name is required",
@@ -355,7 +355,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
@@ -382,7 +382,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -395,7 +395,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: {},
@@ -412,15 +412,15 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.telephoneNumber",
-        label: "Phone Number",
+        label: "Phone number",
         type: "tel",
         placeholder: "+1 (246) 234-5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\+?1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid 11-digit Barbados phone number (e.g., 1 246 234 5678 or +1 246 234 5678)",
           },
         },
       },
@@ -446,7 +446,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "education.institutionName",
-        label: "Name of Institution",
+        label: "Name of institution",
         type: "text",
         placeholder: "",
         validation: {
@@ -459,8 +459,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "education.startYear",
-        label: "Start Year",
-        type: "text",
+        label: "Start year",
+        type: "number",
         placeholder: "",
         validation: {
           required: "Start Year is required",
@@ -476,8 +476,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "education.endYear",
-        label: "End Year",
-        type: "text",
+        label: "End year",
+        type: "number",
         placeholder: "",
         validation: {
           required: "End Year is required",
@@ -491,27 +491,7 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      // {
-      //   name: "education.coursesOrSubjects",
-      //   label: "What courses or subjects did you study?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.qualificationsObtained",
-      //   label: "What are your qualifications?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.gradesObtained",
-      //   label: "What are your grades?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
+
       {
         name: "education.addanother",
         label: "Do you want to add another experience?",
@@ -527,119 +507,14 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "post-secondary-education-training",
-    title: "Name of institution for Post-Secondary Education or Training",
-    description:
-      "Add information about college, university and training courses you have completed",
-    fields: [
-      {
-        name: "postSecondaryEducation.institutionName",
-        label: "Name of Institution",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Name of Instituion is required",
-          minLength: {
-            value: 5,
-            message: "Name of Institution must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.startYear",
-        label: "Start Year",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Start Year is required",
-          minLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.endYear",
-        label: "End Year",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "End Year is required",
-          minLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.coursesOrSubjects",
-        label: "What courses or subjects did you study?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-      {
-        name: "postSecondaryEducation.qualificationsObtained",
-        label: "What are your qualifications?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-      {
-        name: "postSecondaryEducation.gradesObtained",
-        label: "What are your grades?",
-        type: "textarea",
-        placeholder: "",
-        validation: {},
-      },
-    ],
-  },
-  {
-    id: "eligibility-questions",
-    title: "Your eligibility",
+    id: "share-employment",
+    title: "Do you want to add your employment history?",
     description: "",
     fields: [
       {
-        name: "eligibility.skillsAndInterests",
-        label: "Tell us about your skills and interests",
-        hint: "For example, which trades are you skilled in? Which hobbies do you enjoy? Are you part of any community groups",
-        type: "textarea",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "This must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "eligibility.areasOfInterest",
-        label: "What type of jobs or trades are you interested in?",
-        type: "textarea",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "This must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "eligibility.availabilityToWork",
-        label: "Tell us when you are available to work",
-        hint: "If you are 18 and over you are eligible to work at night. Might you be willing to work between 6pm and 7am?",
+        name: "employment.shareEmploymentHistory",
+        label: "",
         type: "radio",
-        rows: 5,
         validation: {
           required: "Field is required",
         },
@@ -648,18 +523,161 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
+    ],
+  },
+  {
+    id: "previous-job",
+    title: "Tell us about your previous job",
+    description: "",
+    fields: [
       {
-        name: "eligibility.shortTermGoals",
-        label: "Tell us about your short-term goals",
-        hint: " This helps us understand the kinds of opportunities that will support your growth. For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills.",
-        type: "textarea",
-        rows: 5,
+        name: "employment.employerName",
+        label: "Name of employer or organization",
+        type: "text",
         validation: {
           required: "Field is required",
           minLength: {
             value: 5,
-            message: "This must be at least 5 characters",
+            message: "Please provide more details (at least 5 characters)",
           },
+        },
+      },
+      {
+        name: "employment.jobTitle",
+        label: "Occupation",
+        hint: "Job Title",
+        type: "text",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "Please provide more details (at least 5 characters)",
+          },
+        },
+      },
+      {
+        name: "employment.startDate",
+        label: "When did you start this job?",
+        type: "date",
+        validation: {
+          required: "Date is required",
+        },
+      },
+      {
+        name: "employment.endDate",
+        label: "When did you end this job?",
+        type: "date",
+        validation: {
+          required: "Date is required",
+        },
+      },
+      {
+        name: "employment.currentlyWorkingHere",
+        label: "I am currently working here",
+        type: "checkbox",
+        validation: {},
+      },
+      {
+        name: "employment.jobDuties",
+        label: "Your main tasks",
+        hint: "Provide a brief description of what you did in your role",
+        type: "textarea",
+        placeholder: "",
+        validation: {
+          required: "This field is required",
+          minLength: {
+            value: 10,
+            message: "Please provide more details (at least 10 characters)",
+          },
+        },
+      },
+      {
+        name: "employment.addanother",
+        label: "Do you want to add another experience?",
+        type: "radio",
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "areas-of-interest",
+    title: "Tell us your areas of interest",
+    description: "",
+    fields: [
+      {
+        name: "goals.interestInJobsAndTrades",
+        label: "What type of jobs or trades are you interested in?",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "This field is required",
+          minLength: {
+            value: 10,
+            message: "Please provide more details (at least 10 characters)",
+          },
+        },
+      },
+      {
+        name: "education.18andOver",
+        label: "Are you 18 and over?",
+        type: "radio",
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "short-term-goals",
+    title: "Tell us about your short-term goals",
+    description:
+      "This helps us understand the kinds of opportunities that will support your growth. For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills",
+    fields: [
+      {
+        name: "goals.shortTermGoals",
+        label: "",
+        type: "textarea",
+        placeholder: "",
+        validation: {
+          required: "This field is required",
+          minLength: {
+            value: 10,
+            message: "Please provide more details (at least 10 characters)",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "confirmation",
+    title: "Confirmation",
+    description:
+      "I certify that all information given herein on this application are true and complete. By submitting this application, I authorize any investigation that the statements made. I understand that if any false information, omissions or misrepresentations are discovered, my registration may not be accepted and if I am employed, my employment may be terminated at any time. I also note that the Government of Barbados will treat my information as Confidential",
+    fields: [
+      {
+        name: "confirmation.agree",
+        label: "All information is correct and true",
+        type: "checkbox",
+        validation: {
+          required: "You must agree before submitting",
+        },
+      },
+      {
+        name: "confirmation.date",
+        label: "Date",
+        type: "date",
+        validation: {
+          required: "Date is required",
         },
       },
     ],

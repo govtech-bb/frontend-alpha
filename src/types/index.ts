@@ -7,6 +7,7 @@ export type FieldType =
   | "select"
   | "textarea"
   | "radio"
+  | "checkbox"
   | "fieldArray"
   | "showHide";
 
@@ -127,13 +128,19 @@ type ShowHideFormField = BaseFormField & {
   showHide: ShowHideConfig;
 };
 
+type CheckboxFormField = BaseFormField & {
+  type: "checkbox";
+  validation: NonDateFieldValidation;
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField
-  | ShowHideFormField;
+  | ShowHideFormField
+  | CheckboxFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
