@@ -1,10 +1,8 @@
 import { Link } from "@govtech-bb/react";
 import NextLink from "next/link";
-import { Suspense } from "react";
 
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
-import { PaymentErrorAlert } from "@/components/payment/payment-error-alert";
 import { Typography } from "@/components/ui/typography";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
@@ -13,10 +11,6 @@ export default async function Home() {
   const featuredServices = await getFeaturedServices();
   return (
     <>
-      {/* Handle payment errors with client-side alert */}
-      <Suspense fallback={null}>
-        <PaymentErrorAlert />
-      </Suspense>
       <section className="border-yellow-dark border-b-4 bg-yellow-100">
         <div className="container">
           <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
