@@ -191,29 +191,39 @@ export default function DynamicMultiStepForm({
     const paymentStatus = searchParams?.get("payment_status");
     const tx = searchParams?.get("tx");
 
+    // Find payment information from confirmation step
+    const confirmationStep = formSteps.find(
+      (step) => step.id === "confirmation"
+    );
+    const paymentInfo = confirmationStep?.payment;
+
     if (paymentStatus) {
       switch (paymentStatus) {
         case "Success":
           setPaymentMessage({
             type: "success",
             message: "Payment successful!",
-            details: `Your payment has been processed. Transaction: ${tx}`,
+            details: paymentInfo
+              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\nTransaction: ${tx || "N/A"}`
+              : `Your payment has been processed. Transaction: ${tx}`,
           });
           break;
         case "Initiated":
           setPaymentMessage({
             type: "pending",
             message: "Payment initiated",
-            details:
-              "Your Direct Debit payment is being processed. It will settle in approximately 5 business days.",
+            details: paymentInfo
+              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\n\nYour Direct Debit payment is being processed. It will settle in approximately 5 business days.`
+              : "Your Direct Debit payment is being processed. It will settle in approximately 5 business days.",
           });
           break;
         case "Failed":
           setPaymentMessage({
             type: "error",
             message: "Payment failed",
-            details:
-              "Your payment could not be processed. Please try again or use a different payment method.",
+            details: paymentInfo
+              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\n\nYour payment could not be processed. Please try again or use a different payment method.`
+              : "Your payment could not be processed. Please try again or use a different payment method.",
           });
           break;
         case "error": {
@@ -237,7 +247,7 @@ export default function DynamicMultiStepForm({
       //   window.history.replaceState({}, '', window.location.pathname);
       // }, 100);
     }
-  }, [_hasHydrated, searchParams]);
+  }, [_hasHydrated, searchParams, formSteps]);
 
   // Watch form changes and sync with Zustand (debounced)
   useEffect(() => {
@@ -508,7 +518,7 @@ export default function DynamicMultiStepForm({
                   {paymentMessage.message}
                 </h3>
                 {paymentMessage.details && (
-                  <p
+                  <div
                     className={`mt-1 text-sm ${
                       paymentMessage.type === "success"
                         ? "text-green-700"
@@ -517,8 +527,10 @@ export default function DynamicMultiStepForm({
                           : "text-red-700"
                     }`}
                   >
-                    {paymentMessage.details}
-                  </p>
+                    {paymentMessage.details.split("\n").map((line, index) => (
+                      <div key={index}>{line}</div>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>

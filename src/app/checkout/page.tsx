@@ -19,7 +19,7 @@ export default function CheckoutPage() {
 
     try {
       // Example form ID - in production, this would come from your form context
-      const formId = "register-a-birth"; // Must match a slug from FORM_COMPONENTS
+      const formId = "get-birth-certificate"; // Must match a slug from FORM_COMPONENTS
 
       // Create cart items
       const cartItems: EZPayCartItem[] = [
