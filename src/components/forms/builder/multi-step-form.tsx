@@ -459,9 +459,20 @@ export default function DynamicMultiStepForm({
       return null;
     }
 
+    // Extract customer details from form data
+    const applicantFirstName =
+      (formData["applicant.firstName"] as string) || "";
+    const applicantLastName = (formData["applicant.lastName"] as string) || "";
+    const customerName = `${applicantFirstName} ${applicantLastName}`.trim();
+
+    // TODO: Add email field to form schema to capture customer email
+    const customerEmail = undefined; // Will use default in PaymentBlock
+
     return (
       <ConfirmationPage
         confirmationStep={confirmationStep}
+        customerEmail={customerEmail}
+        customerName={customerName || undefined}
         onReset={handleReset}
         referenceNumber={referenceNumber}
       />

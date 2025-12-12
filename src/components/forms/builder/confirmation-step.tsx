@@ -12,12 +12,21 @@ type ConfirmationPageProps = {
   confirmationStep: FormStep;
   referenceNumber?: string;
   onReset: () => void;
+  customerEmail?: string;
+  customerName?: string;
 };
 
-export function ConfirmationPage({ confirmationStep }: ConfirmationPageProps) {
+export function ConfirmationPage({
+  confirmationStep,
+  customerEmail,
+  customerName,
+  referenceNumber: _referenceNumber,
+  onReset: _onReset,
+}: ConfirmationPageProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
+  const formSlug = pathSegments[1]; // Extract form slug from URL (e.g., "get-birth-certificate")
   const category = INFORMATION_ARCHITECTURE.find(
     (cat) => cat.slug === categorySlug
   );
@@ -67,8 +76,13 @@ export function ConfirmationPage({ confirmationStep }: ConfirmationPageProps) {
       <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
           {/* Payment content */}
-          {confirmationStep.payment ? (
-            <PaymentBlock details={confirmationStep.payment} />
+          {confirmationStep.payment && formSlug ? (
+            <PaymentBlock
+              customerEmail={customerEmail}
+              customerName={customerName}
+              details={confirmationStep.payment}
+              formId={formSlug}
+            />
           ) : null}
           {/* Dynamic steps content */}
           {confirmationStep.steps?.map((step, index) => (
