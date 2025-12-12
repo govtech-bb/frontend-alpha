@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/style/useTemplate: <explanation> */
+/** biome-ignore-all lint/style/useTemplate: String concatenation needed for dynamic debug messages */
 "use client";
 
 import { useState } from "react";
@@ -18,6 +18,9 @@ export default function CheckoutPage() {
     setDebugInfo("Starting payment...\n");
 
     try {
+      // Example form ID - in production, this would come from your form context
+      const formId = "register-a-birth"; // Must match a slug from FORM_COMPONENTS
+
       // Create cart items
       const cartItems: EZPayCartItem[] = [
         {
@@ -29,10 +32,13 @@ export default function CheckoutPage() {
       ];
 
       setDebugInfo(
-        (prev) => prev + `Cart items: ${JSON.stringify(cartItems, null, 2)}\n`
+        (prev) =>
+          prev +
+          `Form ID: ${formId}\n` +
+          `Cart items: ${JSON.stringify(cartItems, null, 2)}\n`
       );
 
-      // Call create payment API
+      // Call create payment API with formId
       const response = await fetch("/api/ezpay/create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,6 +46,7 @@ export default function CheckoutPage() {
           cartItems,
           customerEmail: "test@example.com",
           customerName: "Test User",
+          formId, // This will be encoded in the reference number
         }),
       });
 
@@ -149,7 +156,9 @@ export default function CheckoutPage() {
             <li>You'll be redirected to EZPay+ payment page</li>
             <li>Use test card 4111 1111 1111 1111 for success</li>
             <li>Complete the payment</li>
-            <li>You'll be redirected back to /payment/return</li>
+            <li>
+              You'll be redirected back to the form with a payment status banner
+            </li>
             <li>Check your terminal for callback logs</li>
           </ol>
         </div>
