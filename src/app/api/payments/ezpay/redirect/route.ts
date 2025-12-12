@@ -19,29 +19,36 @@ export async function GET(request: NextRequest) {
   console.log("EZPay Redirect - Transaction:", transactionNumber);
   console.log("EZPay Redirect - Reference:", referenceNumber);
 
-  // Get the correct origin from request headers
-  const host = request.headers.get("host") || request.nextUrl.host;
-
-  // Determine protocol: localhost should always use http, otherwise use x-forwarded-proto or default protocol
-  let protocol: string;
-  if (host.includes("localhost") || host.startsWith("127.0.0.1")) {
-    protocol = "http";
-  } else {
-    protocol =
-      request.headers.get("x-forwarded-proto") ||
-      request.nextUrl.protocol.replace(":", "");
-  }
-
-  const origin = `${protocol}://${host}`;
-  console.log("EZPay Redirect - Host:", host);
-  console.log("EZPay Redirect - Protocol:", protocol);
-  console.log("EZPay Redirect - Origin:", origin);
-
   // Extract form ID from reference number
   let formId: string | null = null;
   if (referenceNumber) {
     formId = parseFormIdFromReference(referenceNumber);
     console.log("EZPay Redirect - Parsed form ID:", formId);
+  }
+
+  // Get the correct origin - use referer header which contains where the user came from
+  const referer = request.headers.get("referer");
+  let origin: string;
+
+  if (referer) {
+    // Extract origin from referer URL
+    try {
+      const refererUrl = new URL(referer);
+      origin = refererUrl.origin;
+      console.log("EZPay Redirect - Origin from referer:", origin);
+    } catch {
+      // Fallback to constructing from headers
+      const host = request.headers.get("host") || request.nextUrl.host;
+      const protocol = host.includes("localhost") ? "http" : "https";
+      origin = `${protocol}://${host}`;
+      console.log("EZPay Redirect - Fallback origin from host:", origin);
+    }
+  } else {
+    // No referer, construct from headers
+    const host = request.headers.get("host") || request.nextUrl.host;
+    const protocol = host.includes("localhost") ? "http" : "https";
+    origin = `${protocol}://${host}`;
+    console.log("EZPay Redirect - Origin from headers:", origin);
   }
 
   // Find the form URL from information architecture
