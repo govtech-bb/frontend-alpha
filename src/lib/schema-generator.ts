@@ -454,6 +454,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
                   minimum: childField.validation.minLength.value,
                   type: "string",
                   inclusive: true,
+                  origin: "string",
                   message: childField.validation.minLength.message,
                   path: pathParts,
                 });
