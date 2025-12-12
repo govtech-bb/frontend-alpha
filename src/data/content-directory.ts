@@ -26,15 +26,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
       {
-        title: "Get a copy of a death certificate",
-        slug: "get-a-copy-of-a-death-certificate",
-        source_url: "https://www.gov.bb/Citizens/get-a-copy-of-a-death-certificate",
+        title: "Register a death",
+        slug: "register-a-death",
+        source_url: "https://www.gov.bb/Citizens/register-death",
         description:
           "Information on how to register a death and obtain a death certificate in Barbados.",
       },
       {
-        title: "Get a death certificate",
-        slug: "get-a-death-certificate",
+        title: "Get a copy of a death certificate",
+        slug: "get-a-copy-of-a-death-certificate",
         source_url: "",
         description:
           "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
