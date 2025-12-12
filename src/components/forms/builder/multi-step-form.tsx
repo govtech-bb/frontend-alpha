@@ -90,7 +90,11 @@ export default function DynamicMultiStepForm({
   // Generate default values with support for nested field names
   const defaultValues = useMemo(() => {
     const values: Record<string, unknown> = {};
-    for (const step of formSteps) {
+    // Filter out review/confirmation steps that have no fields
+    const stepsWithFields = formSteps.filter(
+      (step) => step.fields && step.fields.length > 0
+    );
+    for (const step of stepsWithFields) {
       for (const field of step.fields) {
         // Date fields need object default, all others get empty string
         const defaultValue =
@@ -185,29 +189,39 @@ export default function DynamicMultiStepForm({
     const paymentStatus = searchParams?.get("payment_status");
     const tx = searchParams?.get("tx");
 
+    // Find payment information from confirmation step
+    const confirmationStep = formSteps.find(
+      (step) => step.id === "confirmation"
+    );
+    const paymentInfo = confirmationStep?.payment;
+
     if (paymentStatus) {
       switch (paymentStatus) {
         case "Success":
           setPaymentMessage({
             type: "success",
             message: "Payment successful!",
-            details: `Your payment has been processed. Transaction: ${tx}`,
+            details: paymentInfo
+              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\nTransaction: ${tx || "N/A"}`
+              : `Your payment has been processed. Transaction: ${tx}`,
           });
           break;
         case "Initiated":
           setPaymentMessage({
             type: "pending",
             message: "Payment initiated",
-            details:
-              "Your Direct Debit payment is being processed. It will settle in approximately 5 business days.",
+            details: paymentInfo
+              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\n\nYour Direct Debit payment is being processed. It will settle in approximately 5 business days.`
+              : "Your Direct Debit payment is being processed. It will settle in approximately 5 business days.",
           });
           break;
         case "Failed":
           setPaymentMessage({
             type: "error",
             message: "Payment failed",
-            details:
-              "Your payment could not be processed. Please try again or use a different payment method.",
+            details: paymentInfo
+              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\n\nYour payment could not be processed. Please try again or use a different payment method.`
+              : "Your payment could not be processed. Please try again or use a different payment method.",
           });
           break;
         case "error": {
@@ -231,7 +245,7 @@ export default function DynamicMultiStepForm({
       //   window.history.replaceState({}, '', window.location.pathname);
       // }, 100);
     }
-  }, [_hasHydrated, searchParams]);
+  }, [_hasHydrated, searchParams, formSteps]);
 
   // Watch form changes and sync with Zustand (debounced)
   useEffect(() => {
@@ -249,7 +263,8 @@ export default function DynamicMultiStepForm({
     try {
       // Submit to API
       const result = await submitFormData({ data, formKey: storageKey });
-
+      // markAsSubmitted(result.data?.submissionId || "N/A");
+      //NOTE: Temporarily disabling
       if (result.success) {
         // Mark as submitted in store
         markAsSubmitted(result.data?.submissionId || "N/A");
@@ -257,7 +272,9 @@ export default function DynamicMultiStepForm({
         const errorMessage = result.errors
           ? result.errors[0]?.message
           : "An unexpected error occurred";
+        // biome-ignore lint/suspicious/noConsole: Intentionally logging form submission errors
         console.error(`Submission failed: ${errorMessage}`);
+        // throw new Error("Submission failed");
       }
     } catch (error) {
       setSubmissionError(
@@ -272,7 +289,7 @@ export default function DynamicMultiStepForm({
 
   const nextStep = async () => {
     // Check if current step is the review step
-    const isReviewStep = formSteps[currentStep].fields.length === 0;
+    const isReviewStep = formSteps[currentStep]?.fields.length === 0;
 
     if (isReviewStep) {
       // Review step complete, trigger form submission
@@ -431,8 +448,29 @@ export default function DynamicMultiStepForm({
 
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
+    const confirmationStep = formSteps.find(
+      (step) => step.id === "confirmation"
+    );
+
+    if (!confirmationStep) {
+      console.error("Confirmation step not found in form schema");
+      return null;
+    }
+
+    // Extract customer details from form data
+    const applicantFirstName =
+      (formData["applicant.firstName"] as string) || "";
+    const applicantLastName = (formData["applicant.lastName"] as string) || "";
+    const customerName = `${applicantFirstName} ${applicantLastName}`.trim();
+
+    // TODO: Add email field to form schema to capture customer email
+    const customerEmail = undefined; // Will use default in PaymentBlock
+
     return (
       <ConfirmationPage
+        confirmationStep={confirmationStep}
+        customerEmail={customerEmail}
+        customerName={customerName || undefined}
         onReset={handleReset}
         referenceNumber={referenceNumber}
       />
@@ -489,7 +527,7 @@ export default function DynamicMultiStepForm({
                   {paymentMessage.message}
                 </h3>
                 {paymentMessage.details && (
-                  <p
+                  <div
                     className={`mt-1 text-sm ${
                       paymentMessage.type === "success"
                         ? "text-green-700"
@@ -498,8 +536,10 @@ export default function DynamicMultiStepForm({
                           : "text-red-700"
                     }`}
                   >
-                    {paymentMessage.details}
-                  </p>
+                    {paymentMessage.details.split("\n").map((line, index) => (
+                      <div key={index}>{line}</div>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
@@ -510,7 +550,7 @@ export default function DynamicMultiStepForm({
         {submissionError && (
           <div className="mb-6 border-red-500 border-l-4 bg-red-50 p-4">
             <div className="flex">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <span className="text-red-500">⚠</span>
               </div>
               <div className="ml-3">

@@ -1,25 +1,32 @@
 "use client";
-import { Button, Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import type { FormStep } from "@/types";
 
 type ConfirmationPageProps = {
+  confirmationStep: FormStep;
   referenceNumber?: string;
-  submittedTo?: string;
   onReset: () => void;
+  customerEmail?: string;
+  customerName?: string;
 };
 
-//TODO: This confirmation page should be dynamic based on the form schema
 export function ConfirmationPage({
-  submittedTo = "the Youth Development Programme",
-  onReset,
+  confirmationStep,
+  customerEmail,
+  customerName,
+  referenceNumber: _referenceNumber,
+  onReset: _onReset,
 }: ConfirmationPageProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
+  const formSlug = pathSegments[1]; // Extract form slug from URL (e.g., "get-birth-certificate")
   const category = INFORMATION_ARCHITECTURE.find(
     (cat) => cat.slug === categorySlug
   );
@@ -52,37 +59,47 @@ export function ConfirmationPage({
           {/* Title section */}
           <div className="flex flex-col gap-4 pt-6 lg:pt-16">
             <Heading className="focus:outline-none" size="h1" tabIndex={-1}>
-              Thank you for registering
+              {confirmationStep.title}
             </Heading>
 
-            <p className="font-normal text-[32px] text-neutral-black leading-[1.7] lg:leading-[1.5]">
-              Your information has been sent to the {submittedTo}, the
-              coordinating programme in the Division of Youth Affairs
-            </p>
+            {confirmationStep.description && (
+              <p className="font-normal text-[32px] text-neutral-black leading-[1.7] lg:leading-normal">
+                {confirmationStep.description}
+              </p>
+            )}
           </div>
         </div>
       </div>
+
       {/* Main content */}
 
       <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
-          {/* What to do next */}
-
-          <div>
-            <Heading as="h2" className="pb-4 lg:pb-2">
-              What happens next?
-            </Heading>
-            <Text as="p">
-              The Youth Commissioner will be in touch shortly to confirm:
-            </Text>
-            <ul className="list-disc pl-7 text-[20px] leading-[1.5]">
-              <li>the location of the programme</li>
-              <li>the start date and times</li>
-              <li>what you will need to bring</li>
-            </ul>
-          </div>
-
-          <Button onClick={onReset}>Start Over</Button>
+          {/* Payment content */}
+          {confirmationStep.payment && formSlug ? (
+            <PaymentBlock
+              customerEmail={customerEmail}
+              customerName={customerName}
+              details={confirmationStep.payment}
+              formId={formSlug}
+            />
+          ) : null}
+          {/* Dynamic steps content */}
+          {confirmationStep.steps?.map((step, index) => (
+            <div key={index}>
+              <Heading as="h2" className="pb-4 lg:pb-2">
+                {step.title}
+              </Heading>
+              <Text as="p">{step.content}</Text>
+              {step.items && step.items.length > 0 && (
+                <ul className="list-disc pl-7 text-[20px] leading-normal">
+                  {step.items.map((item, itemIndex) => (
+                    <li key={itemIndex}>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
 
           <HelpfulBox />
         </div>

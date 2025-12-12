@@ -26,6 +26,31 @@ export async function GET(request: NextRequest) {
     console.log("EZPay Redirect - Parsed form ID:", formId);
   }
 
+  // Get the correct origin - use referer header which contains where the user came from
+  const referer = request.headers.get("referer");
+  let origin: string;
+
+  if (referer) {
+    // Extract origin from referer URL
+    try {
+      const refererUrl = new URL(referer);
+      origin = refererUrl.origin;
+      console.log("EZPay Redirect - Origin from referer:", origin);
+    } catch {
+      // Fallback to constructing from headers
+      const host = request.headers.get("host") || request.nextUrl.host;
+      const protocol = host.includes("localhost") ? "http" : "https";
+      origin = `${protocol}://${host}`;
+      console.log("EZPay Redirect - Fallback origin from host:", origin);
+    }
+  } else {
+    // No referer, construct from headers
+    const host = request.headers.get("host") || request.nextUrl.host;
+    const protocol = host.includes("localhost") ? "http" : "https";
+    origin = `${protocol}://${host}`;
+    console.log("EZPay Redirect - Origin from headers:", origin);
+  }
+
   // Find the form URL from information architecture
   let formUrl: string | null = null;
 
@@ -51,7 +76,7 @@ export async function GET(request: NextRequest) {
     console.error("EZPay Redirect - Critical error:", errorDetails);
 
     // Redirect to home with alert parameters
-    const homeUrl = new URL("/", request.url);
+    const homeUrl = new URL("/", origin);
     homeUrl.searchParams.set("payment_error", "true");
     homeUrl.searchParams.set(
       "error_message",
@@ -59,6 +84,7 @@ export async function GET(request: NextRequest) {
         ? "Missing payment information"
         : `Form not found for ID: ${formId}`
     );
+    console.log("EZPay Redirect - Home URL:", homeUrl.toString());
     return NextResponse.redirect(homeUrl);
   }
 
@@ -76,7 +102,7 @@ export async function GET(request: NextRequest) {
     console.log("EZPay Redirect - Payment status:", status);
 
     // Build redirect URL to form with payment status parameters
-    const redirectUrl = new URL(formUrl, request.url);
+    const redirectUrl = new URL(formUrl, origin);
     redirectUrl.searchParams.set("payment_status", status);
     redirectUrl.searchParams.set("tx", transactionNumber || "");
     redirectUrl.searchParams.set("ref", referenceNumber || "");
@@ -107,7 +133,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Redirect to form with error status
-    const redirectUrl = new URL(formUrl, request.url);
+    const redirectUrl = new URL(formUrl, origin);
     redirectUrl.searchParams.set("payment_status", "error");
     redirectUrl.searchParams.set(
       "payment_error",
@@ -116,6 +142,7 @@ export async function GET(request: NextRequest) {
     redirectUrl.searchParams.set("tx", transactionNumber || "");
     redirectUrl.searchParams.set("ref", referenceNumber || "");
 
+    console.log("EZPay Redirect - Error redirect URL:", redirectUrl.toString());
     return NextResponse.redirect(redirectUrl);
   }
 }
