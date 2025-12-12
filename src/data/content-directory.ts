@@ -28,7 +28,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Get a copy of a death certificate",
         slug: "get-a-copy-of-a-death-certificate",
-        source_url: "https://www.gov.bb/Citizens/get-a-copy-of-a-death-certificate",
+        source_url: "https://www.gov.bb/Citizens/register-death",
         description:
           "Information on how to register a death and obtain a death certificate in Barbados.",
       },
