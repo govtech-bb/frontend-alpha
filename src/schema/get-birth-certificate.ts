@@ -88,12 +88,12 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
-        placeholder: "",
+        placeholder: "e.g., 850101-0001",
         validation: {
           required: "ID Number is required",
-          minLength: {
-            value: 2,
-            message: "ID Number must be at least 2 characters",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
