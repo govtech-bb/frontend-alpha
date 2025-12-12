@@ -30,7 +30,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         slug: "get-a-copy-of-a-birth-certificate",
         source_url: "",
         description:
-          "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
+          "Information on how to obtain a copy of a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
         subPages: [
           { slug: "start", type: "markdown" },
           {

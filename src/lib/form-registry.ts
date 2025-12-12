@@ -19,6 +19,9 @@ export const FORM_COMPONENTS = {
   "apply-to-jobstart-plus-programme": lazy(
     () => import("@/components/forms/apply-to-jobstart-plus-programme-form")
   ),
+  "get-a-copy-of-a-birth-certificate": lazy(
+    () => import("@/components/forms/get-a-copy-of-a-birth-certificate-form")
+  ),
   // Add other forms here
 } as const;
 
