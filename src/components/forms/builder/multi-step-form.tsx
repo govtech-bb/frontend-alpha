@@ -90,7 +90,11 @@ export default function DynamicMultiStepForm({
   // Generate default values with support for nested field names
   const defaultValues = useMemo(() => {
     const values: Record<string, unknown> = {};
-    for (const step of formSteps) {
+    // Filter out review/confirmation steps that have no fields
+    const stepsWithFields = formSteps.filter(
+      (step) => step.fields && step.fields.length > 0
+    );
+    for (const step of stepsWithFields) {
       for (const field of step.fields) {
         // Date fields need object default, all others get empty string
         const defaultValue =
@@ -275,7 +279,7 @@ export default function DynamicMultiStepForm({
 
   const nextStep = async () => {
     // Check if current step is the review step
-    const isReviewStep = formSteps[currentStep].fields.length === 0;
+    const isReviewStep = formSteps[currentStep]?.fields.length === 0;
 
     if (isReviewStep) {
       // Review step complete, trigger form submission
@@ -434,8 +438,18 @@ export default function DynamicMultiStepForm({
 
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
+    const confirmationStep = formSteps.find(
+      (step) => step.id === "confirmation"
+    );
+
+    if (!confirmationStep) {
+      console.error("Confirmation step not found in form schema");
+      return null;
+    }
+
     return (
       <ConfirmationPage
+        confirmationStep={confirmationStep}
         onReset={handleReset}
         referenceNumber={referenceNumber}
       />
@@ -513,7 +527,7 @@ export default function DynamicMultiStepForm({
         {submissionError && (
           <div className="mb-6 border-red-500 border-l-4 bg-red-50 p-4">
             <div className="flex">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <span className="text-red-500">⚠</span>
               </div>
               <div className="ml-3">
