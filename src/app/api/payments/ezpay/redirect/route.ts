@@ -51,7 +51,8 @@ export async function GET(request: NextRequest) {
     console.error("EZPay Redirect - Critical error:", errorDetails);
 
     // Redirect to home with alert parameters
-    const homeUrl = new URL("/", request.url);
+    // Use request.nextUrl.origin to preserve the correct domain (localhost, vercel, production)
+    const homeUrl = new URL("/", request.nextUrl.origin);
     homeUrl.searchParams.set("payment_error", "true");
     homeUrl.searchParams.set(
       "error_message",
@@ -76,7 +77,8 @@ export async function GET(request: NextRequest) {
     console.log("EZPay Redirect - Payment status:", status);
 
     // Build redirect URL to form with payment status parameters
-    const redirectUrl = new URL(formUrl, request.url);
+    // Use request.nextUrl.origin to preserve the correct domain (localhost, vercel, production)
+    const redirectUrl = new URL(formUrl, request.nextUrl.origin);
     redirectUrl.searchParams.set("payment_status", status);
     redirectUrl.searchParams.set("tx", transactionNumber || "");
     redirectUrl.searchParams.set("ref", referenceNumber || "");
@@ -107,7 +109,8 @@ export async function GET(request: NextRequest) {
     });
 
     // Redirect to form with error status
-    const redirectUrl = new URL(formUrl, request.url);
+    // Use request.nextUrl.origin to preserve the correct domain (localhost, vercel, production)
+    const redirectUrl = new URL(formUrl, request.nextUrl.origin);
     redirectUrl.searchParams.set("payment_status", "error");
     redirectUrl.searchParams.set(
       "payment_error",
