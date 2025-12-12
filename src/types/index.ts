@@ -137,11 +137,18 @@ export type FormField =
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
+export type ConfirmationStepItem = {
+  title: string;
+  content: string;
+  items: string[];
+};
+
 export type FormStep = {
   id: string;
   title: string;
   description?: string;
   fields: FormField[];
+  steps?: ConfirmationStepItem[]; // For confirmation pages
 };
 
 export type ApiResponse = {

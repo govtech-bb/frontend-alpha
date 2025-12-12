@@ -321,16 +321,21 @@ export function generateStepSchemas(formSteps: FormStep[]) {
 
 // Collect all conditional fields from form steps for validation
 function getConditionalFields(formSteps: FormStep[]): FormField[] {
-  return formSteps.flatMap((step) =>
-    step.fields.filter((field) => field.conditionalOn)
-  );
+  return formSteps
+    .filter((step) => step.fields && step.fields.length > 0)
+    .flatMap((step) => step.fields.filter((field) => field.conditionalOn));
 }
 
 // Generate combined schema for the entire form dynamically (supports nested field names)
 export function generateFormSchema(formSteps: FormStep[]) {
   const schemaShape: Record<string, unknown> = {};
 
-  for (const step of formSteps) {
+  // Filter out review/confirmation steps that have no fields
+  const stepsWithFields = formSteps.filter(
+    (step) => step.fields && step.fields.length > 0
+  );
+
+  for (const step of stepsWithFields) {
     for (const field of step.fields) {
       setNestedValue(schemaShape, field.name, createFieldSchema(field));
 
