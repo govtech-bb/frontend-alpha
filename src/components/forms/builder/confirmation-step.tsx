@@ -1,9 +1,10 @@
 "use client";
-import { Button, Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import type { FormStep } from "@/types";
 
@@ -13,10 +14,7 @@ type ConfirmationPageProps = {
   onReset: () => void;
 };
 
-export function ConfirmationPage({
-  confirmationStep,
-  onReset,
-}: ConfirmationPageProps) {
+export function ConfirmationPage({ confirmationStep }: ConfirmationPageProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
@@ -63,10 +61,15 @@ export function ConfirmationPage({
           </div>
         </div>
       </div>
+
       {/* Main content */}
 
       <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
+          {/* Payment content */}
+          {confirmationStep.payment ? (
+            <PaymentBlock details={confirmationStep.payment} />
+          ) : null}
           {/* Dynamic steps content */}
           {confirmationStep.steps?.map((step, index) => (
             <div key={index}>
@@ -83,8 +86,6 @@ export function ConfirmationPage({
               )}
             </div>
           ))}
-
-          <Button onClick={onReset}>Start Over</Button>
 
           <HelpfulBox />
         </div>

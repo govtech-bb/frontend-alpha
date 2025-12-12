@@ -149,6 +149,10 @@ export type FormStep = {
   description?: string;
   fields: FormField[];
   steps?: ConfirmationStepItem[]; // For confirmation pages
+  payment?: {
+    amount: number;
+    service: string;
+  };
 };
 
 export type ApiResponse = {
