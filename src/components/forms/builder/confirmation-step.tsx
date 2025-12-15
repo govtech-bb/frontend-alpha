@@ -101,6 +101,36 @@ export function ConfirmationPage({
             </div>
           ))}
 
+          {/* Contact details */}
+          {confirmationStep.contactDetails && (
+            <div>
+              <Text as="p" className="mb-4">
+                If you need help with your application, contact:
+              </Text>
+              <Heading as="h2" className="pb-2">
+                {confirmationStep.contactDetails.title}
+              </Heading>
+              <div className="space-y-1 text-[20px] leading-normal">
+                <p>{confirmationStep.contactDetails.address.line1}</p>
+                {confirmationStep.contactDetails.address.line2 && (
+                  <p>{confirmationStep.contactDetails.address.line2}</p>
+                )}
+                <p>{confirmationStep.contactDetails.address.city}</p>
+                {confirmationStep.contactDetails.address.country && (
+                  <p>{confirmationStep.contactDetails.address.country}</p>
+                )}
+                <p>
+                  <span className="font-bold">Telephone:</span>{" "}
+                  {confirmationStep.contactDetails.telephoneNumber}
+                </p>
+                <p>
+                  <span className="font-bold">Email:</span>{" "}
+                  {confirmationStep.contactDetails.email}
+                </p>
+              </div>
+            </div>
+          )}
+
           <HelpfulBox />
         </div>
       </div>

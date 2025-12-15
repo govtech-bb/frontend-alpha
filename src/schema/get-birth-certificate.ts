@@ -154,13 +154,220 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "relationship-to-person",
+    title: "What is your relationship to the person?",
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "relationshipToPerson",
+        label: "Relationship",
+        type: "select",
+        validation: {
+          required: "Relationship is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Parent", value: "parent" },
+          { label: "Spouse", value: "spouse" },
+          { label: "Child", value: "child" },
+          { label: "Sibling", value: "sibling" },
+          { label: "Grandparent", value: "grandparent" },
+          { label: "Legal guardian", value: "legal-guardian" },
+          { label: "Legal representative", value: "legal-representative" },
+          { label: "Other (please describe)", value: "other" },
+        ],
+      },
+      {
+        name: "relationshipOtherDescription",
+        label: "Please describe your relationship",
+        type: "text",
+        validation: {
+          required: "Please describe your relationship",
+          minLength: {
+            value: 2,
+            message: "Please provide at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "relationshipToPerson",
+          value: "other",
+        },
+      },
+    ],
+  },
+  {
+    id: "reason-for-certificate",
+    title: "Tell us why you're ordering the certificate",
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "reasonForCertificate",
+        label: "Reason",
+        type: "textarea",
+        validation: {
+          required: "Reason is required",
+          minLength: {
+            value: 10,
+            message: "Please provide at least 10 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "person-deceased",
+    title: "Is the person deceased?",
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "personDeceased",
+        label: "",
+        type: "radio",
+        validation: {
+          required: "Select an option",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+      {
+        name: "dateOfDeath",
+        label: "Date of death",
+        placeholder: "For example, March 15, 2023",
+        type: "date",
+        validation: {
+          required: "Date of death is required",
+          date: {
+            type: "past",
+          },
+        },
+        conditionalOn: {
+          field: "personDeceased",
+          value: "yes",
+        },
+      },
+    ],
+  },
+  {
+    id: "person-details",
+    title: "Tell us about the person you are applying for",
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "person.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+        },
+      },
+      {
+        name: "person.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+        },
+      },
+      {
+        name: "person.hasNisNumber",
+        label: "Do they have a National Insurance (NIS) number?",
+        type: "radio",
+        validation: {
+          required: "Select an option",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+      {
+        name: "person.nisNumber",
+        label: "National Insurance (NIS) Number",
+        type: "text",
+        placeholder: "e.g., 123456",
+        validation: {
+          required: "NIS number is required",
+          pattern: {
+            value: "^\\d{6}$",
+            message: "Enter a valid NIS number (6 digits)",
+          },
+        },
+        conditionalOn: {
+          field: "person.hasNisNumber",
+          value: "yes",
+        },
+      },
+    ],
+  },
+  {
+    id: "person-birth-details",
+    title: "Provide the person's birth details",
+    description: "Answer as accurately as possible",
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "person.dateOfBirth",
+        label: "Date of birth",
+        placeholder: "For example, December 30, 1986",
+        type: "date",
+        validation: {
+          required: "Date of birth is required",
+          date: {
+            type: "past",
+          },
+        },
+      },
+      {
+        name: "person.placeOfBirth",
+        label: "Place of birth",
+        type: "text",
+        validation: {
+          required: "Place of birth is required",
+          minLength: {
+            value: 2,
+            message: "Must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "person.placeOfBaptism",
+        label: "Place of baptism",
+        type: "text",
+        validation: {
+          required: "Place of baptism is required",
+          minLength: {
+            value: 2,
+            message: "Must be at least 2 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "birth-details",
     title: "Provide your birth details",
     description: "Answer as accurately as possible",
-    // conditionalOn: {
-    //   field: "marriageStatus",
-    //   value: "no",
-    // },
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "yes",
+    },
     fields: [
       {
         name: "birthDetails.dateOfBirth",
@@ -178,9 +385,8 @@ export const formSteps: FormStep[] = [
         name: "birthDetails.placeOfBirth",
         label: "Place of birth",
         type: "text",
-        // hint: "If you choose 'No', the mother must go to the Registration Department but it is not necessary for the father to attend",
         validation: {
-          required: "Select an option",
+          required: "Place of birth is required",
           minLength: {
             value: 2,
             message: "Must be at least 2 characters",
@@ -191,9 +397,8 @@ export const formSteps: FormStep[] = [
         name: "birthDetails.placeOfBaptism",
         label: "Place of baptism",
         type: "text",
-        // hint: "If you choose 'No', the mother must go to the Registration Department but it is not necessary for the father to attend",
         validation: {
-          required: "Select an option",
+          required: "Place of baptism is required",
           minLength: {
             value: 2,
             message: "Must be at least 2 characters",
@@ -203,8 +408,12 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "parents",
+    id: "parents-self",
     title: "Tell us your parents' names",
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "yes",
+    },
     fields: [
       {
         name: "parents.father.firstName",
@@ -241,6 +450,48 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "parents-other",
+    title: "Tell us their parents' names",
+    conditionalOn: {
+      field: "applyingForYourself",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "parentsOther.father.firstName",
+        label: "Father's first name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+        },
+      },
+      {
+        name: "parentsOther.father.lastName",
+        label: "Father's last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+        },
+      },
+      {
+        name: "parentsOther.mother.firstName",
+        label: "Mother's first name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+        },
+      },
+      {
+        name: "parentsOther.mother.lastName",
+        label: "Mother's last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+        },
+      },
+    ],
+  },
+  {
     id: "order-details",
     title: "How many copies will you be ordering?",
     description: "",
@@ -266,6 +517,34 @@ export const formSteps: FormStep[] = [
     fields: [],
   },
   {
+    id: "declaration",
+    title: "Declaration",
+    description:
+      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+    fields: [
+      {
+        name: "declaration.confirmed",
+        label: "All information is correct and true.",
+        type: "checkbox",
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
+      },
+      {
+        name: "dateOfDeclaration",
+        label: "",
+        placeholder: "",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "confirmation",
     title: "Your submission has been saved",
     description: "Complete your payment below to finalize your submission",
@@ -285,5 +564,16 @@ export const formSteps: FormStep[] = [
         ],
       },
     ],
+    contactDetails: {
+      title: "Registration Department",
+      telephoneNumber: "(246) 535-8300",
+      email: "registrationdept@barbados.gov.bb",
+      address: {
+        line1: "Supreme Court Complex",
+        line2: "Whitepark Road",
+        city: "St. Michael",
+        country: "Barbados",
+      },
+    },
   },
 ];

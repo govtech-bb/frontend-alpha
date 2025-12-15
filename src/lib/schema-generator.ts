@@ -243,6 +243,21 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     return schema;
   }
 
+  // Handle checkboxes (values are "yes" or "no")
+  if (field.type === "checkbox") {
+    schema = z.string();
+    if (validation.required) {
+      // When required, checkbox must be "yes"
+      schema = z.string().refine((val) => val === "yes", {
+        message: validation.required || "This field is required",
+      });
+    } else {
+      // Optional checkbox accepts "yes" or "no"
+      schema = z.enum(["yes", "no"]).optional();
+    }
+    return schema;
+  }
+
   // Handle optional fields (no validation rules)
   if (!validation.required && Object.keys(validation).length === 0) {
     return z.string().optional();
@@ -365,6 +380,10 @@ export function generateFormSchema(formSteps: FormStep[]) {
   return baseSchema.superRefine((data, ctx) => {
     // Helper to check if a field value is empty
     const isFieldEmpty = (fieldValue: unknown, fieldType: string): boolean => {
+      if (fieldType === "checkbox") {
+        // For checkboxes, empty means not "yes"
+        return fieldValue !== "yes";
+      }
       if (fieldType === "number") {
         return (
           fieldValue === undefined ||

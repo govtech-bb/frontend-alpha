@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   DateInput,
   type DateInputValue,
   Input,
@@ -231,6 +232,21 @@ export function DynamicField({
                 </Fragment>
               ))}
             </RadioGroup>
+          )}
+        />
+      ) : field.type === "checkbox" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: controllerField }) => (
+            <Checkbox
+              checked={controllerField.value === "yes"}
+              id={field.name}
+              label={field.label}
+              onCheckedChange={(checked) => {
+                controllerField.onChange(checked ? "yes" : "no");
+              }}
+            />
           )}
         />
       ) : field.type === "showHide" && field.showHide ? (

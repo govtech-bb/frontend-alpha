@@ -7,6 +7,7 @@ export type FieldType =
   | "select"
   | "textarea"
   | "radio"
+  | "checkbox"
   | "fieldArray"
   | "showHide";
 
@@ -104,6 +105,11 @@ type OptionFormField = BaseFormField & {
   options: SelectOption[];
 };
 
+type CheckboxFormField = BaseFormField & {
+  type: "checkbox";
+  validation: NonDateFieldValidation;
+};
+
 type TextareaFormField = BaseFormField & {
   type: "textarea";
   validation: NonDateFieldValidation;
@@ -130,6 +136,7 @@ type ShowHideFormField = BaseFormField & {
 export type FormField =
   | DateFormField
   | OptionFormField
+  | CheckboxFormField
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField
@@ -143,16 +150,30 @@ export type ConfirmationStepItem = {
   items: string[];
 };
 
+export type ContactDetails = {
+  title: string;
+  telephoneNumber: string;
+  email: string;
+  address: {
+    line1: string;
+    line2?: string;
+    city: string;
+    country?: string;
+  };
+};
+
 export type FormStep = {
   id: string;
   title: string;
   description?: string;
   fields: FormField[];
+  conditionalOn?: ConditionalRule; // For conditional steps
   steps?: ConfirmationStepItem[]; // For confirmation pages
   payment?: {
     amount: number;
     service: string;
   };
+  contactDetails?: ContactDetails; // For confirmation pages
 };
 
 export type ApiResponse = {

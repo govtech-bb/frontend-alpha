@@ -67,8 +67,6 @@ export default function DynamicMultiStepForm({
     isSubmitted,
     referenceNumber,
     setCurrentStep,
-    nextStep: nextStepStore,
-    prevStep: prevStepStore,
     markStepComplete,
     updateFormData,
     resetForm,
@@ -78,7 +76,10 @@ export default function DynamicMultiStepForm({
 
   const [isFormReady, setIsFormReady] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [submissionError, setSubmissionError] = useState<{
+    message: string;
+    errors?: { field: string; message: string }[];
+  } | null>(null);
   const [paymentMessage, setPaymentMessage] = useState<{
     type: "success" | "pending" | "error";
     message: string;
@@ -98,9 +99,13 @@ export default function DynamicMultiStepForm({
     );
     for (const step of stepsWithFields) {
       for (const field of step.fields) {
-        // Date fields need object default, all others get empty string
-        const defaultValue =
-          field.type === "date" ? { day: "", month: "", year: "" } : "";
+        // Set appropriate default values based on field type
+        let defaultValue: unknown = "";
+        if (field.type === "date") {
+          defaultValue = { day: "", month: "", year: "" };
+        } else if (field.type === "checkbox") {
+          defaultValue = "no";
+        }
         setNestedValue(values, field.name, defaultValue);
 
         // Add default values for ShowHide child fields and state field
@@ -258,48 +263,149 @@ export default function DynamicMultiStepForm({
     return () => subscription.unsubscribe();
   }, [isFormReady, methods.watch, updateFormData]);
 
+  // Helper function to remove fields from conditional steps that aren't visible
+  const cleanFormDataForSubmission = (data: FormData): FormData => {
+    const cleanedData = { ...data } as Record<string, unknown>;
+
+    // Track parent keys that are used by hidden steps
+    const parentKeysFromHiddenSteps = new Set<string>();
+    // Track parent keys that are used by visible steps
+    const parentKeysFromVisibleSteps = new Set<string>();
+
+    // Get all conditional steps
+    const conditionalSteps = formSteps.filter((step) => step.conditionalOn);
+
+    // For each conditional step, check if it should be shown
+    for (const step of conditionalSteps) {
+      if (!step.conditionalOn) continue;
+
+      const watchedValue = getNestedValue<unknown>(
+        cleanedData,
+        step.conditionalOn.field
+      );
+
+      const isVisible = watchedValue === step.conditionalOn.value;
+
+      for (const field of step.fields) {
+        const fieldParts = field.name.split(".");
+
+        if (fieldParts.length === 1) {
+          // Simple field - delete directly if step is hidden
+          if (!isVisible) {
+            delete cleanedData[field.name];
+          }
+        } else {
+          // Nested field - track the parent key
+          const parentKey = fieldParts[0];
+          if (isVisible) {
+            parentKeysFromVisibleSteps.add(parentKey);
+          } else {
+            parentKeysFromHiddenSteps.add(parentKey);
+          }
+        }
+      }
+    }
+
+    // Only remove parent keys that are in hidden steps but not in any visible steps
+    for (const parentKey of parentKeysFromHiddenSteps) {
+      if (!parentKeysFromVisibleSteps.has(parentKey)) {
+        delete cleanedData[parentKey];
+      }
+    }
+
+    return cleanedData as FormData;
+  };
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
 
     try {
+      // Clean up data to remove fields from hidden conditional steps
+      const cleanedData = cleanFormDataForSubmission(data);
+
       // Submit to API
-      const result = await submitFormData({ data, formKey: storageKey });
-      // markAsSubmitted(result.data?.submissionId || "N/A");
-      //NOTE: Temporarily disabling
+      const result = await submitFormData({
+        data: cleanedData,
+        formKey: storageKey,
+      });
+
       if (result.success) {
         // Mark as submitted in store
         markAsSubmitted(result.data?.submissionId || "N/A");
       } else {
-        const errorMessage = result.errors
-          ? result.errors[0]?.message
-          : "An unexpected error occurred";
-        // biome-ignore lint/suspicious/noConsole: Intentionally logging form submission errors
-        console.error(`Submission failed: ${errorMessage}`);
-        // throw new Error("Submission failed");
+        setSubmissionError({
+          message: result.message || "An unexpected error occurred",
+          errors: result.errors?.map((err) => ({
+            field: err.field,
+            message: err.message,
+          })),
+        });
       }
     } catch (error) {
-      setSubmissionError(
-        error instanceof Error
-          ? error.message
-          : "An error occurred during submission"
-      );
+      setSubmissionError({
+        message:
+          error instanceof Error
+            ? error.message
+            : "An error occurred during submission",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  // Helper function to check if a step should be shown based on its conditionalOn property
+  const isStepVisible = (step: FormStep): boolean => {
+    if (!step.conditionalOn) return true;
+
+    const formValues = methods.getValues();
+    const watchedValue = getNestedValue<unknown>(
+      formValues as Record<string, unknown>,
+      step.conditionalOn.field
+    );
+    return watchedValue === step.conditionalOn.value;
+  };
+
+  // Helper function to find the next visible step index
+  const findNextVisibleStep = (fromIndex: number): number => {
+    for (let i = fromIndex + 1; i < formSteps.length; i++) {
+      if (isStepVisible(formSteps[i])) {
+        return i;
+      }
+    }
+    // If no visible step found, return the last step (confirmation)
+    return formSteps.length - 1;
+  };
+
+  // Helper function to find the previous visible step index
+  const findPrevVisibleStep = (fromIndex: number): number => {
+    for (let i = fromIndex - 1; i >= 0; i--) {
+      if (isStepVisible(formSteps[i])) {
+        return i;
+      }
+    }
+    // If no visible step found, return 0
+    return 0;
+  };
+
   const nextStep = async () => {
-    // Check if current step is the review step
-    const isReviewStep = formSteps[currentStep]?.fields.length === 0;
+    // Check if current step is the review step (has no fields)
+    const currentStepData = formSteps[currentStep];
+    const isReviewStep =
+      currentStepData?.fields.length === 0 &&
+      currentStepData?.id === "check-your-answers";
 
     if (isReviewStep) {
-      // Review step complete, trigger form submission
+      // Review step complete, just move to next step
       markStepComplete(currentStep);
-      // Trigger the form submission
-      await methods.handleSubmit(onSubmit)();
+      isProgrammaticNavigation.current = true;
+      const nextVisibleStep = findNextVisibleStep(currentStep);
+      setCurrentStep(nextVisibleStep);
       return;
     }
+
+    // Check if current step is the declaration step (final step before submission)
+    const isDeclarationStep = currentStepData?.id === "declaration";
 
     // Helper to check if a field value is empty
     const isFieldEmpty = (fieldValue: unknown): boolean =>
@@ -381,7 +487,13 @@ export default function DynamicMultiStepForm({
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
         // Check required validation
-        if (field.validation.required && isFieldEmpty(fieldValue)) {
+        // For checkboxes, require value to be "yes"
+        const isEmpty =
+          field.type === "checkbox"
+            ? fieldValue !== "yes"
+            : isFieldEmpty(fieldValue);
+
+        if (field.validation.required && isEmpty) {
           methods.setError(field.name as keyof FormData, {
             type: "required",
             message: field.validation.required,
@@ -407,9 +519,18 @@ export default function DynamicMultiStepForm({
     if (isValid) {
       // Mark current step as complete
       markStepComplete(currentStep);
-      // Move to next step
+
+      // If this is the declaration step, submit the form
+      if (isDeclarationStep) {
+        const formData = methods.getValues();
+        await onSubmit(formData);
+        return;
+      }
+
+      // Move to next visible step (skipping conditional steps that don't match)
       isProgrammaticNavigation.current = true;
-      nextStepStore();
+      const nextVisibleStep = findNextVisibleStep(currentStep);
+      setCurrentStep(nextVisibleStep);
     } else {
       // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
       const errorSummary = document.querySelector("#error-summary");
@@ -437,7 +558,8 @@ export default function DynamicMultiStepForm({
 
   const prevStep = () => {
     isProgrammaticNavigation.current = true;
-    prevStepStore();
+    const prevVisibleStep = findPrevVisibleStep(currentStep);
+    setCurrentStep(prevVisibleStep);
   };
 
   const handleReset = () => {
@@ -445,7 +567,11 @@ export default function DynamicMultiStepForm({
     methods.reset();
   };
 
-  const isReviewStep = formSteps[currentStep]?.fields.length === 0;
+  const currentStepData = formSteps[currentStep];
+  const isReviewStep =
+    currentStepData?.fields.length === 0 &&
+    currentStepData?.id === "check-your-answers";
+  const isDeclarationStep = currentStepData?.id === "declaration";
   const isLastStep = currentStep === formSteps.length - 1;
 
   if (isSubmitted && referenceNumber) {
@@ -499,7 +625,7 @@ export default function DynamicMultiStepForm({
             }`}
           >
             <div className="flex">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <span
                   className={
                     paymentMessage.type === "success"
@@ -548,18 +674,52 @@ export default function DynamicMultiStepForm({
           </div>
         )}
 
-        {/* Error Message */}
+        {/* Submission Error */}
         {submissionError && (
-          <div className="mb-6 border-red-500 border-l-4 bg-red-50 p-4">
+          <div className="mb-6 border-red-500 border-l-8 bg-red-50 p-6">
             <div className="flex">
               <div className="shrink-0">
-                <span className="text-red-500">⚠</span>
+                <svg
+                  aria-hidden="true"
+                  className="h-6 w-6 text-red-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                  />
+                </svg>
               </div>
-              <div className="ml-3">
-                <h3 className="font-medium text-red-800 text-sm">
-                  Submission Error
+              <div className="ml-4 flex-1">
+                <h3 className="font-bold text-lg text-red-800">
+                  There was a problem submitting your form
                 </h3>
-                <p className="mt-1 text-red-700 text-sm">{submissionError}</p>
+                <p className="mt-2 text-red-700">{submissionError.message}</p>
+                {submissionError.errors &&
+                  submissionError.errors.length > 0 && (
+                    <ul className="mt-4 space-y-2">
+                      {submissionError.errors.map((error, index) => (
+                        <li className="text-red-700" key={index}>
+                          <span className="font-semibold">
+                            {error.field
+                              .split(".")
+                              .map(
+                                (part) =>
+                                  part.charAt(0).toUpperCase() +
+                                  part.slice(1).replace(/([A-Z])/g, " $1")
+                              )
+                              .join(" - ")}
+                            :
+                          </span>{" "}
+                          {error.message}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
               </div>
             </div>
           </div>
@@ -587,8 +747,12 @@ export default function DynamicMultiStepForm({
             </Button>
           )}
 
-          {/* Show Continue button on review step, even if it's technically the last step */}
+          {/* Show Continue button on review step, Submit on declaration step */}
           {isReviewStep ? (
+            <Button disabled={isSubmitting} onClick={nextStep} type="button">
+              Continue
+            </Button>
+          ) : isDeclarationStep ? (
             <Button disabled={isSubmitting} onClick={nextStep} type="button">
               {isSubmitting ? (
                 <>
@@ -612,7 +776,7 @@ export default function DynamicMultiStepForm({
             </Button>
           ) : (
             <Button disabled={isSubmitting} onClick={nextStep} type="button">
-              Next
+              Continue
             </Button>
           )}
         </div>
