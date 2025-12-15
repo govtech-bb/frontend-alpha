@@ -297,7 +297,7 @@ export default function DynamicMultiStepForm({
       const isVisible = watchedValue === step.conditionalOn.value;
 
       for (const field of step.fields) {
-        const fieldParts = field.name.split(".");
+        const fieldParts = field.name?.split(".");
 
         if (fieldParts.length === 1) {
           // Simple field - delete directly if step is hidden
@@ -674,7 +674,7 @@ export default function DynamicMultiStepForm({
                           : "text-red-700"
                     }`}
                   >
-                    {paymentMessage.details.split("\n").map((line, index) => (
+                    {paymentMessage.details?.split("\n").map((line, index) => (
                       <div key={index}>{line}</div>
                     ))}
                   </div>
@@ -716,7 +716,7 @@ export default function DynamicMultiStepForm({
                         <li className="text-red-700" key={index}>
                           <span className="font-semibold">
                             {error.field
-                              .split(".")
+                              ?.split(".")
                               .map(
                                 (part) =>
                                   part.charAt(0).toUpperCase() +

@@ -56,6 +56,7 @@ export type NestedFormField = {
   type: Exclude<FieldType, "fieldArray" | "showHide">;
   placeholder?: string;
   hint?: string;
+  hidden?: boolean; // Hide label on form but show on review screen
   validation: NonDateFieldValidation | DateFieldValidation;
   options?: SelectOption[];
   rows?: number;
@@ -84,6 +85,7 @@ export type BaseFormField = {
   label: string;
   placeholder?: string;
   hint?: string; // Description text displayed below the label
+  hidden?: boolean; // Hide label on form but show on review screen
   validation: ValidationRule;
   options?: SelectOption[]; // For select and radio fields
   rows?: number; // For textarea

@@ -253,6 +253,35 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
+        name: "deceased.dateOfDeath",
+        label: "",
+        type: "date",
+        validation: {
+          required: "Date of death is required",
+          date: {
+            type: "past",
+          },
+        },
+        conditionalOn: {
+          field: "deceased.knownDateOfDeath",
+          value: "yes",
+        },
+      },
+
+      {
+        name: "deceased.estimatedDateOfDeath",
+        label: "Provide the two-year search range you want us to check",
+        hint: "Enter a 2-year period, for example 1990 to 1991. If you are not sure, give your best estimate.",
+        type: "text",
+        validation: {
+          required: "Estimate is required",
+        },
+        conditionalOn: {
+          field: "deceased.knownDateOfDeath",
+          value: "no",
+        },
+      },
+      {
         name: "deceased.nisNumber",
         label: "National Insurance (NIS) Number",
         type: "text",
@@ -283,9 +312,9 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "order.numberOfCopies",
-        label: "",
+        label: "Number of copies",
+        hidden: true,
         type: "number",
-        // placeholder: "For example, 2",
         validation: {
           required: "Number of copies is required",
           min: {
@@ -317,7 +346,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "dateOfDeclaration",
-        label: "",
+        label: "Date of Declaration",
+        hidden: true,
         placeholder: "",
         type: "date",
         validation: {
@@ -335,8 +365,8 @@ export const formSteps: FormStep[] = [
     description: "Complete your payment below to finalize your submission",
     fields: [],
     payment: {
-      amount: 20.0,
-      service: "Application Fee",
+      amount: 5.0,
+      service: "Death Certificate",
     },
     steps: [
       {

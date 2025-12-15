@@ -140,7 +140,8 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "applyingForYourself",
-        label: "",
+        label: "Are you applying for your own birth certificate?",
+        hidden: true,
         type: "radio",
         // hint: "If you choose 'No', the mother must go to the Registration Department but it is not necessary for the father to attend",
         validation: {
@@ -230,7 +231,8 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "personDeceased",
-        label: "",
+        label: "Is the person deceased?",
+        hidden: true,
         type: "radio",
         validation: {
           required: "Select an option",
@@ -498,7 +500,8 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "order.numberOfCopies",
-        label: "",
+        label: "Number of copies",
+        hidden: true,
         type: "number",
         // placeholder: "For example, 2",
         validation: {
@@ -532,8 +535,9 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "dateOfDeclaration",
-        label: "",
-        placeholder: "",
+        label: "Date of declaration",
+        hidden: true,
+        placeholder: "For example, December 15, 2025",
         type: "date",
         validation: {
           required: "Date is required",
