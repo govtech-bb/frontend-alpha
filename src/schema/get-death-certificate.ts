@@ -200,7 +200,7 @@ export const formSteps: FormStep[] = [
       {
         name: "reasonForCertificate",
         label: "Reason",
-        type: "textarea",
+        type: "text",
         validation: {
           required: "Reason is required",
           minLength: {
