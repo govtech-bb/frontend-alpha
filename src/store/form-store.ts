@@ -10,6 +10,7 @@ type FormProgress = {
   lastSaved: string | null;
   isSubmitted: boolean;
   referenceNumber: string | null;
+  customerName: string | null;
   totalSteps: number;
 };
 
@@ -21,6 +22,7 @@ type FormStore = {
   lastSaved: string | null;
   isSubmitted: boolean;
   referenceNumber: string | null;
+  customerName: string | null;
   totalSteps: number;
   _hasHydrated: boolean;
 
@@ -34,7 +36,8 @@ type FormStore = {
   resetForm: () => void;
   getProgress: () => number;
   setHasHydrated: (state: boolean) => void;
-  markAsSubmitted: (referenceNumber: string) => void;
+  markAsSubmitted: (referenceNumber: string, customerName?: string) => void;
+  clearFormDataKeepSubmission: () => void;
 };
 
 const initialState: FormProgress = {
@@ -44,6 +47,7 @@ const initialState: FormProgress = {
   lastSaved: null,
   isSubmitted: false,
   referenceNumber: null,
+  customerName: null,
   totalSteps: 1,
 };
 
@@ -128,11 +132,25 @@ export function createFormStore(
           set({ _hasHydrated: state });
         },
 
-        markAsSubmitted: (referenceNumber: string) => {
+        markAsSubmitted: (referenceNumber: string, customerName?: string) => {
           set({
             isSubmitted: true,
             referenceNumber,
+            customerName: customerName || null,
           });
+        },
+
+        clearFormDataKeepSubmission: () => {
+          set((state) => ({
+            currentStep: 0,
+            completedSteps: [],
+            formData: {},
+            lastSaved: null,
+            // Keep submission state
+            isSubmitted: state.isSubmitted,
+            referenceNumber: state.referenceNumber,
+            customerName: state.customerName,
+          }));
         },
       }),
       {

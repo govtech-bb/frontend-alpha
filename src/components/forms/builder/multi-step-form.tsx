@@ -66,12 +66,14 @@ export default function DynamicMultiStepForm({
     _hasHydrated,
     isSubmitted,
     referenceNumber,
+    customerName: storedCustomerName,
     setCurrentStep,
     markStepComplete,
     updateFormData,
     resetForm,
     // getProgress,
     markAsSubmitted,
+    clearFormDataKeepSubmission,
   } = useFormStore();
 
   const [isFormReady, setIsFormReady] = useState(false);
@@ -263,6 +265,14 @@ export default function DynamicMultiStepForm({
     return () => subscription.unsubscribe();
   }, [isFormReady, methods.watch, updateFormData]);
 
+  // Clear form data when submission is complete and showing confirmation
+  useEffect(() => {
+    if (isSubmitted && referenceNumber && _hasHydrated) {
+      // Clear form data but keep submission state
+      clearFormDataKeepSubmission();
+    }
+  }, [isSubmitted, referenceNumber, _hasHydrated, clearFormDataKeepSubmission]);
+
   // Helper function to remove fields from conditional steps that aren't visible
   const cleanFormDataForSubmission = (data: FormData): FormData => {
     const cleanedData = { ...data } as Record<string, unknown>;
@@ -321,6 +331,11 @@ export default function DynamicMultiStepForm({
     setSubmissionError(null);
 
     try {
+      // Extract customer name before cleaning data
+      const applicantFirstName = (data["applicant.firstName"] as string) || "";
+      const applicantLastName = (data["applicant.lastName"] as string) || "";
+      const customerName = `${applicantFirstName} ${applicantLastName}`.trim();
+
       // Clean up data to remove fields from hidden conditional steps
       const cleanedData = cleanFormDataForSubmission(data);
 
@@ -331,8 +346,8 @@ export default function DynamicMultiStepForm({
       });
 
       if (result.success) {
-        // Mark as submitted in store
-        markAsSubmitted(result.data?.submissionId || "N/A");
+        // Mark as submitted in store with customer name
+        markAsSubmitted(result.data?.submissionId || "N/A", customerName);
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -585,12 +600,7 @@ export default function DynamicMultiStepForm({
       return null;
     }
 
-    // Extract customer details from form data
-    const applicantFirstName =
-      (formData["applicant.firstName"] as string) || "";
-    const applicantLastName = (formData["applicant.lastName"] as string) || "";
-    const customerName = `${applicantFirstName} ${applicantLastName}`.trim();
-
+    // Use stored customer name (persists even after form data is cleared)
     // TODO: Add email field to form schema to capture customer email
     const customerEmail = undefined; // Will use default in PaymentBlock
 
@@ -598,7 +608,7 @@ export default function DynamicMultiStepForm({
       <ConfirmationPage
         confirmationStep={confirmationStep}
         customerEmail={customerEmail}
-        customerName={customerName || undefined}
+        customerName={storedCustomerName || undefined}
         onReset={handleReset}
         referenceNumber={referenceNumber}
       />
