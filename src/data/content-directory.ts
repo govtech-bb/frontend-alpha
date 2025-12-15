@@ -34,6 +34,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         ],
       },
       {
+        title: "Get a copy of a death certificate",
+        slug: "get-death-certificate",
+        source_url: "",
+        description:
+          "Information on how to obtain a copy of a death certificate in Barbados.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Get a Death Certificate form",
+            type: "component",
+          },
+        ],
+      },
+      {
         title: "Register a death",
         slug: "register-a-death",
         source_url: "https://www.gov.bb/Citizens/register-death",
