@@ -19,7 +19,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         ],
       },
       {
-        title: "Get a birth certificate",
+        title: "Get a copy of a birth certificate",
         slug: "get-birth-certificate",
         source_url: "",
         description:
