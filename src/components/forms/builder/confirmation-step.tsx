@@ -1,9 +1,8 @@
 "use client";
-import { Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
-import { HelpfulBox } from "@/components/layout/helpful-box";
 import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import type { FormStep } from "@/types";
@@ -14,6 +13,7 @@ type ConfirmationPageProps = {
   onReset: () => void;
   customerEmail?: string;
   customerName?: string;
+  formId?: string;
 };
 
 export function ConfirmationPage({
@@ -22,6 +22,7 @@ export function ConfirmationPage({
   customerName,
   referenceNumber: _referenceNumber,
   onReset: _onReset,
+  formId,
 }: ConfirmationPageProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
@@ -107,7 +108,7 @@ export function ConfirmationPage({
               <Text as="p" className="mb-4">
                 If you need help with your application, contact:
               </Text>
-              <Heading as="h2" className="pb-2">
+              <Heading as="h3" className="pb-2">
                 {confirmationStep.contactDetails.title}
               </Heading>
               <div className="space-y-1 text-[20px] leading-normal">
@@ -131,7 +132,29 @@ export function ConfirmationPage({
             </div>
           )}
 
-          <HelpfulBox />
+          {/* Feedback section */}
+          {confirmationStep.enableFeedback && formId && (
+            <div>
+              <Heading as="h3" className="pb-4">
+                Help us improve this service
+              </Heading>
+              <Text as="p" className="mb-4">
+                We are always working to improve government services. If you
+                have a moment, you can tell us about your experience today.
+              </Text>
+              <LinkButton
+                href={`/exit-survey?ref_id=${formId}&step=introduction`}
+                variant="secondary"
+              >
+                Give feedback on this service
+              </LinkButton>
+              <Text as="p" className="mt-4 text-[16px] text-neutral-600">
+                This will take about 30 seconds. Your responses are anonymous.
+              </Text>
+            </div>
+          )}
+
+          {/* <HelpfulBox /> */}
         </div>
       </div>
     </>

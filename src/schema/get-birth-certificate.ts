@@ -515,7 +515,7 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "check-your-answers",
+    id: "check-answers",
     title: "Check Your Answers",
     fields: [],
   },
@@ -579,5 +579,6 @@ export const formSteps: FormStep[] = [
         country: "Barbados",
       },
     },
+    enableFeedback: true,
   },
 ];

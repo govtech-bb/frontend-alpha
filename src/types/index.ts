@@ -176,6 +176,7 @@ export type FormStep = {
     service: string;
   };
   contactDetails?: ContactDetails; // For confirmation pages
+  enableFeedback?: boolean; // Enable feedback section on confirmation page
 };
 
 export type ApiResponse = {

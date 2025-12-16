@@ -2,7 +2,7 @@
 
 import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
@@ -54,6 +54,8 @@ export default function DynamicMultiStepForm({
 }: DynamicMultiStepFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
 
   // Get store hook (uses singleton cache internally)
   const useFormStore = createFormStore(storageKey);
@@ -134,6 +136,8 @@ export default function DynamicMultiStepForm({
   // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable, searchParams intentionally omitted to prevent circular updates
   useEffect(() => {
     if (!(_hasHydrated && isFormReady)) return;
+    // Skip URL update if form is submitted (confirmation page handles its own URL)
+    if (isSubmitted && referenceNumber) return;
 
     const stepName = formSteps[currentStep]?.id;
     if (stepName) {
@@ -142,7 +146,14 @@ export default function DynamicMultiStepForm({
       params.set("step", stepName);
       router.push(`?${params.toString()}`, { scroll: false });
     }
-  }, [currentStep, _hasHydrated, isFormReady, router]);
+  }, [
+    currentStep,
+    _hasHydrated,
+    isFormReady,
+    isSubmitted,
+    referenceNumber,
+    router,
+  ]);
 
   // Initialize step from URL on mount and handle browser back/forward
   // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable and doesn't need to be in deps
@@ -272,6 +283,17 @@ export default function DynamicMultiStepForm({
       clearFormDataKeepSubmission();
     }
   }, [isSubmitted, referenceNumber, _hasHydrated, clearFormDataKeepSubmission]);
+
+  // Update URL to show confirmation step when form is submitted
+  useEffect(() => {
+    if (isSubmitted && referenceNumber && _hasHydrated) {
+      const params = new URLSearchParams(searchParams?.toString());
+      if (params.get("step") !== "confirmation") {
+        params.set("step", "confirmation");
+        router.push(`?${params.toString()}`, { scroll: false });
+      }
+    }
+  }, [isSubmitted, referenceNumber, _hasHydrated, searchParams, router]);
 
   // Helper function to remove fields from conditional steps that aren't visible
   const cleanFormDataForSubmission = (data: FormData): FormData => {
@@ -592,7 +614,7 @@ export default function DynamicMultiStepForm({
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
     const confirmationStep = formSteps.find(
-      (step) => step.id === "confirmation"
+      (step) => step.id === "confirmation" || step.id === "thank-you"
     );
 
     if (!confirmationStep) {
@@ -609,6 +631,7 @@ export default function DynamicMultiStepForm({
         confirmationStep={confirmationStep}
         customerEmail={customerEmail}
         customerName={storedCustomerName || undefined}
+        formId={formId}
         onReset={handleReset}
         referenceNumber={referenceNumber}
       />

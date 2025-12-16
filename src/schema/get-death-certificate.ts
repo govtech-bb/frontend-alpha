@@ -152,12 +152,14 @@ export const formSteps: FormStep[] = [
 
   {
     id: "relationship-to-person",
-    title: "Tell us your relationship to the deceased",
-
+    title: "Tell us your relationship with the deceased",
+    description:
+      "For example, spouse, child, parent, sibling, executor, or authorised representative.",
     fields: [
       {
         name: "relationshipToPerson",
         label: "Relationship",
+        hidden: true,
         type: "select",
         validation: {
           required: "Relationship is required",
@@ -195,11 +197,11 @@ export const formSteps: FormStep[] = [
   {
     id: "reason-for-certificate",
     title: "Tell us about why you need this certificate",
-
+    description: "Give the reason in a short sentence.",
     fields: [
       {
         name: "reasonForCertificate",
-        label: "Reason",
+        label: "Reason for requesting the certificate",
         type: "text",
         validation: {
           required: "Reason is required",
@@ -215,7 +217,8 @@ export const formSteps: FormStep[] = [
   {
     id: "deceased-details",
     title: "Tell us about the deceased",
-
+    description:
+      "Provide as much information as you can to help us find the correct record.",
     fields: [
       {
         name: "deceased.firstName",
@@ -242,10 +245,10 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "deceased.knownDateOfDeath",
-        label: "Do you know when they died?",
+        label: "Do you know the date the person died?",
         type: "radio",
         validation: {
-          required: "Select an option",
+          required: "Whether date of death is known is required",
         },
         options: [
           { label: "Yes", value: "yes" },
@@ -284,9 +287,9 @@ export const formSteps: FormStep[] = [
       {
         name: "deceased.idNumber",
         label: "National Identification (ID) Number",
+        hint: "Enter only if known",
         type: "text",
         validation: {
-          required: "ID Number is required",
           pattern: {
             value: "^\\d{6}-\\d{4}$",
             message: "Enter a valid ID number (e.g., 850101-0001)",
@@ -296,10 +299,18 @@ export const formSteps: FormStep[] = [
       {
         name: "deceased.placeOfDeath",
         label: "Place of death",
+        hint: "Enter a house, institution, home address, or parish, if known",
         type: "text",
         validation: {
           required: "Place of death is required",
         },
+      },
+      {
+        name: "deceased.causeOfDeath",
+        label: "Cause of death",
+        hint: "Leave blank if you do not know",
+        type: "text",
+        validation: {},
       },
     ],
   },
@@ -389,5 +400,6 @@ export const formSteps: FormStep[] = [
         country: "Barbados",
       },
     },
+    enableFeedback: true,
   },
 ];
