@@ -1,11 +1,17 @@
-import { Button, Input } from "@govtech-bb/react";
+import { Button, Input, Select } from "@govtech-bb/react";
 import { useEffect } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
-import type { FormField } from "@/types";
+import { getNestedValue } from "@/lib/utils";
+import type { FieldArrayConfig, FormField } from "@/types";
+
+type FieldArrayField = FormField & {
+  type: "fieldArray";
+  fieldArray: FieldArrayConfig;
+};
 
 type DynamicFieldArrayProps = {
-  field: FormField;
+  field: FieldArrayField;
 };
 
 export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
@@ -22,16 +28,34 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
 
   const fieldArrayConfig = field.fieldArray;
   const minItems = fieldArrayConfig?.minItems ?? 1;
+  const nestedFields = fieldArrayConfig?.fields;
 
   // Initialize with at least one field if empty
   useEffect(() => {
     if (fields.length === 0) {
-      append({ value: "" } as never);
+      if (nestedFields) {
+        // For complex field arrays, initialize with empty values for all nested fields
+        const initialItem: Record<string, string> = {};
+        for (const f of nestedFields) {
+          initialItem[f.name] = "";
+        }
+        append(initialItem as never);
+      } else {
+        append({ value: "" } as never);
+      }
     }
-  }, [fields.length, append]);
+  }, [fields.length, append, nestedFields]);
 
   const handleAddAnother = () => {
-    append({ value: "" } as never);
+    if (nestedFields) {
+      const newItem: Record<string, string> = {};
+      for (const f of nestedFields) {
+        newItem[f.name] = "";
+      }
+      append(newItem as never);
+    } else {
+      append({ value: "" } as never);
+    }
   };
 
   const handleRemove = (index: number) => {
@@ -40,6 +64,86 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
     }
   };
 
+  // Complex field array with multiple fields per item
+  if (nestedFields && nestedFields.length > 0) {
+    return (
+      <div className="space-y-6">
+        {fields.map((item, index) => {
+          // Get errors for this array item
+          const itemErrors = getNestedValue<
+            Record<string, { message?: string }>
+          >(errors as Record<string, unknown>, `${field.name}.${index}`);
+
+          return (
+            <div key={item.id}>
+              {/* Show divider and header for items after the first */}
+              {index > 0 && (
+                <div className="mb-6 flex items-center justify-between border-neutral-300 border-t pt-6">
+                  <h3 className="font-bold text-lg">
+                    {fieldArrayConfig?.itemLabel || "Item"} {index + 1}
+                  </h3>
+                  {fields.length > minItems && (
+                    <Button
+                      onClick={() => handleRemove(index)}
+                      type="button"
+                      variant="secondary"
+                    >
+                      {fieldArrayConfig?.removeButtonText || "Remove"}
+                    </Button>
+                  )}
+                </div>
+              )}
+
+              <div className="space-y-4">
+                {nestedFields.map((nestedField) => {
+                  const fieldName =
+                    `${field.name}.${index}.${nestedField.name}` as keyof FormData;
+                  const fieldError = itemErrors?.[nestedField.name];
+
+                  if (nestedField.type === "select" && nestedField.options) {
+                    return (
+                      <Select
+                        error={fieldError?.message}
+                        key={nestedField.name}
+                        label={nestedField.label}
+                        {...register(fieldName)}
+                      >
+                        {nestedField.options.map((option) => (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        ))}
+                      </Select>
+                    );
+                  }
+
+                  return (
+                    <Input
+                      error={fieldError?.message}
+                      id={`${field.name}-${index}-${nestedField.name}`}
+                      key={nestedField.name}
+                      label={nestedField.label}
+                      placeholder={nestedField.placeholder}
+                      type={nestedField.type}
+                      {...register(fieldName)}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+
+        <div className="pt-2">
+          <Button onClick={handleAddAnother} type="button" variant="secondary">
+            {fieldArrayConfig?.addButtonText || "Add another"}
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Simple field array with single value per item
   return (
     <div className="space-y-4">
       {fields.map((item, index) => {
@@ -51,15 +155,11 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
         return (
           <div className="flex flex-col gap-2" key={item.id}>
             <div className="flex items-end gap-2">
-              <div className="flex-1">
+              <div className={`flex-1 ${index > 0 ? "[&_label]:sr-only" : ""}`}>
                 <Input
                   error={itemError?.message}
                   id={`${field.name}-${index}`}
-                  label={
-                    index === 0
-                      ? fieldArrayConfig?.itemLabel || field.label
-                      : undefined
-                  }
+                  label={fieldArrayConfig?.itemLabel || field.label}
                   placeholder={field.placeholder}
                   type="text"
                   {...register(fieldName)}
@@ -80,7 +180,6 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
       })}
 
       <div>
-        {/* TODO: Change to variant link when it becomes available */}
         <Button onClick={handleAddAnother} type="button" variant="secondary">
           {fieldArrayConfig?.addButtonText || "Add another"}
         </Button>

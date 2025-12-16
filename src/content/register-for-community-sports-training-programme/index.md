@@ -5,40 +5,42 @@ featured: false
 publish_date: 2025-10-17
 ---
 
-Anyone living in Barbados can register for a place on government-run community sports programmes.
+Anyone living in Barbados, aged 30 and under, can register for a place on government-run community sports programmes. 
+
+New programmes begin throughout the year.
+
+<!-- Add custom html button to allow necessary styling -->
+<!-- TODO: Make this file MDX so that the Button component can be imported -->
+
+<a href="/work-employment/register-for-community-sports-training-programme/start" className='relative inline-flex items-center justify-center gap-2 rounded-sm text-body whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none disabled-state px-6 py-4 bg-teal-dark !text-neutral-white hover:bg-brand-teal-light hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-brand-teal-darker active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] active:outline-none active:ring-4 active:ring-teal-100 active:ring-offset-1 active:rounded-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-100 focus-visible:ring-offset-1 focus-visible:rounded-sm no-underline' target="_self">Register now</a>
 
 ## How to register
 
-### Get a registration form
+### Complete an application form
 
-You cannot register online yet so you need to collect a paper form from your local youth commissioner or from:
+You can apply online using the Register for a Youth Development Programme (YDP) Community Sports Training programme form.
+
+Or you can collect a paper form from your local youth commissioner or from:
 
 Ministry of Youth, Sports and Community Empowerment  
 Sky Mall  
 Haggatt Hall  
 St. Michael
 
-### Information you need to share
-
-As well as your contact details and depending on what you’re registering for, you will also be asked to share:
-
-1. Your name.
-
-2. Your address.
-
-3. Your valid ID.
-
-4. Your level of skill and previous experience in your area of interest.
-
 ### Submit your registration form
 
-Take your completed application form to your local youth commissioner or coach, or the ministry office.
+If you apply online, your application will be submitted to the Youth Development Programme.
+
+If you complete a paper form, you can take it to:
+
+- your local youth commissioner or coach
+- the ministry office
 
 ## After you register
 
-The Youth Commissioner will confirm:
+The Youth Commissioner will be in touch to confirm:
 
-- location of the programme
+- the location of the programme
 
 - the start date and times
 

@@ -7,7 +7,7 @@ export default function EntryPointLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Suspense fallback={<main>{children}</main>}>
+    <Suspense fallback={<main className="container">{children}</main>}>
       <EntryPointWrapper>{children}</EntryPointWrapper>
     </Suspense>
   );

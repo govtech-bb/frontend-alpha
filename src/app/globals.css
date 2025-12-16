@@ -95,3 +95,8 @@
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
 }
+
+@utility break-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
+  "linter": {
+    "rules": {
+      "performance": {
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "noNestedTernary": "off",
+        "useBlockStatements": "off",
+        "noMagicNumbers": "off"
+      },
+      "suspicious": {
+        "noUnknownAtRules": "off",
+        "noArrayIndexKey": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "off"
+      },
+      "nursery": {
+        "noLeakedRender": "off",
+        "noIncrementDecrement": "warn",
+        "noShadow": "off"
+      }
+    }
+  },
+  "files": {
+    "includes": ["!!**/*.test.tsx", "!!**/*.test.ts"]
+  }
+}

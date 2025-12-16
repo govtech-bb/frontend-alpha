@@ -1,31 +1,39 @@
+import { convertDateObjects } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
+import type { ApiResponse, JsonValue } from "@/types";
 
-type ApiResponse = {
-  success: boolean;
-  referenceNumber?: string;
-  message?: string;
-  error?: string;
-};
+export async function submitFormData({
+  data,
+  formKey,
+}: {
+  data: FormData;
+  formKey: string;
+}): Promise<ApiResponse> {
+  // Form data is already validated by the form component before submission
+  //TODO: Validate env variables using zod
+  const PROCESSING_API = process.env.NEXT_PUBLIC_PROCESSING_API;
 
-export async function submitFormData(_data: FormData): Promise<ApiResponse> {
-  // Simulate network delay
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
 
-  // Generate a mock reference number
-  const referenceNumber = `REF-${Date.now()}-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
+  // Convert DateObject instances to ISO date strings
+  const convertedData = convertDateObjects(data as JsonValue);
 
-  // Simulate 90% success rate (optional - for testing error handling)
-  const shouldSucceed = Math.random() > 0.1;
+  const response = await fetch(`${PROCESSING_API}/forms/${formKey}/submit`, {
+    method: "POST",
+    body: JSON.stringify(convertedData),
+    headers: myHeaders,
+  });
 
-  if (shouldSucceed) {
+  if (!response.ok) {
+    const errorBody = await response.json().catch(() => ({}));
     return {
-      success: true,
-      referenceNumber,
-      message: "Form submitted successfully",
+      success: false,
+      message:
+        errorBody.message ?? `Request failed with status ${response.status}`,
+      errors: errorBody.errors,
     };
   }
-  return {
-    success: false,
-    error: "Mock error: Server temporarily unavailable",
-  };
+
+  return response.json() as Promise<ApiResponse>;
 }

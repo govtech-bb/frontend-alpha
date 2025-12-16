@@ -33,8 +33,8 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to register a death and obtain a death certificate in Barbados.",
       },
       {
-        title: "Get a death certificate",
-        slug: "get-a-death-certificate",
+        title: "Get a copy of a death certificate",
+        slug: "get-a-copy-of-a-death-certificate",
         source_url: "",
         description:
           "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
@@ -98,11 +98,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Register for a Youth Development Programme (YDP) Community Sports Training programme",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Register for Training Form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -120,6 +121,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Apply for a position as a temporary teacher",
         slug: "apply-for-a-position-as-a-temporary-teacher",
         description: "Apply for a position as a temporary teacher",
+      },
+      {
+        title: "Apply to the JobSTART Plus Programme",
+        slug: "apply-to-jobstart-plus-programme",
+        description: "Apply to the JobSTART Plus Programme",
       },
     ],
   },
@@ -160,6 +166,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description:
           "Each year, every child is entitled to a BDS $100 textbook grant while they are a student at a public or private primary school.",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Get a Primary School Textbook Grant",
+            type: "component",
+            protected: true,
+          },
+        ],
       },
     ],
   },
@@ -244,6 +259,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "https://www.gov.bb/Citizens/notarize-document",
         description:
           "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
+      },
+      {
+        title: "POST Office Redirection Notice",
+        slug: "post-office-redirection-notice",
+        description: "POST Office Redirection Notice",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "POST Office Redirection Notice form",
+            type: "component",
+          },
+        ],
       },
     ],
   },

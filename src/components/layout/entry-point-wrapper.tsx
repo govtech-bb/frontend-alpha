@@ -18,7 +18,7 @@ export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
   const searchParams = useSearchParams();
   const pathSegments = pathname.split("/").filter(Boolean);
   const isFormPage = pathSegments.includes("form");
-  const isConfirmationPage = searchParams.get("step") === "review";
+  const isConfirmationPage = searchParams.get("step") === "confirmation";
   const isFeedbackPage = pathname === "/feedback";
 
   return (

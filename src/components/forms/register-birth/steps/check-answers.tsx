@@ -192,7 +192,7 @@ export function CheckAnswers({
                         formData.father.dateOfBirth.month,
                         formData.father.dateOfBirth.day
                       );
-                      return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                      return `${formatForDisplay(formData.father.dateOfBirth)} (${calculateAge(dateString)} years old)`;
                     })()}
                 </dd>
 
@@ -263,7 +263,7 @@ export function CheckAnswers({
                       formData.mother.dateOfBirth.month,
                       formData.mother.dateOfBirth.day
                     );
-                    return `${formatForDisplay(dateString)} (${calculateAge(dateString)} years old)`;
+                    return `${formatForDisplay(formData.mother?.dateOfBirth)} (${calculateAge(dateString)} years old)`;
                   })()}
               </dd>
 
@@ -317,14 +317,7 @@ export function CheckAnswers({
               <dt>Date of birth</dt>
               <dd className="lg:col-span-2">
                 {formData.child?.dateOfBirth &&
-                  (() => {
-                    const dateString = combineDate(
-                      formData.child.dateOfBirth.year,
-                      formData.child.dateOfBirth.month,
-                      formData.child.dateOfBirth.day
-                    );
-                    return formatForDisplay(dateString);
-                  })()}
+                  (() => formatForDisplay(formData.child?.dateOfBirth))()}
               </dd>
 
               <dt>Sex at birth</dt>

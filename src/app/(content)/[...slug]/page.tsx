@@ -6,13 +6,13 @@ import { MarkdownContent } from "@/components/markdown-content";
 import { Typography } from "@/components/ui/typography";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
+import { hasResearchAccess, isProtectedSubpage } from "@/lib/research-access";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
 type ContentPageProps = {
   params: Promise<{ slug: string[] }>;
 };
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
 
@@ -82,7 +82,15 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    return <MarkdownContent markdown={markdownContent} />;
+    // Check if user has research access cookie to show/hide start page links
+    const hasAccess = await hasResearchAccess();
+
+    return (
+      <MarkdownContent
+        hasResearchAccess={hasAccess}
+        markdown={markdownContent}
+      />
+    );
   }
 
   // Three slugs: Sub-pages (start, form, etc.)
@@ -101,6 +109,14 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    // Check research access once for both protected pages and hiding start links
+    const hasAccess = await hasResearchAccess();
+
+    // Protected subpages require research access
+    if (isProtectedSubpage(page, subPageSlug) && !hasAccess) {
+      notFound();
+    }
+
     // Handle form pages (JSX components)
     if (subPageSlug === "form") {
       // Dynamically import the form component based on the page slug
@@ -113,7 +129,12 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    return <MarkdownContent markdown={markdownContent} />;
+    return (
+      <MarkdownContent
+        hasResearchAccess={hasAccess}
+        markdown={markdownContent}
+      />
+    );
   }
 
   return notFound();
@@ -124,7 +145,21 @@ export async function generateMetadata({ params }: ContentPageProps) {
 
   // For sub-pages (3 slugs)
   if (slug.length === 3) {
-    const [, pageSlug, subPageSlug] = slug;
+    const [categorySlug, pageSlug, subPageSlug] = slug;
+
+    const category = INFORMATION_ARCHITECTURE.find(
+      (cat) => cat.slug === categorySlug
+    );
+    const page = category?.pages.find((p) => p.slug === pageSlug);
+
+    // Protected subpages return generic 404 metadata if no access
+    if (page && isProtectedSubpage(page, subPageSlug)) {
+      const hasAccess = await hasResearchAccess();
+      if (!hasAccess) {
+        return { title: "Page not found" };
+      }
+    }
+
     if (subPageSlug === "form") {
       const subPageTitle = findSubPageTitleFromPath(
         INFORMATION_ARCHITECTURE,

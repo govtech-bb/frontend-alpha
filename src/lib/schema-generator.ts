@@ -1,17 +1,90 @@
-/** biome-ignore-all lint/complexity/noForEach: <explanation> */
 import { z } from "zod";
-import { isValidBirthDate } from "@/lib/dates";
-import { formSteps } from "@/schema/sports-training-programme-form-schema";
-import type { FormField } from "@/types";
+import {
+  createDateSchema,
+  dateValidation,
+} from "@/lib/validation/date-validation";
+import type {
+  DateFieldValidation,
+  FormField,
+  FormStep,
+  NestedFormField,
+  NonDateFieldValidation,
+} from "@/types";
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-function createFieldSchema(field: FormField): z.ZodTypeAny {
+/**
+ * Sets a nested value in an object using dot notation path
+ * Creates intermediate objects as needed
+ * @example setNestedValue({}, "guardian.firstName", schema) -> { guardian: { firstName: schema } }
+ */
+function setNestedValue<T>(
+  obj: Record<string, unknown>,
+  path: string,
+  value: T
+): void {
+  const keys = path.split(".");
+  let current = obj;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!(key in current) || typeof current[key] !== "object") {
+      current[key] = {};
+    }
+    current = current[key] as Record<string, unknown>;
+  }
+
+  const lastKey = keys.at(-1);
+  if (lastKey) {
+    current[lastKey] = value;
+  }
+}
+
+/**
+ * Gets a nested value from an object using dot notation path
+ */
+function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
+  const keys = path.split(".");
+  let current: unknown = obj;
+
+  for (const key of keys) {
+    if (current === null || current === undefined) return;
+    current = (current as Record<string, unknown>)[key];
+  }
+
+  return current;
+}
+
+/**
+ * Converts a nested plain object of schemas into a nested Zod object schema
+ */
+function objectToZodSchema(
+  obj: Record<string, unknown>
+): z.ZodObject<Record<string, z.ZodTypeAny>> {
+  const shape: Record<string, z.ZodTypeAny> = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    if (value instanceof z.ZodType) {
+      shape[key] = value;
+    } else if (typeof value === "object" && value !== null) {
+      shape[key] = objectToZodSchema(value as Record<string, unknown>);
+    }
+  }
+
+  return z.object(shape);
+}
+
+function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
   let schema: z.ZodTypeAny = z.string();
 
-  const validation = field.validation;
+  const validation = field.validation as NonDateFieldValidation &
+    DateFieldValidation;
+
+  // Handle showHide fields - the state field needs to be optional string
+  if (field.type === "showHide") {
+    return z.string().optional();
+  }
 
   // Handle field arrays
-  if (field.type === "fieldArray") {
+  if (field.type === "fieldArray" && "fieldArray" in field) {
     let itemSchema: z.ZodTypeAny = z.string();
 
     if (validation.required) {
@@ -43,63 +116,103 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     const arraySchema = z.array(z.object({ value: itemSchema }));
 
     // If conditional, make it optional (allows undefined or array)
-    if (field.conditionalOn) {
+    if ("conditionalOn" in field && field.conditionalOn) {
       return arraySchema.optional();
     }
 
     return arraySchema;
   }
 
-  // Handle conditional fields - make them optional at the schema level
-  // Validation will only apply when the field is visible
-  if (field.conditionalOn) {
-    // For conditional fields, we make the base schema optional
-    // but still apply the validation rules when the field is shown
-    let conditionalSchema: z.ZodTypeAny = z.string();
-
-    if (validation.required) {
-      conditionalSchema = z.string().min(1, validation.required);
+  // Handle conditional fields - make them optional at schema level
+  // Conditional validation is handled by superRefine in generateFormSchema
+  if ("conditionalOn" in field && field.conditionalOn) {
+    // Date fields need the DateInputValue object schema
+    if (field.type === "date") {
+      return createDateSchema(field.label.toLowerCase()).optional();
     }
-
-    if (validation.minLength) {
-      conditionalSchema = (conditionalSchema as z.ZodString).min(
-        validation.minLength.value,
-        validation.minLength.message
-      );
-    }
-
-    if (validation.maxLength) {
-      conditionalSchema = (conditionalSchema as z.ZodString).max(
-        validation.maxLength.value,
-        validation.maxLength.message
-      );
-    }
-
-    if (validation.pattern) {
-      conditionalSchema = (conditionalSchema as z.ZodString).regex(
-        new RegExp(validation.pattern.value),
-        validation.pattern.message
-      );
-    }
-
-    // Make it optional - validation only applies when field is visible
-    return conditionalSchema.optional().or(z.literal(""));
+    // For all other conditional fields, accept string, number or undefined
+    // Number validation is handled in superRefine
+    return z.union([z.string(), z.number(), z.undefined()]);
   }
 
-  // Handle date fields (YYYY-MM-DD format)
+  // Handle date fields (DateInputValue object: { day, month, year })
   if (field.type === "date") {
-    schema = z.string().min(1, validation.required || "Date is required");
-    // Use isValidBirthDate for proper validation (checks format, range, and not future)
-    schema = (schema as z.ZodString).refine(
-      (val) => {
-        if (!val) return false;
-        // Ensure val is a string before validation
-        if (typeof val !== "string") return false;
-        return isValidBirthDate(val);
-      },
-      { message: "Enter a valid date of birth" }
-    );
-    return schema;
+    const label = field.label;
+    const dateFieldValidation = field.validation;
+    let dateSchema = createDateSchema(label);
+
+    // Apply required validation if specified
+    if (dateFieldValidation.required) {
+      dateSchema = dateValidation.required(dateSchema, label);
+    }
+
+    // Apply date-specific validation based on config
+    if ("date" in dateFieldValidation && dateFieldValidation.date) {
+      const rule = dateFieldValidation.date;
+      switch (rule.type) {
+        case "past":
+          dateSchema = dateValidation.past(dateSchema, label);
+          break;
+        case "pastOrToday":
+          dateSchema = dateValidation.pastOrToday(dateSchema, label);
+          break;
+        case "future":
+          dateSchema = dateValidation.future(dateSchema, label);
+          break;
+        case "futureOrToday":
+          dateSchema = dateValidation.futureOrToday(dateSchema, label);
+          break;
+        case "after":
+          dateSchema = dateValidation.after(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "before":
+          dateSchema = dateValidation.before(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "onOrAfter":
+          dateSchema = dateValidation.onOrAfter(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "onOrBefore":
+          dateSchema = dateValidation.onOrBefore(
+            dateSchema,
+            new Date(rule.date),
+            label,
+            rule.description
+          );
+          break;
+        case "between":
+          dateSchema = dateValidation.between(
+            dateSchema,
+            { start: new Date(rule.start), end: new Date(rule.end) },
+            label,
+            rule.description
+          );
+          break;
+        case "minYear":
+          dateSchema = dateValidation.minYear(dateSchema, rule.year, label);
+          break;
+        default: {
+          const _exhaustiveCheck: never = rule as never;
+          throw new Error(`Unknown date validation type: ${_exhaustiveCheck}`);
+        }
+      }
+    }
+
+    return dateSchema;
   }
 
   // Handle radio buttons with boolean values
@@ -135,6 +248,17 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     return z.string().optional();
   }
 
+  // Handle email type first to avoid pattern overwriting
+  if (field.type === "email") {
+    // Chain validations: first check required (min length), then email format
+    schema = z.string();
+    if (validation.required) {
+      schema = (schema as z.ZodString).min(1, validation.required);
+    }
+    schema = (schema as z.ZodString).email("Email address is invalid");
+    return schema;
+  }
+
   if (validation.required) {
     schema = z.string().min(1, validation.required);
   }
@@ -160,13 +284,6 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     );
   }
 
-  if (field.type === "email") {
-    schema = z.email("Invalid email address");
-    if (validation.required) {
-      schema = (schema as z.ZodString).min(1, validation.required);
-    }
-  }
-
   if (field.type === "number") {
     schema = z.coerce.number();
     if (validation.required) {
@@ -189,28 +306,110 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
   return schema;
 }
 
-// Generate schemas for each step
-export const stepSchemas = formSteps.map((step) => {
-  const schemaShape: Record<string, z.ZodTypeAny> = {};
+// Generate schemas for each step dynamically (supports nested field names)
+export function generateStepSchemas(formSteps: FormStep[]) {
+  return formSteps.map((step) => {
+    const schemaShape: Record<string, unknown> = {};
 
-  step.fields.forEach((field) => {
-    schemaShape[field.name] = createFieldSchema(field);
+    for (const field of step.fields) {
+      setNestedValue(schemaShape, field.name, createFieldSchema(field));
+    }
+
+    return objectToZodSchema(schemaShape);
   });
+}
 
-  return z.object(schemaShape);
-});
+// Collect all conditional fields from form steps for validation
+function getConditionalFields(formSteps: FormStep[]): FormField[] {
+  return formSteps.flatMap((step) =>
+    step.fields.filter((field) => field.conditionalOn)
+  );
+}
 
-// Combined schema for the entire form
-export const formSchema = z.object(
-  formSteps.reduce(
-    (acc, step) => {
-      step.fields.forEach((field) => {
-        acc[field.name] = createFieldSchema(field);
-      });
-      return acc;
-    },
-    {} as Record<string, z.ZodTypeAny>
-  )
-);
+// Generate combined schema for the entire form dynamically (supports nested field names)
+export function generateFormSchema(formSteps: FormStep[]) {
+  const schemaShape: Record<string, unknown> = {};
 
-export type FormData = z.infer<typeof formSchema>;
+  for (const step of formSteps) {
+    for (const field of step.fields) {
+      setNestedValue(schemaShape, field.name, createFieldSchema(field));
+
+      // Also add schemas for ShowHide child fields
+      if (field.type === "showHide" && field.showHide) {
+        // Add the state field
+        setNestedValue(
+          schemaShape,
+          field.showHide.stateFieldName,
+          z.string().optional()
+        );
+
+        // Add child field schemas
+        for (const childField of field.showHide.fields) {
+          setNestedValue(
+            schemaShape,
+            childField.name,
+            createFieldSchema(childField as FormField)
+          );
+        }
+      }
+    }
+  }
+
+  const baseSchema = objectToZodSchema(schemaShape);
+
+  const conditionalFields = getConditionalFields(formSteps);
+
+  // Add conditional field validation via superRefine
+  return baseSchema.superRefine((data, ctx) => {
+    // Helper to check if a field value is empty
+    const isFieldEmpty = (fieldValue: unknown, fieldType: string): boolean => {
+      if (fieldType === "number") {
+        return (
+          fieldValue === undefined ||
+          fieldValue === null ||
+          fieldValue === "" ||
+          (typeof fieldValue === "number" && Number.isNaN(fieldValue)) ||
+          (typeof fieldValue === "string" &&
+            (fieldValue as string).trim() === "")
+        );
+      }
+      return (
+        fieldValue === undefined ||
+        fieldValue === null ||
+        fieldValue === "" ||
+        (typeof fieldValue === "string" && (fieldValue as string).trim() === "")
+      );
+    };
+
+    // Validate conditional fields (conditionalOn)
+    for (const field of conditionalFields) {
+      if (!field.conditionalOn) continue;
+
+      const parentValue = getNestedValue(
+        data as Record<string, unknown>,
+        field.conditionalOn.field
+      );
+      const fieldValue = getNestedValue(
+        data as Record<string, unknown>,
+        field.name
+      );
+      const isVisible = parentValue === field.conditionalOn.value;
+
+      if (
+        isVisible &&
+        field.validation.required &&
+        isFieldEmpty(fieldValue, field.type)
+      ) {
+        const pathParts = field.name.split(".");
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: field.validation.required,
+          path: pathParts,
+        });
+      }
+    }
+  });
+}
+
+// Type helper for form data
+export type FormData = Record<string, unknown>;

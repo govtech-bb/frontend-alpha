@@ -4,12 +4,47 @@
  */
 
 import { isAfter } from "date-fns";
+import type { DateObject, JsonObject, JsonValue } from "@/types";
 
 export type DateFieldErrors = {
   day?: string;
   month?: string;
   year?: string;
 };
+
+export function isDateObject(obj: JsonObject): obj is DateObject {
+  return (
+    "day" in obj &&
+    "month" in obj &&
+    "year" in obj &&
+    Object.keys(obj).length === 3
+  );
+}
+
+export function convertDateObjects(value: JsonValue): JsonValue {
+  if (value === null || typeof value !== "object") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => convertDateObjects(item));
+  }
+
+  // Check if this object is a date object
+  if (isDateObject(value)) {
+    const year = String(value.year);
+    const month = String(value.month).padStart(2, "0");
+    const day = String(value.day).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  }
+
+  // Recursively process object properties
+  const result: JsonObject = {};
+  for (const [key, val] of Object.entries(value)) {
+    result[key] = convertDateObjects(val);
+  }
+  return result;
+}
 
 /**
  * Month name mapping for text month input
@@ -394,18 +429,11 @@ export function calculateAge(dateString: string): number {
  * formatForDisplay("2011-jul-30") // "Jul 30, 2011"
  * formatForDisplay("") // ""
  */
-export function formatForDisplay(iso8601: string | undefined): string {
-  if (!iso8601 || iso8601.trim() === "") {
-    return "";
-  }
 
-  // Validate the date is semantically correct (handles both numeric and text months)
-  if (!isValidDateSemantically(iso8601)) {
-    return "";
-  }
-
+export function formatForDisplay(iso8601: DateObject): string {
   // Parse components (handles both numeric and text formats)
-  const { year, month, day } = parseDate(iso8601);
+  // const { year, month, day } = parseDate(iso8601);
+  const { year, month, day } = iso8601;
 
   const yearNum = Number(year);
   const monthNum = parseMonthToNumber(month);

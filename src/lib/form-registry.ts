@@ -10,6 +10,18 @@ export const FORM_COMPONENTS = {
         "@/components/forms/register-for-community-sports-training-programme-form"
       )
   ),
+  "apply-to-be-a-project-protege-mentor": lazy(
+    () => import("@/components/forms/project-protege-mentor")
+  ),
+  "get-a-primary-school-textbook-grant": lazy(
+    () => import("@/components/forms/primary-school-textbook-grant-form")
+  ),
+  "post-office-redirection-notice": lazy(
+    () => import("@/components/forms/post-office-redirection-notice-form")
+  ),
+  "apply-to-jobstart-plus-programme": lazy(
+    () => import("@/components/forms/apply-to-jobstart-plus-programme-form")
+  ),
   // Add other forms here
 } as const;
 

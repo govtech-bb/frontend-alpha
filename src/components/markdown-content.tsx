@@ -2,10 +2,12 @@
 
 import { Heading, Link, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
+import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import rehypeHideStartLinks from "@/lib/rehype-hide-start-links";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
@@ -56,19 +58,19 @@ const components: Components = {
   ),
   li: ({ children, ...props }: ListItemProps) => <li {...props}>{children}</li>,
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
-  a: ({ href, children, target, ...props }: AnchorProps) => {
-    // Check if link starts with # (internal link) to determine if it's likely in a list
-    const isInternalLink = href?.startsWith("#");
-    const linkClass = isInternalLink
-      ? "underline"
-      : "text-teal-dark underline leading-normal";
+  a: ({ href, children, ...props }: AnchorProps) => {
+    const isRouteLink = href?.startsWith("/");
+    const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
 
     return (
       <Link
-        className={linkClass}
+        as={isRouteLink ? NextLink : "a"}
         href={href as string}
+        {...(isExternal && {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        })}
         {...props}
-        target={target || "_blank"}
       >
         {children}
       </Link>
@@ -111,22 +113,30 @@ const components: Components = {
   ),
 };
 
-export const MarkdownContent = ({
-  markdown,
-}: {
+type MarkdownContentProps = {
   markdown: {
     frontmatter: {
       [key: string]: any;
     };
     content: string;
   };
-}) => {
+  hasResearchAccess?: boolean;
+};
+
+export const MarkdownContent = ({
+  markdown,
+  hasResearchAccess = false,
+}: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
     <div className="lg:grid lg:grid-cols-3 lg:gap-16">
       <div className="space-y-6 lg:col-span-2 lg:space-y-8">
         <div className="space-y-4 lg:space-y-6">
-          {frontmatter.title && <Heading as="h1">{frontmatter.title}</Heading>}
+          {frontmatter.title && (
+            <Heading as="h1" className="break-anywhere">
+              {frontmatter.title}
+            </Heading>
+          )}
 
           {frontmatter.stage?.length > 0 ? (
             <StageBanner stage={frontmatter.stage} />
@@ -150,7 +160,11 @@ export const MarkdownContent = ({
         </div>
         <ReactMarkdown
           components={components}
-          rehypePlugins={[rehypeRaw, rehypeSectionise]}
+          rehypePlugins={[
+            rehypeRaw,
+            [rehypeHideStartLinks, { hasResearchAccess }],
+            rehypeSectionise,
+          ]}
           remarkPlugins={[remarkGfm]}
         >
           {content}

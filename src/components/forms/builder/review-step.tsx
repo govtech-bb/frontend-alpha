@@ -4,9 +4,11 @@ import { Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
-import { formSteps } from "@/schema/sports-training-programme-form-schema";
+import { getNestedValue } from "@/lib/utils";
+import type { DateObject, FormStep } from "@/types";
 
 type ReviewStepProps = {
+  formSteps: FormStep[];
   onEdit: (stepIndex: number) => void;
 };
 
@@ -16,7 +18,7 @@ type SectionData = {
   items: { label: string; value: string }[];
 };
 
-export function ReviewStep({ onEdit }: ReviewStepProps) {
+export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
   const { getValues } = useFormContext<FormData>();
   const formValues = getValues();
 
@@ -25,21 +27,27 @@ export function ReviewStep({ onEdit }: ReviewStepProps) {
     .filter((step) => step.fields.length > 0) // Exclude review step
     .map((step, index) => {
       const items = step.fields
-        // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
         .map((field) => {
-          const value = formValues[field.name as keyof FormData];
+          // Support nested field names (e.g., "guardian.firstName")
+          const value = getNestedValue<unknown>(
+            formValues as Record<string, unknown>,
+            field.name
+          );
 
           // Skip conditional fields that shouldn't be shown
           if (field.conditionalOn) {
-            const watchedValue =
-              formValues[field.conditionalOn.field as keyof FormData];
+            const watchedValue = getNestedValue<unknown>(
+              formValues as Record<string, unknown>,
+              field.conditionalOn.field
+            );
             if (watchedValue !== field.conditionalOn.value) {
               return null; // Don't show if condition not met
             }
           }
 
-          // Skip empty optional fields
-          if (!value || value === "") return null;
+          // Skip empty optional fields (but allow 0 for number fields)
+          if (value === undefined || value === null || value === "")
+            return null;
 
           // Format the value based on field type
           let displayValue = value as unknown;
@@ -70,13 +78,17 @@ export function ReviewStep({ onEdit }: ReviewStepProps) {
 
           if (field.type === "date" && value) {
             // Format date to readable format (e.g., "Jul 30, 2011")
-            displayValue = formatForDisplay(value as string);
+            displayValue = formatForDisplay(value as DateObject);
             if (!displayValue) return null; // Invalid date
+          }
+
+          if (field.type === "number") {
+            displayValue = String(value);
           }
 
           return {
             label: field.label,
-            value: displayValue,
+            value: String(displayValue),
           };
         })
         .filter(
