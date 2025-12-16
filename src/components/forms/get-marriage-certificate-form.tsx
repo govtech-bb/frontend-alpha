@@ -7,6 +7,7 @@ export default function GetMarriageCertificateForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
+      serviceTitle="Get a copy of a marriage certificate"
       storageKey="get-marriage-certificate"
     />
   );

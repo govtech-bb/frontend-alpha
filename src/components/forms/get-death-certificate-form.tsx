@@ -7,6 +7,7 @@ export default function GetDeathCertificateForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
+      serviceTitle="Get a copy of a death certificate"
       storageKey="get-death-certificate"
     />
   );
