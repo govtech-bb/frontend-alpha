@@ -330,6 +330,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description: "",
       },
+      {
+        title:
+          "Apply for a licence to sell goods or services at a beach or park",
+        slug: "apply-for-a-licence-to-sell-goods-or-services-at-a-beach-or-park",
+        source_url: "",
+        description:
+          "Apply for a licence to sell goods or services at a beach or park",
+        subPages: [{ slug: "start", type: "markdown" }],
+      },
     ],
   },
   {
