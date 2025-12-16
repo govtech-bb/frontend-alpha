@@ -43,11 +43,13 @@ function setNestedValue(
 
 type DynamicMultiStepFormProps = {
   formSteps: FormStep[];
+  serviceTitle: string;
   storageKey?: string;
 };
 
 export default function DynamicMultiStepForm({
   formSteps,
+  serviceTitle,
   storageKey = "multi-step-form-storage",
 }: DynamicMultiStepFormProps) {
   const router = useRouter();
@@ -526,7 +528,10 @@ export default function DynamicMultiStepForm({
         {isReviewStep ? (
           <ReviewStep formSteps={formSteps} onEdit={handleEditFromReview} />
         ) : (
-          <DynamicStep step={formSteps[currentStep]} />
+          <DynamicStep
+            serviceTitle={serviceTitle}
+            step={formSteps[currentStep]}
+          />
         )}
 
         {/* Navigation Buttons */}

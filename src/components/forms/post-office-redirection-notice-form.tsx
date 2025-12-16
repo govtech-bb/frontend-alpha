@@ -7,6 +7,7 @@ export default function PostOfficeRedirectionNoticeForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
+      serviceTitle="Post office redirection notice"
       storageKey="post-office-redirection-notice"
     />
   );

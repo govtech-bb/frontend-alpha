@@ -7,6 +7,7 @@ export default function ProjectProtegeForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
+      serviceTitle="Apply to be a Project Protégé mentor"
       storageKey="project-protege-mentor"
     />
   );

@@ -1,12 +1,16 @@
 import { ErrorSummary, Heading, Text } from "@govtech-bb/react";
 import { type FieldError, useFormContext } from "react-hook-form";
-import { StageBanner } from "@/components/stage-banner";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
-export function DynamicStep({ step }: { step: FormStep }) {
+type DynamicStepProps = {
+  step: FormStep;
+  serviceTitle: string;
+};
+
+export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
   const {
     formState: { errors },
     watch,
@@ -44,12 +48,15 @@ export function DynamicStep({ step }: { step: FormStep }) {
 
   return (
     <div className="space-y-8">
-      <StageBanner stage="alpha" />
-      <div>
-        <Heading as="h1" className="mb-4 focus:outline-none lg:mb-2">
+      <div className="space-y-4">
+        <div className="border-blue-40 border-l-4 py-xs pl-s">
+          <Text as="p" className="text-neutral-midgrey">
+            {serviceTitle}
+          </Text>
+        </div>
+        <Heading as="h1" className="focus:outline-none">
           {step.title}
         </Heading>
-
         {step.description && <Text as="p">{step.description}</Text>}
       </div>
 
