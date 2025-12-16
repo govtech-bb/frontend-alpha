@@ -242,7 +242,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "deceased.knownDateOfDeath",
-        label: "Do you know the date of death?",
+        label: "Do you know when they died?",
         type: "radio",
         validation: {
           required: "Select an option",
@@ -282,15 +282,14 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "deceased.nisNumber",
-        label: "National Insurance (NIS) Number",
+        name: "deceased.idNumber",
+        label: "National Identification (ID) Number",
         type: "text",
-        placeholder: "e.g., 123456",
         validation: {
-          required: "NIS number is required",
+          required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}$",
-            message: "Enter a valid NIS number (6 digits)",
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
       },

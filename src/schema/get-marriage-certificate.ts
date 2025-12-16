@@ -63,7 +63,6 @@ export const formSteps: FormStep[] = [
         placeholder: "",
         validation: {},
       },
-
       {
         name: "applicant.parish",
         label: "Parish",
@@ -147,7 +146,6 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
-
   {
     id: "husband-details",
     title: "Tell us about the husband",
