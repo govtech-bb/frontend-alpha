@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import DynamicMultiStepForm from "@/components/forms/builder/multi-step-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { formSteps } from "@/schema/exit-survey";
 
-export default function ExitSurveyForm() {
+function ExitSurveyFormContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [serviceTitle, setServiceTitle] = useState<string>("");
@@ -50,5 +50,13 @@ export default function ExitSurveyForm() {
       serviceTitle={serviceTitle}
       storageKey="exit-survey"
     />
+  );
+}
+
+export default function ExitSurveyForm() {
+  return (
+    <Suspense fallback={null}>
+      <ExitSurveyFormContent />
+    </Suspense>
   );
 }
