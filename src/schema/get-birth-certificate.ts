@@ -165,6 +165,7 @@ export const formSteps: FormStep[] = [
       {
         name: "relationshipToPerson",
         label: "Relationship",
+        hidden: true,
         type: "select",
         validation: {
           required: "Relationship is required",
@@ -275,6 +276,13 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "First name is required",
         },
+      },
+      {
+        name: "person.middleName",
+        label: "Middle name",
+        hint: " Optional. Provide only if known",
+        type: "text",
+        validation: {},
       },
       {
         name: "person.lastName",
@@ -426,6 +434,13 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "parents.father.middleName",
+        label: "Father's middle name",
+        hint: " Optional. Provide only if known",
+        type: "text",
+        validation: {},
+      },
+      {
         name: "parents.father.lastName",
         label: "Father's last name",
         type: "text",
@@ -440,6 +455,13 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "First name is required",
         },
+      },
+      {
+        name: "parents.mother.middleName",
+        label: "Mother's middle name",
+        hint: " Optional. Provide only if known",
+        type: "text",
+        validation: {},
       },
       {
         name: "parents.mother.lastName",
@@ -468,6 +490,13 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "parentsOther.father.middleName",
+        label: "Father's middle name",
+        hint: " Optional. Provide only if known",
+        type: "text",
+        validation: {},
+      },
+      {
         name: "parentsOther.father.lastName",
         label: "Father's last name",
         type: "text",
@@ -482,6 +511,13 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "First name is required",
         },
+      },
+      {
+        name: "parentsOther.mother.middleName",
+        label: "Mother's middle name",
+        hint: " Optional. Provide only if known",
+        type: "text",
+        validation: {},
       },
       {
         name: "parentsOther.mother.lastName",
