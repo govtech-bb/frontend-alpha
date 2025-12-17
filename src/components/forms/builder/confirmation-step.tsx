@@ -7,6 +7,15 @@ import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import type { FormStep } from "@/types";
 
+type PaymentData = {
+  amount: number;
+  description: string;
+  numberOfCopies?: number;
+  paymentUrl?: string;
+  paymentToken?: string;
+  paymentId?: string;
+};
+
 type ConfirmationPageProps = {
   confirmationStep: FormStep;
   referenceNumber?: string;
@@ -14,6 +23,7 @@ type ConfirmationPageProps = {
   customerEmail?: string;
   customerName?: string;
   formId?: string;
+  paymentData?: PaymentData;
 };
 
 export function ConfirmationPage({
@@ -23,6 +33,7 @@ export function ConfirmationPage({
   referenceNumber: _referenceNumber,
   onReset: _onReset,
   formId,
+  paymentData,
 }: ConfirmationPageProps) {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
@@ -77,12 +88,12 @@ export function ConfirmationPage({
       <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
           {/* Payment content */}
-          {confirmationStep.payment && formSlug ? (
+          {paymentData && formSlug ? (
             <PaymentBlock
               customerEmail={customerEmail}
               customerName={customerName}
-              details={confirmationStep.payment}
               formId={formSlug}
+              paymentData={paymentData}
             />
           ) : null}
           {/* Dynamic steps content */}

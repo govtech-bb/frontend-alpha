@@ -171,10 +171,6 @@ export type FormStep = {
   fields: FormField[];
   conditionalOn?: ConditionalRule; // For conditional steps
   steps?: ConfirmationStepItem[]; // For confirmation pages
-  payment?: {
-    amount: number;
-    service: string;
-  };
   contactDetails?: ContactDetails; // For confirmation pages
   enableFeedback?: boolean; // Enable feedback section on confirmation page
 };
@@ -186,6 +182,14 @@ export type ApiResponse = {
     formId: string;
     status: string;
     processedAt: string;
+    paymentRequired?: boolean;
+    paymentUrl?: string;
+    paymentToken?: string;
+    paymentId?: string;
+    referenceNumber?: string;
+    amount?: number;
+    description?: string;
+    numberOfCopies?: number;
   };
   errors?: { field: string; message: string; code: string }[];
   message?: string;

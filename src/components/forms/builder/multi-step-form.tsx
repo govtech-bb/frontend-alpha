@@ -69,6 +69,7 @@ export default function DynamicMultiStepForm({
     isSubmitted,
     referenceNumber,
     customerName: storedCustomerName,
+    paymentData,
     setCurrentStep,
     markStepComplete,
     updateFormData,
@@ -221,20 +222,14 @@ export default function DynamicMultiStepForm({
     const paymentStatus = searchParams?.get("payment_status");
     const tx = searchParams?.get("tx");
 
-    // Find payment information from confirmation step
-    const confirmationStep = formSteps.find(
-      (step) => step.id === "confirmation"
-    );
-    const paymentInfo = confirmationStep?.payment;
-
     if (paymentStatus) {
       switch (paymentStatus) {
         case "Success":
           setPaymentMessage({
             type: "success",
             message: "Payment successful!",
-            details: paymentInfo
-              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\nTransaction: ${tx || "N/A"}`
+            details: paymentData
+              ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\nTransaction: ${tx || "N/A"}`
               : `Your payment has been processed. Transaction: ${tx}`,
           });
           break;
@@ -242,8 +237,8 @@ export default function DynamicMultiStepForm({
           setPaymentMessage({
             type: "pending",
             message: "Payment initiated",
-            details: paymentInfo
-              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\n\nYour Direct Debit payment is being processed. It will settle in approximately 5 business days.`
+            details: paymentData
+              ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\n\nYour Direct Debit payment is being processed. It will settle in approximately 5 business days.`
               : "Your Direct Debit payment is being processed. It will settle in approximately 5 business days.",
           });
           break;
@@ -251,8 +246,8 @@ export default function DynamicMultiStepForm({
           setPaymentMessage({
             type: "error",
             message: "Payment failed",
-            details: paymentInfo
-              ? `Service: ${paymentInfo.service}\nAmount: $${paymentInfo.amount.toFixed(2)}\n\nYour payment could not be processed. Please try again or use a different payment method.`
+            details: paymentData
+              ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\n\nYour payment could not be processed. Please try again or use a different payment method.`
               : "Your payment could not be processed. Please try again or use a different payment method.",
           });
           break;
@@ -277,7 +272,7 @@ export default function DynamicMultiStepForm({
       //   window.history.replaceState({}, '', window.location.pathname);
       // }, 100);
     }
-  }, [_hasHydrated, searchParams, formSteps]);
+  }, [_hasHydrated, searchParams, paymentData]);
 
   // Watch form changes and sync with Zustand (debounced)
   useEffect(() => {
@@ -380,8 +375,25 @@ export default function DynamicMultiStepForm({
       });
 
       if (result.success) {
-        // Mark as submitted in store with customer name
-        markAsSubmitted(result.data?.submissionId || "N/A", customerName);
+        // Extract payment data from API response
+        const apiPaymentData =
+          result.data?.amount !== undefined
+            ? {
+                amount: result.data.amount,
+                description: result.data.description || "",
+                numberOfCopies: result.data.numberOfCopies,
+                paymentUrl: result.data.paymentUrl,
+                paymentToken: result.data.paymentToken,
+                paymentId: result.data.paymentId,
+              }
+            : undefined;
+
+        // Mark as submitted in store with customer name and payment data
+        markAsSubmitted(
+          result.data?.submissionId || "N/A",
+          customerName,
+          apiPaymentData
+        );
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -655,6 +667,7 @@ export default function DynamicMultiStepForm({
         customerName={storedCustomerName || undefined}
         formId={formId}
         onReset={handleReset}
+        paymentData={paymentData || undefined}
         referenceNumber={referenceNumber}
       />
     );

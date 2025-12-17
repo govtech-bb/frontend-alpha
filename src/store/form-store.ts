@@ -3,6 +3,15 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { FormData } from "@/lib/schema-generator";
 
+type PaymentData = {
+  amount: number;
+  description: string;
+  numberOfCopies?: number;
+  paymentUrl?: string;
+  paymentToken?: string;
+  paymentId?: string;
+};
+
 type FormProgress = {
   currentStep: number;
   completedSteps: number[];
@@ -11,6 +20,7 @@ type FormProgress = {
   isSubmitted: boolean;
   referenceNumber: string | null;
   customerName: string | null;
+  paymentData: PaymentData | null;
   totalSteps: number;
 };
 
@@ -23,6 +33,7 @@ type FormStore = {
   isSubmitted: boolean;
   referenceNumber: string | null;
   customerName: string | null;
+  paymentData: PaymentData | null;
   totalSteps: number;
   _hasHydrated: boolean;
 
@@ -36,7 +47,11 @@ type FormStore = {
   resetForm: () => void;
   getProgress: () => number;
   setHasHydrated: (state: boolean) => void;
-  markAsSubmitted: (referenceNumber: string, customerName?: string) => void;
+  markAsSubmitted: (
+    referenceNumber: string,
+    customerName?: string,
+    paymentData?: PaymentData
+  ) => void;
   clearFormDataKeepSubmission: () => void;
 };
 
@@ -48,6 +63,7 @@ const initialState: FormProgress = {
   isSubmitted: false,
   referenceNumber: null,
   customerName: null,
+  paymentData: null,
   totalSteps: 1,
 };
 
@@ -132,11 +148,16 @@ export function createFormStore(
           set({ _hasHydrated: state });
         },
 
-        markAsSubmitted: (referenceNumber: string, customerName?: string) => {
+        markAsSubmitted: (
+          referenceNumber: string,
+          customerName?: string,
+          paymentData?: PaymentData
+        ) => {
           set({
             isSubmitted: true,
             referenceNumber,
             customerName: customerName || null,
+            paymentData: paymentData || null,
           });
         },
 
@@ -150,6 +171,7 @@ export function createFormStore(
             isSubmitted: state.isSubmitted,
             referenceNumber: state.referenceNumber,
             customerName: state.customerName,
+            paymentData: state.paymentData,
           }));
         },
       }),

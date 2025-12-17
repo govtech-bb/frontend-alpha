@@ -1,31 +1,28 @@
 "use client";
 
-import { Button, Heading, Text } from "@govtech-bb/react";
+import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { EZPayCartItem, EZPayVerifyResponse } from "@/lib/ezpay/types";
+import type { EZPayVerifyResponse } from "@/lib/ezpay/types";
+
+type PaymentData = {
+  amount: number;
+  description: string;
+  numberOfCopies?: number;
+  paymentUrl?: string;
+  paymentToken?: string;
+  paymentId?: string;
+};
 
 type Props = {
-  details: {
-    service: string;
-    amount: number;
-  };
+  paymentData: PaymentData;
   formId: string;
   customerEmail?: string;
   customerName?: string;
 };
 
-// Payment code from EZPay+ Playground
-const PAYMENT_CODE = "awR2Da5z7K";
-
-export const PaymentBlock = ({
-  details,
-  formId,
-  customerEmail = "customer@example.com",
-  customerName = "Customer",
-}: Props) => {
+export const PaymentBlock = ({ paymentData }: Props) => {
   const searchParams = useSearchParams();
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
@@ -95,52 +92,6 @@ export const PaymentBlock = ({
     verifyTransaction();
   }, [searchParams, paymentStatus.status]);
 
-  const handlePayment = async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      // Create cart items
-      const cartItems: EZPayCartItem[] = [
-        {
-          code: PAYMENT_CODE,
-          amount: details.amount,
-          details: details.service,
-          reference: `${formId.toUpperCase()}-${Date.now()}`,
-        },
-      ];
-
-      // Call create payment API with formId
-      const response = await fetch("/api/ezpay/create-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          cartItems,
-          customerEmail,
-          customerName,
-          formId,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (result.success && result.paymentUrl) {
-        // Store reference for verification later
-        localStorage.setItem("ezpay_reference", result.referenceNumber);
-
-        // Redirect to payment page
-        window.location.href = result.paymentUrl;
-      } else {
-        setError(result.error || "Failed to create payment");
-      }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error";
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // If payment is successful, show success message
   if (paymentStatus.status === "Success") {
     return (
@@ -155,12 +106,19 @@ export const PaymentBlock = ({
         </div>
         <div className="space-y-2">
           <Text as="p" className="text-green-900">
-            <span className="font-bold">Service:</span> {details.service}
+            <span className="font-bold">Service:</span>{" "}
+            {paymentData.description}
           </Text>
           <Text as="p" className="text-green-900">
             <span className="font-bold">Amount:</span> $
-            {paymentStatus.amount || details.amount.toFixed(2)}
+            {paymentStatus.amount || paymentData.amount.toFixed(2)}
           </Text>
+          {paymentData.numberOfCopies && (
+            <Text as="p" className="text-green-900">
+              <span className="font-bold">Number of Copies:</span>{" "}
+              {paymentData.numberOfCopies}
+            </Text>
+          )}
           {paymentStatus.transactionNumber && (
             <Text as="p" className="text-green-900">
               <span className="font-bold">Transaction Number:</span>{" "}
@@ -192,12 +150,19 @@ export const PaymentBlock = ({
         </div>
         <div className="space-y-2">
           <Text as="p" className="text-red-900">
-            <span className="font-bold">Service:</span> {details.service}
+            <span className="font-bold">Service:</span>{" "}
+            {paymentData.description}
           </Text>
           <Text as="p" className="text-red-900">
             <span className="font-bold">Amount:</span> $
-            {details.amount.toFixed(2)}
+            {paymentData.amount.toFixed(2)}
           </Text>
+          {paymentData.numberOfCopies && (
+            <Text as="p" className="text-red-900">
+              <span className="font-bold">Number of Copies:</span>{" "}
+              {paymentData.numberOfCopies}
+            </Text>
+          )}
           {paymentStatus.transactionNumber && (
             <Text as="p" className="text-red-900">
               <span className="font-bold">Transaction Number:</span>{" "}
@@ -205,9 +170,6 @@ export const PaymentBlock = ({
             </Text>
           )}
         </div>
-        <Button disabled={loading} onClick={handlePayment} type="button">
-          {loading ? "Processing..." : "Try Again"}
-        </Button>
       </div>
     );
   }
@@ -226,12 +188,19 @@ export const PaymentBlock = ({
         </div>
         <div className="space-y-2">
           <Text as="p" className="text-amber-900">
-            <span className="font-bold">Service:</span> {details.service}
+            <span className="font-bold">Service:</span>{" "}
+            {paymentData.description}
           </Text>
           <Text as="p" className="text-amber-900">
             <span className="font-bold">Amount:</span> $
-            {paymentStatus.amount || details.amount.toFixed(2)}
+            {paymentStatus.amount || paymentData.amount.toFixed(2)}
           </Text>
+          {paymentData.numberOfCopies && (
+            <Text as="p" className="text-amber-900">
+              <span className="font-bold">Number of Copies:</span>{" "}
+              {paymentData.numberOfCopies}
+            </Text>
+          )}
           {paymentStatus.transactionNumber && (
             <Text as="p" className="text-amber-900">
               <span className="font-bold">Transaction Number:</span>{" "}
@@ -264,12 +233,18 @@ export const PaymentBlock = ({
       </div>
       <div>
         <Text as="p">
-          <span className="font-bold">Service:</span> {details.service}
+          <span className="font-bold">Service:</span> {paymentData.description}
         </Text>
         <Text as="p">
           <span className="font-bold">Amount:</span> $
-          {details.amount.toFixed(2)}
+          {paymentData.amount.toFixed(2)}
         </Text>
+        {paymentData.numberOfCopies && (
+          <Text as="p">
+            <span className="font-bold">Number of Copies:</span>{" "}
+            {paymentData.numberOfCopies}
+          </Text>
+        )}
       </div>
 
       {/* Error Display */}
@@ -279,13 +254,17 @@ export const PaymentBlock = ({
         </div>
       )}
 
-      <Button
-        disabled={loading || verifying}
-        onClick={handlePayment}
-        type="button"
-      >
-        {loading ? "Processing..." : "Continue to payment"}
-      </Button>
+      {paymentData.paymentUrl ? (
+        verifying ? (
+          <Button disabled type="button">
+            Verifying...
+          </Button>
+        ) : (
+          <LinkButton href={paymentData.paymentUrl} variant="primary">
+            Continue to payment
+          </LinkButton>
+        )
+      ) : null}
       <Text as="p" className="text-gray-500 italic">
         You will be redirected to EZ Pay to securely complete your payment.
       </Text>

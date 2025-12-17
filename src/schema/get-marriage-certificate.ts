@@ -435,10 +435,6 @@ export const formSteps: FormStep[] = [
     title: "Your submission has been saved",
     description: "Complete your payment below to finalize your submission",
     fields: [],
-    payment: {
-      amount: 5.0,
-      service: "Death Certificate",
-    },
     steps: [
       {
         title: "What happens next",
