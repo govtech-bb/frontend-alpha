@@ -121,11 +121,12 @@ export const formSteps: FormStep[] = [
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
+        content: "",
         items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
+          "We will review the feedback we receive to identify ways to improve this service and the website.",
+          "Your responses are combined with other feedback and used to inform future updates.",
+          "You do not need to do anything else.",
+          "You can now close this page or return to alpha.gov.bb for more services and information..",
         ],
       },
     ],

@@ -88,17 +88,27 @@ export function ConfirmationPage({
           {/* Dynamic steps content */}
           {confirmationStep.steps?.map((step, index) => (
             <div key={index}>
-              <Heading as="h2" className="pb-4 lg:pb-2">
-                {step.title}
-              </Heading>
-              <Text as="p">{step.content}</Text>
-              {step.items && step.items.length > 0 && (
+              {step.title && (
+                <Heading as="h2" className="pb-4 lg:pb-2">
+                  {step.title}
+                </Heading>
+              )}
+              {step.content && <Text as="p">{step.content}</Text>}
+              {step.items && step.items.length > 0 && step.content ? (
                 <ul className="list-disc pl-7 text-[20px] leading-normal">
                   {step.items.map((item, itemIndex) => (
                     <li key={itemIndex}>{item}</li>
                   ))}
                 </ul>
-              )}
+              ) : step.items && step.items.length > 0 ? (
+                <div className="space-y-4">
+                  {step.items.map((item, itemIndex) => (
+                    <Text as="p" key={itemIndex}>
+                      {item}
+                    </Text>
+                  ))}
+                </div>
+              ) : null}
             </div>
           ))}
 

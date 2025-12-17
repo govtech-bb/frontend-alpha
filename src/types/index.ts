@@ -149,7 +149,7 @@ export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 export type ConfirmationStepItem = {
   title: string;
   content: string;
-  items: string[];
+  items?: string[];
 };
 
 export type ContactDetails = {

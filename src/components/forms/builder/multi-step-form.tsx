@@ -171,6 +171,19 @@ export default function DynamicMultiStepForm({
 
     if (urlStep) {
       const stepIndex = formSteps.findIndex((step) => step.id === urlStep);
+      const step = formSteps[stepIndex];
+
+      // Prevent navigation to final steps (confirmation/thank-you) via URL if not submitted
+      if (
+        step &&
+        (step.id === "confirmation" || step.id === "thank-you") &&
+        !(isSubmitted && referenceNumber)
+      ) {
+        // Redirect to first step if trying to access final step without submission
+        setCurrentStep(0);
+        return;
+      }
+
       if (
         stepIndex !== -1 &&
         stepIndex !== currentStep &&
@@ -392,6 +405,9 @@ export default function DynamicMultiStepForm({
 
   // Helper function to check if a step should be shown based on its conditionalOn property
   const isStepVisible = (step: FormStep): boolean => {
+    // Exclude final steps (confirmation/thank-you) from regular navigation
+    if (step.id === "confirmation" || step.id === "thank-you") return false;
+
     if (!step.conditionalOn) return true;
 
     const formValues = methods.getValues();
@@ -608,7 +624,15 @@ export default function DynamicMultiStepForm({
     currentStepData?.fields.length === 0 &&
     currentStepData?.id === "check-your-answers";
   const isDeclarationStep = currentStepData?.id === "declaration";
-  const isLastStep = currentStep === formSteps.length - 1;
+  const isFinalStep =
+    currentStepData?.id === "confirmation" ||
+    currentStepData?.id === "thank-you";
+
+  // Check if this is the last navigable step (excluding confirmation/thank-you)
+  const lastNavigableStepIndex = formSteps.findLastIndex(
+    (step) => step.id !== "confirmation" && step.id !== "thank-you"
+  );
+  const isLastStep = currentStep === lastNavigableStepIndex;
 
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
@@ -765,52 +789,54 @@ export default function DynamicMultiStepForm({
           />
         )}
 
-        {/* Navigation Buttons */}
-        <div className="mt-8 flex gap-4">
-          {currentStep > 0 && (
-            <Button
-              disabled={isSubmitting}
-              onClick={prevStep}
-              type="button"
-              variant="secondary"
-            >
-              Previous
-            </Button>
-          )}
+        {/* Navigation Buttons - Don't show on confirmation/thank-you steps */}
+        {!isFinalStep && (
+          <div className="mt-8 flex gap-4">
+            {currentStep > 0 && (
+              <Button
+                disabled={isSubmitting}
+                onClick={prevStep}
+                type="button"
+                variant="secondary"
+              >
+                Previous
+              </Button>
+            )}
 
-          {/* Show Continue button on review step, Submit on declaration step */}
-          {isReviewStep ? (
-            <Button disabled={isSubmitting} onClick={nextStep} type="button">
-              Continue
-            </Button>
-          ) : isDeclarationStep ? (
-            <Button disabled={isSubmitting} onClick={nextStep} type="button">
-              {isSubmitting ? (
-                <>
-                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
-                  Submitting...
-                </>
-              ) : (
-                "Submit"
-              )}
-            </Button>
-          ) : isLastStep ? (
-            <Button disabled={isSubmitting} type="submit">
-              {isSubmitting ? (
-                <>
-                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
-                  Submitting...
-                </>
-              ) : (
-                "Submit Application"
-              )}
-            </Button>
-          ) : (
-            <Button disabled={isSubmitting} onClick={nextStep} type="button">
-              Continue
-            </Button>
-          )}
-        </div>
+            {/* Show Continue button on review step, Submit on declaration step */}
+            {isReviewStep ? (
+              <Button disabled={isSubmitting} onClick={nextStep} type="button">
+                Continue
+              </Button>
+            ) : isDeclarationStep ? (
+              <Button disabled={isSubmitting} onClick={nextStep} type="button">
+                {isSubmitting ? (
+                  <>
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
+                    Submitting...
+                  </>
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            ) : isLastStep ? (
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting ? (
+                  <>
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
+                    Submitting...
+                  </>
+                ) : (
+                  "Submit Application"
+                )}
+              </Button>
+            ) : (
+              <Button disabled={isSubmitting} onClick={nextStep} type="button">
+                Continue
+              </Button>
+            )}
+          </div>
+        )}
       </form>
     </FormProvider>
   );
