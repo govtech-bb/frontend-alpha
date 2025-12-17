@@ -67,9 +67,6 @@ export async function POST(request: NextRequest) {
     const validationResult = birthCertificateSchema.safeParse(body);
 
     if (!validationResult.success) {
-      // biome-ignore lint/suspicious/noConsole: needed for debugging validation errors in production
-      console.error("Validation error:", validationResult.error);
-
       // Return detailed validation errors
       const errorMessages = validationResult.error.issues.map(
         (issue) => `${issue.path.join(".")}: ${issue.message}`
@@ -85,20 +82,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const formData = validationResult.data;
+    const _formData = validationResult.data;
 
     // Generate a reference number for tracking
     const referenceNumber = generateReferenceNumber();
     const submittedAt = getBarbadosDateTime();
-
-    // Log the submission (in production, this would be saved to a database)
-    // biome-ignore lint/suspicious/noConsole: Intentionally logging for debugging
-    console.log("Birth certificate request received:", {
-      referenceNumber,
-      submittedAt,
-      applicant: formData.applicant,
-      numberOfCopies: formData.order.numberOfCopies,
-    });
 
     // In production, you would:
     // 1. Save to database
@@ -118,8 +106,6 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: needed for debugging errors in production
-    console.error("Error submitting birth certificate request:", error);
     return NextResponse.json(
       {
         success: false,

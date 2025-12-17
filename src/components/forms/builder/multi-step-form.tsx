@@ -186,7 +186,6 @@ export default function DynamicMultiStepForm({
   useEffect(() => {
     if (!(_hasHydrated && !isFormReady)) return;
 
-    // console.log("Hydration complete, loading form data:", formData);
     if (formData && Object.keys(formData).length > 0) {
       // Reset form with saved data
       for (const key of Object.keys(formData)) {
@@ -618,7 +617,6 @@ export default function DynamicMultiStepForm({
     );
 
     if (!confirmationStep) {
-      console.error("Confirmation step not found in form schema");
       return null;
     }
 

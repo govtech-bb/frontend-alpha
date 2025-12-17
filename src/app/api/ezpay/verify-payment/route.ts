@@ -14,16 +14,14 @@ const handleValidationError = (error: z.ZodError) =>
     { status: 400 }
   );
 
-const handleServerError = (error: unknown) => {
-  console.error("EZPay verify payment error:", error);
-  return NextResponse.json(
+const handleServerError = (error: unknown) =>
+  NextResponse.json(
     {
       success: false,
       error: error instanceof Error ? error.message : "Internal server error",
     },
     { status: 500 }
   );
-};
 
 export async function POST(request: NextRequest) {
   try {
