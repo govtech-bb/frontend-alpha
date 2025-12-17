@@ -3,10 +3,11 @@
 import DynamicMultiStepForm from "@/components/forms/builder/multi-step-form";
 import { formSteps } from "@/schema/primary-school-textbook-grant";
 
-export default function ProjectProtegeForm() {
+export default function PrimarySchoolTextbookGrantForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
+      serviceTitle="Get a primary school textbook grant"
       storageKey="primary-school-textbook-grant"
     />
   );

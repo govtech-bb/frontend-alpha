@@ -33,8 +33,8 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to register a death and obtain a death certificate in Barbados.",
       },
       {
-        title: "Get a copy of a death certificate",
-        slug: "get-a-copy-of-a-death-certificate",
+        title: "Get a death certificate",
+        slug: "get-a-death-certificate",
         source_url: "",
         description:
           "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
@@ -329,6 +329,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         slug: "loud-music-permit",
         source_url: "",
         description: "",
+      },
+      {
+        title:
+          "Apply for a licence to sell goods or services at a beach or park",
+        slug: "apply-for-a-licence-to-sell-goods-or-services-at-a-beach-or-park",
+        source_url: "",
+        description:
+          "Apply for a licence to sell goods or services at a beach or park",
+        subPages: [{ slug: "start", type: "markdown" }],
       },
     ],
   },

@@ -7,6 +7,7 @@ export default function RegisterForCommunitySportsTrainingProgrammeForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
+      serviceTitle="Register for a Youth Development Programme (YDP) Community Sports Training programme"
       storageKey="community-sports-programme"
     />
   );
