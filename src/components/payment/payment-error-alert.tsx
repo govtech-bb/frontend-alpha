@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 /**
  * Client component that displays payment error alerts
- * and logs errors to console
  */
 export function PaymentErrorAlert() {
   const searchParams = useSearchParams();
@@ -16,12 +15,6 @@ export function PaymentErrorAlert() {
     const errorMessage = searchParams.get("error_message");
 
     if (hasPaymentError && errorMessage) {
-      // Log error to console
-      console.error("Payment Error:", {
-        message: errorMessage,
-        timestamp: new Date().toISOString(),
-      });
-
       // Show browser alert
       // biome-ignore lint/suspicious/noAlert: User requested alert for payment errors
       alert(`Payment Error: ${errorMessage}`);

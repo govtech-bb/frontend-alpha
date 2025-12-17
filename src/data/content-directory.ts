@@ -19,11 +19,49 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         ],
       },
       {
-        title: "Get a birth certificate",
+        title: "Get a copy of a birth certificate",
         slug: "get-birth-certificate",
         source_url: "",
         description:
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Get a Birth Certificate form",
+            type: "component",
+          },
+        ],
+      },
+      {
+        title: "Get a copy of a death certificate",
+        slug: "get-death-certificate",
+        source_url: "",
+        description:
+          "Information on how to obtain a copy of a death certificate in Barbados.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Get a Death Certificate form",
+            type: "component",
+          },
+        ],
+      },
+      {
+        title: "Get a copy of a marriage certificate",
+        slug: "get-marriage-certificate",
+        source_url: "",
+        description:
+          "Information on how to obtain a copy of a marriage certificate in Barbados.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Get a Marriage Certificate form",
+            type: "component",
+          },
+        ],
       },
       {
         title: "Register a death",
@@ -31,13 +69,6 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "https://www.gov.bb/Citizens/register-death",
         description:
           "Information on how to register a death and obtain a death certificate in Barbados.",
-      },
-      {
-        title: "Get a death certificate",
-        slug: "get-a-death-certificate",
-        source_url: "",
-        description:
-          "Information on how to obtain a death certificate in Barbados, including required documents and contact details for the Registration Department.",
       },
       {
         title: "Register a marriage",

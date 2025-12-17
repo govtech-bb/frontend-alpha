@@ -75,9 +75,6 @@ export async function POST(request: NextRequest) {
     const validationResult = birthRegistrationSchema.safeParse(body);
 
     if (!validationResult.success) {
-      // biome-ignore lint/suspicious/noConsole: needed for debugging validation errors in production
-      console.error("Validation error:", validationResult.error);
-
       // Return detailed validation errors
       const errorMessages = validationResult.error.issues.map(
         (issue) => `${issue.path.join(".")}: ${issue.message}`
@@ -148,8 +145,6 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: needed for debugging email issues in production
-    console.error("Error submitting birth registration:", error);
     return NextResponse.json(
       { message: "Failed to submit birth registration" },
       { status: 500 }

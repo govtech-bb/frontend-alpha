@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   DateInput,
   type DateInputValue,
   Input,
@@ -6,6 +7,7 @@ import {
   RadioGroup,
   Select,
   ShowHide,
+  Text,
   TextArea,
 } from "@govtech-bb/react";
 import { Fragment, useEffect } from "react";
@@ -128,7 +130,9 @@ export function DynamicField({
                     description={conditionalField.placeholder}
                     error={conditionalError?.message}
                     id={conditionalField.name}
-                    label={conditionalField.label}
+                    label={
+                      conditionalField.hidden ? "" : conditionalField.label
+                    }
                     name={conditionalField.name}
                     onChange={controllerField.onChange}
                     value={dateValue}
@@ -139,7 +143,7 @@ export function DynamicField({
           ) : conditionalField.type === "select" ? (
             <Select
               error={conditionalError?.message}
-              label={conditionalField.label}
+              label={conditionalField.hidden ? "" : conditionalField.label}
               {...register(conditionalField.name as keyof FormData)}
             >
               {conditionalField.options?.map((option) => (
@@ -148,11 +152,55 @@ export function DynamicField({
                 </option>
               ))}
             </Select>
+          ) : conditionalField.type === "textarea" ? (
+            <div className="flex flex-col gap-1">
+              {!conditionalField.hidden && (
+                <label
+                  className="font-bold text-lg"
+                  htmlFor={conditionalField.name}
+                >
+                  {conditionalField.label}
+                </label>
+              )}
+              {conditionalField.hint && (
+                <Text as="p" className="text-neutral-midgrey" size="body">
+                  {conditionalField.hint}
+                </Text>
+              )}
+              <TextArea
+                {...register(conditionalField.name as keyof FormData)}
+                error={conditionalError?.message}
+                id={conditionalField.name}
+                placeholder={conditionalField.placeholder}
+                rows={conditionalField.rows || 4}
+              />
+            </div>
+          ) : conditionalField.hint ? (
+            <div className="flex flex-col gap-1">
+              {!conditionalField.hidden && (
+                <label
+                  className="font-bold text-lg"
+                  htmlFor={conditionalField.name}
+                >
+                  {conditionalField.label}
+                </label>
+              )}
+              <Text as="p" className="text-neutral-midgrey" size="body">
+                {conditionalField.hint}
+              </Text>
+              <Input
+                error={conditionalError?.message}
+                id={conditionalField.name}
+                placeholder={conditionalField.placeholder}
+                type={conditionalField.type}
+                {...register(conditionalField.name as keyof FormData)}
+              />
+            </div>
           ) : (
             <Input
               error={conditionalError?.message}
               id={conditionalField.name}
-              label={conditionalField.label}
+              label={conditionalField.hidden ? "" : conditionalField.label}
               placeholder={conditionalField.placeholder}
               type={conditionalField.type}
               {...register(conditionalField.name as keyof FormData)}
@@ -181,7 +229,7 @@ export function DynamicField({
                 description={field.placeholder}
                 error={error?.message}
                 id={field.name}
-                label={field.label}
+                label={field.hidden ? "" : field.label}
                 name={field.name}
                 onChange={controllerField.onChange}
                 value={dateValue}
@@ -193,7 +241,7 @@ export function DynamicField({
         <>
           <Select
             error={error?.message}
-            label={field.label}
+            label={field.hidden ? "" : field.label}
             {...register(field.name as keyof FormData)}
           >
             {field.options?.map((option) => (
@@ -213,7 +261,7 @@ export function DynamicField({
             <RadioGroup
               description={field.hint}
               error={error?.message}
-              label={field.label}
+              label={field.hidden ? "" : field.label}
               onValueChange={controllerField.onChange}
               value={controllerField.value as string}
             >
@@ -231,6 +279,21 @@ export function DynamicField({
                 </Fragment>
               ))}
             </RadioGroup>
+          )}
+        />
+      ) : field.type === "checkbox" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: controllerField }) => (
+            <Checkbox
+              checked={controllerField.value === "yes"}
+              id={field.name}
+              label={field.hidden ? "" : field.label}
+              onCheckedChange={(checked) => {
+                controllerField.onChange(checked ? "yes" : "no");
+              }}
+            />
           )}
         />
       ) : field.type === "showHide" && field.showHide ? (
@@ -281,16 +344,22 @@ export function DynamicField({
                     <div key={childField.name}>
                       {childField.type === "textarea" ? (
                         <div className="flex flex-col gap-1">
-                          <label
-                            className="font-bold text-lg"
-                            htmlFor={childField.name}
-                          >
-                            {childField.label}
-                          </label>
+                          {!childField.hidden && (
+                            <label
+                              className="font-bold text-lg"
+                              htmlFor={childField.name}
+                            >
+                              {childField.label}
+                            </label>
+                          )}
                           {childField.hint && (
-                            <p className="text-neutral-600">
+                            <Text
+                              as="p"
+                              className="text-neutral-midgrey"
+                              size="body"
+                            >
                               {childField.hint}
-                            </p>
+                            </Text>
                           )}
                           <TextArea
                             {...register(childField.name as keyof FormData)}
@@ -304,7 +373,7 @@ export function DynamicField({
                         <Input
                           error={childError?.message}
                           id={childField.name}
-                          label={childField.label}
+                          label={childField.hidden ? "" : childField.label}
                           placeholder={childField.placeholder}
                           type={childField.type}
                           {...register(childField.name as keyof FormData)}
@@ -319,10 +388,16 @@ export function DynamicField({
         })()
       ) : field.type === "textarea" ? (
         <div className="flex flex-col gap-1">
-          <label className="font-bold text-lg" htmlFor={field.name}>
-            {field.label}
-          </label>
-          {field.hint && <p className="text-neutral-600">{field.hint}</p>}
+          {!field.hidden && (
+            <label className="font-bold text-lg" htmlFor={field.name}>
+              {field.label}
+            </label>
+          )}
+          {field.hint && (
+            <Text as="p" className="text-neutral-midgrey" size="body">
+              {field.hint}
+            </Text>
+          )}
           <TextArea
             {...register(field.name as keyof FormData)}
             error={error?.message}
@@ -333,10 +408,14 @@ export function DynamicField({
         </div>
       ) : field.hint ? (
         <div className="flex flex-col gap-1">
-          <label className="font-bold text-lg" htmlFor={field.name}>
-            {field.label}
-          </label>
-          <p className="text-neutral-600">{field.hint}</p>
+          {!field.hidden && (
+            <label className="font-bold text-lg" htmlFor={field.name}>
+              {field.label}
+            </label>
+          )}
+          <Text as="p" className="text-neutral-midgrey" size="body">
+            {field.hint}
+          </Text>
           <Input
             error={error?.message}
             id={field.name}
@@ -348,7 +427,7 @@ export function DynamicField({
       ) : (
         <Input
           error={error?.message}
-          label={field.label}
+          label={field.hidden ? "" : field.label}
           type={field.type}
           {...register(field.name as keyof FormData)}
           placeholder={field.placeholder}
