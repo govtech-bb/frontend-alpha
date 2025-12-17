@@ -258,8 +258,11 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     return schema;
   }
 
-  // Handle optional fields (no validation rules)
-  if (!validation.required && Object.keys(validation).length === 0) {
+  // Handle optional fields (explicitly marked as required: false or no validation rules)
+  if (
+    validation.required === false ||
+    (!validation.required && Object.keys(validation).length === 0)
+  ) {
     return z.string().optional();
   }
 
@@ -293,10 +296,22 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
   }
 
   if (validation.pattern) {
-    schema = (schema as z.ZodString).regex(
-      new RegExp(validation.pattern.value),
-      validation.pattern.message
-    );
+    if (validation.required) {
+      schema = (schema as z.ZodString).regex(
+        new RegExp(validation.pattern.value),
+        validation.pattern.message
+      );
+    } else {
+      // For optional fields with pattern: modify regex to accept empty string OR the pattern
+      // Remove existing anchors and add our own to allow empty string
+      const originalPattern = validation.pattern.value;
+      const patternWithoutAnchors = originalPattern.replace(/^\^|\$$/g, "");
+      const optionalPattern = `^(${patternWithoutAnchors})?$`;
+      schema = z
+        .string()
+        .regex(new RegExp(optionalPattern), validation.pattern.message)
+        .optional();
+    }
   }
 
   if (field.type === "number") {

@@ -33,7 +33,7 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "applicant.lastName",
@@ -61,7 +61,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
 
       {
@@ -103,7 +103,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.passportDetails",
         label: "",
         type: "showHide",
-        validation: {},
+        validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
           stateFieldName: "applicant.usePassportInstead",
@@ -141,9 +141,9 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
           },
         },
       },
@@ -233,7 +233,7 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Leave blank if not known",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "deceased.lastName",
@@ -310,7 +310,7 @@ export const formSteps: FormStep[] = [
         label: "Cause of death",
         hint: "Leave blank if you do not know",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
     ],
   },

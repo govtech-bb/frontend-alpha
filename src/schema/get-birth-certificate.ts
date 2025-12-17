@@ -33,7 +33,7 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "applicant.lastName",
@@ -61,7 +61,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
 
       {
@@ -103,7 +103,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.passportDetails",
         label: "",
         type: "showHide",
-        validation: {},
+        validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
           stateFieldName: "applicant.usePassportInstead",

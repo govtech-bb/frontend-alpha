@@ -280,7 +280,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "Apt 4B (Optional)",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "parish",
@@ -295,13 +295,13 @@ export const formSteps: FormStep[] = [
         name: "telephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "+1 (246) 234-5678",
+        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
           },
         },
       },
@@ -369,7 +369,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "Apt 4B (Optional)",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "emergencyParish",
@@ -384,13 +384,13 @@ export const formSteps: FormStep[] = [
         name: "emergencyTelephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "+1 (246) 234-5678",
+        placeholder: "246 234 5678",
         validation: {
           required: "Emergency contact telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
           },
         },
       },

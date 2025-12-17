@@ -26,7 +26,7 @@ export type DateValidationRule =
 
 // Base validation rules (all fields can use these)
 type BaseValidationRule = {
-  required?: string;
+  required?: string | false; // string for error message, false to explicitly mark as optional
   minLength?: { value: number; message: string };
   maxLength?: { value: number; message: string };
   pattern?: { value: string; message: string };

@@ -33,7 +33,7 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "applicant.lastName",
@@ -61,7 +61,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "applicant.parish",
@@ -102,7 +102,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.passportDetails",
         label: "",
         type: "showHide",
-        validation: {},
+        validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
           stateFieldName: "applicant.usePassportInstead",
@@ -165,7 +165,7 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Leave blank if there are no middle names or if they are not known.",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "husband.lastName",
@@ -193,7 +193,7 @@ export const formSteps: FormStep[] = [
         name: "husband.passportDetails",
         label: "",
         type: "showHide",
-        validation: {},
+        validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
           stateFieldName: "applicant.usePassportInstead",
@@ -237,7 +237,7 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Leave blank if there are no middle names or if they are not known.",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "wife.lastName",
@@ -265,7 +265,7 @@ export const formSteps: FormStep[] = [
         name: "wife.passportDetails",
         label: "",
         type: "showHide",
-        validation: {},
+        validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
           stateFieldName: "applicant.usePassportInstead",
