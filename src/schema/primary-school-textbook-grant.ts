@@ -11,7 +11,6 @@ export const formSteps: FormStep[] = [
         name: "beneficiaries.firstName",
         label: "First Name",
         type: "text",
-        placeholder: "John",
         validation: {
           required: "First name is required",
           minLength: {
@@ -24,7 +23,6 @@ export const formSteps: FormStep[] = [
         name: "beneficiaries.lastName",
         label: "Last Name",
         type: "text",
-        placeholder: "Doe",
         validation: {
           required: "Last name is required",
           minLength: {
@@ -35,33 +33,49 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "beneficiaries.idNumber",
-        label: "ID Number",
+        label: "National Identification (ID) Number",
         type: "text",
-        placeholder: "",
         validation: {
           required: "ID Number is required",
-          minLength: {
-            value: 2,
-            message: "ID Number must be at least 2 characters",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "beneficiaries.usePassportInstead",
       },
       {
-        name: "beneficiaries.gender",
-        label: "Gender",
-        type: "select",
-        validation: {
-          required: "Gender is required",
+        name: "beneficiaries.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
         },
-        options: [
-          { label: "Select gender", value: "" },
-          { label: "Male", value: "male" },
-          { label: "Female", value: "female" },
-        ],
       },
       {
         name: "beneficiaries.class",
-        label: "Class",
+        label: "What class are they currently in?",
+        hint: "If they are between school years, add the class they are going into",
         type: "select",
         validation: {
           required: "Class is required",
@@ -74,31 +88,218 @@ export const formSteps: FormStep[] = [
           { label: "Class 4", value: "4" },
         ],
       },
+      {
+        name: "beneficiaries.relationshipToChild",
+        label: "What is your relationship to the child?",
+        type: "select",
+        validation: {
+          required: "Relationship is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Parent", value: "parent" },
+          { label: "Spouse", value: "spouse" },
+          { label: "Child", value: "child" },
+          { label: "Sibling", value: "sibling" },
+          { label: "Grandparent", value: "grandparent" },
+          { label: "Legal guardian", value: "legal-guardian" },
+          { label: "Legal representative", value: "legal-representative" },
+          { label: "Other (please describe)", value: "other" },
+        ],
+      },
+      {
+        name: "beneficiaries.relationshipDescription",
+        label: "Please describe your relationship",
+        type: "text",
+        validation: {
+          required: "Please describe your relationship",
+          minLength: {
+            value: 2,
+            message: "Please provide at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "beneficiaries.relationshipToChild",
+          value: "other",
+        },
+      },
+    ],
+  },
+  {
+    id: "applicant-details",
+    title: "Tell us about yourself",
+    fields: [
+      {
+        name: "applicant.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+        },
+      },
+      {
+        name: "applicant.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+        },
+      },
+      {
+        name: "applicant.addressLine1",
+        label: "Address Line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "applicant.addressLine2",
+        label: "Address Line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
+      },
+
+      {
+        name: "applicant.parish",
+        label: "Parish",
+        type: "select",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "applicant.postalCode",
+        label: "Postal Code",
+        type: "text",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
+
+      {
+        name: "applicant.email",
+        label: "Email Address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "applicant.telephoneNumber",
+        label: "Telephone Number",
+        type: "tel",
+        validation: {
+          required: "Telephone number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message:
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+          },
+        },
+      },
+      {
+        name: "applicant.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        placeholder: "e.g., 850101-0001",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+      {
+        name: "applicant.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "applicant.tamisNumber",
+        label: "TAMIS Number",
+        type: "text",
+        validation: {
+          required: "TAMIS Number is required",
+          minLength: {
+            value: 2,
+            message: "TAMIS number must be at least 2 characters",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+    ],
+  },
+  {
+    id: "guardian-or-parent",
+    title: "Are you the parent or guardian?",
+    description: "",
+    fields: [
+      {
+        name: "guardianOrParentRelationship",
+        label: "Are you the parent or guardian?",
+        hidden: true,
+        type: "radio",
+        validation: {
+          required:
+            "Whether or not you are a parent or guardian to the child is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
     ],
   },
   {
     id: "guardian",
     title: "Tell us about the guardian",
     description: "",
+    conditionalOn: {
+      field: "guardianOrParentRelationship",
+      value: "no",
+    },
     fields: [
-      {
-        name: "guardian.title",
-        label: "Title",
-        type: "select",
-        validation: { required: false },
-        options: [
-          { label: "Select title", value: "" },
-          { label: "Mr", value: "mr" },
-          { label: "Miss", value: "miss" },
-          { label: "Mrs", value: "mrs" },
-          { label: "Dr", value: "dr" },
-        ],
-      },
       {
         name: "guardian.firstName",
         label: "First Name",
         type: "text",
-        placeholder: "John",
         validation: {
           required: "First name is required",
           minLength: {
@@ -108,17 +309,9 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "guardian.middleName",
-        label: "Middle Name",
-        type: "text",
-        placeholder: "",
-        validation: { required: false },
-      },
-      {
         name: "guardian.lastName",
         label: "Last Name",
         type: "text",
-        placeholder: "Doe",
         validation: {
           required: "Last name is required",
           minLength: {
@@ -129,36 +322,58 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "guardian.idNumber",
-        label: "ID Number",
+        label: "National Identification (ID) Number",
         type: "text",
-        placeholder: "",
         validation: {
           required: "ID Number is required",
-          minLength: {
-            value: 2,
-            message: "ID Number must be at least 2 characters",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
       },
-
       {
-        name: "guardian.relationship",
-        label: "Relationship to Child",
-        type: "select",
-        validation: {
-          required: "Relationship is required",
+        name: "guardian.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
         },
-        options: [
-          { label: "Select relationship", value: "" },
-          { label: "Mother", value: "mother" },
-          { label: "Father", value: "father" },
-          { label: "Grandmother", value: "grandmother" },
-          { label: "Grandfather", value: "grandfather" },
-          { label: "Aunt", value: "aunt" },
-          { label: "Uncle", value: "uncle" },
-          { label: "Legal Guardian", value: "legal_guardian" },
-          { label: "Other", value: "other" },
-        ],
+      },
+      {
+        name: "guardian.tamisNumber",
+        label: "TAMIS Number",
+        type: "text",
+        validation: {
+          required: "TAMIS Number is required",
+          minLength: {
+            value: 2,
+            message: "TAMIS number must be at least 2 characters",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
       },
     ],
   },
@@ -219,124 +434,9 @@ export const formSteps: FormStep[] = [
       "In order to receive the $100 Grant, please provide accurate and current banking information to prevent delays in processing this application.",
     fields: [
       {
-        name: "bankAccount.bank",
-        label: "Select a bank",
-        type: "select",
-        validation: {
-          required: "Please select a bank",
-        },
-        options: [
-          { label: "Select a bank", value: "" },
-          { label: "Republic Bank (Barbados) Limited", value: "republic_bank" },
-          {
-            label: "CIBC FirstCaribbean International Bank",
-            value: "cibc_firstcaribbean",
-          },
-          { label: "Scotiabank Barbados", value: "scotiabank" },
-          {
-            label: "First Citizens Bank (Barbados) Limited",
-            value: "first_citizens",
-          },
-        ],
-      },
-      // Republic Bank branches
-      {
-        name: "bankAccount.branch",
-        label: "Select a branch",
-        type: "select",
-        validation: {
-          required: "Please select a branch",
-        },
-        conditionalOn: {
-          field: "bankAccount.bank",
-          value: "republic_bank",
-        },
-        options: [
-          { label: "Select a branch", value: "" },
-          { label: "Broad Street, Bridgetown", value: "broad_street" },
-          { label: "Haggatt Hall", value: "haggatt_hall" },
-          { label: "Hastings", value: "hastings" },
-          { label: "Holetown", value: "holetown" },
-          { label: "Oistins", value: "oistins" },
-          { label: "Speightstown", value: "speightstown" },
-          { label: "Warrens", value: "warrens" },
-        ],
-      },
-      // CIBC FirstCaribbean branches
-      {
-        name: "bankAccount.branch",
-        label: "Select a branch",
-        type: "select",
-        validation: {
-          required: "Please select a branch",
-        },
-        conditionalOn: {
-          field: "bankAccount.bank",
-          value: "cibc_firstcaribbean",
-        },
-        options: [
-          { label: "Select a branch", value: "" },
-          { label: "Broad Street, Bridgetown", value: "broad_street" },
-          { label: "Holetown", value: "holetown" },
-          { label: "Oistins", value: "oistins" },
-          { label: "Sunset Crest", value: "sunset_crest" },
-          { label: "Warrens", value: "warrens" },
-        ],
-      },
-      // Scotiabank branches
-      {
-        name: "bankAccount.branch",
-        label: "Select a branch",
-        type: "select",
-        validation: {
-          required: "Please select a branch",
-        },
-        conditionalOn: {
-          field: "bankAccount.bank",
-          value: "scotiabank",
-        },
-        options: [
-          { label: "Select a branch", value: "" },
-          { label: "Broad Street, Bridgetown", value: "broad_street" },
-          { label: "Haggatt Hall", value: "haggatt_hall" },
-          { label: "Holetown", value: "holetown" },
-          { label: "Sunset Crest", value: "sunset_crest" },
-          { label: "Warrens", value: "warrens" },
-        ],
-      },
-      // First Citizens Bank branches
-      {
-        name: "bankAccount.branch",
-        label: "Select a branch",
-        type: "select",
-        validation: {
-          required: "Please select a branch",
-        },
-        conditionalOn: {
-          field: "bankAccount.bank",
-          value: "first_citizens",
-        },
-        options: [
-          { label: "Select a branch", value: "" },
-          { label: "Warrens", value: "warrens" },
-        ],
-      },
-      {
-        name: "bankAccount.accountType",
-        label: "Select account type",
-        type: "select",
-        validation: {
-          required: "Please select an account type",
-        },
-        options: [
-          { label: "Select account type", value: "" },
-          { label: "Savings", value: "savings" },
-          { label: "Chequing", value: "chequing" },
-        ],
-      },
-      {
-        name: "bankAccount.nameOnAccount",
-        label: "Name on account",
+        name: "bankAccount.accountHolderName",
+        label: "Account holder name",
+        hint: "Enter the full name shown on the bank account",
         type: "text",
         placeholder: "",
         validation: {
@@ -348,21 +448,75 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "bankAccount.bankName",
+        label: "Bank name",
+        hint: "For example: 'Republic Bank', 'CIBC FirstCaribbean', 'Scotiabank', or 'First Citizens'",
+        type: "text",
+        validation: {
+          required: "Bank name is required",
+          minLength: {
+            value: 2,
+            message: "Bank name must be at least 2 characters",
+          },
+        },
+      },
+      {
         name: "bankAccount.accountNumber",
         label: "Account number",
+        hint: "Enter the account number exactly as it appears on your bank statement",
         type: "text",
         placeholder: "",
         validation: {
           required: "Account number is required",
+          minLength: {
+            value: 2,
+            message: "Bank name must be at least 2 characters",
+          },
         },
+      },
+      {
+        name: "bankAccount.branchName",
+        label: "Branch name",
+        hint: "Enter the branch where the account is held",
+        type: "text",
+        validation: {
+          required: "Branch name is required",
+          minLength: {
+            value: 2,
+            message: "Branch name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "bankAccount.accountType",
+        label: "Account type",
+        type: "radio",
+        validation: {
+          required: "Please select an account type",
+        },
+        options: [
+          { label: "Savings", value: "savings" },
+          { label: "Chequing", value: "chequing" },
+        ],
       },
     ],
   },
   {
     id: "review",
-    title: "Check your answers",
+    title: "Your submission has been saved",
     description:
       "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
     fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "",
+        items: [
+          "The child's school will confirm if they are eligible for the grant.",
+          "You will receiv $100 BBD per eligible child in the bank account you provided details for",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
