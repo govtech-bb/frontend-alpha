@@ -502,6 +502,33 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       },
     ],
   },
+
+  {
+    title: "Government",
+    slug: "government",
+    description: "Find out about government and its services",
+    pages: [
+      {
+        title: "About Government",
+        slug: "about",
+        source_url: "",
+        description:
+          "Learn how the Government of Barbados works, understand your constitutional rights, and find ways to get involved.",
+        subPages: [
+          { slug: "how-government-works", type: "markdown" },
+          { slug: "constitution", type: "markdown" },
+          { slug: "get-involved", type: "markdown" },
+        ],
+      },
+      {
+        title: "Government Directory",
+        slug: "directory",
+        source_url: "",
+        description:
+          "Find contact details and information about government agencies, ministries, departments and statutory bodies.",
+      },
+    ],
+  },
 ];
 
 export const INFORMATION_SECTIONS = [
