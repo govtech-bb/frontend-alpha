@@ -109,11 +109,6 @@ type OptionFormField = BaseFormField & {
   options: SelectOption[];
 };
 
-type CheckboxFormField = BaseFormField & {
-  type: "checkbox";
-  validation: NonDateFieldValidation;
-};
-
 type TextareaFormField = BaseFormField & {
   type: "textarea";
   validation: NonDateFieldValidation;
