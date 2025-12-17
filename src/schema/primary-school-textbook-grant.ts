@@ -503,9 +503,20 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "review",
-    title: "Check your answers",
+    title: "Your submission has been saved",
     description:
       "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
     fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "",
+        items: [
+          "The child's school will confirm if they are eligible for the grant.",
+          "You will receiv $100 BBD per eligible child in the bank account you provided details for",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
