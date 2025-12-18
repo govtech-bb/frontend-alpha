@@ -159,7 +159,8 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "applicant.hasDisability",
-        label: "",
+        label: "Do you have a disability?",
+        hidden: true,
         type: "radio",
         validation: {
           required: "Disability status is required",
@@ -191,7 +192,7 @@ export const formSteps: FormStep[] = [
   {
     id: "contact-details",
     title: "Your contact details",
-    description: "Description",
+    description: "How can we reach you?",
     fields: [
       {
         name: "contact.addressLine1",
@@ -409,6 +410,17 @@ export const formSteps: FormStep[] = [
           required: "Parish is required",
         },
         options: barbadosParishes,
+      },
+      {
+        name: "emergency.postalCode",
+        label: "Postal code",
+        type: "text",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
       },
       {
         name: "emergency.telephoneNumber",
