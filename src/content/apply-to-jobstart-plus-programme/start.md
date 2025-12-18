@@ -6,7 +6,7 @@ publish_date: 2025-12-05
 
 You should complete your registration in one go. At the moment, it is not possible to save your answers and come back to them later.
 
-## How long does it take? 
+## How long does it take?
 
 It should not take more than 20 minutes
 
@@ -24,5 +24,3 @@ As well as your contact details, the application form asks about:
 - your skills, interests and community groups
 - your availability
 - your short-term, work-related goals
-
-

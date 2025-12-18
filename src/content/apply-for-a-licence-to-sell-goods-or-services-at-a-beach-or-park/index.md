@@ -9,11 +9,11 @@ If you would like to sell goods or services on a beach or in a park, you must ha
 
 Goods are physical items such as food or memorabilia. Services are experiences like massages or horse rides
 
-## How to apply 
+## How to apply
 
 ### Complete an application form
 
-You can apply for a licence online. Aside from your personal details and contact information, the application form ask you about:
+You can apply for a licence online. Aside from your personal details and contact information, the application form asks you about:
 
 - the type of goods or services you’d like to sell
 - where you would like to sell them
