@@ -131,19 +131,12 @@ export const formSteps: FormStep[] = [
   {
     id: "applying-for-yourself",
     title: "Are you applying for your own birth certificate?",
-    // description:
-    //   "If you choose 'Yes', both parents must go to the Registration Department and sign the official register together",
-    // conditionalOn: {
-    //   field: "marriageStatus",
-    //   value: "no",
-    // },
     fields: [
       {
         name: "applyingForYourself",
         label: "Are you applying for your own birth certificate?",
         hidden: true,
         type: "radio",
-        // hint: "If you choose 'No', the mother must go to the Registration Department but it is not necessary for the father to attend",
         validation: {
           required: "Select an option",
         },
@@ -164,7 +157,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "relationshipToPerson",
-        label: "Relationship",
+        label: "What is your relationship to the person?",
         hidden: true,
         type: "select",
         validation: {
@@ -202,14 +195,14 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "reason-for-certificate",
-    title: "Tell us why you're ordering the certificate",
+    title: "Tell us why you're ordering a birth certificate",
     conditionalOn: {
       field: "applyingForYourself",
       value: "no",
     },
     fields: [
       {
-        name: "reasonForCertificate",
+        name: "reasonForOrderingCertificate",
         label: "Reason",
         type: "textarea",
         validation: {
@@ -319,53 +312,6 @@ export const formSteps: FormStep[] = [
         conditionalOn: {
           field: "person.hasNisNumber",
           value: "yes",
-        },
-      },
-    ],
-  },
-  {
-    id: "person-birth-details",
-    title: "Provide the person's birth details",
-    description: "Answer as accurately as possible",
-    conditionalOn: {
-      field: "applyingForYourself",
-      value: "no",
-    },
-    fields: [
-      {
-        name: "person.dateOfBirth",
-        label: "Date of birth",
-        placeholder: "For example, December 30, 1986",
-        type: "date",
-        validation: {
-          required: "Date of birth is required",
-          date: {
-            type: "past",
-          },
-        },
-      },
-      {
-        name: "person.placeOfBirth",
-        label: "Place of birth",
-        type: "text",
-        validation: {
-          required: "Place of birth is required",
-          minLength: {
-            value: 2,
-            message: "Must be at least 2 characters",
-          },
-        },
-      },
-      {
-        name: "person.placeOfBaptism",
-        label: "Place of baptism",
-        type: "text",
-        validation: {
-          required: "Place of baptism is required",
-          minLength: {
-            value: 2,
-            message: "Must be at least 2 characters",
-          },
         },
       },
     ],
@@ -544,7 +490,7 @@ export const formSteps: FormStep[] = [
           required: "Number of copies is required",
           min: {
             value: 1,
-            message: "You must order at least 1 copy",
+            message: "You must order at least 1 copy and maximum 10 copies",
           },
         },
       },
