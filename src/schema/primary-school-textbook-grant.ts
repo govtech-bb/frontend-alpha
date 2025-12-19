@@ -359,10 +359,38 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "review",
+    id: "check-your-answers",
     title: "Check your answers",
     description:
       "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
     fields: [],
+  },
+   {
+    id: "confirmation",
+    title: "Your Primary School Textbook Grant application has been sent",
+    description: "Your application for the **Primary School Textbook Grant** has been submitted successfully.",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "Your application has been sent to the **principal of the child’s school** for review. The school will check that:",
+        items: [
+          "the child is eligible, and",
+          "no other claim has been submitted for the same child in this academic year"
+        ],
+      },
+    ],
+    // contactDetails: {
+    //   title: "Ministry of Educational Transformation",
+    //   telephoneNumber: "(246) 535-0600",
+    //   email: "info@mes.gov.bb",
+    //   address: {
+    //     line1: "Supreme Court Complex",
+    //     line2: "Whitepark Road",
+    //     city: "St. Michael",
+    //     country: "Barbados",
+    //   },
+    // },
+    enableFeedback: true,
   },
 ];
