@@ -1,9 +1,7 @@
 "use client";
 
-import { Link } from "@govtech-bb/react";
-import NextLink from "next/link";
-import { usePathname } from "next/navigation";
-import { Typography } from "@/components/ui/typography";
+import { Button, Heading, Text } from "@govtech-bb/react";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 type HelpfulBoxProps = {
@@ -12,34 +10,31 @@ type HelpfulBoxProps = {
 
 export const HelpfulBox = ({ className = "" }: HelpfulBoxProps) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleFeedbackClick = () => {
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("feedbackReferrer", pathname);
-    }
+    sessionStorage.setItem("feedbackReferrer", pathname);
+    router.push("/feedback");
   };
 
   return (
     <div
       className={cn(
-        "mt-3 space-y-2 border-4 border-yellow-100 bg-yellow-40 px-4 py-6 lg:gap-2 lg:space-y-0 lg:p-6",
+        "flex flex-col items-start gap-xs border-4 border-yellow-100 bg-yellow-40 px-s py-xm",
         className
       )}
     >
-      <Typography className="mb-4" variant="h3">
-        Was this helpful?
-      </Typography>
-      <Typography className="mb-4" variant="paragraph">
-        Give us your feedback about this page.
-      </Typography>
-      <Link
-        as={NextLink}
-        href="/feedback"
+      <Heading as="h3">Was this helpful?</Heading>
+      <Text as="p">Give us your feedback about this page.</Text>
+
+      {/* TODO: Design System: Make button link variant curosr pointer */}
+      <Button
+        className="cursor-pointer text-neutral-black"
         onClick={handleFeedbackClick}
-        variant="secondary"
+        variant={"link"}
       >
         Help us improve alpha.gov.bb
-      </Link>
+      </Button>
     </div>
   );
 };

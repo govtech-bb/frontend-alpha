@@ -1,9 +1,8 @@
-import { Link } from "@govtech-bb/react";
-import NextLink from "next/link";
+import { Heading, Text } from "@govtech-bb/react";
 import { notFound } from "next/navigation";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { MarkdownContent } from "@/components/markdown-content";
-import { Typography } from "@/components/ui/typography";
+import { SignpostBlock } from "@/components/ui/signpost-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess, isProtectedSubpage } from "@/lib/research-access";
@@ -32,32 +31,28 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     return (
-      <>
-        <Typography variant="h1">{category.title}</Typography>
-        {category.description
-          ?.split("\n")
-          .map((line: string, _index: number) => (
-            <p className="text-[20px] leading-normal" key={_index}>
-              {line}
-            </p>
-          ))}
-        <div className="flex flex-col divide-y-2 divide-neutral-grey last:border-neutral-grey last:border-b-2">
+      <div className="flex flex-col gap-xm">
+        <div className="flex flex-col gap-xs">
+          <Heading as="h1">{category.title}</Heading>
+          {category.description
+            ?.split("\n")
+            .map((line: string, index: number) => (
+              <Text as="p" key={index}>
+                {line}
+              </Text>
+            ))}
+        </div>
+
+        <div className="flex flex-col">
           {category.pages.map((service) => (
-            <div
-              className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
-              key={service.title}
-            >
-              <Link
-                as={NextLink}
-                className="cursor-pointer text-[20px] leading-normal lg:text-3xl"
-                href={`/${categorySlug}/${service.slug}`}
-              >
-                {service.title}
-              </Link>
-            </div>
+            <SignpostBlock
+              href={`/${categorySlug}/${service.slug}`}
+              key={service.slug}
+              title={service.title}
+            />
           ))}
         </div>
-      </>
+      </div>
     );
   }
 
