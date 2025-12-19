@@ -1,6 +1,6 @@
 "use client";
 
-import { Heading, Text } from "@govtech-bb/react";
+import { Button, Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
@@ -168,13 +168,13 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           <div className="mb-4 flex items-center justify-between lg:gap-x-2">
             <Heading as="h2">{section.title}</Heading>
             {/* !!! To replace with the link variant on button component */}
-            <button
-              className="hidden text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:inline"
+            <Button
+              className="hidden lg:inline"
               onClick={() => onEdit(section.stepIndex)}
-              type="button"
+              variant={"link"}
             >
               Change
-            </button>
+            </Button>
           </div>
 
           <dl className="grid grid-cols-1 gap-2 font-normal text-[20px] leading-[1.7] lg:gap-4">
@@ -186,13 +186,14 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
             ))}
           </dl>
           {/* !!! To replace with the link variant on button component */}
-          <button
-            className="py-2 font-normal text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:hidden"
+          <Button
+            className="hidden lg:inline"
             onClick={() => onEdit(section.stepIndex)}
             type="button"
+            variant="link"
           >
             Change
-          </button>
+          </Button>
         </div>
       ))}
     </div>
