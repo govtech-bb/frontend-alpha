@@ -85,8 +85,10 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.postalCode",
         label: "Postal Code",
+        hint: "optional",
         type: "text",
         validation: {
+          required: false,
           pattern: {
             value: "^BB\\d{5}$",
             message: "Enter a valid postal code (e.g., BB17004)",
@@ -187,6 +189,7 @@ export const formSteps: FormStep[] = [
       {
         name: "relationshipOtherDescription",
         label: "Please describe your relationship",
+        hint: "For example, nephew, researcher, historian, or authorised representative.",
         type: "text",
         validation: {
           required: "Please describe your relationship",
@@ -349,6 +352,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBirth",
         label: "Place of birth",
+        hint: "Enter a house, institution, home address, or parish, if known",
         type: "text",
         validation: {
           required: "Place of birth is required",
@@ -361,6 +365,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBaptism",
         label: "Place of baptism",
+        hint: "Enter a house, church, or parish, if known",
         type: "text",
         validation: {
           required: "Place of baptism is required",
