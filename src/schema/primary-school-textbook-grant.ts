@@ -13,6 +13,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+          },
           minLength: {
             value: 2,
             message: "First name must be at least 2 characters",
@@ -25,6 +30,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+          },
           minLength: {
             value: 2,
             message: "Last name must be at least 2 characters",
@@ -34,6 +44,7 @@ export const formSteps: FormStep[] = [
       {
         name: "beneficiaries.idNumber",
         label: "National Identification (ID) Number",
+        width: "medium",
         type: "text",
         validation: {
           required: "ID Number is required",
@@ -57,7 +68,7 @@ export const formSteps: FormStep[] = [
             "If you don't have a National ID number, you can use your passport number instead.",
           fields: [
             {
-              name: "applicant.passportNumber",
+              name: "beneficiaries.passportNumber",
               label: "Passport Number",
               type: "text",
               placeholder: "",
@@ -89,27 +100,20 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "beneficiaries.relationshipToChild",
-        label: "What is your relationship to the child?",
-        type: "select",
+        name: "beneficiaries.isParentOrGuardian",
+        label: "Are you the parent or guardian?",
+        type: "radio",
         validation: {
           required: "Relationship is required",
         },
         options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
         ],
       },
       {
         name: "beneficiaries.relationshipDescription",
-        label: "Please describe your relationship",
+        label: "What is your relationship with the child?",
         type: "text",
         validation: {
           required: "Please describe your relationship",
@@ -119,171 +123,9 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "beneficiaries.relationshipToChild",
-          value: "other",
+          field: "beneficiaries.isParentOrGuardian",
+          value: "no",
         },
-      },
-    ],
-  },
-  {
-    id: "applicant-details",
-    title: "Tell us about yourself",
-    fields: [
-      {
-        name: "applicant.firstName",
-        label: "First name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-        },
-      },
-      {
-        name: "applicant.lastName",
-        label: "Last name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-        },
-      },
-      {
-        name: "applicant.addressLine1",
-        label: "Address Line 1",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Address line 1 is required",
-          minLength: {
-            value: 5,
-            message: "Address must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "applicant.addressLine2",
-        label: "Address Line 2",
-        type: "text",
-        placeholder: "",
-        validation: { required: false },
-      },
-
-      {
-        name: "applicant.parish",
-        label: "Parish",
-        type: "select",
-        validation: {
-          required: "Parish is required",
-        },
-        options: barbadosParishes,
-      },
-      {
-        name: "applicant.postalCode",
-        label: "Postal Code",
-        type: "text",
-        validation: {
-          pattern: {
-            value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
-          },
-        },
-      },
-
-      {
-        name: "applicant.email",
-        label: "Email Address",
-        type: "email",
-        validation: {
-          required: "Email address is required",
-        },
-      },
-      {
-        name: "applicant.telephoneNumber",
-        label: "Telephone Number",
-        type: "tel",
-        validation: {
-          required: "Telephone number is required",
-          pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
-          },
-        },
-      },
-      {
-        name: "applicant.idNumber",
-        label: "National Identification (ID) Number",
-        type: "text",
-        placeholder: "e.g., 850101-0001",
-        validation: {
-          required: "ID Number is required",
-          pattern: {
-            value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-      {
-        name: "applicant.passportDetails",
-        label: "",
-        type: "showHide",
-        validation: { required: false },
-        showHide: {
-          summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
-          description:
-            "If you don't have a National ID number, you can use your passport number instead.",
-          fields: [
-            {
-              name: "applicant.passportNumber",
-              label: "Passport Number",
-              type: "text",
-              placeholder: "",
-              validation: {
-                required: "Passport number is required",
-                minLength: {
-                  value: 6,
-                  message: "Passport number must be at least 6 characters",
-                },
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "applicant.tamisNumber",
-        label: "TAMIS Number",
-        type: "text",
-        validation: {
-          required: "TAMIS Number is required",
-          minLength: {
-            value: 2,
-            message: "TAMIS number must be at least 2 characters",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-    ],
-  },
-  {
-    id: "guardian-or-parent",
-    title: "Are you the parent or guardian?",
-    description: "",
-    fields: [
-      {
-        name: "guardianOrParentRelationship",
-        label: "Are you the parent or guardian?",
-        hidden: true,
-        type: "radio",
-        validation: {
-          required:
-            "Whether or not you are a parent or guardian to the child is required",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
       },
     ],
   },
@@ -292,7 +134,7 @@ export const formSteps: FormStep[] = [
     title: "Tell us about the guardian",
     description: "",
     conditionalOn: {
-      field: "guardianOrParentRelationship",
+      field: "beneficiaries.isParentOrGuardian",
       value: "no",
     },
     fields: [
@@ -302,6 +144,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+          },
           minLength: {
             value: 2,
             message: "First name must be at least 2 characters",
@@ -314,6 +161,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+          },
           minLength: {
             value: 2,
             message: "Last name must be at least 2 characters",
@@ -324,6 +176,7 @@ export const formSteps: FormStep[] = [
         name: "guardian.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        width: "medium",
         validation: {
           required: "ID Number is required",
           pattern: {
@@ -367,6 +220,10 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "TAMIS Number is required",
+          pattern: {
+            value: "^\\d+$",
+            message: "Please enter numbers only",
+          },
           minLength: {
             value: 2,
             message: "TAMIS number must be at least 2 characters",
@@ -378,15 +235,48 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "contact",
-    title: "Contact details",
-    description: "Your contact information",
+    id: "applicant-details",
+    title: "Tell us about yourself",
     fields: [
       {
-        name: "contact.addressLine1",
+        name: "applicant.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+          },
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "applicant.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+          },
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "applicant.addressLine1",
         label: "Address Line 1",
         type: "text",
-        placeholder: "123 Main Street",
+        placeholder: "",
         validation: {
           required: "Address line 1 is required",
           minLength: {
@@ -396,26 +286,48 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contact.addressLine2",
+        name: "applicant.addressLine2",
         label: "Address Line 2",
         type: "text",
-        placeholder: "Apt 4B (Optional)",
+        placeholder: "",
         validation: { required: false },
       },
+
       {
-        name: "contact.parish",
+        name: "applicant.parish",
         label: "Parish",
         type: "select",
+        width: "medium",
         validation: {
           required: "Parish is required",
         },
         options: barbadosParishes,
       },
       {
-        name: "contact.telephoneNumber",
+        name: "applicant.postalCode",
+        label: "Postal Code",
+        type: "text",
+        width: "medium",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
+
+      {
+        name: "applicant.email",
+        label: "Email Address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "applicant.telephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
@@ -425,8 +337,71 @@ export const formSteps: FormStep[] = [
           },
         },
       },
+      {
+        name: "applicant.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        width: "medium",
+        // placeholder: "e.g., 850101-0001",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+      {
+        name: "applicant.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "applicant.tamisNumber",
+        label: "TAMIS Number",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: "TAMIS Number is required",
+          pattern: {
+            value: "^\\d+$",
+            message: "Please enter numbers only",
+          },
+          minLength: {
+            value: 2,
+            message: "TAMIS number must be at least 2 characters",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
     ],
   },
+
   {
     id: "bankAccount",
     title: "Bank account information",
@@ -488,6 +463,19 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "bankAccount.branchCode",
+        label: "Branch code",
+        hint: "Enter the bank branch code used for transfers",
+        type: "text",
+        validation: {
+          required: "Branch code is required",
+          minLength: {
+            value: 2,
+            message: "Branch name must be at least 2 characters",
+          },
+        },
+      },
+      {
         name: "bankAccount.accountType",
         label: "Account type",
         type: "radio",
@@ -502,7 +490,12 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "review",
+    id: "check-your-answers",
+    title: "Check your answers",
+    fields: [],
+  },
+  {
+    id: "confirmation",
     title: "Your submission has been saved",
     description:
       "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
