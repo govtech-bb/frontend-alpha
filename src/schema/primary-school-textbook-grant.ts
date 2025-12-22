@@ -139,7 +139,7 @@ export const formSteps: FormStep[] = [
     },
     fields: [
       {
-        name: "guardian.firstName",
+        name: "beneficiaries.guardian.firstName",
         label: "First Name",
         type: "text",
         validation: {
@@ -156,7 +156,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "guardian.lastName",
+        name: "beneficiaries.guardian.lastName",
         label: "Last Name",
         type: "text",
         validation: {
@@ -173,7 +173,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "guardian.idNumber",
+        name: "beneficiaries.guardian.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
         width: "medium",
@@ -188,7 +188,7 @@ export const formSteps: FormStep[] = [
         skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
       },
       {
-        name: "guardian.passportDetails",
+        name: "beneficiaries.guardian.passportDetails",
         label: "",
         type: "showHide",
         validation: { required: false },
@@ -215,7 +215,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "guardian.tamisNumber",
+        name: "beneficiaries.guardian.tamisNumber",
         label: "TAMIS Number",
         type: "text",
         validation: {
