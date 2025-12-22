@@ -127,10 +127,22 @@ export const formSteps: FormStep[] = [
           value: "no",
         },
       },
+      {
+        name: "beneficiaries.addAnotherChild",
+        label: "Do you have another child at the same school?",
+        type: "radio",
+        validation: {
+          required: false,
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
     ],
   },
   {
-    id: "guardian",
+    id: "beneficiaries.guardian",
     title: "Tell us about the guardian",
     description: "",
     conditionalOn: {
