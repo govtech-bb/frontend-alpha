@@ -109,11 +109,6 @@ type OptionFormField = BaseFormField & {
   options: SelectOption[];
 };
 
-type CheckboxFormField = BaseFormField & {
-  type: "checkbox";
-  validation: NonDateFieldValidation;
-};
-
 type TextareaFormField = BaseFormField & {
   type: "textarea";
   validation: NonDateFieldValidation;
@@ -137,6 +132,11 @@ type ShowHideFormField = BaseFormField & {
   showHide: ShowHideConfig;
 };
 
+type CheckboxFormField = BaseFormField & {
+  type: "checkbox";
+  validation: NonDateFieldValidation;
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -144,7 +144,8 @@ export type FormField =
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField
-  | ShowHideFormField;
+  | ShowHideFormField
+  | CheckboxFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
