@@ -302,7 +302,7 @@ export const formSteps: FormStep[] = [
       {
         name: "deceased.placeOfDeath",
         label: "Place of death",
-        hint: "Enter a house, institution, home address, or parish, if known",
+        hint: "Enter the location where the person died. If you do not know the exact address, provide the town, city, or country.",
         type: "text",
         validation: {
           required: "Place of death is required",
