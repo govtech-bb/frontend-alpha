@@ -398,7 +398,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "check-your-answers",
-    title: "Check Your Answers",
+    title: "Check your answers",
     fields: [],
   },
   {

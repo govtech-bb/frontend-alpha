@@ -4,7 +4,7 @@ import type { FormStep } from "@/types";
 export const formSteps: FormStep[] = [
   {
     id: "personal",
-    title: "Application Details",
+    title: "Application details",
     description: "",
     fields: [
       {
@@ -173,7 +173,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "houseMembers",
-    title: "House Member Details",
+    title: "House member details",
     description: "",
     fields: [
       {
