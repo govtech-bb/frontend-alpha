@@ -26,6 +26,10 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "Address must be at least 5 characters",
+          },
         },
       },
       {
@@ -41,6 +45,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+
+          minLength: {
+            value: 2,
+            message: "Address must be at least 5 characters",
+          },
         },
       },
       {
@@ -208,7 +217,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Reason is required",
           minLength: {
-            value: 10,
+            value: 5,
             message: "Please provide at least 10 characters",
           },
         },
@@ -328,7 +337,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.dateOfBirth",
         label: "Date of birth",
-        placeholder: "For example, December 30, 1986",
+        placeholder: "For example, 12 30 1986",
         type: "date",
         validation: {
           required: "Date of birth is required",
@@ -498,7 +507,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "check-your-answers",
-    title: "Check Your Answers",
+    title: "Check your answers",
     fields: [],
   },
   {
@@ -519,7 +528,7 @@ export const formSteps: FormStep[] = [
         name: "dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
-        placeholder: "For example, December 15, 2025",
+        placeholder: "For example, 12 15 2025",
         type: "date",
         validation: {
           required: "Date is required",
