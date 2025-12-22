@@ -13,6 +13,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Only letters, spaces, hyphens, and apostrophes are allowed",
+          },
           minLength: {
             value: 2,
             message: "First name must be at least 2 characters",
@@ -25,6 +30,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Only letters, spaces, hyphens, and apostrophes are allowed",
+          },
           minLength: {
             value: 2,
             message: "Last name must be at least 2 characters",
@@ -52,12 +62,12 @@ export const formSteps: FormStep[] = [
         validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
+          stateFieldName: "beneficiaries.usePassportInstead",
           description:
             "If you don't have a National ID number, you can use your passport number instead.",
           fields: [
             {
-              name: "applicant.passportNumber",
+              name: "beneficiaries.passportNumber",
               label: "Passport Number",
               type: "text",
               placeholder: "",
@@ -90,26 +100,20 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "beneficiaries.relationshipToChild",
-        label: "What is your relationship to the child?",
-        type: "select",
+        label: "Are you the parent or guardian?",
+        type: "radio",
         validation: {
-          required: "Relationship is required",
+          required: "Select an option",
         },
         options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
         ],
       },
       {
         name: "beneficiaries.relationshipDescription",
-        label: "Please describe your relationship",
+        label: "What is your relationship with the child?",
+        // hint: "For example, nephew, researcher, historian, or authorised representative.",
         type: "text",
         validation: {
           required: "Please describe your relationship",
@@ -120,7 +124,110 @@ export const formSteps: FormStep[] = [
         },
         conditionalOn: {
           field: "beneficiaries.relationshipToChild",
-          value: "other",
+          value: "no",
+        },
+      },
+      //TODO: Allow user to add multiple children
+    ],
+  },
+  {
+    id: "guardian",
+    title: "Tell us about the parent or guardian",
+    description: "",
+    conditionalOn: {
+      field: "beneficiaries.relationshipToChild",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "guardian.firstName",
+        label: "First Name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Only letters, spaces, hyphens, and apostrophes are allowed",
+          },
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "guardian.lastName",
+        label: "Last Name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Only letters, spaces, hyphens, and apostrophes are allowed",
+          },
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "guardian.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+      {
+        name: "guardian.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "guardian.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "guardian.tamisNumber",
+        label: "TAMIS Number",
+        type: "text",
+        validation: {
+          required: "TAMIS Number is required",
+          pattern: {
+            value: "^\\d+$",
+            message: "Please enter numbers only",
+          },
+          minLength: {
+            value: 2,
+            message: "TAMIS number must be at least 2 characters",
+          },
         },
       },
     ],
@@ -180,6 +287,7 @@ export const formSteps: FormStep[] = [
         label: "Postal Code",
         type: "text",
         validation: {
+          required: false,
           pattern: {
             value: "^BB\\d{5}$",
             message: "Enter a valid postal code (e.g., BB17004)",
@@ -212,7 +320,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
-        placeholder: "e.g., 850101-0001",
+        // placeholder: "e.g., 850101-0001",
         validation: {
           required: "ID Number is required",
           pattern: {
@@ -253,185 +361,27 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.tamisNumber",
         label: "TAMIS Number",
-        type: "text",
+        type: "number",
         validation: {
           required: "TAMIS Number is required",
+          pattern: {
+            value: "^\\d+$",
+            message: "Please enter numbers only",
+          },
           minLength: {
             value: 2,
             message: "TAMIS number must be at least 2 characters",
           },
         },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
       },
     ],
   },
-  {
-    id: "guardian-or-parent",
-    title: "Are you the parent or guardian?",
-    description: "",
-    fields: [
-      {
-        name: "guardianOrParentRelationship",
-        label: "Are you the parent or guardian?",
-        hidden: true,
-        type: "radio",
-        validation: {
-          required:
-            "Whether or not you are a parent or guardian to the child is required",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "guardian",
-    title: "Tell us about the guardian",
-    description: "",
-    conditionalOn: {
-      field: "guardianOrParentRelationship",
-      value: "no",
-    },
-    fields: [
-      {
-        name: "guardian.firstName",
-        label: "First Name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
-          },
-        },
-      },
-      {
-        name: "guardian.lastName",
-        label: "Last Name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-        },
-      },
-      {
-        name: "guardian.idNumber",
-        label: "National Identification (ID) Number",
-        type: "text",
-        validation: {
-          required: "ID Number is required",
-          pattern: {
-            value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-      {
-        name: "guardian.passportDetails",
-        label: "",
-        type: "showHide",
-        validation: { required: false },
-        showHide: {
-          summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
-          description:
-            "If you don't have a National ID number, you can use your passport number instead.",
-          fields: [
-            {
-              name: "applicant.passportNumber",
-              label: "Passport Number",
-              type: "text",
-              placeholder: "",
-              validation: {
-                required: "Passport number is required",
-                minLength: {
-                  value: 6,
-                  message: "Passport number must be at least 6 characters",
-                },
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "guardian.tamisNumber",
-        label: "TAMIS Number",
-        type: "text",
-        validation: {
-          required: "TAMIS Number is required",
-          minLength: {
-            value: 2,
-            message: "TAMIS number must be at least 2 characters",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-    ],
-  },
-  {
-    id: "contact",
-    title: "Contact details",
-    description: "Your contact information",
-    fields: [
-      {
-        name: "contact.addressLine1",
-        label: "Address Line 1",
-        type: "text",
-        placeholder: "123 Main Street",
-        validation: {
-          required: "Address line 1 is required",
-          minLength: {
-            value: 5,
-            message: "Address must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "contact.addressLine2",
-        label: "Address Line 2",
-        type: "text",
-        placeholder: "Apt 4B (Optional)",
-        validation: { required: false },
-      },
-      {
-        name: "contact.parish",
-        label: "Parish",
-        type: "select",
-        validation: {
-          required: "Parish is required",
-        },
-        options: barbadosParishes,
-      },
-      {
-        name: "contact.telephoneNumber",
-        label: "Telephone Number",
-        type: "tel",
-        placeholder: "246 234 5678",
-        validation: {
-          required: "Telephone number is required",
-          pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
-          },
-        },
-      },
-    ],
-  },
+
   {
     id: "bankAccount",
     title: "Bank account information",
     description:
-      "In order to receive the $100 Grant, please provide accurate and current banking information to prevent delays in processing this application.",
+      "Add the bank account details for an account which has been used within the last 3 months.  Check your details are correct to avoid delays.",
     fields: [
       {
         name: "bankAccount.accountHolderName",
@@ -441,6 +391,11 @@ export const formSteps: FormStep[] = [
         placeholder: "",
         validation: {
           required: "Name on account is required",
+          pattern: {
+            value: "^[A-Za-z\\s'-]+$",
+            message:
+              "Only letters, spaces, hyphens, and apostrophes are allowed",
+          },
           minLength: {
             value: 2,
             message: "Name must be at least 2 characters",
@@ -450,7 +405,7 @@ export const formSteps: FormStep[] = [
       {
         name: "bankAccount.bankName",
         label: "Bank name",
-        hint: "For example: 'Republic Bank', 'CIBC FirstCaribbean', 'Scotiabank', or 'First Citizens'",
+        hint: "For example: Republic Bank, Scotiabank, CIBC FirstCaribbean",
         type: "text",
         validation: {
           required: "Bank name is required",
@@ -478,6 +433,19 @@ export const formSteps: FormStep[] = [
         name: "bankAccount.branchName",
         label: "Branch name",
         hint: "Enter the branch where the account is held",
+        type: "text",
+        validation: {
+          required: "Branch name is required",
+          minLength: {
+            value: 2,
+            message: "Branch name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "bankAccount.branchCode",
+        label: "Branch code",
+        hint: "Enter the bank branch code used for transfers",
         type: "text",
         validation: {
           required: "Branch name is required",
