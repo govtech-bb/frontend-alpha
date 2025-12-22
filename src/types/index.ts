@@ -60,6 +60,7 @@ export type NestedFormField = {
   validation: NonDateFieldValidation | DateFieldValidation;
   options?: SelectOption[];
   rows?: number;
+  width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
 export type FieldArrayConfig = {
@@ -94,6 +95,7 @@ export type BaseFormField = {
   showHide?: ShowHideConfig; // For showHide type (collapsible disclosure)
   /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
   skipValidationWhenShowHideOpen?: string;
+  width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
 type DateFormField = BaseFormField & {

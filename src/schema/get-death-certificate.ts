@@ -10,6 +10,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.title",
         label: "Title",
         type: "select",
+        width: "short",
         validation: {
           required: "Title is required",
         },
@@ -68,6 +69,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.parish",
         label: "Parish",
         type: "select",
+        width: "medium",
         validation: {
           required: "Parish is required",
         },
@@ -77,6 +79,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.postalCode",
         label: "Postal Code",
         type: "text",
+        width: "short",
         validation: {
           pattern: {
             value: "^BB\\d{5}$",
@@ -325,6 +328,7 @@ export const formSteps: FormStep[] = [
         label: "Number of copies",
         hidden: true,
         type: "number",
+        width: "short",
         validation: {
           required: "Number of copies is required",
           min: {
