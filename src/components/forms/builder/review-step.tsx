@@ -24,8 +24,28 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
 
   // Map form values to their respective sections
   const sections: SectionData[] = formSteps
-    .filter((step) => step.fields.length > 0) // Exclude review step
     .map((step, index) => {
+      // Exclude review step, declaration step, and confirmation step
+      if (
+        step.fields.length === 0 ||
+        step.id === "declaration" ||
+        step.id === "confirmation"
+      ) {
+        return null;
+      }
+
+      // Exclude conditional steps that don't meet their conditions
+      if (step.conditionalOn) {
+        const watchedValue = getNestedValue<unknown>(
+          formValues as Record<string, unknown>,
+          step.conditionalOn.field
+        );
+        if (watchedValue !== step.conditionalOn.value) {
+          return null;
+        }
+      }
+
+      // Create section data with original step index
       const items = step.fields
         .map((field) => {
           // Support nested field names (e.g., "guardian.firstName")
@@ -101,6 +121,7 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
         items,
       };
     })
+    .filter((section): section is SectionData => section !== null) // Remove excluded conditional steps
     .filter((section) => section.items.length > 0); // Only show sections with data
 
   return (

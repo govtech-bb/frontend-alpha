@@ -7,6 +7,7 @@ export type FieldType =
   | "select"
   | "textarea"
   | "radio"
+  | "checkbox"
   | "fieldArray"
   | "showHide";
 
@@ -25,7 +26,7 @@ export type DateValidationRule =
 
 // Base validation rules (all fields can use these)
 type BaseValidationRule = {
-  required?: string;
+  required?: string | false; // string for error message, false to explicitly mark as optional
   minLength?: { value: number; message: string };
   maxLength?: { value: number; message: string };
   pattern?: { value: string; message: string };
@@ -55,9 +56,11 @@ export type NestedFormField = {
   type: Exclude<FieldType, "fieldArray" | "showHide">;
   placeholder?: string;
   hint?: string;
+  hidden?: boolean; // Hide label on form but show on review screen
   validation: NonDateFieldValidation | DateFieldValidation;
   options?: SelectOption[];
   rows?: number;
+  width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
 export type FieldArrayConfig = {
@@ -83,6 +86,7 @@ export type BaseFormField = {
   label: string;
   placeholder?: string;
   hint?: string; // Description text displayed below the label
+  hidden?: boolean; // Hide label on form but show on review screen
   validation: ValidationRule;
   options?: SelectOption[]; // For select and radio fields
   rows?: number; // For textarea
@@ -91,6 +95,7 @@ export type BaseFormField = {
   showHide?: ShowHideConfig; // For showHide type (collapsible disclosure)
   /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
   skipValidationWhenShowHideOpen?: string;
+  width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
 type DateFormField = BaseFormField & {
@@ -102,6 +107,11 @@ type OptionFormField = BaseFormField & {
   type: "select" | "radio";
   validation: NonDateFieldValidation;
   options: SelectOption[];
+};
+
+type CheckboxFormField = BaseFormField & {
+  type: "checkbox";
+  validation: NonDateFieldValidation;
 };
 
 type TextareaFormField = BaseFormField & {
@@ -130,6 +140,7 @@ type ShowHideFormField = BaseFormField & {
 export type FormField =
   | DateFormField
   | OptionFormField
+  | CheckboxFormField
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField
@@ -137,11 +148,33 @@ export type FormField =
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
+export type ConfirmationStepItem = {
+  title: string;
+  content: string;
+  items?: string[];
+};
+
+export type ContactDetails = {
+  title: string;
+  telephoneNumber: string;
+  email: string;
+  address: {
+    line1: string;
+    line2?: string;
+    city: string;
+    country?: string;
+  };
+};
+
 export type FormStep = {
   id: string;
   title: string;
   description?: string;
   fields: FormField[];
+  conditionalOn?: ConditionalRule; // For conditional steps
+  steps?: ConfirmationStepItem[]; // For confirmation pages
+  contactDetails?: ContactDetails; // For confirmation pages
+  enableFeedback?: boolean; // Enable feedback section on confirmation page
 };
 
 export type ApiResponse = {
@@ -151,6 +184,14 @@ export type ApiResponse = {
     formId: string;
     status: string;
     processedAt: string;
+    paymentRequired?: boolean;
+    paymentUrl?: string;
+    paymentToken?: string;
+    paymentId?: string;
+    referenceNumber?: string;
+    amount?: number;
+    description?: string;
+    numberOfCopies?: number;
   };
   errors?: { field: string; message: string; code: string }[];
   message?: string;

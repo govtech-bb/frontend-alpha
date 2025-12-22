@@ -85,7 +85,7 @@ export const formSteps: FormStep[] = [
         name: "guardian.title",
         label: "Title",
         type: "select",
-        validation: {},
+        validation: { required: false },
         options: [
           { label: "Select title", value: "" },
           { label: "Mr", value: "mr" },
@@ -112,7 +112,7 @@ export const formSteps: FormStep[] = [
         label: "Middle Name",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "guardian.lastName",
@@ -164,7 +164,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "contact",
-    title: "Contact Details",
+    title: "Contact details",
     description: "Your contact information",
     fields: [
       {
@@ -185,7 +185,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "Apt 4B (Optional)",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "contact.parish",
@@ -200,13 +200,13 @@ export const formSteps: FormStep[] = [
         name: "contact.telephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "+1 (246) 234-5678",
+        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
           },
         },
       },

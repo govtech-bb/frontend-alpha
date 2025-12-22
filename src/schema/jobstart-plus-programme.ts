@@ -32,7 +32,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.middleName",
         label: "Middle Name",
         type: "text",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "applicant.lastName",
@@ -98,7 +98,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.passportDetails",
         label: "",
         type: "showHide",
-        validation: {},
+        validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
           stateFieldName: "applicant.usePassportInstead",
@@ -190,7 +190,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "contact-details",
-    title: "Your Contact Details",
+    title: "Your contact details",
     description: "Description",
     fields: [
       {
@@ -211,7 +211,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
 
       {
@@ -318,9 +318,9 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
           },
         },
       },
@@ -328,7 +328,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "emergency-contact",
-    title: "Emergency Contact Details",
+    title: "Emergency contact details",
     description: "Description",
     fields: [
       {
@@ -398,7 +398,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
 
       {
@@ -414,13 +414,13 @@ export const formSteps: FormStep[] = [
         name: "emergency.telephoneNumber",
         label: "Phone Number",
         type: "tel",
-        placeholder: "+1 (246) 234-5678",
+        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
           },
         },
       },
@@ -528,7 +528,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "post-secondary-education-training",
-    title: "Name of institution for Post-Secondary Education or Training",
+    title: "Name of institution for post-secondary education or training",
     description:
       "Add information about college, university and training courses you have completed",
     fields: [
@@ -584,21 +584,21 @@ export const formSteps: FormStep[] = [
         label: "What courses or subjects did you study?",
         type: "textarea",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "postSecondaryEducation.qualificationsObtained",
         label: "What are your qualifications?",
         type: "textarea",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
       {
         name: "postSecondaryEducation.gradesObtained",
         label: "What are your grades?",
         type: "textarea",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
     ],
   },
@@ -666,7 +666,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "check-your-answers",
-    title: "Check Your Answers",
+    title: "Check your answers",
     fields: [],
   },
 ];

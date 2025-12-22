@@ -81,9 +81,6 @@ export function RegisterBirthForm() {
         goNext();
         clearFormData();
       } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: needed for debugging submission errors
-        console.error("Error submitting birth registration:", error);
-
         // Set error message for user
         setSubmissionError(
           error instanceof Error

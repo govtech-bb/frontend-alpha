@@ -4,7 +4,7 @@ import type { FormStep } from "@/types";
 export const formSteps: FormStep[] = [
   {
     id: "personal",
-    title: "Application Details",
+    title: "Application details",
     description: "",
     fields: [
       {
@@ -81,7 +81,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
 
       {
@@ -98,7 +98,7 @@ export const formSteps: FormStep[] = [
         label: "Postal Code",
         type: "number",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
     ],
   },
@@ -125,7 +125,7 @@ export const formSteps: FormStep[] = [
         label: "Address Line 2",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
 
       {
@@ -142,7 +142,7 @@ export const formSteps: FormStep[] = [
         label: "Postal Code",
         type: "number",
         placeholder: "",
-        validation: {},
+        validation: { required: false },
       },
     ],
   },
@@ -173,7 +173,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "houseMembers",
-    title: "House Member Details",
+    title: "House member details",
     description: "",
     fields: [
       {
@@ -219,7 +219,7 @@ export const formSteps: FormStep[] = [
         name: "houseMembers.addAnother",
         label: "Do you want to add another member?",
         type: "radio",
-        validation: {},
+        validation: { required: false },
         options: [
           { label: "No", value: "no" },
           { label: "Yes", value: "yes" },

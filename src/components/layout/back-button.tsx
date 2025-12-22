@@ -3,7 +3,6 @@
 import { BackButton as _BackButton } from "@govtech-bb/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import { generateBreadcrumbs } from "@/lib/breadcrumbs";
 import { cn } from "@/lib/utils";
 import { ChevronLeftSVG } from "../icons/chevron-left";
@@ -18,18 +17,7 @@ export const BackButton = ({
   mode = "back",
 }: BackButtonProps) => {
   const pathname = usePathname();
-  const [isClient, setIsClient] = useState(false);
-
   const breadcrumbs = generateBreadcrumbs(pathname);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // Don't render on server to avoid hydration mismatch
-  if (!isClient) {
-    return <div className="h-6" />; // Placeholder to prevent layout shift
-  }
 
   // Don't show on home page
   if (pathname === "/") {

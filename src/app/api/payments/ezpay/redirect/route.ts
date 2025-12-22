@@ -1,4 +1,3 @@
-/** biome-ignore-all lint/suspicious/noConsole: Console logging required for payment redirect debugging */
 import { type NextRequest, NextResponse } from "next/server";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import {
@@ -16,14 +15,32 @@ export async function GET(request: NextRequest) {
   const transactionNumber = searchParams.get("tx");
   const referenceNumber = searchParams.get("rid");
 
-  console.log("EZPay Redirect - Transaction:", transactionNumber);
-  console.log("EZPay Redirect - Reference:", referenceNumber);
-
   // Extract form ID from reference number
   let formId: string | null = null;
   if (referenceNumber) {
     formId = parseFormIdFromReference(referenceNumber);
-    console.log("EZPay Redirect - Parsed form ID:", formId);
+  }
+
+  // Get the correct origin - use referer header which contains where the user came from
+  const referer = request.headers.get("referer");
+  let origin: string;
+
+  if (referer) {
+    // Extract origin from referer URL
+    try {
+      const refererUrl = new URL(referer);
+      origin = refererUrl.origin;
+    } catch {
+      // Fallback to constructing from headers
+      const host = request.headers.get("host") || request.nextUrl.host;
+      const protocol = host.includes("localhost") ? "http" : "https";
+      origin = `${protocol}://${host}`;
+    }
+  } else {
+    // No referer, construct from headers
+    const host = request.headers.get("host") || request.nextUrl.host;
+    const protocol = host.includes("localhost") ? "http" : "https";
+    origin = `${protocol}://${host}`;
   }
 
   // Find the form URL from information architecture
@@ -34,7 +51,6 @@ export async function GET(request: NextRequest) {
       const page = category.pages.find((p) => p.slug === formId);
       if (page) {
         formUrl = `/${category.slug}/${page.slug}/form`;
-        console.log("EZPay Redirect - Found form URL:", formUrl);
         break;
       }
     }
@@ -42,16 +58,8 @@ export async function GET(request: NextRequest) {
 
   // If form not found or missing parameters, redirect to home with error alert
   if (!(formUrl && (transactionNumber || referenceNumber))) {
-    const errorDetails = {
-      reason: formUrl ? "missing-parameters" : "form-not-found",
-      formId,
-      transactionNumber,
-      referenceNumber,
-    };
-    console.error("EZPay Redirect - Critical error:", errorDetails);
-
     // Redirect to home with alert parameters
-    const homeUrl = new URL("/", request.url);
+    const homeUrl = new URL("/", origin);
     homeUrl.searchParams.set("payment_error", "true");
     homeUrl.searchParams.set(
       "error_message",
@@ -69,14 +77,11 @@ export async function GET(request: NextRequest) {
       reference: referenceNumber || undefined,
     });
 
-    console.log("EZPay Redirect - Verify result:", verifyResult);
-
     // Determine payment status
     const status = verifyResult._status;
-    console.log("EZPay Redirect - Payment status:", status);
 
     // Build redirect URL to form with payment status parameters
-    const redirectUrl = new URL(formUrl, request.url);
+    const redirectUrl = new URL(formUrl, origin);
     redirectUrl.searchParams.set("payment_status", status);
     redirectUrl.searchParams.set("tx", transactionNumber || "");
     redirectUrl.searchParams.set("ref", referenceNumber || "");
@@ -90,24 +95,10 @@ export async function GET(request: NextRequest) {
       redirectUrl.searchParams.set("payment_failed", "true");
     }
 
-    console.log(
-      "EZPay Redirect - Redirecting to form:",
-      redirectUrl.toString()
-    );
     return NextResponse.redirect(redirectUrl);
   } catch (error) {
-    // Log error details but still redirect to form with error status
-    console.error("EZPay Redirect - Verification error:", {
-      error: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined,
-      transactionNumber,
-      referenceNumber,
-      formId,
-      formUrl,
-    });
-
     // Redirect to form with error status
-    const redirectUrl = new URL(formUrl, request.url);
+    const redirectUrl = new URL(formUrl, origin);
     redirectUrl.searchParams.set("payment_status", "error");
     redirectUrl.searchParams.set(
       "payment_error",

@@ -13,7 +13,7 @@ It should not take more than 10 minutes.
 
 ## What you will need
 
-As well as your contact details, the application form ask you to upload:
+As well as your contact details, the application form asks you to upload:
 
 - 2 references from 2 trustworthy and respected people
 - a Police Certificate of Character
