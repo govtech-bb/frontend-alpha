@@ -144,7 +144,7 @@ export async function POST(request: NextRequest) {
       { message: "Birth registration submitted successfully" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { message: "Failed to submit birth registration" },
       { status: 500 }

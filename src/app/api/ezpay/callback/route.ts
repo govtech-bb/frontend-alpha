@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     const response = { received: true, timestamp: new Date().toISOString() };
 
     return NextResponse.json(response);
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: "Failed to process callback", received: false },
       { status: 500 }
