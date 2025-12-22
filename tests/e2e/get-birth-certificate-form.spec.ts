@@ -13,27 +13,6 @@ test.describe("Get Birth Certificate Form", () => {
     // Set up API response interceptor to capture the external API call
     let apiRequestBody: unknown = null;
     let apiResponseStatus = 0;
-    let _apiResponseReceived = false;
-
-    // Intercept the external API call
-    await page.route(
-      "**/api/forms/get-birth-certificate/submit",
-      async (route) => {
-        const request = route.request();
-        apiRequestBody = request.postDataJSON();
-
-        // Continue with the actual request to the external API
-        await route.continue();
-      }
-    );
-
-    // Listen for the API response
-    const responsePromise = page.waitForResponse(
-      (response) =>
-        response.url().includes("/forms/get-birth-certificate/submit") &&
-        response.request().method() === "POST",
-      { timeout: 15_000 }
-    );
 
     page.on("response", async (response) => {
       if (
@@ -41,7 +20,6 @@ test.describe("Get Birth Certificate Form", () => {
         response.request().method() === "POST"
       ) {
         apiResponseStatus = response.status();
-        _apiResponseReceived = true;
         apiRequestBody = await response.request().postDataJSON();
       }
     });
@@ -75,7 +53,7 @@ test.describe("Get Birth Certificate Form", () => {
           "st-thomas",
         ]),
         postalCode: `BB${faker.string.numeric(5)}`,
-        idNumber: faker.string.alphanumeric(10).toUpperCase(),
+        idNumber: `${faker.string.numeric(6)}-${faker.string.numeric(4)}`,
       },
       applyingForYourself: "yes",
       birthDetails: {
@@ -153,8 +131,8 @@ test.describe("Get Birth Certificate Form", () => {
     // Wait a moment for form state to update
     await page.waitForTimeout(500);
 
-    // Click Next button and wait for navigation
-    await page.getByRole("button", { name: /next/i }).click();
+    // Click Continue button and wait for navigation
+    await page.getByRole("button", { name: /continue/i }).click();
     await page.waitForURL(/step=applying-for-yourself/, { timeout: 10_000 });
 
     // Step 2: Applying for yourself
@@ -168,7 +146,7 @@ test.describe("Get Birth Certificate Form", () => {
     await page.getByText("Yes - the certificate is for me").click();
     await page.waitForTimeout(500);
 
-    await page.getByRole("button", { name: /next/i }).click();
+    await page.getByRole("button", { name: /continue/i }).click();
     await page.waitForURL(/step=birth-details/, { timeout: 10_000 });
 
     // Step 3: Birth details
@@ -196,8 +174,8 @@ test.describe("Get Birth Certificate Form", () => {
       .fill(testData.birthDetails.placeOfBaptism);
 
     await page.waitForTimeout(500);
-    await page.getByRole("button", { name: /next/i }).click();
-    await page.waitForURL(/step=parents/, { timeout: 10_000 });
+    await page.getByRole("button", { name: /continue/i }).click();
+    await page.waitForURL(/step=parents-self/, { timeout: 10_000 });
 
     // Step 4: Parents' names
     await expect(
@@ -218,7 +196,7 @@ test.describe("Get Birth Certificate Form", () => {
       .fill(testData.parents.mother.lastName);
 
     await page.waitForTimeout(500);
-    await page.getByRole("button", { name: /next/i }).click();
+    await page.getByRole("button", { name: /continue/i }).click();
     await page.waitForURL(/step=order-details/, { timeout: 10_000 });
 
     // Step 5: Order details
@@ -233,7 +211,7 @@ test.describe("Get Birth Certificate Form", () => {
       .fill(testData.order.numberOfCopies.toString());
 
     await page.waitForTimeout(500);
-    await page.getByRole("button", { name: /next/i }).click();
+    await page.getByRole("button", { name: /continue/i }).click();
     await page.waitForURL(/step=check-your-answers/, { timeout: 10_000 });
 
     // Step 6: Review and submit
@@ -248,6 +226,35 @@ test.describe("Get Birth Certificate Form", () => {
     await expect(
       page.getByText(testData.applicant.lastName, { exact: false })
     ).toBeVisible();
+
+    // Click Continue to go to declaration step
+    await page.waitForTimeout(500);
+    await page.getByRole("button", { name: /continue/i }).click();
+    await page.waitForURL(/step=declaration/, { timeout: 10_000 });
+
+    // Step 7: Declaration
+    await expect(
+      page.getByRole("heading", { name: /declaration/i })
+    ).toBeVisible({ timeout: 10_000 });
+
+    // Check the declaration checkbox - click on the entire checkbox component area
+    // The checkbox is rendered as a button with role="checkbox"
+    await page.locator('button[role="checkbox"]').click();
+
+    // Fill in the date of declaration using accessible textbox roles
+    const today = new Date();
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
+    const year = today.getFullYear().toString();
+
+    await page.getByRole("textbox", { name: "Month" }).fill(month);
+    await page.getByRole("textbox", { name: "Day" }).fill(day);
+    await page.getByRole("textbox", { name: "Year" }).fill(year);
+
+    await page.waitForTimeout(500);
+
+    // Take a screenshot after filling declaration
+    await page.screenshot({ path: "test-results/declaration-filled.png" });
 
     // Listen for all console messages
     const consoleMessages: { type: string; text: string }[] = [];
@@ -264,10 +271,27 @@ test.describe("Get Birth Certificate Form", () => {
     // Take a screenshot before submission
     await page.screenshot({ path: "test-results/before-submit.png" });
 
+    // Check if there are any validation errors before submitting
+    const errorSummary = page.locator("#error-summary");
+    if (await errorSummary.isVisible().catch(() => false)) {
+      console.log("Validation errors found before submit:");
+      const errorText = await errorSummary.textContent();
+      console.log(errorText);
+      await page.screenshot({ path: "test-results/validation-errors.png" });
+    }
+
     // Click Submit button and wait for network request
     console.log("Clicking Submit button...");
     const submitButton = page.getByRole("button", { name: /submit/i });
     await submitButton.scrollIntoViewIfNeeded();
+
+    // Set up response promise before clicking submit
+    const responsePromise = page.waitForResponse(
+      (response) =>
+        response.url().includes("/forms/get-birth-certificate/submit") &&
+        response.request().method() === "POST",
+      { timeout: 15_000 }
+    );
 
     // Wait for any POST request after clicking submit
     const requestPromise = page
@@ -384,7 +408,7 @@ test.describe("Get Birth Certificate Form", () => {
     await expect(page.locator("form")).toBeVisible();
 
     // Try to proceed without filling required fields
-    await page.getByRole("button", { name: /next/i }).click();
+    await page.getByRole("button", { name: /continue/i }).click();
 
     // Should show validation errors
     await expect(page.getByText(/required/i).first()).toBeVisible();
@@ -426,7 +450,7 @@ test.describe("Get Birth Certificate Form", () => {
     }
 
     // Should be able to proceed
-    await page.getByRole("button", { name: /next/i }).click();
+    await page.getByRole("button", { name: /continue/i }).click();
 
     // Should move to next step
     await expect(
