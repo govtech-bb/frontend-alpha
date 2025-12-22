@@ -259,7 +259,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "contact",
-    title: "Contact Details",
+    title: "Contact details",
     description: "Your contact information",
     fields: [
       {
@@ -309,7 +309,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "emergency",
-    title: "Emergency Contact",
+    title: "Emergency contact",
     description: "Provide emergency contact details",
     fields: [
       {

@@ -190,7 +190,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "contact-details",
-    title: "Your Contact Details",
+    title: "Your contact details",
     description: "Description",
     fields: [
       {
@@ -328,7 +328,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "emergency-contact",
-    title: "Emergency Contact Details",
+    title: "Emergency contact details",
     description: "Description",
     fields: [
       {
@@ -528,7 +528,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "post-secondary-education-training",
-    title: "Name of institution for Post-Secondary Education or Training",
+    title: "Name of institution for post-secondary education or training",
     description:
       "Add information about college, university and training courses you have completed",
     fields: [
@@ -666,7 +666,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "check-your-answers",
-    title: "Check Your Answers",
+    title: "Check your answers",
     fields: [],
   },
 ];

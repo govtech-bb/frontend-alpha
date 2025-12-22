@@ -3,6 +3,7 @@ import {
   DateInput,
   type DateInputValue,
   Input,
+  NumberInput,
   Radio,
   RadioGroup,
   Select,
@@ -21,6 +22,22 @@ type DynamicFieldProps = {
   field: FormField;
   conditionalFields?: FormField[];
 };
+
+/**
+ * Get the CSS class for field width
+ */
+function getWidthClass(width?: "short" | "medium" | "full"): string {
+  switch (width) {
+    case "short":
+      return "w-full md:w-1/3";
+    case "medium":
+      return "w-full md:w-1/2";
+    case "full":
+      return "w-full";
+    default:
+      return "w-full";
+  }
+}
 
 export function DynamicField({
   field,
@@ -175,6 +192,26 @@ export function DynamicField({
                 rows={conditionalField.rows || 4}
               />
             </div>
+          ) : conditionalField.type === "number" ? (
+            <Controller
+              control={control}
+              name={conditionalField.name as keyof FormData}
+              render={({ field: controllerField }) => (
+                <NumberInput
+                  description={conditionalField.hint}
+                  error={conditionalError?.message}
+                  label={conditionalField.hidden ? "" : conditionalField.label}
+                  name={controllerField.name}
+                  onBlur={controllerField.onBlur}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const value = e.target.value;
+                    controllerField.onChange(value === "" ? "" : Number(value));
+                  }}
+                  placeholder={conditionalField.placeholder}
+                  value={controllerField.value as number | ""}
+                />
+              )}
+            />
           ) : conditionalField.hint ? (
             <div className="flex flex-col gap-1">
               {!conditionalField.hidden && (
@@ -212,7 +249,7 @@ export function DynamicField({
   };
 
   return (
-    <div id={field.name}>
+    <div className={getWidthClass(field.width)} id={field.name}>
       {field.type === "date" ? (
         <Controller
           control={control}
@@ -369,6 +406,30 @@ export function DynamicField({
                             rows={childField.rows || 4}
                           />
                         </div>
+                      ) : childField.type === "number" ? (
+                        <Controller
+                          control={control}
+                          name={childField.name as keyof FormData}
+                          render={({ field: controllerField }) => (
+                            <NumberInput
+                              description={childField.hint}
+                              error={childError?.message}
+                              label={childField.hidden ? "" : childField.label}
+                              name={controllerField.name}
+                              onBlur={controllerField.onBlur}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                const value = e.target.value;
+                                controllerField.onChange(
+                                  value === "" ? "" : Number(value)
+                                );
+                              }}
+                              placeholder={childField.placeholder}
+                              value={controllerField.value as number | ""}
+                            />
+                          )}
+                        />
                       ) : (
                         <Input
                           error={childError?.message}
@@ -406,6 +467,26 @@ export function DynamicField({
             rows={field.rows || 4}
           />
         </div>
+      ) : field.type === "number" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: controllerField }) => (
+            <NumberInput
+              description={field.hint}
+              error={error?.message}
+              label={field.hidden ? "" : field.label}
+              name={controllerField.name}
+              onBlur={controllerField.onBlur}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const value = e.target.value;
+                controllerField.onChange(value === "" ? "" : Number(value));
+              }}
+              placeholder={field.placeholder}
+              value={controllerField.value as number | ""}
+            />
+          )}
+        />
       ) : field.hint ? (
         <div className="flex flex-col gap-1">
           {!field.hidden && (

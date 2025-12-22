@@ -113,7 +113,7 @@ export const formSteps: FormStep[] = [
 
   {
     id: "contact",
-    title: "Contact Details",
+    title: "Contact details",
     description: "Your contact information",
     fields: [
       {
