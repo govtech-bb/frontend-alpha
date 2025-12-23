@@ -4,12 +4,22 @@ import {
   dateValidation,
 } from "@/lib/validation/date-validation";
 import type {
+  ConditionalRule,
   DateFieldValidation,
   FormField,
   FormStep,
   NestedFormField,
   NonDateFieldValidation,
 } from "@/types";
+
+/**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -557,7 +567,10 @@ export function generateFormSchema(formSteps: FormStep[]) {
 
     // Validate conditional fields (conditionalOn)
     for (const field of conditionalFields) {
-      if (!field.conditionalOn) continue;
+      if (
+        !(field.conditionalOn && isSimpleConditionalRule(field.conditionalOn))
+      )
+        continue;
 
       const parentValue = getNestedValue(
         data as Record<string, unknown>,

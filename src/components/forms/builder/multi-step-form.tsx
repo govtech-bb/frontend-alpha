@@ -16,6 +16,15 @@ import { ConfirmationPage } from "./confirmation-step";
 import { DynamicStep } from "./dynamic-step";
 
 /**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
+
+/**
  * Sets a nested value in an object using dot notation path
  * Creates intermediate objects as needed
  */
@@ -499,7 +508,7 @@ export default function DynamicMultiStepForm({
           for (const condition of step.conditionalOn.or) {
             fields.add(condition.field);
           }
-        } else {
+        } else if (isSimpleConditionalRule(step.conditionalOn)) {
           fields.add(step.conditionalOn.field);
         }
       }
@@ -733,12 +742,8 @@ export default function DynamicMultiStepForm({
     for (const step of conditionalSteps) {
       if (!step.conditionalOn) continue;
 
-      const watchedValue = getNestedValue<unknown>(
-        cleanedData,
-        step.conditionalOn.field
-      );
-
-      const isVisible = watchedValue === step.conditionalOn.value;
+      // Use isStepVisible helper which handles both simple and OR logic
+      const isVisible = isStepVisible(step, cleanedData as FormData);
 
       for (const field of step.fields) {
         const fieldParts = field.name?.split(".");
@@ -834,18 +839,33 @@ export default function DynamicMultiStepForm({
   };
 
   // Helper function to check if a step should be shown based on its conditionalOn property
-  const isStepVisible = (step: FormStep): boolean => {
+  const isStepVisibleInNav = (step: FormStep): boolean => {
     // Exclude final steps (confirmation/thank-you) from regular navigation
     if (step.id === "confirmation" || step.id === "thank-you") return false;
 
     if (!step.conditionalOn) return true;
 
     const formValues = methods.getValues();
-    const watchedValue = getNestedValue<unknown>(
-      formValues as Record<string, unknown>,
-      step.conditionalOn.field
-    );
-    return watchedValue === step.conditionalOn.value;
+    if (isSimpleConditionalRule(step.conditionalOn)) {
+      const watchedValue = getNestedValue<unknown>(
+        formValues as Record<string, unknown>,
+        step.conditionalOn.field
+      );
+      return watchedValue === step.conditionalOn.value;
+    }
+
+    // Handle OR logic
+    if ("or" in step.conditionalOn) {
+      return step.conditionalOn.or.some((condition) => {
+        const fieldValue = getNestedValue(
+          formValues as Record<string, unknown>,
+          condition.field
+        );
+        return fieldValue === condition.value;
+      });
+    }
+
+    return false;
   };
 
   // Helper function to find the next visible step index
