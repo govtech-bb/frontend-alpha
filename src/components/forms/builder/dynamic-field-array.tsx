@@ -35,6 +35,7 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
   const {
     register,
     control,
+    watch,
     formState: { errors },
     getValues,
   } = useFormContext<FormData>();
@@ -146,15 +147,58 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
                     `${field.name}.${index}.${nestedField.name}` as keyof FormData;
                   const fieldError = itemErrors?.[nestedField.name];
 
+                  // Check if field should be shown based on conditionalOn
+                  if (nestedField.conditionalOn) {
+                    const conditionalFieldName =
+                      `${field.name}.${index}.${nestedField.conditionalOn.field}` as keyof FormData;
+                    const conditionalValue = watch(conditionalFieldName);
+
+                    if (conditionalValue !== nestedField.conditionalOn.value) {
+                      return null; // Don't render if condition not met
+                    }
+                  }
+
+                  // Render select field
                   if (nestedField.type === "select" && nestedField.options) {
-                    return (
+                    const options = nestedField.options;
+                    return nestedField.hint ? (
+                      <div
+                        className="flex flex-col gap-1"
+                        key={nestedField.name}
+                      >
+                        <label
+                          className="font-bold text-lg"
+                          htmlFor={`${field.name}.${index}.${nestedField.name}`}
+                        >
+                          {nestedField.label}
+                        </label>
+                        <Text
+                          as="p"
+                          className="text-neutral-midgrey"
+                          size="body"
+                        >
+                          {nestedField.hint}
+                        </Text>
+                        <Select
+                          error={fieldError?.message}
+                          id={`${field.name}.${index}.${nestedField.name}`}
+                          {...register(fieldName)}
+                        >
+                          {options.map((option) => (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          ))}
+                        </Select>
+                      </div>
+                    ) : (
                       <Select
                         error={fieldError?.message}
                         key={nestedField.name}
                         label={nestedField.label}
                         {...register(fieldName)}
                       >
-                        {nestedField.options.map((option) => (
+                        {options.map((option) => (
                           <option key={option.value} value={option.value}>
                             {option.label}
                           </option>
@@ -163,6 +207,36 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
                     );
                   }
 
+                  // Render radio field
+                  if (nestedField.type === "radio" && nestedField.options) {
+                    const options = nestedField.options;
+                    return (
+                      <Controller
+                        control={control}
+                        key={nestedField.name}
+                        name={fieldName}
+                        render={({ field: controllerField }) => (
+                          <RadioGroup
+                            error={fieldError?.message}
+                            label={nestedField.label}
+                            onValueChange={controllerField.onChange}
+                            value={controllerField.value as string}
+                          >
+                            {options.map((option) => (
+                              <Radio
+                                id={`${fieldName}-${option.value}`}
+                                key={option.value}
+                                label={option.label}
+                                value={option.value}
+                              />
+                            ))}
+                          </RadioGroup>
+                        )}
+                      />
+                    );
+                  }
+
+                  // Render text/other input fields
                   return (
                     <Input
                       error={fieldError?.message}

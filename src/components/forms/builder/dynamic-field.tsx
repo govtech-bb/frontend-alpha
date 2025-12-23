@@ -234,17 +234,44 @@ export function DynamicField({
               }}
             />
           ) : conditionalField.type === "select" ? (
-            <Select
-              error={conditionalError?.message}
-              label={conditionalField.hidden ? "" : conditionalField.label}
-              {...register(conditionalField.name as keyof FormData)}
-            >
-              {conditionalField.options?.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </Select>
+            conditionalField.hint ? (
+              <div className="flex flex-col gap-1">
+                {!conditionalField.hidden && (
+                  <label
+                    className="font-bold text-lg"
+                    htmlFor={conditionalField.name}
+                  >
+                    {conditionalField.label}
+                  </label>
+                )}
+                <Text as="p" className="text-neutral-midgrey" size="body">
+                  {conditionalField.hint}
+                </Text>
+                <Select
+                  error={conditionalError?.message}
+                  id={conditionalField.name}
+                  {...register(conditionalField.name as keyof FormData)}
+                >
+                  {conditionalField.options?.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </Select>
+              </div>
+            ) : (
+              <Select
+                error={conditionalError?.message}
+                label={conditionalField.hidden ? "" : conditionalField.label}
+                {...register(conditionalField.name as keyof FormData)}
+              >
+                {conditionalField.options?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </Select>
+            )
           ) : conditionalField.type === "textarea" ? (
             <div className="flex flex-col gap-1">
               {!conditionalField.hidden && (
@@ -326,7 +353,9 @@ export function DynamicField({
 
   return (
     <div className={getWidthClass(field.width)} id={field.name}>
-      {field.type === "date" ? (
+      {field.type === "fieldArray" ? (
+        <DynamicFieldArray field={field} />
+      ) : field.type === "date" ? (
         <Controller
           control={control}
           name={field.name as keyof FormData}
@@ -352,17 +381,41 @@ export function DynamicField({
         />
       ) : field.type === "select" ? (
         <>
-          <Select
-            error={error?.message}
-            label={field.hidden ? "" : field.label}
-            {...register(field.name as keyof FormData)}
-          >
-            {field.options?.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
+          {field.hint ? (
+            <div className="flex flex-col gap-1">
+              {!field.hidden && (
+                <label className="font-bold text-lg" htmlFor={field.name}>
+                  {field.label}
+                </label>
+              )}
+              <Text as="p" className="text-neutral-midgrey" size="body">
+                {field.hint}
+              </Text>
+              <Select
+                error={error?.message}
+                id={field.name}
+                {...register(field.name as keyof FormData)}
+              >
+                {field.options?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          ) : (
+            <Select
+              error={error?.message}
+              label={field.hidden ? "" : field.label}
+              {...register(field.name as keyof FormData)}
+            >
+              {field.options?.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </Select>
+          )}
           {/* Render conditional fields for select */}
           {conditionalFields.map((cf) => renderConditionalField(cf))}
         </>

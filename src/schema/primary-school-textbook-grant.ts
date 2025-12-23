@@ -1,251 +1,289 @@
 import { barbadosParishes } from "@/data/constants";
 import type { FormStep } from "@/types";
 
-export const formSteps: FormStep[] = [
+// Helper function to create child basic info fields
+const createChildFields = (childIndex: number) => [
   {
-    id: "beneficiaries",
-    title: "Tell us about the child",
-    description: "",
-    fields: [
-      {
-        name: "beneficiaries.firstName",
-        label: "First Name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          pattern: {
-            value: "^[A-Za-z\\s'-]+$",
-            message:
-              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
-          },
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
-          },
-        },
+    name: `beneficiaries.${childIndex}.firstName`,
+    label: "First name",
+    type: "text" as const,
+    validation: {
+      required: "First name is required",
+      pattern: {
+        value: "^[A-Za-z\\s'-]+$",
+        message:
+          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
       },
-      {
-        name: "beneficiaries.lastName",
-        label: "Last Name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-          pattern: {
-            value: "^[A-Za-z\\s'-]+$",
-            message:
-              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
-          },
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-        },
+      minLength: {
+        value: 2,
+        message: "First name must be at least 2 characters",
       },
-      {
-        name: "beneficiaries.idNumber",
-        label: "National Identification (ID) Number",
-        width: "medium",
-        type: "text",
-        validation: {
-          required: "ID Number is required",
-          pattern: {
-            value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "beneficiaries.usePassportInstead",
+    },
+  },
+  {
+    name: `beneficiaries.${childIndex}.lastName`,
+    label: "Last name",
+    type: "text" as const,
+    validation: {
+      required: "Last name is required",
+      pattern: {
+        value: "^[A-Za-z\\s'-]+$",
+        message:
+          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
       },
-      {
-        name: "beneficiaries.passportDetails",
-        label: "",
-        type: "showHide",
-        validation: { required: false },
-        showHide: {
-          summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
-          description:
-            "If you don't have a National ID number, you can use your passport number instead.",
-          fields: [
-            {
-              name: "beneficiaries.passportNumber",
-              label: "Passport Number",
-              type: "text",
-              placeholder: "",
-              validation: {
-                required: "Passport number is required",
-                minLength: {
-                  value: 6,
-                  message: "Passport number must be at least 6 characters",
-                },
-              },
+      minLength: {
+        value: 2,
+        message: "Last name must be at least 2 characters",
+      },
+    },
+  },
+  {
+    name: `beneficiaries.${childIndex}.idNumber`,
+    label: "National Identification (ID) number",
+    width: "medium" as const,
+    type: "text" as const,
+    validation: {
+      required: "ID Number is required",
+      pattern: {
+        value: "^\\d{6}-\\d{4}$",
+        message: "Enter a valid ID number (e.g., 850101-0001)",
+      },
+    },
+    skipValidationWhenShowHideOpen: `beneficiaries.${childIndex}.usePassportInstead`,
+  },
+  {
+    name: `beneficiaries.${childIndex}.passportDetails`,
+    label: "",
+    type: "showHide" as const,
+    validation: { required: false as const },
+    showHide: {
+      summary: "Use passport number instead",
+      stateFieldName: `beneficiaries.${childIndex}.usePassportInstead`,
+      description:
+        "If you don't have a National ID number, you can use your passport number instead.",
+      fields: [
+        {
+          name: `beneficiaries.${childIndex}.passportNumber`,
+          label: "Passport number",
+          type: "text" as const,
+          placeholder: "",
+          validation: {
+            required: "Passport number is required",
+            minLength: {
+              value: 6,
+              message: "Passport number must be at least 6 characters",
             },
-          ],
-        },
-      },
-      {
-        name: "beneficiaries.class",
-        label: "What class are they currently in?",
-        hint: "If they are between school years, add the class they are going into",
-        type: "select",
-        validation: {
-          required: "Class is required",
-        },
-        options: [
-          { label: "Select class", value: "" },
-          { label: "Class 1", value: "1" },
-          { label: "Class 2", value: "2" },
-          { label: "Class 3", value: "3" },
-          { label: "Class 4", value: "4" },
-        ],
-      },
-      {
-        name: "beneficiaries.isParentOrGuardian",
-        label: "Are you the parent or guardian?",
-        type: "radio",
-        validation: {
-          required: "Relationship is required",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-      {
-        name: "beneficiaries.relationshipDescription",
-        label: "What is your relationship with the child?",
-        type: "text",
-        validation: {
-          required: "Please describe your relationship",
-          minLength: {
-            value: 2,
-            message: "Please provide at least 2 characters",
           },
         },
-        conditionalOn: {
-          field: "beneficiaries.isParentOrGuardian",
-          value: "no",
-        },
-      },
-      {
-        name: "beneficiaries.addAnotherChild",
-        label: "Do you have another child at the same school?",
-        type: "radio",
-        validation: {
-          required: false,
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
+      ],
+    },
+  },
+  {
+    name: `beneficiaries.${childIndex}.class`,
+    label: "What class are they currently in?",
+    hint: "If they are between school years, add the class they are going into",
+    type: "select" as const,
+    validation: {
+      required: "Class is required",
+    },
+    options: [
+      { label: "Select class", value: "" },
+      { label: "Class 1", value: "1" },
+      { label: "Class 2", value: "2" },
+      { label: "Class 3", value: "3" },
+      { label: "Class 4", value: "4" },
     ],
   },
   {
-    id: "beneficiaries.guardian",
-    title: "Tell us about the guardian",
-    description: "",
+    name: `beneficiaries.${childIndex}.isParentOrGuardian`,
+    label: "Are you the parent or guardian?",
+    type: "radio" as const,
+    validation: {
+      required: "Relationship is required",
+    },
+    options: [
+      { label: "Yes", value: "yes" },
+      { label: "No", value: "no" },
+    ],
+  },
+  {
+    name: `beneficiaries.${childIndex}.relationshipDescription`,
+    label: "What is your relationship with the child?",
+    type: "text" as const,
+    validation: {
+      required: "Please describe your relationship",
+      minLength: {
+        value: 2,
+        message: "Please provide at least 2 characters",
+      },
+    },
     conditionalOn: {
-      field: "beneficiaries.isParentOrGuardian",
+      field: `beneficiaries.${childIndex}.isParentOrGuardian`,
       value: "no",
     },
-    fields: [
-      {
-        name: "beneficiaries.guardian.firstName",
-        label: "First Name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          pattern: {
-            value: "^[A-Za-z\\s'-]+$",
-            message:
-              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+  },
+  ...(childIndex < 4
+    ? [
+        {
+          name: `beneficiaries.${childIndex}.addAnotherChild`,
+          label: "Do you have another child at the same school?",
+          type: "radio" as const,
+          validation: {
+            required: false as const,
           },
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
-          },
-        },
-      },
-      {
-        name: "beneficiaries.guardian.lastName",
-        label: "Last Name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-          pattern: {
-            value: "^[A-Za-z\\s'-]+$",
-            message:
-              "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
-          },
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-        },
-      },
-      {
-        name: "beneficiaries.guardian.idNumber",
-        label: "National Identification (ID) Number",
-        type: "text",
-        width: "medium",
-        validation: {
-          required: "ID Number is required",
-          pattern: {
-            value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-      {
-        name: "beneficiaries.guardian.passportDetails",
-        label: "",
-        type: "showHide",
-        validation: { required: false },
-        showHide: {
-          summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
-          description:
-            "If you don't have a National ID number, you can use your passport number instead.",
-          fields: [
-            {
-              name: "applicant.passportNumber",
-              label: "Passport Number",
-              type: "text",
-              placeholder: "",
-              validation: {
-                required: "Passport number is required",
-                minLength: {
-                  value: 6,
-                  message: "Passport number must be at least 6 characters",
-                },
-              },
-            },
+          options: [
+            { label: "Yes, add another child", value: "yes" },
+            { label: "No, continue", value: "no" },
           ],
         },
+      ]
+    : []),
+];
+
+// Helper function to create guardian fields
+const createGuardianFields = (childIndex: number) => [
+  {
+    name: `beneficiaries.${childIndex}.guardian.firstName`,
+    label: "First name",
+    type: "text" as const,
+    validation: {
+      required: "Guardian first name is required",
+      pattern: {
+        value: "^[A-Za-z\\s'-]+$",
+        message:
+          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
       },
-      {
-        name: "beneficiaries.guardian.tamisNumber",
-        label: "TAMIS Number",
-        type: "text",
-        validation: {
-          required: "TAMIS Number is required",
-          pattern: {
-            value: "^\\d+$",
-            message: "Please enter numbers only",
-          },
-          minLength: {
-            value: 2,
-            message: "TAMIS number must be at least 2 characters",
+      minLength: {
+        value: 2,
+        message: "First name must be at least 2 characters",
+      },
+    },
+  },
+  {
+    name: `beneficiaries.${childIndex}.guardian.lastName`,
+    label: "Last name",
+    type: "text" as const,
+    validation: {
+      required: "Guardian last name is required",
+      pattern: {
+        value: "^[A-Za-z\\s'-]+$",
+        message:
+          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+      },
+      minLength: {
+        value: 2,
+        message: "Last name must be at least 2 characters",
+      },
+    },
+  },
+  {
+    name: `beneficiaries.${childIndex}.guardian.idNumber`,
+    label: "National Identification (ID) number",
+    type: "text" as const,
+    width: "medium" as const,
+    validation: {
+      required: "Guardian ID Number is required",
+      pattern: {
+        value: "^\\d{6}-\\d{4}$",
+        message: "Enter a valid ID number (e.g., 850101-0001)",
+      },
+    },
+    skipValidationWhenShowHideOpen: `beneficiaries.${childIndex}.guardian.usePassportInstead`,
+  },
+  {
+    name: `beneficiaries.${childIndex}.guardian.passportDetails`,
+    label: "",
+    type: "showHide" as const,
+    validation: { required: false as const },
+    showHide: {
+      summary: "Use passport number instead",
+      stateFieldName: `beneficiaries.${childIndex}.guardian.usePassportInstead`,
+      description:
+        "If you don't have a National ID number, you can use your passport number instead.",
+      fields: [
+        {
+          name: `beneficiaries.${childIndex}.guardian.passportNumber`,
+          label: "Passport number",
+          type: "text" as const,
+          placeholder: "",
+          validation: {
+            required: "Passport number is required",
+            minLength: {
+              value: 6,
+              message: "Passport number must be at least 6 characters",
+            },
           },
         },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-    ],
+      ],
+    },
   },
+  {
+    name: `beneficiaries.${childIndex}.guardian.tamisNumber`,
+    label: "TAMIS number",
+    type: "number" as const,
+    width: "medium" as const,
+    validation: {
+      required: "Guardian TAMIS Number is required",
+      min: {
+        value: 10,
+        message: "TAMIS number must be at least 2 digits",
+      },
+    },
+    skipValidationWhenShowHideOpen: `beneficiaries.${childIndex}.guardian.usePassportInstead`,
+  },
+];
+
+// Generate steps for up to 5 children
+const childSteps: FormStep[] = [];
+for (let i = 0; i < 5; i++) {
+  const ordinalNum =
+    i === 0
+      ? "first"
+      : i === 1
+        ? "second"
+        : i === 2
+          ? "third"
+          : i === 3
+            ? "fourth"
+            : "fifth";
+
+  // Child basic info step
+  childSteps.push({
+    id: `beneficiaries-${i}`,
+    title:
+      i === 0
+        ? "Tell us about the child"
+        : `Tell us about the ${ordinalNum} child`,
+    description: "",
+    ...(i > 0
+      ? {
+          conditionalOn: {
+            field: `beneficiaries.${i - 1}.addAnotherChild`,
+            value: "yes",
+          },
+        }
+      : {}),
+    fields: createChildFields(i),
+  });
+
+  // Guardian step (conditional)
+  childSteps.push({
+    id: `beneficiaries-${i}-guardian`,
+    title:
+      i === 0
+        ? "Tell us about the parent or guardian for the child"
+        : `Tell us about the parent or guardian for the ${ordinalNum} child`,
+    description: "",
+    conditionalOn: {
+      field: `beneficiaries.${i}.isParentOrGuardian`,
+      value: "no",
+    },
+    fields: createGuardianFields(i),
+  });
+}
+
+export const formSteps: FormStep[] = [
+  ...childSteps,
   {
     id: "applicant-details",
     title: "Tell us about yourself",
@@ -354,7 +392,6 @@ export const formSteps: FormStep[] = [
         label: "National Identification (ID) Number",
         type: "text",
         width: "medium",
-        // placeholder: "e.g., 850101-0001",
         validation: {
           required: "ID Number is required",
           pattern: {
@@ -362,7 +399,6 @@ export const formSteps: FormStep[] = [
             message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
         skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
       },
       {
@@ -408,7 +444,6 @@ export const formSteps: FormStep[] = [
             message: "TAMIS number must be at least 2 characters",
           },
         },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
         skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
       },
     ],
@@ -518,7 +553,7 @@ export const formSteps: FormStep[] = [
         content: "",
         items: [
           "The child's school will confirm if they are eligible for the grant.",
-          "You will receiv $100 BBD per eligible child in the bank account you provided details for",
+          "You will receive $100 BBD per eligible child in the bank account you provided details for",
         ],
       },
     ],

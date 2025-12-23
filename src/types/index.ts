@@ -61,6 +61,7 @@ export type NestedFormField = {
   validation: NonDateFieldValidation | DateFieldValidation;
   options?: SelectOption[];
   rows?: number;
+  conditionalOn?: ConditionalRule; // For conditional fields within field arrays
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
