@@ -15,13 +15,22 @@ import { Fragment, useEffect } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
-import type { FormField } from "@/types";
+import type { ConditionalRule, FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
 type DynamicFieldProps = {
   field: FormField;
   conditionalFields?: FormField[];
 };
+
+/**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
 
 /**
  * Get the CSS class for field width
@@ -67,6 +76,7 @@ export function DynamicField({
     for (const conditionalField of conditionalFields) {
       if (
         conditionalField.conditionalOn &&
+        isSimpleConditionalRule(conditionalField.conditionalOn) &&
         conditionalField.conditionalOn.field === field.name
       ) {
         const shouldShow =
@@ -80,8 +90,10 @@ export function DynamicField({
           const anotherFieldWithSameNameIsShown = conditionalFields.some(
             (cf) =>
               cf.name === conditionalField.name &&
-              cf.conditionalOn?.field === field.name &&
-              currentFieldValue === cf.conditionalOn?.value
+              cf.conditionalOn &&
+              isSimpleConditionalRule(cf.conditionalOn) &&
+              cf.conditionalOn.field === field.name &&
+              currentFieldValue === cf.conditionalOn.value
           );
 
           // Only clear if no other conditional field with this name is visible
@@ -116,17 +128,29 @@ export function DynamicField({
       errors as Record<string, unknown>,
       conditionalField.name
     );
-    const watchedValue = conditionalField.conditionalOn
-      ? watch(conditionalField.conditionalOn.field as keyof FormData)
-      : null;
-    const shouldShow = watchedValue === conditionalField.conditionalOn?.value;
+    const watchedValue =
+      conditionalField.conditionalOn &&
+      isSimpleConditionalRule(conditionalField.conditionalOn)
+        ? watch(conditionalField.conditionalOn.field as keyof FormData)
+        : null;
+    const shouldShow =
+      conditionalField.conditionalOn &&
+      isSimpleConditionalRule(conditionalField.conditionalOn)
+        ? watchedValue === conditionalField.conditionalOn.value
+        : false;
 
     if (!shouldShow) return null;
+
+    const conditionalKey =
+      conditionalField.conditionalOn &&
+      isSimpleConditionalRule(conditionalField.conditionalOn)
+        ? conditionalField.conditionalOn.value
+        : "conditional";
 
     return (
       <div
         className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-5 motion-safe:animate-in motion-safe:duration-200"
-        key={`${conditionalField.name}-${conditionalField.conditionalOn?.value}`}
+        key={`${conditionalField.name}-${conditionalKey}`}
       >
         <div className="border-neutral-grey border-l-8 border-solid pb-4 pl-[52px]">
           {conditionalField.type === "fieldArray" ? (
@@ -311,7 +335,12 @@ export function DynamicField({
                   />
                   {/* Render conditional fields that match this option */}
                   {conditionalFields
-                    .filter((cf) => cf.conditionalOn?.value === option.value)
+                    .filter(
+                      (cf) =>
+                        cf.conditionalOn &&
+                        isSimpleConditionalRule(cf.conditionalOn) &&
+                        cf.conditionalOn.value === option.value
+                    )
                     .map((cf) => renderConditionalField(cf))}
                 </Fragment>
               ))}

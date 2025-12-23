@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
+import { Button, Heading, Link, Text } from "@govtech-bb/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { EZPayVerifyResponse } from "@/lib/ezpay/types";
@@ -260,9 +260,9 @@ export const PaymentBlock = ({ paymentData }: Props) => {
             Verifying...
           </Button>
         ) : (
-          <LinkButton href={paymentData.paymentUrl} variant="primary">
+          <Link href={paymentData.paymentUrl} variant="default">
             Continue to payment
-          </LinkButton>
+          </Link>
         )
       ) : null}
       <Text as="p" className="text-gray-500 italic">

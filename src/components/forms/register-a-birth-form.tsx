@@ -5,6 +5,10 @@ import { formSteps } from "@/schema/register-a-birth";
 
 export default function RegisterBirthForm() {
   return (
-    <DynamicMultiStepForm formSteps={formSteps} storageKey="register-a-birth" />
+    <DynamicMultiStepForm
+      formSteps={formSteps}
+      serviceTitle="Register a birth"
+      storageKey="register-a-birth"
+    />
   );
 }
