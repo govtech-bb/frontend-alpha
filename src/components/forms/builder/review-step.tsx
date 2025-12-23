@@ -74,14 +74,31 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
 
           // Handle field arrays
           if (field.type === "fieldArray" && Array.isArray(value)) {
-            const arrayValues = value as Array<{ value: string }>;
-            if (arrayValues.length === 0) return null;
+            if (value.length === 0) return null;
 
-            // Join array values with comma
-            displayValue = arrayValues
-              .map((item) => item.value)
-              .filter((v) => v && v !== "")
-              .join(", ");
+            // Check if this is a complex field array with nested fields
+            if (
+              field.fieldArray?.fields &&
+              field.fieldArray.fields.length > 0
+            ) {
+              // For complex field arrays, format each item's key fields
+              const formattedItems = value.map((item, index) => {
+                const itemData = item as Record<string, unknown>;
+                // Get the first few important fields to display (e.g., name)
+                const firstName = itemData.firstName || "";
+                const lastName = itemData.lastName || "";
+                const fullName = `${firstName} ${lastName}`.trim();
+                return `${field.fieldArray.itemLabel} ${index + 1}${fullName ? `: ${fullName}` : ""}`;
+              });
+              displayValue = formattedItems.join("; ");
+            } else {
+              // Simple field array - join values with comma
+              const arrayValues = value as Array<{ value: string }>;
+              displayValue = arrayValues
+                .map((item) => item.value)
+                .filter((v) => v && v !== "")
+                .join(", ");
+            }
 
             if (!displayValue) return null;
           }

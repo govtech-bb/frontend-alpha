@@ -85,6 +85,26 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
 
   // Handle field arrays
   if (field.type === "fieldArray" && "fieldArray" in field) {
+    // Check if this is a complex field array with nested fields
+    if (field.fieldArray?.fields && field.fieldArray.fields.length > 0) {
+      // Create schema for complex field array with nested fields
+      const itemSchemaShape: Record<string, z.ZodTypeAny> = {};
+
+      for (const nestedField of field.fieldArray.fields) {
+        itemSchemaShape[nestedField.name] = createFieldSchema(nestedField);
+      }
+
+      const arraySchema = z.array(z.object(itemSchemaShape));
+
+      // If conditional, make it optional (allows undefined or array)
+      if ("conditionalOn" in field && field.conditionalOn) {
+        return arraySchema.optional();
+      }
+
+      return arraySchema;
+    }
+
+    // Simple field array with single value per item
     let itemSchema: z.ZodTypeAny = z.string();
 
     if (validation.required) {
@@ -442,6 +462,47 @@ export function generateFormSchema(formSteps: FormStep[]) {
           message: field.validation.required,
           path: pathParts,
         });
+      }
+    }
+
+    // Validate conditional fields within field arrays
+    for (const step of formSteps) {
+      for (const field of step.fields) {
+        if (field.type === "fieldArray" && field.fieldArray?.fields) {
+          const arrayValue = getNestedValue(
+            data as Record<string, unknown>,
+            field.name
+          );
+
+          if (Array.isArray(arrayValue)) {
+            // Iterate through each array item
+            for (let index = 0; index < arrayValue.length; index++) {
+              const item = arrayValue[index] as Record<string, unknown>;
+
+              // Check each nested field for conditional logic
+              for (const nestedField of field.fieldArray.fields) {
+                if (!nestedField.conditionalOn) continue;
+
+                const parentValue = item[nestedField.conditionalOn.field];
+                const fieldValue = item[nestedField.name];
+                const isVisible =
+                  parentValue === nestedField.conditionalOn.value;
+
+                if (
+                  isVisible &&
+                  nestedField.validation.required &&
+                  isFieldEmpty(fieldValue, nestedField.type)
+                ) {
+                  ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: nestedField.validation.required,
+                    path: [field.name, index, nestedField.name],
+                  });
+                }
+              }
+            }
+          }
+        }
       }
     }
 
