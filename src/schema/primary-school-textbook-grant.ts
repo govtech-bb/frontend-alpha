@@ -431,7 +431,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.tamisNumber",
         label: "TAMIS Number",
-        type: "text",
+        type: "number",
         width: "medium",
         validation: {
           required: "TAMIS Number is required",
