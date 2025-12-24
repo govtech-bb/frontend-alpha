@@ -1,4 +1,4 @@
-import { address, contactInfo, name } from "@/schema/blocks";
+import { barbadosParishes } from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -64,8 +64,8 @@ export const formSteps: FormStep[] = [
         validation: { required: "Company name is required" },
         fieldArray: {
           itemLabel: "Company name",
-          addButtonText: "Add another",
-          minItems: 1,
+          addButtonText: "Add another company",
+          minItems: 2,
         },
       },
     ],
@@ -109,13 +109,26 @@ export const formSteps: FormStep[] = [
       {
         name: "businessActivity",
         label: "Business activity",
-        type: "select",
+        type: "fieldArray",
         validation: { required: "Business activity is required" },
-        options: [
-          { label: "", value: "" },
-          { label: "Business", value: "business" },
-          { label: "Non-profit", value: "non-profit" }, // TODO: Add the options for this field, i put placeholders for now
-        ],
+        fieldArray: {
+          itemLabel: "Business activity",
+          addButtonText: "Add another business activity",
+          minItems: 1,
+          fields: [
+            {
+              name: "activity",
+              label: "Business activity",
+              type: "select",
+              validation: { required: "Business activity is required" },
+              options: [
+                { label: "", value: "" },
+                { label: "Business", value: "business" },
+                { label: "Non-profit", value: "non-profit" }, // TODO: Add the options for this field, i put placeholders for now
+              ],
+            },
+          ],
+        },
       },
     ],
   },
@@ -124,22 +137,91 @@ export const formSteps: FormStep[] = [
     title: "Tell us about yourself",
     description: "",
     fields: [
-      ...name({
-        prefix: "applicant",
-        showFirstName: true,
-        showMiddleName: true,
-        showLastName: true,
-      }),
-      ...address({
-        prefix: "applicant",
-        showParish: true,
-        showPostcode: true,
-      }),
-      ...contactInfo({
-        prefix: "applicant",
-        showEmailAddress: true,
-        showTelephoneNumber: true,
-      }),
+      {
+        name: "applicant.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "applicant.middleName",
+        label: "Middle name(s)",
+        type: "text",
+        hint: "If you have more than one, add them in order",
+        validation: { required: false },
+      },
+      {
+        name: "applicant.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "applicant.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "applicant.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        validation: { required: false },
+      },
+      {
+        name: "applicant.parish",
+        label: "Parish",
+        type: "select",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "applicant.postcode",
+        label: "Postcode",
+        type: "text",
+        validation: { required: false },
+      },
+      {
+        name: "applicant.email",
+        label: "Email address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "applicant.telephoneNumber",
+        label: "Telephone number",
+        type: "tel",
+        validation: {
+          required: "Telephone number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message:
+              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+          },
+        },
+      },
     ],
   },
   {
