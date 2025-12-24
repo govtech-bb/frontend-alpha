@@ -135,7 +135,15 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
         })}
 
         <div className="pt-2">
-          <Button onClick={handleAddAnother} type="button" variant="secondary">
+          <Button
+            onClick={handleAddAnother}
+            type="button"
+            variant={
+              fieldArrayConfig?.addButtonVariant === "link"
+                ? "link"
+                : "secondary"
+            }
+          >
             {fieldArrayConfig?.addButtonText || "Add another"}
           </Button>
         </div>
@@ -180,7 +188,13 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
       })}
 
       <div>
-        <Button onClick={handleAddAnother} type="button" variant="secondary">
+        <Button
+          onClick={handleAddAnother}
+          type="button"
+          variant={
+            fieldArrayConfig?.addButtonVariant === "link" ? "link" : "secondary"
+          }
+        >
           {fieldArrayConfig?.addButtonText || "Add another"}
         </Button>
       </div>
