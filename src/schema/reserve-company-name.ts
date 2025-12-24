@@ -64,8 +64,9 @@ export const formSteps: FormStep[] = [
         validation: { required: "Company name is required" },
         fieldArray: {
           itemLabel: "Company name",
-          addButtonText: "Add another",
-          minItems: 1,
+          addButtonText: "Add another company",
+          addButtonVariant: "link",
+          minItems: 2,
         },
       },
     ],
@@ -109,13 +110,27 @@ export const formSteps: FormStep[] = [
       {
         name: "businessActivity",
         label: "Business activity",
-        type: "select",
+        type: "fieldArray",
         validation: { required: "Business activity is required" },
-        options: [
-          { label: "", value: "" },
-          { label: "Business", value: "business" },
-          { label: "Non-profit", value: "non-profit" }, // TODO: Add the options for this field, i put placeholders for now
-        ],
+        fieldArray: {
+          itemLabel: "Business activity",
+          addButtonText: "Add another business activity",
+          addButtonVariant: "link",
+          minItems: 1,
+          fields: [
+            {
+              name: "activity",
+              label: "Business activity",
+              type: "select",
+              validation: { required: "Business activity is required" },
+              options: [
+                { label: "", value: "" },
+                { label: "Business", value: "business" },
+                { label: "Non-profit", value: "non-profit" }, // TODO: Add the options for this field, i put placeholders for now
+              ],
+            },
+          ],
+        },
       },
     ],
   },

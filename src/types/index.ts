@@ -66,6 +66,7 @@ export type NestedFormField = {
 export type FieldArrayConfig = {
   itemLabel: string; // Label for each item (e.g., "Name of the organisation")
   addButtonText: string; // Text for the "Add another" button
+  addButtonVariant?: "button" | "link"; // Style variant for add button (defaults to "button")
   removeButtonText?: string; // Text for remove button (defaults to "Remove")
   minItems?: number; // Minimum number of items (defaults to 1)
   /** Fields to render for each array item (for complex field arrays) */
