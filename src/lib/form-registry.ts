@@ -34,6 +34,9 @@ export const FORM_COMPONENTS = {
   "reserve-society-name": lazy(
     () => import("@/components/forms/reserve-society-name-form")
   ),
+  "reserve-company-name": lazy(
+    () => import("@/components/forms/reserve-company-name")
+  ),
   // Add other forms here
 } as const;
 
