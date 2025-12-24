@@ -1,7 +1,6 @@
-import { Link } from "@govtech-bb/react";
+import { Link, Text } from "@govtech-bb/react";
 import Image from "next/image";
 import NextLink from "next/link";
-import { Typography } from "../ui/typography";
 
 export const Footer = () => (
   <footer className="bg-blue-100">
@@ -27,9 +26,9 @@ export const Footer = () => (
             src="/images/coat-of-arms.png"
             width={112}
           />
-          <Typography className="text-white" variant="paragraph">
+          <Text as="p" className="text-white">
             &copy; 2025 Government of Barbados
-          </Typography>
+          </Text>
         </div>
       </div>
     </div>
