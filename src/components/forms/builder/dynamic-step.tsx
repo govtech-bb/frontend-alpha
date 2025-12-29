@@ -34,11 +34,26 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
         }
       }
 
-      if (error?.message && field) {
-        return {
-          target: `#${fieldName}`,
-          text: `${error.message}`,
-        };
+      if (field) {
+        // If it's a field error with a direct message
+        if (error && "message" in error && typeof error.message === "string") {
+          return {
+            target: `#${fieldName}`,
+            text: error.message,
+          };
+        }
+
+        // If it's a field array with item errors (error is an array or object without direct message)
+        if (
+          error &&
+          (Array.isArray(error) ||
+            (typeof error === "object" && Object.keys(error).length > 0))
+        ) {
+          return {
+            target: `#${fieldName}`,
+            text: field.validation.required || "This field is required",
+          };
+        }
       }
       return null;
     })

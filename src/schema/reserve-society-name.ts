@@ -41,32 +41,48 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "society-names",
+    id: "choices",
     title: "What is the proposed society name?",
     description: "You can suggest up to 3 names",
     fields: [
       {
-        name: "names.first.title",
-        label: "First choice",
-        type: "text",
+        name: "choices",
+        label: "Society name choices",
+        type: "fieldArray",
         validation: {
-          required: "Title is required",
-          minLength: {
-            value: 2,
-            message: "Must be at least 2 characters",
-          },
+          required: "At least one society name is required",
         },
-      },
-      {
-        name: "names.first.explanation",
-        label: "How did you choose this name?",
-        type: "text",
-        validation: {
-          required: "Your name choice is required",
-          minLength: {
-            value: 2,
-            message: "Must be at least 2 characters",
-          },
+        fieldArray: {
+          itemLabel: "Name choice",
+          addButtonText: "Add another name",
+          minItems: 1,
+          maxItems: 3,
+          fields: [
+            {
+              name: "title",
+              label: "Name of society",
+              type: "text",
+              validation: {
+                required: "Society name is required",
+                minLength: {
+                  value: 2,
+                  message: "Must be at least 2 characters",
+                },
+              },
+            },
+            {
+              name: "explanation",
+              label: "How did you choose this name?",
+              type: "text",
+              validation: {
+                required: "Explanation is required",
+                minLength: {
+                  value: 2,
+                  message: "Must be at least 2 characters",
+                },
+              },
+            },
+          ],
         },
       },
     ],
@@ -77,15 +93,17 @@ export const formSteps: FormStep[] = [
     description: "List the main activities of the society",
     fields: [
       {
-        name: "activity.type",
-        label: "Activity",
-        type: "text",
+        name: "activity.types",
+        label: "Activities",
+        type: "fieldArray",
         validation: {
-          required: "Activity is required",
-          minLength: {
-            value: 2,
-            message: "Activity must be at least 2 characters",
-          },
+          required: "At least one activity is required",
+        },
+        fieldArray: {
+          itemLabel: "Activity",
+          addButtonText: "Add another activity",
+          minItems: 1,
+          maxItems: 3,
         },
       },
     ],
@@ -187,8 +205,7 @@ export const formSteps: FormStep[] = [
           required: "Telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
           },
         },
       },
@@ -215,7 +232,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfDeclaration",
+        name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
         placeholder: "For example, 12 15 2025",

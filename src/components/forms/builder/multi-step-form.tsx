@@ -110,6 +110,21 @@ export default function DynamicMultiStepForm({
           defaultValue = { day: "", month: "", year: "" };
         } else if (field.type === "checkbox") {
           defaultValue = "no";
+        } else if (field.type === "fieldArray") {
+          const minItems = field.fieldArray?.minItems ?? 1;
+          if (minItems > 0) {
+            if (field.fieldArray?.fields) {
+              const initialItem: Record<string, string> = {};
+              for (const f of field.fieldArray.fields) {
+                initialItem[f.name] = "";
+              }
+              defaultValue = [initialItem];
+            } else {
+              defaultValue = [{ value: "" }];
+            }
+          } else {
+            defaultValue = [];
+          }
         }
         setNestedValue(values, field.name, defaultValue);
 
@@ -476,6 +491,7 @@ export default function DynamicMultiStepForm({
       fieldValue === undefined ||
       fieldValue === null ||
       fieldValue === "" ||
+      (Array.isArray(fieldValue) && fieldValue.length === 0) ||
       (typeof fieldValue === "string" && fieldValue.trim() === "") ||
       (typeof fieldValue === "number" && Number.isNaN(fieldValue));
 
@@ -602,8 +618,11 @@ export default function DynamicMultiStepForm({
         errorSummary.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
         // Fallback to first error field if ErrorSummary not found
-        const firstErrorField = currentFieldNames.find(
-          (field) => methods.formState.errors[field]
+        const firstErrorField = currentFieldNames.find((field) =>
+          getNestedValue(
+            methods.formState.errors as Record<string, unknown>,
+            field
+          )
         );
         if (firstErrorField) {
           const element = document.querySelector(`#${String(firstErrorField)}`);

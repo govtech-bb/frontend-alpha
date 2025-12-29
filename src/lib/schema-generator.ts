@@ -85,10 +85,76 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
 
   // Handle field arrays
   if (field.type === "fieldArray" && "fieldArray" in field) {
+    const nestedFields = field.fieldArray?.fields;
+    const minItems = field.fieldArray?.minItems ?? 1;
+    const maxItems = field.fieldArray?.maxItems;
+
+    // Complex field array with nested fields
+    if (nestedFields && nestedFields.length > 0) {
+      // Build schema for each nested field
+      const nestedShape: Record<string, z.ZodTypeAny> = {};
+      for (const nestedField of nestedFields) {
+        let fieldSchema: z.ZodTypeAny = z.string();
+        const nestedValidation =
+          nestedField.validation as NonDateFieldValidation;
+
+        if (nestedValidation.required) {
+          const requiredMsg =
+            typeof nestedValidation.required === "string"
+              ? nestedValidation.required
+              : `${nestedField.label} is required`;
+          fieldSchema = z.string().min(1, requiredMsg);
+        }
+
+        if (nestedValidation.minLength) {
+          fieldSchema = (fieldSchema as z.ZodString).min(
+            nestedValidation.minLength.value,
+            nestedValidation.minLength.message
+          );
+        }
+
+        if (nestedValidation.maxLength) {
+          fieldSchema = (fieldSchema as z.ZodString).max(
+            nestedValidation.maxLength.value,
+            nestedValidation.maxLength.message
+          );
+        }
+
+        nestedShape[nestedField.name] = fieldSchema;
+      }
+
+      let arraySchema = z.array(z.object(nestedShape));
+
+      // Apply minimum items validation
+      if (validation.required && minItems > 0) {
+        arraySchema = arraySchema.min(minItems, validation.required);
+      }
+
+      // Apply maximum items validation
+      if (maxItems !== undefined) {
+        const itemLabel = field.fieldArray?.itemLabel || "items";
+        arraySchema = arraySchema.max(
+          maxItems,
+          `You can add a maximum of ${maxItems} ${itemLabel.toLowerCase()}${maxItems === 1 ? "" : "s"}`
+        );
+      }
+
+      // If conditional, make it optional
+      if ("conditionalOn" in field && field.conditionalOn) {
+        return arraySchema.optional();
+      }
+
+      return arraySchema;
+    }
+
+    // Simple field array with single value per item
     let itemSchema: z.ZodTypeAny = z.string();
 
     if (validation.required) {
-      itemSchema = z.string().min(1, validation.required);
+      // Use itemLabel for individual item validation, not the array-level message
+      const itemLabel = field.fieldArray?.itemLabel || "This field";
+      const itemRequiredMessage = `${itemLabel} is required`;
+      itemSchema = z.string().min(1, itemRequiredMessage);
     }
 
     if (validation.minLength) {
@@ -113,7 +179,40 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     }
 
     // Create array schema with object wrapper for each item
-    const arraySchema = z.array(z.object({ value: itemSchema }));
+    let arraySchema = z.array(z.object({ value: itemSchema }));
+
+    // Apply minimum items validation to the array itself
+    if (validation.required) {
+      if (minItems > 0) {
+        arraySchema = arraySchema.min(minItems, validation.required);
+      }
+
+      // Additional check to ensure at least minItems have non-empty values
+      arraySchema = arraySchema.refine(
+        (items) => {
+          const nonEmptyItems = items.filter(
+            (item) =>
+              item &&
+              typeof item === "object" &&
+              "value" in item &&
+              item.value !== undefined &&
+              item.value !== null &&
+              String(item.value).trim() !== ""
+          );
+          return nonEmptyItems.length >= minItems;
+        },
+        { message: validation.required }
+      );
+    }
+
+    // Apply maximum items validation
+    if (maxItems !== undefined) {
+      const itemLabel = field.fieldArray?.itemLabel || "items";
+      arraySchema = arraySchema.max(
+        maxItems,
+        `You can add a maximum of ${maxItems} ${itemLabel.toLowerCase()}${maxItems === 1 ? "" : "s"}`
+      );
+    }
 
     // If conditional, make it optional (allows undefined or array)
     if ("conditionalOn" in field && field.conditionalOn) {
@@ -398,6 +497,25 @@ export function generateFormSchema(formSteps: FormStep[]) {
       if (fieldType === "checkbox") {
         // For checkboxes, empty means not "yes"
         return fieldValue !== "yes";
+      }
+      if (fieldType === "fieldArray") {
+        // For field arrays, empty means not an array, length 0, or all items are effectively empty
+        if (!Array.isArray(fieldValue) || fieldValue.length === 0) {
+          return true;
+        }
+        // If it's a simple field array (items have .value property), check if first item is empty
+        const firstItem = fieldValue[0];
+        if (
+          firstItem &&
+          typeof firstItem === "object" &&
+          "value" in firstItem &&
+          (firstItem.value === undefined ||
+            firstItem.value === null ||
+            String(firstItem.value).trim() === "")
+        ) {
+          return true;
+        }
+        return false;
       }
       if (fieldType === "number") {
         return (
