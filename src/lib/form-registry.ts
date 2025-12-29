@@ -31,6 +31,9 @@ export const FORM_COMPONENTS = {
   "get-marriage-certificate": lazy(
     () => import("@/components/forms/get-marriage-certificate-form")
   ),
+  "reserve-society-name": lazy(
+    () => import("@/components/forms/reserve-society-name-form")
+  ),
   // Add other forms here
 } as const;
 
