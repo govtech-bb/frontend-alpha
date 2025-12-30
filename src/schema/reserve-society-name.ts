@@ -41,12 +41,12 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "choices",
+    id: "proposals",
     title: "What is the proposed society name?",
     description: "You can suggest up to 3 names",
     fields: [
       {
-        name: "choices",
+        name: "proposed-names",
         label: "Society name choices",
         type: "fieldArray",
         validation: {
@@ -93,7 +93,7 @@ export const formSteps: FormStep[] = [
     description: "List the main activities of the society",
     fields: [
       {
-        name: "activity.types",
+        name: "activities",
         label: "Activities",
         type: "fieldArray",
         validation: {
