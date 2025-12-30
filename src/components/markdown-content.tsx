@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
-import { Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
@@ -16,7 +16,9 @@ type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
 type ListProps = ComponentPropsWithoutRef<"ul">;
 type ListItemProps = ComponentPropsWithoutRef<"li">;
-type AnchorProps = ComponentPropsWithoutRef<"a">;
+type AnchorProps = ComponentPropsWithoutRef<"a"> & {
+  "data-start-link"?: string;
+};
 type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
 
 // Custom components for react-markdown
@@ -58,18 +60,29 @@ const components: Components = {
   ),
   li: ({ children, ...props }: ListItemProps) => <li {...props}>{children}</li>,
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
-  a: ({ href, children, ...props }: AnchorProps) => {
+  a: ({
+    href,
+    children,
+    "data-start-link": dataStartLink,
+    ...props
+  }: AnchorProps) => {
     const isRouteLink = href?.startsWith("/");
+    const isStartLink = dataStartLink !== undefined;
     const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
+
+    if (isStartLink) {
+      return (
+        <LinkButton {...props} external={isExternal} href={href as string}>
+          {children}
+        </LinkButton>
+      );
+    }
 
     return (
       <Link
         as={isRouteLink ? NextLink : "a"}
+        external={isExternal}
         href={href as string}
-        {...(isExternal && {
-          target: "_blank",
-          rel: "noopener noreferrer",
-        })}
         {...props}
       >
         {children}
