@@ -68,6 +68,7 @@ export type FieldArrayConfig = {
   addButtonText: string; // Text for the "Add another" button
   removeButtonText?: string; // Text for remove button (defaults to "Remove")
   minItems?: number; // Minimum number of items (defaults to 1)
+  maxItems?: number; // Maximum number of items (no limit if not specified)
   /** Fields to render for each array item (for complex field arrays) */
   fields?: NestedFormField[];
 };

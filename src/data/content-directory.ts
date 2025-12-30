@@ -370,6 +370,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Apply for a licence to sell goods or services at a beach or park",
         subPages: [{ slug: "start", type: "markdown" }],
       },
+      {
+        title: "Request for name search and name reservation",
+        slug: "reserve-society-name",
+        description: "Request for name search and name reservation",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Request to reserve a society name form",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {

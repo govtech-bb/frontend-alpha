@@ -74,16 +74,39 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
 
           // Handle field arrays
           if (field.type === "fieldArray" && Array.isArray(value)) {
-            const arrayValues = value as Array<{ value: string }>;
-            if (arrayValues.length === 0) return null;
+            if (value.length === 0) return null;
 
-            // Join array values with comma
-            displayValue = arrayValues
-              .map((item) => item.value)
-              .filter((v) => v && v !== "")
-              .join(", ");
+            const nestedFields = field.fieldArray?.fields;
 
-            if (!displayValue) return null;
+            // Complex field array with nested fields
+            if (nestedFields && nestedFields.length > 0) {
+              const formattedItems = value.map(
+                (item: Record<string, string>, idx: number) => {
+                  const parts = nestedFields
+                    .map((nf) => {
+                      const fieldValue = item[nf.name];
+                      if (!fieldValue) return null;
+                      return `${nf.label}: ${fieldValue}`;
+                    })
+                    .filter(Boolean);
+                  return parts.length > 0
+                    ? `${idx + 1}. ${parts.join(" — ")}`
+                    : null;
+                }
+              );
+
+              displayValue = formattedItems.filter(Boolean).join("\n");
+              if (!displayValue) return null;
+            } else {
+              // Simple field array with { value: string }
+              const arrayValues = value as Array<{ value: string }>;
+              displayValue = arrayValues
+                .map((item) => item.value)
+                .filter((v) => v && v !== "")
+                .join(", ");
+
+              if (!displayValue) return null;
+            }
           }
 
           if (field.type === "select" && field.options) {
