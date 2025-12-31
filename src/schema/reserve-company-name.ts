@@ -8,7 +8,7 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "aNewCompany",
+        name: "purposeOfNewCompanyName",
         label: "What will this name be used for?",
         type: "radio",
         hidden: true,
@@ -34,13 +34,13 @@ export const formSteps: FormStep[] = [
     id: "company-present-name",
     title: "What is the present name of the company?",
     conditionalOn: {
-      field: "aNewCompany",
+      field: "purposeOfNewCompanyName",
       value: "nameChange",
     },
     description: "",
     fields: [
       {
-        name: "What is the present name of the company",
+        name: "companyPresentName",
         label: "What is the present name of the company?",
         type: "text",
         hidden: true,
@@ -52,7 +52,7 @@ export const formSteps: FormStep[] = [
     id: "company-names-merged",
     title: "What are the names of the companies being merged?",
     conditionalOn: {
-      field: "aNewCompany",
+      field: "purposeOfNewCompanyName",
       value: "merger",
     },
     description: "",
@@ -76,25 +76,25 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "firstChoice",
+        name: "companyName.firstChoice",
         label: "First choice",
         type: "text",
         validation: { required: "First choice is required" },
       },
       {
-        name: "secondChoice",
+        name: "companyName.secondChoice",
         label: "Second choice",
         type: "text",
         validation: { required: "Second choice is required" },
       },
       {
-        name: "thirdChoice",
+        name: "companyName.thirdChoice",
         label: "Third choice",
         type: "text",
         validation: { required: "Third choice is required" },
       },
       {
-        name: "reserveFirstAvailableName",
+        name: "companyName.reserveFirstAvailableName",
         label: "Reserve the first available name",
         type: "checkbox",
         validation: { required: false },
