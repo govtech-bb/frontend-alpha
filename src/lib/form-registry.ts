@@ -40,6 +40,9 @@ export const FORM_COMPONENTS = {
   "post-office-redirection-business": lazy(
     () => import("@/components/forms/post-office-redirection-business-form")
   ),
+  "request-a-fire-service-inspection": lazy(
+    () => import("@/components/forms/request-a-fire-service-inspection")
+  ),
   // Add other forms here
 } as const;
 

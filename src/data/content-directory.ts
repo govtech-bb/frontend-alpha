@@ -417,6 +417,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     description: "Reporting crime, raising a concern and safeguarding",
     pages: [
       {
+        title: "Request a fire service inspection",
+        slug: "request-a-fire-service-inspection",
+        description:
+          "Request an inspection from the Barbados Fire Service for hotels, daycares, and places of entertainment.",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Request a Fire Service Inspection form",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
+      {
         title: "Report a concern about a child",
         slug: "report-a-concern-about-a-child",
         source_url: "",
