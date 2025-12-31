@@ -58,8 +58,9 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "companyName",
-        label: "Company name",
+       name: "companiesToBeMerged",
+       label: "What are the names of the companies being merged?",
+       hidden: true,
         type: "fieldArray",
         validation: { required: "Company name is required" },
         fieldArray: {
@@ -218,7 +219,7 @@ export const formSteps: FormStep[] = [
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+              "Please enter a valid phone number (e.g., 1 246 234 5678)",
           },
         },
       },
@@ -256,5 +257,22 @@ export const formSteps: FormStep[] = [
         },
       },
     ],
+  },
+  {
+    id: "confirmation",
+    title: "We have received your request to reserve a company name",
+    description: "",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "",
+        items: [
+          "The Corporate Affairs and Intellectual Property Office (CAIPO) will review your request.",
+          "You will be contacted if more information is needed or to let you know the outcome.",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
