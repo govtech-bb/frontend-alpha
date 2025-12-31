@@ -63,7 +63,7 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "who-is-thte-certificate-for",
+    id: "who-is-the-certificate-for",
     title: "Who is the certificate for?",
     description: "",
     fields: [
@@ -74,11 +74,11 @@ export const formSteps: FormStep[] = [
         options: [
           {
             label: "Barbados Tourism Authority",
-            value: "barbadosTourismAuthority",
+            value: "barbados-tourism-authority",
           },
           {
             label: "Child Care Board",
-            value: "childCareBoard",
+            value: "child-care-board",
           },
           {
             label: "Treasury",
@@ -129,7 +129,7 @@ export const formSteps: FormStep[] = [
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+              "Please enter a valid phone number (e.g. 1 246 234 5678)",
           },
         },
       },
