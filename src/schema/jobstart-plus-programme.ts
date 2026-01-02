@@ -472,7 +472,7 @@ export const formSteps: FormStep[] = [
         type: "text",
         placeholder: "",
         validation: {
-          required: "Name of Instituion is required",
+          required: false,
           minLength: {
             value: 5,
             message: "Name of Institution must be at least 5 characters",
@@ -500,7 +500,7 @@ export const formSteps: FormStep[] = [
         type: "text",
         placeholder: "",
         validation: {
-          required: "Start Year is required",
+          required: false,
           minLength: {
             value: 4,
             message: "Start Year must be 4 characters",
@@ -517,7 +517,7 @@ export const formSteps: FormStep[] = [
         type: "text",
         placeholder: "",
         validation: {
-          required: "End Year is required",
+          required: false,
           minLength: {
             value: 4,
             message: "End Year must be 4 characters",
@@ -537,7 +537,7 @@ export const formSteps: FormStep[] = [
       "This includes part-time and /or casual work, or a full-time employed position.",
     fields: [
       {
-        name: "employmentHistory",
+        name: "hasPreviousPaidJob",
         label: "Have you had a paid job?",
         hidden: true,
         type: "radio",
@@ -555,6 +555,10 @@ export const formSteps: FormStep[] = [
     id: "employment-history",
     title: "Tell us about your previous job",
     description: "",
+    conditionalOn: {
+      field: "hasPreviousPaidJob",
+      value: "yes",
+    },
     repeatable: {
       arrayFieldName: "employmentHistory",
       maxItems: 10,
