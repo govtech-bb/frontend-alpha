@@ -135,12 +135,11 @@ export const formSteps: FormStep[] = [
   {
     id: "licence-history",
     title: "Your licence history",
-    description: "Tell us about any previous conductors or driving licences",
+    description: "Tell us about any previous conductor's or driving licences",
     fields: [
       {
         name: "licenceHistory.hasPreviousLicence",
         label: "Do you have any previous licences?",
-        hidden: true,
         type: "radio",
         validation: {
           required: "Select an option",
@@ -204,13 +203,67 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "endorsement-details",
+    title:
+      "Tell us about the minor dependent that needs their mail sent to the new address",
+    conditionalOn: {
+      field: "hasEndorsements",
+      value: "yes",
+    },
+    repeatable: {
+      arrayFieldName: "endorsementDetails",
+      maxItems: 10,
+      addAnotherLabel: "Do you need to add another endorsement?",
+    },
+    fields: [
+      {
+        name: "typeOfLicence",
+        label: "Type of licence",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: "Type of licence is required",
+          minLength: {
+            value: 2,
+            message: "Type of licence must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "dateOfEndorsement",
+        label: "Date of endorsement",
+        placeholder: "For example, 12 15 2025",
+        type: "date",
+        validation: {
+          required: "Date of endorsement is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+      {
+        name: "duration",
+        label: "Duration",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: "Duration is required",
+          minLength: {
+            value: 2,
+            message: "Duration must be at least 2 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "disqualifications",
     title: "Your disqualifications",
     description:
       "A disqualification is when a court has stopped you from getting or holding a licence. Include any period when you were not allowed to hold or apply for a conductor’s or driving licence, and the reason the court gave for the disqualification",
     fields: [
       {
-        name: "hasDisqualifications",
+        name: "disqualifications.hasDisqualifications",
         label: "Have you ever been disqualified?",
         type: "radio",
         validation: {
@@ -220,6 +273,53 @@ export const formSteps: FormStep[] = [
           { label: "Yes", value: "yes" },
           { label: "No", value: "no" },
         ],
+      },
+      {
+        name: "disqualifications.courtName",
+        label: "Court name",
+        type: "text",
+        validation: {
+          required: "Court name is required",
+          minLength: {
+            value: 2,
+            message: "Please provide at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "disqualifications.hasDisqualifications",
+          value: "yes",
+        },
+      },
+      {
+        name: "disqualifications.dateOfDisqualification",
+        label: "Date of disqualification",
+        type: "date",
+        validation: {
+          required: "Date of disqualification is required",
+          date: {
+            type: "past",
+          },
+        },
+        conditionalOn: {
+          field: "disqualifications.hasDisqualifications",
+          value: "yes",
+        },
+      },
+      {
+        name: "disqualifications.lengthOfDisqualficiation",
+        label: "Length of disqualification",
+        type: "text",
+        validation: {
+          required: "Length of disqualification is required",
+          minLength: {
+            value: 2,
+            message: "Please provide at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "disqualifications.hasDisqualifications",
+          value: "yes",
+        },
       },
     ],
   },
