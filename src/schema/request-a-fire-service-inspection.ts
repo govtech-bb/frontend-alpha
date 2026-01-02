@@ -70,7 +70,7 @@ export const formSteps: FormStep[] = [
       {
         name: "purposeOfCertificate",
         label: "Purpose of certificate",
-        hidden:true
+        hidden: true,
         type: "radio",
         options: [
           {
@@ -114,7 +114,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicant.emailAddress",
+        name: "applicant.email",
         label: "Email address",
         type: "text",
         validation: {
@@ -129,8 +129,7 @@ export const formSteps: FormStep[] = [
           required: "Telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g. 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 1 246 234 5678)",
           },
         },
       },
@@ -156,7 +155,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfDeclaration",
+        name: "declaration.dateOfDeclaration",
         label: "Date of Declaration",
         hidden: true,
         placeholder: "",
@@ -169,5 +168,22 @@ export const formSteps: FormStep[] = [
         },
       },
     ],
+  },
+  {
+    id: "confirmation",
+    title: "Your request for a Fire Service inspection has been submitted.",
+    description: "We have received your request for a Fire Service inspection.",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "The Fire Service will review your request.",
+        items: [
+          "If they need more information, they will contact you using the details you provided.",
+          "An inspection visit will be scheduled if your request can proceed.",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
