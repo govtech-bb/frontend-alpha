@@ -16,9 +16,6 @@ export const FORM_COMPONENTS = {
   "get-a-primary-school-textbook-grant": lazy(
     () => import("@/components/forms/primary-school-textbook-grant-form")
   ),
-  "post-office-redirection-notice": lazy(
-    () => import("@/components/forms/post-office-redirection-notice-form")
-  ),
   "apply-to-jobstart-plus-programme": lazy(
     () => import("@/components/forms/apply-to-jobstart-plus-programme-form")
   ),
@@ -33,6 +30,15 @@ export const FORM_COMPONENTS = {
   ),
   "reserve-society-name": lazy(
     () => import("@/components/forms/reserve-society-name-form")
+  ),
+  "post-office-redirection-individual": lazy(
+    () => import("@/components/forms/post-office-redirection-individual-form")
+  ),
+  "post-office-redirection-deceased": lazy(
+    () => import("@/components/forms/post-office-redirection-deceased-form")
+  ),
+  "post-office-redirection-business": lazy(
+    () => import("@/components/forms/post-office-redirection-business-form")
   ),
   // Add other forms here
 } as const;

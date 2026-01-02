@@ -9,7 +9,8 @@ export type FieldType =
   | "radio"
   | "checkbox"
   | "fieldArray"
-  | "showHide";
+  | "showHide"
+  | "file";
 
 // Date-specific validation rules (only applicable when type === "date")
 export type DateValidationRule =
@@ -138,6 +139,15 @@ type ShowHideFormField = BaseFormField & {
   showHide: ShowHideConfig;
 };
 
+type FileFormField = BaseFormField & {
+  type: "file";
+  validation: NonDateFieldValidation;
+  /** Accepted file types (e.g., ".pdf,.docx,.png" or "image/*") */
+  accept?: string;
+  /** Whether multiple files can be selected */
+  multiple?: boolean;
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -145,7 +155,8 @@ export type FormField =
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField
-  | ShowHideFormField;
+  | ShowHideFormField
+  | FileFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
