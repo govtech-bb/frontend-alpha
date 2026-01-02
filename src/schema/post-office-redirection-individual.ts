@@ -101,6 +101,26 @@ export const formSteps: FormStep[] = [
           ],
         },
       },
+      {
+        name: "applicant.email",
+        label: "Email Address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "applicant.telephoneNumber",
+        label: "Telephone Number",
+        type: "tel",
+        validation: {
+          required: "Telephone number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+          },
+        },
+      },
     ],
   },
   {
@@ -264,14 +284,19 @@ export const formSteps: FormStep[] = [
   {
     id: "minor-details",
     title:
-      "Tell us about the minor dependent that needs their email sent to the new address",
+      "Tell us about the minor dependent that needs their mail sent to the new address",
     conditionalOn: {
       field: "anyMinorDependents",
       value: "yes",
     },
+    repeatable: {
+      arrayFieldName: "minorDetails",
+      maxItems: 10,
+      addAnotherLabel: "Do you need to add another minor dependent?",
+    },
     fields: [
       {
-        name: "minorDetail.firstName",
+        name: "firstName",
         label: "First name",
         type: "text",
         validation: {
@@ -283,7 +308,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "minorDetail.lastName",
+        name: "lastName",
         label: "Last name",
         type: "text",
         validation: {
