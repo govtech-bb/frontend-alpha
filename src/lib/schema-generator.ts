@@ -357,6 +357,26 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     return schema;
   }
 
+  // Handle file uploads (stores File[] array, but we validate based on uploaded URLs)
+  if (field.type === "file") {
+    // File fields store File[] objects which can't be serialized to JSON
+    // The actual validation is that files were uploaded (array has items)
+    // We use z.any() since File objects don't have a Zod type
+    if (validation.required) {
+      return z.any().refine(
+        (val) => {
+          // Check if it's an array with at least one file
+          if (Array.isArray(val) && val.length > 0) return true;
+          // Also accept if it's already been converted to URLs (string array)
+          if (typeof val === "string" && val.length > 0) return true;
+          return false;
+        },
+        { message: validation.required || "Please upload a file" }
+      );
+    }
+    return z.any().optional();
+  }
+
   // Handle optional fields (explicitly marked as required: false or no validation rules)
   if (
     validation.required === false ||
