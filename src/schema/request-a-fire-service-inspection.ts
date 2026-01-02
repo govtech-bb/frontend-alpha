@@ -86,7 +86,7 @@ export const formSteps: FormStep[] = [
           },
         ],
         validation: {
-          required: "Type of premises is required",
+          required: "Purpose of certificate is required",
         },
       },
     ],
