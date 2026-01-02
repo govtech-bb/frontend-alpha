@@ -242,6 +242,61 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "minor-dependents",
+    title:
+      "Are there any minor dependents that need their mail sent to the new address?",
+    fields: [
+      {
+        name: "anyMinorDependents",
+        label: "Are there any minor dependents?",
+        hidden: true,
+        type: "radio",
+        validation: {
+          required: "Select an option",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "minor-details",
+    title:
+      "Tell us about the minor dependent that needs their email sent to the new address",
+    conditionalOn: {
+      field: "anyMinorDependents",
+      value: "yes",
+    },
+    fields: [
+      {
+        name: "minorDetail.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "minorDetail.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
