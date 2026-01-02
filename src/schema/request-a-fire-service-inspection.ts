@@ -68,7 +68,7 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "typeOfPremises",
+        name: "purposeOfCertificate",
         label: "Type of premises",
         type: "radio",
         options: [
