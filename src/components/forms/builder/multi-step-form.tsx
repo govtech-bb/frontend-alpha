@@ -3,7 +3,7 @@
 import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
@@ -11,7 +11,7 @@ import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
-import type { FormStep } from "@/types";
+import type { FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DynamicStep } from "./dynamic-step";
 
@@ -39,6 +39,90 @@ function setNestedValue(
   if (lastKey) {
     current[lastKey] = value;
   }
+}
+
+/**
+ * Creates a repeatable step instance with indexed field names
+ * @param baseStep - The template step with repeatable config
+ * @param index - The instance index (0-based)
+ * @param isLastInstance - Whether this is the last allowed instance (no "add another" question)
+ */
+function createRepeatableStepInstance(
+  baseStep: FormStep,
+  index: number,
+  isLastInstance: boolean
+): FormStep {
+  const config = baseStep.repeatable;
+  if (!config) return baseStep;
+
+  const { arrayFieldName, addAnotherLabel } = config;
+
+  // Create indexed field names (e.g., minorDetails.0.firstName)
+  const indexedFields: FormField[] = baseStep.fields.map((field) => ({
+    ...field,
+    name: `${arrayFieldName}.${index}.${field.name}`,
+  }));
+
+  // Add "add another" radio field if not the last instance
+  if (!isLastInstance) {
+    const addAnotherField: FormField = {
+      name: `_addAnother_${arrayFieldName}_${index}`,
+      label: addAnotherLabel ?? "Do you need to add another?",
+      type: "radio",
+      validation: {
+        required: "Select an option",
+      },
+      options: [
+        { label: "Yes", value: "yes" },
+        { label: "No", value: "no" },
+      ],
+    };
+    indexedFields.push(addAnotherField);
+  }
+
+  return {
+    ...baseStep,
+    id: `${baseStep.id}-${index}`,
+    fields: indexedFields,
+    // First instance inherits the base step's conditionalOn, subsequent instances are conditional on previous "add another"
+    conditionalOn:
+      index === 0
+        ? baseStep.conditionalOn
+        : {
+            field: `_addAnother_${arrayFieldName}_${index - 1}`,
+            value: "yes",
+          },
+    // Clear the repeatable config from instances (they're already expanded)
+    repeatable: undefined,
+  };
+}
+
+/**
+ * Expands form steps by generating instances of repeatable steps
+ * @param steps - Original form steps
+ * @param repeatableCounts - Map of step ID to instance count
+ */
+function expandFormSteps(
+  steps: FormStep[],
+  repeatableCounts: Record<string, number>
+): FormStep[] {
+  const expanded: FormStep[] = [];
+
+  for (const step of steps) {
+    if (step.repeatable) {
+      const count = repeatableCounts[step.id] ?? 1;
+      const maxItems = step.repeatable.maxItems ?? 10;
+
+      for (let i = 0; i < count; i++) {
+        const isLastInstance = i >= maxItems - 1;
+        expanded.push(createRepeatableStepInstance(step, i, isLastInstance));
+      }
+    } else {
+      expanded.push(step);
+    }
+  }
+
+  return expanded;
 }
 
 type DynamicMultiStepFormProps = {
@@ -92,14 +176,52 @@ export default function DynamicMultiStepForm({
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
 
-  // Generate schema dynamically from the formSteps prop
-  const formSchema = useMemo(() => generateFormSchema(formSteps), [formSteps]);
+  // Track instance counts for repeatable steps (key: base step ID, value: count)
+  const [repeatableCounts, setRepeatableCounts] = useState<
+    Record<string, number>
+  >(() => {
+    // Initialize with 1 instance for each repeatable step
+    const initial: Record<string, number> = {};
+    for (const step of formSteps) {
+      if (step.repeatable) {
+        initial[step.id] = 1;
+      }
+    }
+    return initial;
+  });
+
+  // Expand form steps based on current repeatable counts
+  const expandedFormSteps = useMemo(
+    () => expandFormSteps(formSteps, repeatableCounts),
+    [formSteps, repeatableCounts]
+  );
+
+  // Generate schema dynamically from the expanded formSteps
+  const formSchema = useMemo(
+    () => generateFormSchema(expandedFormSteps),
+    [expandedFormSteps]
+  );
+
+  // Helper to add another repeatable step instance
+  const addRepeatableInstance = useCallback(
+    (baseStepId: string) => {
+      const baseStep = formSteps.find((s) => s.id === baseStepId);
+      if (!baseStep?.repeatable) return;
+
+      const maxItems = baseStep.repeatable.maxItems ?? 10;
+      setRepeatableCounts((prev) => ({
+        ...prev,
+        [baseStepId]: Math.min((prev[baseStepId] ?? 1) + 1, maxItems),
+      }));
+    },
+    [formSteps]
+  );
 
   // Generate default values with support for nested field names
   const defaultValues = useMemo(() => {
     const values: Record<string, unknown> = {};
     // Filter out review/confirmation steps that have no fields
-    const stepsWithFields = formSteps.filter(
+    const stepsWithFields = expandedFormSteps.filter(
       (step) => step.fields && step.fields.length > 0
     );
     for (const step of stepsWithFields) {
@@ -140,7 +262,7 @@ export default function DynamicMultiStepForm({
       }
     }
     return values as FormData;
-  }, [formSteps]);
+  }, [expandedFormSteps]);
 
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -149,13 +271,13 @@ export default function DynamicMultiStepForm({
   });
 
   // Update URL when step changes
-  // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable, searchParams intentionally omitted to prevent circular updates
+  // biome-ignore lint/correctness/useExhaustiveDependencies: expandedFormSteps changes are tracked, searchParams intentionally omitted to prevent circular updates
   useEffect(() => {
     if (!(_hasHydrated && isFormReady)) return;
     // Skip URL update if form is submitted (confirmation page handles its own URL)
     if (isSubmitted && referenceNumber) return;
 
-    const stepName = formSteps[currentStep]?.id;
+    const stepName = expandedFormSteps[currentStep]?.id;
     if (stepName) {
       // App Router approach
       const params = new URLSearchParams(searchParams?.toString());
@@ -169,10 +291,11 @@ export default function DynamicMultiStepForm({
     isSubmitted,
     referenceNumber,
     router,
+    expandedFormSteps,
   ]);
 
   // Initialize step from URL on mount and handle browser back/forward
-  // biome-ignore lint/correctness/useExhaustiveDependencies: formSteps is stable and doesn't need to be in deps
+  // biome-ignore lint/correctness/useExhaustiveDependencies: expandedFormSteps is tracked and doesn't need to be in deps
   useEffect(() => {
     if (!_hasHydrated) return;
 
@@ -186,8 +309,10 @@ export default function DynamicMultiStepForm({
     // For Pages Router: const urlStep = router.query.step as string;
 
     if (urlStep) {
-      const stepIndex = formSteps.findIndex((step) => step.id === urlStep);
-      const step = formSteps[stepIndex];
+      const stepIndex = expandedFormSteps.findIndex(
+        (step) => step.id === urlStep
+      );
+      const step = expandedFormSteps[stepIndex];
 
       // Prevent navigation to final steps (confirmation/thank-you) via URL if not submitted
       if (
@@ -326,8 +451,10 @@ export default function DynamicMultiStepForm({
     // Track parent keys that are used by visible steps
     const parentKeysFromVisibleSteps = new Set<string>();
 
-    // Get all conditional steps
-    const conditionalSteps = formSteps.filter((step) => step.conditionalOn);
+    // Get all conditional steps from expanded steps
+    const conditionalSteps = expandedFormSteps.filter(
+      (step) => step.conditionalOn
+    );
 
     // For each conditional step, check if it should be shown
     for (const step of conditionalSteps) {
@@ -447,19 +574,19 @@ export default function DynamicMultiStepForm({
 
   // Helper function to find the next visible step index
   const findNextVisibleStep = (fromIndex: number): number => {
-    for (let i = fromIndex + 1; i < formSteps.length; i++) {
-      if (isStepVisible(formSteps[i])) {
+    for (let i = fromIndex + 1; i < expandedFormSteps.length; i++) {
+      if (isStepVisible(expandedFormSteps[i])) {
         return i;
       }
     }
     // If no visible step found, return the last step (confirmation)
-    return formSteps.length - 1;
+    return expandedFormSteps.length - 1;
   };
 
   // Helper function to find the previous visible step index
   const findPrevVisibleStep = (fromIndex: number): number => {
     for (let i = fromIndex - 1; i >= 0; i--) {
-      if (isStepVisible(formSteps[i])) {
+      if (isStepVisible(expandedFormSteps[i])) {
         return i;
       }
     }
@@ -469,7 +596,7 @@ export default function DynamicMultiStepForm({
 
   const nextStep = async () => {
     // Check if current step is the review step (has no fields)
-    const currentStepData = formSteps[currentStep];
+    const currentStepData = expandedFormSteps[currentStep];
     const isReviewStep =
       currentStepData?.fields.length === 0 &&
       currentStepData?.id === "check-your-answers";
@@ -499,16 +626,18 @@ export default function DynamicMultiStepForm({
     const allValues = methods.getValues();
 
     // Filter out fields that are conditionally hidden
-    const visibleFields = formSteps[currentStep].fields.filter((field) => {
-      // Include field if it has no conditional rule
-      if (!field.conditionalOn) return true;
+    const visibleFields = expandedFormSteps[currentStep].fields.filter(
+      (field) => {
+        // Include field if it has no conditional rule
+        if (!field.conditionalOn) return true;
 
-      // Check if conditional field should be visible
-      const watchedValue = methods.watch(
-        field.conditionalOn.field as keyof FormData
-      );
-      return watchedValue === field.conditionalOn.value;
-    });
+        // Check if conditional field should be visible
+        const watchedValue = methods.watch(
+          field.conditionalOn.field as keyof FormData
+        );
+        return watchedValue === field.conditionalOn.value;
+      }
+    );
 
     // Collect field names, handling ShowHide state for conditional validation
     const currentFieldNames: string[] = [];
@@ -607,6 +736,32 @@ export default function DynamicMultiStepForm({
         return;
       }
 
+      // Check if current step has an "add another" field and if user selected "yes"
+      // This triggers adding a new repeatable step instance
+      const addAnotherField = currentStepData.fields.find((field) =>
+        field.name.startsWith("_addAnother_")
+      );
+
+      if (addAnotherField) {
+        const addAnotherValue = methods.getValues(
+          addAnotherField.name as keyof FormData
+        );
+        if (addAnotherValue === "yes") {
+          // Extract base step ID from the field name: _addAnother_{baseStepId}_{index}
+          const match = addAnotherField.name.match(/^_addAnother_(.+)_(\d+)$/);
+          if (match) {
+            const baseStepId = match[1];
+            // Find the original step to get its ID
+            const baseStep = formSteps.find(
+              (s) => s.repeatable?.arrayFieldName === baseStepId
+            );
+            if (baseStep) {
+              addRepeatableInstance(baseStep.id);
+            }
+          }
+        }
+      }
+
       // Move to next visible step (skipping conditional steps that don't match)
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
@@ -650,24 +805,24 @@ export default function DynamicMultiStepForm({
     methods.reset();
   };
 
-  const currentStepData = formSteps[currentStep];
+  const currentStepDataRender = expandedFormSteps[currentStep];
   const isReviewStep =
-    currentStepData?.fields.length === 0 &&
-    currentStepData?.id === "check-your-answers";
-  const isDeclarationStep = currentStepData?.id === "declaration";
+    currentStepDataRender?.fields.length === 0 &&
+    currentStepDataRender?.id === "check-your-answers";
+  const isDeclarationStep = currentStepDataRender?.id === "declaration";
   const isFinalStep =
-    currentStepData?.id === "confirmation" ||
-    currentStepData?.id === "thank-you";
+    currentStepDataRender?.id === "confirmation" ||
+    currentStepDataRender?.id === "thank-you";
 
   // Check if this is the last navigable step (excluding confirmation/thank-you)
-  const lastNavigableStepIndex = formSteps.findLastIndex(
+  const lastNavigableStepIndex = expandedFormSteps.findLastIndex(
     (step) => step.id !== "confirmation" && step.id !== "thank-you"
   );
   const isLastStep = currentStep === lastNavigableStepIndex;
 
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
-    const confirmationStep = formSteps.find(
+    const confirmationStep = expandedFormSteps.find(
       (step) => step.id === "confirmation" || step.id === "thank-you"
     );
 
@@ -813,11 +968,14 @@ export default function DynamicMultiStepForm({
         )}
         {/* Current Step - Show Review or Regular Step */}
         {isReviewStep ? (
-          <ReviewStep formSteps={formSteps} onEdit={handleEditFromReview} />
+          <ReviewStep
+            formSteps={expandedFormSteps}
+            onEdit={handleEditFromReview}
+          />
         ) : (
           <DynamicStep
             serviceTitle={serviceTitle}
-            step={formSteps[currentStep]}
+            step={expandedFormSteps[currentStep]}
           />
         )}
 

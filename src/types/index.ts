@@ -9,7 +9,8 @@ export type FieldType =
   | "radio"
   | "checkbox"
   | "fieldArray"
-  | "showHide";
+  | "showHide"
+  | "file";
 
 // Date-specific validation rules (only applicable when type === "date")
 export type DateValidationRule =
@@ -138,6 +139,15 @@ type ShowHideFormField = BaseFormField & {
   showHide: ShowHideConfig;
 };
 
+type FileFormField = BaseFormField & {
+  type: "file";
+  validation: NonDateFieldValidation;
+  /** Accepted file types (e.g., ".pdf,.docx,.png" or "image/*") */
+  accept?: string;
+  /** Whether multiple files can be selected */
+  multiple?: boolean;
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -145,7 +155,8 @@ export type FormField =
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField
-  | ShowHideFormField;
+  | ShowHideFormField
+  | FileFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
@@ -167,6 +178,19 @@ export type ContactDetails = {
   };
 };
 
+/**
+ * Configuration for repeatable steps that can be dynamically added/removed
+ * Field names are automatically prefixed with the array index (e.g., arrayFieldName.0.fieldName)
+ */
+export type RepeatableStepConfig = {
+  /** Base field name for array storage (e.g., "minorDetails") */
+  arrayFieldName: string;
+  /** Maximum number of repetitions allowed (defaults to 10) */
+  maxItems?: number;
+  /** Label for the "add another" question (defaults to "Do you need to add another?") */
+  addAnotherLabel?: string;
+};
+
 export type FormStep = {
   id: string;
   title: string;
@@ -176,6 +200,8 @@ export type FormStep = {
   steps?: ConfirmationStepItem[]; // For confirmation pages
   contactDetails?: ContactDetails; // For confirmation pages
   enableFeedback?: boolean; // Enable feedback section on confirmation page
+  /** Configuration for repeatable steps - when set, this step can be repeated */
+  repeatable?: RepeatableStepConfig;
 };
 
 export type ApiResponse = {

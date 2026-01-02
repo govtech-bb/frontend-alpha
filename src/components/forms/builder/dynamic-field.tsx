@@ -2,6 +2,7 @@ import {
   Checkbox,
   DateInput,
   type DateInputValue,
+  FileUpload,
   Input,
   NumberInput,
   Radio,
@@ -11,12 +12,87 @@ import {
   Text,
   TextArea,
 } from "@govtech-bb/react";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
+import { uploadFile } from "@/services/api";
 import type { FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
+
+type FileUploadFieldProps = {
+  field: FormField & { type: "file" };
+  error?: FieldError;
+  value: File[];
+  onChange: (files: File[]) => void;
+  /** Callback to save uploaded file URLs to form state */
+  onUploadComplete: (urls: string[]) => void;
+};
+
+/**
+ * Wrapper component for FileUpload that handles API upload on file selection
+ * and saves uploaded file URLs to form progress storage
+ */
+function FileUploadField({
+  field,
+  error,
+  value,
+  onChange,
+  onUploadComplete,
+}: FileUploadFieldProps) {
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  const handleFileChange = async (files: File[]) => {
+    // Update form state with the files
+    onChange(files);
+
+    // Upload each new file to the API
+    if (files.length > 0) {
+      setIsUploading(true);
+      setUploadError(null);
+
+      try {
+        const uploadedUrls: string[] = [];
+
+        // Upload files sequentially
+        for (const file of files) {
+          const result = await uploadFile(file);
+          if (!result.success) {
+            setUploadError(result.message ?? "Failed to upload file");
+            break;
+          }
+          // Collect the URL from successful upload
+          if (result.data?.url) {
+            uploadedUrls.push(result.data.url);
+          }
+        }
+
+        // Save uploaded URLs to form progress storage
+        if (uploadedUrls.length > 0) {
+          onUploadComplete(uploadedUrls);
+        }
+      } catch (err) {
+        setUploadError(err instanceof Error ? err.message : "Upload failed");
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  };
+
+  return (
+    <FileUpload
+      accept={field.accept}
+      description={isUploading ? "Uploading..." : (uploadError ?? field.hint)}
+      disabled={isUploading}
+      error={uploadError ?? error?.message}
+      label={field.hidden ? "" : field.label}
+      multiple={field.multiple}
+      onChange={handleFileChange}
+      value={value}
+    />
+  );
+}
 
 type DynamicFieldProps = {
   field: FormField;
@@ -449,6 +525,27 @@ export function DynamicField({
             </ShowHide>
           );
         })()
+      ) : field.type === "file" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: controllerField }) => (
+            <FileUploadField
+              error={error}
+              field={field as FormField & { type: "file" }}
+              onChange={(files) => controllerField.onChange(files)}
+              onUploadComplete={(urls) => {
+                // Save uploaded file URLs to a related field in form state
+                // This persists the URLs with form progress in session storage
+                const urlFieldName = `${field.name}Urls` as keyof FormData;
+                setValue(urlFieldName, urls as FormData[keyof FormData], {
+                  shouldValidate: false,
+                });
+              }}
+              value={(controllerField.value as File[]) ?? []}
+            />
+          )}
+        />
       ) : field.type === "textarea" ? (
         <div className="flex flex-col gap-1">
           {!field.hidden && (
