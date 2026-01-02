@@ -292,14 +292,40 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
       },
       {
-        title: "POST Office Redirection Notice",
-        slug: "post-office-redirection-notice",
-        description: "POST Office Redirection Notice",
+        title: "Redirect My Mail (Individual)",
+        slug: "post-office-redirection-individual",
+        description: "Redirect mail for an individual",
         subPages: [
           { slug: "start", type: "markdown" },
           {
             slug: "form",
-            title: "POST Office Redirection Notice form",
+            title: "Redirect My Mail (Individual) form",
+            type: "component",
+          },
+        ],
+      },
+      {
+        title: "Redirect My Mail (Deceased)",
+        slug: "post-office-redirection-deceased",
+        description: "Redirect mail for a deceased person",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Redirect My Mail (Deceased) form",
+            type: "component",
+          },
+        ],
+      },
+      {
+        title: "Redirect My Mail (Business)",
+        slug: "post-office-redirection-business",
+        description: "Redirect mail for a Business",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Redirect My Mail (Business) form",
             type: "component",
           },
         ],
