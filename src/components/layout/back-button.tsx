@@ -1,7 +1,7 @@
 "use client";
 
-import { BackButton as _BackButton } from "@govtech-bb/react";
-import Link from "next/link";
+import { BackButton as _BackButton, Link } from "@govtech-bb/react";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { generateBreadcrumbs } from "@/lib/breadcrumbs";
 import { cn } from "@/lib/utils";
@@ -32,16 +32,13 @@ export const BackButton = ({
   return (
     <nav
       aria-label={mode === "breadcrumbs" ? "Breadcrumbs" : "Backbutton"}
-      className={cn("flex items-center text-sm", className)}
+      className={cn("flex items-center", className)}
     >
       {mode === "breadcrumbs" ? (
         breadcrumbs.map((crumb, index) => (
           <div className="flex items-center gap-2" key={crumb.href}>
             {index > 0 && <ChevronLeftSVG className="mr-2" />}
-            <Link
-              className="text-[20px] text-teal-00 underline"
-              href={crumb.href}
-            >
+            <Link as={NextLink} href={crumb.href}>
               {crumb.label}
             </Link>
           </div>
