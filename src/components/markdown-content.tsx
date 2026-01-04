@@ -58,6 +58,9 @@ const components: Components = {
   ),
   li: ({ children, ...props }: ListItemProps) => <li {...props}>{children}</li>,
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
+  pre: (props: any) => (
+    <pre className="overflow-x-auto whitespace-pre-wrap" {...props} />
+  ),
   a: ({ href, children, ...props }: AnchorProps) => {
     const isRouteLink = href?.startsWith("/");
     const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
