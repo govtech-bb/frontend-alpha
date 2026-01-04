@@ -154,9 +154,32 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description: "Apply for a position as a temporary teacher",
       },
       {
-        title: "Apply to the JobSTART Plus Programme",
+        title: "Apply to the JobSTART Plus programme",
         slug: "apply-to-jobstart-plus-programme",
         description: "Apply to the JobSTART Plus Programme",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Registering for JobStart Plus",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
+      {
+        title: "Apply for conductor licence",
+        slug: "apply-for-conductor-licence",
+        description: "",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Conductor Licence Application",
+            type: "component",
+            protected: true,
+          },
+        ],
       },
     ],
   },
