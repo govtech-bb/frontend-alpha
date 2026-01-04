@@ -10,7 +10,7 @@ export default async function Home() {
   const featuredServices = await getFeaturedServices();
   return (
     <>
-      <section className="border-yellow-dark border-b-4 bg-yellow-100">
+      <section className="border-yellow-00 border-b-4 bg-yellow-100">
         <div className="container">
           <div className="space-y-s py-m">
             <Heading as="h1">
@@ -71,7 +71,7 @@ export default async function Home() {
             <div className="flex flex-col">
               {INFORMATION_ARCHITECTURE.map((service) => (
                 <div
-                  className="flex flex-col items-start gap-xs border-neutral-grey border-b-2 py-s last:border-0"
+                  className="flex flex-col items-start gap-xs border-grey-00 border-b-2 py-s last:border-0"
                   key={service.title}
                 >
                   <Link as={NextLink} href={service.slug}>

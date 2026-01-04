@@ -12,7 +12,7 @@ export const SignpostBlock = ({
   title,
   description,
 }: SignpostBlockProps) => (
-  <div className="flex flex-col items-start gap-xs border-neutral-grey border-b-2 py-s last:border-0">
+  <div className="flex flex-col items-start gap-xs border-grey-00 border-b-2 py-s last:border-0">
     <Text as="p">
       <Link as={NextLink} href={href}>
         {title}

@@ -29,7 +29,7 @@ export const HelpfulBox = ({ className = "" }: HelpfulBoxProps) => {
 
       {/* TODO: Design System: Make button link variant curosr pointer */}
       <Button
-        className="cursor-pointer text-neutral-black"
+        className="cursor-pointer text-black-00"
         onClick={handleFeedbackClick}
         variant={"link"}
       >

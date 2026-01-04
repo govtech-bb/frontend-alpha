@@ -34,7 +34,7 @@ Registration is open between March and April each year. The training begins in M
 
 When registration is open, you will be able to register here.
 
-<a href="/work-employment/apply-to-jobstart-plus-programme/start" className='relative inline-flex items-center justify-center gap-2 rounded-sm text-body whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none disabled-state px-6 py-4 bg-teal-dark !text-neutral-white hover:bg-brand-teal-light hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-brand-teal-darker active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] active:outline-none active:ring-4 active:ring-teal-100 active:ring-offset-1 active:rounded-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-100 focus-visible:ring-offset-1 focus-visible:rounded-sm no-underline' target="_self">Register now</a>
+<a href="/work-employment/apply-to-jobstart-plus-programme/start" className='relative inline-flex items-center justify-center gap-2 rounded-sm text-body whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none disabled-state px-6 py-4 bg-teal-00 !text-white-00 hover:bg-brand-teal-light hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-brand-teal-darker active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] active:outline-none active:ring-4 active:ring-teal-100 active:ring-offset-1 active:rounded-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-100 focus-visible:ring-offset-1 focus-visible:rounded-sm no-underline' target="_self">Register now</a>
 
 <!-- Registration is open now. The deadline is [date] and the training will begin in May.
 

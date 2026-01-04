@@ -155,7 +155,7 @@ export function FathersDetails({
             {/* Passport number disclosure */}
             <ShowHide summary="Use passport number instead">
               <div>
-                <p className="mb-4 text-[20px] text-neutral-midgrey leading-[1.7]">
+                <p className="mb-4 text-[20px] text-midgrey-00 leading-[1.7]">
                   If you don't have a National Registration number, you can use
                   your passport number instead.
                 </p>

@@ -103,10 +103,10 @@ export function DateInput({
         aria-describedby={describedby || undefined}
         className="govuk-fieldset"
       >
-        <legend className="block text-h4 text-neutral-black">{label}</legend>
+        <legend className="block text-black-00 text-h4">{label}</legend>
 
         {hint && (
-          <div className="mt-1 text-body text-neutral-black" id={hintId}>
+          <div className="mt-1 text-black-00 text-body" id={hintId}>
             {hint}
           </div>
         )}
@@ -114,7 +114,7 @@ export function DateInput({
         {hasAnyError && (
           <div
             aria-live="assertive"
-            className="mt-1 text-body text-red-dark"
+            className="mt-1 text-body text-red-00"
             id={errorId}
             role="alert"
           >
@@ -129,16 +129,16 @@ export function DateInput({
         <div className="flex flex-wrap items-end gap-4">
           <div className="flex flex-col">
             <label
-              className="mb-1 font-medium text-neutral-black text-sm"
+              className="mb-1 font-medium text-black-00 text-sm"
               htmlFor={`${id}-day`}
             >
               Day
             </label>
             <div
-              className={`relative inline-flex w-16 items-center rounded-sm border-2 bg-neutral-white transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
+              className={`relative inline-flex w-16 items-center rounded-sm border-2 bg-white-00 transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
                 hasErrorDay
-                  ? "border-red-dark focus-within:border-red-dark"
-                  : "border-neutral-black"
+                  ? "border-red-00 focus-within:border-red-00"
+                  : "border-black-00"
               }`}
             >
               <input
@@ -160,16 +160,16 @@ export function DateInput({
 
           <div className="flex flex-col">
             <label
-              className="mb-1 font-medium text-neutral-black text-sm"
+              className="mb-1 font-medium text-black-00 text-sm"
               htmlFor={`${id}-month`}
             >
               Month
             </label>
             <div
-              className={`relative inline-flex w-16 items-center rounded-sm border-2 bg-neutral-white transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
+              className={`relative inline-flex w-16 items-center rounded-sm border-2 bg-white-00 transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
                 hasErrorMonth
-                  ? "border-red-dark focus-within:border-red-dark"
-                  : "border-neutral-black"
+                  ? "border-red-00 focus-within:border-red-00"
+                  : "border-black-00"
               }`}
             >
               <input
@@ -190,16 +190,16 @@ export function DateInput({
 
           <div className="flex flex-col">
             <label
-              className="mb-1 font-medium text-neutral-black text-sm"
+              className="mb-1 font-medium text-black-00 text-sm"
               htmlFor={`${id}-year`}
             >
               Year
             </label>
             <div
-              className={`relative inline-flex w-24 items-center rounded-sm border-2 bg-neutral-white transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
+              className={`relative inline-flex w-24 items-center rounded-sm border-2 bg-white-00 transition-all focus-within:ring-4 focus-within:ring-teal-100 hover:shadow-[inset_4px_4px_0px_0px_rgba(0,0,0,0.1)] has-[:focus-visible]:shadow-none ${
                 hasErrorYear
-                  ? "border-red-dark focus-within:border-red-dark"
-                  : "border-neutral-black"
+                  ? "border-red-00 focus-within:border-red-00"
+                  : "border-black-00"
               }`}
             >
               <input

@@ -39,7 +39,7 @@ export const BackButton = ({
           <div className="flex items-center gap-2" key={crumb.href}>
             {index > 0 && <ChevronLeftSVG className="mr-2" />}
             <Link
-              className="text-[20px] text-teal-dark underline"
+              className="text-[20px] text-teal-00 underline"
               href={crumb.href}
             >
               {crumb.label}

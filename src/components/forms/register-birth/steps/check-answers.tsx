@@ -32,13 +32,13 @@ function SummarySection({
   children,
 }: SummarySectionProps) {
   return (
-    <div className="border-neutral-grey border-b-4 pb-8">
+    <div className="border-grey-00 border-b-4 pb-8">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="mb-4 font-bold text-[40px] leading-[1.25] lg:mb-0">
+        <h2 className="mb-4 font-bold text-[40px] leading-tight lg:mb-0">
           {title}
         </h2>
         <button
-          className="hidden text-teal-dark underline hover:text-teal-dark/80 lg:inline"
+          className="hidden text-teal-00 underline hover:text-teal-00/80 lg:inline"
           onClick={() => onEdit(stepName)}
           type="button"
         >
@@ -47,7 +47,7 @@ function SummarySection({
       </div>
       {children}
       <button
-        className="mt-2 font-normal text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:hidden"
+        className="mt-2 font-normal text-[20px] text-teal-00 leading-[1.7] underline hover:text-teal-00/80 lg:hidden"
         onClick={() => onEdit(stepName)}
         type="button"
       >

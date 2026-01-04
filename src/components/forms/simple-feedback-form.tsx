@@ -185,7 +185,7 @@ export function SimpleFeedbackForm() {
           </Button>
 
           {submitStatus === "error" && (
-            <div className="rounded-md border border-red-100 bg-red-10 px-4 py-3 text-red-dark">
+            <div className="rounded-md border border-red-100 bg-red-10 px-4 py-3 text-red-00">
               Sorry, there was an error sending your feedback. Please try again.
             </div>
           )}

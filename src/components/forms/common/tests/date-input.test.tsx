@@ -771,9 +771,9 @@ describe("DateInput", () => {
       const yearInput = screen.getByLabelText("Year");
 
       // Border is now on parent container
-      expect(dayInput.parentElement).toHaveClass("border-red-dark");
-      expect(monthInput.parentElement).not.toHaveClass("border-red-dark");
-      expect(yearInput.parentElement).not.toHaveClass("border-red-dark");
+      expect(dayInput.parentElement).toHaveClass("border-red-00");
+      expect(monthInput.parentElement).not.toHaveClass("border-red-00");
+      expect(yearInput.parentElement).not.toHaveClass("border-red-00");
     });
 
     it("should highlight only month field when month has error", () => {
@@ -794,9 +794,9 @@ describe("DateInput", () => {
       const yearInput = screen.getByLabelText("Year");
 
       // Border is now on parent container
-      expect(dayInput.parentElement).not.toHaveClass("border-red-dark");
-      expect(monthInput.parentElement).toHaveClass("border-red-dark");
-      expect(yearInput.parentElement).not.toHaveClass("border-red-dark");
+      expect(dayInput.parentElement).not.toHaveClass("border-red-00");
+      expect(monthInput.parentElement).toHaveClass("border-red-00");
+      expect(yearInput.parentElement).not.toHaveClass("border-red-00");
     });
 
     it("should highlight only year field when year has error", () => {
@@ -817,9 +817,9 @@ describe("DateInput", () => {
       const yearInput = screen.getByLabelText("Year");
 
       // Border is now on parent container
-      expect(dayInput.parentElement).not.toHaveClass("border-red-dark");
-      expect(monthInput.parentElement).not.toHaveClass("border-red-dark");
-      expect(yearInput.parentElement).toHaveClass("border-red-dark");
+      expect(dayInput.parentElement).not.toHaveClass("border-red-00");
+      expect(monthInput.parentElement).not.toHaveClass("border-red-00");
+      expect(yearInput.parentElement).toHaveClass("border-red-00");
     });
 
     it("should highlight multiple fields when multiple errors present", () => {
@@ -843,9 +843,9 @@ describe("DateInput", () => {
       const yearInput = screen.getByLabelText("Year");
 
       // Border is now on parent container
-      expect(dayInput.parentElement).toHaveClass("border-red-dark");
-      expect(monthInput.parentElement).toHaveClass("border-red-dark");
-      expect(yearInput.parentElement).not.toHaveClass("border-red-dark");
+      expect(dayInput.parentElement).toHaveClass("border-red-00");
+      expect(monthInput.parentElement).toHaveClass("border-red-00");
+      expect(yearInput.parentElement).not.toHaveClass("border-red-00");
     });
 
     it("should set aria-invalid only on fields with errors", () => {

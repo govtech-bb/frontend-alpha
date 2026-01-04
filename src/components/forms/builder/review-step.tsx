@@ -161,10 +161,7 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
       </div>
 
       {sections.map((section) => (
-        <div
-          className="border-neutral-grey border-b-4 pb-7"
-          key={section.title}
-        >
+        <div className="border-grey-00 border-b-4 pb-7" key={section.title}>
           <div className="mb-4 flex items-center justify-between lg:gap-x-2">
             <Heading as="h2">{section.title}</Heading>
             {/* !!! To replace with the link variant on button component */}
