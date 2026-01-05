@@ -1,6 +1,6 @@
 "use client";
 
-import { Heading, Text } from "@govtech-bb/react";
+import { Button, Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
@@ -162,22 +162,24 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
 
       {sections.map((section) => (
         <div
-          className="border-neutral-grey border-b-4 pb-7"
+          className="grid grid-cols-1 gap-y-2 border-neutral-grey border-b-4 pb-8 [grid-template-areas:'heading'_'content'_'button'] lg:grid-cols-[1fr_auto] lg:gap-x-2 lg:[grid-template-areas:'heading_button'_'content_content']"
           key={section.title}
         >
-          <div className="mb-4 flex items-center justify-between lg:gap-x-2">
-            <Heading as="h2">{section.title}</Heading>
-            {/* !!! To replace with the link variant on button component */}
-            <button
-              className="hidden text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:inline"
-              onClick={() => onEdit(section.stepIndex)}
-              type="button"
-            >
-              Change
-            </button>
-          </div>
+          <Heading as="h2" className="[grid-area:heading]">
+            {section.title}
+          </Heading>
 
-          <dl className="grid grid-cols-1 gap-2 font-normal text-[20px] leading-[1.7] lg:gap-4">
+          {/* !!! To replace with the link variant on button component */}
+          <Button
+            className="justify-self-start [grid-area:button] lg:self-center lg:justify-self-end"
+            onClick={() => onEdit(section.stepIndex)}
+            type="button"
+            variant="link"
+          >
+            Change
+          </Button>
+
+          <dl className="grid grid-cols-1 gap-2 font-normal text-[20px] leading-[1.7] [grid-area:content] lg:gap-4">
             {section.items.map((item, index) => (
               <div className="flex flex-col sm:flex-row lg:gap-x-2" key={index}>
                 <dt className="font-bold sm:w-1/3">{item.label}</dt>
@@ -185,14 +187,6 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
               </div>
             ))}
           </dl>
-          {/* !!! To replace with the link variant on button component */}
-          <button
-            className="py-2 font-normal text-[20px] text-teal-dark leading-[1.7] underline hover:text-teal-dark/80 lg:hidden"
-            onClick={() => onEdit(section.stepIndex)}
-            type="button"
-          >
-            Change
-          </button>
         </div>
       ))}
     </div>
