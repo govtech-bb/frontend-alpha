@@ -13,7 +13,7 @@ export const StageBanner = ({
   className,
 }: StageBannerProps) => (
   <StatusBanner className={className} variant={stage as "alpha" | "beta"}>
-    <Text as="p">
+    <Text as="p" size={"body"}>
       This page is in{" "}
       <Link
         as={NextLink}

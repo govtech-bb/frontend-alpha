@@ -152,7 +152,7 @@ export const MarkdownContent = ({
             <MigrationBanner pageURL={frontmatter.source_url} />
           ) : null}
           {frontmatter.publish_date && (
-            <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
+            <div className="border-blue-10 border-b-4 pb-4 text-mid-grey-00">
               <Text as="p" size="caption">
                 Last updated on{" "}
                 {format(

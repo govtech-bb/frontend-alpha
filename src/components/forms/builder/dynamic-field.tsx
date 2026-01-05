@@ -204,7 +204,7 @@ export function DynamicField({
         className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-5 motion-safe:animate-in motion-safe:duration-200"
         key={`${conditionalField.name}-${conditionalField.conditionalOn?.value}`}
       >
-        <div className="border-neutral-grey border-l-8 border-solid pb-4 pl-[52px]">
+        <div className="border-grey-00 border-l-8 border-solid pb-4 pl-[52px]">
           {conditionalField.type === "fieldArray" ? (
             <DynamicFieldArray field={conditionalField} />
           ) : conditionalField.type === "date" ? (
@@ -256,7 +256,7 @@ export function DynamicField({
                 </label>
               )}
               {conditionalField.hint && (
-                <Text as="p" className="text-neutral-midgrey" size="body">
+                <Text as="p" className="text-mid-grey-00" size="body">
                   {conditionalField.hint}
                 </Text>
               )}
@@ -298,7 +298,7 @@ export function DynamicField({
                   {conditionalField.label}
                 </label>
               )}
-              <Text as="p" className="text-neutral-midgrey" size="body">
+              <Text as="p" className="text-mid-grey-00" size="body">
                 {conditionalField.hint}
               </Text>
               <Input
@@ -446,7 +446,7 @@ export function DynamicField({
             >
               <div className="flex flex-col gap-6">
                 {showHideConfig.description && (
-                  <p className="text-[20px] text-neutral-midgrey leading-[1.7]">
+                  <p className="text-[20px] text-mid-grey-00 leading-[1.7]">
                     {showHideConfig.description}
                   </p>
                 )}
@@ -470,7 +470,7 @@ export function DynamicField({
                           {childField.hint && (
                             <Text
                               as="p"
-                              className="text-neutral-midgrey"
+                              className="text-mid-grey-00"
                               size="body"
                             >
                               {childField.hint}
@@ -554,7 +554,7 @@ export function DynamicField({
             </label>
           )}
           {field.hint && (
-            <Text as="p" className="text-neutral-midgrey" size="body">
+            <Text as="p" className="text-mid-grey-00" size="body">
               {field.hint}
             </Text>
           )}
@@ -593,7 +593,7 @@ export function DynamicField({
               {field.label}
             </label>
           )}
-          <Text as="p" className="text-neutral-midgrey" size="body">
+          <Text as="p" className="text-mid-grey-00" size="body">
             {field.hint}
           </Text>
           <Input
