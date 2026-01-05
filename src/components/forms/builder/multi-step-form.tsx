@@ -42,6 +42,94 @@ function setNestedValue(
 }
 
 /**
+ * Checks if an object has only consecutive numeric keys starting from 0.
+ * This identifies objects that react-hook-form creates from indexed field names
+ * (e.g., `beneficiaries.0`, `beneficiaries.1`) which should be arrays.
+ */
+function hasOnlyNumericKeys(obj: Record<string, unknown>): boolean {
+  const keys = Object.keys(obj);
+  if (keys.length === 0) return false;
+
+  // Check if all keys are numeric and consecutive starting from 0
+  const numericKeys = keys.map(Number).sort((a, b) => a - b);
+  return numericKeys.every((key, index) => key === index && !Number.isNaN(key));
+}
+
+/**
+ * Recursively converts objects with numeric keys to arrays.
+ * React-hook-form creates objects like `{ "0": {...}, "1": {...} }` when using
+ * indexed field names (e.g., `beneficiaries.0.firstName`). This function
+ * transforms them to proper arrays `[{...}, {...}]`.
+ */
+function convertIndexedObjectsToArrays(
+  data: Record<string, unknown>
+): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      const objValue = value as Record<string, unknown>;
+
+      if (hasOnlyNumericKeys(objValue)) {
+        // Convert to array and recursively process each item
+        const sortedKeys = Object.keys(objValue)
+          .map(Number)
+          .sort((a, b) => a - b);
+        result[key] = sortedKeys.map((numKey) => {
+          const item = objValue[String(numKey)];
+          if (item && typeof item === "object" && !Array.isArray(item)) {
+            return convertIndexedObjectsToArrays(
+              item as Record<string, unknown>
+            );
+          }
+          return item;
+        });
+      } else {
+        // Recursively process nested objects
+        result[key] = convertIndexedObjectsToArrays(objValue);
+      }
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Returns the ordinal word for a given number (e.g., 2 -> "second", 3 -> "third")
+ */
+function getOrdinalWord(n: number): string {
+  const ordinals = [
+    "first",
+    "second",
+    "third",
+    "fourth",
+    "fifth",
+    "sixth",
+    "seventh",
+    "eighth",
+    "ninth",
+    "tenth",
+  ];
+  return ordinals[n - 1] ?? `${n}th`;
+}
+
+/**
+ * Updates a step title with ordinal numbering for subsequent instances.
+ * Replaces "the X" with "the second X", "the third X", etc.
+ * Only applies to instances after the first (index > 0).
+ */
+function getOrdinalTitle(title: string, index: number): string {
+  if (index === 0) return title;
+
+  const ordinal = getOrdinalWord(index + 1);
+  // Replace "the " with "the second " (or third, fourth, etc.)
+  // This handles titles like "Tell us about the child" -> "Tell us about the second child"
+  return title.replace(/\bthe\s+/i, `the ${ordinal} `);
+}
+
+/**
  * Creates a repeatable step instance with indexed field names
  * @param baseStep - The template step with repeatable config
  * @param index - The instance index (0-based)
@@ -57,11 +145,54 @@ function createRepeatableStepInstance(
 
   const { arrayFieldName, addAnotherLabel } = config;
 
+  // Helper to prefix a field name with the array path
+  const indexFieldName = (fieldName: string) =>
+    `${arrayFieldName}.${index}.${fieldName}`;
+
   // Create indexed field names (e.g., minorDetails.0.firstName)
-  const indexedFields: FormField[] = baseStep.fields.map((field) => ({
-    ...field,
-    name: `${arrayFieldName}.${index}.${field.name}`,
-  }));
+  // Also update any field references (conditionalOn, skipValidationWhenShowHideOpen, showHide)
+  const indexedFields: FormField[] = baseStep.fields.map((field) => {
+    const indexed: FormField = {
+      ...field,
+      name: indexFieldName(field.name),
+    };
+
+    // Update conditionalOn.field reference to include the array index
+    if (field.conditionalOn) {
+      indexed.conditionalOn = {
+        ...field.conditionalOn,
+        field: indexFieldName(field.conditionalOn.field),
+      };
+    }
+
+    // Update skipValidationWhenShowHideOpen reference
+    if (field.skipValidationWhenShowHideOpen) {
+      indexed.skipValidationWhenShowHideOpen = indexFieldName(
+        field.skipValidationWhenShowHideOpen
+      );
+    }
+
+    // Update showHide config with indexed field names
+    if (field.showHide) {
+      indexed.showHide = {
+        ...field.showHide,
+        stateFieldName: indexFieldName(field.showHide.stateFieldName),
+        fields: field.showHide.fields.map((nestedField) => ({
+          ...nestedField,
+          name: indexFieldName(nestedField.name),
+          // Also update conditionalOn in nested fields if present
+          ...(nestedField.conditionalOn && {
+            conditionalOn: {
+              ...nestedField.conditionalOn,
+              field: indexFieldName(nestedField.conditionalOn.field),
+            },
+          }),
+        })),
+      };
+    }
+
+    return indexed;
+  });
 
   // Add "add another" radio field if not the last instance
   if (!isLastInstance) {
@@ -83,6 +214,8 @@ function createRepeatableStepInstance(
   return {
     ...baseStep,
     id: `${baseStep.id}-${index}`,
+    // Update title with ordinal for subsequent instances (e.g., "Tell us about the second child")
+    title: getOrdinalTitle(baseStep.title, index),
     fields: indexedFields,
     // First instance inherits the base step's conditionalOn, subsequent instances are conditional on previous "add another"
     conditionalOn:
@@ -415,10 +548,15 @@ export default function DynamicMultiStepForm({
   }, [_hasHydrated, searchParams, paymentData]);
 
   // Watch form changes and sync with Zustand (debounced)
+  // Converts indexed objects to arrays before storing
   useEffect(() => {
     if (!isFormReady) return;
     const subscription = methods.watch((value) => {
-      updateFormData(value as Partial<FormData>);
+      // Convert indexed objects to arrays before storing in sessionStorage
+      const arrayifiedData = convertIndexedObjectsToArrays(
+        value as Record<string, unknown>
+      );
+      updateFormData(arrayifiedData as Partial<FormData>);
     });
     return () => subscription.unsubscribe();
   }, [isFormReady, methods.watch, updateFormData]);
@@ -494,7 +632,10 @@ export default function DynamicMultiStepForm({
       }
     }
 
-    return cleanedData as FormData;
+    // Convert indexed objects (e.g., { "0": {...}, "1": {...} }) to arrays
+    const arrayifiedData = convertIndexedObjectsToArrays(cleanedData);
+
+    return arrayifiedData as FormData;
   };
 
   const onSubmit = async (data: FormData) => {

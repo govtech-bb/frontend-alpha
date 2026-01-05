@@ -1,289 +1,130 @@
 import { barbadosParishes } from "@/data/constants";
 import type { FormStep } from "@/types";
 
-// Helper function to create child basic info fields
-const createChildFields = (childIndex: number) => [
+export const formSteps: FormStep[] = [
   {
-    name: `beneficiaries.${childIndex}.firstName`,
-    label: "First name",
-    type: "text" as const,
-    validation: {
-      required: "First name is required",
-      pattern: {
-        value: "^[A-Za-z\\s'-]+$",
-        message:
-          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
-      },
-      minLength: {
-        value: 2,
-        message: "First name must be at least 2 characters",
-      },
+    id: "tell-us-about-the-child",
+    title: "Tell us about the child",
+    description: "You can add one or more child",
+    repeatable: {
+      arrayFieldName: "beneficiaries",
+      maxItems: 10,
+      addAnotherLabel: "Do you need to add another beneficiary?",
     },
-  },
-  {
-    name: `beneficiaries.${childIndex}.lastName`,
-    label: "Last name",
-    type: "text" as const,
-    validation: {
-      required: "Last name is required",
-      pattern: {
-        value: "^[A-Za-z\\s'-]+$",
-        message:
-          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
-      },
-      minLength: {
-        value: 2,
-        message: "Last name must be at least 2 characters",
-      },
-    },
-  },
-  {
-    name: `beneficiaries.${childIndex}.idNumber`,
-    label: "National Identification (ID) number",
-    width: "medium" as const,
-    type: "text" as const,
-    validation: {
-      required: "ID Number is required",
-      pattern: {
-        value: "^\\d{6}-\\d{4}$",
-        message: "Enter a valid ID number (e.g., 850101-0001)",
-      },
-    },
-    skipValidationWhenShowHideOpen: `beneficiaries.${childIndex}.usePassportInstead`,
-  },
-  {
-    name: `beneficiaries.${childIndex}.passportDetails`,
-    label: "",
-    type: "showHide" as const,
-    validation: { required: false as const },
-    showHide: {
-      summary: "Use passport number instead",
-      stateFieldName: `beneficiaries.${childIndex}.usePassportInstead`,
-      description:
-        "If you don't have a National ID number, you can use your passport number instead.",
-      fields: [
-        {
-          name: `beneficiaries.${childIndex}.passportNumber`,
-          label: "Passport number",
-          type: "text" as const,
-          placeholder: "",
-          validation: {
-            required: "Passport number is required",
-            minLength: {
-              value: 6,
-              message: "Passport number must be at least 6 characters",
-            },
+    fields: [
+      {
+        name: "firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
           },
         },
-      ],
-    },
-  },
-  {
-    name: `beneficiaries.${childIndex}.class`,
-    label: "What class are they currently in?",
-    hint: "If they are between school years, add the class they are going into",
-    type: "select" as const,
-    validation: {
-      required: "Class is required",
-    },
-    options: [
-      { label: "Select class", value: "" },
-      { label: "Class 1", value: "1" },
-      { label: "Class 2", value: "2" },
-      { label: "Class 3", value: "3" },
-      { label: "Class 4", value: "4" },
-    ],
-  },
-  {
-    name: `beneficiaries.${childIndex}.isParentOrGuardian`,
-    label: "Are you the parent or guardian?",
-    type: "radio" as const,
-    validation: {
-      required: "Relationship is required",
-    },
-    options: [
-      { label: "Yes", value: "yes" },
-      { label: "No", value: "no" },
-    ],
-  },
-  {
-    name: `beneficiaries.${childIndex}.relationshipDescription`,
-    label: "What is your relationship with the child?",
-    type: "text" as const,
-    validation: {
-      required: "Please describe your relationship",
-      minLength: {
-        value: 2,
-        message: "Please provide at least 2 characters",
       },
-    },
-    conditionalOn: {
-      field: `beneficiaries.${childIndex}.isParentOrGuardian`,
-      value: "no",
-    },
-  },
-  ...(childIndex < 4
-    ? [
-        {
-          name: `beneficiaries.${childIndex}.addAnotherChild`,
-          label: "Do you have another child at the same school?",
-          type: "radio" as const,
-          validation: {
-            required: false as const,
+      {
+        name: "lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
           },
-          options: [
-            { label: "Yes, add another child", value: "yes" },
-            { label: "No, continue", value: "no" },
+        },
+      },
+      {
+        name: "idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        width: "medium",
+        // placeholder: "e.g., 850101-0001",
+        validation: {
+          required: "ID number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "usePassportInstead",
+      },
+      {
+        name: "passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
           ],
         },
-      ]
-    : []),
-];
-
-// Helper function to create guardian fields
-const createGuardianFields = (childIndex: number) => [
-  {
-    name: `beneficiaries.${childIndex}.guardian.firstName`,
-    label: "First name",
-    type: "text" as const,
-    validation: {
-      required: "Guardian first name is required",
-      pattern: {
-        value: "^[A-Za-z\\s'-]+$",
-        message:
-          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
       },
-      minLength: {
-        value: 2,
-        message: "First name must be at least 2 characters",
+      {
+        name: "classNumber",
+        label: "Which class are they currently in?",
+        hint: "If they are between school years, add the class they are going into",
+        type: "select" as const,
+        validation: {
+          required: "Class number is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Class 1", value: "1" },
+          { label: "Class 2", value: "2" },
+          { label: "Class 3", value: "3" },
+          { label: "Class 4", value: "4" },
+        ],
       },
-    },
-  },
-  {
-    name: `beneficiaries.${childIndex}.guardian.lastName`,
-    label: "Last name",
-    type: "text" as const,
-    validation: {
-      required: "Guardian last name is required",
-      pattern: {
-        value: "^[A-Za-z\\s'-]+$",
-        message:
-          "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
+      {
+        name: "isParentOrGuardian",
+        label: "Are you the parent or guardian?",
+        type: "radio" as const,
+        validation: {
+          required: "Relationship is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
       },
-      minLength: {
-        value: 2,
-        message: "Last name must be at least 2 characters",
-      },
-    },
-  },
-  {
-    name: `beneficiaries.${childIndex}.guardian.idNumber`,
-    label: "National Identification (ID) number",
-    type: "text" as const,
-    width: "medium" as const,
-    validation: {
-      required: "Guardian ID Number is required",
-      pattern: {
-        value: "^\\d{6}-\\d{4}$",
-        message: "Enter a valid ID number (e.g., 850101-0001)",
-      },
-    },
-    skipValidationWhenShowHideOpen: `beneficiaries.${childIndex}.guardian.usePassportInstead`,
-  },
-  {
-    name: `beneficiaries.${childIndex}.guardian.passportDetails`,
-    label: "",
-    type: "showHide" as const,
-    validation: { required: false as const },
-    showHide: {
-      summary: "Use passport number instead",
-      stateFieldName: `beneficiaries.${childIndex}.guardian.usePassportInstead`,
-      description:
-        "If you don't have a National ID number, you can use your passport number instead.",
-      fields: [
-        {
-          name: `beneficiaries.${childIndex}.guardian.passportNumber`,
-          label: "Passport number",
-          type: "text" as const,
-          placeholder: "",
-          validation: {
-            required: "Passport number is required",
-            minLength: {
-              value: 6,
-              message: "Passport number must be at least 6 characters",
-            },
+      {
+        name: "relationshipDescription",
+        label: "What is your relationship with the child?",
+        type: "text" as const,
+        validation: {
+          required: "Please describe your relationship",
+          minLength: {
+            value: 2,
+            message: "Please provide at least 2 characters",
           },
         },
-      ],
-    },
-  },
-  {
-    name: `beneficiaries.${childIndex}.guardian.tamisNumber`,
-    label: "TAMIS number",
-    type: "number" as const,
-    width: "medium" as const,
-    validation: {
-      required: "Guardian TAMIS Number is required",
-      min: {
-        value: 10,
-        message: "TAMIS number must be at least 2 digits",
+        conditionalOn: {
+          field: "isParentOrGuardian",
+          value: "no",
+        },
       },
-    },
-    skipValidationWhenShowHideOpen: `beneficiaries.${childIndex}.guardian.usePassportInstead`,
+    ],
   },
-];
-
-// Generate steps for up to 5 children
-const childSteps: FormStep[] = [];
-for (let i = 0; i < 5; i++) {
-  const ordinalNum =
-    i === 0
-      ? "first"
-      : i === 1
-        ? "second"
-        : i === 2
-          ? "third"
-          : i === 3
-            ? "fourth"
-            : "fifth";
-
-  // Child basic info step
-  childSteps.push({
-    id: `beneficiaries-${i}`,
-    title:
-      i === 0
-        ? "Tell us about the child"
-        : `Tell us about the ${ordinalNum} child`,
-    description: "",
-    ...(i > 0
-      ? {
-          conditionalOn: {
-            field: `beneficiaries.${i - 1}.addAnotherChild`,
-            value: "yes",
-          },
-        }
-      : {}),
-    fields: createChildFields(i),
-  });
-
-  // Guardian step (conditional)
-  childSteps.push({
-    id: `beneficiaries-${i}-guardian`,
-    title:
-      i === 0
-        ? "Tell us about the parent or guardian for the child"
-        : `Tell us about the parent or guardian for the ${ordinalNum} child`,
-    description: "",
-    conditionalOn: {
-      field: `beneficiaries.${i}.isParentOrGuardian`,
-      value: "no",
-    },
-    fields: createGuardianFields(i),
-  });
-}
-
-export const formSteps: FormStep[] = [
-  ...childSteps,
   {
     id: "applicant-details",
     title: "Tell us about yourself",
@@ -539,6 +380,35 @@ export const formSteps: FormStep[] = [
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
+  },
+  {
+    id: "declaration",
+    title: "Declaration",
+    description:
+      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+    fields: [
+      {
+        name: "declaration.confirmed",
+        label: "All information is correct and true.",
+        type: "checkbox",
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
+      },
+      {
+        name: "declaration.dateOfDeclaration",
+        label: "Date of declaration",
+        hidden: true,
+        placeholder: "For example, 12 15 2025",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+    ],
   },
   {
     id: "confirmation",
