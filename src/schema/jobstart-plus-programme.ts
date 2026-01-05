@@ -9,6 +9,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.title",
         label: "Title",
+        width: "short",
         type: "select",
         validation: {
           required: "Title is required",
@@ -22,7 +23,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "First name is required",
@@ -30,13 +31,14 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.middleName",
-        label: "Middle Name",
+        label: "Middle name(s)",
+        hint: "If you have more than one, add them in order",
         type: "text",
         validation: { required: false },
       },
       {
         name: "applicant.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
@@ -44,7 +46,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.dateOfBirth",
-        label: "Date of Birth",
+        label: "Date of birth",
+        placeholder: "For example, 12 30 1986",
         type: "date",
         validation: {
           required: "Date of birth is required",
@@ -54,7 +57,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicant.gender",
+        name: "applicant.sex",
         label: "Sex",
         type: "radio",
         validation: {
@@ -67,13 +70,14 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.maritalStatus",
-        label: "Marital Status",
+        label: "Marital status",
+        width: "medium",
         type: "select",
         validation: {
           required: "Marital Status is required",
         },
         options: [
-          { label: "Select marital status", value: "" },
+          { label: "", value: "" },
           { label: "Single", value: "single" },
           { label: "Married", value: "married" },
           { label: "Divorced", value: "divorced" },
@@ -82,6 +86,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
+        width: "medium",
         type: "text",
         placeholder: "",
         validation: {
@@ -122,7 +127,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.hasNisNumber",
-        label: "Do you have a National Insurance Number (NIS)?",
+        label: "Do you have a National Insurance number (NIS)?",
         type: "radio",
         validation: {
           required: "NIS Number is required",
@@ -134,7 +139,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.nisNumber",
-        label: "What is your National Insurance Number (NIS)?",
+        label: "Provide your National insurance number (NIS)?",
         type: "text",
         placeholder: "",
         validation: {
@@ -191,11 +196,11 @@ export const formSteps: FormStep[] = [
   {
     id: "contact-details",
     title: "Your contact details",
-    description: "Description",
+    description: "How can we reach you?",
     fields: [
       {
-        name: "contact.addressLine1",
-        label: "Address Line 1",
+        name: "contactDetails.addressLine1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -207,16 +212,17 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contact.addressLine2",
-        label: "Address Line 2",
+        name: "contactDetails.addressLine2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
       },
 
       {
-        name: "contact.parish",
+        name: "contactDetails.parish",
         label: "Parish",
+        width: "medium",
         type: "select",
         validation: {
           required: "Parish is required",
@@ -224,8 +230,9 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "contact.postalCode",
-        label: "Postal Code",
+        name: "contactDetails.postalCode",
+        label: "Postal code",
+        width: "medium",
         type: "text",
         validation: {
           pattern: {
@@ -234,77 +241,8 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      // {
-      //   name: "contact.isMailingAddressSame",
-      //   label: "Is your mailing address the same as above?",
-      //   type: "radio",
-      //   validation: {
-      //     required: "Field is required",
-      //   },
-      //   options: [
-      //     { label: "Yes", value: "yes" },
-      //     { label: "No", value: "no" },
-      //   ],
-      // },
-      // {
-      //   name: "mailing.addressLine1",
-      //   label: "Mailing Address Line 1",
-      //   type: "text",
-      //   placeholder: "",
-      //   validation: {
-      //     required: "Mailing address line 1 is required",
-      //     minLength: {
-      //       value: 5,
-      //       message: "Address must be at least 5 characters",
-      //     },
-      //   },
-      //   conditionalOn: {
-      //     field: "contact.isMailingAddressSame",
-      //     value: "no",
-      //   },
-      // },
-      // {
-      //   name: "mailing.addressLine2",
-      //   label: "Mailing Address Line 2",
-      //   type: "text",
-      //   placeholder: "",
-      //   validation: {},
-      //   conditionalOn: {
-      //     field: "contact.isMailingAddressSame",
-      //     value: "no",
-      //   },
-      // },
-      // {
-      //   name: "mailing.parish",
-      //   label: "Mailing Parish",
-      //   type: "select",
-      //   validation: {
-      //     required: "Mailing parish is required",
-      //   },
-      //   options: barbadosParishes,
-      //   conditionalOn: {
-      //     field: "contact.isMailingAddressSame",
-      //     value: "no",
-      //   },
-      // },
-      // {
-      //   name: "mailing.postalCode",
-      //   label: "Mailing Postal Code",
-      //   type: "text",
-      //   placeholder: "BB17004",
-      //   validation: {
-      //     pattern: {
-      //       value: "^BB\\d{5}$",
-      //       message: "Enter a valid postal code (e.g., BB17004)",
-      //     },
-      //   },
-      //   conditionalOn: {
-      //     field: "contact.isMailingAddressSame",
-      //     value: "no",
-      //   },
-      // },
       {
-        name: "contact.email",
+        name: "contactDetails.email",
         label: "Email Address",
         type: "email",
         validation: {
@@ -312,15 +250,14 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contact.telephoneNumber",
-        label: "Telephone Number",
+        name: "contactDetails.telephoneNumber",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 1 246 234 5678)",
           },
         },
       },
@@ -329,11 +266,12 @@ export const formSteps: FormStep[] = [
   {
     id: "emergency-contact",
     title: "Emergency contact details",
-    description: "Description",
+    description: "In case of an emergency, who should we contact?",
     fields: [
       {
         name: "emergency.title",
         label: "Title",
+        width: "short",
         type: "select",
         validation: {
           required: "Title is required",
@@ -347,7 +285,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "First name is required",
@@ -355,7 +293,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
@@ -382,7 +320,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -395,7 +333,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergency.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -404,6 +342,7 @@ export const formSteps: FormStep[] = [
       {
         name: "emergency.parish",
         label: "Parish",
+        width: "medium",
         type: "select",
         validation: {
           required: "Parish is required",
@@ -411,134 +350,152 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
+        name: "emergency.email",
+        label: "Email Address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
         name: "emergency.telephoneNumber",
-        label: "Phone Number",
+        label: "Phone number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 1 246 234 5678)",
           },
         },
       },
     ],
   },
   {
-    id: "education-training",
-    title: "Tell us about your education and training",
-    description: "",
+    id: "primary-education",
+    title: "Tell us about your primary education",
     fields: [
       {
-        name: "education.level",
-        label: "Education Level",
-        type: "radio",
-        validation: {
-          required: "Education Level is required",
-        },
-        options: [
-          { label: "Primary", value: "primary" },
-          { label: "Secondary", value: "secondary" },
-          { label: "Tertiary", value: "tertiary" },
-        ],
-      },
-      {
-        name: "education.institutionName",
-        label: "Name of Institution",
+        name: "primaryEducation.schoolName",
+        label: "Name of primary school",
         type: "text",
-        placeholder: "",
+        width: "medium",
         validation: {
-          required: "Name of Secondary School is required",
+          required: "Name is required",
           minLength: {
             value: 5,
-            message: "Name of Secondary School must be at least 5 characters",
+            message: "Name must be at least 5 characters",
           },
         },
       },
       {
-        name: "education.startYear",
-        label: "Start Year",
+        name: "primaryEducation.startYear",
+        label: "Start year",
         type: "text",
-        placeholder: "",
+        width: "short",
         validation: {
-          required: "Start Year is required",
+          required: "Start year is required",
           minLength: {
             value: 4,
-            message: "Start Year must be 4 characters",
+            message: "Start year must be 4 characters",
           },
           maxLength: {
             value: 4,
-            message: "Start Year must be 4 characters",
+            message: "Start year must be 4 characters",
           },
         },
       },
       {
-        name: "education.endYear",
-        label: "End Year",
+        name: "primaryEducation.endYear",
+        label: "End year",
+        width: "short",
         type: "text",
-        placeholder: "",
         validation: {
-          required: "End Year is required",
+          required: "End year is required",
           minLength: {
             value: 4,
-            message: "End Year must be 4 characters",
+            message: "End year must be 4 characters",
           },
           maxLength: {
             value: 4,
-            message: "End Year must be 4 characters",
+            message: "End year must be 4 characters",
           },
         },
-      },
-      // {
-      //   name: "education.coursesOrSubjects",
-      //   label: "What courses or subjects did you study?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.qualificationsObtained",
-      //   label: "What are your qualifications?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      // {
-      //   name: "education.gradesObtained",
-      //   label: "What are your grades?",
-      //   type: "textarea",
-      //   placeholder: "",
-      //   validation: {},
-      // },
-      {
-        name: "education.addanother",
-        label: "Do you want to add another experience?",
-        type: "radio",
-        validation: {
-          required: "Field is required",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
       },
     ],
   },
   {
-    id: "post-secondary-education-training",
-    title: "Name of institution for post-secondary education or training",
-    description:
-      "Add information about college, university and training courses you have completed",
+    id: "secondary-education",
+    title: "Tell us about your secondary education",
     fields: [
       {
-        name: "postSecondaryEducation.institutionName",
+        name: "secondaryEducation.schoolName",
+        label: "Name of secondary school",
+        width: "medium",
+        type: "text",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "Name must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "secondaryEducation.startYear",
+        label: "Start year",
+        width: "short",
+        type: "text",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 4,
+            message: "Start year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "Start year must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "secondaryEducation.endYear",
+        label: "End year",
+        width: "short",
+        type: "text",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 4,
+            message: "End Year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "End year must be 4 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "post-secondary-tertiary-training",
+    title: "Post-secondary and tertiary training",
+    description:
+      "Add information about college, university and training courses you have completed",
+    repeatable: {
+      arrayFieldName: "postSecondaryEducation",
+      maxItems: 10,
+      addAnotherLabel: "Do you need to add another training?",
+    },
+    fields: [
+      {
+        name: "institutionName",
         label: "Name of Institution",
+        width: "medium",
         type: "text",
         placeholder: "",
         validation: {
-          required: "Name of Instituion is required",
+          required: false,
           minLength: {
             value: 5,
             message: "Name of Institution must be at least 5 characters",
@@ -546,112 +503,241 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "postSecondaryEducation.startYear",
-        label: "Start Year",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Start Year is required",
-          minLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.endYear",
-        label: "End Year",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "End Year is required",
-          minLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-        },
-      },
-      {
-        name: "postSecondaryEducation.coursesOrSubjects",
-        label: "What courses or subjects did you study?",
-        type: "textarea",
-        placeholder: "",
-        validation: { required: false },
-      },
-      {
-        name: "postSecondaryEducation.qualificationsObtained",
+        name: "qualificationsObtained",
         label: "What are your qualifications?",
+        width: "medium",
         type: "textarea",
         placeholder: "",
         validation: { required: false },
       },
       {
-        name: "postSecondaryEducation.gradesObtained",
-        label: "What are your grades?",
-        type: "textarea",
+        name: "coursesOrSubjects",
+        label: "Courses or subjects",
+        width: "medium",
+        hint: "Separate each course with a comma",
+        type: "text",
         placeholder: "",
         validation: { required: false },
+      },
+      {
+        name: "startYear",
+        label: "Start Year",
+        width: "short",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: false,
+          minLength: {
+            value: 4,
+            message: "Start Year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "Start Year must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "endYear",
+        label: "End Year",
+        width: "short",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: false,
+          minLength: {
+            value: 4,
+            message: "End Year must be 4 characters",
+          },
+          maxLength: {
+            value: 4,
+            message: "End Year must be 4 characters",
+          },
+        },
       },
     ],
   },
   {
-    id: "eligibility-questions",
-    title: "Your eligibility",
-    description: "",
+    id: "previous-paid-job",
+    title: "Have you had a paid job?",
+    description:
+      "This includes part-time and /or casual work, or a full-time employed position.",
     fields: [
       {
-        name: "eligibility.skillsAndInterests",
-        label: "Tell us about your skills and interests",
-        hint: "For example, which trades are you skilled in? Which hobbies do you enjoy? Are you part of any community groups",
-        type: "textarea",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "This must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "eligibility.areasOfInterest",
-        label: "What type of jobs or trades are you interested in?",
-        type: "textarea",
-        rows: 5,
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "This must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "eligibility.availabilityToWork",
-        label: "Tell us when you are available to work",
-        hint: "If you are 18 and over you are eligible to work at night. Might you be willing to work between 6pm and 7am?",
+        name: "hasPreviousPaidJob",
+        label: "Have you had a paid job?",
+        hidden: true,
         type: "radio",
-        rows: 5,
         validation: {
-          required: "Field is required",
+          required: "Select an option",
         },
         options: [
           { label: "Yes", value: "yes" },
           { label: "No", value: "no" },
         ],
       },
+    ],
+  },
+  {
+    id: "employment-history",
+    title: "Tell us about your previous job",
+    description: "",
+    conditionalOn: {
+      field: "hasPreviousPaidJob",
+      value: "yes",
+    },
+    repeatable: {
+      arrayFieldName: "employmentHistory",
+      maxItems: 10,
+      addAnotherLabel: "Do you need to add another job?",
+    },
+    fields: [
+      {
+        name: "employerName",
+        label: "Name of employer",
+        width: "medium",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Name of employer is required",
+          minLength: {
+            value: 5,
+            message: "Name of employer must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "occupation",
+        label: "Occupation",
+        width: "medium",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Occupation is required",
+          minLength: {
+            value: 5,
+            message: "Occupation must be at least 5 characters",
+          },
+        },
+      },
+
+      {
+        name: "startDate",
+        label: "When did you start this job?",
+        hint: "Provide the month and year (eg 12, 2023)",
+        type: "text",
+        width: "short",
+        placeholder: "",
+        validation: {
+          required: "Start date is required",
+          minLength: {
+            value: 4,
+            message: "Start date must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "endDate",
+        label: "When did you end this job?",
+        hint: "Provide the month and year (eg 12, 2023)",
+        type: "text",
+        width: "short",
+        placeholder: "",
+        validation: {
+          required: false,
+          minLength: {
+            value: 4,
+            message: "End date must be 4 characters",
+          },
+        },
+      },
+      {
+        name: "currentlyWorkingHere",
+        label: "I am currently working here",
+        type: "checkbox",
+        validation: {
+          required: false,
+        },
+      },
+      {
+        name: "mainTasks",
+        label: "Your main tasks",
+        hint: "Provide a brief description of what you did in your role",
+        width: "medium",
+        type: "textarea",
+        rows: 5,
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "Main tasks must be at least 5 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "eligibility-interests",
+    title: "Tell us about your areas of interests",
+    fields: [
+      {
+        name: "eligibility.interests",
+        label: "What type of jobs or trades are you interested in?",
+        width: "medium",
+        type: "textarea",
+        validation: {
+          required: "Field is required",
+          minLength: {
+            value: 5,
+            message: "This must be at least 5 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "eligibility-age",
+    title: "Are you 18 and over?",
+    fields: [
+      {
+        name: "eligibility.areYouOver18",
+        label: "Are you 18 and over?",
+        hidden: true,
+        type: "radio",
+        validation: {
+          required: "Select an option",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+      // {
+      //   name: "eligibility.availabilityToWork",
+      //   label: "Tell us when you are available to work",
+      //   hint: "If you are 18 and over you are eligible to work at night. Might you be willing to work between 6pm and 7am?",
+      //   type: "radio",
+      //   rows: 5,
+      //   validation: {
+      //     required: "Field is required",
+      //   },
+      //   options: [
+      //     { label: "Yes", value: "yes" },
+      //     { label: "No", value: "no" },
+      //   ],
+      // },
+    ],
+  },
+  {
+    id: "eligibility-questions",
+    title: "Tell us about your short-term goals",
+    description:
+      "This helps us understand the kinds of opportunities that will support your growth.\n\n For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills.",
+    fields: [
       {
         name: "eligibility.shortTermGoals",
         label: "Tell us about your short-term goals",
-        hint: " This helps us understand the kinds of opportunities that will support your growth. For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills.",
+        hidden: true,
         type: "textarea",
         rows: 5,
         validation: {
@@ -668,5 +754,52 @@ export const formSteps: FormStep[] = [
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
+  },
+  {
+    id: "declaration",
+    title: "Declaration",
+    description:
+      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+    fields: [
+      {
+        name: "declaration.confirmed",
+        label: "All information is correct and true.",
+        type: "checkbox",
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
+      },
+      {
+        name: "dateOfDeclaration",
+        label: "Date of declaration",
+        hidden: true,
+        placeholder: "For example, 12 15 2025",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "confirmation",
+    title: "Your application has been submitted",
+    description: "",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "",
+        items: [
+          "Your application will be reviewed.",
+          "You may be contacted if more information is needed.",
+          "You will be informed of the outcome.",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
