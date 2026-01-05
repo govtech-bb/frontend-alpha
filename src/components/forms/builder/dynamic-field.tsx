@@ -462,8 +462,6 @@ export function DynamicField({
             />
           )}
         />
-      ) : field.type === "fieldArray" ? (
-        <DynamicFieldArray field={field} />
       ) : field.type === "showHide" && field.showHide ? (
         (() => {
           // Extract showHide config to help TypeScript narrow the type
