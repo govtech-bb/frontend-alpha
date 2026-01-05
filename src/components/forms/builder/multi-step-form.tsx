@@ -780,7 +780,8 @@ export default function DynamicMultiStepForm({
           )
         );
         if (firstErrorField) {
-          const element = document.querySelector(`#${String(firstErrorField)}`);
+          const escapedSelector = `#${CSS.escape(firstErrorField)}`;
+          const element = document.querySelector(escapedSelector);
           if (element) {
             element.scrollIntoView({ behavior: "smooth", block: "center" });
           }
