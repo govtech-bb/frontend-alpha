@@ -56,7 +56,11 @@ const components: Components = {
       {children}
     </ol>
   ),
-  li: ({ children, ...props }: ListItemProps) => <li {...props}>{children}</li>,
+  li: ({ children, ...props }: ListItemProps) => (
+    <li className="space-y-s" {...props}>
+      {children}
+    </li>
+  ),
   hr: (props: any) => <hr className="my-8 border border-gray-100" {...props} />,
   pre: (props: any) => (
     <pre className="overflow-x-auto whitespace-pre-wrap" {...props} />
