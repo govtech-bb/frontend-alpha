@@ -77,7 +77,7 @@ export const formSteps: FormStep[] = [
           required: "Marital Status is required",
         },
         options: [
-          { label: "Select marital status", value: "" },
+          { label: "", value: "" },
           { label: "Single", value: "single" },
           { label: "Married", value: "married" },
           { label: "Divorced", value: "divorced" },
@@ -196,7 +196,7 @@ export const formSteps: FormStep[] = [
   {
     id: "contact-details",
     title: "Your contact details",
-    description: "Description",
+    description: "How can we reach you?",
     fields: [
       {
         name: "contactDetails.addressLine1",
@@ -266,7 +266,7 @@ export const formSteps: FormStep[] = [
   {
     id: "emergency-contact",
     title: "Emergency contact details",
-    description: "Description",
+    description: "In case of an emergency, who should we contact?",
     fields: [
       {
         name: "emergency.title",
@@ -381,7 +381,7 @@ export const formSteps: FormStep[] = [
         type: "text",
         width: "medium",
         validation: {
-          required: "Field is required",
+          required: "Name is required",
           minLength: {
             value: 5,
             message: "Name must be at least 5 characters",
@@ -394,7 +394,7 @@ export const formSteps: FormStep[] = [
         type: "text",
         width: "short",
         validation: {
-          required: "Field is required",
+          required: "Start year is required",
           minLength: {
             value: 4,
             message: "Start year must be 4 characters",
@@ -411,7 +411,7 @@ export const formSteps: FormStep[] = [
         width: "short",
         type: "text",
         validation: {
-          required: "Field is required",
+          required: "End year is required",
           minLength: {
             value: 4,
             message: "End year must be 4 characters",
@@ -732,7 +732,7 @@ export const formSteps: FormStep[] = [
     id: "eligibility-questions",
     title: "Tell us about your short-term goals",
     description:
-      "This helps us understand the kinds of opportunities that will support your growth. ",
+      "This helps us understand the kinds of opportunities that will support your growth.\n\n For example, I want to be working in a full-time administrative role where I can improve my customer service and office management skills.",
     fields: [
       {
         name: "eligibility.shortTermGoals",
