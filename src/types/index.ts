@@ -190,6 +190,12 @@ export type RepeatableStepConfig = {
   maxItems?: number;
   /** Label for the "add another" question (defaults to "Do you need to add another?") */
   addAnotherLabel?: string;
+  /**
+   * When true, this step won't include the "add another" question.
+   * Use this for conditional sub-steps that appear within a repeatable group
+   * (e.g., guardian details that appear after each child entry when applicable)
+   */
+  skipAddAnother?: boolean;
 };
 
 export type FormStep = {

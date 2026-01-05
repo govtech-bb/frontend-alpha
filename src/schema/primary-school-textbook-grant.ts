@@ -126,6 +126,105 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "guardian-details",
+    title: "Tell us about the child's guardian",
+    description:
+      "Please provide the details of the child's legal guardian who will be responsible for the grant.",
+    repeatable: {
+      arrayFieldName: "beneficiaries",
+      maxItems: 10,
+      skipAddAnother: true,
+    },
+    conditionalOn: {
+      field: "isParentOrGuardian",
+      value: "no",
+    },
+    fields: [
+      {
+        name: "guardian.firstName",
+        label: "First name",
+        type: "text" as const,
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "guardian.lastName",
+        label: "Last name",
+        type: "text" as const,
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "guardian.idNumber",
+        label: "National Identification (ID) number",
+        type: "text" as const,
+        width: "medium",
+        validation: {
+          required: "ID number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
+          },
+        },
+        skipValidationWhenShowHideOpen: "guardian.usePassportInstead",
+      },
+      {
+        name: "guardian.passportDetails",
+        label: "",
+        type: "showHide" as const,
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "guardian.usePassportInstead",
+          description:
+            "If the guardian doesn't have a National ID number, you can use their passport number instead.",
+          fields: [
+            {
+              name: "guardian.passportNumber",
+              label: "Passport number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "guardian.tamisNumber",
+        label: "TAMIS number",
+        type: "number" as const,
+        width: "medium",
+        validation: {
+          required: "TAMIS number is required",
+          pattern: {
+            value: "^\\d+$",
+            message: "Please enter numbers only",
+          },
+          minLength: {
+            value: 2,
+            message: "TAMIS number must be at least 2 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "applicant-details",
     title: "Tell us about yourself",
     fields: [

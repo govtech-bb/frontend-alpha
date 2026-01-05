@@ -133,12 +133,14 @@ function getOrdinalTitle(title: string, index: number): string {
  * Creates a repeatable step instance with indexed field names
  * @param baseStep - The template step with repeatable config
  * @param index - The instance index (0-based)
- * @param isLastInstance - Whether this is the last allowed instance (no "add another" question)
+ * @param shouldAddAnotherField - Whether to add the "add another" question to this step
+ * @param isSubStep - Whether this is a sub-step (conditionalOn should be indexed)
  */
 function createRepeatableStepInstance(
   baseStep: FormStep,
   index: number,
-  isLastInstance: boolean
+  shouldAddAnotherField: boolean,
+  isSubStep: boolean
 ): FormStep {
   const config = baseStep.repeatable;
   if (!config) return baseStep;
@@ -194,8 +196,8 @@ function createRepeatableStepInstance(
     return indexed;
   });
 
-  // Add "add another" radio field if not the last instance
-  if (!isLastInstance) {
+  // Add "add another" radio field if this step should have it
+  if (shouldAddAnotherField) {
     const addAnotherField: FormField = {
       name: `_addAnother_${arrayFieldName}_${index}`,
       label: addAnotherLabel ?? "Do you need to add another?",
@@ -211,47 +213,132 @@ function createRepeatableStepInstance(
     indexedFields.push(addAnotherField);
   }
 
+  // Determine the conditionalOn for this step instance
+  let stepConditionalOn = baseStep.conditionalOn;
+
+  if (isSubStep && baseStep.conditionalOn) {
+    // Sub-steps: index the conditionalOn.field reference (e.g., isParentOrGuardian -> beneficiaries.0.isParentOrGuardian)
+    stepConditionalOn = {
+      ...baseStep.conditionalOn,
+      field: indexFieldName(baseStep.conditionalOn.field),
+    };
+  } else if (index > 0 && !isSubStep) {
+    // Primary steps after the first: conditional on previous "add another" being "yes"
+    stepConditionalOn = {
+      field: `_addAnother_${arrayFieldName}_${index - 1}`,
+      value: "yes",
+    };
+  }
+
   return {
     ...baseStep,
     id: `${baseStep.id}-${index}`,
     // Update title with ordinal for subsequent instances (e.g., "Tell us about the second child")
     title: getOrdinalTitle(baseStep.title, index),
     fields: indexedFields,
-    // First instance inherits the base step's conditionalOn, subsequent instances are conditional on previous "add another"
-    conditionalOn:
-      index === 0
-        ? baseStep.conditionalOn
-        : {
-            field: `_addAnother_${arrayFieldName}_${index - 1}`,
-            value: "yes",
-          },
+    conditionalOn: stepConditionalOn,
     // Clear the repeatable config from instances (they're already expanded)
     repeatable: undefined,
   };
 }
 
 /**
+ * Groups consecutive steps that share the same repeatable arrayFieldName
+ * @returns Array of step groups, where each group is an array of steps sharing the same arrayFieldName
+ */
+function groupRepeatableSteps(steps: FormStep[]): FormStep[][] {
+  const groups: FormStep[][] = [];
+  let currentGroup: FormStep[] = [];
+  let currentArrayFieldName: string | null = null;
+
+  for (const step of steps) {
+    const arrayFieldName = step.repeatable?.arrayFieldName;
+
+    if (arrayFieldName) {
+      if (arrayFieldName === currentArrayFieldName) {
+        // Same group, add to current
+        currentGroup.push(step);
+      } else {
+        // Different arrayFieldName, start new group
+        if (currentGroup.length > 0) {
+          groups.push(currentGroup);
+        }
+        currentGroup = [step];
+        currentArrayFieldName = arrayFieldName;
+      }
+    } else {
+      // Non-repeatable step
+      if (currentGroup.length > 0) {
+        groups.push(currentGroup);
+        currentGroup = [];
+        currentArrayFieldName = null;
+      }
+      groups.push([step]);
+    }
+  }
+
+  // Don't forget the last group
+  if (currentGroup.length > 0) {
+    groups.push(currentGroup);
+  }
+
+  return groups;
+}
+
+/**
  * Expands form steps by generating instances of repeatable steps
+ * Consecutive steps with the same arrayFieldName are grouped and expanded together
+ * (e.g., child-0, guardian-0, child-1, guardian-1, etc.)
  * @param steps - Original form steps
- * @param repeatableCounts - Map of step ID to instance count
+ * @param repeatableCounts - Map of primary step ID to instance count
  */
 function expandFormSteps(
   steps: FormStep[],
   repeatableCounts: Record<string, number>
 ): FormStep[] {
   const expanded: FormStep[] = [];
+  const groups = groupRepeatableSteps(steps);
 
-  for (const step of steps) {
-    if (step.repeatable) {
-      const count = repeatableCounts[step.id] ?? 1;
-      const maxItems = step.repeatable.maxItems ?? 10;
+  for (const group of groups) {
+    // Non-repeatable step (single step in group with no repeatable config)
+    if (group.length === 1 && !group[0].repeatable) {
+      expanded.push(group[0]);
+      continue;
+    }
 
-      for (let i = 0; i < count; i++) {
-        const isLastInstance = i >= maxItems - 1;
-        expanded.push(createRepeatableStepInstance(step, i, isLastInstance));
+    // Find the primary step (the one without skipAddAnother) to get the count
+    const primaryStep = group.find((s) => !s.repeatable?.skipAddAnother);
+    if (!primaryStep?.repeatable) {
+      // Fallback: just use the first step
+      expanded.push(...group);
+      continue;
+    }
+
+    const count = repeatableCounts[primaryStep.id] ?? 1;
+    const maxItems = primaryStep.repeatable.maxItems ?? 10;
+
+    // Expand the group: for each instance, add all steps in the group
+    for (let i = 0; i < count; i++) {
+      const isLastInstance = i >= maxItems - 1;
+
+      for (const step of group) {
+        const isSubStep = step.repeatable?.skipAddAnother === true;
+        // Only the last non-sub-step in the group should have the "add another" field
+        const lastNonSubStep = [...group]
+          .reverse()
+          .find((s) => !s.repeatable?.skipAddAnother);
+        const shouldAddAnotherField =
+          !(isLastInstance || isSubStep) && step === lastNonSubStep;
+
+        expanded.push(
+          createRepeatableStepInstance(
+            step,
+            i,
+            shouldAddAnotherField,
+            isSubStep
+          )
+        );
       }
-    } else {
-      expanded.push(step);
     }
   }
 
