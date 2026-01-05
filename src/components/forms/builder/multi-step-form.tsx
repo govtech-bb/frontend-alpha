@@ -42,29 +42,162 @@ function setNestedValue(
 }
 
 /**
+ * Checks if an object has only consecutive numeric keys starting from 0.
+ * This identifies objects that react-hook-form creates from indexed field names
+ * (e.g., `beneficiaries.0`, `beneficiaries.1`) which should be arrays.
+ */
+function hasOnlyNumericKeys(obj: Record<string, unknown>): boolean {
+  const keys = Object.keys(obj);
+  if (keys.length === 0) return false;
+
+  // Check if all keys are numeric and consecutive starting from 0
+  const numericKeys = keys.map(Number).sort((a, b) => a - b);
+  return numericKeys.every((key, index) => key === index && !Number.isNaN(key));
+}
+
+/**
+ * Recursively converts objects with numeric keys to arrays.
+ * React-hook-form creates objects like `{ "0": {...}, "1": {...} }` when using
+ * indexed field names (e.g., `beneficiaries.0.firstName`). This function
+ * transforms them to proper arrays `[{...}, {...}]`.
+ */
+function convertIndexedObjectsToArrays(
+  data: Record<string, unknown>
+): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(data)) {
+    if (value && typeof value === "object" && !Array.isArray(value)) {
+      const objValue = value as Record<string, unknown>;
+
+      if (hasOnlyNumericKeys(objValue)) {
+        // Convert to array and recursively process each item
+        const sortedKeys = Object.keys(objValue)
+          .map(Number)
+          .sort((a, b) => a - b);
+        result[key] = sortedKeys.map((numKey) => {
+          const item = objValue[String(numKey)];
+          if (item && typeof item === "object" && !Array.isArray(item)) {
+            return convertIndexedObjectsToArrays(
+              item as Record<string, unknown>
+            );
+          }
+          return item;
+        });
+      } else {
+        // Recursively process nested objects
+        result[key] = convertIndexedObjectsToArrays(objValue);
+      }
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
+
+/**
+ * Returns the ordinal word for a given number (e.g., 2 -> "second", 3 -> "third")
+ */
+function getOrdinalWord(n: number): string {
+  const ordinals = [
+    "first",
+    "second",
+    "third",
+    "fourth",
+    "fifth",
+    "sixth",
+    "seventh",
+    "eighth",
+    "ninth",
+    "tenth",
+  ];
+  return ordinals[n - 1] ?? `${n}th`;
+}
+
+/**
+ * Updates a step title with ordinal numbering for subsequent instances.
+ * Replaces "the X" with "the second X", "the third X", etc.
+ * Only applies to instances after the first (index > 0).
+ */
+function getOrdinalTitle(title: string, index: number): string {
+  if (index === 0) return title;
+
+  const ordinal = getOrdinalWord(index + 1);
+  // Replace "the " with "the second " (or third, fourth, etc.)
+  // This handles titles like "Tell us about the child" -> "Tell us about the second child"
+  return title.replace(/\bthe\s+/i, `the ${ordinal} `);
+}
+
+/**
  * Creates a repeatable step instance with indexed field names
  * @param baseStep - The template step with repeatable config
  * @param index - The instance index (0-based)
- * @param isLastInstance - Whether this is the last allowed instance (no "add another" question)
+ * @param shouldAddAnotherField - Whether to add the "add another" question to this step
+ * @param isSubStep - Whether this is a sub-step (conditionalOn should be indexed)
  */
 function createRepeatableStepInstance(
   baseStep: FormStep,
   index: number,
-  isLastInstance: boolean
+  shouldAddAnotherField: boolean,
+  isSubStep: boolean
 ): FormStep {
   const config = baseStep.repeatable;
   if (!config) return baseStep;
 
   const { arrayFieldName, addAnotherLabel } = config;
 
-  // Create indexed field names (e.g., minorDetails.0.firstName)
-  const indexedFields: FormField[] = baseStep.fields.map((field) => ({
-    ...field,
-    name: `${arrayFieldName}.${index}.${field.name}`,
-  }));
+  // Helper to prefix a field name with the array path
+  const indexFieldName = (fieldName: string) =>
+    `${arrayFieldName}.${index}.${fieldName}`;
 
-  // Add "add another" radio field if not the last instance
-  if (!isLastInstance) {
+  // Create indexed field names (e.g., minorDetails.0.firstName)
+  // Also update any field references (conditionalOn, skipValidationWhenShowHideOpen, showHide)
+  const indexedFields: FormField[] = baseStep.fields.map((field) => {
+    const indexed: FormField = {
+      ...field,
+      name: indexFieldName(field.name),
+    };
+
+    // Update conditionalOn.field reference to include the array index
+    if (field.conditionalOn) {
+      indexed.conditionalOn = {
+        ...field.conditionalOn,
+        field: indexFieldName(field.conditionalOn.field),
+      };
+    }
+
+    // Update skipValidationWhenShowHideOpen reference
+    if (field.skipValidationWhenShowHideOpen) {
+      indexed.skipValidationWhenShowHideOpen = indexFieldName(
+        field.skipValidationWhenShowHideOpen
+      );
+    }
+
+    // Update showHide config with indexed field names
+    if (field.showHide) {
+      indexed.showHide = {
+        ...field.showHide,
+        stateFieldName: indexFieldName(field.showHide.stateFieldName),
+        fields: field.showHide.fields.map((nestedField) => ({
+          ...nestedField,
+          name: indexFieldName(nestedField.name),
+          // Also update conditionalOn in nested fields if present
+          ...(nestedField.conditionalOn && {
+            conditionalOn: {
+              ...nestedField.conditionalOn,
+              field: indexFieldName(nestedField.conditionalOn.field),
+            },
+          }),
+        })),
+      };
+    }
+
+    return indexed;
+  });
+
+  // Add "add another" radio field if this step should have it
+  if (shouldAddAnotherField) {
     const addAnotherField: FormField = {
       name: `_addAnother_${arrayFieldName}_${index}`,
       label: addAnotherLabel ?? "Do you need to add another?",
@@ -80,45 +213,132 @@ function createRepeatableStepInstance(
     indexedFields.push(addAnotherField);
   }
 
+  // Determine the conditionalOn for this step instance
+  let stepConditionalOn = baseStep.conditionalOn;
+
+  if (isSubStep && baseStep.conditionalOn) {
+    // Sub-steps: index the conditionalOn.field reference (e.g., isParentOrGuardian -> beneficiaries.0.isParentOrGuardian)
+    stepConditionalOn = {
+      ...baseStep.conditionalOn,
+      field: indexFieldName(baseStep.conditionalOn.field),
+    };
+  } else if (index > 0 && !isSubStep) {
+    // Primary steps after the first: conditional on previous "add another" being "yes"
+    stepConditionalOn = {
+      field: `_addAnother_${arrayFieldName}_${index - 1}`,
+      value: "yes",
+    };
+  }
+
   return {
     ...baseStep,
     id: `${baseStep.id}-${index}`,
+    // Update title with ordinal for subsequent instances (e.g., "Tell us about the second child")
+    title: getOrdinalTitle(baseStep.title, index),
     fields: indexedFields,
-    // First instance inherits the base step's conditionalOn, subsequent instances are conditional on previous "add another"
-    conditionalOn:
-      index === 0
-        ? baseStep.conditionalOn
-        : {
-            field: `_addAnother_${arrayFieldName}_${index - 1}`,
-            value: "yes",
-          },
+    conditionalOn: stepConditionalOn,
     // Clear the repeatable config from instances (they're already expanded)
     repeatable: undefined,
   };
 }
 
 /**
+ * Groups consecutive steps that share the same repeatable arrayFieldName
+ * @returns Array of step groups, where each group is an array of steps sharing the same arrayFieldName
+ */
+function groupRepeatableSteps(steps: FormStep[]): FormStep[][] {
+  const groups: FormStep[][] = [];
+  let currentGroup: FormStep[] = [];
+  let currentArrayFieldName: string | null = null;
+
+  for (const step of steps) {
+    const arrayFieldName = step.repeatable?.arrayFieldName;
+
+    if (arrayFieldName) {
+      if (arrayFieldName === currentArrayFieldName) {
+        // Same group, add to current
+        currentGroup.push(step);
+      } else {
+        // Different arrayFieldName, start new group
+        if (currentGroup.length > 0) {
+          groups.push(currentGroup);
+        }
+        currentGroup = [step];
+        currentArrayFieldName = arrayFieldName;
+      }
+    } else {
+      // Non-repeatable step
+      if (currentGroup.length > 0) {
+        groups.push(currentGroup);
+        currentGroup = [];
+        currentArrayFieldName = null;
+      }
+      groups.push([step]);
+    }
+  }
+
+  // Don't forget the last group
+  if (currentGroup.length > 0) {
+    groups.push(currentGroup);
+  }
+
+  return groups;
+}
+
+/**
  * Expands form steps by generating instances of repeatable steps
+ * Consecutive steps with the same arrayFieldName are grouped and expanded together
+ * (e.g., child-0, guardian-0, child-1, guardian-1, etc.)
  * @param steps - Original form steps
- * @param repeatableCounts - Map of step ID to instance count
+ * @param repeatableCounts - Map of primary step ID to instance count
  */
 function expandFormSteps(
   steps: FormStep[],
   repeatableCounts: Record<string, number>
 ): FormStep[] {
   const expanded: FormStep[] = [];
+  const groups = groupRepeatableSteps(steps);
 
-  for (const step of steps) {
-    if (step.repeatable) {
-      const count = repeatableCounts[step.id] ?? 1;
-      const maxItems = step.repeatable.maxItems ?? 10;
+  for (const group of groups) {
+    // Non-repeatable step (single step in group with no repeatable config)
+    if (group.length === 1 && !group[0].repeatable) {
+      expanded.push(group[0]);
+      continue;
+    }
 
-      for (let i = 0; i < count; i++) {
-        const isLastInstance = i >= maxItems - 1;
-        expanded.push(createRepeatableStepInstance(step, i, isLastInstance));
+    // Find the primary step (the one without skipAddAnother) to get the count
+    const primaryStep = group.find((s) => !s.repeatable?.skipAddAnother);
+    if (!primaryStep?.repeatable) {
+      // Fallback: just use the first step
+      expanded.push(...group);
+      continue;
+    }
+
+    const count = repeatableCounts[primaryStep.id] ?? 1;
+    const maxItems = primaryStep.repeatable.maxItems ?? 10;
+
+    // Expand the group: for each instance, add all steps in the group
+    for (let i = 0; i < count; i++) {
+      const isLastInstance = i >= maxItems - 1;
+
+      for (const step of group) {
+        const isSubStep = step.repeatable?.skipAddAnother === true;
+        // Only the last non-sub-step in the group should have the "add another" field
+        const lastNonSubStep = [...group]
+          .reverse()
+          .find((s) => !s.repeatable?.skipAddAnother);
+        const shouldAddAnotherField =
+          !(isLastInstance || isSubStep) && step === lastNonSubStep;
+
+        expanded.push(
+          createRepeatableStepInstance(
+            step,
+            i,
+            shouldAddAnotherField,
+            isSubStep
+          )
+        );
       }
-    } else {
-      expanded.push(step);
     }
   }
 
@@ -415,10 +635,15 @@ export default function DynamicMultiStepForm({
   }, [_hasHydrated, searchParams, paymentData]);
 
   // Watch form changes and sync with Zustand (debounced)
+  // Converts indexed objects to arrays before storing
   useEffect(() => {
     if (!isFormReady) return;
     const subscription = methods.watch((value) => {
-      updateFormData(value as Partial<FormData>);
+      // Convert indexed objects to arrays before storing in sessionStorage
+      const arrayifiedData = convertIndexedObjectsToArrays(
+        value as Record<string, unknown>
+      );
+      updateFormData(arrayifiedData as Partial<FormData>);
     });
     return () => subscription.unsubscribe();
   }, [isFormReady, methods.watch, updateFormData]);
@@ -494,7 +719,10 @@ export default function DynamicMultiStepForm({
       }
     }
 
-    return cleanedData as FormData;
+    // Convert indexed objects (e.g., { "0": {...}, "1": {...} }) to arrays
+    const arrayifiedData = convertIndexedObjectsToArrays(cleanedData);
+
+    return arrayifiedData as FormData;
   };
 
   const onSubmit = async (data: FormData) => {
