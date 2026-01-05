@@ -204,8 +204,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "endorsement-details",
-    title:
-      "Tell us about the minor dependent that needs their mail sent to the new address",
+    title: "Your endorsements",
     conditionalOn: {
       field: "hasEndorsements",
       value: "yes",
