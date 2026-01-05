@@ -57,7 +57,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicant.gender",
+        name: "applicant.sex",
         label: "Sex",
         type: "radio",
         validation: {
@@ -199,7 +199,7 @@ export const formSteps: FormStep[] = [
     description: "Description",
     fields: [
       {
-        name: "contact.addressLine1",
+        name: "contactDetails.addressLine1",
         label: "Address line 1",
         type: "text",
         placeholder: "",
@@ -212,7 +212,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contact.addressLine2",
+        name: "contactDetails.addressLine2",
         label: "Address line 2",
         type: "text",
         placeholder: "",
@@ -220,7 +220,7 @@ export const formSteps: FormStep[] = [
       },
 
       {
-        name: "contact.parish",
+        name: "contactDetails.parish",
         label: "Parish",
         width: "medium",
         type: "select",
@@ -230,7 +230,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "contact.postalCode",
+        name: "contactDetails.postalCode",
         label: "Postal code",
         width: "medium",
         type: "text",
@@ -242,7 +242,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contact.email",
+        name: "contactDetails.email",
         label: "Email Address",
         type: "email",
         validation: {
@@ -250,7 +250,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contact.telephoneNumber",
+        name: "contactDetails.telephoneNumber",
         label: "Telephone number",
         type: "tel",
         validation: {
@@ -350,6 +350,14 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
+        name: "emergency.email",
+        label: "Email Address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
         name: "emergency.telephoneNumber",
         label: "Phone number",
         type: "tel",
@@ -368,9 +376,10 @@ export const formSteps: FormStep[] = [
     title: "Tell us about your primary education",
     fields: [
       {
-        name: "primary-education.schoolName",
+        name: "primaryEducation.schoolName",
         label: "Name of primary school",
         type: "text",
+        width: "medium",
         validation: {
           required: "Field is required",
           minLength: {
@@ -380,24 +389,34 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "primary-education.startYear",
+        name: "primaryEducation.startYear",
         label: "Start year",
         type: "text",
+        width: "short",
         validation: {
           required: "Field is required",
           minLength: {
             value: 4,
             message: "Start year must be 4 characters",
           },
+          maxLength: {
+            value: 4,
+            message: "Start year must be 4 characters",
+          },
         },
       },
       {
-        name: "primary-education.endYear",
+        name: "primaryEducation.endYear",
         label: "End year",
+        width: "short",
         type: "text",
         validation: {
           required: "Field is required",
           minLength: {
+            value: 4,
+            message: "End year must be 4 characters",
+          },
+          maxLength: {
             value: 4,
             message: "End year must be 4 characters",
           },
@@ -410,8 +429,9 @@ export const formSteps: FormStep[] = [
     title: "Tell us about your secondary education",
     fields: [
       {
-        name: "secondary-education.schoolName",
+        name: "secondaryEducation.schoolName",
         label: "Name of secondary school",
+        width: "medium",
         type: "text",
         validation: {
           required: "Field is required",
@@ -422,8 +442,9 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "secondary-education.startYear",
+        name: "secondaryEducation.startYear",
         label: "Start year",
+        width: "short",
         type: "text",
         validation: {
           required: "Field is required",
@@ -438,8 +459,9 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "secondary-education.endYear",
+        name: "secondaryEducation.endYear",
         label: "End year",
+        width: "short",
         type: "text",
         validation: {
           required: "Field is required",
@@ -469,6 +491,7 @@ export const formSteps: FormStep[] = [
       {
         name: "institutionName",
         label: "Name of Institution",
+        width: "medium",
         type: "text",
         placeholder: "",
         validation: {
@@ -482,6 +505,7 @@ export const formSteps: FormStep[] = [
       {
         name: "qualificationsObtained",
         label: "What are your qualifications?",
+        width: "medium",
         type: "textarea",
         placeholder: "",
         validation: { required: false },
@@ -489,14 +513,16 @@ export const formSteps: FormStep[] = [
       {
         name: "coursesOrSubjects",
         label: "Courses or subjects",
+        width: "medium",
         hint: "Separate each course with a comma",
-        type: "textarea",
+        type: "text",
         placeholder: "",
         validation: { required: false },
       },
       {
         name: "startYear",
         label: "Start Year",
+        width: "short",
         type: "text",
         placeholder: "",
         validation: {
@@ -514,6 +540,7 @@ export const formSteps: FormStep[] = [
       {
         name: "endYear",
         label: "End Year",
+        width: "short",
         type: "text",
         placeholder: "",
         validation: {
@@ -568,6 +595,7 @@ export const formSteps: FormStep[] = [
       {
         name: "employerName",
         label: "Name of employer",
+        width: "medium",
         type: "text",
         placeholder: "",
         validation: {
@@ -581,6 +609,7 @@ export const formSteps: FormStep[] = [
       {
         name: "occupation",
         label: "Occupation",
+        width: "medium",
         type: "text",
         placeholder: "",
         validation: {
@@ -595,15 +624,13 @@ export const formSteps: FormStep[] = [
       {
         name: "startDate",
         label: "When did you start this job?",
+        hint: "Provide the month and year (eg 12, 2023)",
         type: "text",
+        width: "short",
         placeholder: "",
         validation: {
           required: "Start date is required",
           minLength: {
-            value: 4,
-            message: "Start date must be 4 characters",
-          },
-          maxLength: {
             value: 4,
             message: "Start date must be 4 characters",
           },
@@ -612,15 +639,13 @@ export const formSteps: FormStep[] = [
       {
         name: "endDate",
         label: "When did you end this job?",
+        hint: "Provide the month and year (eg 12, 2023)",
         type: "text",
+        width: "short",
         placeholder: "",
         validation: {
-          required: "End date is required",
+          required: false,
           minLength: {
-            value: 4,
-            message: "End date must be 4 characters",
-          },
-          maxLength: {
             value: 4,
             message: "End date must be 4 characters",
           },
@@ -638,6 +663,7 @@ export const formSteps: FormStep[] = [
         name: "mainTasks",
         label: "Your main tasks",
         hint: "Provide a brief description of what you did in your role",
+        width: "medium",
         type: "textarea",
         rows: 5,
         validation: {
@@ -657,7 +683,8 @@ export const formSteps: FormStep[] = [
       {
         name: "eligibility.interests",
         label: "What type of jobs or trades are you interested in?",
-        type: "text",
+        width: "medium",
+        type: "textarea",
         validation: {
           required: "Field is required",
           minLength: {
@@ -727,5 +754,52 @@ export const formSteps: FormStep[] = [
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
+  },
+  {
+    id: "declaration",
+    title: "Declaration",
+    description:
+      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+    fields: [
+      {
+        name: "declaration.confirmed",
+        label: "All information is correct and true.",
+        type: "checkbox",
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
+      },
+      {
+        name: "dateOfDeclaration",
+        label: "Date of declaration",
+        hidden: true,
+        placeholder: "For example, 12 15 2025",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "confirmation",
+    title: "Your application has been submitted",
+    description: "",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "",
+        items: [
+          "Your application will be reviewed.",
+          "You may be contacted if more information is needed.",
+          "You will be informed of the outcome.",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
