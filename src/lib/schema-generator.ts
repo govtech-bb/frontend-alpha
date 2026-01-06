@@ -610,9 +610,15 @@ export function generateFormSchema(formSteps: FormStep[]) {
             for (let index = 0; index < arrayValue.length; index++) {
               const item = arrayValue[index] as Record<string, unknown>;
 
-              // Check each nested field for conditional logic
+              // Check each nested field for conditional logic (only simple rules, not OR rules)
               for (const nestedField of field.fieldArray.fields) {
-                if (!nestedField.conditionalOn) continue;
+                if (
+                  !(
+                    nestedField.conditionalOn &&
+                    "field" in nestedField.conditionalOn
+                  )
+                )
+                  continue;
 
                 const parentValue = item[nestedField.conditionalOn.field];
                 const fieldValue = item[nestedField.name];

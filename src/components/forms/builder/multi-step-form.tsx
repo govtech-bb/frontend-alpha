@@ -11,7 +11,7 @@ import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
-import type { FormField, FormStep } from "@/types";
+import type { ConditionalRule, FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DynamicStep } from "./dynamic-step";
 
@@ -169,7 +169,8 @@ function createRepeatableStepInstance(
     };
 
     // Update conditionalOn.field reference to include the array index
-    if (field.conditionalOn) {
+    // Only handle simple conditional rules (not OR rules)
+    if (field.conditionalOn && isSimpleConditionalRule(field.conditionalOn)) {
       indexed.conditionalOn = {
         ...field.conditionalOn,
         field: indexFieldName(field.conditionalOn.field),
@@ -191,13 +192,14 @@ function createRepeatableStepInstance(
         fields: field.showHide.fields.map((nestedField) => ({
           ...nestedField,
           name: indexFieldName(nestedField.name),
-          // Also update conditionalOn in nested fields if present
-          ...(nestedField.conditionalOn && {
-            conditionalOn: {
-              ...nestedField.conditionalOn,
-              field: indexFieldName(nestedField.conditionalOn.field),
-            },
-          }),
+          // Also update conditionalOn in nested fields if present (only simple rules)
+          ...(nestedField.conditionalOn &&
+            "field" in nestedField.conditionalOn && {
+              conditionalOn: {
+                ...nestedField.conditionalOn,
+                field: indexFieldName(nestedField.conditionalOn.field),
+              },
+            }),
         })),
       };
     }
@@ -225,7 +227,11 @@ function createRepeatableStepInstance(
   // Determine the conditionalOn for this step instance
   let stepConditionalOn = baseStep.conditionalOn;
 
-  if (isSubStep && baseStep.conditionalOn) {
+  if (
+    isSubStep &&
+    baseStep.conditionalOn &&
+    isSimpleConditionalRule(baseStep.conditionalOn)
+  ) {
     // Sub-steps: index the conditionalOn.field reference (e.g., isParentOrGuardian -> beneficiaries.0.isParentOrGuardian)
     stepConditionalOn = {
       ...baseStep.conditionalOn,
@@ -498,6 +504,37 @@ export default function DynamicMultiStepForm({
     mode: "onSubmit",
     defaultValues,
   });
+
+  // Helper function to check if a step should be visible based on form values
+  const isStepVisible = useCallback(
+    (step: FormStep, formValues?: FormData): boolean => {
+      if (!step.conditionalOn) return true;
+
+      const values = formValues ?? methods.getValues();
+
+      if (isSimpleConditionalRule(step.conditionalOn)) {
+        const watchedValue = getNestedValue<unknown>(
+          values as Record<string, unknown>,
+          step.conditionalOn.field
+        );
+        return watchedValue === step.conditionalOn.value;
+      }
+
+      // Handle OR logic
+      if ("or" in step.conditionalOn) {
+        return step.conditionalOn.or.some((condition) => {
+          const fieldValue = getNestedValue(
+            values as Record<string, unknown>,
+            condition.field
+          );
+          return fieldValue === condition.value;
+        });
+      }
+
+      return false;
+    },
+    [methods]
+  );
 
   // Extract fields that affect step visibility (memoized to prevent unnecessary re-renders)
   const conditionalFields = useMemo(() => {
@@ -926,6 +963,9 @@ export default function DynamicMultiStepForm({
       (field) => {
         // Include field if it has no conditional rule
         if (!field.conditionalOn) return true;
+
+        // Only handle simple conditional rules (not OR rules)
+        if (!isSimpleConditionalRule(field.conditionalOn)) return true;
 
         // Check if conditional field should be visible
         const watchedValue = methods.watch(

@@ -17,7 +17,7 @@ import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
-import type { FormField } from "@/types";
+import type { ConditionalRule, FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
 type FileUploadFieldProps = {
