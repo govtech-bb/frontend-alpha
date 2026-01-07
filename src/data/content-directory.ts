@@ -181,6 +181,20 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Sell goods or services at a beach or park",
+        slug: "sell-goods-services-beach-park",
+        description: "",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Request to sell goods or services at a beach or park",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
     ],
   },
   {
