@@ -1,3 +1,4 @@
+import { barbadosParishes } from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -26,7 +27,7 @@ export const formSteps: FormStep[] = [
     id: "include-father-details",
     title: "Do you want to include the father's details on the birth record?",
     description:
-      "If you choose 'Yes', both parents must go to the Registration Department and sign the official register together",
+      "If you choose 'Yes', both parents must go to the Registration Department and sign the official register together\n\nIf you choose 'No', the mother must go to the Registration Department but it is not necessary for the father to attend",
     conditionalOn: {
       field: "marriageStatus",
       value: "no",
@@ -36,7 +37,7 @@ export const formSteps: FormStep[] = [
         name: "includeFatherDetails",
         label: "",
         type: "radio",
-        hint: "If you choose 'No', the mother must go to the Registration Department but it is not necessary for the father to attend",
+        hint: "",
         validation: {
           required: "Select your preference",
         },
@@ -77,7 +78,9 @@ export const formSteps: FormStep[] = [
         hint: "If they have more than one, add them in order",
         type: "text",
         placeholder: "",
-        validation: {},
+        validation: {
+          required: false,
+        },
       },
       {
         name: "father.lastName",
@@ -92,21 +95,11 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      {
-        name: "father.dateOfBirth",
-        label: "Date of Birth",
-        type: "date",
-        placeholder: "For example, 27 3 2007",
-        validation: {
-          required: "Date of birth is required",
-          date: {
-            type: "past",
-          },
-        },
-      },
+
       {
         name: "father.idNumber",
         label: "National Identification (ID) Number",
+        width: "medium",
         type: "text",
         placeholder: "",
         validation: {
@@ -146,16 +139,43 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "father.currentAddress",
-        label: "Current Address",
-        type: "textarea",
+        name: "father.age",
+        label: "Age",
+        type: "number",
+        width: "short",
         validation: {
-          required: "Current Address is required",
+          required: "Age is required",
+        },
+      },
+      {
+        name: "father.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "father.addressLine1",
+        label: "Address Line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
           minLength: {
             value: 5,
             message: "Address must be at least 5 characters",
           },
         },
+      },
+      {
+        name: "father.addressLine2",
+        label: "Address Line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
       },
       {
         name: "father.occupation",
@@ -213,60 +233,6 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "mother.hasPreviousLastName",
-        label: "Has the mother had any other last name?",
-        type: "radio",
-        hint: "For example, a maiden name.",
-        validation: {
-          required: "Select your preference",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-      {
-        name: "mother.previousLastName",
-        label: "Previous Last Name",
-        type: "text",
-
-        validation: {
-          required: "Field is required",
-          minLength: {
-            value: 5,
-            message: "Previous Last Name must be at least 5 characters",
-          },
-        },
-        conditionalOn: {
-          field: "mother.hasPreviousLastName",
-          value: "yes",
-        },
-      },
-      {
-        name: "mother.dateOfBirth",
-        label: "Date of Birth",
-        type: "date",
-        placeholder: "For example, 27 3 2007",
-        validation: {
-          required: "Date of birth is required",
-          date: {
-            type: "past",
-          },
-        },
-      },
-      {
-        name: "mother.currentAddress",
-        label: "Current Address",
-        type: "textarea",
-        validation: {
-          required: "Date of birth is required",
-          minLength: {
-            value: 5,
-            message: "Address must be at least 5 characters",
-          },
-        },
-      },
-      {
         name: "mother.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
@@ -308,6 +274,53 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "mother.age",
+        label: "Age",
+        type: "number",
+        width: "short",
+        validation: {
+          required: "Age is required",
+        },
+      },
+      {
+        name: "mother.maidenName",
+        label: "Maiden Name",
+        type: "text",
+        validation: {
+          required: false,
+        },
+      },
+      {
+        name: "mother.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "mother.addressLine1",
+        label: "Address Line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "mother.addressLine2",
+        label: "Address Line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
+      },
+      {
         name: "mother.occupation",
         label: "Occupation",
         hint: "This will be included on the child's birth certificate and in official records",
@@ -319,6 +332,112 @@ export const formSteps: FormStep[] = [
             value: 2,
             message: "Occupation must be at least 2 characters",
           },
+        },
+      },
+    ],
+  },
+  {
+    id: "birth-details",
+    title: "Tell us about the birth",
+    description: "",
+    fields: [
+      {
+        name: "birth.location",
+        label: "Where did the birth take place?",
+        type: "radio",
+        placeholder: "",
+        validation: {
+          required: "Select a location",
+        },
+        options: [
+          { label: "Health facility", value: "health-facility" },
+          { label: "Residential", value: "residential" },
+          { label: "Other", value: "other" },
+        ],
+      },
+      {
+        name: "birth.healthFacility",
+        label: "Health Facility",
+        type: "select",
+        validation: {
+          required: false,
+        },
+        conditionalOn: {
+          field: "birth.placeOfBirths",
+          value: "health-facility",
+        },
+        options: [
+          { label: "", value: "" },
+          {
+            label: "Queen Elizabeth Hospital",
+            value: "3d5cd721-df37-493c-86c0-41b8aa42e27d",
+          },
+          {
+            label: "Bayview Hospital",
+            value: "9ddfdd4a-4219-4ca0-ad34-5a9fc1071225",
+          },
+          {
+            label: "MD Alliance Surgery and Birthing Centre",
+            value: "a1abb507-4a25-4795-a280-c99226cb916f",
+          },
+        ],
+      },
+      {
+        name: "birth.numberOfBirths",
+        label: "How many births do you need to register?",
+        type: "radio",
+        placeholder: "",
+        validation: {
+          required: "Select a location",
+        },
+        options: [
+          { label: "Single", value: "single" },
+          { label: "Twins", value: "twins" },
+          { label: "Triplets", value: "triplets" },
+          { label: "Higher multiple births", value: "n" },
+        ],
+      },
+      {
+        name: "birth.attendantAtBirth",
+        label: "Attendant at birth",
+        type: "select",
+        validation: {
+          required: false,
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Doctor", value: "doctor" },
+          { label: "Midwife", value: "midwife" },
+          { label: "Nurse", value: "nurse" },
+          { label: "Relative", value: "relative" },
+          { label: "None", value: "none" },
+        ],
+      },
+      {
+        name: "birth.bornAlive",
+        label: "Born alive",
+        type: "number",
+        placeholder: "",
+        validation: {
+          required: false,
+        },
+      },
+      {
+        name: "birth.stillborn",
+        label: "Still born",
+        type: "number",
+        placeholder: "",
+        validation: {
+          required: false,
+        },
+      },
+      {
+        name: "birth.totalStillAlive",
+        label: "Total still alive",
+        type: "number",
+        placeholder: "",
+        validation: {
+          required: false,
         },
       },
     ],
@@ -376,8 +495,8 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "child.gender",
-        label: "Sex at birth",
+        name: "child.sex",
+        label: "Sex",
         hint: "We ask this so that we can monitor population trends",
         type: "radio",
         validation: {
@@ -423,32 +542,55 @@ The birth registration is free of charge.`,
     ],
   },
   {
-    id: "contact",
-    title: "Contact Details",
+    id: "check-your-answers",
+    title: "Check your answers",
+    fields: [],
+  },
+  {
+    id: "declaration",
+    title: "Declaration",
     description:
-      "We ask for this information so that we can send you confirmation and let you know what to do next.",
+      "I confirm that the information provided is correct. I understand that giving false information may result in the registration being rejected or voided.",
     fields: [
       {
-        name: "contact.email",
-        label: "Email Address",
-        type: "email",
+        name: "declaration.confirmed",
+        label: "I confirm all information is correct and true.",
+        type: "checkbox",
         validation: {
-          required: "Email address is required",
+          required: "You must confirm the declaration to continue",
         },
       },
       {
-        name: "contact.telephoneNumber",
-        label: "Telephone Number",
-        type: "tel",
+        name: "declaration.dateOfDeclaration",
+        label: "Date of declaration",
+        hidden: true,
+        placeholder: "For example, 12 15 2025",
+        type: "date",
         validation: {
-          required: "Telephone number is required",
-          pattern: {
-            value: "^\\+1\\s?\\(?246\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$",
-            message:
-              "Please enter a valid Barbados phone number (e.g., +1 246 234 5678)",
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
           },
         },
       },
     ],
+  },
+  {
+    id: "confirmation",
+    title: "Thank you for pre-registering a birth",
+    description: "The Registration Department has received your information.",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content:
+          "The Registration Department will contact you within 3 working days and invite you to visit, in person, to sign the birth register.\n\nShow your reference number to the Applications Desk at the Registration Department. You will need to:",
+        items: [
+          "Sign the register and complete the registration.",
+          "Collect your copy or copies of the birth certificate. You will be able to pay in cash or by card.",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
