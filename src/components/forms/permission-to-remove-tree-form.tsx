@@ -1,14 +1,14 @@
 "use client";
 
 import DynamicMultiStepForm from "@/components/forms/builder/multi-step-form";
-import { formSteps } from "@/schema/remove-protected-tree";
+import { formSteps } from "@/schema/permission-to-remove-tree";
 
-export default function RemoveProtectedTreeForm() {
+export default function PermissionToRemoveTreeForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
       serviceTitle="Apply for permission to remove a protected tree"
-      storageKey="remove-protected-tree"
+      storageKey="permission-to-remove-tree"
     />
   );
 }

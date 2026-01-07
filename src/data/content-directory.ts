@@ -474,7 +474,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       },
       {
         title: "Apply for permission to remove a protected tree",
-        slug: "remove-protected-tree",
+        slug: "permission-to-remove-tree",
         description: "Apply for permission to remove a protected tree",
         subPages: [
           { slug: "start", type: "markdown" },
