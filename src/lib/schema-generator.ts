@@ -583,6 +583,47 @@ export function generateFormSchema(formSteps: FormStep[]) {
       }
     }
 
+    // Validate conditional fields within field arrays
+    for (const step of formSteps) {
+      for (const field of step.fields) {
+        if (field.type === "fieldArray" && field.fieldArray?.fields) {
+          const arrayValue = getNestedValue(
+            data as Record<string, unknown>,
+            field.name
+          );
+
+          if (Array.isArray(arrayValue)) {
+            // Iterate through each array item
+            for (let index = 0; index < arrayValue.length; index++) {
+              const item = arrayValue[index] as Record<string, unknown>;
+
+              // Check each nested field for conditional logic
+              for (const nestedField of field.fieldArray.fields) {
+                if (!nestedField.conditionalOn) continue;
+
+                const parentValue = item[nestedField.conditionalOn.field];
+                const fieldValue = item[nestedField.name];
+                const isVisible =
+                  parentValue === nestedField.conditionalOn.value;
+
+                if (
+                  isVisible &&
+                  nestedField.validation.required &&
+                  isFieldEmpty(fieldValue, nestedField.type)
+                ) {
+                  ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: nestedField.validation.required,
+                    path: [field.name, index, nestedField.name],
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     // Validate ShowHide child fields when ShowHide is open
     for (const step of formSteps) {
       for (const field of step.fields) {
