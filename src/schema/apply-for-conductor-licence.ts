@@ -205,7 +205,7 @@ export const formSteps: FormStep[] = [
   {
     id: "endorsement-details",
     title:
-      "Tell us about the minor dependent that needs their mail sent to the new address",
+      "Your endorsements",
     conditionalOn: {
       field: "hasEndorsements",
       value: "yes",
@@ -332,7 +332,6 @@ export const formSteps: FormStep[] = [
       {
         name: "hasCriminalConvictions",
         label: "Have you ever had any criminal convictions?",
-        hidden: true,
         type: "radio",
         validation: {
           required: "Select an option",
