@@ -6,9 +6,14 @@ import { HelpfulBox } from "@/components/layout/helpful-box";
 import { Typography } from "@/components/ui/typography";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
+import { hasResearchAccess } from "@/lib/research-access";
 
 export default async function Home() {
-  const featuredServices = await getFeaturedServices();
+  const [featuredServices, showTallySurvey] = await Promise.all([
+    getFeaturedServices(),
+    hasResearchAccess(),
+  ]);
+
   return (
     <>
       <section className="border-yellow-dark border-b-4 bg-yellow-100">
@@ -21,13 +26,15 @@ export default async function Home() {
               It will be clearer, simpler and faster for citizens to get things
               done.
             </Typography>
-            <LinkButton
-              className="bg-[#1a777d]!"
-              href="/tell-us"
-              variant="primary"
-            >
-              Have your say
-            </LinkButton>
+            {showTallySurvey && (
+              <LinkButton
+                className="bg-[#1a777d]!"
+                href="/tell-us"
+                variant="primary"
+              >
+                Have your say
+              </LinkButton>
+            )}
           </div>
         </div>
       </section>
@@ -74,7 +81,7 @@ export default async function Home() {
 
       <section>
         <div className="container">
-          <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
+          <div className="space-y-4 py-8 lg:space-y-4">
             <Typography variant="h2">Find government services</Typography>
 
             <div className="flex flex-col">
