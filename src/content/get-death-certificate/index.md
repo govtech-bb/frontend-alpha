@@ -31,7 +31,7 @@ Every question is compulsory so if you are unsure about the basic information as
 
 2. #### Get a paper Application for death certificate form from the Registration Department
 
-You must complete it by hand and return it to the department. You can pay with cash or by card when you collect it.
+You must complete it by hand and return it to the department. You can pay with cash or by card when you collect it.<br />
 If you are unsure about the basic information asked for (for example, if there is estrangement in the family), you should complete the paper form.
 
     Registration Department
