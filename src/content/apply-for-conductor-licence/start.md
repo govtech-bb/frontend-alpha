@@ -1,5 +1,5 @@
 ---
-title: "Conductor Licence Applicationn"
+title: "Conductor Licence Application"
 stage: "alpha"
 publish_date: 2025-12-31
 ---
