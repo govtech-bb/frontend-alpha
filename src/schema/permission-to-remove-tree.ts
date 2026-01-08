@@ -4,7 +4,7 @@ import type { FormStep } from "@/types";
 export const formSteps: FormStep[] = [
   {
     id: "landowner",
-    title: "Tell us about the landowner",
+    title: "Tell us about yourself",
     fields: [
       {
         name: "applicant.title",
@@ -36,6 +36,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.middleName",
         label: "Middle name",
+        hint: "Enter all middle names in order",
         type: "text",
         validation: {
           required: false,
@@ -59,7 +60,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -72,7 +73,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -90,7 +91,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.postalCode",
-        label: "Postal Code",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -104,7 +105,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         validation: {
           required: "Email address is required",
@@ -112,7 +113,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.mobileNumber",
-        label: "Mobile phone",
+        label: "Mobile phone number",
         type: "tel",
         validation: {
           required: "Mobile phone is required",
@@ -124,7 +125,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.homeNumber",
-        label: "Home phone",
+        label: "Home phone number",
         type: "tel",
         validation: {
           required: "Home phone is required",
@@ -147,7 +148,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "typeOfProtectedTree",
-        label: "What type of protected tree do you want to remove?",
+        label: "What type of tree is it?",
         hint: "If you are not sure of the species, describe the tree",
         type: "text",
         validation: {
@@ -160,8 +161,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "reasonForRemovingTree",
-        label: "Why does this protected tree need to be removed?",
-        hint: "Tell us what is happening and why the tree needs to be removed",
+        label: "Why does the tree need to be removed?",
+        hint: "For example, it has a termite infestation or it is dangerous and unstable",
         type: "text",
         validation: {
           required: "Reason for removing tree is required",
@@ -172,35 +173,18 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "addressLine1",
-        label: "Address Line 1",
+        name: "treeLocation",
+        label: "Where is the tree?",
+        hint: "Give the property address or describe the location of the piece of land",
         type: "text",
         placeholder: "",
         validation: {
-          required: "Address line 1 is required",
+          required: "Tree location is required",
           minLength: {
             value: 5,
-            message: "Address must be at least 5 characters",
+            message: "Tree location must be at least 5 characters",
           },
         },
-      },
-      {
-        name: "addressLine2",
-        label: "Address Line 2",
-        type: "text",
-        placeholder: "",
-        validation: { required: false },
-      },
-
-      {
-        name: "parish",
-        label: "Parish",
-        type: "select",
-        width: "medium",
-        validation: {
-          required: "Parish is required",
-        },
-        options: barbadosParishes,
       },
     ],
   },

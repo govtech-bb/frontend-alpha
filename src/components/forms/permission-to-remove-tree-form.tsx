@@ -7,7 +7,7 @@ export default function PermissionToRemoveTreeForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      serviceTitle="Apply for permission to remove a protected tree"
+      serviceTitle="Apply to remove a protected tree"
       storageKey="permission-to-remove-tree"
     />
   );
