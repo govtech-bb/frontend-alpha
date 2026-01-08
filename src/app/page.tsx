@@ -1,4 +1,4 @@
-import { Link } from "@govtech-bb/react";
+import { Link, LinkButton } from "@govtech-bb/react";
 import NextLink from "next/link";
 
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
@@ -13,7 +13,7 @@ export default async function Home() {
     <>
       <section className="border-yellow-dark border-b-4 bg-yellow-100">
         <div className="container">
-          <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
+          <div className="space-y-4 py-8 lg:space-y-4">
             <Typography variant="h1">
               How you find and use government services is changing
             </Typography>
@@ -21,13 +21,20 @@ export default async function Home() {
               It will be clearer, simpler and faster for citizens to get things
               done.
             </Typography>
+            <LinkButton
+              className="bg-[#1a777d]!"
+              href="/tell-us"
+              variant="primary"
+            >
+              Have your say
+            </LinkButton>
           </div>
         </div>
       </section>
 
       <section className="border-teal-40 border-b-4 bg-teal-10">
         <div className="container">
-          <div className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
+          <div className="space-y-4 py-8 lg:space-y-4">
             <Typography variant="h2">Alpha services</Typography>
 
             <Typography variant="paragraph">
