@@ -31,3 +31,10 @@ export function isProtectedSubpage(
   const subPage = page.subPages?.find((sp) => sp.slug === subPageSlug);
   return subPage?.protected === true;
 }
+
+/**
+ * Check if a page has any protected subpages
+ */
+export function hasProtectedSubpages(page: PageType): boolean {
+  return page.subPages?.some((p) => p.protected === true) ?? false;
+}
