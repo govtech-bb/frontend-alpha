@@ -1,5 +1,5 @@
-import { createFormTest, type FormTestConfig } from "./generic-form.spec";
 import { formSteps } from "@/schema/sell-goods-services-beach-park";
+import { createFormTest, type FormTestConfig } from "./generic-form.spec";
 
 /**
  * Sell Goods or Services at Beach or Park Form Test using Generic Test Framework
