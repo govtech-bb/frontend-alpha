@@ -28,7 +28,7 @@ As part of your application, you will also need to share:
 - a Police Certificate of Character
 - 2 passport-sized pictures
 
-### After you apply
+## After you apply
 
 The Conservation Commission will contact you to let you know if your application has been successful.
 
