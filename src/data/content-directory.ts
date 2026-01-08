@@ -181,20 +181,6 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
-      {
-        title: "Sell goods or services at a beach or park",
-        slug: "sell-goods-services-beach-park",
-        description: "",
-        subPages: [
-          { slug: "start", type: "markdown", protected: true },
-          {
-            slug: "form",
-            title: "Request to sell goods or services at a beach or park",
-            type: "component",
-            protected: true,
-          },
-        ],
-      },
     ],
   },
   {
@@ -427,12 +413,28 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title:
           "Apply for a licence to sell goods or services at a beach or park",
-        slug: "apply-for-a-licence-to-sell-goods-or-services-at-a-beach-or-park",
-        source_url: "",
-        description:
-          "Apply for a licence to sell goods or services at a beach or park",
-        subPages: [{ slug: "start", type: "markdown" }],
+        slug: "sell-goods-services-beach-park",
+        description: "",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title:
+              "Apply for a licence to sell goods or services at a beach or park",
+            type: "component",
+            protected: true,
+          },
+        ],
       },
+      // {
+      //   title:
+      //     "Apply for a licence to sell goods or services at a beach or park",
+      //   slug: "apply-for-a-licence-to-sell-goods-or-services-at-a-beach-or-park",
+      //   source_url: "",
+      //   description:
+      //     "Apply for a licence to sell goods or services at a beach or park",
+      //   subPages: [{ slug: "start", type: "markdown" }],
+      // },
       {
         title: "Request for name search and name reservation",
         slug: "reserve-society-name",
