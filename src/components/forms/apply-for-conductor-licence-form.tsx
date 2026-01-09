@@ -7,7 +7,7 @@ export default function ApplyForConductorLicenceForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      serviceTitle="Conductor Licence Application"
+      serviceTitle="Apply for conductor's licence"
       storageKey="apply-for-conductor-licence"
     />
   );
