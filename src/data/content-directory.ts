@@ -432,6 +432,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Apply to use a public park or beach for an activity",
+        slug: "use-park-beach-for-activity",
+        description: "Apply to use a public park or beach for an activity",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Apply to use a public park or beach for an activity",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {
