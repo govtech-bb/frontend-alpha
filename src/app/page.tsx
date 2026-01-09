@@ -6,13 +6,9 @@ import { HelpfulBox } from "@/components/layout/helpful-box";
 import { Typography } from "@/components/ui/typography";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
-import { hasResearchAccess } from "@/lib/research-access";
 
 export default async function Home() {
-  const [featuredServices, showTallySurvey] = await Promise.all([
-    getFeaturedServices(),
-    hasResearchAccess(),
-  ]);
+  const featuredServices = await getFeaturedServices();
 
   return (
     <>
@@ -26,15 +22,13 @@ export default async function Home() {
               It will be clearer, simpler and faster for citizens to get things
               done.
             </Typography>
-            {showTallySurvey && (
-              <LinkButton
-                className="bg-[#1a777d]!"
-                href="/tell-us"
-                variant="primary"
-              >
-                Have your say
-              </LinkButton>
-            )}
+            <LinkButton
+              className="bg-[#1a777d]!"
+              href="/tell-us"
+              variant="primary"
+            >
+              Tell us what's important
+            </LinkButton>
           </div>
         </div>
       </section>
