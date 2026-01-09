@@ -97,7 +97,8 @@ function generateFieldData(field: FormField): TestDataValue {
       return faker.internet.email();
 
     case "tel":
-      return `246 ${faker.string.numeric(3)} ${faker.string.numeric(4)}`;
+      // Barbados phone format: +1 246 xxx xxxx
+      return `+1 246 ${faker.string.numeric(3)} ${faker.string.numeric(4)}`;
 
     case "date":
       return {
@@ -133,10 +134,12 @@ function generateStepData(
 
   for (const field of step.fields) {
     // Skip if field is conditional and condition isn't met
+    // Check both existing data AND data generated within this same step (for intra-step conditionals)
     if (field.conditionalOn) {
       const conditionField = field.conditionalOn.field;
       const conditionValue = field.conditionalOn.value;
-      if (existingData[conditionField] !== conditionValue) {
+      const allData = { ...existingData, ...data };
+      if (allData[conditionField] !== conditionValue) {
         continue;
       }
     }
@@ -198,7 +201,8 @@ async function fillField(
                 "Could not check radio input directly, trying label click"
               );
               try {
-                const label = page.getByText(option.label, { exact: false });
+                // Use exact: true to avoid matching partial text (e.g., "Male" matching "Female")
+                const label = page.getByText(option.label, { exact: true });
                 await label.click({ timeout: 3000 });
                 console.log(`✓ Clicked radio label: ${option.label}`);
               } catch (labelError) {
@@ -450,31 +454,98 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
 
       console.log("Reached Declaration page");
 
-      // Check the declaration checkbox
-      const declarationCheckbox = page.locator(
-        'input[name="declaration.confirmed"]'
-      );
-      if (await declarationCheckbox.isVisible().catch(() => false)) {
-        await declarationCheckbox.check({ force: true });
-        console.log("✓ Checked declaration");
+      // Check the declaration checkbox - try multiple selector strategies
+      const declarationCheckboxSelectors = [
+        'input[name="declaration.confirmed"]',
+        "#declaration\\.confirmed",
+        'input[type="checkbox"]',
+      ];
+
+      let checkboxChecked = false;
+      for (const selector of declarationCheckboxSelectors) {
+        try {
+          const checkbox = page.locator(selector).first();
+          if (await checkbox.isVisible({ timeout: 2000 }).catch(() => false)) {
+            await checkbox.check({ force: true });
+            console.log(`✓ Checked declaration checkbox using: ${selector}`);
+            checkboxChecked = true;
+            break;
+          }
+        } catch (_error) {}
+      }
+
+      // Fallback: try clicking the label if checkbox wasn't checked
+      if (!checkboxChecked) {
+        try {
+          const label = page.getByText(/confirm.*information.*correct/i);
+          await label.click({ timeout: 3000 });
+          console.log("✓ Clicked declaration label");
+        } catch (_error) {
+          console.warn("Could not check declaration checkbox");
+        }
       }
 
       // Fill declaration date (today's date)
       const today = new Date();
-      try {
-        // Use the ID-based selectors for @govtech-bb/react DateInput
-        await page
-          .locator("#dateOfDeclaration-month")
-          .fill((today.getMonth() + 1).toString());
-        await page
-          .locator("#dateOfDeclaration-day")
-          .fill(today.getDate().toString());
-        await page
-          .locator("#dateOfDeclaration-year")
-          .fill(today.getFullYear().toString());
-        console.log("✓ Filled declaration date");
-      } catch (_error) {
-        console.warn("Could not fill declaration date, may not be required");
+      const dateSelectors = [
+        // Try with full field name (declaration.dateOfDeclaration)
+        {
+          month: "#declaration\\.dateOfDeclaration-month",
+          day: "#declaration\\.dateOfDeclaration-day",
+          year: "#declaration\\.dateOfDeclaration-year",
+        },
+        // Try with short name (dateOfDeclaration)
+        {
+          month: "#dateOfDeclaration-month",
+          day: "#dateOfDeclaration-day",
+          year: "#dateOfDeclaration-year",
+        },
+        // Try with accessible names
+        {
+          month: 'input[aria-label="Month"]',
+          day: 'input[aria-label="Day"]',
+          year: 'input[aria-label="Year"]',
+        },
+      ];
+
+      let dateFilled = false;
+      for (const selectors of dateSelectors) {
+        try {
+          const monthInput = page.locator(selectors.month);
+          if (
+            await monthInput.isVisible({ timeout: 1000 }).catch(() => false)
+          ) {
+            await monthInput.fill((today.getMonth() + 1).toString());
+            await page.locator(selectors.day).fill(today.getDate().toString());
+            await page
+              .locator(selectors.year)
+              .fill(today.getFullYear().toString());
+            console.log("✓ Filled declaration date");
+            dateFilled = true;
+            break;
+          }
+        } catch (_error) {}
+      }
+
+      // Last resort: try filling by role
+      if (!dateFilled) {
+        try {
+          await page
+            .getByRole("textbox", { name: /month/i })
+            .last()
+            .fill((today.getMonth() + 1).toString());
+          await page
+            .getByRole("textbox", { name: /day/i })
+            .last()
+            .fill(today.getDate().toString());
+          await page
+            .getByRole("textbox", { name: /year/i })
+            .last()
+            .fill(today.getFullYear().toString());
+          console.log("✓ Filled declaration date (by role)");
+        } catch (_error) {
+          console.warn("Could not fill declaration date, may not be required");
+        }
       }
 
       await page.waitForTimeout(1000);
@@ -698,10 +769,39 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
       await nextButton.scrollIntoViewIfNeeded();
       await nextButton.click();
 
-      // Should show validation errors
-      await expect(page.getByText(/required/i).first()).toBeVisible({
-        timeout: 5000,
-      });
+      // Should show validation errors - look for common error message patterns
+      // Error messages may include: "required", "select", "enter", "is required", etc.
+      const errorPatterns = [
+        /required/i,
+        /select your/i,
+        /please enter/i,
+        /must be/i,
+        /is invalid/i,
+      ];
+
+      let foundError = false;
+      for (const pattern of errorPatterns) {
+        const errorElement = page.getByText(pattern).first();
+        if (await errorElement.isVisible().catch(() => false)) {
+          foundError = true;
+          console.log(`✓ Found validation error matching: ${pattern}`);
+          break;
+        }
+      }
+
+      // If no text-based error found, look for error role or aria-invalid
+      if (!foundError) {
+        const ariaInvalidInputs = page.locator('[aria-invalid="true"]');
+        const errorCount = await ariaInvalidInputs.count();
+        if (errorCount > 0) {
+          foundError = true;
+          console.log(
+            `✓ Found ${errorCount} input(s) with aria-invalid="true"`
+          );
+        }
+      }
+
+      expect(foundError).toBe(true);
     });
   });
 }

@@ -155,7 +155,11 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
                   const fieldError = itemErrors?.[nestedField.name];
 
                   // Check if field should be shown based on conditionalOn
-                  if (nestedField.conditionalOn) {
+                  // Only handle simple conditional rules (not OR rules) for nested fields
+                  if (
+                    nestedField.conditionalOn &&
+                    "field" in nestedField.conditionalOn
+                  ) {
                     const conditionalFieldName =
                       `${field.name}.${index}.${nestedField.conditionalOn.field}` as keyof FormData;
                     const conditionalValue = watch(conditionalFieldName);

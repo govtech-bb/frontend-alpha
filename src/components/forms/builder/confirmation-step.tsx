@@ -1,5 +1,5 @@
 "use client";
-import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
@@ -163,12 +163,13 @@ export function ConfirmationPage({
                 We are always working to improve government services. If you
                 have a moment, you can tell us about your experience today.
               </Text>
-              <LinkButton
+              <Link
+                as={NextLink}
                 href={`/exit-survey?ref_id=${formId}&step=introduction`}
                 variant="secondary"
               >
                 Give feedback on this service
-              </LinkButton>
+              </Link>
               <Text as="p" className="mt-4 text-[16px] text-neutral-600">
                 This will take about 30 seconds. Your responses are anonymous.
               </Text>

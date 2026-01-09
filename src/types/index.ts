@@ -46,10 +46,17 @@ export type SelectOption = {
   value: string;
 };
 
-export type ConditionalRule = {
-  field: string; // The field name to watch
-  value: string; // The value that triggers this field to show
-};
+export type ConditionalRule =
+  | {
+      field: string; // The field name to watch
+      value: string; // The value that triggers this field to show
+    }
+  | {
+      or: Array<{
+        field: string;
+        value: string;
+      }>;
+    };
 
 export type NestedFormField = {
   name: string;
