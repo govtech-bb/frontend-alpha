@@ -29,7 +29,7 @@ export const formSteps: FormStep[] = [
           required: "First name is required",
           minLength: {
             value: 2,
-            message: "Address must be at least 5 characters",
+            message: "First name must be at least 2 characters",
           },
         },
       },
@@ -39,10 +39,9 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
-
           minLength: {
             value: 2,
-            message: "Address must be at least 5 characters",
+            message: "Last name must be at least 2 characters",
           },
         },
       },
