@@ -1,15 +1,6 @@
-import { notFound } from "next/navigation";
 import Script from "next/script";
 
-import { hasResearchAccess } from "@/lib/research-access";
-
-export default async function TellUsPage() {
-  const hasAccess = await hasResearchAccess();
-
-  if (!hasAccess) {
-    notFound();
-  }
-
+export default function TellUsPage() {
   return (
     <main className="container pt-4 pb-8 lg:py-8">
       <iframe
