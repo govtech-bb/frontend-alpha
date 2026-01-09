@@ -379,6 +379,10 @@ export function DynamicField({
             );
           }}
         />
+      ) : field.type === "fieldArray" && field.fieldArray ? (
+        <DynamicFieldArray
+          field={field as Parameters<typeof DynamicFieldArray>[0]["field"]}
+        />
       ) : field.type === "select" ? (
         <>
           {field.hint ? (
