@@ -16,11 +16,8 @@ export const FORM_COMPONENTS = {
   "get-a-primary-school-textbook-grant": lazy(
     () => import("@/components/forms/primary-school-textbook-grant-form")
   ),
-  "post-office-redirection-notice": lazy(
-    () => import("@/components/forms/post-office-redirection-notice-form")
-  ),
   "apply-to-jobstart-plus-programme": lazy(
-    () => import("@/components/forms/apply-to-jobstart-plus-programme-form")
+    () => import("@/components/forms/jobstart-plus-programme-form")
   ),
   "get-birth-certificate": lazy(
     () => import("@/components/forms/get-birth-certificate-form")
@@ -30,6 +27,24 @@ export const FORM_COMPONENTS = {
   ),
   "get-marriage-certificate": lazy(
     () => import("@/components/forms/get-marriage-certificate-form")
+  ),
+  "reserve-society-name": lazy(
+    () => import("@/components/forms/reserve-society-name-form")
+  ),
+  "post-office-redirection-individual": lazy(
+    () => import("@/components/forms/post-office-redirection-individual-form")
+  ),
+  "post-office-redirection-deceased": lazy(
+    () => import("@/components/forms/post-office-redirection-deceased-form")
+  ),
+  "post-office-redirection-business": lazy(
+    () => import("@/components/forms/post-office-redirection-business-form")
+  ),
+  "request-a-fire-service-inspection": lazy(
+    () => import("@/components/forms/request-a-fire-service-inspection")
+  ),
+  "apply-for-conductor-licence": lazy(
+    () => import("@/components/forms/apply-for-conductor-licence-form")
   ),
   // Add other forms here
 } as const;

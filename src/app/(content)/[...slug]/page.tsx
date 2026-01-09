@@ -6,7 +6,11 @@ import { MarkdownContent } from "@/components/markdown-content";
 import { Typography } from "@/components/ui/typography";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
-import { hasResearchAccess, isProtectedSubpage } from "@/lib/research-access";
+import {
+  hasResearchAccess,
+  isProtectedSubpage,
+  hasProtectedSubpages,
+} from "@/lib/research-access";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
 type ContentPageProps = {
@@ -82,8 +86,11 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    // Check if user has research access cookie to show/hide start page links
-    const hasAccess = await hasResearchAccess();
+    // Only check research access for pages with protected subpages
+    // For non-protected pages, always show /start links
+    const hasAccess = hasProtectedSubpages(page)
+      ? await hasResearchAccess()
+      : true;
 
     return (
       <MarkdownContent
@@ -109,8 +116,11 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    // Check research access once for both protected pages and hiding start links
-    const hasAccess = await hasResearchAccess();
+    // Only check research access if this page has protected subpages
+    const pageHasProtectedSubpages = hasProtectedSubpages(page);
+    const hasAccess = pageHasProtectedSubpages
+      ? await hasResearchAccess()
+      : true;
 
     // Protected subpages require research access
     if (isProtectedSubpage(page, subPageSlug) && !hasAccess) {

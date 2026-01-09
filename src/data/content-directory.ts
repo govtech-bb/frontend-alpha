@@ -154,9 +154,32 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description: "Apply for a position as a temporary teacher",
       },
       {
-        title: "Apply to the JobSTART Plus Programme",
+        title: "Apply to the JobSTART Plus programme",
         slug: "apply-to-jobstart-plus-programme",
         description: "Apply to the JobSTART Plus Programme",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Registering for JobStart Plus",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
+      {
+        title: "Apply for conductor licence",
+        slug: "apply-for-conductor-licence",
+        description: "",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Conductor Licence Application",
+            type: "component",
+            protected: true,
+          },
+        ],
       },
     ],
   },
@@ -292,14 +315,40 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
       },
       {
-        title: "POST Office Redirection Notice",
-        slug: "post-office-redirection-notice",
-        description: "POST Office Redirection Notice",
+        title: "Redirect My Mail (Individual)",
+        slug: "post-office-redirection-individual",
+        description: "Redirect mail for an individual",
         subPages: [
           { slug: "start", type: "markdown" },
           {
             slug: "form",
-            title: "POST Office Redirection Notice form",
+            title: "Redirect My Mail (Individual) form",
+            type: "component",
+          },
+        ],
+      },
+      {
+        title: "Redirect My Mail (Deceased)",
+        slug: "post-office-redirection-deceased",
+        description: "Redirect mail for a deceased person",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Redirect My Mail (Deceased) form",
+            type: "component",
+          },
+        ],
+      },
+      {
+        title: "Redirect My Mail (Business)",
+        slug: "post-office-redirection-business",
+        description: "Redirect mail for a Business",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Redirect My Mail (Business) form",
             type: "component",
           },
         ],
@@ -370,6 +419,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Apply for a licence to sell goods or services at a beach or park",
         subPages: [{ slug: "start", type: "markdown" }],
       },
+      {
+        title: "Request for name search and name reservation",
+        slug: "reserve-society-name",
+        description: "Request for name search and name reservation",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Request to reserve a society name form",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {
@@ -377,6 +439,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     slug: "public-safety",
     description: "Reporting crime, raising a concern and safeguarding",
     pages: [
+      {
+        title: "Request a fire service inspection",
+        slug: "request-a-fire-service-inspection",
+        description:
+          "Request an inspection from the Barbados Fire Service for hotels, daycares, and places of entertainment.",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Request a Fire Service Inspection form",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
       {
         title: "Report a concern about a child",
         slug: "report-a-concern-about-a-child",

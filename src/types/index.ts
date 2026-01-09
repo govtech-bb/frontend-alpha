@@ -9,7 +9,8 @@ export type FieldType =
   | "radio"
   | "checkbox"
   | "fieldArray"
-  | "showHide";
+  | "showHide"
+  | "file";
 
 // Date-specific validation rules (only applicable when type === "date")
 export type DateValidationRule =
@@ -60,6 +61,7 @@ export type NestedFormField = {
   validation: NonDateFieldValidation | DateFieldValidation;
   options?: SelectOption[];
   rows?: number;
+  conditionalOn?: ConditionalRule; // For conditional fields within field arrays
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
@@ -68,6 +70,7 @@ export type FieldArrayConfig = {
   addButtonText: string; // Text for the "Add another" button
   removeButtonText?: string; // Text for remove button (defaults to "Remove")
   minItems?: number; // Minimum number of items (defaults to 1)
+  maxItems?: number; // Maximum number of items (no limit if not specified)
   /** Fields to render for each array item (for complex field arrays) */
   fields?: NestedFormField[];
 };
@@ -137,6 +140,15 @@ type ShowHideFormField = BaseFormField & {
   showHide: ShowHideConfig;
 };
 
+type FileFormField = BaseFormField & {
+  type: "file";
+  validation: NonDateFieldValidation;
+  /** Accepted file types (e.g., ".pdf,.docx,.png" or "image/*") */
+  accept?: string;
+  /** Whether multiple files can be selected */
+  multiple?: boolean;
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -144,7 +156,8 @@ export type FormField =
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField
-  | ShowHideFormField;
+  | ShowHideFormField
+  | FileFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
@@ -166,6 +179,25 @@ export type ContactDetails = {
   };
 };
 
+/**
+ * Configuration for repeatable steps that can be dynamically added/removed
+ * Field names are automatically prefixed with the array index (e.g., arrayFieldName.0.fieldName)
+ */
+export type RepeatableStepConfig = {
+  /** Base field name for array storage (e.g., "minorDetails") */
+  arrayFieldName: string;
+  /** Maximum number of repetitions allowed (defaults to 10) */
+  maxItems?: number;
+  /** Label for the "add another" question (defaults to "Do you need to add another?") */
+  addAnotherLabel?: string;
+  /**
+   * When true, this step won't include the "add another" question.
+   * Use this for conditional sub-steps that appear within a repeatable group
+   * (e.g., guardian details that appear after each child entry when applicable)
+   */
+  skipAddAnother?: boolean;
+};
+
 export type FormStep = {
   id: string;
   title: string;
@@ -175,6 +207,8 @@ export type FormStep = {
   steps?: ConfirmationStepItem[]; // For confirmation pages
   contactDetails?: ContactDetails; // For confirmation pages
   enableFeedback?: boolean; // Enable feedback section on confirmation page
+  /** Configuration for repeatable steps - when set, this step can be repeated */
+  repeatable?: RepeatableStepConfig;
 };
 
 export type ApiResponse = {
