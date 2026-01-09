@@ -251,6 +251,240 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "professional-referee",
+    title: "Tell us about your professional referee",
+    description:
+      "This can be someone more senior who you've worked with, or a teacher or lecturer.",
+    fields: [
+      {
+        name: "professionalReferee.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "professionalReferee.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "professionalReferee.relationship",
+        label: "Relationship",
+        type: "select",
+        validation: {
+          required: "Relationship is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Parent", value: "parent" },
+          { label: "Spouse", value: "spouse" },
+          { label: "Child", value: "child" },
+          { label: "Sibling", value: "sibling" },
+          { label: "Grandparent", value: "grandparent" },
+          { label: "Legal guardian", value: "legal-guardian" },
+          { label: "Legal representative", value: "legal-representative" },
+          { label: "Other (please describe)", value: "other" },
+        ],
+      },
+      {
+        name: "professionalReferee.email",
+        label: "Email address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "professionalReferee.telephoneNumber",
+        label: "Telephone number",
+        type: "tel",
+        validation: {
+          required: "Telephone number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+          },
+        },
+      },
+      {
+        name: "professionalReferee.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "professionalReferee.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
+      },
+
+      {
+        name: "professionalReferee.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "professionalReferee.postcode",
+        label: "Postcode",
+        hint: "Optional",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: false,
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "personal-referee",
+    title: "Tell us about your personal referee",
+    description:
+      "This can be someone who can speak about your character. For example, a community leader or mentor",
+    fields: [
+      {
+        name: "personalReferee.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "personalReferee.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "personalReferee.relationship",
+        label: "Relationship",
+        type: "select",
+        validation: {
+          required: "Relationship is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Parent", value: "parent" },
+          { label: "Spouse", value: "spouse" },
+          { label: "Child", value: "child" },
+          { label: "Sibling", value: "sibling" },
+          { label: "Grandparent", value: "grandparent" },
+          { label: "Legal guardian", value: "legal-guardian" },
+          { label: "Legal representative", value: "legal-representative" },
+          { label: "Other (please describe)", value: "other" },
+        ],
+      },
+      {
+        name: "personalReferee.email",
+        label: "Email address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "personalReferee.telephoneNumber",
+        label: "Telephone number",
+        type: "tel",
+        validation: {
+          required: "Telephone number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+          },
+        },
+      },
+      {
+        name: "personalReferee.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "personalReferee.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
+      },
+
+      {
+        name: "personalReferee.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "personalReferee.postcode",
+        label: "Postcode",
+        hint: "Optional",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: false,
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
@@ -270,7 +504,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfDeclaration",
+        name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
         placeholder: "For example, 12 15 2025",
