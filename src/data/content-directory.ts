@@ -230,6 +230,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Referral to Student Support Services",
+        slug: "referral-student-support-services",
+        source_url: "",
+        description: "",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Referral to Student Support Services",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
     ],
   },
   // {

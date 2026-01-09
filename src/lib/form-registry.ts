@@ -46,6 +46,9 @@ export const FORM_COMPONENTS = {
   "apply-for-conductor-licence": lazy(
     () => import("@/components/forms/apply-for-conductor-licence-form")
   ),
+  "referral-student-support-services": lazy(
+    () => import("@/components/forms/referral-student-support-services-form")
+  ),
   // Add other forms here
 } as const;
 
