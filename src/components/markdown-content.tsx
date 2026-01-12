@@ -7,16 +7,9 @@ import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
-import { BannerPortal } from "@/components/layout/entry-point-wrapper";
 import rehypeHideStartLinks from "@/lib/rehype-hide-start-links";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 import { MigrationBanner } from "./migration-banner";
-import { StageBanner } from "./stage-banner";
-
-const stageBackgrounds: Record<string, string> = {
-  alpha: "bg-blue-10",
-  beta: "bg-yellow-40",
-};
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -132,56 +125,45 @@ export const MarkdownContent = ({
 }: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
-    <>
-      {frontmatter.stage?.length > 0 && (
-        <BannerPortal>
-          <div className={stageBackgrounds[frontmatter.stage] || "bg-blue-10"}>
-            <div className="container">
-              <StageBanner stage={frontmatter.stage} />
+    <div className="lg:grid lg:grid-cols-3 lg:gap-16">
+      <div className="space-y-6 lg:col-span-2 lg:space-y-8">
+        <div className="space-y-4 lg:space-y-6">
+          {frontmatter.title && (
+            <Heading as="h1" className="break-anywhere">
+              {frontmatter.title}
+            </Heading>
+          )}
+
+          {frontmatter.source_url && (
+            <MigrationBanner pageURL={frontmatter.source_url} />
+          )}
+
+          {frontmatter.publish_date && (
+            <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
+              <Text as="p" size="caption">
+                Last updated on{" "}
+                {format(
+                  parseISO(
+                    frontmatter.publish_date.toISOString().split("T")[0]
+                  ),
+                  "PPP"
+                )}
+              </Text>
             </div>
-          </div>
-        </BannerPortal>
-      )}
-      <div className="lg:grid lg:grid-cols-3 lg:gap-16">
-        <div className="space-y-6 lg:col-span-2 lg:space-y-8">
-          <div className="space-y-4 lg:space-y-6">
-            {frontmatter.title && (
-              <Heading as="h1" className="break-anywhere">
-                {frontmatter.title}
-              </Heading>
-            )}
-
-            {frontmatter.source_url && (
-              <MigrationBanner pageURL={frontmatter.source_url} />
-            )}
-
-            {frontmatter.publish_date && (
-              <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
-                <Text as="p" size="caption">
-                  Last updated on{" "}
-                  {format(
-                    parseISO(
-                      frontmatter.publish_date.toISOString().split("T")[0]
-                    ),
-                    "PPP"
-                  )}
-                </Text>
-              </div>
-            )}
-          </div>
-          <ReactMarkdown
-            components={components}
-            rehypePlugins={[
-              rehypeRaw,
-              [rehypeHideStartLinks, { hasResearchAccess }],
-              rehypeSectionise,
-            ]}
-            remarkPlugins={[remarkGfm]}
-          >
-            {content}
-          </ReactMarkdown>
+          )}
         </div>
+        <ReactMarkdown
+          components={components}
+          rehypePlugins={[
+            rehypeRaw,
+            [rehypeHideStartLinks, { hasResearchAccess }],
+            rehypeSectionise,
+          ]}
+          remarkPlugins={[remarkGfm]}
+        >
+          {content}
+        </ReactMarkdown>
       </div>
-    </>
+    </div>
   );
 };
