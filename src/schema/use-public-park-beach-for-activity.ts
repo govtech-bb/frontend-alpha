@@ -3,24 +3,32 @@ import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
   {
-    id: "applicant-details",
-    title: "Tell us about yourself",
+    id: "individual-or-business",
+    title: "Is the applicant an individual or a business?",
     fields: [
       {
-        name: "applicant.title",
-        label: "Title",
-        type: "select",
-        width: "short",
+        name: "isIndividualOrBusiness",
+        label: "Is the applicant an individual or a business?",
+        hidden: true,
+        type: "radio",
         validation: {
-          required: "Title is required",
+          required: "Select an option",
         },
         options: [
-          { label: "", value: "" },
-          { label: "Mr", value: "mr" },
-          { label: "Ms", value: "ms" },
-          { label: "Mrs", value: "mrs" },
+          { label: "Individual", value: "individual" },
+          { label: "Business", value: "business" },
         ],
       },
+    ],
+  },
+  {
+    id: "applicant-details",
+    title: "Tell us about yourself",
+    conditionalOn: {
+      field: "isIndividualOrBusiness",
+      value: "individual",
+    },
+    fields: [
       {
         name: "applicant.firstName",
         label: "First name",
@@ -36,6 +44,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.middleName",
         label: "Middle name",
+        hint: "If you have more than one, add them in order",
         type: "text",
         validation: {
           required: false,
@@ -51,7 +60,6 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
-
           minLength: {
             value: 2,
             message: "Last name must be at least 2 characters",
@@ -59,83 +67,8 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicant.dateOfBirth",
-        label: "Date of birth",
-        placeholder: "For example, 12 30 1986",
-        type: "date",
-        validation: {
-          required: "Date of birth is required",
-          date: {
-            type: "past",
-          },
-        },
-      },
-      {
-        name: "applicant.idNumber",
-        label: "National Identification (ID) Number",
-        type: "text",
-        width: "medium",
-        // placeholder: "e.g., 850101-0001",
-        validation: {
-          required: "ID Number is required",
-          pattern: {
-            value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-      {
-        name: "applicant.passportDetails",
-        label: "",
-        type: "showHide",
-        validation: { required: false },
-        showHide: {
-          summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
-          description:
-            "If you don't have a National ID number, you can use your passport number instead.",
-          fields: [
-            {
-              name: "applicant.passportNumber",
-              label: "Passport Number",
-              type: "text",
-              placeholder: "",
-              validation: {
-                required: "Passport number is required",
-                minLength: {
-                  value: 6,
-                  message: "Passport number must be at least 6 characters",
-                },
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "applicant.email",
-        label: "Email Address",
-        type: "email",
-        validation: {
-          required: "Email address is required",
-        },
-      },
-      {
-        name: "applicant.telephoneNumber",
-        label: "Telephone Number",
-        type: "tel",
-        validation: {
-          required: "Telephone number is required",
-          pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
-          },
-        },
-      },
-      {
         name: "applicant.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -148,7 +81,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -165,8 +98,8 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "applicant.postalCode",
-        label: "Postal Code",
+        name: "applicant.postcode",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -178,150 +111,86 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-    ],
-  },
-  {
-    id: "goods-or-services",
-    title: "Would you like to sell goods or services?",
-    description:
-      "For example, goods are physical items such as food or memorabilia. Services are experiences like massages or horse rides.",
-    fields: [
       {
-        name: "selling.goodsOrServices",
-        label: "Selling goods or services",
-        hidden: true,
-        type: "radio",
+        name: "applicant.email",
+        label: "Email address",
+        type: "email",
         validation: {
-          required: "Select an option",
+          required: "Email address is required",
         },
-        options: [
-          { label: "Goods", value: "goods" },
-          { label: "Services", value: "services" },
-        ],
       },
       {
-        name: "selling.manufacturingLocation",
-        label: "Where are the goods made?",
-        hint: "Select a country",
-        type: "text",
+        name: "applicant.mobileNumber",
+        label: "Mobile number",
+        type: "tel",
         validation: {
-          required: "Location is required",
-          minLength: {
-            value: 2,
-            message: "Location must be at least 2 characters",
+          required: "Mobile number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
           },
         },
-        conditionalOn: {
-          field: "selling.goodsOrServices",
-          value: "goods",
+      },
+      {
+        name: "applicant.workPhoneNumber",
+        label: "Work phone number",
+        type: "tel",
+        validation: {
+          required: "Work phone number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+          },
+        },
+      },
+      {
+        name: "applicant.homePhoneNumber",
+        label: "Home phone number",
+        type: "tel",
+        validation: {
+          required: "Home phone number is required",
+          pattern: {
+            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+          },
         },
       },
     ],
   },
   {
     id: "business-details",
-    title: "Tell us about your goods or services",
+    title: "Tell us about the business",
+    conditionalOn: {
+      field: "isIndividualOrBusiness",
+      value: "business",
+    },
     fields: [
       {
-        name: "business.descriptionOfGoodsOrServices",
-        label: "Describe the goods or services you would like to sell",
-        hint: "For example, fresh, locally-sourced fruit or 20-minute jet ski rides",
+        name: "business.businessName",
+        label: "Name of business",
         type: "text",
         validation: {
-          required: "Location is required",
+          required: "Name of business is required",
           minLength: {
             value: 2,
-            message: "Location must be at least 2 characters",
+            message: "Name of business must be at least 2 characters",
           },
         },
       },
       {
-        name: "business.intendedPlaceOfDoingBusiness",
-        label: "Where do you intend to sell your goods or services?",
-        hint: "For example, in front of Copacabana Beach Club in Carlisle Bay",
+        name: "business.generalName",
+        label: "General name of business",
         type: "text",
         validation: {
-          required: "Place of doing business is required",
+          required: "General name of business is required",
           minLength: {
             value: 2,
-            message: "Place of doing business must be at least 2 characters",
-          },
-        },
-      },
-    ],
-  },
-  {
-    id: "professional-referee",
-    title: "Tell us about your professional referee",
-    description:
-      "This can be someone more senior who you've worked with, or a teacher or lecturer.",
-    fields: [
-      {
-        name: "professionalReferee.firstName",
-        label: "First name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
+            message: "General name of business must be at least 2 characters",
           },
         },
       },
       {
-        name: "professionalReferee.lastName",
-        label: "Last name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-        },
-      },
-      {
-        name: "professionalReferee.relationship",
-        label: "Relationship",
-        type: "select",
-        validation: {
-          required: "Relationship is required",
-        },
-        options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
-        ],
-      },
-      {
-        name: "professionalReferee.email",
-        label: "Email address",
-        type: "email",
-        validation: {
-          required: "Email address is required",
-        },
-      },
-      {
-        name: "professionalReferee.telephoneNumber",
-        label: "Telephone number",
-        type: "tel",
-        validation: {
-          required: "Telephone number is required",
-          pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
-          },
-        },
-      },
-      {
-        name: "professionalReferee.addressLine1",
+        name: "business.addressLine1",
         label: "Address line 1",
         type: "text",
         placeholder: "",
@@ -334,15 +203,14 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "professionalReferee.addressLine2",
+        name: "business.addressLine2",
         label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
       },
-
       {
-        name: "professionalReferee.parish",
+        name: "business.parish",
         label: "Parish",
         type: "select",
         width: "medium",
@@ -352,7 +220,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "professionalReferee.postcode",
+        name: "business.postcode",
         label: "Postcode",
         hint: "Optional",
         type: "text",
@@ -368,13 +236,15 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "personal-referee",
-    title: "Tell us about your personal referee",
-    description:
-      "This can be someone who can speak about your character. For example, a community leader or mentor",
+    id: "business-contact-details",
+    title: "Tell us about the business contact person",
+    conditionalOn: {
+      field: "isIndividualOrBusiness",
+      value: "business",
+    },
     fields: [
       {
-        name: "personalReferee.firstName",
+        name: "businessContact.firstName",
         label: "First name",
         type: "text",
         validation: {
@@ -386,12 +256,11 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personalReferee.lastName",
+        name: "businessContact.lastName",
         label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
-
           minLength: {
             value: 2,
             message: "Last name must be at least 2 characters",
@@ -399,34 +268,19 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personalReferee.relationship",
-        label: "Relationship",
-        type: "select",
-        validation: {
-          required: "Relationship is required",
-        },
-        options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
-        ],
-      },
-      {
-        name: "personalReferee.email",
+        name: "businessContact.email",
         label: "Email address",
-        type: "email",
+        type: "text",
         validation: {
           required: "Email address is required",
+          minLength: {
+            value: 2,
+            message: "Email address must be at least 2 characters",
+          },
         },
       },
       {
-        name: "personalReferee.telephoneNumber",
+        name: "businessContact.telephoneNumber",
         label: "Telephone number",
         type: "tel",
         validation: {
@@ -437,8 +291,69 @@ export const formSteps: FormStep[] = [
           },
         },
       },
+    ],
+  },
+  {
+    id: "activity-details",
+    title: "When will the activity take place",
+    fields: [
       {
-        name: "personalReferee.addressLine1",
+        name: "activity.startDate",
+        label: "Start date",
+        type: "date",
+        validation: {
+          required: "Start date is required",
+        },
+      },
+      {
+        name: "activity.startTime",
+        label: "Start time",
+        type: "text",
+        validation: {
+          required: "Start time is required",
+          minLength: {
+            value: 2,
+            message: "Start time must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "activity.endDate",
+        label: "End date",
+        type: "date",
+        validation: {
+          required: "End date is required",
+        },
+      },
+      {
+        name: "activity.endTime",
+        label: "End time",
+        type: "text",
+        validation: {
+          required: "End time is required",
+          minLength: {
+            value: 2,
+            message: "End time must be at least 2 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "location-details",
+    title: "Where will the activity take place?",
+    fields: [
+      {
+        name: "location.nameOfLocation",
+        label: "Name of park or beach",
+        hint: "For example, Carlisle Bay or Queen's Park",
+        type: "text",
+        validation: {
+          required: "Field is required",
+        },
+      },
+      {
+        name: "location.addressLine1",
         label: "Address line 1",
         type: "text",
         placeholder: "",
@@ -451,15 +366,14 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personalReferee.addressLine2",
+        name: "location.addressLine2",
         label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
       },
-
       {
-        name: "personalReferee.parish",
+        name: "location.parish",
         label: "Parish",
         type: "select",
         width: "medium",
@@ -469,7 +383,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "personalReferee.postcode",
+        name: "location.postcode",
         label: "Postcode",
         hint: "Optional",
         type: "text",
@@ -480,6 +394,142 @@ export const formSteps: FormStep[] = [
             value: "^BB\\d{5}$",
             message: "Enter a valid postal code (e.g., BB17004)",
           },
+        },
+      },
+    ],
+  },
+  {
+    id: "structures-required",
+    title: "Will you set up any structures at the location?",
+    fields: [
+      {
+        name: "structures.typesRequired",
+        label: "Select all structures required",
+        hidden: true,
+        type: "checkboxGroup",
+        validation: {
+          required: "Select at least one option",
+        },
+        options: [
+          { label: "Tent(s)", value: "tents" },
+          { label: "Stall(s)", value: "stalls" },
+          { label: "Bar(s)", value: "bars" },
+          { label: "Stage(s)", value: "stages" },
+        ],
+      },
+      {
+        name: "structures.numberOfTents",
+        label: "Number of tents",
+        type: "number",
+        validation: {
+          required: "Number of tents is required",
+        },
+        conditionalOn: {
+          field: "structures.typesRequired",
+          value: "tents",
+        },
+      },
+      {
+        name: "structures.numberOfStalls",
+        label: "Number of stalls",
+        type: "number",
+        validation: {
+          required: "Number of stalls is required",
+        },
+        conditionalOn: {
+          field: "structures.typesRequired",
+          value: "stalls",
+        },
+      },
+      {
+        name: "structures.numberOfBars",
+        label: "Number of bars",
+        type: "number",
+        validation: {
+          required: "Number of bars is required",
+        },
+        conditionalOn: {
+          field: "structures.typesRequired",
+          value: "bars",
+        },
+      },
+      {
+        name: "structures.numberOfStages",
+        label: "Number of stages",
+        type: "number",
+        validation: {
+          required: "Number of stages is required",
+        },
+        conditionalOn: {
+          field: "structures.typesRequired",
+          value: "stages",
+        },
+      },
+    ],
+  },
+  {
+    id: "services-required",
+    title: "What services do you need for this activity?",
+    fields: [
+      {
+        name: "servicesRequired",
+        label: "Select all services you require",
+        type: "checkboxGroup",
+        validation: {
+          required: "Select at least one option",
+        },
+        options: [
+          { label: "Exclusive use of area", value: "exclusive-use-of-area" },
+          { label: "Electricity", value: "electricity" },
+          { label: "Caretaker service", value: "caretaker-service" },
+          { label: "Ranger or warden service", value: "ranger-warden-service" },
+          { label: "Lifeguard service", value: "lifeguard-service" },
+          {
+            label: "Self-catering facilities - Batts Rock (bar)",
+            value: "self-catering-batts-rock-bar",
+          },
+          {
+            label: "Self-catering facilities - Batts Rock (kitchen)",
+            value: "self-catering-batts-rock-kitchen",
+          },
+          {
+            label: "King George V Memorial Park - park hall",
+            value: "king-george-memorial-park-park-hall",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: "upload-document",
+    title: "Upload supporting documents",
+    description: "Provide the official company stamp",
+    fields: [
+      {
+        type: "file",
+        name: "insurance-certificate",
+        label: "Upload public liability insurance certificate",
+        hint: "Minimum coverage of $100,000.00",
+        validation: {
+          required: "Please upload public liability insurance certificate",
+        },
+      },
+      {
+        type: "file",
+        name: "security-arrangement",
+        label: "Upload proof of security arrangement",
+        hint: "From the Royal Barbados Police Force",
+        validation: {
+          required: "Please upload proof of security arrangement",
+        },
+      },
+      {
+        type: "file",
+        name: "chemical-toilet-provision",
+        label: "Upload proof of chemical toilet provision",
+        hint: "At least one chemical toilet",
+        validation: {
+          required: "Please upload proof of chemical toilet provision",
         },
       },
     ],
