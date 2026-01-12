@@ -9,7 +9,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "personal.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         placeholder: "John",
         validation: {
@@ -22,7 +22,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "personal.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         placeholder: "Doe",
         validation: {
@@ -35,7 +35,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "personal.dateOfBirth",
-        label: "Date of Birth",
+        label: "Date of birth",
         type: "date",
         placeholder: "For example, 27 3 2007",
         validation: {
@@ -118,7 +118,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "contact.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "123 Main Street",
         validation: {
@@ -131,7 +131,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "Apt 4B (Optional)",
         validation: { required: false },
@@ -146,8 +146,21 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
+        name: "contact.postalCode",
+        label: "Post code",
+        hint: "Optional (e.g. BB17004)",
+        type: "text",
+        width: "short",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
+      {
         name: "contact.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         placeholder: "john.doe@example.com",
         validation: {
@@ -156,7 +169,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         placeholder: "246 234 5678",
         validation: {
