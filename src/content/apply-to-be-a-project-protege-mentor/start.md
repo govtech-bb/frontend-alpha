@@ -24,7 +24,6 @@ As well as your contact details, the application form asks about:
 - your previous experience of mentoring
 - your current and past employment
 - your reasons for applying
-- your competencies (your knowledge, skills and abilities)
+- your strengths (your knowledge, skills and abilities)
 - what you think a mentee could learn from you
 - your preference of mentoring a male or female
-
