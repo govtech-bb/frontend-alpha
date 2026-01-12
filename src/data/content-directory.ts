@@ -435,19 +435,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       //     "Apply for a licence to sell goods or services at a beach or park",
       //   subPages: [{ slug: "start", type: "markdown" }],
       // },
-      {
-        title: "Request for name search and name reservation",
-        slug: "reserve-society-name",
-        description: "Request for name search and name reservation",
-        subPages: [
-          { slug: "start", type: "markdown" },
-          {
-            slug: "form",
-            title: "Request to reserve a society name form",
-            type: "component",
-          },
-        ],
-      },
+      // {
+      //   title: "Request for name search and name reservation",
+      //   slug: "reserve-society-name",
+      //   description: "Request for name search and name reservation",
+      //   subPages: [
+      //     { slug: "start", type: "markdown" },
+      //     {
+      //       slug: "form",
+      //       title: "Request to reserve a society name form",
+      //       type: "component",
+      //     },
+      //   ],
+      // },
     ],
   },
   {
@@ -455,21 +455,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     slug: "public-safety",
     description: "Reporting crime, raising a concern and safeguarding",
     pages: [
-      {
-        title: "Request a fire service inspection",
-        slug: "request-a-fire-service-inspection",
-        description:
-          "Request an inspection from the Barbados Fire Service for hotels, daycares, and places of entertainment.",
-        subPages: [
-          { slug: "start", type: "markdown", protected: true },
-          {
-            slug: "form",
-            title: "Request a Fire Service Inspection form",
-            type: "component",
-            protected: true,
-          },
-        ],
-      },
+      // {
+      //   title: "Request a fire service inspection",
+      //   slug: "request-a-fire-service-inspection",
+      //   description:
+      //     "Request an inspection from the Barbados Fire Service for hotels, daycares, and places of entertainment.",
+      //   subPages: [
+      //     { slug: "start", type: "markdown", protected: true },
+      //     {
+      //       slug: "form",
+      //       title: "Request a Fire Service Inspection form",
+      //       type: "component",
+      //       protected: true,
+      //     },
+      //   ],
+      // },
       {
         title: "Report a concern about a child",
         slug: "report-a-concern-about-a-child",
