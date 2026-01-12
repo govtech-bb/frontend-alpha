@@ -7,9 +7,9 @@ import { Typography } from "@/components/ui/typography";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
 import {
+  hasProtectedSubpages,
   hasResearchAccess,
   isProtectedSubpage,
-  hasProtectedSubpages,
 } from "@/lib/research-access";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
