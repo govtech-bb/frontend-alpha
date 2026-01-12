@@ -500,18 +500,15 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your submission has been saved",
-    description: "Complete your payment below to finalize your submission",
+    title: "Thank you for your application",
+    description: "",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
-        items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
-        ],
+        content:
+          "If you are shortlisted, you will be contacted by phone or email and invited for an interview.",
+        items: [""],
       },
     ],
     enableFeedback: true,
