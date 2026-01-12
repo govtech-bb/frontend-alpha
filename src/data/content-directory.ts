@@ -181,6 +181,23 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title:
+          "Apply for the Rausing Public Service Fellowship for Barbados (2026–2027)",
+        slug: "rausing-public-service-fellowship",
+        description:
+          "Apply for the Rausing Public Service Fellowship for Barbados (2026–2027)",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title:
+              "Apply for the Rausing Public Service Fellowship for Barbados (2026–2027)",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
     ],
   },
   {
