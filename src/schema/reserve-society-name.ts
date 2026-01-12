@@ -205,7 +205,7 @@ export const formSteps: FormStep[] = [
           required: "Telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 12462345678)",
           },
         },
       },
@@ -262,17 +262,6 @@ export const formSteps: FormStep[] = [
         ],
       },
     ],
-    contactDetails: {
-      title: "Registration Department",
-      telephoneNumber: "(246) 535-8300",
-      email: "registrationdept@barbados.gov.bb",
-      address: {
-        line1: "Supreme Court Complex",
-        line2: "Whitepark Road",
-        city: "St. Michael",
-        country: "Barbados",
-      },
-    },
     enableFeedback: true,
   },
 ];
