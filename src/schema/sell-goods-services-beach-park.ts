@@ -286,21 +286,10 @@ export const formSteps: FormStep[] = [
       {
         name: "professionalReferee.relationship",
         label: "Relationship",
-        type: "select",
+        type: "text",
         validation: {
-          required: "Relationship is required",
+          required: "Professional relationship is required",
         },
-        options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
-        ],
       },
       {
         name: "professionalReferee.email",
@@ -405,21 +394,10 @@ export const formSteps: FormStep[] = [
       {
         name: "personalReferee.relationship",
         label: "Relationship",
-        type: "select",
+        type: "text",
         validation: {
-          required: "Relationship is required",
+          required: "Personal relationship is required",
         },
-        options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
-        ],
       },
       {
         name: "personalReferee.email",
