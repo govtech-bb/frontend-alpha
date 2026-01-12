@@ -7,10 +7,16 @@ import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import { BannerPortal } from "@/components/layout/entry-point-wrapper";
 import rehypeHideStartLinks from "@/lib/rehype-hide-start-links";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 import { MigrationBanner } from "./migration-banner";
 import { StageBanner } from "./stage-banner";
+
+const stageBackgrounds: Record<string, string> = {
+  alpha: "bg-blue-10",
+  beta: "bg-yellow-40",
+};
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -90,33 +96,23 @@ const components: Components = {
     />
   ),
   table: ({ node, ...props }) => (
-    <div className="mx-4 my-6 overflow-x-auto sm:mx-0">
+    <div className="my-s overflow-x-auto">
       <div className="inline-block min-w-full align-middle">
-        <table
-          className="min-w-full divide-y divide-gray-300 border border-gray-300"
-          {...props}
-        />
+        <table className="min-w-full" {...props} />
       </div>
     </div>
   ),
-  thead: ({ node, ...props }) => <thead className="bg-gray-50" {...props} />,
-  tbody: ({ node, ...props }) => (
-    <tbody className="divide-y divide-gray-200 bg-white" {...props} />
-  ),
-  tr: ({ node, ...props }) => (
-    <tr className="transition-colors hover:bg-gray-50" {...props} />
-  ),
+  thead: ({ node, ...props }) => <thead className="bg-blue-10" {...props} />,
+  tbody: ({ node, ...props }) => <tbody className="bg-white" {...props} />,
+  tr: ({ node, ...props }) => <tr {...props} />,
   th: ({ node, ...props }) => (
     <th
-      className="px-3 py-3 text-left font-semibold text-gray-900 text-xs sm:px-6 sm:text-sm"
+      className="px-xs py-s text-left font-bold text-caption-sm text-neutral-midgrey"
       {...props}
     />
   ),
   td: ({ node, ...props }) => (
-    <td
-      className="px-3 py-4 text-gray-700 text-xs sm:px-6 sm:text-sm"
-      {...props}
-    />
+    <td className="px-xs py-s text-black text-caption-sm" {...props} />
   ),
 };
 
@@ -136,47 +132,56 @@ export const MarkdownContent = ({
 }: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="lg:grid lg:grid-cols-3 lg:gap-16">
-      <div className="space-y-6 lg:col-span-2 lg:space-y-8">
-        <div className="space-y-4 lg:space-y-6">
-          {frontmatter.title && (
-            <Heading as="h1" className="break-anywhere">
-              {frontmatter.title}
-            </Heading>
-          )}
-
-          {frontmatter.stage?.length > 0 ? (
-            <StageBanner stage={frontmatter.stage} />
-          ) : null}
-          {frontmatter.source_url ? (
-            <MigrationBanner pageURL={frontmatter.source_url} />
-          ) : null}
-          {frontmatter.publish_date && (
-            <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
-              <Text as="p" size="caption">
-                Last updated on{" "}
-                {format(
-                  parseISO(
-                    frontmatter.publish_date.toISOString().split("T")[0]
-                  ),
-                  "PPP"
-                )}
-              </Text>
+    <>
+      {frontmatter.stage?.length > 0 && (
+        <BannerPortal>
+          <div className={stageBackgrounds[frontmatter.stage] || "bg-blue-10"}>
+            <div className="container">
+              <StageBanner stage={frontmatter.stage} />
             </div>
-          )}
+          </div>
+        </BannerPortal>
+      )}
+      <div className="lg:grid lg:grid-cols-3 lg:gap-16">
+        <div className="space-y-6 lg:col-span-2 lg:space-y-8">
+          <div className="space-y-4 lg:space-y-6">
+            {frontmatter.title && (
+              <Heading as="h1" className="break-anywhere">
+                {frontmatter.title}
+              </Heading>
+            )}
+
+            {frontmatter.source_url && (
+              <MigrationBanner pageURL={frontmatter.source_url} />
+            )}
+
+            {frontmatter.publish_date && (
+              <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
+                <Text as="p" size="caption">
+                  Last updated on{" "}
+                  {format(
+                    parseISO(
+                      frontmatter.publish_date.toISOString().split("T")[0]
+                    ),
+                    "PPP"
+                  )}
+                </Text>
+              </div>
+            )}
+          </div>
+          <ReactMarkdown
+            components={components}
+            rehypePlugins={[
+              rehypeRaw,
+              [rehypeHideStartLinks, { hasResearchAccess }],
+              rehypeSectionise,
+            ]}
+            remarkPlugins={[remarkGfm]}
+          >
+            {content}
+          </ReactMarkdown>
         </div>
-        <ReactMarkdown
-          components={components}
-          rehypePlugins={[
-            rehypeRaw,
-            [rehypeHideStartLinks, { hasResearchAccess }],
-            rehypeSectionise,
-          ]}
-          remarkPlugins={[remarkGfm]}
-        >
-          {content}
-        </ReactMarkdown>
       </div>
-    </div>
+    </>
   );
 };

@@ -1,6 +1,8 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { BackButton } from "@/components/layout/back-button";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { StageBanner } from "@/components/stage-banner";
@@ -12,6 +14,23 @@ import { cn } from "@/lib/utils";
 // biome-ignore lint/style/useConsistentTypeDefinitions: Do not need `type` features
 interface EntryPointWrapperProps {
   children: React.ReactNode;
+}
+
+export const BANNER_PORTAL_ID = "content-banner-slot";
+
+export function BannerPortal({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const target = document.getElementById(BANNER_PORTAL_ID);
+  if (!target) return null;
+
+  return createPortal(children, target);
 }
 
 export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
@@ -27,6 +46,7 @@ export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
 
   return (
     <main>
+      <div id={BANNER_PORTAL_ID} />
       {!isFormPage && (
         <div className="container py-4 lg:py-6">
           <BackButton />
