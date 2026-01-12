@@ -465,10 +465,55 @@ export const formSteps: FormStep[] = [
   },
 
   {
-    id: "review",
+    id: "check-your-answers",
     title: "Check your answers",
-    description:
-      "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
     fields: [],
+  },
+  {
+    id: "declaration",
+    title: "Declaration",
+    description:
+      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+    fields: [
+      {
+        name: "declaration.confirmed",
+        label: "All information is correct and true.",
+        type: "checkbox",
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
+      },
+      {
+        name: "declaration.dateOfDeclaration",
+        label: "Date of Declaration",
+        hidden: true,
+        placeholder: "",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "confirmation",
+    title: "Your submission has been saved",
+    description: "Complete your payment below to finalize your submission",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "You will receive a confirmation email with:",
+        items: [
+          "Your application reference number",
+          "the cost of the certificate(s)",
+          "the expected completion date",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
