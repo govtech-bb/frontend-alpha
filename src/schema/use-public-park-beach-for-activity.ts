@@ -120,7 +120,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicant.mobileNumber",
+        name: "applicant.mobilePhoneNumber",
         label: "Mobile number",
         type: "tel",
         validation: {
@@ -507,7 +507,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         type: "file",
-        name: "insurance-certificate",
+        name: "uploads.insurance-certificate",
         label: "Upload public liability insurance certificate",
         hint: "Minimum coverage of $100,000.00",
         validation: {
@@ -516,7 +516,7 @@ export const formSteps: FormStep[] = [
       },
       {
         type: "file",
-        name: "security-arrangement",
+        name: "uploads.security-arrangement",
         label: "Upload proof of security arrangement",
         hint: "From the Royal Barbados Police Force",
         validation: {
@@ -525,7 +525,7 @@ export const formSteps: FormStep[] = [
       },
       {
         type: "file",
-        name: "chemical-toilet-provision",
+        name: "uploads.chemical-toilet-provision",
         label: "Upload proof of chemical toilet provision",
         hint: "At least one chemical toilet",
         validation: {
