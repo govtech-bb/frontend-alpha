@@ -190,6 +190,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Apply to be a temporary teacher",
+        slug: "temporary-teacher-application",
+        source_url: "",
+        description: "Apply to be a temporary teacher at an institution.",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Temporary Teacher Application",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
     ],
   },
   {
