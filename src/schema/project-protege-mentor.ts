@@ -11,7 +11,6 @@ export const formSteps: FormStep[] = [
         name: "personal.firstName",
         label: "First name",
         type: "text",
-        placeholder: "John",
         validation: {
           required: "First name is required",
           minLength: {
@@ -24,7 +23,6 @@ export const formSteps: FormStep[] = [
         name: "personal.lastName",
         label: "Last name",
         type: "text",
-        placeholder: "Doe",
         validation: {
           required: "Last name is required",
           minLength: {
@@ -60,7 +58,6 @@ export const formSteps: FormStep[] = [
         name: "personal.institutionName",
         label: "Name of institution",
         type: "text",
-        placeholder: "e.g., University of the West Indies",
         validation: {
           required: "Institution name is required",
           minLength: {
@@ -77,7 +74,6 @@ export const formSteps: FormStep[] = [
         name: "personal.employerName",
         label: "Name of company or organisation",
         type: "text",
-        placeholder: "e.g., ABC Company Ltd",
         validation: {
           required: "Company or organisation name is required",
           minLength: {
@@ -95,7 +91,6 @@ export const formSteps: FormStep[] = [
         name: "personal.otherEmploymentDetails",
         label: "Please give details",
         type: "text",
-        placeholder: "Describe your employment status",
         validation: {
           required: "Employment details are required",
           minLength: {
@@ -120,7 +115,6 @@ export const formSteps: FormStep[] = [
         name: "contact.addressLine1",
         label: "Address line 1",
         type: "text",
-        placeholder: "123 Main Street",
         validation: {
           required: "Address line 1 is required",
           minLength: {
@@ -133,7 +127,6 @@ export const formSteps: FormStep[] = [
         name: "contact.addressLine2",
         label: "Address line 2",
         type: "text",
-        placeholder: "Apt 4B (Optional)",
         validation: { required: false },
       },
       {
@@ -162,7 +155,6 @@ export const formSteps: FormStep[] = [
         name: "contact.email",
         label: "Email address",
         type: "email",
-        placeholder: "john.doe@example.com",
         validation: {
           required: "Email address is required",
         },
@@ -171,7 +163,6 @@ export const formSteps: FormStep[] = [
         name: "contact.telephoneNumber",
         label: "Telephone number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
@@ -199,7 +190,8 @@ export const formSteps: FormStep[] = [
           required: "Tell us why you want to be a mentor",
           minLength: {
             value: 5,
-            message: "This must be at least 5 characters",
+            message:
+              "Why you want to be a mentor must be at least 5 characters",
           },
         },
       },
@@ -213,7 +205,8 @@ export const formSteps: FormStep[] = [
           required: "Tell us about your strengths",
           minLength: {
             value: 5,
-            message: "Strength must be at least 5 characters",
+            message:
+              "Your qualities, knowledge or skills must be at least 5 characters",
           },
         },
       },
@@ -227,7 +220,8 @@ export const formSteps: FormStep[] = [
           required: "Tell us what a mentee could learn from you",
           minLength: {
             value: 5,
-            message: "This must be at least 5 characters",
+            message:
+              "What you think a mentee could learn from you must be at least 5 characters",
           },
         },
       },
@@ -270,7 +264,6 @@ export const formSteps: FormStep[] = [
         name: "preferences.menteePhoneNumber",
         label: "What is your phone number?",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Enter your phone number",
           pattern: {
@@ -300,7 +293,6 @@ export const formSteps: FormStep[] = [
         name: "preferences.menteeInMindName",
         label: "What is their name?",
         type: "text",
-        placeholder: "Enter their name",
         validation: {
           required: "Enter the name of the person you have in mind",
         },
@@ -334,7 +326,6 @@ export const formSteps: FormStep[] = [
         name: "experience.yearsOfExperience",
         label: "How many years of experience?",
         type: "number",
-        placeholder: "e.g., 3",
         validation: {
           required: "Enter your years of experience",
         },
@@ -356,7 +347,6 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.firstName",
         label: "First name",
         type: "text",
-        placeholder: "John",
         validation: {
           required: "Enter the referee's first name",
         },
@@ -365,7 +355,6 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.lastName",
         label: "Last name",
         type: "text",
-        placeholder: "Smith",
         validation: {
           required: "Enter the referee's last name",
         },
@@ -374,7 +363,6 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.relationship",
         label: "Relationship",
         type: "text",
-        placeholder: "e.g., Former manager, Lecturer",
         validation: {
           required: "Enter your relationship to the referee",
         },
@@ -383,7 +371,6 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.email",
         label: "Email address",
         type: "email",
-        placeholder: "john.smith@example.com",
         validation: {
           required: "Enter the referee's email address",
         },
@@ -392,7 +379,6 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.phone",
         label: "Phone number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Enter the referee's phone number",
           pattern: {
@@ -415,7 +401,6 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.firstName",
         label: "First name",
         type: "text",
-        placeholder: "Jane",
         validation: {
           required: "Enter the referee's first name",
         },
@@ -424,7 +409,6 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.lastName",
         label: "Last name",
         type: "text",
-        placeholder: "Doe",
         validation: {
           required: "Enter the referee's last name",
         },
@@ -433,7 +417,6 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.relationship",
         label: "Relationship",
         type: "text",
-        placeholder: "e.g., Family friend, Neighbour",
         validation: {
           required: "Enter your relationship to the referee",
         },
@@ -442,7 +425,6 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.email",
         label: "Email address",
         type: "email",
-        placeholder: "jane.doe@example.com",
         validation: {
           required: "Enter the referee's email address",
         },
@@ -451,7 +433,6 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.phone",
         label: "Phone number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Enter the referee's phone number",
           pattern: {
