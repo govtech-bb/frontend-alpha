@@ -98,7 +98,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contactDetails.postalCode",
-        label: "Postal Code",
+        label: "Postal Code  (e.g. BB17004)",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -106,7 +106,7 @@ export const formSteps: FormStep[] = [
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postal code (e.g. BB17004)",
           },
         },
       },
@@ -125,8 +125,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g. 12462345678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },

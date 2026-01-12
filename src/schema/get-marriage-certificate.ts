@@ -77,6 +77,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.postalCode",
         label: "Postal Code",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "short",
         validation: {
