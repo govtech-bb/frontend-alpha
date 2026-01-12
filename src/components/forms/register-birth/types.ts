@@ -29,11 +29,16 @@ export type PersonDetails = {
   lastName: string;
   hadOtherSurname?: "yes" | "no" | "";
   otherSurname?: string;
-  dateOfBirth: DateInputValue;
-  address: string;
+  maidenName?: string;
+  dateOfBirth?: DateInputValue;
+  address?: string;
+  parish?: string;
+  streetAddress?: string;
   nationalRegistrationNumber?: string;
   passportNumber?: string;
   passportPlaceOfIssue?: string;
+  telephoneNumber?: string;
+  emailAddress?: string;
   occupation?: string;
 };
 
@@ -46,7 +51,7 @@ export type ChildDetails = {
   lastName: string;
   dateOfBirth: DateInputValue;
   sexAtBirth: "Male" | "Female";
-  parishOfBirth: string;
+  parishOfBirth?: string;
 };
 
 /**

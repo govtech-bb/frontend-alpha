@@ -166,18 +166,13 @@ function createPersonDetailsSchema(personType: "father" | "mother") {
       ),
       hadOtherSurname: z.enum(["yes", "no", ""]).optional(),
       otherSurname: z.string().optional(),
-      dateOfBirth: dateValidation.past(
-        dateValidation.required(
-          createDateSchema(`${personType}'s date of birth`),
-          `${personType}'s date of birth`
-        ),
-        `${personType}'s date of birth`
-      ),
-
-      address: z.preprocess(
-        (val) => val ?? "",
-        z.string().min(1, `Enter the ${personType}'s current address`)
-      ),
+      dateOfBirth: dateInputValueSchema.optional(),
+      address: z.string().optional(),
+      parish: z.string().optional(),
+      streetAddress: z.string().optional(),
+      maidenName: z.string().optional(),
+      telephoneNumber: z.string().optional(),
+      emailAddress: z.string().email("Enter a valid email address").optional(),
       nationalRegistrationNumber: z.string().optional(),
       passportNumber: z.string().optional(),
       passportPlaceOfIssue: z.string().optional(),
@@ -216,10 +211,7 @@ export const childDetailsValidation = z.object({
   sexAtBirth: z.enum(["Male", "Female"], {
     message: "Select the child's sex at birth",
   }),
-  parishOfBirth: z.preprocess(
-    (val) => val ?? "",
-    z.string().min(1, "Enter the child's place of birth")
-  ),
+  parishOfBirth: z.string().optional(),
 });
 
 // Marriage status validation

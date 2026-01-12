@@ -2,6 +2,7 @@
 
 import type { ErrorItem } from "@govtech-bb/react";
 import { Button, ErrorSummary, Radio, RadioGroup } from "@govtech-bb/react";
+import { usePathname, useRouter } from "next/navigation";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { marriageStatusValidation } from "../schema";
@@ -25,8 +26,20 @@ export function MarriageStatus({
   value,
   onChange,
   onNext,
+  onBack,
 }: MarriageStatusProps) {
   const titleRef = useStepFocus("Marriage status", "Register a Birth");
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleBack = () => {
+    if (pathname?.includes("/form")) {
+      const startPath = pathname.replace("/form", "/start");
+      router.push(startPath);
+    } else {
+      onBack();
+    }
+  };
 
   // Wrap value in object for validation hook, converting empty string to undefined
   const formValue = { marriageStatus: value === "" ? undefined : value };
@@ -119,8 +132,11 @@ export function MarriageStatus({
           </RadioGroup>
         </div>
         <div className="flex gap-4">
+          <Button onClick={handleBack} type="button" variant="secondary">
+            Back
+          </Button>
           <Button type="submit">Continue</Button>
-        </div>{" "}
+        </div>
       </div>
     </form>
   );

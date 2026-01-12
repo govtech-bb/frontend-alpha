@@ -27,16 +27,16 @@ export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
 
   return (
     <main>
-      {!isFormPage && (
-        <div className="container py-4 lg:py-6">
-          <BackButton />
-        </div>
-      )}
       {isFormPage && !isConfirmationPage && (
         <div className="bg-blue-10">
           <div className="container">
             <StageBanner stage="alpha" />
           </div>
+        </div>
+      )}
+      {!isFormPage && (
+        <div className="container py-4 lg:py-6">
+          <BackButton />
         </div>
       )}
       {isConfirmationPage ? (

@@ -3,14 +3,13 @@
 import type { ErrorItem } from "@govtech-bb/react";
 import {
   Button,
-  DateInput,
   ErrorSummary,
   Input,
-  Radio,
-  RadioGroup,
+  Select,
   ShowHide,
   TextArea,
 } from "@govtech-bb/react";
+import { barbadosParishes } from "@/data/constants";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
 import { motherDetailsValidation } from "../schema";
@@ -118,63 +117,12 @@ export function MothersDetails({
             value={value.lastName || ""}
           />
 
-          {/* Had other surname */}
-          <div>
-            <RadioGroup
-              description="For example, a maiden name"
-              label="Has the mother had any other last name?"
-              onValueChange={(val) => handleChange("hadOtherSurname", val)}
-              value={value.hadOtherSurname || ""}
-            >
-              <Radio id="mother-hadOtherSurname-yes" label="Yes" value="yes" />
-
-              {value.hadOtherSurname === "yes" && (
-                <div className="motion-safe:fade-in motion-safe:slide-in-from-top-2 pl-[20px] motion-safe:animate-in motion-safe:duration-200">
-                  <div className="border-neutral-grey border-l-8 border-solid pb-4 pl-[52px]">
-                    <Input
-                      className="w-80"
-                      id="mother-otherSurname"
-                      label="Previous last name"
-                      onChange={(e) =>
-                        handleChange("otherSurname", e.target.value)
-                      }
-                      type="text"
-                      value={value.otherSurname || ""}
-                    />
-                  </div>
-                </div>
-              )}
-              <Radio id="mother-hadOtherSurname-no" label="No" value="no" />
-            </RadioGroup>
-          </div>
-
-          {/* Date of birth */}
-          <DateInput
-            description="For example, 27 3 2007"
-            error={dateFieldErrors.dateOfBirth || fieldErrors.dateOfBirth}
-            id="mother-dateOfBirth"
-            label="Date of birth"
-            name="mother-dateOfBirth"
-            onChange={(dateValue) => handleChange("dateOfBirth", dateValue)}
-            value={value.dateOfBirth}
-          />
-
-          {/* Address */}
-          <TextArea
-            error={fieldErrors.address}
-            id="mother-address"
-            label="Current address"
-            onChange={(e) => handleChange("address", e.target.value)}
-            rows={3}
-            value={value.address || ""}
-          />
-
-          {/* National registration number */}
+          {/* National Identification (ID) number */}
           <div>
             <Input
               error={fieldErrors.nationalRegistrationNumber}
               id="mother-nationalRegistrationNumber"
-              label="National registration number"
+              label="National Identification (ID) number"
               onChange={(e) =>
                 handleChange("nationalRegistrationNumber", e.target.value)
               }
@@ -184,35 +132,106 @@ export function MothersDetails({
             />
 
             {/* Passport number disclosure */}
-            <ShowHide summary="Use passport number instead">
+            <ShowHide className="mt-3" summary="Use passport number instead">
               <div>
                 <p className="mb-4 text-[20px] text-neutral-midgrey leading-[1.7]">
-                  If you don't have a National Registration number, you can use
-                  your passport number instead.
+                  If you don't have a National Identification number, you can
+                  use your passport number instead.
                 </p>
-                <Input
-                  error={fieldErrors.passportNumber}
-                  id="mother-passportNumber"
-                  label="Passport number"
-                  onChange={(e) =>
-                    handleChange("passportNumber", e.target.value)
-                  }
-                  type="text"
-                  value={value.passportNumber || ""}
-                />
-                <Input
-                  error={fieldErrors.passportPlaceOfIssue}
-                  id="mother-passportPlaceOfIssue"
-                  label="Place of issue"
-                  onChange={(e) =>
-                    handleChange("passportPlaceOfIssue", e.target.value)
-                  }
-                  type="text"
-                  value={value.passportPlaceOfIssue || ""}
-                />
+                <div className="space-y-2">
+                  <Input
+                    error={fieldErrors.passportNumber}
+                    id="mother-passportNumber"
+                    label="Passport number"
+                    onChange={(e) =>
+                      handleChange("passportNumber", e.target.value)
+                    }
+                    type="text"
+                    value={value.passportNumber || ""}
+                  />
+                  <Input
+                    error={fieldErrors.passportPlaceOfIssue}
+                    id="mother-passportPlaceOfIssue"
+                    label="Place of issue"
+                    onChange={(e) =>
+                      handleChange("passportPlaceOfIssue", e.target.value)
+                    }
+                    type="text"
+                    value={value.passportPlaceOfIssue || ""}
+                  />
+                </div>
               </div>
             </ShowHide>
           </div>
+
+          {/* Maiden name */}
+          <Input
+            error={fieldErrors.maidenName}
+            id="mother-maidenName"
+            label="Maiden name"
+            onChange={(e) => handleChange("maidenName", e.target.value)}
+            type="text"
+            value={value.maidenName || ""}
+          />
+
+          <hr className="my-5 border-2 border-gray-200" />
+
+          <h2 className="mb-4 font-bold text-[40px] leading-[1.25]">
+            Current address
+          </h2>
+
+          {/* Parish */}
+          <Select
+            error={fieldErrors.parish}
+            id="mother-parish"
+            label="Parish"
+            onChange={(e) => handleChange("parish", e.target.value)}
+            value={value.parish || ""}
+          >
+            {barbadosParishes.map((parish) => (
+              <option key={parish.value} value={parish.value}>
+                {parish.label}
+              </option>
+            ))}
+          </Select>
+
+          {/* Street address */}
+          <TextArea
+            error={fieldErrors.streetAddress}
+            id="mother-streetAddress"
+            label="Street address"
+            onChange={(e) => handleChange("streetAddress", e.target.value)}
+            rows={3}
+            value={value.streetAddress || ""}
+          />
+
+          <hr className="my-5 border-2 border-gray-200" />
+
+          <h2 className="mb-4 font-bold text-[40px] leading-[1.25]">
+            Contact details
+          </h2>
+
+          {/* Telephone number */}
+          <Input
+            error={fieldErrors.telephoneNumber}
+            id="mother-telephoneNumber"
+            label="Telephone number"
+            onChange={(e) => handleChange("telephoneNumber", e.target.value)}
+            type="tel"
+            value={value.telephoneNumber || ""}
+          />
+
+          {/* Email address */}
+          <Input
+            error={fieldErrors.emailAddress}
+            id="mother-emailAddress"
+            label="Email address"
+            onChange={(e) => handleChange("emailAddress", e.target.value)}
+            type="email"
+            value={value.emailAddress || ""}
+          />
+
+          <hr className="my-5 border-2 border-gray-200" />
 
           {/* Occupation */}
           <Input

@@ -6,8 +6,7 @@ import {
   DateInput,
   ErrorSummary,
   Input,
-  Radio,
-  RadioGroup,
+  Select,
 } from "@govtech-bb/react";
 import { useStepFocus } from "../../common/hooks/use-step-focus";
 import { useStepValidation } from "../../common/hooks/use-step-validation";
@@ -125,63 +124,23 @@ export function ChildDetails({
             value={value.dateOfBirth}
           />
 
-          {/* Sex at birth */}
-          <fieldset>
-            <legend className="font-bold text-[24px]">Sex at birth</legend>
-            <p className="mb-4 text-[20px] leading-[1.7]">
-              We ask this so that we can monitor population trends.
-            </p>
-            {fieldErrors.sexAtBirth && (
-              <p className="mb-4 text-red-600" id="child-sexAtBirth-error">
-                {fieldErrors.sexAtBirth}
-              </p>
-            )}
-            <RadioGroup
-              aria-describedby={
-                fieldErrors.sexAtBirth ? "child-sexAtBirth-error" : undefined
-              }
-              aria-invalid={!!fieldErrors.sexAtBirth}
-              aria-label="Sex at birth"
-              onValueChange={(val) =>
-                handleChange("sexAtBirth", val as "Male" | "Female")
-              }
-              value={value.sexAtBirth || undefined}
-            >
-              <Radio id="child-sexAtBirth-male" label="Male" value="Male" />
-              <Radio
-                id="child-sexAtBirth-female"
-                label="Female"
-                value="Female"
-              />
-            </RadioGroup>
-          </fieldset>
-
-          {/* Place of birth */}
-          <div>
-            <label
-              className="block font-bold text-[20px] leading-[1.7]"
-              htmlFor="child-parishOfBirth"
-            >
-              Place of birth
-            </label>
-            <div className="mb-2 text-[20px] leading-[1.7]">
-              <p className="mb-4">
-                Include the town and parish in your answer.
-              </p>
-              <p>
-                For example, Queen Elizabeth Hospital, Bridgetown, St. Michael.
-                <br />
-                Or a home address if they were born at home.
-              </p>
-            </div>
-            <Input
-              error={fieldErrors.parishOfBirth}
-              id="child-parishOfBirth"
-              onChange={(e) => handleChange("parishOfBirth", e.target.value)}
-              type="text"
-              value={value.parishOfBirth || ""}
-            />
-          </div>
+          {/* Sex */}
+          <Select
+            error={fieldErrors.sexAtBirth}
+            id="child-sexAtBirth"
+            label="Sex"
+            onChange={(e) =>
+              handleChange("sexAtBirth", e.target.value as "Male" | "Female")
+            }
+            value={value.sexAtBirth || ""}
+          >
+            <option key="male" value="Male">
+              Male
+            </option>
+            <option key="female" value="Female">
+              Female
+            </option>
+          </Select>
         </div>
         <div className="flex gap-4">
           <Button onClick={onBack} type="button" variant="secondary">
