@@ -472,6 +472,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description: "",
       },
+      {
+        title: "Apply for permission to remove a protected tree",
+        slug: "permission-to-remove-tree",
+        description: "Apply for permission to remove a protected tree",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Apply for permission to remove a protected tree",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
 ];
