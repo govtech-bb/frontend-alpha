@@ -22,7 +22,7 @@ When you request a copy, you must disclose:
 
 There are 2 ways to get a copy of a death certificate. You can:
 
-1. Request a copy online
+1. #### Request a copy online
 
 You must pay online so you will need a debit or credit card, and you will need to have (or create) an EZPay+ account.<br/ >
 Every question is compulsory so if you are unsure about the basic information asked for, you should complete the paper form instead.
