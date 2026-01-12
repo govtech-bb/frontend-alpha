@@ -28,6 +28,25 @@ export function getNestedValue<T>(
   return result as T | undefined;
 }
 
+/**
+ * Check if a field value matches a conditional value
+ * Handles both string values (for radio/select) and array values (for checkboxGroup)
+ * @example matchesConditionalValue("individual", "individual") // true
+ * @example matchesConditionalValue(["tents", "bars"], "tents") // true
+ * @example matchesConditionalValue(["bars"], "tents") // false
+ */
+export function matchesConditionalValue(
+  fieldValue: unknown,
+  conditionalValue: string
+): boolean {
+  // If the field value is an array (e.g., from checkboxGroup), check if it contains the value
+  if (Array.isArray(fieldValue)) {
+    return fieldValue.includes(conditionalValue);
+  }
+  // Otherwise, use strict equality (for radio, select, etc.)
+  return fieldValue === conditionalValue;
+}
+
 export function findSubPageTitleFromPath(
   data: InformationContent[],
   path: string

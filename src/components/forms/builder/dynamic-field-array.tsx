@@ -9,7 +9,7 @@ import {
 import { useEffect, useRef } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, matchesConditionalValue } from "@/lib/utils";
 import type { FieldArrayConfig, FormField } from "@/types";
 
 // Convert index to ordinal word (0 -> "First", 1 -> "Second", etc.)
@@ -160,7 +160,12 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
                       `${field.name}.${index}.${nestedField.conditionalOn.field}` as keyof FormData;
                     const conditionalValue = watch(conditionalFieldName);
 
-                    if (conditionalValue !== nestedField.conditionalOn.value) {
+                    if (
+                      !matchesConditionalValue(
+                        conditionalValue,
+                        nestedField.conditionalOn.value
+                      )
+                    ) {
                       return null; // Don't render if condition not met
                     }
                   }

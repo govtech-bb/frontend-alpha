@@ -8,6 +8,7 @@ export type FieldType =
   | "textarea"
   | "radio"
   | "checkbox"
+  | "checkboxGroup"
   | "fieldArray"
   | "showHide"
   | "file";
@@ -117,6 +118,12 @@ type CheckboxFormField = BaseFormField & {
   validation: NonDateFieldValidation;
 };
 
+type CheckboxGroupFormField = BaseFormField & {
+  type: "checkboxGroup";
+  validation: NonDateFieldValidation;
+  options: SelectOption[];
+};
+
 type TextareaFormField = BaseFormField & {
   type: "textarea";
   validation: NonDateFieldValidation;
@@ -153,6 +160,7 @@ export type FormField =
   | DateFormField
   | OptionFormField
   | CheckboxFormField
+  | CheckboxGroupFormField
   | TextareaFormField
   | FieldArrayFormField
   | TextFormField

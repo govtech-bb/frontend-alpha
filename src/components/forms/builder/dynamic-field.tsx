@@ -15,7 +15,7 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, matchesConditionalValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
 import type { FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
@@ -145,8 +145,10 @@ export function DynamicField({
         conditionalField.conditionalOn &&
         conditionalField.conditionalOn.field === field.name
       ) {
-        const shouldShow =
-          currentFieldValue === conditionalField.conditionalOn.value;
+        const shouldShow = matchesConditionalValue(
+          currentFieldValue,
+          conditionalField.conditionalOn.value
+        );
         const currentValue = getValues(conditionalField.name as keyof FormData);
 
         // Only clear if field should be hidden AND has a value
@@ -157,7 +159,10 @@ export function DynamicField({
             (cf) =>
               cf.name === conditionalField.name &&
               cf.conditionalOn?.field === field.name &&
-              currentFieldValue === cf.conditionalOn?.value
+              matchesConditionalValue(
+                currentFieldValue,
+                cf.conditionalOn?.value || ""
+              )
           );
 
           // Only clear if no other conditional field with this name is visible
@@ -195,7 +200,12 @@ export function DynamicField({
     const watchedValue = conditionalField.conditionalOn
       ? watch(conditionalField.conditionalOn.field as keyof FormData)
       : null;
-    const shouldShow = watchedValue === conditionalField.conditionalOn?.value;
+    const shouldShow = conditionalField.conditionalOn
+      ? matchesConditionalValue(
+          watchedValue,
+          conditionalField.conditionalOn.value
+        )
+      : true;
 
     if (!shouldShow) return null;
 
@@ -461,6 +471,59 @@ export function DynamicField({
               }}
             />
           )}
+        />
+      ) : field.type === "checkboxGroup" ? (
+        <Controller
+          control={control}
+          name={field.name as keyof FormData}
+          render={({ field: controllerField }) => {
+            const selectedValues = Array.isArray(controllerField.value)
+              ? (controllerField.value as string[])
+              : [];
+
+            return (
+              <div className="flex flex-col gap-4">
+                {!field.hidden && (
+                  <label className="font-bold text-lg" htmlFor={field.name}>
+                    {field.label}
+                  </label>
+                )}
+                {field.hint && (
+                  <Text as="p" className="text-neutral-midgrey" size="body">
+                    {field.hint}
+                  </Text>
+                )}
+                {error?.message && (
+                  <Text as="p" className="text-red-600" size="body">
+                    {error.message}
+                  </Text>
+                )}
+                <div className="flex flex-col gap-3">
+                  {field.options?.map((option) => (
+                    <Fragment key={option.value}>
+                      <Checkbox
+                        checked={selectedValues.includes(option.value)}
+                        id={`${field.name}-${option.value}`}
+                        label={option.label}
+                        onCheckedChange={(checked) => {
+                          const newValues = checked
+                            ? [...selectedValues, option.value]
+                            : selectedValues.filter((v) => v !== option.value);
+                          controllerField.onChange(newValues);
+                        }}
+                      />
+                      {/* Render conditional fields that match this checkbox option */}
+                      {conditionalFields
+                        .filter(
+                          (cf) => cf.conditionalOn?.value === option.value
+                        )
+                        .map((cf) => renderConditionalField(cf))}
+                    </Fragment>
+                  ))}
+                </div>
+              </div>
+            );
+          }}
         />
       ) : field.type === "showHide" && field.showHide ? (
         (() => {

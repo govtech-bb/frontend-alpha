@@ -10,7 +10,8 @@ import type { FormField, FormStep } from "@/types";
 type TestDataValue =
   | string
   | number
-  | { day: string; month: string; year: string };
+  | { day: string; month: string; year: string }
+  | string[]; // For checkbox groups
 type TestData = Record<string, TestDataValue>;
 
 /**
@@ -116,6 +117,21 @@ function generateFieldData(field: FormField): TestDataValue {
 
     case "checkbox":
       return "true";
+
+    case "checkboxGroup":
+      // For checkbox groups, select 1-2 random options
+      if (options && options.length > 0) {
+        const numToSelect = Math.min(
+          faker.number.int({ min: 1, max: 2 }),
+          options.length
+        );
+        const selectedOptions = faker.helpers.arrayElements(
+          options,
+          numToSelect
+        );
+        return selectedOptions.map((opt) => opt.value).join(",");
+      }
+      return "";
 
     default:
       return "";
@@ -263,6 +279,38 @@ async function fillField(
         }
         break;
       }
+
+      case "checkboxGroup": {
+        // Value is a comma-separated string of values to check
+        if (typeof value === "string" && field.options) {
+          const valuesToCheck = value.split(",");
+          for (const val of valuesToCheck) {
+            const option = field.options.find((opt) => opt.value === val);
+            if (option) {
+              try {
+                const checkboxInput = page.locator(
+                  `input[type="checkbox"][id="${name}-${val}"]`
+                );
+                await checkboxInput.waitFor({
+                  state: "attached",
+                  timeout: 3000,
+                });
+                if (!(await checkboxInput.isChecked())) {
+                  await checkboxInput.check({ force: true });
+                }
+                console.log(`✓ Checked checkbox: ${name}-${val}`);
+              } catch (_checkboxError) {
+                console.warn(`Could not check checkbox: ${name}-${val}`);
+              }
+            }
+          }
+        }
+        break;
+      }
+
+      default:
+        // Unsupported field type, skip silently
+        break;
     }
   } catch (error) {
     console.warn(`Failed to fill field ${name}:`, error);
@@ -399,7 +447,7 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
             const conditionField = nextStep.conditionalOn.field;
             const conditionValue = nextStep.conditionalOn.value;
             if (allTestData[conditionField] !== conditionValue) {
-              nextStepIndex++;
+              nextStepIndex += 1;
               nextStep = dataSteps[nextStepIndex];
             } else {
               break;
@@ -407,7 +455,7 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
           }
 
           await nextButton.click();
-          _currentStepIndex++;
+          _currentStepIndex += 1;
 
           // Wait for the page to navigate or content to change
           if (nextStep) {
