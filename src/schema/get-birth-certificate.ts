@@ -87,7 +87,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.postalCode",
         label: "Postal Code",
-        hint: "Optional",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "medium",
         validation: {
@@ -535,7 +535,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfDeclaration",
+        name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
         placeholder: "For example, 12 15 2025",

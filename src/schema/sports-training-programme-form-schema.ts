@@ -300,8 +300,7 @@ export const formSteps: FormStep[] = [
           required: "Telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 12462345678)",
           },
         },
       },
@@ -389,18 +388,44 @@ export const formSteps: FormStep[] = [
           required: "Emergency contact telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 12462345678)",
           },
         },
       },
     ],
   },
   {
-    id: "review",
+    id: "check-your-answers",
     title: "Check your answers",
+    fields: [],
+  },
+  {
+    id: "declaration",
+    title: "Declaration",
     description:
-      "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
-    fields: [], // Empty fields array for review step
+      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+    fields: [
+      {
+        name: "declaration.confirmed",
+        label: "All information is correct and true.",
+        type: "checkbox",
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
+      },
+      {
+        name: "declaration.dateOfDeclaration",
+        label: "Date of declaration",
+        hidden: true,
+        placeholder: "For example, 12 15 2025",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+    ],
   },
 ];
