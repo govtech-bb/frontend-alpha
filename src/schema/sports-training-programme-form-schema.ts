@@ -11,7 +11,6 @@ export const formSteps: FormStep[] = [
         name: "firstName",
         label: "First Name",
         type: "text",
-        placeholder: "John",
         validation: {
           required: "First name is required",
           minLength: {
@@ -24,7 +23,6 @@ export const formSteps: FormStep[] = [
         name: "lastName",
         label: "Last Name",
         type: "text",
-        placeholder: "Doe",
         validation: {
           required: "Last name is required",
           minLength: {
@@ -36,8 +34,8 @@ export const formSteps: FormStep[] = [
       {
         name: "dateOfBirth",
         label: "Date of Birth",
+        hint: "For example, 3 27 2007",
         type: "date",
-        placeholder: "For example, 27 3 2007",
         validation: {
           required: "Date of birth is required",
           date: {
@@ -69,7 +67,6 @@ export const formSteps: FormStep[] = [
         name: "disciplineOfInterest",
         label: "Discipline of Interest",
         type: "text",
-        placeholder: "e.g., Tennis, Basketball, Swimming",
         validation: {
           required: "Discipline of interest is required",
           minLength: {
@@ -115,7 +112,6 @@ export const formSteps: FormStep[] = [
         name: "otherExperienceLevel",
         label: "Please specify",
         type: "text",
-        placeholder: "e.g., Professional, Amateur, etc.",
         validation: {
           required: "Please specify your experience level",
           minLength: {
@@ -132,7 +128,6 @@ export const formSteps: FormStep[] = [
         name: "yearsOfExperience",
         label: "Years of Experience",
         type: "number",
-        placeholder: "e.g., 5",
         validation: {
           required: "Years of experience is required",
           pattern: {
@@ -166,7 +161,6 @@ export const formSteps: FormStep[] = [
         name: "institutionName",
         label: "Name of institution",
         type: "text",
-        placeholder: "e.g., University of the West Indies",
         validation: {
           required: "Institution name is required",
           minLength: {
@@ -183,7 +177,6 @@ export const formSteps: FormStep[] = [
         name: "employerName",
         label: "Name of company or organisation",
         type: "text",
-        placeholder: "e.g., ABC Company Ltd",
         validation: {
           required: "Company or organisation name is required",
           minLength: {
@@ -201,7 +194,6 @@ export const formSteps: FormStep[] = [
         name: "otherEmploymentDetails",
         label: "Please give details",
         type: "text",
-        placeholder: "Describe your employment status",
         validation: {
           required: "Employment details are required",
           minLength: {
@@ -237,7 +229,6 @@ export const formSteps: FormStep[] = [
         name: "organizationNames",
         label: "Organizations",
         type: "fieldArray",
-        placeholder: "Enter organisation name",
         validation: {
           required: "Organisation name is required",
           minLength: {
@@ -266,7 +257,6 @@ export const formSteps: FormStep[] = [
         name: "addressLine1",
         label: "Address Line 1",
         type: "text",
-        placeholder: "123 Main Street",
         validation: {
           required: "Address line 1 is required",
           minLength: {
@@ -279,7 +269,6 @@ export const formSteps: FormStep[] = [
         name: "addressLine2",
         label: "Address Line 2",
         type: "text",
-        placeholder: "Apt 4B (Optional)",
         validation: { required: false },
       },
       {
@@ -295,12 +284,13 @@ export const formSteps: FormStep[] = [
         name: "telephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g. 12462345678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -315,7 +305,6 @@ export const formSteps: FormStep[] = [
         name: "emergencyFirstName",
         label: "First Name",
         type: "text",
-        placeholder: "Jane",
         validation: {
           required: "Emergency contact first name is required",
           minLength: {
@@ -328,7 +317,6 @@ export const formSteps: FormStep[] = [
         name: "emergencyLastName",
         label: "Last Name",
         type: "text",
-        placeholder: "Doe",
         validation: {
           required: "Emergency contact last name is required",
           minLength: {
@@ -341,7 +329,6 @@ export const formSteps: FormStep[] = [
         name: "emergencyRelationship",
         label: "Relationship",
         type: "text",
-        placeholder: "e.g., Mother, Father, Spouse, Sibling",
         validation: {
           required: "Relationship is required",
           minLength: {
@@ -354,7 +341,6 @@ export const formSteps: FormStep[] = [
         name: "emergencyAddressLine1",
         label: "Address Line 1",
         type: "text",
-        placeholder: "123 Main Street",
         validation: {
           required: "Emergency contact address line 1 is required",
           minLength: {
@@ -367,7 +353,6 @@ export const formSteps: FormStep[] = [
         name: "emergencyAddressLine2",
         label: "Address Line 2",
         type: "text",
-        placeholder: "Apt 4B (Optional)",
         validation: { required: false },
       },
       {
@@ -383,7 +368,6 @@ export const formSteps: FormStep[] = [
         name: "emergencyTelephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Emergency contact telephone number is required",
           pattern: {
@@ -427,5 +411,23 @@ export const formSteps: FormStep[] = [
         },
       },
     ],
+  },
+  {
+    id: "confirmation",
+    title: "Your submission has been saved",
+    description: "",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "You will receive a confirmation email with:",
+        items: [
+          "Your application reference number",
+          "the cost of the certificate(s)",
+          "the expected completion date",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
