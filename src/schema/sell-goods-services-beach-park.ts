@@ -128,8 +128,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -284,21 +286,10 @@ export const formSteps: FormStep[] = [
       {
         name: "professionalReferee.relationship",
         label: "Relationship",
-        type: "select",
+        type: "text",
         validation: {
-          required: "Relationship is required",
+          required: "Professional relationship is required",
         },
-        options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
-        ],
       },
       {
         name: "professionalReferee.email",
@@ -315,8 +306,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -401,21 +394,10 @@ export const formSteps: FormStep[] = [
       {
         name: "personalReferee.relationship",
         label: "Relationship",
-        type: "select",
+        type: "text",
         validation: {
-          required: "Relationship is required",
+          required: "Personal relationship is required",
         },
-        options: [
-          { label: "", value: "" },
-          { label: "Parent", value: "parent" },
-          { label: "Spouse", value: "spouse" },
-          { label: "Child", value: "child" },
-          { label: "Sibling", value: "sibling" },
-          { label: "Grandparent", value: "grandparent" },
-          { label: "Legal guardian", value: "legal-guardian" },
-          { label: "Legal representative", value: "legal-representative" },
-          { label: "Other (please describe)", value: "other" },
-        ],
       },
       {
         name: "personalReferee.email",
@@ -432,8 +414,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
