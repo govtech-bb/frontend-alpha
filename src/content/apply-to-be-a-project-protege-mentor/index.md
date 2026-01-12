@@ -26,9 +26,9 @@ You can apply online using the Apply to be a Project Protégé mentor form.
 
    Ministry of Youth, Sports and Community Empowerment
    \
-   Sky Mall  
+   Sky Mall
    \
-   Haggatt Hall  
+   Haggatt Hall
    \
    St Michael
 
@@ -50,7 +50,9 @@ As well as your contact details, the application form asks about:
 
 - your preference of mentoring a male or female
 
-You will also be asked for the names and contact details of 2 references: 1 personal 1 professional.
+You will also be asked for the names and contact details of 2 references:
+\
+1 personal 1 professional.
 
 ### Submit your application
 
