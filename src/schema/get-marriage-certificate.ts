@@ -77,6 +77,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.postalCode",
         label: "Postal Code",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "short",
         validation: {
@@ -450,16 +451,5 @@ export const formSteps: FormStep[] = [
         ],
       },
     ],
-    contactDetails: {
-      title: "Registration Department",
-      telephoneNumber: "(246) 535-8300",
-      email: "registrationdept@barbados.gov.bb",
-      address: {
-        line1: "Supreme Court Complex",
-        line2: "Whitepark Road",
-        city: "St. Michael",
-        country: "Barbados",
-      },
-    },
   },
 ];

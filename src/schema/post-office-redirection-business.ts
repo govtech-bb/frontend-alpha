@@ -116,8 +116,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g., 1 246 234 5678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -161,7 +163,7 @@ export const formSteps: FormStep[] = [
       {
         name: "oldBusinessAddress.postalCode",
         label: "Postal Code",
-        hint: "Optional",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "medium",
         validation: {
@@ -212,7 +214,7 @@ export const formSteps: FormStep[] = [
       {
         name: "newBusinessAddress.postalCode",
         label: "Postal Code",
-        hint: "Optional",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "medium",
         validation: {
