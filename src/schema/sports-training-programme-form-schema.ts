@@ -295,13 +295,11 @@ export const formSteps: FormStep[] = [
         name: "telephoneNumber",
         label: "Telephone Number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 12462345678)",
           },
         },
       },
@@ -389,8 +387,7 @@ export const formSteps: FormStep[] = [
           required: "Emergency contact telephone number is required",
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+            message: "Please enter a valid phone number (e.g. 12462345678)",
           },
         },
       },
