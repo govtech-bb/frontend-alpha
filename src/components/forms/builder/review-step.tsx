@@ -4,7 +4,7 @@ import { Button, Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, matchesConditionalValue } from "@/lib/utils";
 import type { DateObject, FormStep } from "@/types";
 
 type ReviewStepProps = {
@@ -40,7 +40,7 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           formValues as Record<string, unknown>,
           step.conditionalOn.field
         );
-        if (watchedValue !== step.conditionalOn.value) {
+        if (!matchesConditionalValue(watchedValue, step.conditionalOn.value)) {
           return null;
         }
       }
@@ -60,7 +60,9 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
               formValues as Record<string, unknown>,
               field.conditionalOn.field
             );
-            if (watchedValue !== field.conditionalOn.value) {
+            if (
+              !matchesConditionalValue(watchedValue, field.conditionalOn.value)
+            ) {
               return null; // Don't show if condition not met
             }
           }
@@ -117,6 +119,24 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           if (field.type === "radio" && field.options) {
             const option = field.options.find((opt) => opt.value === value);
             displayValue = option?.label || value;
+          }
+
+          if (
+            field.type === "checkboxGroup" &&
+            field.options &&
+            Array.isArray(value)
+          ) {
+            // Map selected values to their labels
+            const selectedLabels = value
+              .map((val) => {
+                const option = field.options?.find((opt) => opt.value === val);
+                return option?.label || val;
+              })
+              .filter(Boolean);
+
+            displayValue =
+              selectedLabels.length > 0 ? selectedLabels.join(", ") : "";
+            if (!displayValue) return null;
           }
 
           if (field.type === "date" && value) {

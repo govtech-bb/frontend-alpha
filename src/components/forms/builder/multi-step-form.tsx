@@ -8,7 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, matchesConditionalValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
@@ -452,6 +452,8 @@ export default function DynamicMultiStepForm({
           defaultValue = { day: "", month: "", year: "" };
         } else if (field.type === "checkbox") {
           defaultValue = "no";
+        } else if (field.type === "checkboxGroup") {
+          defaultValue = [];
         } else if (field.type === "fieldArray") {
           const minItems = field.fieldArray?.minItems ?? 1;
           if (minItems > 0) {
@@ -797,7 +799,7 @@ export default function DynamicMultiStepForm({
       formValues as Record<string, unknown>,
       step.conditionalOn.field
     );
-    return watchedValue === step.conditionalOn.value;
+    return matchesConditionalValue(watchedValue, step.conditionalOn.value);
   };
 
   // Helper function to find the next visible step index

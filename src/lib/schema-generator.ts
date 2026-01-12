@@ -357,6 +357,22 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     return schema;
   }
 
+  // Handle checkbox groups (values are arrays of selected options)
+  if (field.type === "checkboxGroup" && field.options) {
+    const values = field.options.map((opt) => opt.value);
+    const baseArraySchema = z.array(z.enum(values as [string, ...string[]]));
+
+    if (validation.required) {
+      // When required, at least one checkbox must be selected
+      return baseArraySchema.min(
+        1,
+        validation.required || "Select at least one option"
+      );
+    }
+    // Optional checkbox group can be empty array
+    return baseArraySchema.optional();
+  }
+
   // Handle file uploads (stores File[] array, but we validate based on uploaded URLs)
   if (field.type === "file") {
     // File fields store File[] objects which can't be serialized to JSON

@@ -1,7 +1,7 @@
 import { ErrorSummary, Heading, Text } from "@govtech-bb/react";
 import { type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, matchesConditionalValue } from "@/lib/utils";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
@@ -29,7 +29,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
       // Skip errors for fields that are conditionally hidden
       if (field?.conditionalOn) {
         const watchedValue = watch(field.conditionalOn.field as keyof FormData);
-        if (watchedValue !== field.conditionalOn.value) {
+        if (!matchesConditionalValue(watchedValue, field.conditionalOn.value)) {
           return null; // Don't show error if field is hidden
         }
       }
