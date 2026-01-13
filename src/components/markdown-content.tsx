@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
-import { Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
@@ -65,18 +65,28 @@ const components: Components = {
   pre: (props: any) => (
     <pre className="overflow-x-auto whitespace-pre-wrap" {...props} />
   ),
-  a: ({ href, children, ...props }: AnchorProps) => {
+  a: ({
+    href,
+    children,
+    "data-start-link": isStartLink,
+    ...props
+  }: AnchorProps & { "data-start-link"?: string }) => {
     const isRouteLink = href?.startsWith("/");
     const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
+
+    if (isStartLink !== undefined) {
+      return (
+        <LinkButton href={href as string} {...props}>
+          {children}
+        </LinkButton>
+      );
+    }
 
     return (
       <Link
         as={isRouteLink ? NextLink : "a"}
+        external={isExternal}
         href={href as string}
-        {...(isExternal && {
-          target: "_blank",
-          rel: "noopener noreferrer",
-        })}
         {...props}
       >
         {children}
