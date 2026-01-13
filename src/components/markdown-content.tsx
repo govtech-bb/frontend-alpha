@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
-import { Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
@@ -64,18 +64,36 @@ const components: Components = {
   pre: (props: any) => (
     <pre className="overflow-x-auto whitespace-pre-wrap" {...props} />
   ),
-  a: ({ href, children, ...props }: AnchorProps) => {
+  a: ({
+    href,
+    children,
+    "data-start-link": isStartLink,
+    ...props
+  }: AnchorProps & { [key: string]: any }) => {
     const isRouteLink = href?.startsWith("/");
     const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
+
+    if (isStartLink !== undefined) {
+      return (
+        <LinkButton href={href as string} {...props}>
+          {children}
+        </LinkButton>
+      );
+    }
+
+    if (isStartLink !== undefined) {
+      return (
+        <LinkButton href={href as string} {...props}>
+          {children}
+        </LinkButton>
+      );
+    }
 
     return (
       <Link
         as={isRouteLink ? NextLink : "a"}
+        external={isExternal}
         href={href as string}
-        {...(isExternal && {
-          target: "_blank",
-          rel: "noopener noreferrer",
-        })}
         {...props}
       >
         {children}
@@ -100,12 +118,12 @@ const components: Components = {
   tr: ({ node, ...props }) => <tr {...props} />,
   th: ({ node, ...props }) => (
     <th
-      className="px-xs py-s text-left font-bold text-caption-sm text-neutral-midgrey"
+      className="px-xs py-s text-left font-bold text-caption text-mid-grey-00"
       {...props}
     />
   ),
   td: ({ node, ...props }) => (
-    <td className="px-xs py-s text-black text-caption-sm" {...props} />
+    <td className="px-xs py-s text-black text-caption" {...props} />
   ),
 };
 
@@ -125,7 +143,7 @@ export const MarkdownContent = ({
 }: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="lg:grid lg:grid-cols-3 lg:gap-16">
+    <div className="mb-xm lg:grid lg:grid-cols-3 lg:gap-16">
       <div className="space-y-6 lg:col-span-2 lg:space-y-8">
         <div className="space-y-4 lg:space-y-6">
           {frontmatter.title && (
@@ -139,7 +157,7 @@ export const MarkdownContent = ({
           )}
 
           {frontmatter.publish_date && (
-            <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
+            <div className="border-blue-10 border-b-4 pb-4 text-mid-grey-00">
               <Text as="p" size="caption">
                 Last updated on{" "}
                 {format(

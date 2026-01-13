@@ -75,9 +75,12 @@ export function ConfirmationPage({
             </Heading>
 
             {confirmationStep.description && (
-              <p className="font-normal text-[32px] text-neutral-black leading-[1.7] lg:leading-normal">
+              <Text
+                as="p"
+                className="font-normal text-[32px] text-black-00 leading-[1.7] lg:leading-normal"
+              >
                 {confirmationStep.description}
-              </p>
+              </Text>
             )}
           </div>
         </div>
