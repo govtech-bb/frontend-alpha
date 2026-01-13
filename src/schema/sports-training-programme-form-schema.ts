@@ -9,7 +9,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "First name is required",
@@ -21,7 +21,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
@@ -33,7 +33,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "dateOfBirth",
-        label: "Date of Birth",
+        label: "Date of birth",
         hint: "For example, 3 27 2007",
         type: "date",
         validation: {
@@ -61,11 +61,12 @@ export const formSteps: FormStep[] = [
   {
     id: "discipline",
     title: "What sport discipline are you interested in?",
-    description: "Tell us about your area of interest",
+    description: "Tell us about your experience",
     fields: [
       {
         name: "disciplineOfInterest",
         label: "Discipline of Interest",
+        hint: "For example, football or gymnastics",
         type: "text",
         validation: {
           required: "Discipline of interest is required",
@@ -126,7 +127,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "yearsOfExperience",
-        label: "Years of Experience",
+        label: "Years of experience",
         type: "number",
         validation: {
           required: "Years of experience is required",
@@ -141,7 +142,7 @@ export const formSteps: FormStep[] = [
   {
     id: "employment",
     title: "What is your employment status?",
-    description: "What is your current employment status?",
+    description: "How best describes your current employment status?",
     fields: [
       {
         name: "employmentStatus",
@@ -210,12 +211,12 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "organizations",
-    title: "Do you belong to any organizations?",
-    description: "Tell us about your organizational memberships",
+    title: "Tell us about your memberships?",
+    description: "",
     fields: [
       {
         name: "belongsToOrganizations",
-        label: "Do you belong to any organizations?",
+        label: "Do you belong to any organisations?",
         type: "radio",
         validation: {
           required: "Organizational membership is required",
@@ -227,7 +228,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "organizationNames",
-        label: "Organizations",
+        label: "Organisations",
         type: "fieldArray",
         validation: {
           required: "Organisation name is required",
@@ -250,12 +251,12 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "contact",
-    title: "Contact details",
+    title: "Your contact details",
     description: "Your contact information",
     fields: [
       {
         name: "addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         validation: {
           required: "Address line 1 is required",
@@ -267,7 +268,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         validation: { required: false },
       },
@@ -282,7 +283,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
@@ -294,6 +295,14 @@ export const formSteps: FormStep[] = [
           },
         },
       },
+      {
+        name: "email",
+        label: "Email address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
     ],
   },
   {
@@ -303,7 +312,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "emergencyFirstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
         validation: {
           required: "Emergency contact first name is required",
@@ -315,7 +324,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergencyLastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
         validation: {
           required: "Emergency contact last name is required",
@@ -339,7 +348,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergencyAddressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         validation: {
           required: "Emergency contact address line 1 is required",
@@ -351,7 +360,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergencyAddressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         validation: { required: false },
       },
@@ -366,7 +375,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "emergencyTelephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Emergency contact telephone number is required",
@@ -414,17 +423,19 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your submission has been saved",
-    description: "",
+    title: "Thank you for your application",
+    description:
+      "Your information has been sent to the Youth Development Programme, the coordinating programme in the Division of Youth Affairs",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
+        content:
+          "If your application is successful, the Youth Commissioner will be in touch shortly to  confirm:",
         items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
+          "the location of the programme",
+          "the start date and times",
+          "what you will need to bring",
         ],
       },
     ],
