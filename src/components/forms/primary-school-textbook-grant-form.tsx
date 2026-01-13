@@ -7,7 +7,7 @@ export default function PrimarySchoolTextbookGrantForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      serviceTitle="Get a primary school textbook grant"
+      serviceTitle="Get a Primary School Textbook Grant"
       storageKey="primary-school-textbook-grant"
     />
   );
