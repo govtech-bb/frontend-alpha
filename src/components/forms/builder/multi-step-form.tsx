@@ -676,12 +676,39 @@ export default function DynamicMultiStepForm({
     // Track parent keys that are used by visible steps
     const parentKeysFromVisibleSteps = new Set<string>();
 
+    // First, collect parent keys from ALL steps (not just conditional ones)
+    // This ensures we track keys used by repeatable/non-conditional steps
+    for (const step of expandedFormSteps) {
+      // Skip steps without fields
+      if (!step.fields || step.fields.length === 0) continue;
+
+      // Check if step is visible (for conditional steps)
+      const isVisible =
+        !step.conditionalOn ||
+        getNestedValue<unknown>(cleanedData, step.conditionalOn.field) ===
+          step.conditionalOn.value;
+
+      for (const field of step.fields) {
+        const fieldParts = field.name?.split(".");
+
+        if (fieldParts.length > 1) {
+          // Nested field - track the parent key
+          const parentKey = fieldParts[0];
+          if (isVisible) {
+            parentKeysFromVisibleSteps.add(parentKey);
+          } else {
+            parentKeysFromHiddenSteps.add(parentKey);
+          }
+        }
+      }
+    }
+
     // Get all conditional steps from expanded steps
     const conditionalSteps = expandedFormSteps.filter(
       (step) => step.conditionalOn
     );
 
-    // For each conditional step, check if it should be shown
+    // For each conditional step, check if it should be shown and remove hidden fields
     for (const step of conditionalSteps) {
       if (!step.conditionalOn) continue;
 
@@ -692,21 +719,13 @@ export default function DynamicMultiStepForm({
 
       const isVisible = watchedValue === step.conditionalOn.value;
 
-      for (const field of step.fields) {
-        const fieldParts = field.name?.split(".");
-
-        if (fieldParts.length === 1) {
-          // Simple field - delete directly if step is hidden
-          if (!isVisible) {
+      // Only delete simple (non-nested) fields from hidden steps
+      if (!isVisible) {
+        for (const field of step.fields) {
+          const fieldParts = field.name?.split(".");
+          if (fieldParts.length === 1) {
+            // Simple field - delete directly if step is hidden
             delete cleanedData[field.name];
-          }
-        } else {
-          // Nested field - track the parent key
-          const parentKey = fieldParts[0];
-          if (isVisible) {
-            parentKeysFromVisibleSteps.add(parentKey);
-          } else {
-            parentKeysFromHiddenSteps.add(parentKey);
           }
         }
       }
