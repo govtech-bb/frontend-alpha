@@ -35,6 +35,12 @@ export default async function Page({ params }: ContentPageProps) {
       return <MarkdownContent markdown={markdownContent} />;
     }
 
+    // Filter out protected pages if user doesn't have research access
+    const hasAccess = await hasResearchAccess();
+    const visiblePages = hasAccess
+      ? category.pages
+      : category.pages.filter((page) => !page.protected);
+
     return (
       <>
         <Typography variant="h1">{category.title}</Typography>
@@ -46,7 +52,7 @@ export default async function Page({ params }: ContentPageProps) {
             </p>
           ))}
         <div className="flex flex-col divide-y-2 divide-neutral-grey last:border-neutral-grey last:border-b-2">
-          {category.pages.map((service) => (
+          {visiblePages.map((service) => (
             <div
               className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
               key={service.title}
@@ -81,16 +87,19 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    // Check research access for protected pages or pages with protected subpages
+    const needsAccess = page.protected || hasProtectedSubpages(page);
+    const hasAccess = needsAccess ? await hasResearchAccess() : true;
+
+    // Block access to protected entry pages
+    if (page.protected && !hasAccess) {
+      notFound();
+    }
+
     const markdownContent = await getMarkdownContent([pageSlug]);
     if (!markdownContent) {
       notFound();
     }
-
-    // Only check research access for pages with protected subpages
-    // For non-protected pages, always show /start links
-    const hasAccess = hasProtectedSubpages(page)
-      ? await hasResearchAccess()
-      : true;
 
     return (
       <MarkdownContent

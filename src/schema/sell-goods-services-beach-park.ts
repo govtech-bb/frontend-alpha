@@ -31,6 +31,12 @@ export const formSteps: FormStep[] = [
             value: 2,
             message: "First name must be at least 2 characters",
           },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -39,9 +45,11 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: false,
-          minLength: {
-            value: 2,
-            message: "Middle name must be at least 2 characters",
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -51,10 +59,15 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
-
           minLength: {
             value: 2,
-            message: "Last name must be at least 2 characters",
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -268,6 +281,12 @@ export const formSteps: FormStep[] = [
             value: 2,
             message: "First name must be at least 2 characters",
           },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -276,10 +295,15 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
-
           minLength: {
             value: 2,
-            message: "Last name must be at least 2 characters",
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -376,6 +400,12 @@ export const formSteps: FormStep[] = [
             value: 2,
             message: "First name must be at least 2 characters",
           },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -384,10 +414,15 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
-
           minLength: {
             value: 2,
             message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -504,17 +539,18 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your submission has been saved",
-    description: "",
+    title: "Thank you for your application",
+    description:
+      "Your information has been sent to the our National Conservation Commission",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
+        content: "If your application is successful, you will need to provide:",
         items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
+          "a Police Certificate of Character",
+          "2 recent references",
+          "2 passport-sized photographs",
         ],
       },
     ],
