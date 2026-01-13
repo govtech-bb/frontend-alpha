@@ -3,6 +3,7 @@ import {
   DateInput,
   type DateInputValue,
   FileUpload,
+  Heading,
   Input,
   NumberInput,
   Radio,
@@ -12,7 +13,7 @@ import {
   Text,
   TextArea,
 } from "@govtech-bb/react";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
@@ -376,8 +377,17 @@ export function DynamicField({
   };
 
   return (
-    <div className={getWidthClass(field.width)} id={field.name}>
-      {field.type === "fieldArray" ? (
+    <div className={getWidthClass(field.width)} id={field.name || undefined}>
+      {field.type === "heading" ? (
+        <div className="py-5">
+          <hr className="border-neutral-grey border-t-4" />
+          {field.label && field.label.trim() ? (
+            <Heading as="h2" className="mt-10">
+              {field.label}
+            </Heading>
+          ) : null}
+        </div>
+      ) : field.type === "fieldArray" ? (
         <DynamicFieldArray field={field} />
       ) : field.type === "date" ? (
         <Controller
@@ -448,32 +458,95 @@ export function DynamicField({
           control={control}
           name={field.name as keyof FormData}
           render={({ field: controllerField }) => (
-            <RadioGroup
-              description={field.hint}
-              error={error?.message}
-              label={field.hidden ? "" : field.label}
-              onValueChange={controllerField.onChange}
-              value={controllerField.value as string}
-            >
-              {field.options?.map((option) => (
-                <Fragment key={option.value}>
+            <>
+              <RadioGroup
+                description={field.hint}
+                error={error?.message}
+                label={field.hidden ? "" : field.label}
+                onValueChange={controllerField.onChange}
+                value={controllerField.value as string}
+              >
+                {field.options?.map((option) => (
                   <Radio
                     id={option.value}
+                    key={option.value}
                     label={option.label}
                     value={option.value}
                   />
-                  {/* Render conditional fields that match this option */}
-                  {conditionalFields
-                    .filter(
-                      (cf) =>
-                        cf.conditionalOn &&
-                        isSimpleConditionalRule(cf.conditionalOn) &&
-                        cf.conditionalOn.value === option.value
+                ))}
+              </RadioGroup>
+              {/* Render conditional fields after all radio options without indentation */}
+              {conditionalFields
+                .filter((cf) => {
+                  if (
+                    !(
+                      cf.conditionalOn &&
+                      isSimpleConditionalRule(cf.conditionalOn)
                     )
-                    .map((cf) => renderConditionalField(cf))}
-                </Fragment>
-              ))}
-            </RadioGroup>
+                  )
+                    return false;
+                  const watchedValue = watch(
+                    cf.conditionalOn.field as keyof FormData
+                  );
+                  return watchedValue === cf.conditionalOn.value;
+                })
+                .map((cf) => {
+                  const conditionalError = getNestedValue<FieldError>(
+                    errors as Record<string, unknown>,
+                    cf.name
+                  );
+                  return (
+                    <div className="mt-4" key={cf.name}>
+                      {cf.type === "select" ? (
+                        cf.hint ? (
+                          <div className="flex flex-col gap-1">
+                            {!cf.hidden && (
+                              <label
+                                className="font-bold text-lg"
+                                htmlFor={cf.name}
+                              >
+                                {cf.label}
+                              </label>
+                            )}
+                            <Text
+                              as="p"
+                              className="text-neutral-midgrey"
+                              size="body"
+                            >
+                              {cf.hint}
+                            </Text>
+                            <Select
+                              error={conditionalError?.message}
+                              id={cf.name}
+                              {...register(cf.name as keyof FormData)}
+                            >
+                              {cf.options?.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </Select>
+                          </div>
+                        ) : (
+                          <Select
+                            error={conditionalError?.message}
+                            label={cf.hidden ? "" : cf.label}
+                            {...register(cf.name as keyof FormData)}
+                          >
+                            {cf.options?.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </Select>
+                        )
+                      ) : (
+                        renderConditionalField(cf)
+                      )}
+                    </div>
+                  );
+                })}
+            </>
           )}
         />
       ) : field.type === "checkbox" ? (

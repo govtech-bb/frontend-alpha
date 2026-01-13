@@ -1,7 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
 import { Heading, Link, Text } from "@govtech-bb/react";
-import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
@@ -10,7 +9,6 @@ import remarkGfm from "remark-gfm";
 import rehypeHideStartLinks from "@/lib/rehype-hide-start-links";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 import { MigrationBanner } from "./migration-banner";
-import { StageBanner } from "./stage-banner";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -145,25 +143,9 @@ export const MarkdownContent = ({
             </Heading>
           )}
 
-          {frontmatter.stage?.length > 0 ? (
-            <StageBanner stage={frontmatter.stage} />
-          ) : null}
           {frontmatter.source_url ? (
             <MigrationBanner pageURL={frontmatter.source_url} />
           ) : null}
-          {frontmatter.publish_date && (
-            <div className="border-blue-10 border-b-4 pb-3 text-neutral-midgrey">
-              <Text as="p" size="caption">
-                Last updated on{" "}
-                {format(
-                  parseISO(
-                    frontmatter.publish_date.toISOString().split("T")[0]
-                  ),
-                  "PPP"
-                )}
-              </Text>
-            </div>
-          )}
         </div>
         <ReactMarkdown
           components={components}

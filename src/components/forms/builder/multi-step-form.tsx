@@ -1326,7 +1326,7 @@ export default function DynamicMultiStepForm({
                 type="button"
                 variant="secondary"
               >
-                Previous
+                Back
               </Button>
             )}
 

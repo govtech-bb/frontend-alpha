@@ -20,23 +20,25 @@ export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
   const pathSegments = pathname.split("/").filter(Boolean);
   const isFormPage =
     pathSegments.includes("form") || pathSegments.includes("exit-survey");
+  const isStartPage = pathSegments[pathSegments.length - 1] === "start";
   const isConfirmationPage =
     searchParams.get("step") === "confirmation" ||
     searchParams.get("status") === "thank-you";
   const isFeedbackPage = pathname === "/feedback";
+  const shouldShowBanner = (isFormPage || isStartPage) && !isConfirmationPage;
 
   return (
     <main>
-      {!isFormPage && (
-        <div className="container py-4 lg:py-6">
-          <BackButton />
-        </div>
-      )}
-      {isFormPage && !isConfirmationPage && (
+      {shouldShowBanner && (
         <div className="bg-blue-10">
           <div className="container">
             <StageBanner stage="alpha" />
           </div>
+        </div>
+      )}
+      {!isFormPage && (
+        <div className="container py-4 lg:py-6">
+          <BackButton />
         </div>
       )}
       {isConfirmationPage ? (

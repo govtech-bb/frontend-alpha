@@ -86,7 +86,11 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
         <Heading as="h1" className="focus:outline-none">
           {step.title}
         </Heading>
-        {step.description && <Text as="p">{step.description}</Text>}
+        {step.description && (
+          <Text as="p" className="whitespace-pre-line leading-[1.5]">
+            {step.description}
+          </Text>
+        )}
       </div>
 
       {/* Error Summary - only show if there are errors */}
@@ -99,7 +103,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
       <div className="space-y-4">
         {step.fields
           .filter((field) => !field.conditionalOn)
-          .map((field) => {
+          .map((field, index) => {
             // Find conditional fields that depend on this field
             const conditionalFields = step.fields.filter(
               (f) =>
@@ -107,11 +111,14 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
                 isSimpleConditionalRule(f.conditionalOn) &&
                 f.conditionalOn.field === field.name
             );
+            // Use field name if available, otherwise use index to ensure unique keys
+            // This is especially important for heading fields with empty names
+            const fieldKey = field.name || `${field.type}-${index}`;
             return (
               <DynamicField
                 conditionalFields={conditionalFields}
                 field={field}
-                key={field.name}
+                key={fieldKey}
               />
             );
           })}
