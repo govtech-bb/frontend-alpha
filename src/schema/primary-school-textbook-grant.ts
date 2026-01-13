@@ -9,7 +9,7 @@ export const formSteps: FormStep[] = [
     repeatable: {
       arrayFieldName: "beneficiaries",
       maxItems: 10,
-      addAnotherLabel: "Do you need to add another beneficiary?",
+      addAnotherLabel: "Do you need to add another child?",
     },
     fields: [
       {
@@ -276,7 +276,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -289,7 +289,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -307,7 +307,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.postalCode",
-        label: "Postal Code",
+        label: "Post code",
         type: "text",
         width: "medium",
         validation: {
@@ -320,7 +320,7 @@ export const formSteps: FormStep[] = [
 
       {
         name: "applicant.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         validation: {
           required: "Email address is required",
@@ -328,7 +328,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
@@ -367,7 +367,7 @@ export const formSteps: FormStep[] = [
           fields: [
             {
               name: "applicant.passportNumber",
-              label: "Passport Number",
+              label: "Passport number",
               type: "text",
               placeholder: "",
               validation: {
@@ -383,7 +383,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.tamisNumber",
-        label: "TAMIS Number",
+        label: "TAMIS number",
         type: "number",
         width: "medium",
         validation: {
@@ -406,7 +406,7 @@ export const formSteps: FormStep[] = [
     id: "bankAccount",
     title: "Bank account information",
     description:
-      "In order to receive the $100 Grant, please provide accurate and current banking information to prevent delays in processing this application.",
+      "Add the bank account details for an account which has been used within the last 3 months. Check your details are correct to avoid delays.",
     fields: [
       {
         name: "bankAccount.accountHolderName",

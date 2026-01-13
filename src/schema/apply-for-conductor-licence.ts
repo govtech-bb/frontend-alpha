@@ -232,7 +232,8 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "endorsement-details",
-    title: "Your endorsements",
+    title:
+      "Your endorsements",
     conditionalOn: {
       field: "hasEndorsements",
       value: "yes",
@@ -359,7 +360,6 @@ export const formSteps: FormStep[] = [
       {
         name: "hasCriminalConvictions",
         label: "Have you ever had any criminal convictions?",
-        hidden: true,
         type: "radio",
         validation: {
           required: "Select an option",

@@ -765,20 +765,23 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
-      // {
-      //   name: "eligibility.availabilityToWork",
-      //   label: "Tell us when you are available to work",
-      //   hint: "If you are 18 and over you are eligible to work at night. Might you be willing to work between 6pm and 7am?",
-      //   type: "radio",
-      //   rows: 5,
-      //   validation: {
-      //     required: "Field is required",
-      //   },
-      //   options: [
-      //     { label: "Yes", value: "yes" },
-      //     { label: "No", value: "no" },
-      //   ],
-      // },
+      {
+        name: "eligibility.willingToWorkAtNight",
+        label: "Are you willing to work at night?",
+        type: "radio",
+        rows: 5,
+        validation: {
+          required: "Field is required",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+        conditionalOn: {
+          field: "eligibility.areYouOver18",
+          value: "yes",
+        },
+      },
     ],
   },
   {
