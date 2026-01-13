@@ -1,12 +1,52 @@
 ---
-title: "Redirect My Mail (Business)"
+title: "Redirect my business mail"
 description: ""
-publish_date: 2025-12-08
+publish_date: 2026-01-13
 section: "Travel, ID and citizenship"
 ---
 
-## Lorem Ipsum
+You should use this service to tell the Post Office that you would like to change the address that your business mail gets delivered to.
 
-Lorem Ipsum dolor
+If you are 18 years old or over, you can complete a redirection notice to redirect mail addressed to you or your business.
 
-<a href="/travel-id-citizenship/post-office-redirection-business/start" className='relative inline-flex items-center justify-center gap-2 rounded-sm text-body whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none disabled-state px-6 py-4 bg-teal-dark text-neutral-white! hover:bg-brand-teal-light hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-brand-teal-darker active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] active:outline-none active:ring-4 active:ring-teal-100 active:ring-offset-1 active:rounded-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-100 focus-visible:ring-offset-1 focus-visible:rounded-sm no-underline' target="_self">Complete the online form</a>
+A common use case is if your business is moving office.
+
+A redirection notice will last for 6 months.
+
+There are a separate forms if you would like to:
+
+- redirect your personal mail
+- tell the Post Office that someone has died
+
+## How to redirect business mail
+
+### Complete the form
+
+There are 2 ways to redirect your business mail. You can:
+
+1. #### Tell the Post Office online
+
+You can complete the redirection form online. You must pay $4 BBD online as part of the process so you will need a debit or credit card, and you will need to have (or create) an EZPay+ account.
+
+<a href="/travel-id-citizenship/post-office-redirection-business/start" className='relative inline-flex items-center justify-center gap-2 rounded-sm text-body whitespace-nowrap transition-[background-color,box-shadow] duration-200 outline-none disabled-state px-6 py-4 bg-teal-dark text-neutral-white! hover:bg-brand-teal-light hover:shadow-[inset_0_0_0_4px_rgba(222,245,246,0.10)] active:bg-brand-teal-darker active:shadow-[inset_0_0_0_3px_rgba(0,0,0,0.20)] active:outline-none active:ring-4 active:ring-teal-100 active:ring-offset-1 active:rounded-sm focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-teal-100 focus-visible:ring-offset-1 focus-visible:rounded-sm no-underline' target="_self">Online redirection</a>
+
+2. #### Get a paper redirection form any Post Office
+
+You must complete it by hand and return it to any Post Office.
+
+### What you will need to share
+
+Along with your business details, the redirection form asks you to share:
+
+- the name and National Identification number of the person applying
+- name(s) of every other person who also wants to redirect their mail
+- the old address
+- the new address
+- start date of redirection
+- end date if the redirection is only temporary
+
+## After you tell the Post Office
+
+The Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months.
+
+The Post Office is responsible for this service.
