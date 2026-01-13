@@ -539,17 +539,18 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your submission has been saved",
-    description: "",
+    title: "Thank you for your application",
+    description:
+      "Your information has been sent to the our National Conservation Commission",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
+        content: "If your application is successful, you will need to provide:",
         items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
+          "a Police Certificate of Character",
+          "2 recent references",
+          "2 passport-sized photographs",
         ],
       },
     ],
