@@ -6,6 +6,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     slug: "family-birth-relationships",
     description:
       "Managing key life events and family responsibilities, from registering a birth to caring for others",
+
     pages: [
       {
         title: "Register a birth",
@@ -40,11 +41,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a copy of a death certificate in Barbados.",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Death Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -55,11 +57,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a copy of a marriage certificate in Barbados.",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Marriage Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -318,12 +321,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect My Mail (Individual)",
         slug: "post-office-redirection-individual",
         description: "Redirect mail for an individual",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Redirect My Mail (Individual) form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -331,12 +336,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect My Mail (Deceased)",
         slug: "post-office-redirection-deceased",
         description: "Redirect mail for a deceased person",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Redirect My Mail (Deceased) form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -344,12 +351,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect My Mail (Business)",
         slug: "post-office-redirection-business",
         description: "Redirect mail for a Business",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Redirect My Mail (Business) form",
             type: "component",
+            protected: true,
           },
         ],
       },

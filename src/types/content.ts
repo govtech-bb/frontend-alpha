@@ -5,6 +5,7 @@ export type PageType = {
   slug: string;
   source_url?: string;
   description: string; // date when content was published, updated or migrated
+  protected?: boolean;
   subPages?: {
     slug: string;
     title?: string;
