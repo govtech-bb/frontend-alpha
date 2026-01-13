@@ -176,21 +176,6 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
-      {
-        title: "Apply to be a temporary teacher",
-        slug: "temporary-teacher-application",
-        source_url: "",
-        description: "Apply to be a temporary teacher at an institution.",
-        subPages: [
-          { slug: "start", type: "markdown", protected: true },
-          {
-            slug: "form",
-            title: "Temporary Teacher Application",
-            type: "component",
-            protected: true,
-          },
-        ],
-      },
     ],
   },
   {
@@ -242,12 +227,28 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       },
     ],
   },
-  // {
-  //   title: "Education, youth and learning",
-  //   slug: "education-youth-learning",
-  //   description: "Apply for or manage education and youth opportunities",
-  //   pages: [],
-  // },
+  {
+    title: "Education, youth and learning",
+    slug: "education-youth-learning",
+    description: "Apply for or manage education and youth opportunities",
+    pages: [
+      {
+        title: "Apply to be a temporary teacher",
+        slug: "temporary-teacher-application",
+        source_url: "",
+        description: "Apply to be a temporary teacher at an institution.",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Temporary Teacher Application",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
+    ],
+  },
   {
     title: "Travel, ID and citizenship",
     slug: "travel-id-citizenship",
