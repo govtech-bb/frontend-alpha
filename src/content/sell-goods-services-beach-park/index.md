@@ -25,7 +25,7 @@ You can apply for a licence online. Aside from your personal details and contact
 As part of your application, you will also need to share:
 
 - the name and contact details of 2 referees so they can provide references
-- a Police Certificate of Character
+- a [Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
 - 2 passport-sized pictures
 
 ## After you apply
