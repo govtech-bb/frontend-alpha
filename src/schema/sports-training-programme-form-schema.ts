@@ -60,8 +60,9 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "discipline",
-    title: "What sport discipline are you interested in?",
-    description: "Tell us about your experience",
+    title: "Which sport are you interested in?",
+    description:
+      "We ask this to match you to a community sports training programme",
     fields: [
       {
         name: "disciplineOfInterest",
@@ -97,7 +98,8 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "experienceLevel",
-        label: "What level of experience do you have?",
+        label:
+          "What level of experience do you have in the sport you are interested in?",
         type: "radio",
         validation: {
           required: "Experience level is required",
@@ -142,7 +144,7 @@ export const formSteps: FormStep[] = [
   {
     id: "employment",
     title: "What is your employment status?",
-    description: "How best describes your current employment status?",
+    description: "We ask this to help with scheduling",
     fields: [
       {
         name: "employmentStatus",
