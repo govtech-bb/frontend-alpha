@@ -5,7 +5,7 @@ export const formSteps: FormStep[] = [
   {
     id: "tell-us-about-the-child",
     title: "Tell us about the child",
-    description: "You can add one or more child",
+    description: "You can add information for other children later",
     repeatable: {
       arrayFieldName: "beneficiaries",
       maxItems: 10,
