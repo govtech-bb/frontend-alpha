@@ -166,6 +166,9 @@ type HeadingFormField = {
   hidden?: boolean; // For consistency with other field types (not typically used for headings)
   width?: "short" | "medium" | "full"; // For consistency with other field types (not typically used for headings)
   conditionalOn?: ConditionalRule; // For consistency with other field types (not typically used for headings)
+  fieldArray?: FieldArrayConfig; // For consistency with other field types (not typically used for headings)
+  showHide?: ShowHideConfig; // For consistency with other field types (not typically used for headings)
+  skipValidationWhenShowHideOpen?: string; // For consistency with other field types (not typically used for headings)
 };
 
 export type FormField =
