@@ -7,7 +7,8 @@ import { StageBanner } from "../stage-banner";
 
 export const Banner = () => {
   const pathname = usePathname();
-  const isOnHomePage = pathname === "/";
+  const isHomePage = pathname === "/";
+
   return (
     <>
       <div className="bg-blue-100 text-neutral-white">
@@ -28,7 +29,7 @@ export const Banner = () => {
           </div>
         </div>
       </div>
-      {isOnHomePage && (
+      {isHomePage && (
         <div className="bg-blue-10">
           <div className="container">
             <StageBanner stage="alpha" />
