@@ -447,28 +447,43 @@ export const formSteps: FormStep[] = [
       {
         name: "birth.bornAlive",
         label: "Born alive",
-        type: "number",
+        type: "text",
         placeholder: "",
+        inputClassName: "w-20",
         validation: {
           required: false,
+          pattern: {
+            value: "^\\d*$",
+            message: "Please enter numbers only",
+          },
         },
       },
       {
         name: "birth.stillborn",
         label: "Still born",
-        type: "number",
+        type: "text",
         placeholder: "",
+        inputClassName: "w-20",
         validation: {
           required: false,
+          pattern: {
+            value: "^\\d*$",
+            message: "Please enter numbers only",
+          },
         },
       },
       {
         name: "birth.totalStillAlive",
         label: "Total still alive",
-        type: "number",
+        type: "text",
         placeholder: "",
+        inputClassName: "w-20",
         validation: {
           required: false,
+          pattern: {
+            value: "^\\d*$",
+            message: "Please enter numbers only",
+          },
         },
       },
     ],
