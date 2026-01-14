@@ -20,24 +20,29 @@ You can request a copy on someone else’s behalf but you must disclose:
 
 ### Complete the form online
 
-1. Request a copy online
+1. #### Request a copy online
 
-You must pay online so you will need a debit or credit card, and you will need to have (or create) an EZPay+ account.
-Every question is compulsory so if you are unsure about the basic information asked for, you should complete the paper form instead.
+   You must pay online so you will need a debit or credit card, and you will need to have (or create) an EZPay+ account.
+   Every question is compulsory so if you are unsure about the basic information asked for, you should complete the paper form instead.
 
-<a data-start-link href="/family-birth-relationships/get-death-certificate/start">Complete the online form</a>
+   <a data-start-link href="/family-birth-relationships/get-death-certificate/start">Complete the online form</a>
 
-2. Get a paper Application for death certificate form from the Registration Department
+2. #### Get a paper Application for death certificate form from the Registration Department
 
-You must complete it by hand and return it to the department. You can pay with cash or by card when you collect it.
-If you are unsure about the basic details asked for (for example, if there is estrangement in the family), you should complete the paper form.
+   You must complete it by hand and return it to the department. You can pay with cash or by card when you collect it.
+   If you are unsure about the basic details asked for (for example, if there is estrangement in the family), you should complete the paper form.
 
-    Registration Department
-    Supreme Court Complex
-    Whitepark Road
-    St. Michael
-    (246) 535-9700
-    Open Monday to Friday: 8:30am to 3:15pm
+   Registration Department
+   \
+   Supreme Court Complex
+   \
+   Whitepark Road
+   \
+   St. Michael
+   \
+   (246) 535-9700
+   \
+   Open Monday to Friday: 8:30am to 3:15pm
 
 ## Cost of certificates
 
@@ -61,8 +66,6 @@ There are circumstances when you may not be able to provide all the information 
 
 Contact the Registration Department.
 
-registrarsupremecourt@barbados.gov.bb
-
-(246) 535-9700
-
-+1 (246) 535-9751 (if you are calling from overseas)
+- registrarsupremecourt@barbados.gov.bb
+- (246) 535-9700
+- +1 (246) 535-9751 (if you are calling from overseas)
