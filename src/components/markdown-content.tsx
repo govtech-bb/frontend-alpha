@@ -81,14 +81,6 @@ const components: Components = {
       );
     }
 
-    if (isStartLink !== undefined) {
-      return (
-        <LinkButton href={href as string} {...props}>
-          {children}
-        </LinkButton>
-      );
-    }
-
     return (
       <Link
         as={isRouteLink ? NextLink : "a"}
