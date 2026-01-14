@@ -129,6 +129,12 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
             displayValue = String(value);
           }
 
+          if (field.type === "file" && Array.isArray(value)) {
+            const files = value as File[];
+            if (files.length === 0) return null;
+            displayValue = files.map((file) => file.name).join(", ");
+          }
+
           return {
             label: field.label,
             value: String(displayValue),
