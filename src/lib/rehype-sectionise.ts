@@ -1,26 +1,18 @@
 import type { Element, ElementContent, Root } from "hast";
 
 function rehypeSectionise() {
-  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: This function is a simple wrapper around a for loop
   return (tree: Root) => {
-    const wrapSection = (
-      children: ElementContent[],
-      headingLevel?: "h2" | "h3"
-    ): Element => ({
+    const wrapSection = (children: ElementContent[]): Element => ({
       type: "element",
       tagName: "div",
       properties: {
-        className:
-          headingLevel === "h3"
-            ? ["space-y-2", "font-normal", "text-[20px]", "leading-[1.7]"]
-            : ["space-y-4", "font-normal", "text-[20px]", "leading-[1.7]"],
+        className: "space-y-s",
       },
       children,
     });
 
     const result: ElementContent[] = [];
     let buffer: ElementContent[] = [];
-    let currentHeadingLevel: "h2" | "h3" | undefined;
 
     for (const node of tree.children) {
       if (
@@ -29,11 +21,10 @@ function rehypeSectionise() {
       ) {
         // Wrap previous content if exists
         if (buffer.length > 0) {
-          result.push(wrapSection(buffer, currentHeadingLevel));
+          result.push(wrapSection(buffer));
           buffer = [];
         }
         // Start new section with heading
-        currentHeadingLevel = node.tagName as "h2" | "h3";
         buffer.push(node);
       } else if (node.type === "element" || node.type === "text") {
         buffer.push(node);
@@ -42,7 +33,7 @@ function rehypeSectionise() {
 
     // Wrap remaining content
     if (buffer.length > 0) {
-      result.push(wrapSection(buffer, currentHeadingLevel));
+      result.push(wrapSection(buffer));
     }
 
     tree.children = result;

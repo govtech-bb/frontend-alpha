@@ -1,16 +1,15 @@
-import { Link } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
-import { Typography } from "@/components/ui/typography";
 import { getAlphaServices } from "@/lib/markdown";
 
 export const AlphaServicesList = async () => {
   const alphaServices = await getAlphaServices();
 
   return (
-    <section className="space-y-4 py-8 pb-[28px] lg:space-y-4 lg:py-8">
-      <Typography variant="h2">Alpha services</Typography>
+    <section className="space-y-4 py-8">
+      <Heading as="h2">Alpha services</Heading>
 
-      <Typography variant="paragraph">These services are in alpha.</Typography>
+      <Text as="p">These services are in alpha.</Text>
 
       <div className="flex flex-col gap-2">
         {alphaServices.map((service) => (
