@@ -408,6 +408,38 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
+        name: "birth.residentialParish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        conditionalOn: {
+          field: "birth.location",
+          value: "residential",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "birth.residentialStreetAddress",
+        label: "Street address",
+        type: "textarea",
+        placeholder: "",
+        rows: 3,
+        validation: {
+          required: "Street address is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+        conditionalOn: {
+          field: "birth.location",
+          value: "residential",
+        },
+      },
+      {
         name: "birth.numberOfBirths",
         label: "How many births do you need to register?",
         type: "radio",
