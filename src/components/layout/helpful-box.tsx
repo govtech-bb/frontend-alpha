@@ -22,7 +22,7 @@ export const HelpfulBox = ({ className = "" }: HelpfulBoxProps) => {
   return (
     <div
       className={cn(
-        "mt-3 space-y-2 border-4 border-yellow-100 bg-yellow-40 px-4 py-6 lg:gap-2 lg:space-y-0 lg:p-6",
+        "mt-6 space-y-2 border-4 border-yellow-100 bg-yellow-40 px-4 py-6 lg:gap-2 lg:space-y-0 lg:p-6",
         className
       )}
     >
@@ -38,7 +38,7 @@ export const HelpfulBox = ({ className = "" }: HelpfulBoxProps) => {
         onClick={handleFeedbackClick}
         variant="secondary"
       >
-        Help us improve alpha.gov.bb
+        <Typography variant="body">Help us improve alpha.gov.bb</Typography>
       </Link>
     </div>
   );

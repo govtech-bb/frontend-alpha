@@ -6,13 +6,14 @@ export const formSteps: FormStep[] = [
     id: "marriage-status",
     title:
       "When the child was born, were the mother and father married to each other?",
-    description: "",
+    description:
+      "We ask this because your answer might determine:\n• the surname of the child\n• who can register the birth",
     fields: [
       {
         name: "marriageStatus",
         label: "",
         type: "radio",
-        hint: "We ask this because your answer might determine, the surname of the child and who can register the birth",
+        hint: "",
         validation: {
           required: "Select your preference",
         },
@@ -139,13 +140,10 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "father.age",
-        label: "Age",
-        type: "number",
-        width: "short",
-        validation: {
-          required: "Age is required",
-        },
+        name: "father.currentAddressHeading",
+        label: "Current address",
+        type: "heading",
+        validation: {},
       },
       {
         name: "father.parish",
@@ -158,12 +156,13 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "father.addressLine1",
-        label: "Address Line 1",
-        type: "text",
+        name: "father.streetAddress",
+        label: "Street address",
+        type: "textarea",
         placeholder: "",
+        rows: 3,
         validation: {
-          required: "Address line 1 is required",
+          required: "Street address is required",
           minLength: {
             value: 5,
             message: "Address must be at least 5 characters",
@@ -171,11 +170,10 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "father.addressLine2",
-        label: "Address Line 2",
-        type: "text",
-        placeholder: "",
-        validation: { required: false },
+        name: "father.separator1",
+        label: "",
+        type: "heading",
+        validation: {},
       },
       {
         name: "father.occupation",
@@ -274,21 +272,18 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "mother.age",
-        label: "Age",
-        type: "number",
-        width: "short",
-        validation: {
-          required: "Age is required",
-        },
-      },
-      {
         name: "mother.maidenName",
         label: "Maiden Name",
         type: "text",
         validation: {
           required: false,
         },
+      },
+      {
+        name: "mother.currentAddressHeading",
+        label: "Current address",
+        type: "heading",
+        validation: {},
       },
       {
         name: "mother.parish",
@@ -301,12 +296,13 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "mother.addressLine1",
-        label: "Address Line 1",
-        type: "text",
+        name: "mother.streetAddress",
+        label: "Street address",
+        type: "textarea",
         placeholder: "",
+        rows: 3,
         validation: {
-          required: "Address line 1 is required",
+          required: "Street address is required",
           minLength: {
             value: 5,
             message: "Address must be at least 5 characters",
@@ -314,11 +310,34 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "mother.addressLine2",
-        label: "Address Line 2",
-        type: "text",
+        name: "mother.contactDetailsHeading",
+        label: "Contact details",
+        type: "heading",
+        validation: {},
+      },
+      {
+        name: "mother.telephoneNumber",
+        label: "Telephone number",
+        type: "tel",
         placeholder: "",
-        validation: { required: false },
+        validation: {
+          required: "Telephone number is required",
+        },
+      },
+      {
+        name: "mother.emailAddress",
+        label: "Email address",
+        type: "email",
+        placeholder: "",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "mother.separator1",
+        label: "",
+        type: "heading",
+        validation: {},
       },
       {
         name: "mother.occupation",
@@ -356,14 +375,20 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
+        name: "birth.separator1",
+        label: "",
+        type: "heading",
+        validation: {},
+      },
+      {
         name: "birth.healthFacility",
         label: "Health Facility",
         type: "select",
         validation: {
-          required: false,
+          required: "Health Facility is required",
         },
         conditionalOn: {
-          field: "birth.placeOfBirths",
+          field: "birth.location",
           value: "health-facility",
         },
         options: [
@@ -412,6 +437,12 @@ export const formSteps: FormStep[] = [
           { label: "Relative", value: "relative" },
           { label: "None", value: "none" },
         ],
+      },
+      {
+        name: "birth.separator2",
+        label: "",
+        type: "heading",
+        validation: {},
       },
       {
         name: "birth.bornAlive",
@@ -486,7 +517,7 @@ export const formSteps: FormStep[] = [
         name: "child.dateOfBirth",
         label: "Date of Birth",
         type: "date",
-        placeholder: "For example, 27 3 2007",
+        placeholder: "For example, December 30 1986",
         validation: {
           required: "Date of birth is required",
           date: {
@@ -497,25 +528,15 @@ export const formSteps: FormStep[] = [
       {
         name: "child.sex",
         label: "Sex",
-        hint: "We ask this so that we can monitor population trends",
-        type: "radio",
+        type: "select",
         validation: {
           required: "Sex at birth is required",
         },
         options: [
+          { label: "", value: "" },
           { label: "Male", value: "male" },
           { label: "Female", value: "female" },
         ],
-      },
-
-      {
-        name: "child.placeOfBirth",
-        label: "Place of birth",
-        hint: "Include the town and parish in your answer. For example, Queen Elizabeth Hospital, Bridgetown, St. Michael. Or a home address if they were born at home.",
-        type: "text",
-        validation: {
-          required: "Place of birth is required",
-        },
       },
     ],
   },

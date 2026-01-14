@@ -387,7 +387,32 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     return z.any().optional();
   }
 
+  // Handle number type BEFORE checking optional (to avoid treating numbers as strings)
+  if (field.type === "number") {
+    schema = z.coerce.number();
+    if (validation.required) {
+      schema = (schema as z.ZodNumber).min(0, validation.required);
+    } else {
+      // For optional number fields, allow undefined or a number
+      schema = schema.optional();
+    }
+    if (validation.min) {
+      schema = (schema as z.ZodNumber).min(
+        validation.min.value,
+        validation.min.message
+      );
+    }
+    if (validation.max) {
+      schema = (schema as z.ZodNumber).max(
+        validation.max.value,
+        validation.max.message
+      );
+    }
+    return schema;
+  }
+
   // Handle optional fields (explicitly marked as required: false or no validation rules)
+  // Only for non-number fields (number fields are handled above)
   if (
     validation.required === false ||
     (!validation.required && Object.keys(validation).length === 0)
@@ -440,25 +465,6 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
         .string()
         .regex(new RegExp(optionalPattern), validation.pattern.message)
         .optional();
-    }
-  }
-
-  if (field.type === "number") {
-    schema = z.coerce.number();
-    if (validation.required) {
-      schema = (schema as z.ZodNumber).min(0, validation.required);
-    }
-    if (validation.min) {
-      schema = (schema as z.ZodNumber).min(
-        validation.min.value,
-        validation.min.message
-      );
-    }
-    if (validation.max) {
-      schema = (schema as z.ZodNumber).max(
-        validation.max.value,
-        validation.max.message
-      );
     }
   }
 

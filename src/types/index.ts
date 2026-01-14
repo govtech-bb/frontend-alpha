@@ -156,6 +156,21 @@ type FileFormField = BaseFormField & {
   multiple?: boolean;
 };
 
+type HeadingFormField = {
+  name: string;
+  type: "heading";
+  label: string; // The heading text
+  validation: NonDateFieldValidation; // Empty validation for heading fields
+  placeholder?: string; // For consistency with other field types (not typically used for headings)
+  hint?: string; // For consistency with other field types (not typically used for headings)
+  hidden?: boolean; // For consistency with other field types (not typically used for headings)
+  width?: "short" | "medium" | "full"; // For consistency with other field types (not typically used for headings)
+  conditionalOn?: ConditionalRule; // For consistency with other field types (not typically used for headings)
+  fieldArray?: FieldArrayConfig; // For consistency with other field types (not typically used for headings)
+  showHide?: ShowHideConfig; // For consistency with other field types (not typically used for headings)
+  skipValidationWhenShowHideOpen?: string; // For consistency with other field types (not typically used for headings)
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -164,7 +179,8 @@ export type FormField =
   | FieldArrayFormField
   | TextFormField
   | ShowHideFormField
-  | FileFormField;
+  | FileFormField
+  | HeadingFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 

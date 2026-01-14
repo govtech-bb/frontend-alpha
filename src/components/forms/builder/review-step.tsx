@@ -34,11 +34,14 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
   // Map form values to their respective sections
   const sections: SectionData[] = formSteps
     .map((step, index) => {
-      // Exclude review step, declaration step, and confirmation step
+      // Exclude review step, declaration step, confirmation step, and specific question steps
       if (
         step.fields.length === 0 ||
         step.id === "declaration" ||
-        step.id === "confirmation"
+        step.id === "confirmation" ||
+        step.id === "marriage-status" ||
+        step.id === "include-father-details" ||
+        step.id === "order-details"
       ) {
         return null;
       }
@@ -69,6 +72,11 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
       // Create section data with original step index
       const items = step.fields
         .map((field) => {
+          // Skip heading fields (they're visual separators, not form inputs)
+          if (field.type === "heading") {
+            return null;
+          }
+
           // Support nested field names (e.g., "guardian.firstName")
           const value = getNestedValue<unknown>(
             formValues as Record<string, unknown>,
