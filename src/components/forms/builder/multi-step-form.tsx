@@ -1061,6 +1061,24 @@ export default function DynamicMultiStepForm({
       }
     }
 
+    for (const field of visibleFields) {
+      if (!field.conditionalOn && field.validation.pattern) {
+        const fieldValue = methods.getValues(field.name as keyof FormData);
+        const stringValue = typeof fieldValue === "string" ? fieldValue : "";
+
+        if (stringValue && stringValue.trim() !== "") {
+          const regex = new RegExp(field.validation.pattern.value);
+          if (!regex.test(stringValue)) {
+            methods.setError(field.name as keyof FormData, {
+              type: "pattern",
+              message: field.validation.pattern.message,
+            });
+            isValid = false;
+          }
+        }
+      }
+    }
+
     if (isValid) {
       // Mark current step as complete
       markStepComplete(currentStep);

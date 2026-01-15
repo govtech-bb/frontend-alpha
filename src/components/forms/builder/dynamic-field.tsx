@@ -98,6 +98,7 @@ function FileUploadField({
 type DynamicFieldProps = {
   field: FormField;
   conditionalFields?: FormField[];
+  className?: string;
 };
 
 /**
@@ -224,6 +225,39 @@ export function DynamicField({
         ? conditionalField.conditionalOn.value
         : "conditional";
 
+    // For textarea, render without indentation
+    if (conditionalField.type === "textarea") {
+      return (
+        <div
+          className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 motion-safe:animate-in motion-safe:duration-200"
+          key={`${conditionalField.name}-${conditionalKey}`}
+        >
+          <div className="flex flex-col gap-1">
+            {!conditionalField.hidden && (
+              <label
+                className="font-bold text-lg"
+                htmlFor={conditionalField.name}
+              >
+                {conditionalField.label}
+              </label>
+            )}
+            {conditionalField.hint && (
+              <Text as="p" className="text-neutral-midgrey" size="body">
+                {conditionalField.hint}
+              </Text>
+            )}
+            <TextArea
+              {...register(conditionalField.name as keyof FormData)}
+              error={conditionalError?.message}
+              id={conditionalField.name}
+              placeholder={conditionalField.placeholder}
+              rows={conditionalField.rows || 4}
+            />
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div
         className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-5 motion-safe:animate-in motion-safe:duration-200"
@@ -297,29 +331,6 @@ export function DynamicField({
                 ))}
               </Select>
             )
-          ) : conditionalField.type === "textarea" ? (
-            <div className="flex flex-col gap-1">
-              {!conditionalField.hidden && (
-                <label
-                  className="font-bold text-lg"
-                  htmlFor={conditionalField.name}
-                >
-                  {conditionalField.label}
-                </label>
-              )}
-              {conditionalField.hint && (
-                <Text as="p" className="text-neutral-midgrey" size="body">
-                  {conditionalField.hint}
-                </Text>
-              )}
-              <TextArea
-                {...register(conditionalField.name as keyof FormData)}
-                error={conditionalError?.message}
-                id={conditionalField.name}
-                placeholder={conditionalField.placeholder}
-                rows={conditionalField.rows || 4}
-              />
-            </div>
           ) : conditionalField.type === "number" ? (
             <Controller
               control={control}
@@ -754,6 +765,7 @@ export function DynamicField({
             id={field.name}
             type={field.type}
             {...register(field.name as keyof FormData)}
+            className={field.inputClassName || ""}
             placeholder={field.placeholder}
           />
         </div>
@@ -763,6 +775,7 @@ export function DynamicField({
           label={field.hidden ? "" : field.label}
           type={field.type}
           {...register(field.name as keyof FormData)}
+          className={field.inputClassName || ""}
           placeholder={field.placeholder}
         />
       )}
