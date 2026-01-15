@@ -20,7 +20,7 @@ export type FormAutoSaveBannerProps = {
 export function FormAutoSaveBanner({ onClear }: FormAutoSaveBannerProps) {
   return (
     <div className="mb-6 border-blue-bright border-l-4 bg-blue-light/30 p-4">
-      <Typography className="text-neutral-black" variant="paragraph">
+      <Typography className="text-black-00" variant="paragraph">
         Your progress is automatically saved on this device.{" "}
         <button
           className="underline hover:no-underline"

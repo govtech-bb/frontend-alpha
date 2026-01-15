@@ -26,7 +26,7 @@
   --list-spacing: 0.5rem; /* 8px */
 
   /* Interaction?? */
-  --link: var(--teal-dark);
+  --link: var(--teal-00);
   --link-hover: var(--teal-bright);
 }
 

@@ -32,14 +32,14 @@ export const BackButton = ({
   return (
     <nav
       aria-label={mode === "breadcrumbs" ? "Breadcrumbs" : "Backbutton"}
-      className={cn("flex items-center text-sm", className)}
+      className={cn("flex items-center", className)}
     >
       {mode === "breadcrumbs" ? (
         breadcrumbs.map((crumb, index) => (
           <div className="flex items-center gap-2" key={crumb.href}>
             {index > 0 && <ChevronLeftSVG className="mr-2" />}
             <Link
-              className="text-[20px] text-teal-dark underline"
+              className="text-[20px] text-teal-00 underline"
               href={crumb.href}
             >
               {crumb.label}

@@ -129,6 +129,12 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
             displayValue = String(value);
           }
 
+          if (field.type === "file" && Array.isArray(value)) {
+            const files = value as File[];
+            if (files.length === 0) return null;
+            displayValue = files.map((file) => file.name).join(", ");
+          }
+
           return {
             label: field.label,
             value: String(displayValue),
@@ -162,7 +168,7 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
 
       {sections.map((section) => (
         <div
-          className="grid grid-cols-1 gap-y-2 border-neutral-grey border-b-4 pb-8 [grid-template-areas:'heading'_'content'_'button'] lg:grid-cols-[1fr_auto] lg:gap-x-2 lg:[grid-template-areas:'heading_button'_'content_content']"
+          className="grid grid-cols-1 gap-y-2 border-grey-00 border-b-4 pb-8 [grid-template-areas:'heading'_'content'_'button'] lg:grid-cols-[1fr_auto] lg:gap-x-2 lg:[grid-template-areas:'heading_button'_'content_content']"
           key={section.title}
         >
           <Heading as="h2" className="[grid-area:heading]">
