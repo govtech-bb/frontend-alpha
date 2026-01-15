@@ -1,7 +1,7 @@
 ---
 title: "Apply for a licence to sell goods or services at a beach or park"
 stage: "alpha"
-publish_date: 2026-01-07
+publish_date: 2026-01-14
 ---
 
 You should complete your application in one go. At the moment, it is not possible to save your answers and come back to them later.
@@ -12,10 +12,9 @@ It shouldn’t take longer than 10 minutes.
 
 ### What you will need
 
-As well as your contact details, the application form asks you to upload:
+As well as your contact details, the application form asks you:
 
-- 2 references from 2 trustworthy and respected people
-- a [Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
-- 2 passport-sized pictures
+- the names of 2 trustworthy and respected referees who can later provide references
+- where your goods are made
 
 <a data-start-link href="/business-trade/sell-goods-services-beach-park/form">Start now</a>
