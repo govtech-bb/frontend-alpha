@@ -778,9 +778,7 @@ export default function DynamicMultiStepForm({
 
       // Check if step is visible (for conditional steps)
       const isVisible =
-        !step.conditionalOn ||
-        getNestedValue<unknown>(cleanedData, step.conditionalOn.field) ===
-          step.conditionalOn.value;
+        !step.conditionalOn || isStepVisible(step, cleanedData as FormData);
 
       for (const field of step.fields) {
         const fieldParts = field.name?.split(".");
@@ -792,38 +790,6 @@ export default function DynamicMultiStepForm({
             parentKeysFromVisibleSteps.add(parentKey);
           } else {
             parentKeysFromHiddenSteps.add(parentKey);
-          }
-        }
-      }
-    }
-
-    // Get all conditional steps from expanded steps
-    const conditionalSteps = expandedFormSteps.filter(
-      (step) => step.conditionalOn
-    );
-
-    // For each conditional step, check if it should be shown and remove hidden fields
-    for (const step of conditionalSteps) {
-      if (!step.conditionalOn) continue;
-
-      const watchedValue = getNestedValue<unknown>(
-        cleanedData,
-        step.conditionalOn.field
-      );
-
-      // Check if step is visible (for conditional steps)
-      const isVisible =
-        !step.conditionalOn ||
-        getNestedValue<unknown>(cleanedData, step.conditionalOn.field) ===
-          step.conditionalOn.value;
-
-      // Only delete simple (non-nested) fields from hidden steps
-      if (!isVisible) {
-        for (const field of step.fields) {
-          const fieldParts = field.name?.split(".");
-          if (fieldParts.length === 1) {
-            // Simple field - delete directly if step is hidden
-            delete cleanedData[field.name];
           }
         }
       }
