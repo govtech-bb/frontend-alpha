@@ -250,6 +250,11 @@ export type ApiResponse = {
     amount?: number;
     description?: string;
     numberOfCopies?: number;
+    integrations?: {
+      opencrvs?: {
+        trackingId?: string;
+      };
+    };
   };
   errors?: { field: string; message: string; code: string }[];
   message?: string;
