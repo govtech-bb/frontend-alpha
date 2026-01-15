@@ -5,11 +5,11 @@ export const formSteps: FormStep[] = [
   {
     id: "tell-us-about-the-child",
     title: "Tell us about the child",
-    description: "You can add one or more child",
+    description: "You can add information for other children later",
     repeatable: {
       arrayFieldName: "beneficiaries",
       maxItems: 10,
-      addAnotherLabel: "Do you need to add another beneficiary?",
+      addAnotherLabel: "Do you need to add another child?",
     },
     fields: [
       {
@@ -150,6 +150,12 @@ export const formSteps: FormStep[] = [
             value: 2,
             message: "First name must be at least 2 characters",
           },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -160,7 +166,13 @@ export const formSteps: FormStep[] = [
           required: "Last name is required",
           minLength: {
             value: 2,
-            message: "Last name must be at least 2 characters",
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -264,7 +276,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -277,7 +289,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -295,7 +307,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.postalCode",
-        label: "Postal Code",
+        label: "Post code",
         type: "text",
         width: "medium",
         validation: {
@@ -308,7 +320,7 @@ export const formSteps: FormStep[] = [
 
       {
         name: "applicant.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         validation: {
           required: "Email address is required",
@@ -316,13 +328,15 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g. 1 246 234 5678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -353,7 +367,7 @@ export const formSteps: FormStep[] = [
           fields: [
             {
               name: "applicant.passportNumber",
-              label: "Passport Number",
+              label: "Passport number",
               type: "text",
               placeholder: "",
               validation: {
@@ -369,7 +383,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.tamisNumber",
-        label: "TAMIS Number",
+        label: "TAMIS number",
         type: "number",
         width: "medium",
         validation: {
@@ -392,7 +406,7 @@ export const formSteps: FormStep[] = [
     id: "bankAccount",
     title: "Bank account information",
     description:
-      "In order to receive the $100 Grant, please provide accurate and current banking information to prevent delays in processing this application.",
+      "Add the bank account details for an account which has been used within the last 3 months. Check your details are correct to avoid delays.",
     fields: [
       {
         name: "bankAccount.accountHolderName",

@@ -6,6 +6,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     slug: "family-birth-relationships",
     description:
       "Managing key life events and family responsibilities, from registering a birth to caring for others",
+
     pages: [
       {
         title: "Register a birth",
@@ -14,8 +15,13 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to register a birth in Barbados, including who can register, the required documents, and any associated fees.",
         subPages: [
-          { slug: "start", type: "markdown" },
-          { slug: "form", title: "Register a Birth form", type: "component" },
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Register a Birth form",
+            type: "component",
+            protected: true,
+          },
         ],
       },
       {
@@ -318,12 +324,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect My Mail (Individual)",
         slug: "post-office-redirection-individual",
         description: "Redirect mail for an individual",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Redirect My Mail (Individual) form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -331,12 +339,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect My Mail (Deceased)",
         slug: "post-office-redirection-deceased",
         description: "Redirect mail for a deceased person",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Redirect My Mail (Deceased) form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -344,12 +354,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect My Mail (Business)",
         slug: "post-office-redirection-business",
         description: "Redirect mail for a Business",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Redirect My Mail (Business) form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -413,25 +425,41 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title:
           "Apply for a licence to sell goods or services at a beach or park",
-        slug: "apply-for-a-licence-to-sell-goods-or-services-at-a-beach-or-park",
-        source_url: "",
-        description:
-          "Apply for a licence to sell goods or services at a beach or park",
-        subPages: [{ slug: "start", type: "markdown" }],
-      },
-      {
-        title: "Request for name search and name reservation",
-        slug: "reserve-society-name",
-        description: "Request for name search and name reservation",
+        slug: "sell-goods-services-beach-park",
+        description: "",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
-            title: "Request to reserve a society name form",
+            title:
+              "Apply for a licence to sell goods or services at a beach or park",
             type: "component",
+            protected: true,
           },
         ],
       },
+      // {
+      //   title:
+      //     "Apply for a licence to sell goods or services at a beach or park",
+      //   slug: "apply-for-a-licence-to-sell-goods-or-services-at-a-beach-or-park",
+      //   source_url: "",
+      //   description:
+      //     "Apply for a licence to sell goods or services at a beach or park",
+      //   subPages: [{ slug: "start", type: "markdown" }],
+      // },
+      // {
+      //   title: "Request for name search and name reservation",
+      //   slug: "reserve-society-name",
+      //   description: "Request for name search and name reservation",
+      //   subPages: [
+      //     { slug: "start", type: "markdown" },
+      //     {
+      //       slug: "form",
+      //       title: "Request to reserve a society name form",
+      //       type: "component",
+      //     },
+      //   ],
+      // },
     ],
   },
   {
@@ -439,21 +467,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     slug: "public-safety",
     description: "Reporting crime, raising a concern and safeguarding",
     pages: [
-      {
-        title: "Request a fire service inspection",
-        slug: "request-a-fire-service-inspection",
-        description:
-          "Request an inspection from the Barbados Fire Service for hotels, daycares, and places of entertainment.",
-        subPages: [
-          { slug: "start", type: "markdown", protected: true },
-          {
-            slug: "form",
-            title: "Request a Fire Service Inspection form",
-            type: "component",
-            protected: true,
-          },
-        ],
-      },
+      // {
+      //   title: "Request a fire service inspection",
+      //   slug: "request-a-fire-service-inspection",
+      //   description:
+      //     "Request an inspection from the Barbados Fire Service for hotels, daycares, and places of entertainment.",
+      //   subPages: [
+      //     { slug: "start", type: "markdown", protected: true },
+      //     {
+      //       slug: "form",
+      //       title: "Request a Fire Service Inspection form",
+      //       type: "component",
+      //       protected: true,
+      //     },
+      //   ],
+      // },
       {
         title: "Report a concern about a child",
         slug: "report-a-concern-about-a-child",

@@ -1,12 +1,15 @@
-import { Link } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { MarkdownContent } from "@/components/markdown-content";
-import { Typography } from "@/components/ui/typography";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getMarkdownContent } from "@/lib/markdown";
-import { hasResearchAccess, isProtectedSubpage } from "@/lib/research-access";
+import {
+  hasProtectedSubpages,
+  hasResearchAccess,
+  isProtectedSubpage,
+} from "@/lib/research-access";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
 type ContentPageProps = {
@@ -31,18 +34,24 @@ export default async function Page({ params }: ContentPageProps) {
       return <MarkdownContent markdown={markdownContent} />;
     }
 
+    // Filter out protected pages if user doesn't have research access
+    const hasAccess = await hasResearchAccess();
+    const visiblePages = hasAccess
+      ? category.pages
+      : category.pages.filter((page) => !page.protected);
+
     return (
       <>
-        <Typography variant="h1">{category.title}</Typography>
+        <Heading as="h1">{category.title}</Heading>
         {category.description
           ?.split("\n")
-          .map((line: string, _index: number) => (
-            <p className="text-[20px] leading-normal" key={_index}>
+          .map((line: string, index: number) => (
+            <Text as="p" key={index}>
               {line}
-            </p>
+            </Text>
           ))}
-        <div className="flex flex-col divide-y-2 divide-neutral-grey last:border-neutral-grey last:border-b-2">
-          {category.pages.map((service) => (
+        <div className="flex flex-col divide-y-2 divide-grey-00 last:border-grey-00 last:border-b-2">
+          {visiblePages.map((service) => (
             <div
               className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
               key={service.title}
@@ -77,13 +86,19 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    // Check research access for protected pages or pages with protected subpages
+    const needsAccess = page.protected || hasProtectedSubpages(page);
+    const hasAccess = needsAccess ? await hasResearchAccess() : true;
+
+    // Block access to protected entry pages
+    if (page.protected && !hasAccess) {
+      notFound();
+    }
+
     const markdownContent = await getMarkdownContent([pageSlug]);
     if (!markdownContent) {
       notFound();
     }
-
-    // Check if user has research access cookie to show/hide start page links
-    const hasAccess = await hasResearchAccess();
 
     return (
       <MarkdownContent
@@ -109,8 +124,11 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    // Check research access once for both protected pages and hiding start links
-    const hasAccess = await hasResearchAccess();
+    // Only check research access if this page has protected subpages
+    const pageHasProtectedSubpages = hasProtectedSubpages(page);
+    const hasAccess = pageHasProtectedSubpages
+      ? await hasResearchAccess()
+      : true;
 
     // Protected subpages require research access
     if (isProtectedSubpage(page, subPageSlug) && !hasAccess) {

@@ -3,7 +3,6 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { BackButton } from "@/components/layout/back-button";
 import { HelpfulBox } from "@/components/layout/helpful-box";
-import { StageBanner } from "@/components/stage-banner";
 import { cn } from "@/lib/utils";
 
 // Without back button; py-8 lg:py-16 (padding-top: 32px; padding-bottom: 32px; @media (min-width: 1024px) { padding-top: 64px; padding-bottom: 64px; })
@@ -28,14 +27,7 @@ export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
   const shouldShowBanner = (isFormPage || isStartPage) && !isConfirmationPage;
 
   return (
-    <main>
-      {shouldShowBanner && (
-        <div className="bg-blue-10">
-          <div className="container">
-            <StageBanner stage="alpha" />
-          </div>
-        </div>
-      )}
+    <>
       {!isFormPage && (
         <div className="container py-4 lg:py-6">
           <BackButton />
@@ -55,6 +47,6 @@ export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
           {!(isFormPage || isFeedbackPage) && <HelpfulBox />}
         </div>
       )}
-    </main>
+    </>
   );
 }

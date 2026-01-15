@@ -8,8 +8,6 @@ You should complete the registration form in one go. At the moment, it is not po
 
 There is a separate form if you need to <a className="text-black" href="/family-birth-relationships/register-a-birth/form">register a stillbirth.</a>
 
-<!-- Add custom html button to allow necessary styling -->
-<!-- TODO: Make this file MDX so that the Button component can be imported -->
 
 ## How long does it take?
 

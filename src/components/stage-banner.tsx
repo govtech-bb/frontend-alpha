@@ -15,12 +15,7 @@ export const StageBanner = ({
   <StatusBanner className={className} variant={stage as "alpha" | "beta"}>
     <Text as="p">
       This page is in{" "}
-      <Link
-        as={NextLink}
-        className="capitalize"
-        href={url}
-        variant={"secondary"}
-      >
+      <Link as={NextLink} className="capitalize" href={url} variant="secondary">
         {stage}
       </Link>
       .

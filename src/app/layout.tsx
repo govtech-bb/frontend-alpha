@@ -1,3 +1,4 @@
+import { textVariants } from "@govtech-bb/react";
 import type { Metadata } from "next";
 import { figtree } from "@/lib/fonts";
 import "./globals.css";
@@ -34,7 +35,7 @@ export default function RootLayout({
   return (
     <html className="bg-blue-100" lang="en">
       <body
-        className={`${figtree.variable} grid min-h-screen grid-rows-[auto_1fr_auto] bg-neutral-white font-sans antialiased`}
+        className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white font-sans antialiased`}
       >
         <Header />
         {children}

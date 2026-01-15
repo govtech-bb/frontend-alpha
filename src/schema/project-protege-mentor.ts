@@ -9,33 +9,43 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "personal.firstName",
-        label: "First Name",
+        label: "First name",
         type: "text",
-        placeholder: "John",
         validation: {
           required: "First name is required",
           minLength: {
             value: 2,
             message: "First name must be at least 2 characters",
           },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
         name: "personal.lastName",
-        label: "Last Name",
+        label: "Last name",
         type: "text",
-        placeholder: "Doe",
         validation: {
           required: "Last name is required",
           minLength: {
             value: 2,
-            message: "Last name must be at least 2 characters",
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
       {
         name: "personal.dateOfBirth",
-        label: "Date of Birth",
+        label: "Date of birth",
         type: "date",
         placeholder: "For example, 27 3 2007",
         validation: {
@@ -63,7 +73,6 @@ export const formSteps: FormStep[] = [
         name: "personal.institutionName",
         label: "Name of institution",
         type: "text",
-        placeholder: "e.g., University of the West Indies",
         validation: {
           required: "Institution name is required",
           minLength: {
@@ -80,7 +89,6 @@ export const formSteps: FormStep[] = [
         name: "personal.employerName",
         label: "Name of company or organisation",
         type: "text",
-        placeholder: "e.g., ABC Company Ltd",
         validation: {
           required: "Company or organisation name is required",
           minLength: {
@@ -98,7 +106,6 @@ export const formSteps: FormStep[] = [
         name: "personal.otherEmploymentDetails",
         label: "Please give details",
         type: "text",
-        placeholder: "Describe your employment status",
         validation: {
           required: "Employment details are required",
           minLength: {
@@ -121,9 +128,8 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "contact.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
-        placeholder: "123 Main Street",
         validation: {
           required: "Address line 1 is required",
           minLength: {
@@ -134,9 +140,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
-        placeholder: "Apt 4B (Optional)",
         validation: { required: false },
       },
       {
@@ -149,25 +154,37 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
+        name: "contact.postalCode",
+        label: "Post code",
+        hint: "Optional (e.g. BB17004)",
+        type: "text",
+        width: "short",
+        validation: {
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
+      {
         name: "contact.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
-        placeholder: "john.doe@example.com",
         validation: {
           required: "Email address is required",
         },
       },
       {
         name: "contact.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -188,7 +205,8 @@ export const formSteps: FormStep[] = [
           required: "Tell us why you want to be a mentor",
           minLength: {
             value: 5,
-            message: "This must be at least 5 characters",
+            message:
+              "Why you want to be a mentor must be at least 5 characters",
           },
         },
       },
@@ -202,7 +220,8 @@ export const formSteps: FormStep[] = [
           required: "Tell us about your strengths",
           minLength: {
             value: 5,
-            message: "Strength must be at least 5 characters",
+            message:
+              "Your qualities, knowledge or skills must be at least 5 characters",
           },
         },
       },
@@ -216,7 +235,8 @@ export const formSteps: FormStep[] = [
           required: "Tell us what a mentee could learn from you",
           minLength: {
             value: 5,
-            message: "This must be at least 5 characters",
+            message:
+              "What you think a mentee could learn from you must be at least 5 characters",
           },
         },
       },
@@ -259,7 +279,6 @@ export const formSteps: FormStep[] = [
         name: "preferences.menteePhoneNumber",
         label: "What is your phone number?",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Enter your phone number",
           pattern: {
@@ -289,7 +308,6 @@ export const formSteps: FormStep[] = [
         name: "preferences.menteeInMindName",
         label: "What is their name?",
         type: "text",
-        placeholder: "Enter their name",
         validation: {
           required: "Enter the name of the person you have in mind",
         },
@@ -323,7 +341,6 @@ export const formSteps: FormStep[] = [
         name: "experience.yearsOfExperience",
         label: "How many years of experience?",
         type: "number",
-        placeholder: "e.g., 3",
         validation: {
           required: "Enter your years of experience",
         },
@@ -345,25 +362,42 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.firstName",
         label: "First name",
         type: "text",
-        placeholder: "John",
         validation: {
-          required: "Enter the referee's first name",
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
         name: "professionalReferee.lastName",
         label: "Last name",
         type: "text",
-        placeholder: "Smith",
         validation: {
-          required: "Enter the referee's last name",
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
         name: "professionalReferee.relationship",
         label: "Relationship",
         type: "text",
-        placeholder: "e.g., Former manager, Lecturer",
         validation: {
           required: "Enter your relationship to the referee",
         },
@@ -372,7 +406,6 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.email",
         label: "Email address",
         type: "email",
-        placeholder: "john.smith@example.com",
         validation: {
           required: "Enter the referee's email address",
         },
@@ -381,13 +414,13 @@ export const formSteps: FormStep[] = [
         name: "professionalReferee.phone",
         label: "Phone number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Enter the referee's phone number",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -404,25 +437,42 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.firstName",
         label: "First name",
         type: "text",
-        placeholder: "Jane",
         validation: {
-          required: "Enter the referee's first name",
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
         name: "personalReferee.lastName",
         label: "Last name",
         type: "text",
-        placeholder: "Doe",
         validation: {
-          required: "Enter the referee's last name",
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
         name: "personalReferee.relationship",
         label: "Relationship",
         type: "text",
-        placeholder: "e.g., Family friend, Neighbour",
         validation: {
           required: "Enter your relationship to the referee",
         },
@@ -431,7 +481,6 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.email",
         label: "Email address",
         type: "email",
-        placeholder: "jane.doe@example.com",
         validation: {
           required: "Enter the referee's email address",
         },
@@ -440,13 +489,13 @@ export const formSteps: FormStep[] = [
         name: "personalReferee.phone",
         label: "Phone number",
         type: "tel",
-        placeholder: "246 234 5678",
         validation: {
           required: "Enter the referee's phone number",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -454,10 +503,52 @@ export const formSteps: FormStep[] = [
   },
 
   {
-    id: "review",
+    id: "check-your-answers",
     title: "Check your answers",
-    description:
-      "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
     fields: [],
+  },
+  {
+    id: "declaration",
+    title: "Declaration",
+    description:
+      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+    fields: [
+      {
+        name: "declaration.confirmed",
+        label: "All information is correct and true.",
+        type: "checkbox",
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
+      },
+      {
+        name: "declaration.dateOfDeclaration",
+        label: "Date of Declaration",
+        hidden: true,
+        placeholder: "",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "confirmation",
+    title: "Thank you for your application",
+    description: "",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content:
+          "If you are shortlisted, you will be contacted by phone or email and invited for an interview.",
+        items: [""],
+      },
+    ],
+    enableFeedback: true,
   },
 ];

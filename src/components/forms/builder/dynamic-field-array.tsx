@@ -183,11 +183,7 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
                         >
                           {nestedField.label}
                         </label>
-                        <Text
-                          as="p"
-                          className="text-neutral-midgrey"
-                          size="body"
-                        >
+                        <Text as="p" className="text-mid-grey-00" size="body">
                           {nestedField.hint}
                         </Text>
                         <Select

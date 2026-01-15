@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
-import { Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
@@ -63,18 +64,28 @@ const components: Components = {
   pre: (props: any) => (
     <pre className="overflow-x-auto whitespace-pre-wrap" {...props} />
   ),
-  a: ({ href, children, ...props }: AnchorProps) => {
+  a: ({
+    href,
+    children,
+    "data-start-link": isStartLink,
+    ...props
+  }: AnchorProps & { [key: string]: any }) => {
     const isRouteLink = href?.startsWith("/");
     const isExternal = !(href?.startsWith("/") || href?.startsWith("#"));
+
+    if (isStartLink !== undefined) {
+      return (
+        <LinkButton href={href as string} {...props}>
+          {children}
+        </LinkButton>
+      );
+    }
 
     return (
       <Link
         as={isRouteLink ? NextLink : "a"}
+        external={isExternal}
         href={href as string}
-        {...(isExternal && {
-          target: "_blank",
-          rel: "noopener noreferrer",
-        })}
         {...props}
       >
         {children}
@@ -88,33 +99,23 @@ const components: Components = {
     />
   ),
   table: ({ node, ...props }) => (
-    <div className="mx-4 my-6 overflow-x-auto sm:mx-0">
+    <div className="my-s overflow-x-auto">
       <div className="inline-block min-w-full align-middle">
-        <table
-          className="min-w-full divide-y divide-gray-300 border border-gray-300"
-          {...props}
-        />
+        <table className="min-w-full" {...props} />
       </div>
     </div>
   ),
-  thead: ({ node, ...props }) => <thead className="bg-gray-50" {...props} />,
-  tbody: ({ node, ...props }) => (
-    <tbody className="divide-y divide-gray-200 bg-white" {...props} />
-  ),
-  tr: ({ node, ...props }) => (
-    <tr className="transition-colors hover:bg-gray-50" {...props} />
-  ),
+  thead: ({ node, ...props }) => <thead className="bg-blue-10" {...props} />,
+  tbody: ({ node, ...props }) => <tbody className="bg-white" {...props} />,
+  tr: ({ node, ...props }) => <tr {...props} />,
   th: ({ node, ...props }) => (
     <th
-      className="px-3 py-3 text-left font-semibold text-gray-900 text-xs sm:px-6 sm:text-sm"
+      className="px-xs py-s text-left font-bold text-caption text-mid-grey-00"
       {...props}
     />
   ),
   td: ({ node, ...props }) => (
-    <td
-      className="px-3 py-4 text-gray-700 text-xs sm:px-6 sm:text-sm"
-      {...props}
-    />
+    <td className="px-xs py-s text-black text-caption" {...props} />
   ),
 };
 
@@ -134,7 +135,7 @@ export const MarkdownContent = ({
 }: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
-    <div className="lg:grid lg:grid-cols-3 lg:gap-16">
+    <div className="mb-xm lg:grid lg:grid-cols-3 lg:gap-16">
       <div className="space-y-6 lg:col-span-2 lg:space-y-8">
         <div className="space-y-4 lg:space-y-6">
           {frontmatter.title && (
@@ -143,9 +144,23 @@ export const MarkdownContent = ({
             </Heading>
           )}
 
-          {frontmatter.source_url ? (
+          {frontmatter.source_url && (
             <MigrationBanner pageURL={frontmatter.source_url} />
-          ) : null}
+          )}
+
+          {frontmatter.publish_date && (
+            <div className="border-blue-10 border-b-4 pb-4 text-mid-grey-00">
+              <Text as="p" size="caption">
+                Last updated on{" "}
+                {format(
+                  parseISO(
+                    frontmatter.publish_date.toISOString().split("T")[0]
+                  ),
+                  "PPP"
+                )}
+              </Text>
+            </div>
+          )}
         </div>
         <ReactMarkdown
           components={components}

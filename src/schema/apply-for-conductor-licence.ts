@@ -28,6 +28,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -37,6 +47,12 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: false,
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -45,6 +61,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -67,7 +93,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "contactDetails.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -80,7 +106,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contactDetails.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -98,15 +124,15 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contactDetails.postalCode",
-        label: "Postal Code",
-        hint: "Optional",
+        label: "Post code",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "medium",
         validation: {
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postal code (e.g. BB17004)",
           },
         },
       },
@@ -125,8 +151,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
-            message: "Please enter a valid phone number (e.g. 1 246 234 5678)",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -134,12 +162,12 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "licence-history",
-    title: "Your licence history",
-    description: "Tell us about any previous conductor's or driving licences",
+    title: "Tell us about your licence history",
+    description: "",
     fields: [
       {
         name: "licenceHistory.hasPreviousLicence",
-        label: "Do you have any previous licences?",
+        label: "Have you had a conductor's licence or driving licence before?",
         type: "radio",
         validation: {
           required: "Select an option",
@@ -184,7 +212,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "endorsements",
-    title: "Your endorsements",
+    title: "Tell us about any endorsements",
     description:
       "An endorsement is a record of an offence added to your conductor's or driving licence",
     fields: [
@@ -242,7 +270,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "duration",
-        label: "Duration",
+        label: "How long did the endorsement appear on your licence?",
         type: "text",
         width: "medium",
         validation: {
@@ -257,9 +285,9 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "disqualifications",
-    title: "Your disqualifications",
+    title: "Tell us about your disqualifications",
     description:
-      "A disqualification is when a court has stopped you from getting or holding a licence. Include any period when you were not allowed to hold or apply for a conductor’s or driving licence, and the reason the court gave for the disqualification",
+      "A disqualification is when a court has stopped you from getting or holding a licence.",
     fields: [
       {
         name: "disqualifications.hasDisqualifications",
@@ -279,6 +307,22 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Court name is required",
+          minLength: {
+            value: 2,
+            message: "Please provide at least 2 characters",
+          },
+        },
+        conditionalOn: {
+          field: "disqualifications.hasDisqualifications",
+          value: "yes",
+        },
+      },
+      {
+        name: "disqualifications.reasonForDisqualificiation",
+        label: "Court's reason for disqualification",
+        type: "text",
+        validation: {
+          required: "Reason for disqualification is required",
           minLength: {
             value: 2,
             message: "Please provide at least 2 characters",
@@ -331,7 +375,6 @@ export const formSteps: FormStep[] = [
       {
         name: "hasCriminalConvictions",
         label: "Have you ever had any criminal convictions?",
-        hidden: true,
         type: "radio",
         validation: {
           required: "Select an option",
@@ -379,16 +422,19 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your request for a Fire Service inspection has been submitted.",
-    description: "We have received your request for a Fire Service inspection.",
+    title: "Thank you for your application",
+    description:
+      "Your information has been sent to the Barbados Transport Authority",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "The Fire Service will review your request.",
+        content:
+          "We will review your application and any supporting information.",
         items: [
-          "If they need more information, they will contact you using the details you provided.",
-          "An inspection visit will be scheduled if your request can proceed.",
+          "If we need further details, we will contact you using the email address you provided.",
+          "You will receive an email confirming this submission.",
+          "If you do not receive the confirmation email within a few minutes, check your junk or spam folder.",
         ],
       },
     ],

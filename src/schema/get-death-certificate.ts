@@ -27,6 +27,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -34,7 +44,15 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Optional. Provide only if known",
         type: "text",
-        validation: { required: false },
+        validation: {
+          required: false,
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "applicant.lastName",
@@ -42,6 +60,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -78,6 +106,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.postalCode",
         label: "Postal Code",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "short",
         validation: {
@@ -144,9 +173,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -229,6 +259,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -236,7 +276,15 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Leave blank if not known",
         type: "text",
-        validation: { required: false },
+        validation: {
+          required: false,
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "deceased.lastName",
@@ -244,6 +292,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -389,17 +447,6 @@ export const formSteps: FormStep[] = [
         ],
       },
     ],
-    contactDetails: {
-      title: "Registration Department",
-      telephoneNumber: "(246) 535-8300",
-      email: "registrationdept@barbados.gov.bb",
-      address: {
-        line1: "Supreme Court Complex",
-        line2: "Whitepark Road",
-        city: "St. Michael",
-        country: "Barbados",
-      },
-    },
     enableFeedback: true,
   },
 ];

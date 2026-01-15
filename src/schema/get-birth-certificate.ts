@@ -29,7 +29,13 @@ export const formSteps: FormStep[] = [
           required: "First name is required",
           minLength: {
             value: 2,
-            message: "Address must be at least 5 characters",
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -38,7 +44,15 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: "Optional. Provide only if known",
         type: "text",
-        validation: { required: false },
+        validation: {
+          required: false,
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "applicant.lastName",
@@ -46,10 +60,15 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
-
           minLength: {
             value: 2,
-            message: "Address must be at least 5 characters",
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -86,8 +105,8 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.postalCode",
-        label: "Postal Code",
-        hint: "Optional",
+        label: "Post code",
+        hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "medium",
         validation: {
@@ -284,6 +303,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -291,7 +320,15 @@ export const formSteps: FormStep[] = [
         label: "Middle name",
         hint: " Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: {
+          required: false,
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "person.lastName",
@@ -299,6 +336,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -395,6 +442,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -402,7 +459,19 @@ export const formSteps: FormStep[] = [
         label: "Father's middle name",
         hint: " Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "parents.father.lastName",
@@ -410,6 +479,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -418,6 +497,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -425,7 +514,19 @@ export const formSteps: FormStep[] = [
         label: "Mother's middle name",
         hint: " Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "parents.mother.lastName",
@@ -433,6 +534,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
     ],
@@ -451,6 +562,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -458,7 +579,19 @@ export const formSteps: FormStep[] = [
         label: "Father's middle name",
         hint: " Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "parentsOther.father.lastName",
@@ -466,6 +599,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -474,6 +617,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
@@ -481,7 +634,19 @@ export const formSteps: FormStep[] = [
         label: "Mother's middle name",
         hint: " Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "parentsOther.mother.lastName",
@@ -489,6 +654,16 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
     ],
@@ -535,7 +710,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfDeclaration",
+        name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
         placeholder: "For example, 12 15 2025",

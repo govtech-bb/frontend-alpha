@@ -2,27 +2,35 @@
 title: "Apply to be a Project Protégé mentor"
 stage: "alpha"
 featured: false
-publish_date: 2025-10-17
+publish_date: 2026-12-12
 ---
 
-Anyone aged 18 and over is eligible to apply to mentor a young person between the age of 13 and 17 in the Project Protege programme. Mentors are volunteers who are able to commit regular time to support and inspire their mentee.
+Anyone aged 18 and over is eligible to apply to mentor a young person between the age of 13 and 17 in the Project Protégé programme. Mentors are volunteers who are able to commit regular time to support and inspire their mentee.
 
 Applications are accepted all year round.
+
 
 ## How to apply 
 
 ### Complete an application form
 
-You can [download an application form](/NEW_Mentor_Application_-_2024_2025.pdf).
+You can apply online using the Apply to be a Project Protégé mentor form.
 
-Or you can collect a paper form from:
+1. Apply online
 
-Ministry of Youth, Sports and Community Empowerment  
-Sky Mall  
-Haggatt Hall  
-St Michael
+   <a data-start-link href="/work-employment/apply-to-be-a-project-protege-mentor/start">Complete the online form</a>
 
-### What you will be asked about
+2. Get a paper form from:
+
+   Ministry of Youth, Sports and Community Empowerment
+   \
+   Sky Mall
+   \
+   Haggatt Hall
+   \
+   St Michael
+
+### What you will need to share
 
 As well as your contact details, the application form asks about:
 
@@ -34,17 +42,24 @@ As well as your contact details, the application form asks about:
 
 - your reasons for applying
 
-- your competencies (your knowledge, skills and abilities)
+- your strengths (your knowledge, skills and abilities)
 
 - what you think a mentee could learn from you
 
 - your preference of mentoring a male or female
 
-You will also be asked for the names and contact details of 2 references: 1 personal 1 professional.
+You will also be asked for the names and contact details of 2 references:
+\
+1 personal 1 professional.
 
 ### Submit your application
 
-Email your completed form to [YDP@barbados.gov.bb](mailto:YDP@barbados.gov.bb) or take it or send it to the ministry office.
+If you apply online, your application will be submitted to the Youth Development Programme.
+
+If you complete a paper form, you can:
+
+- send a scan or photograph to [YDP@barbados.gov.bb](mailto:YDP@barbados.gov.bb)
+- take it or send it to the ministry office
 
 ## After you have applied
 

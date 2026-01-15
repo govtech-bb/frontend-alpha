@@ -1,9 +1,8 @@
 "use client";
 
 import type { ErrorItem } from "@govtech-bb/react";
-import { Button, ErrorSummary, TextArea } from "@govtech-bb/react";
+import { Button, ErrorSummary, Text, TextArea } from "@govtech-bb/react";
 import { useEffect, useRef, useState } from "react";
-import { Typography } from "@/components/ui/typography";
 
 type FormErrors = {
   visitReason?: string;
@@ -134,9 +133,7 @@ export function SimpleFeedbackForm() {
     <div className="mb-6 space-y-6">
       {submitStatus === "success" ? (
         <div className="space-y-2 border-4 border-teal-40 bg-teal-10 p-6">
-          <Typography className="font-bold text-black" variant="paragraph">
-            Thank you for your feedback.
-          </Typography>
+          <Text weight={"bold"}>Thank you for your feedback.</Text>
           <button
             className="cursor-pointer font-normal text-[20px] text-black leading-[150%] underline decoration-[#00267F] underline-offset-[1px]"
             onClick={resetForm}
@@ -188,7 +185,7 @@ export function SimpleFeedbackForm() {
           </Button>
 
           {submitStatus === "error" && (
-            <div className="rounded-md border border-red-100 bg-red-10 px-4 py-3 text-red-dark">
+            <div className="rounded-md border border-red-100 bg-red-10 px-4 py-3 text-red-00">
               Sorry, there was an error sending your feedback. Please try again.
             </div>
           )}

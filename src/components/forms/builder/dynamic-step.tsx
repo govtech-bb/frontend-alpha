@@ -79,7 +79,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
     <div className="space-y-8">
       <div className="space-y-4">
         <div className="border-blue-40 border-l-4 py-xs pl-s">
-          <Text as="p" className="text-neutral-midgrey">
+          <Text as="p" className="text-mid-grey-00">
             {serviceTitle}
           </Text>
         </div>
