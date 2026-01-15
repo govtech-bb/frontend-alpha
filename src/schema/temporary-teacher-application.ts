@@ -1,4 +1,4 @@
-import { barbadosParishes } from "@/data/constants";
+import { barbadosParishes, countries } from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -77,11 +77,13 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.nationality",
-        type: "text",
         label: "Nationality",
+        type: "select",
+        width: "medium",
         validation: {
-          required: "This field is required",
+          required: "Nationality is required",
         },
+        options: countries,
       },
       {
         name: "applicant.sex",
