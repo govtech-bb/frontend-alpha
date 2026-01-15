@@ -331,6 +331,29 @@ export function DynamicField({
                 ))}
               </Select>
             )
+          ) : conditionalField.type === "textarea" ? (
+            <div className="flex flex-col gap-1">
+              {!conditionalField.hidden && (
+                <label
+                  className="font-bold text-lg"
+                  htmlFor={conditionalField.name}
+                >
+                  {conditionalField.label}
+                </label>
+              )}
+              {conditionalField.hint && (
+                <Text as="p" className="text-mid-grey-00" size="body">
+                  {conditionalField.hint}
+                </Text>
+              )}
+              <TextArea
+                {...register(conditionalField.name as keyof FormData)}
+                error={conditionalError?.message}
+                id={conditionalField.name}
+                placeholder={conditionalField.placeholder}
+                rows={conditionalField.rows || 4}
+              />
+            </div>
           ) : conditionalField.type === "number" ? (
             <Controller
               control={control}
