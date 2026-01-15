@@ -143,6 +143,7 @@ export const formSteps: FormStep[] = [
       {
         name: "oldAddress.addressLine1",
         label: "Address Line 1",
+        hint: "Which address does your personal mail currently go to?",
         type: "text",
         placeholder: "",
         validation: {
@@ -193,6 +194,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "newAddress.addressLine1",
+        hint: "Which address would you like your personal mail to go to?",
         label: "Address Line 1",
         type: "text",
         placeholder: "",
@@ -277,11 +279,12 @@ export const formSteps: FormStep[] = [
   {
     id: "minor-dependents",
     title:
-      "Are there any minor dependents that need their mail sent to the new address?",
+      "Are there any minor dependents who also need their mail to be redirected to the new address?",
     fields: [
       {
         name: "anyMinorDependents",
-        label: "Are there any minor dependents?",
+        label:
+          "Are there any minor dependents who also need their mail to be redirected to the new address?",
         hidden: true,
         type: "radio",
         validation: {
@@ -296,8 +299,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "minor-details",
-    title:
-      "Tell us about the minor dependent that needs their mail sent to the new address",
+    title: "Tell us about the minor dependent",
     conditionalOn: {
       field: "anyMinorDependents",
       value: "yes",
