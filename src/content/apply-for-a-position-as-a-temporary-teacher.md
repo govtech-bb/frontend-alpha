@@ -2,6 +2,7 @@
 title: "Apply for a position as a temporary teacher"
 featured: false
 stage: "alpha"
+publish_date: 2026-01-15
 ---
 
 If you want to be a temporary teacher in a government-funded primary school in Barbados, you must apply. If your application meets the requirements and a suitable position becomes available, you may be contacted for an interview.
