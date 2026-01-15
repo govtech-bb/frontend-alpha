@@ -361,7 +361,7 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "birth.location",
+        name: "birth.placeOfBirth",
         label: "Where did the birth take place?",
         type: "radio",
         placeholder: "",
@@ -388,7 +388,7 @@ export const formSteps: FormStep[] = [
           required: "Health Facility is required",
         },
         conditionalOn: {
-          field: "birth.location",
+          field: "birth.placeOfBirth",
           value: "health-facility",
         },
         options: [
@@ -408,7 +408,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "birth.residentialParish",
+        name: "birth.parish",
         label: "Parish",
         type: "select",
         width: "medium",
@@ -416,13 +416,13 @@ export const formSteps: FormStep[] = [
           required: "Parish is required",
         },
         conditionalOn: {
-          field: "birth.location",
+          field: "birth.placeOfBirth",
           value: "residential",
         },
         options: barbadosParishes,
       },
       {
-        name: "birth.residentialStreetAddress",
+        name: "birth.streetAddress",
         label: "Street address",
         type: "textarea",
         placeholder: "",
@@ -435,8 +435,40 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "birth.location",
+          field: "birth.placeOfBirth",
           value: "residential",
+        },
+      },
+      {
+        name: "birth.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        conditionalOn: {
+          field: "birth.placeOfBirth",
+          value: "other",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "birth.streetAddress",
+        label: "Street address",
+        type: "textarea",
+        placeholder: "",
+        rows: 3,
+        validation: {
+          required: "Street address is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+        conditionalOn: {
+          field: "birth.placeOfBirth",
+          value: "other",
         },
       },
       {
@@ -573,7 +605,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "child.sex",
+        name: "child.sexAtBirth",
         label: "Sex",
         type: "select",
         validation: {

@@ -8,7 +8,7 @@ export default function RegisterBirthForm() {
     <DynamicMultiStepForm
       formSteps={formSteps}
       serviceTitle="Register a birth"
-      storageKey="register-a-birth"
+      storageKey="register-birth-form"
     />
   );
 }
