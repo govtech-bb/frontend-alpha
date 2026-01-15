@@ -1,7 +1,7 @@
 "use client";
-import { Heading, Link, Text } from "@govtech-bb/react";
+import { Button, Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
@@ -30,12 +30,13 @@ export function ConfirmationPage({
   confirmationStep,
   customerEmail,
   customerName,
-  referenceNumber: _referenceNumber,
+  referenceNumber,
   onReset: _onReset,
   formId,
   paymentData,
 }: ConfirmationPageProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
   const formSlug = pathSegments[1]; // Extract form slug from URL (e.g., "get-birth-certificate")
@@ -46,7 +47,7 @@ export function ConfirmationPage({
   return (
     <>
       {/* Header section with breadcrumb and title */}
-      <div className="bg-green-40">
+      <div>
         <div className="container pt-4 pb-8 lg:pt-0">
           {/* Breadcrumb */}
           {category ? (
@@ -75,7 +76,7 @@ export function ConfirmationPage({
             </Heading>
 
             {confirmationStep.description && (
-              <p className="font-normal text-[32px] text-neutral-black leading-[1.7] lg:leading-normal">
+              <p className="font-normal text-[32px] text-neutral-black leading-normal">
                 {confirmationStep.description}
               </p>
             )}
@@ -87,6 +88,15 @@ export function ConfirmationPage({
 
       <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
+          {/* Reference number banner */}
+          {referenceNumber && (
+            <div className="bg-neutral-200 px-6 py-5.5 text-center">
+              <p className="font-bold text-[40px] text-neutral-black">
+                Your reference number is {referenceNumber}
+              </p>
+            </div>
+          )}
+
           {/* Payment content */}
           {paymentData && formSlug ? (
             <PaymentBlock
@@ -104,17 +114,25 @@ export function ConfirmationPage({
                   {step.title}
                 </Heading>
               )}
-              {step.content && <Text as="p">{step.content}</Text>}
+              {step.content && (
+                <Text as="p" className="mb-6 whitespace-pre-line text-[20px]">
+                  {step.content}
+                </Text>
+              )}
               {step.items && step.items.length > 0 && step.content ? (
-                <ul className="list-disc pl-7 text-[20px] leading-normal">
+                <ol className="list-decimal pl-7 text-[20px] leading-normal">
                   {step.items.map((item, itemIndex) => (
                     <li key={itemIndex}>{item}</li>
                   ))}
-                </ul>
+                </ol>
               ) : step.items && step.items.length > 0 ? (
                 <div className="space-y-4">
                   {step.items.map((item, itemIndex) => (
-                    <Text as="p" key={itemIndex}>
+                    <Text
+                      as="p"
+                      className="text-[20px] leading-normal"
+                      key={itemIndex}
+                    >
                       {item}
                     </Text>
                   ))}
@@ -132,7 +150,7 @@ export function ConfirmationPage({
               <Heading as="h3" className="pb-2">
                 {confirmationStep.contactDetails.title}
               </Heading>
-              <div className="space-y-1 text-[20px] leading-normal">
+              <div className="space-y-1 text-base leading-normal">
                 <p>{confirmationStep.contactDetails.address.line1}</p>
                 {confirmationStep.contactDetails.address.line2 && (
                   <p>{confirmationStep.contactDetails.address.line2}</p>
@@ -153,24 +171,41 @@ export function ConfirmationPage({
             </div>
           )}
 
+          <div>
+            <Heading as="h3" className="pb-4">
+              Who must attend the appointment
+            </Heading>
+            <Link className="block" href="#">
+              See what you need to bring with you
+            </Link>
+            <Link className="block" href="#">
+              Who should register a birth?
+            </Link>
+          </div>
+
           {/* Feedback section */}
           {confirmationStep.enableFeedback && formId && (
             <div>
               <Heading as="h3" className="pb-4">
                 Help us improve this service
               </Heading>
-              <Text as="p" className="mb-4">
+              <Text as="p" className="mb-4 leading-normal">
                 We are always working to improve government services. If you
                 have a moment, you can tell us about your experience today.
               </Text>
-              <Link
-                as={NextLink}
-                href={`/exit-survey?ref_id=${formId}&step=introduction`}
+              <Button
+                className="cursor-pointer"
+                onClick={() => {
+                  router.push(
+                    `/exit-survey?ref_id=${formId}&step=introduction`
+                  );
+                }}
+                type="button"
                 variant="secondary"
               >
                 Give feedback on this service
-              </Link>
-              <Text as="p" className="mt-4 text-[16px] text-neutral-600">
+              </Button>
+              <Text as="p" className="mt-4 text-neutral-black">
                 This will take about 30 seconds. Your responses are anonymous.
               </Text>
             </div>
