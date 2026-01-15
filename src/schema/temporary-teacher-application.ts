@@ -3,12 +3,12 @@ import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
   {
-    id: "applicantDetails",
+    id: "applicant-details",
     title: "Tell us about yourself",
     description: "",
     fields: [
       {
-        name: "applicantDetails.firstName",
+        name: "applicant-details.firstName",
         type: "text",
         label: "First Name",
         validation: {
@@ -24,7 +24,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.middleName",
+        name: "applicant-details.middleName",
         type: "text",
         label: "Middle name(s)",
         validation: {
@@ -40,7 +40,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.lastName",
+        name: "applicant-details.lastName",
         type: "text",
         label: "Last Name",
         validation: {
@@ -56,7 +56,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.dateOfBirth",
+        name: "applicant-details.dateOfBirth",
         type: "date",
         label: "Date of Birth",
         validation: {
@@ -68,7 +68,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.placeOfBirth",
+        name: "applicant-details.placeOfBirth",
         type: "text",
         label: "Place of birth",
         validation: {
@@ -76,7 +76,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.nationality",
+        name: "applicant-details.nationality",
         type: "text",
         label: "Nationality",
         validation: {
@@ -84,7 +84,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.sex",
+        name: "applicant-details.sex",
         type: "select",
         label: "Sex",
         options: [
@@ -106,7 +106,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.martialStatus",
+        name: "applicant-details.martialStatus",
         type: "select",
         label: "Martial status",
         options: [
@@ -132,7 +132,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.nationalIdNumber",
+        name: "applicant-details.nationalIdNumber",
         type: "text",
         label: "National Identification (ID) number",
         validation: {
@@ -143,13 +143,13 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantDetails.passportNumber",
+        name: "applicant-details.passportNumber",
         type: "text",
         label: "Passport Number (#)",
         validation: { required: false },
       },
       {
-        name: "applicantDetails.nationalInsuranceNumber",
+        name: "applicant-details.nationalInsuranceNumber",
         type: "text",
         label: "National Insurance number (NIS)",
         validation: { required: false },
@@ -181,12 +181,12 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "contactDetails",
+    id: "contact-details",
     title: "Contact Details",
     description: "Your contact information",
     fields: [
       {
-        name: "contactDetails.addressLine1",
+        name: "contact-details.addressLine1",
         type: "text",
         label: "Address Line 1",
         validation: {
@@ -194,7 +194,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contactDetails.addressLine2",
+        name: "contact-details.addressLine2",
         type: "text",
         label: "Address Line 2",
         validation: {
@@ -202,7 +202,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contactDetails.country",
+        name: "contact-details.country",
         type: "select",
         label: "Country",
         validation: {
@@ -216,7 +216,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "contactDetails.parish",
+        name: "contact-details.parish",
         type: "select",
         label: "Parish",
         validation: {
@@ -225,19 +225,19 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "contactDetails.postcode",
+        name: "contact-details.postcode",
         type: "text",
         label: "Postcode",
         validation: { required: false },
       },
       {
-        name: "contactDetails.emailAddress",
+        name: "contact-details.emailAddress",
         type: "email",
         label: "Email address",
         validation: { required: "This field is required" },
       },
       {
-        name: "contactDetails.telephoneNumber",
+        name: "contact-details.telephoneNumber",
         type: "text",
         label: "Telephone Number",
         validation: {
@@ -251,24 +251,24 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "applicantEducation",
+    id: "applicant-education",
     title: "Your Education",
     description: "Tell us about your education",
     fields: [
       {
-        name: "applicantEducation.nameOfInstitution",
+        name: "applicant-education.nameOfInstitution",
         type: "text",
         label: "Name of Institution",
         validation: { required: "This field is required" },
       },
       {
-        name: "applicantEducation.country",
+        name: "applicant-education.country",
         type: "text",
         label: "Country",
         validation: { required: false },
       },
       {
-        name: "applicantEducation.startYear",
+        name: "applicant-education.startYear",
         label: "Start Year",
         type: "number",
         validation: {
@@ -280,7 +280,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantEducation.endYear",
+        name: "applicant-education.endYear",
         label: "End Year",
         type: "number",
         validation: {
@@ -292,7 +292,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantEducation.anotherEducation",
+        name: "applicant-education.anotherEducation",
         label: "Do you want to add another education experience?",
         type: "radio",
         validation: { required: "This field is required" },
@@ -310,23 +310,23 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "applicantQualification",
+    id: "applicant-qualification",
     title: "Your qualifications",
     fields: [
       {
-        name: "applicantQualification.subject",
+        name: "applicant-qualification.subject",
         label: "Subject",
         type: "text",
         validation: { required: "This field is required" },
       },
       {
-        name: "applicantQualification.examinLengthingBody",
+        name: "applicant-qualification.examinLengthingBody",
         label: "ExaminLengthing Body",
         type: "text",
         validation: { required: "This field is required" },
       },
       {
-        name: "applicantQualification.year",
+        name: "applicant-qualification.year",
         label: "Year",
         type: "number",
         validation: {
@@ -338,7 +338,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantQualification.levelGrade",
+        name: "applicant-qualification.levelGrade",
         label: "Level / Grade Obtained",
         type: "text",
         validation: { required: "This field is required" },
@@ -359,24 +359,24 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "applicantWorkExperience",
+    id: "applicant-work-experience",
     title: "Your work experience",
     description: "Tell us about your work experience",
     fields: [
       {
-        name: "applicantWorkExperience.employerName",
+        name: "applicant-work-experience.employerName",
         label: "Name of employer or organization",
         type: "text",
         validation: { required: "This field is required" },
       },
       {
-        name: "applicantWorkExperience.positionHeld",
+        name: "applicant-work-experience.positionHeld",
         label: "Position held",
         type: "text",
         validation: { required: "This field is required" },
       },
       {
-        name: "applicantWorkExperience.fromYear",
+        name: "applicant-work-experience.fromYear",
         label: "From (year)",
         type: "number",
         validation: {
@@ -388,7 +388,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantWorkExperience.toYear",
+        name: "applicant-work-experience.toYear",
         label: "To (year)",
         type: "number",
         validation: {
@@ -400,7 +400,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantWorkExperience.currentlyWorking",
+        name: "applicant-work-experience.currentlyWorking",
         label: "I am currently working here",
         type: "checkbox",
         validation: {
@@ -408,13 +408,13 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantWorkExperience.tasks",
+        name: "applicant-work-experience.tasks",
         label: "Your main tasks",
         validation: { required: "This field is required" },
         type: "text",
       },
       {
-        name: "applicantWorkExperience.anotherExperience",
+        name: "applicant-work-experience.anotherExperience",
         validation: { required: "This field is required" },
         type: "radio",
         label: "Do you want to add another experience?",
@@ -426,29 +426,29 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "skillsAndExperience",
+    id: "skills-and-experience",
     title: "Your skills and experiences",
     fields: [
       {
-        name: "skillsAndExperience.athleticsGamesCraftSkills",
+        name: "skills-and-experience.athleticsGamesCraftSkills",
         label: "Athletics, games, or craft skills",
         type: "text",
         validation: { required: false },
       },
       {
-        name: "skillsAndExperience.youthCommunityVolunteerGroups",
+        name: "skills-and-experience.youthCommunityVolunteerGroups",
         label: "Experience in youth, community, or volunteer groups",
         type: "text",
         validation: { required: false },
       },
       {
-        name: "skillsAndExperience.responsibilityPositions",
+        name: "skills-and-experience.responsibilityPositions",
         label: "Positions of responsibility held",
         type: "text",
         validation: { required: false },
       },
       {
-        name: "skillsAndExperience.extraDetails",
+        name: "skills-and-experience.extraDetails",
         label: "Anything else relevant to your application?",
         type: "text",
         validation: { required: false },
@@ -617,5 +617,23 @@ export const formSteps: FormStep[] = [
         },
       },
     ],
+  },
+  {
+    id: "confirmation",
+    title: "Your application has been submitted",
+    description: "",
+    fields: [],
+    steps: [
+      {
+        title: "What happens next",
+        content: "",
+        items: [
+          "Your application will be reviewed.",
+          "You may be contacted if more information is needed.",
+          "You will be informed of the outcome.",
+        ],
+      },
+    ],
+    enableFeedback: true,
   },
 ];
