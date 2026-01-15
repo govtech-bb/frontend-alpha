@@ -133,20 +133,46 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant-details.nationalIdNumber",
+        label: "National Identification (ID) Number",
         type: "text",
-        label: "National Identification (ID) number",
+        width: "medium",
+        // placeholder: "e.g., 850101-0001",
         validation: {
+          required: "ID number is required",
           pattern: {
-            value: "^[0-9]{6}-[0-9]{4}$",
-            message: "Invalid ID number.",
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "usePassportInstead",
       },
       {
-        name: "applicant-details.passportNumber",
-        type: "text",
-        label: "Passport Number (#)",
+        name: "applicant-details.passportDetails",
+        label: "",
+        type: "showHide",
         validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
       },
       {
         name: "applicant-details.nationalInsuranceNumber",
