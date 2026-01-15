@@ -19,10 +19,12 @@ export function EntryPointWrapper({ children }: EntryPointWrapperProps) {
   const pathSegments = pathname.split("/").filter(Boolean);
   const isFormPage =
     pathSegments.includes("form") || pathSegments.includes("exit-survey");
+  const isStartPage = pathSegments[pathSegments.length - 1] === "start";
   const isConfirmationPage =
     searchParams.get("step") === "confirmation" ||
     searchParams.get("status") === "thank-you";
   const isFeedbackPage = pathname === "/feedback";
+  const shouldShowBanner = (isFormPage || isStartPage) && !isConfirmationPage;
 
   return (
     <>

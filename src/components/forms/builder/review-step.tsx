@@ -5,7 +5,16 @@ import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
-import type { DateObject, FormStep } from "@/types";
+import type { ConditionalRule, DateObject, FormStep } from "@/types";
+
+/**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
 
 type ReviewStepProps = {
   formSteps: FormStep[];
@@ -25,29 +34,49 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
   // Map form values to their respective sections
   const sections: SectionData[] = formSteps
     .map((step, index) => {
-      // Exclude review step, declaration step, and confirmation step
+      // Exclude review step, declaration step, confirmation step, and specific question steps
       if (
         step.fields.length === 0 ||
         step.id === "declaration" ||
-        step.id === "confirmation"
+        step.id === "confirmation" ||
+        step.id === "marriage-status" ||
+        step.id === "include-father-details" ||
+        step.id === "order-details"
       ) {
         return null;
       }
 
       // Exclude conditional steps that don't meet their conditions
       if (step.conditionalOn) {
-        const watchedValue = getNestedValue<unknown>(
-          formValues as Record<string, unknown>,
-          step.conditionalOn.field
-        );
-        if (watchedValue !== step.conditionalOn.value) {
-          return null;
+        // Handle OR logic
+        if ("or" in step.conditionalOn) {
+          const isVisible = step.conditionalOn.or.some((condition) => {
+            const fieldValue = getNestedValue<unknown>(
+              formValues as Record<string, unknown>,
+              condition.field
+            );
+            return fieldValue === condition.value;
+          });
+          if (!isVisible) return null;
+        } else if (isSimpleConditionalRule(step.conditionalOn)) {
+          const watchedValue = getNestedValue<unknown>(
+            formValues as Record<string, unknown>,
+            step.conditionalOn.field
+          );
+          if (watchedValue !== step.conditionalOn.value) {
+            return null;
+          }
         }
       }
 
       // Create section data with original step index
       const items = step.fields
         .map((field) => {
+          // Skip heading fields (they're visual separators, not form inputs)
+          if (field.type === "heading") {
+            return null;
+          }
+
           // Support nested field names (e.g., "guardian.firstName")
           const value = getNestedValue<unknown>(
             formValues as Record<string, unknown>,
@@ -55,7 +84,11 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           );
 
           // Skip conditional fields that shouldn't be shown
-          if (field.conditionalOn) {
+          // Field-level conditionals only use simple rules (not OR)
+          if (
+            field.conditionalOn &&
+            isSimpleConditionalRule(field.conditionalOn)
+          ) {
             const watchedValue = getNestedValue<unknown>(
               formValues as Record<string, unknown>,
               field.conditionalOn.field

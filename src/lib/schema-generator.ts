@@ -4,12 +4,22 @@ import {
   dateValidation,
 } from "@/lib/validation/date-validation";
 import type {
+  ConditionalRule,
   DateFieldValidation,
   FormField,
   FormStep,
   NestedFormField,
   NonDateFieldValidation,
 } from "@/types";
+
+/**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -377,7 +387,32 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     return z.any().optional();
   }
 
+  // Handle number type BEFORE checking optional (to avoid treating numbers as strings)
+  if (field.type === "number") {
+    schema = z.coerce.number();
+    if (validation.required) {
+      schema = (schema as z.ZodNumber).min(0, validation.required);
+    } else {
+      // For optional number fields, allow undefined or a number
+      schema = schema.optional();
+    }
+    if (validation.min) {
+      schema = (schema as z.ZodNumber).min(
+        validation.min.value,
+        validation.min.message
+      );
+    }
+    if (validation.max) {
+      schema = (schema as z.ZodNumber).max(
+        validation.max.value,
+        validation.max.message
+      );
+    }
+    return schema;
+  }
+
   // Handle optional fields (explicitly marked as required: false or no validation rules)
+  // Only for non-number fields (number fields are handled above)
   if (
     validation.required === false ||
     (!validation.required && Object.keys(validation).length === 0)
@@ -430,25 +465,6 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
         .string()
         .regex(new RegExp(optionalPattern), validation.pattern.message)
         .optional();
-    }
-  }
-
-  if (field.type === "number") {
-    schema = z.coerce.number();
-    if (validation.required) {
-      schema = (schema as z.ZodNumber).min(0, validation.required);
-    }
-    if (validation.min) {
-      schema = (schema as z.ZodNumber).min(
-        validation.min.value,
-        validation.min.message
-      );
-    }
-    if (validation.max) {
-      schema = (schema as z.ZodNumber).max(
-        validation.max.value,
-        validation.max.message
-      );
     }
   }
 
@@ -557,7 +573,10 @@ export function generateFormSchema(formSteps: FormStep[]) {
 
     // Validate conditional fields (conditionalOn)
     for (const field of conditionalFields) {
-      if (!field.conditionalOn) continue;
+      if (
+        !(field.conditionalOn && isSimpleConditionalRule(field.conditionalOn))
+      )
+        continue;
 
       const parentValue = getNestedValue(
         data as Record<string, unknown>,
@@ -597,9 +616,15 @@ export function generateFormSchema(formSteps: FormStep[]) {
             for (let index = 0; index < arrayValue.length; index++) {
               const item = arrayValue[index] as Record<string, unknown>;
 
-              // Check each nested field for conditional logic
+              // Check each nested field for conditional logic (only simple rules, not OR rules)
               for (const nestedField of field.fieldArray.fields) {
-                if (!nestedField.conditionalOn) continue;
+                if (
+                  !(
+                    nestedField.conditionalOn &&
+                    "field" in nestedField.conditionalOn
+                  )
+                )
+                  continue;
 
                 const parentValue = item[nestedField.conditionalOn.field];
                 const fieldValue = item[nestedField.name];

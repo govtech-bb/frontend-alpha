@@ -2,13 +2,22 @@ import { ErrorSummary, Heading, Text } from "@govtech-bb/react";
 import { type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
-import type { FormStep } from "@/types";
+import type { ConditionalRule, FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
 type DynamicStepProps = {
   step: FormStep;
   serviceTitle: string;
 };
+
+/**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
 
 export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
   const {
@@ -27,7 +36,10 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
       const field = step.fields.find((f) => f.name === fieldName);
 
       // Skip errors for fields that are conditionally hidden
-      if (field?.conditionalOn) {
+      if (
+        field?.conditionalOn &&
+        isSimpleConditionalRule(field.conditionalOn)
+      ) {
         const watchedValue = watch(field.conditionalOn.field as keyof FormData);
         if (watchedValue !== field.conditionalOn.value) {
           return null; // Don't show error if field is hidden
@@ -74,7 +86,11 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
         <Heading as="h1" className="focus:outline-none">
           {step.title}
         </Heading>
-        {step.description && <Text as="p">{step.description}</Text>}
+        {step.description && (
+          <Text as="p" className="whitespace-pre-line leading-[1.5]">
+            {step.description}
+          </Text>
+        )}
       </div>
 
       {/* Error Summary - only show if there are errors */}
@@ -87,16 +103,22 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
       <div className="space-y-4">
         {step.fields
           .filter((field) => !field.conditionalOn)
-          .map((field) => {
+          .map((field, index) => {
             // Find conditional fields that depend on this field
             const conditionalFields = step.fields.filter(
-              (f) => f.conditionalOn?.field === field.name
+              (f) =>
+                f.conditionalOn &&
+                isSimpleConditionalRule(f.conditionalOn) &&
+                f.conditionalOn.field === field.name
             );
+            // Use field name if available, otherwise use index to ensure unique keys
+            // This is especially important for heading fields with empty names
+            const fieldKey = field.name || `${field.type}-${index}`;
             return (
               <DynamicField
                 conditionalFields={conditionalFields}
                 field={field}
-                key={field.name}
+                key={fieldKey}
               />
             );
           })}

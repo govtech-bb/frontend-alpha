@@ -4,6 +4,7 @@ import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Typography } from "../ui/typography";
 
 type HelpfulBoxProps = {
   className?: string;
@@ -34,7 +35,7 @@ export const HelpfulBox = ({ className = "" }: HelpfulBoxProps) => {
         onClick={handleFeedbackClick}
         variant="secondary"
       >
-        Help us improve alpha.gov.bb
+        <Typography variant="body">Help us improve alpha.gov.bb</Typography>
       </Link>
     </div>
   );

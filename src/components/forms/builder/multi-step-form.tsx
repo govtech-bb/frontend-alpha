@@ -11,9 +11,18 @@ import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
-import type { FormField, FormStep } from "@/types";
+import type { ConditionalRule, FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DynamicStep } from "./dynamic-step";
+
+/**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -160,7 +169,8 @@ function createRepeatableStepInstance(
     };
 
     // Update conditionalOn.field reference to include the array index
-    if (field.conditionalOn) {
+    // Only handle simple conditional rules (not OR rules)
+    if (field.conditionalOn && isSimpleConditionalRule(field.conditionalOn)) {
       indexed.conditionalOn = {
         ...field.conditionalOn,
         field: indexFieldName(field.conditionalOn.field),
@@ -182,13 +192,14 @@ function createRepeatableStepInstance(
         fields: field.showHide.fields.map((nestedField) => ({
           ...nestedField,
           name: indexFieldName(nestedField.name),
-          // Also update conditionalOn in nested fields if present
-          ...(nestedField.conditionalOn && {
-            conditionalOn: {
-              ...nestedField.conditionalOn,
-              field: indexFieldName(nestedField.conditionalOn.field),
-            },
-          }),
+          // Also update conditionalOn in nested fields if present (only simple rules)
+          ...(nestedField.conditionalOn &&
+            "field" in nestedField.conditionalOn && {
+              conditionalOn: {
+                ...nestedField.conditionalOn,
+                field: indexFieldName(nestedField.conditionalOn.field),
+              },
+            }),
         })),
       };
     }
@@ -216,7 +227,11 @@ function createRepeatableStepInstance(
   // Determine the conditionalOn for this step instance
   let stepConditionalOn = baseStep.conditionalOn;
 
-  if (isSubStep && baseStep.conditionalOn) {
+  if (
+    isSubStep &&
+    baseStep.conditionalOn &&
+    isSimpleConditionalRule(baseStep.conditionalOn)
+  ) {
     // Sub-steps: index the conditionalOn.field reference (e.g., isParentOrGuardian -> beneficiaries.0.isParentOrGuardian)
     stepConditionalOn = {
       ...baseStep.conditionalOn,
@@ -490,6 +505,78 @@ export default function DynamicMultiStepForm({
     defaultValues,
   });
 
+  // Helper function to check if a step should be visible based on form values
+  const isStepVisible = useCallback(
+    (step: FormStep, formValues?: FormData): boolean => {
+      if (!step.conditionalOn) return true;
+
+      const values = formValues ?? methods.getValues();
+
+      if (isSimpleConditionalRule(step.conditionalOn)) {
+        const watchedValue = getNestedValue<unknown>(
+          values as Record<string, unknown>,
+          step.conditionalOn.field
+        );
+        return watchedValue === step.conditionalOn.value;
+      }
+
+      // Handle OR logic
+      if ("or" in step.conditionalOn) {
+        return step.conditionalOn.or.some((condition) => {
+          const fieldValue = getNestedValue(
+            values as Record<string, unknown>,
+            condition.field
+          );
+          return fieldValue === condition.value;
+        });
+      }
+
+      return false;
+    },
+    [methods]
+  );
+
+  // Extract fields that affect step visibility (memoized to prevent unnecessary re-renders)
+  const conditionalFields = useMemo(() => {
+    const fields = new Set<string>();
+    for (const step of formSteps) {
+      if (step.conditionalOn) {
+        if ("or" in step.conditionalOn) {
+          for (const condition of step.conditionalOn.or) {
+            fields.add(condition.field);
+          }
+        } else if (isSimpleConditionalRule(step.conditionalOn)) {
+          fields.add(step.conditionalOn.field);
+        }
+      }
+    }
+    return Array.from(fields);
+  }, [formSteps]);
+
+  // Compute visible steps based on current form values
+  const computeVisibleSteps = useCallback(() => {
+    const currentValues = methods.getValues();
+    return formSteps.filter((step) => isStepVisible(step, currentValues));
+  }, [formSteps, methods]);
+
+  // Track visible steps in state
+  const [visibleSteps, setVisibleSteps] = useState<FormStep[]>(() =>
+    computeVisibleSteps()
+  );
+
+  // Update visible steps only when conditional fields change
+  useEffect(() => {
+    if (!conditionalFields.length) return;
+
+    const subscription = methods.watch((_value, { name }) => {
+      // Only recompute if a conditional field changed
+      if (name && conditionalFields.includes(name)) {
+        setVisibleSteps(computeVisibleSteps());
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [conditionalFields, computeVisibleSteps, methods]);
+
   // Update URL when step changes
   // biome-ignore lint/correctness/useExhaustiveDependencies: expandedFormSteps changes are tracked, searchParams intentionally omitted to prevent circular updates
   useEffect(() => {
@@ -554,7 +641,14 @@ export default function DynamicMultiStepForm({
         setCurrentStep(stepIndex);
       }
     }
-  }, [_hasHydrated, searchParams, completedSteps, currentStep, setCurrentStep]);
+  }, [
+    _hasHydrated,
+    searchParams,
+    completedSteps,
+    currentStep,
+    setCurrentStep,
+    visibleSteps,
+  ]);
 
   // Load saved form data on mount
   useEffect(() => {
@@ -684,9 +778,7 @@ export default function DynamicMultiStepForm({
 
       // Check if step is visible (for conditional steps)
       const isVisible =
-        !step.conditionalOn ||
-        getNestedValue<unknown>(cleanedData, step.conditionalOn.field) ===
-          step.conditionalOn.value;
+        !step.conditionalOn || isStepVisible(step, cleanedData as FormData);
 
       for (const field of step.fields) {
         const fieldParts = field.name?.split(".");
@@ -712,12 +804,8 @@ export default function DynamicMultiStepForm({
     for (const step of conditionalSteps) {
       if (!step.conditionalOn) continue;
 
-      const watchedValue = getNestedValue<unknown>(
-        cleanedData,
-        step.conditionalOn.field
-      );
-
-      const isVisible = watchedValue === step.conditionalOn.value;
+      // Use isStepVisible helper which handles both simple and OR logic
+      const isVisible = isStepVisible(step, cleanedData as FormData);
 
       // Only delete simple (non-nested) fields from hidden steps
       if (!isVisible) {
@@ -779,7 +867,9 @@ export default function DynamicMultiStepForm({
 
         // Mark as submitted in store with customer name and payment data
         markAsSubmitted(
-          result.data?.submissionId || "N/A",
+          result.data?.integrations?.opencrvs?.trackingId ||
+            result.data?.submissionId ||
+            "N/A",
           customerName,
           apiPaymentData
         );
@@ -805,18 +895,33 @@ export default function DynamicMultiStepForm({
   };
 
   // Helper function to check if a step should be shown based on its conditionalOn property
-  const isStepVisible = (step: FormStep): boolean => {
+  const isStepVisibleInNav = (step: FormStep): boolean => {
     // Exclude final steps (confirmation/thank-you) from regular navigation
     if (step.id === "confirmation" || step.id === "thank-you") return false;
 
     if (!step.conditionalOn) return true;
 
     const formValues = methods.getValues();
-    const watchedValue = getNestedValue<unknown>(
-      formValues as Record<string, unknown>,
-      step.conditionalOn.field
-    );
-    return watchedValue === step.conditionalOn.value;
+    if (isSimpleConditionalRule(step.conditionalOn)) {
+      const watchedValue = getNestedValue<unknown>(
+        formValues as Record<string, unknown>,
+        step.conditionalOn.field
+      );
+      return watchedValue === step.conditionalOn.value;
+    }
+
+    // Handle OR logic
+    if ("or" in step.conditionalOn) {
+      return step.conditionalOn.or.some((condition) => {
+        const fieldValue = getNestedValue(
+          formValues as Record<string, unknown>,
+          condition.field
+        );
+        return fieldValue === condition.value;
+      });
+    }
+
+    return false;
   };
 
   // Helper function to find the next visible step index
@@ -877,6 +982,9 @@ export default function DynamicMultiStepForm({
       (field) => {
         // Include field if it has no conditional rule
         if (!field.conditionalOn) return true;
+
+        // Only handle simple conditional rules (not OR rules)
+        if (!isSimpleConditionalRule(field.conditionalOn)) return true;
 
         // Check if conditional field should be visible
         const watchedValue = methods.watch(
@@ -960,6 +1068,24 @@ export default function DynamicMultiStepForm({
 
         // Check pattern validation
         if (field.validation.pattern && stringValue) {
+          const regex = new RegExp(field.validation.pattern.value);
+          if (!regex.test(stringValue)) {
+            methods.setError(field.name as keyof FormData, {
+              type: "pattern",
+              message: field.validation.pattern.message,
+            });
+            isValid = false;
+          }
+        }
+      }
+    }
+
+    for (const field of visibleFields) {
+      if (!field.conditionalOn && field.validation.pattern) {
+        const fieldValue = methods.getValues(field.name as keyof FormData);
+        const stringValue = typeof fieldValue === "string" ? fieldValue : "";
+
+        if (stringValue && stringValue.trim() !== "") {
           const regex = new RegExp(field.validation.pattern.value);
           if (!regex.test(stringValue)) {
             methods.setError(field.name as keyof FormData, {
@@ -1237,7 +1363,7 @@ export default function DynamicMultiStepForm({
                 type="button"
                 variant="secondary"
               >
-                Previous
+                Back
               </Button>
             )}
 

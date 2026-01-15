@@ -46,10 +46,17 @@ export type SelectOption = {
   value: string;
 };
 
-export type ConditionalRule = {
-  field: string; // The field name to watch
-  value: string; // The value that triggers this field to show
-};
+export type ConditionalRule =
+  | {
+      field: string; // The field name to watch
+      value: string; // The value that triggers this field to show
+    }
+  | {
+      or: Array<{
+        field: string;
+        value: string;
+      }>;
+    };
 
 export type NestedFormField = {
   name: string;
@@ -99,6 +106,7 @@ export type BaseFormField = {
   /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
   skipValidationWhenShowHideOpen?: string;
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
+  inputClassName?: string;
 };
 
 type DateFormField = BaseFormField & {
@@ -149,6 +157,21 @@ type FileFormField = BaseFormField & {
   multiple?: boolean;
 };
 
+type HeadingFormField = {
+  name: string;
+  type: "heading";
+  label: string; // The heading text
+  validation: NonDateFieldValidation; // Empty validation for heading fields
+  placeholder?: string; // For consistency with other field types (not typically used for headings)
+  hint?: string; // For consistency with other field types (not typically used for headings)
+  hidden?: boolean; // For consistency with other field types (not typically used for headings)
+  width?: "short" | "medium" | "full"; // For consistency with other field types (not typically used for headings)
+  conditionalOn?: ConditionalRule; // For consistency with other field types (not typically used for headings)
+  fieldArray?: FieldArrayConfig; // For consistency with other field types (not typically used for headings)
+  showHide?: ShowHideConfig; // For consistency with other field types (not typically used for headings)
+  skipValidationWhenShowHideOpen?: string; // For consistency with other field types (not typically used for headings)
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -157,7 +180,8 @@ export type FormField =
   | FieldArrayFormField
   | TextFormField
   | ShowHideFormField
-  | FileFormField;
+  | FileFormField
+  | HeadingFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
@@ -226,6 +250,11 @@ export type ApiResponse = {
     amount?: number;
     description?: string;
     numberOfCopies?: number;
+    integrations?: {
+      opencrvs?: {
+        trackingId?: string;
+      };
+    };
   };
   errors?: { field: string; message: string; code: string }[];
   message?: string;

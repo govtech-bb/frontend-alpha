@@ -3,6 +3,7 @@ import {
   DateInput,
   type DateInputValue,
   FileUpload,
+  Heading,
   Input,
   NumberInput,
   Radio,
@@ -12,12 +13,12 @@ import {
   Text,
   TextArea,
 } from "@govtech-bb/react";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
-import type { FormField } from "@/types";
+import type { ConditionalRule, FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
 type FileUploadFieldProps = {
@@ -97,7 +98,17 @@ function FileUploadField({
 type DynamicFieldProps = {
   field: FormField;
   conditionalFields?: FormField[];
+  className?: string;
 };
+
+/**
+ * Type guard to check if a ConditionalRule is a simple field/value rule (not an OR rule)
+ */
+function isSimpleConditionalRule(
+  rule: ConditionalRule
+): rule is { field: string; value: string } {
+  return "field" in rule;
+}
 
 /**
  * Get the CSS class for field width
@@ -143,6 +154,7 @@ export function DynamicField({
     for (const conditionalField of conditionalFields) {
       if (
         conditionalField.conditionalOn &&
+        isSimpleConditionalRule(conditionalField.conditionalOn) &&
         conditionalField.conditionalOn.field === field.name
       ) {
         const shouldShow =
@@ -156,8 +168,10 @@ export function DynamicField({
           const anotherFieldWithSameNameIsShown = conditionalFields.some(
             (cf) =>
               cf.name === conditionalField.name &&
-              cf.conditionalOn?.field === field.name &&
-              currentFieldValue === cf.conditionalOn?.value
+              cf.conditionalOn &&
+              isSimpleConditionalRule(cf.conditionalOn) &&
+              cf.conditionalOn.field === field.name &&
+              currentFieldValue === cf.conditionalOn.value
           );
 
           // Only clear if no other conditional field with this name is visible
@@ -192,17 +206,62 @@ export function DynamicField({
       errors as Record<string, unknown>,
       conditionalField.name
     );
-    const watchedValue = conditionalField.conditionalOn
-      ? watch(conditionalField.conditionalOn.field as keyof FormData)
-      : null;
-    const shouldShow = watchedValue === conditionalField.conditionalOn?.value;
+    const watchedValue =
+      conditionalField.conditionalOn &&
+      isSimpleConditionalRule(conditionalField.conditionalOn)
+        ? watch(conditionalField.conditionalOn.field as keyof FormData)
+        : null;
+    const shouldShow =
+      conditionalField.conditionalOn &&
+      isSimpleConditionalRule(conditionalField.conditionalOn)
+        ? watchedValue === conditionalField.conditionalOn.value
+        : false;
 
     if (!shouldShow) return null;
+
+    const conditionalKey =
+      conditionalField.conditionalOn &&
+      isSimpleConditionalRule(conditionalField.conditionalOn)
+        ? conditionalField.conditionalOn.value
+        : "conditional";
+
+    // For textarea, render without indentation
+    if (conditionalField.type === "textarea") {
+      return (
+        <div
+          className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 motion-safe:animate-in motion-safe:duration-200"
+          key={`${conditionalField.name}-${conditionalKey}`}
+        >
+          <div className="flex flex-col gap-1">
+            {!conditionalField.hidden && (
+              <label
+                className="font-bold text-lg"
+                htmlFor={conditionalField.name}
+              >
+                {conditionalField.label}
+              </label>
+            )}
+            {conditionalField.hint && (
+              <Text as="p" className="text-neutral-midgrey" size="body">
+                {conditionalField.hint}
+              </Text>
+            )}
+            <TextArea
+              {...register(conditionalField.name as keyof FormData)}
+              error={conditionalError?.message}
+              id={conditionalField.name}
+              placeholder={conditionalField.placeholder}
+              rows={conditionalField.rows || 4}
+            />
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div
         className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-5 motion-safe:animate-in motion-safe:duration-200"
-        key={`${conditionalField.name}-${conditionalField.conditionalOn?.value}`}
+        key={`${conditionalField.name}-${conditionalKey}`}
       >
         <div className="border-grey-00 border-l-8 border-solid pb-4 pl-[52px]">
           {conditionalField.type === "fieldArray" ? (
@@ -272,29 +331,6 @@ export function DynamicField({
                 ))}
               </Select>
             )
-          ) : conditionalField.type === "textarea" ? (
-            <div className="flex flex-col gap-1">
-              {!conditionalField.hidden && (
-                <label
-                  className="font-bold text-lg"
-                  htmlFor={conditionalField.name}
-                >
-                  {conditionalField.label}
-                </label>
-              )}
-              {conditionalField.hint && (
-                <Text as="p" className="text-mid-grey-00" size="body">
-                  {conditionalField.hint}
-                </Text>
-              )}
-              <TextArea
-                {...register(conditionalField.name as keyof FormData)}
-                error={conditionalError?.message}
-                id={conditionalField.name}
-                placeholder={conditionalField.placeholder}
-                rows={conditionalField.rows || 4}
-              />
-            </div>
           ) : conditionalField.type === "number" ? (
             <Controller
               control={control}
@@ -352,8 +388,17 @@ export function DynamicField({
   };
 
   return (
-    <div className={getWidthClass(field.width)} id={field.name}>
-      {field.type === "fieldArray" ? (
+    <div className={getWidthClass(field.width)} id={field.name || undefined}>
+      {field.type === "heading" ? (
+        <div className="py-5">
+          <hr className="border-neutral-grey border-t-4" />
+          {field.label && field.label.trim() ? (
+            <Heading as="h2" className="mt-10">
+              {field.label}
+            </Heading>
+          ) : null}
+        </div>
+      ) : field.type === "fieldArray" ? (
         <DynamicFieldArray field={field} />
       ) : field.type === "date" ? (
         <Controller
@@ -424,27 +469,95 @@ export function DynamicField({
           control={control}
           name={field.name as keyof FormData}
           render={({ field: controllerField }) => (
-            <RadioGroup
-              description={field.hint}
-              error={error?.message}
-              label={field.hidden ? "" : field.label}
-              onValueChange={controllerField.onChange}
-              value={controllerField.value as string}
-            >
-              {field.options?.map((option) => (
-                <Fragment key={option.value}>
+            <>
+              <RadioGroup
+                description={field.hint}
+                error={error?.message}
+                label={field.hidden ? "" : field.label}
+                onValueChange={controllerField.onChange}
+                value={controllerField.value as string}
+              >
+                {field.options?.map((option) => (
                   <Radio
                     id={option.value}
+                    key={option.value}
                     label={option.label}
                     value={option.value}
                   />
-                  {/* Render conditional fields that match this option */}
-                  {conditionalFields
-                    .filter((cf) => cf.conditionalOn?.value === option.value)
-                    .map((cf) => renderConditionalField(cf))}
-                </Fragment>
-              ))}
-            </RadioGroup>
+                ))}
+              </RadioGroup>
+              {/* Render conditional fields after all radio options without indentation */}
+              {conditionalFields
+                .filter((cf) => {
+                  if (
+                    !(
+                      cf.conditionalOn &&
+                      isSimpleConditionalRule(cf.conditionalOn)
+                    )
+                  )
+                    return false;
+                  const watchedValue = watch(
+                    cf.conditionalOn.field as keyof FormData
+                  );
+                  return watchedValue === cf.conditionalOn.value;
+                })
+                .map((cf) => {
+                  const conditionalError = getNestedValue<FieldError>(
+                    errors as Record<string, unknown>,
+                    cf.name
+                  );
+                  return (
+                    <div className="mt-4" key={cf.name}>
+                      {cf.type === "select" ? (
+                        cf.hint ? (
+                          <div className="flex flex-col gap-1">
+                            {!cf.hidden && (
+                              <label
+                                className="font-bold text-lg"
+                                htmlFor={cf.name}
+                              >
+                                {cf.label}
+                              </label>
+                            )}
+                            <Text
+                              as="p"
+                              className="text-neutral-midgrey"
+                              size="body"
+                            >
+                              {cf.hint}
+                            </Text>
+                            <Select
+                              error={conditionalError?.message}
+                              id={cf.name}
+                              {...register(cf.name as keyof FormData)}
+                            >
+                              {cf.options?.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                  {option.label}
+                                </option>
+                              ))}
+                            </Select>
+                          </div>
+                        ) : (
+                          <Select
+                            error={conditionalError?.message}
+                            label={cf.hidden ? "" : cf.label}
+                            {...register(cf.name as keyof FormData)}
+                          >
+                            {cf.options?.map((option) => (
+                              <option key={option.value} value={option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </Select>
+                        )
+                      ) : (
+                        renderConditionalField(cf)
+                      )}
+                    </div>
+                  );
+                })}
+            </>
           )}
         />
       ) : field.type === "checkbox" ? (
@@ -652,6 +765,7 @@ export function DynamicField({
             id={field.name}
             type={field.type}
             {...register(field.name as keyof FormData)}
+            className={field.inputClassName || ""}
             placeholder={field.placeholder}
           />
         </div>
@@ -661,6 +775,7 @@ export function DynamicField({
           label={field.hidden ? "" : field.label}
           type={field.type}
           {...register(field.name as keyof FormData)}
+          className={field.inputClassName || ""}
           placeholder={field.placeholder}
         />
       )}
