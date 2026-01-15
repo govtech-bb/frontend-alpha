@@ -1,7 +1,7 @@
 "use client";
 
 import DynamicMultiStepForm from "@/components/forms/builder/multi-step-form";
-import { formSteps } from "@/schema/post-office-redirection-business";
+import { formSteps } from "@/schema/post-office-redirection-deceased";
 
 export default function RedirectMailForDeceasedForm() {
   return (
