@@ -7,7 +7,7 @@ export default function RedirectMailForDeceasedForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      serviceTitle="Change where mail is sent for a deceased person"
+      serviceTitle="Tell the Post Office someone has died"
       storageKey="post-office-redirection-deceased"
     />
   );

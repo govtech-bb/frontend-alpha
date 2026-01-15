@@ -336,15 +336,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         ],
       },
       {
-        title: "Redirect My Mail (Deceased)",
+        title: "Tell the Post Office someone has died",
         slug: "post-office-redirection-deceased",
-        description: "Redirect mail for a deceased person",
+        description: "Tell the Post Office someone has died",
         protected: true,
         subPages: [
           { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
-            title: "Redirect My Mail (Deceased) form",
+            title: "Form to tell the Post Office someone has died",
             type: "component",
             protected: true,
           },
