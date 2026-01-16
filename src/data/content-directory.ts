@@ -321,15 +321,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
       },
       {
-        title: "Redirect My Mail (Individual)",
+        title: "Redirect my personal mail",
         slug: "post-office-redirection-individual",
-        description: "Redirect mail for an individual",
+        description: "Redirect my personal mail",
         protected: true,
         subPages: [
           { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
-            title: "Redirect My Mail (Individual) form",
+            title: "Redirect my personal mail form",
             type: "component",
             protected: true,
           },
@@ -351,15 +351,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         ],
       },
       {
-        title: "Redirect My Mail (Business)",
+        title: "Redirect my business mail",
         slug: "post-office-redirection-business",
-        description: "Redirect mail for a Business",
+        description: "Redirect my business mail",
         protected: true,
         subPages: [
           { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
-            title: "Redirect My Mail (Business) form",
+            title: "Redirect my business mail form",
             type: "component",
             protected: true,
           },

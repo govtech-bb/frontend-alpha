@@ -4,7 +4,7 @@ import type { FormStep } from "@/types";
 export const formSteps: FormStep[] = [
   {
     id: "applicant-details",
-    title: "Tell us about yourself",
+    title: "Tell us about the person submitting this application",
     fields: [
       {
         name: "applicant.title",
@@ -40,6 +40,25 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "applicant.middleName",
+        label: "Middle name",
+        hint: "Enter all middle names in order",
+        type: "text",
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
         name: "applicant.lastName",
         label: "Last name",
         type: "text",
@@ -55,61 +74,6 @@ export const formSteps: FormStep[] = [
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
-        },
-      },
-      {
-        name: "applicant.dateOfBirth",
-        label: "Date of birth",
-        placeholder: "For example, 12 30 1986",
-        type: "date",
-        validation: {
-          required: "Date of birth is required",
-          date: {
-            type: "past",
-          },
-        },
-      },
-      {
-        name: "applicant.idNumber",
-        label: "National Identification (ID) Number",
-        type: "text",
-        width: "medium",
-        // placeholder: "e.g., 850101-0001",
-        validation: {
-          required: "ID Number is required",
-          pattern: {
-            value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
-          },
-        },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-      {
-        name: "applicant.passportDetails",
-        label: "",
-        type: "showHide",
-        validation: { required: false },
-        showHide: {
-          summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
-          description:
-            "If you don't have a National ID number, you can use your passport number instead.",
-          fields: [
-            {
-              name: "applicant.passportNumber",
-              label: "Passport Number",
-              type: "text",
-              placeholder: "",
-              validation: {
-                required: "Passport number is required",
-                minLength: {
-                  value: 6,
-                  message: "Passport number must be at least 6 characters",
-                },
-              },
-            },
-          ],
         },
       },
       {
@@ -137,63 +101,31 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "old-business-address",
-    title: "Old address of the business",
+    id: "business-name",
+    title: "Tell us about the business",
     fields: [
       {
-        name: "oldBusinessAddress.addressLine1",
-        label: "Address Line 1",
+        name: "businessName",
+        label: "Business name",
         type: "text",
         placeholder: "",
         validation: {
-          required: "Address line 1 is required",
+          required: "Business name is required",
           minLength: {
             value: 5,
-            message: "Address must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "oldBusinessAddress.addressLine2",
-        label: "Address Line 2",
-        type: "text",
-        placeholder: "",
-        validation: { required: false },
-      },
-
-      {
-        name: "oldBusinessAddress.parish",
-        label: "Parish",
-        type: "select",
-        width: "medium",
-        validation: {
-          required: "Parish is required",
-        },
-        options: barbadosParishes,
-      },
-      {
-        name: "oldBusinessAddress.postalCode",
-        label: "Postal Code",
-        hint: "Optional (e.g. BB17004)",
-        type: "text",
-        width: "medium",
-        validation: {
-          required: false,
-          pattern: {
-            value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Business name must be at least 5 characters",
           },
         },
       },
     ],
   },
   {
-    id: "new-business-address",
-    title: "New address of the business",
+    id: "current-address",
+    title: "Current address of the business",
     fields: [
       {
-        name: "newBusinessAddress.addressLine1",
-        label: "Address Line 1",
+        name: "currentAddress.addressLine1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -205,15 +137,15 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "newBusinessAddress.addressLine2",
-        label: "Address Line 2",
+        name: "currentAddress.addressLine2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
       },
 
       {
-        name: "newBusinessAddress.parish",
+        name: "currentAddress.parish",
         label: "Parish",
         type: "select",
         width: "medium",
@@ -223,8 +155,79 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "newBusinessAddress.postalCode",
-        label: "Postal Code",
+        name: "currentAddress.postcode",
+        label: "Postcode",
+        hint: "Optional (e.g. BB17004)",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: false,
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid post code (e.g., BB17004)",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "permission-details",
+    title: "Tell us what permission you have to act for this business",
+    fields: [
+      {
+        name: "permissionDetails",
+        label: "Permission details",
+        hint: "For example, director, manager, authorised employee, or appointed agent",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Permission details is required",
+          minLength: {
+            value: 5,
+            message: "Permission details must be at least 5 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "new-address",
+    title: "Where should we redirect the mail?",
+    fields: [
+      {
+        name: "newAddress.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "newAddress.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
+      },
+
+      {
+        name: "newAddress.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "newAddress.postcode",
+        label: "Postcode",
         hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "medium",
@@ -237,7 +240,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "newBusinessAddress.isMovingPermanent",
+        name: "newAddress.isMovingPermanent",
         label: "Are you moving permanently?",
         type: "radio",
         validation: {
@@ -249,26 +252,26 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "newBusinessAddress.redirectionStartDate",
+        name: "newAddress.redirectionStartDate",
         label: "Redirection start date",
         type: "date",
         validation: {
           required: "Start date is required",
         },
         conditionalOn: {
-          field: "newBusinessAddress.isMovingPermanent",
+          field: "newAddress.isMovingPermanent",
           value: "no",
         },
       },
       {
-        name: "newBusinessAddress.redirectionEndDate",
+        name: "newAddress.redirectionEndDate",
         label: "Redirection end date",
         type: "date",
         validation: {
           required: "End date is required",
         },
         conditionalOn: {
-          field: "newBusinessAddress.isMovingPermanent",
+          field: "newAddress.isMovingPermanent",
           value: "no",
         },
       },
@@ -276,8 +279,9 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "upload-document",
-    title: "Upload document",
-    description: "Provide the official company stamp",
+    title: "Upload supporting documents",
+    description:
+      "For example, a letter of authorisation, company resolution, or official company stamp. ",
     fields: [
       {
         type: "file",
@@ -310,7 +314,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfDeclaration",
+        name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
         placeholder: "For example, 12 15 2025",
@@ -326,17 +330,16 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your request has been submitted",
-    description: "Complete your payment below to finalize your submission",
+    title: "Application submitted",
+    description: "Your application has been submitted successfully",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
+        content: "We will review the information you provided.",
         items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
+          "If we need more information or documents, we will contact you",
+          "Once approved, mail will be redirected to the address you specified",
         ],
       },
     ],
