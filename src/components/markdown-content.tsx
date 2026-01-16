@@ -9,6 +9,7 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import rehypeHideStartLinks from "@/lib/rehype-hide-start-links";
 import rehypeSectionise from "@/lib/rehype-sectionise";
+import { ClearSession } from "./clear-session";
 import { MigrationBanner } from "./migration-banner";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
@@ -125,6 +126,7 @@ type MarkdownContentProps = {
       [key: string]: any;
     };
     content: string;
+    slug?: string[];
   };
   hasResearchAccess?: boolean;
 };
@@ -134,8 +136,19 @@ export const MarkdownContent = ({
   hasResearchAccess = false,
 }: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
+  // Check if this is the register-a-birth start page
+  // Check if slug includes both "register-a-birth" and "start", or check content for unique text
+  const isStartPage =
+    (markdown.slug &&
+      Array.isArray(markdown.slug) &&
+      markdown.slug.includes("register-a-birth") &&
+      markdown.slug.includes("start")) ||
+    (content.includes("register a stillbirth") &&
+      content.includes("There is a separate form if you need to"));
+
   return (
     <div className="mb-xm lg:grid lg:grid-cols-3 lg:gap-16">
+      {isStartPage && <ClearSession />}
       <div className="space-y-6 lg:col-span-2 lg:space-y-8">
         <div className="space-y-4 lg:space-y-6">
           {frontmatter.title && (
