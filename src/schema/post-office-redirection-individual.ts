@@ -139,11 +139,11 @@ export const formSteps: FormStep[] = [
   {
     id: "old-address",
     title: "Old address",
+    description: "Which address does your personal mail currently go to?",
     fields: [
       {
         name: "oldAddress.addressLine1",
-        label: "Address Line 1",
-        hint: "Which address does your personal mail currently go to?",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -156,7 +156,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "oldAddress.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -174,7 +174,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "oldAddress.postalCode",
-        label: "Postal Code",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -191,11 +191,11 @@ export const formSteps: FormStep[] = [
   {
     id: "new-address",
     title: "New address",
+    description: "Which address would you like your personal mail to go to?",
     fields: [
       {
         name: "newAddress.addressLine1",
-        hint: "Which address would you like your personal mail to go to?",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -208,7 +208,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "newAddress.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -226,7 +226,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "newAddress.postalCode",
-        label: "Postal Code",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -280,9 +280,11 @@ export const formSteps: FormStep[] = [
     id: "minor-dependents",
     title:
       "Are there any minor dependents who also need their mail to be redirected to the new address?",
+    description:
+      "Minor dependents are persons in your care under the age of 16",
     fields: [
       {
-        name: "anyMinorDependents",
+        name: "dependents.anyMinorDependents",
         label:
           "Are there any minor dependents who also need their mail to be redirected to the new address?",
         hidden: true,
@@ -295,13 +297,26 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
+      // {
+      //   name: "dependents.numberOfMinors",
+      //   label:
+      //     "How many minor dependents need their mail sent to the new address?",
+      //   type: "number",
+      //   validation: {
+      //     required: "Number of minors is required",
+      //   },
+      //   conditionalOn: {
+      //     field: "dependents.anyMinorDependents",
+      //     value: "yes",
+      //   },
+      // },
     ],
   },
   {
     id: "minor-details",
     title: "Tell us about the minor dependent",
     conditionalOn: {
-      field: "anyMinorDependents",
+      field: "dependents.anyMinorDependents",
       value: "yes",
     },
     repeatable: {
