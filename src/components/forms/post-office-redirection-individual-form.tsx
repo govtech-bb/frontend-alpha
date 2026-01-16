@@ -7,7 +7,7 @@ export default function RedirectMailForIndividualForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      serviceTitle="Change where mail is sent for an individual"
+      serviceTitle="Redirect my personal mail"
       storageKey="post-office-redirection-individual"
     />
   );
