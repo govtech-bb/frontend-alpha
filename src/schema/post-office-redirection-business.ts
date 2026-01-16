@@ -279,8 +279,9 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "upload-document",
-    title: "Upload document",
-    description: "Provide the official company stamp",
+    title: "Upload supporting documents",
+    description:
+      "For example, a letter of authorisation, company resolution, or official company stamp. ",
     fields: [
       {
         type: "file",
