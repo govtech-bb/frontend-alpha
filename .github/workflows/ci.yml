@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    env:
+      MAIL_FROM: "no-reply@notify.dev.alpha.gov.bb"
+      SES_REGION: "region"
+      FEEDBACK_TO_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
+      FEEDBACK_FROM_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build

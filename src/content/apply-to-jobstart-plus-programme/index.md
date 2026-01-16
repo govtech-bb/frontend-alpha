@@ -41,6 +41,3 @@ When registration is open, you will be able to register here.
 [Button to start page] Register now -->
 
 The initiative is owned by the Ministry of Labour, Social Security and Third Sector
-
-535-1400  
-jobstartplus@labour.gov.bb

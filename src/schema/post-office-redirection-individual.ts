@@ -139,10 +139,11 @@ export const formSteps: FormStep[] = [
   {
     id: "old-address",
     title: "Old address",
+    description: "Which address does your personal mail currently go to?",
     fields: [
       {
         name: "oldAddress.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -155,7 +156,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "oldAddress.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -173,7 +174,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "oldAddress.postalCode",
-        label: "Postal Code",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -190,10 +191,11 @@ export const formSteps: FormStep[] = [
   {
     id: "new-address",
     title: "New address",
+    description: "Which address would you like your personal mail to go to?",
     fields: [
       {
         name: "newAddress.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -206,7 +208,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "newAddress.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -224,7 +226,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "newAddress.postalCode",
-        label: "Postal Code",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -277,11 +279,14 @@ export const formSteps: FormStep[] = [
   {
     id: "minor-dependents",
     title:
-      "Are there any minor dependents that need their mail sent to the new address?",
+      "Are there any minor dependents who also need their mail to be redirected to the new address?",
+    description:
+      "Minor dependents are persons in your care under the age of 16",
     fields: [
       {
         name: "anyMinorDependents",
-        label: "Are there any minor dependents?",
+        label:
+          "Are there any minor dependents who also need their mail to be redirected to the new address?",
         hidden: true,
         type: "radio",
         validation: {
@@ -292,12 +297,24 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
+      // {
+      //   name: "dependents.numberOfMinors",
+      //   label:
+      //     "How many minor dependents need their mail sent to the new address?",
+      //   type: "number",
+      //   validation: {
+      //     required: "Number of minors is required",
+      //   },
+      //   conditionalOn: {
+      //     field: "dependents.anyMinorDependents",
+      //     value: "yes",
+      //   },
+      // },
     ],
   },
   {
     id: "minor-details",
-    title:
-      "Tell us about the minor dependent that needs their mail sent to the new address",
+    title: "Tell us about the minor dependent",
     conditionalOn: {
       field: "anyMinorDependents",
       value: "yes",
@@ -370,18 +387,16 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your submission has been saved",
-    description: "Complete your payment below to finalize your submission",
+    title: "Thank you for your request",
+    description:
+      "The Barbados Postal Service will process your redirection request when you have made the payment.",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
-        items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
-        ],
+        content:
+          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months",
+        items: [],
       },
     ],
     enableFeedback: true,

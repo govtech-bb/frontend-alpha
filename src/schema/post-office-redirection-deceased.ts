@@ -3,6 +3,145 @@ import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
   {
+    id: "deceased-details",
+    title: "Tell us about the deceased",
+    fields: [
+      {
+        name: "deceased.title",
+        label: "Title",
+        type: "select",
+        width: "short",
+        validation: {
+          required: "Title is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Mr", value: "mr" },
+          { label: "Ms", value: "ms" },
+          { label: "Mrs", value: "mrs" },
+        ],
+      },
+      {
+        name: "deceased.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "deceased.middleName",
+        label: "Middle name(s)",
+        type: "text",
+        hint: "Enter all middle names in order",
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "deceased.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "deceased.dateOfDeath",
+        label: "Date of death",
+        placeholder: "For example, 07 09 1999",
+        type: "date",
+        validation: {
+          required: "Date of death is required",
+          date: {
+            type: "past",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "old-address",
+    title: "Old address of the deceased person",
+    fields: [
+      {
+        name: "oldAddress.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "oldAddress.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
+      },
+
+      {
+        name: "oldAddress.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "oldAddress.postcode",
+        label: "Postcode",
+        hint: "Optional",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: false,
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "applicant-details",
     title: "Tell us about yourself",
     fields: [
@@ -58,58 +197,38 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicant.dateOfBirth",
-        label: "Date of birth",
-        placeholder: "For example, 12 30 1986",
-        type: "date",
+        name: "applicant.relationshipToDeceased",
+        label: "What is your relationship to the person?",
+        type: "select",
         validation: {
-          required: "Date of birth is required",
-          date: {
-            type: "past",
-          },
+          required: "Relationship is required",
         },
+        options: [
+          { label: "", value: "" },
+          { label: "Parent", value: "parent" },
+          { label: "Spouse", value: "spouse" },
+          { label: "Child", value: "child" },
+          { label: "Sibling", value: "sibling" },
+          { label: "Grandparent", value: "grandparent" },
+          { label: "Legal guardian", value: "legal-guardian" },
+          { label: "Legal representative", value: "legal-representative" },
+          { label: "Other (please describe)", value: "other" },
+        ],
       },
       {
-        name: "applicant.idNumber",
-        label: "National Identification (ID) Number",
+        name: "applicant.relationshipOtherDescription",
+        label: "Please describe your relationship",
         type: "text",
-        width: "medium",
-        // placeholder: "e.g., 850101-0001",
         validation: {
-          required: "ID Number is required",
-          pattern: {
-            value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+          required: "Please describe your relationship",
+          minLength: {
+            value: 2,
+            message: "Please provide at least 2 characters",
           },
         },
-        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
-        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
-      },
-      {
-        name: "applicant.passportDetails",
-        label: "",
-        type: "showHide",
-        validation: { required: false },
-        showHide: {
-          summary: "Use passport number instead",
-          stateFieldName: "applicant.usePassportInstead",
-          description:
-            "If you don't have a National ID number, you can use your passport number instead.",
-          fields: [
-            {
-              name: "applicant.passportNumber",
-              label: "Passport Number",
-              type: "text",
-              placeholder: "",
-              validation: {
-                required: "Passport number is required",
-                minLength: {
-                  value: 6,
-                  message: "Passport number must be at least 6 characters",
-                },
-              },
-            },
-          ],
+        conditionalOn: {
+          field: "relationshipToPerson",
+          value: "other",
         },
       },
       {
@@ -137,51 +256,19 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "old-address",
-    title: "Old address of the deceased person",
+    id: "permission-details",
+    title: "Tell us what permission you have to act on behalf of the estate",
     fields: [
       {
-        name: "oldBusinessAddress.addressLine1",
-        label: "Address Line 1",
+        name: "permissionDetails",
+        label: "Permission details",
         type: "text",
-        placeholder: "",
+        hint: "This should match the Power of Attorney you upload",
         validation: {
-          required: "Address line 1 is required",
+          required: "Permission details is required",
           minLength: {
             value: 5,
-            message: "Address must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "oldBusinessAddress.addressLine2",
-        label: "Address Line 2",
-        type: "text",
-        placeholder: "",
-        validation: { required: false },
-      },
-
-      {
-        name: "oldBusinessAddress.parish",
-        label: "Parish",
-        type: "select",
-        width: "medium",
-        validation: {
-          required: "Parish is required",
-        },
-        options: barbadosParishes,
-      },
-      {
-        name: "oldBusinessAddress.postalCode",
-        label: "Postal Code",
-        hint: "Optional",
-        type: "text",
-        width: "medium",
-        validation: {
-          required: false,
-          pattern: {
-            value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Permission details must be at least 5 characters",
           },
         },
       },
@@ -189,11 +276,11 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "new-address",
-    title: "New address of the deceased person",
+    title: "Where should we redirect the mail?",
     fields: [
       {
         name: "newAddress.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -206,7 +293,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "newAddress.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -223,8 +310,8 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "newAddress.postalCode",
-        label: "Postal Code",
+        name: "newAddress.postcode",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -237,8 +324,8 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "newAddress.isMovingPermanent",
-        label: "Are you moving permanently?",
+        name: "newAddress.isRedirectPermanent",
+        label: "Are you redirecting their mail permanently?",
         type: "radio",
         validation: {
           required: "Select an option",
@@ -256,7 +343,7 @@ export const formSteps: FormStep[] = [
           required: "Start date is required",
         },
         conditionalOn: {
-          field: "newBusinessAddress.isMovingPermanent",
+          field: "newAddress.isRedirectPermanent",
           value: "no",
         },
       },
@@ -268,7 +355,7 @@ export const formSteps: FormStep[] = [
           required: "End date is required",
         },
         conditionalOn: {
-          field: "newBusinessAddress.isMovingPermanent",
+          field: "newAddress.isRedirectPermanent",
           value: "no",
         },
       },
@@ -276,8 +363,8 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "upload-document",
-    title: "Upload document",
-    description: "Provide the power of attorney document",
+    title: "Upload supporting document",
+    description: "You must upload a Power of Attorney",
     fields: [
       {
         type: "file",
@@ -310,10 +397,10 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "dateOfDeclaration",
+        name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
-        placeholder: "For example, 12 15 2025",
+        placeholder: "For example, 07 11 1999",
         type: "date",
         validation: {
           required: "Date is required",
@@ -326,17 +413,16 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your request has been submitted",
-    description: "Complete your payment below to finalize your submission",
+    title: "Application submitted",
+    description: "Your application has been submitted successfully",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
+        content: "We will review the information you provided",
         items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
+          "If we need more information or documents, we will contact you",
+          "Once approved, mail will be redirected to the address you specified",
         ],
       },
     ],
