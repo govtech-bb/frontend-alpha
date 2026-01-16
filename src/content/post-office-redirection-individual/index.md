@@ -16,8 +16,8 @@ A redirection notice will last for 6 months.
 
 There are a separate forms if you would like to:
 
-- redirect your business mail
-- tell the Post Office that someone has died
+- [redirect your business mail](/travel-id-citizenship/post-office-redirection-business)
+- [tell the Post Office that someone has died](/travel-id-citizenship/post-office-redirection-deceased)
 
 ## How to redirect personal mail
 
