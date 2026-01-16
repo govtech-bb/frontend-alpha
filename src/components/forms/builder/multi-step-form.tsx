@@ -999,6 +999,19 @@ export default function DynamicMultiStepForm({
     const fieldsToSkipValidation: string[] = [];
 
     for (const field of visibleFields) {
+      // Double-check conditional fields are actually visible before adding to validation
+      if (field.conditionalOn && isSimpleConditionalRule(field.conditionalOn)) {
+        const watchedValue = getNestedValue(
+          allValues as Record<string, unknown>,
+          field.conditionalOn.field
+        );
+        if (watchedValue !== field.conditionalOn.value) {
+          // Field is not visible, skip validation and clear any errors
+          methods.clearErrors(field.name as keyof FormData);
+          continue;
+        }
+      }
+
       // Check if this field should skip validation when ShowHide is open
       if (
         "skipValidationWhenShowHideOpen" in field &&
@@ -1046,7 +1059,20 @@ export default function DynamicMultiStepForm({
 
     // Manually validate conditional fields (required and pattern)
     for (const field of visibleFields) {
-      if (field.conditionalOn) {
+      if (field.conditionalOn && isSimpleConditionalRule(field.conditionalOn)) {
+        // Check if the condition is actually met before validating
+        const watchedValue = methods.getValues(
+          field.conditionalOn.field as keyof FormData
+        );
+        const isConditionMet = watchedValue === field.conditionalOn.value;
+
+        // Only validate if the condition is met (field is visible)
+        if (!isConditionMet) {
+          // Clear any existing errors for this field since it's not visible
+          methods.clearErrors(field.name as keyof FormData);
+          continue;
+        }
+
         const fieldValue = methods.getValues(field.name as keyof FormData);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
@@ -1080,7 +1106,87 @@ export default function DynamicMultiStepForm({
       }
     }
 
+    // Manually validate ShowHide child fields (required and number validation)
     for (const field of visibleFields) {
+      if (field.type === "showHide" && field.showHide?.fields) {
+        const showHideState = getNestedValue(
+          allValues as Record<string, unknown>,
+          field.showHide.stateFieldName
+        );
+        if (showHideState === "open") {
+          for (const childField of field.showHide.fields) {
+            const childValue = methods.getValues(
+              childField.name as keyof FormData
+            );
+
+            // Validate required for child fields
+            if (childField.validation.required) {
+              const isEmpty =
+                childField.type === "number"
+                  ? childValue === undefined ||
+                    childValue === null ||
+                    childValue === "" ||
+                    (typeof childValue === "number" && Number.isNaN(childValue))
+                  : childValue === undefined ||
+                    childValue === null ||
+                    childValue === "" ||
+                    (typeof childValue === "string" &&
+                      childValue.trim() === "");
+
+              if (isEmpty) {
+                methods.setError(childField.name as keyof FormData, {
+                  type: "required",
+                  message: childField.validation.required,
+                });
+                isValid = false;
+              }
+            }
+
+            // Validate number min/max for child fields
+            if (
+              childField.type === "number" &&
+              childValue !== undefined &&
+              childValue !== null &&
+              childValue !== ""
+            ) {
+              const numValue =
+                typeof childValue === "number"
+                  ? childValue
+                  : Number(childValue);
+              if (!Number.isNaN(numValue)) {
+                if (
+                  childField.validation.min !== undefined &&
+                  numValue < childField.validation.min.value
+                ) {
+                  methods.setError(childField.name as keyof FormData, {
+                    type: "min",
+                    message: childField.validation.min.message,
+                  });
+                  isValid = false;
+                }
+                if (
+                  childField.validation.max !== undefined &&
+                  numValue > childField.validation.max.value
+                ) {
+                  methods.setError(childField.name as keyof FormData, {
+                    type: "max",
+                    message: childField.validation.max.message,
+                  });
+                  isValid = false;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for (const field of visibleFields) {
+      // Skip pattern validation if field is in skip list
+      if (fieldsToSkipValidation.includes(field.name)) {
+        continue;
+      }
+
       if (!field.conditionalOn && field.validation.pattern) {
         const fieldValue = methods.getValues(field.name as keyof FormData);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
@@ -1141,25 +1247,44 @@ export default function DynamicMultiStepForm({
       setCurrentStep(nextVisibleStep);
     } else {
       // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
-      const errorSummary = document.querySelector("#error-summary");
-      if (errorSummary) {
-        errorSummary.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        // Fallback to first error field if ErrorSummary not found
-        const firstErrorField = currentFieldNames.find((field) =>
-          getNestedValue(
-            methods.formState.errors as Record<string, unknown>,
-            field
-          )
-        );
-        if (firstErrorField) {
-          const escapedSelector = `#${CSS.escape(firstErrorField)}`;
-          const element = document.querySelector(escapedSelector);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth", block: "center" });
+      // Use setTimeout to ensure errors are rendered before scrolling
+      setTimeout(() => {
+        const errorSummary = document.querySelector("#error-summary");
+        if (errorSummary) {
+          errorSummary.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          // Fallback to first error field if ErrorSummary not found
+          // Check both direct fields and ShowHide child fields
+          const allFieldNamesToCheck = [...currentFieldNames];
+          // Add ShowHide child fields to the check list
+          for (const field of visibleFields) {
+            if (field.type === "showHide" && field.showHide?.fields) {
+              const showHideState = getNestedValue(
+                allValues as Record<string, unknown>,
+                field.showHide.stateFieldName
+              );
+              if (showHideState === "open") {
+                for (const childField of field.showHide.fields) {
+                  allFieldNamesToCheck.push(childField.name);
+                }
+              }
+            }
+          }
+          const firstErrorField = allFieldNamesToCheck.find((fieldName) =>
+            getNestedValue(
+              methods.formState.errors as Record<string, unknown>,
+              fieldName
+            )
+          );
+          if (firstErrorField) {
+            const escapedSelector = `#${CSS.escape(firstErrorField)}`;
+            const element = document.querySelector(escapedSelector);
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
           }
         }
-      }
+      }, 0);
     }
   };
 

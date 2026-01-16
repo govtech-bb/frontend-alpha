@@ -105,9 +105,9 @@ export const formSteps: FormStep[] = [
         placeholder: "",
         validation: {
           required: "ID Number is required",
-          minLength: {
-            value: 2,
-            message: "ID Number must be at least 2 characters",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -130,9 +130,23 @@ export const formSteps: FormStep[] = [
               type: "text",
               placeholder: "",
               validation: {
+                required: "Passport number is required",
                 minLength: {
                   value: 6,
                   message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+            {
+              name: "father.age",
+              label: "Age",
+              type: "number",
+              placeholder: "",
+              validation: {
+                required: "Age is required",
+                min: {
+                  value: 0,
+                  message: "Age must be 0 or greater",
                 },
               },
             },
@@ -237,9 +251,9 @@ export const formSteps: FormStep[] = [
         placeholder: "",
         validation: {
           required: "ID Number is required",
-          minLength: {
-            value: 2,
-            message: "ID Number must be at least 2 characters",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -262,9 +276,23 @@ export const formSteps: FormStep[] = [
               type: "text",
               placeholder: "",
               validation: {
+                required: "Passport number is required",
                 minLength: {
                   value: 6,
                   message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+            {
+              name: "mother.age",
+              label: "Age",
+              type: "number",
+              placeholder: "",
+              validation: {
+                required: "Age is required",
+                min: {
+                  value: 0,
+                  message: "Age must be 0 or greater",
                 },
               },
             },
@@ -649,28 +677,26 @@ The birth registration is free of charge.`,
   {
     id: "declaration",
     title: "Declaration",
-    description:
-      "I confirm that the information provided is correct. I understand that giving false information may result in the registration being rejected or voided.",
     fields: [
       {
+        name: "declaration.applicantName",
+        label: "Applicant's name:",
+        type: "heading",
+        validation: {},
+      },
+      {
+        name: "declaration.date",
+        label: "Date:",
+        type: "heading",
+        validation: {},
+      },
+      {
         name: "declaration.confirmed",
-        label: "I confirm all information is correct and true.",
+        label:
+          "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
         type: "checkbox",
         validation: {
           required: "You must confirm the declaration to continue",
-        },
-      },
-      {
-        name: "declaration.dateOfDeclaration",
-        label: "Date of declaration",
-        hidden: true,
-        placeholder: "For example, 12 15 2025",
-        type: "date",
-        validation: {
-          required: "Date is required",
-          date: {
-            type: "pastOrToday",
-          },
         },
       },
     ],

@@ -71,10 +71,73 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
 
       // Create section data with original step index
       const items = step.fields
-        .map((field) => {
+        .flatMap((field) => {
           // Skip heading fields (they're visual separators, not form inputs)
           if (field.type === "heading") {
-            return null;
+            return [];
+          }
+
+          // Handle ShowHide fields - process their child fields
+          if (field.type === "showHide" && field.showHide) {
+            const showHideState = getNestedValue<unknown>(
+              formValues as Record<string, unknown>,
+              field.showHide.stateFieldName
+            );
+
+            // Only show ShowHide child fields when ShowHide is open
+            if (showHideState === "open") {
+              return field.showHide.fields
+                .map((childField) => {
+                  const childValue = getNestedValue<unknown>(
+                    formValues as Record<string, unknown>,
+                    childField.name
+                  );
+
+                  // Skip empty optional fields (but allow 0 for number fields)
+                  if (childField.type === "number") {
+                    // For number fields, only skip if undefined, null, or NaN
+                    if (
+                      childValue === undefined ||
+                      childValue === null ||
+                      (typeof childValue === "number" &&
+                        Number.isNaN(childValue))
+                    ) {
+                      return null;
+                    }
+                  } else {
+                    // For other fields, skip if empty
+                    if (
+                      childValue === undefined ||
+                      childValue === null ||
+                      childValue === "" ||
+                      (typeof childValue === "string" &&
+                        childValue.trim() === "")
+                    ) {
+                      return null;
+                    }
+                  }
+
+                  // Format the value based on field type
+                  let displayValue = childValue as unknown;
+
+                  if (childField.type === "number") {
+                    displayValue = String(childValue);
+                  }
+
+                  // Use the child field's own label (e.g., "Passport Number" for passport, "Age" for age)
+                  const label = childField.label;
+
+                  return {
+                    label,
+                    value: String(displayValue),
+                  };
+                })
+                .filter(
+                  (item): item is { label: string; value: string } =>
+                    item !== null
+                );
+            }
+            return [];
           }
 
           // Support nested field names (e.g., "guardian.firstName")
@@ -94,13 +157,24 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
               field.conditionalOn.field
             );
             if (watchedValue !== field.conditionalOn.value) {
-              return null; // Don't show if condition not met
+              return []; // Don't show if condition not met
+            }
+          }
+
+          // Check if this field should be skipped when ShowHide is open
+          if (field.skipValidationWhenShowHideOpen) {
+            const showHideState = getNestedValue<unknown>(
+              formValues as Record<string, unknown>,
+              field.skipValidationWhenShowHideOpen
+            );
+            // If ShowHide is open, skip showing the ID field (passport will be shown instead)
+            if (showHideState === "open") {
+              return [];
             }
           }
 
           // Skip empty optional fields (but allow 0 for number fields)
-          if (value === undefined || value === null || value === "")
-            return null;
+          if (value === undefined || value === null || value === "") return [];
 
           // Format the value based on field type
           let displayValue = value as unknown;
@@ -164,15 +238,18 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
 
           if (field.type === "file" && Array.isArray(value)) {
             const files = value as File[];
-            if (files.length === 0) return null;
+            if (files.length === 0) return [];
             displayValue = files.map((file) => file.name).join(", ");
           }
 
-          return {
-            label: field.label,
-            value: String(displayValue),
-          };
+          return [
+            {
+              label: field.label,
+              value: String(displayValue),
+            },
+          ];
         })
+        .flat()
         .filter(
           (item): item is { label: string; value: string } => item !== null
         );

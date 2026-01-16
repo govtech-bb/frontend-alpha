@@ -513,10 +513,12 @@ export function generateFormSchema(formSteps: FormStep[]) {
           z.string().optional()
         );
 
-        // Add child field schemas as optional - they'll be validated conditionally via superRefine
+        // Add child field schemas - use createFieldSchema to handle different types (number, text, etc.)
         for (const childField of field.showHide.fields) {
-          // Make child fields optional at schema level
-          setNestedValue(schemaShape, childField.name, z.string().optional());
+          // Create schema for child field and make it optional at schema level
+          // Validation will be handled conditionally via superRefine
+          const childSchema = createFieldSchema(childField);
+          setNestedValue(schemaShape, childField.name, childSchema.optional());
         }
       }
     }
@@ -712,6 +714,49 @@ export function generateFormSchema(formSteps: FormStep[]) {
                     message: childField.validation.pattern.message,
                     path: pathParts,
                   });
+                }
+              }
+
+              // Validate number min/max
+              if (
+                childField.type === "number" &&
+                !isFieldEmpty(childValue, childField.type)
+              ) {
+                const numValue =
+                  typeof childValue === "number"
+                    ? childValue
+                    : Number(childValue);
+                if (!Number.isNaN(numValue)) {
+                  if (
+                    childField.validation.min !== undefined &&
+                    numValue < childField.validation.min.value
+                  ) {
+                    const pathParts = childField.name.split(".");
+                    ctx.addIssue({
+                      code: z.ZodIssueCode.too_small,
+                      minimum: childField.validation.min.value,
+                      type: "number",
+                      inclusive: true,
+                      origin: "number",
+                      message: childField.validation.min.message,
+                      path: pathParts,
+                    });
+                  }
+                  if (
+                    childField.validation.max !== undefined &&
+                    numValue > childField.validation.max.value
+                  ) {
+                    const pathParts = childField.name.split(".");
+                    ctx.addIssue({
+                      code: z.ZodIssueCode.too_big,
+                      maximum: childField.validation.max.value,
+                      type: "number",
+                      inclusive: true,
+                      origin: "number",
+                      message: childField.validation.max.message,
+                      path: pathParts,
+                    });
+                  }
                 }
               }
             }

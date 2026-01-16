@@ -722,13 +722,16 @@ export function DynamicField({
               {field.hint}
             </Text>
           )}
-          <TextArea
-            {...register(field.name as keyof FormData)}
-            error={error?.message}
-            id={field.name}
-            placeholder={field.placeholder}
-            rows={field.rows || 4}
-          />
+          <div className="[&_label]:hidden">
+            <TextArea
+              {...register(field.name as keyof FormData)}
+              error={error?.message}
+              id={field.name}
+              label={field.hidden ? "" : field.label}
+              placeholder={field.placeholder}
+              rows={field.rows || 4}
+            />
+          </div>
         </div>
       ) : field.type === "number" ? (
         <Controller
