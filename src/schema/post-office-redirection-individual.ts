@@ -284,7 +284,7 @@ export const formSteps: FormStep[] = [
       "Minor dependents are persons in your care under the age of 16",
     fields: [
       {
-        name: "anyMinorDependents",
+        name: "dependents.anyMinorDependents",
         label:
           "Are there any minor dependents who also need their mail to be redirected to the new address?",
         hidden: true,
@@ -297,26 +297,26 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
-      // {
-      //   name: "dependents.numberOfMinors",
-      //   label:
-      //     "How many minor dependents need their mail sent to the new address?",
-      //   type: "number",
-      //   validation: {
-      //     required: "Number of minors is required",
-      //   },
-      //   conditionalOn: {
-      //     field: "dependents.anyMinorDependents",
-      //     value: "yes",
-      //   },
-      // },
+      {
+        name: "dependents.numberOfMinors",
+        label:
+          "How many minor dependents need their mail sent to the new address?",
+        type: "number",
+        validation: {
+          required: "Number of minors is required",
+        },
+        conditionalOn: {
+          field: "dependents.anyMinorDependents",
+          value: "yes",
+        },
+      },
     ],
   },
   {
     id: "minor-details",
     title: "Tell us about the minor dependent",
     conditionalOn: {
-      field: "anyMinorDependents",
+      field: "dependents.anyMinorDependents",
       value: "yes",
     },
     repeatable: {
