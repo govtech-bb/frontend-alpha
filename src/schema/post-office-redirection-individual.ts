@@ -284,7 +284,7 @@ export const formSteps: FormStep[] = [
       "Minor dependents are persons in your care under the age of 16",
     fields: [
       {
-        name: "dependents.anyMinorDependents",
+        name: "anyMinorDependents",
         label:
           "Are there any minor dependents who also need their mail to be redirected to the new address?",
         hidden: true,
