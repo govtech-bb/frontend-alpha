@@ -3,76 +3,6 @@ import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
   {
-    id: "business-name",
-    title: "Tell us about the business",
-    fields: [
-      {
-        name: "businessName",
-        label: "Business name",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Business name is required",
-          minLength: {
-            value: 5,
-            message: "Business name must be at least 5 characters",
-          },
-        },
-      },
-    ],
-  },
-  {
-    id: "current-address",
-    title: "Current address of the business",
-    fields: [
-      {
-        name: "currentAddress.addressLine1",
-        label: "Address line 1",
-        type: "text",
-        placeholder: "",
-        validation: {
-          required: "Address line 1 is required",
-          minLength: {
-            value: 5,
-            message: "Address must be at least 5 characters",
-          },
-        },
-      },
-      {
-        name: "currentAddress.addressLine2",
-        label: "Address line 2",
-        type: "text",
-        placeholder: "",
-        validation: { required: false },
-      },
-
-      {
-        name: "currentAddress.parish",
-        label: "Parish",
-        type: "select",
-        width: "medium",
-        validation: {
-          required: "Parish is required",
-        },
-        options: barbadosParishes,
-      },
-      {
-        name: "currentAddress.postcode",
-        label: "Postcode",
-        hint: "Optional (e.g. BB17004)",
-        type: "text",
-        width: "medium",
-        validation: {
-          required: false,
-          pattern: {
-            value: "^BB\\d{5}$",
-            message: "Enter a valid post code (e.g., BB17004)",
-          },
-        },
-      },
-    ],
-  },
-  {
     id: "applicant-details",
     title: "Tell us about the person submitting this application",
     fields: [
@@ -164,6 +94,76 @@ export const formSteps: FormStep[] = [
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
               "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "business-name",
+    title: "Tell us about the business",
+    fields: [
+      {
+        name: "businessName",
+        label: "Business name",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Business name is required",
+          minLength: {
+            value: 5,
+            message: "Business name must be at least 5 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "current-address",
+    title: "Current address of the business",
+    fields: [
+      {
+        name: "currentAddress.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "currentAddress.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        placeholder: "",
+        validation: { required: false },
+      },
+
+      {
+        name: "currentAddress.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "currentAddress.postcode",
+        label: "Postcode",
+        hint: "Optional (e.g. BB17004)",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: false,
+          pattern: {
+            value: "^BB\\d{5}$",
+            message: "Enter a valid post code (e.g., BB17004)",
           },
         },
       },
