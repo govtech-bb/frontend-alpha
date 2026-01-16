@@ -363,8 +363,8 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "upload-document",
-    title: "Upload document",
-    description: "You must upload a Power of Attorney document",
+    title: "Upload supporting document",
+    description: "You must upload a Power of Attorney",
     fields: [
       {
         type: "file",
