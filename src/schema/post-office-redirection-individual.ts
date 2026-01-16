@@ -387,18 +387,16 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your submission has been saved",
-    description: "Complete your payment below to finalize your submission",
+    title: "Thank you for your request",
+    description:
+      "The Barbados Postal Service will process your redirection request when you have made the payment.",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content: "You will receive a confirmation email with:",
-        items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
-        ],
+        content:
+          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months",
+        items: [],
       },
     ],
     enableFeedback: true,
