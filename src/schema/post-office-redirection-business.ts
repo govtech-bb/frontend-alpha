@@ -42,6 +42,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.middleName",
         label: "Middle name",
+        hint: "Enter all middle names in order",
         type: "text",
         validation: {
           required: false,
