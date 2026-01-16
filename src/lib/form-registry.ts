@@ -49,6 +49,9 @@ export const FORM_COMPONENTS = {
   "sell-goods-services-beach-park": lazy(
     () => import("@/components/forms/sell-goods-services-beach-park-form")
   ),
+  "apply-for-job-at-ncc": lazy(
+    () => import("@/components/forms/apply-for-job-at-ncc-form")
+  ),
   // Add other forms here
 } as const;
 
