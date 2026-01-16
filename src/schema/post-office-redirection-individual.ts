@@ -316,7 +316,7 @@ export const formSteps: FormStep[] = [
     id: "minor-details",
     title: "Tell us about the minor dependent",
     conditionalOn: {
-      field: "dependents.anyMinorDependents",
+      field: "anyMinorDependents",
       value: "yes",
     },
     repeatable: {
