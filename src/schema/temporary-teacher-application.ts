@@ -108,9 +108,9 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicant.martialStatus",
+        name: "applicant.maritalStatus",
         type: "select",
-        label: "Martial status",
+        label: "Marital status",
         options: [
           {
             label: "Single",
@@ -126,7 +126,7 @@ export const formSteps: FormStep[] = [
           },
         ],
         validation: {
-          required: "Must select a martial status",
+          required: "Must select a marital status",
           pattern: {
             value: "^(single|married|divorced)$",
             message: "Must select single, married, or divorced.",
