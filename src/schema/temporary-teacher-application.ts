@@ -209,12 +209,12 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "contactDetails",
+    id: "contact",
     title: "Contact Details",
     description: "Your contact information",
     fields: [
       {
-        name: "contactDetails.addressLine1",
+        name: "contact.addressLine1",
         type: "text",
         label: "Address Line 1",
         validation: {
@@ -222,7 +222,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contactDetails.addressLine2",
+        name: "contact.addressLine2",
         type: "text",
         label: "Address Line 2",
         validation: {
@@ -230,7 +230,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "contactDetails.country",
+        name: "contact.country",
         type: "select",
         label: "Country",
         validation: {
@@ -244,7 +244,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "contactDetails.parish",
+        name: "contact.parish",
         type: "select",
         label: "Parish",
         validation: {
@@ -253,19 +253,19 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "contactDetails.postcode",
+        name: "contact.postcode",
         type: "text",
         label: "Postcode",
         validation: { required: false },
       },
       {
-        name: "contactDetails.emailAddress",
+        name: "contact.emailAddress",
         type: "email",
         label: "Email address",
         validation: { required: "This field is required" },
       },
       {
-        name: "contactDetails.telephoneNumber",
+        name: "contact.telephoneNumber",
         type: "text",
         label: "Telephone Number",
         validation: {
