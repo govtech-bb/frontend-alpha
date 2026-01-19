@@ -8,7 +8,7 @@ export const formSteps: FormStep[] = [
     description: "",
     fields: [
       {
-        name: "firstName",
+        name: "applicant.firstName",
         label: "First name",
         type: "text",
         validation: {
@@ -17,22 +17,34 @@ export const formSteps: FormStep[] = [
             value: 2,
             message: "First name must be at least 2 characters",
           },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
         },
       },
       {
-        name: "lastName",
+        name: "applicant.lastName",
         label: "Last name",
         type: "text",
         validation: {
           required: "Last name is required",
           minLength: {
             value: 2,
-            message: "Last name must be at least 2 characters",
+            message: "Last name must be at least 2  characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
       {
-        name: "dateOfBirth",
+        name: "applicant.dateOfBirth",
         label: "Date of birth",
         hint: "For example, 3 27 2007",
         type: "date",
@@ -44,14 +56,13 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "gender",
-        label: "Gender",
-        type: "select",
+        name: "applicant.sex",
+        label: "Sex",
+        type: "radio",
         validation: {
-          required: "Gender is required",
+          required: "Sex is required",
         },
         options: [
-          { label: "Select gender", value: "" },
           { label: "Male", value: "male" },
           { label: "Female", value: "female" },
         ],
@@ -65,9 +76,10 @@ export const formSteps: FormStep[] = [
       "We ask this to match you to a community sports training programme",
     fields: [
       {
-        name: "disciplineOfInterest",
-        label: "Discipline of Interest",
+        name: "discipline.areaOfInterest",
+        label: "Discipline of interest",
         hint: "For example, football or gymnastics",
+        // hidden: true,
         type: "text",
         validation: {
           required: "Discipline of interest is required",
@@ -78,15 +90,15 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "disciplineExperience",
+        name: "discipline.hasExperience",
         label: "Do you have experience in this discipline?",
         type: "radio",
         validation: {
           required: "Experience in this discipline is required",
         },
         options: [
-          { label: "Yes", value: "true" },
-          { label: "No", value: "false" },
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
         ],
       },
     ],
@@ -94,12 +106,18 @@ export const formSteps: FormStep[] = [
   {
     id: "experience",
     title: "Tell us about your experience",
-    description: "Tell us about your experience",
+    description:
+      "What level of experience do you have in the sport you are interested in?",
+    conditionalOn: {
+      field: "discipline.hasExperience",
+      value: "yes",
+    },
     fields: [
       {
-        name: "experienceLevel",
+        name: "experience.levelOfExperience",
         label:
           "What level of experience do you have in the sport you are interested in?",
+        hidden: true,
         type: "radio",
         validation: {
           required: "Experience level is required",
@@ -112,7 +130,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "otherExperienceLevel",
+        name: "experience.otherExperience",
         label: "Please specify",
         type: "text",
         validation: {
@@ -123,12 +141,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "experienceLevel",
+          field: "experience.levelOfExperience",
           value: "other",
         },
       },
       {
-        name: "yearsOfExperience",
+        name: "experience.yearsOfExperience",
         label: "Years of experience",
         type: "number",
         validation: {
@@ -144,11 +162,13 @@ export const formSteps: FormStep[] = [
   {
     id: "employment",
     title: "What is your employment status?",
-    description: "We ask this to help with scheduling",
+    description:
+      "We ask this to help with scheduling and to help us see the impact of the programme",
     fields: [
       {
-        name: "employmentStatus",
+        name: "employment.status",
         label: "What is your employment status?",
+        hidden: true,
         type: "radio",
         validation: {
           required: "Employment status is required",
@@ -161,7 +181,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "institutionName",
+        name: "employment.institutionName",
         label: "Name of institution",
         type: "text",
         validation: {
@@ -172,12 +192,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "employment.status",
           value: "studying",
         },
       },
       {
-        name: "employerName",
+        name: "employment.companyName",
         label: "Name of company or organisation",
         type: "text",
         validation: {
@@ -189,12 +209,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "employment.status",
           value: "employed",
         },
       },
       {
-        name: "otherEmploymentDetails",
+        name: "employment.otherDetails",
         label: "Please give details",
         type: "text",
         validation: {
@@ -205,31 +225,45 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "employment.status",
           value: "other",
         },
       },
     ],
   },
   {
-    id: "organizations",
-    title: "Tell us about your memberships?",
-    description: "",
+    id: "membership",
+    title: "Do you belong to any organisations?",
+    description:
+      "For example, a sports or social group, or a youth and community club",
     fields: [
       {
-        name: "belongsToOrganizations",
+        name: "belongsToOrganisations",
         label: "Do you belong to any organisations?",
+        hidden: true,
         type: "radio",
         validation: {
           required: "Organizational membership is required",
         },
         options: [
-          { label: "Yes", value: "true" },
-          { label: "No", value: "false" },
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
         ],
       },
+    ],
+  },
+  {
+    id: "organisation-details",
+    title: "Do you belong to any organisations?",
+    description:
+      "For example, a sports or social group, or a youth and community club",
+    conditionalOn: {
+      field: "belongsToOrganisations",
+      value: "yes",
+    },
+    fields: [
       {
-        name: "organizationNames",
+        name: "organisationDetails",
         label: "Organisations",
         type: "fieldArray",
         validation: {
@@ -240,13 +274,37 @@ export const formSteps: FormStep[] = [
           },
         },
         fieldArray: {
-          itemLabel: "Name of the organisation",
+          itemLabel: "Organisation name",
           addButtonText: "Add another",
           minItems: 1,
-        },
-        conditionalOn: {
-          field: "belongsToOrganizations",
-          value: "true",
+          maxItems: 3,
+          fields: [
+            {
+              name: "organisationName",
+              label: "Name of the organisation",
+              type: "text",
+              validation: {
+                required: "Name of the organisation is required",
+                minLength: {
+                  value: 2,
+                  message: "Must be at least 2 characters",
+                },
+              },
+            },
+            {
+              name: "hasSignificantPosition",
+              label:
+                "Do you hold a significant position within the organisation?",
+              type: "radio",
+              validation: {
+                required: "If you hold a significant position is required",
+              },
+              options: [
+                { label: "Yes", value: "yes" },
+                { label: "No", value: "no" },
+              ],
+            },
+          ],
         },
       },
     ],
@@ -254,10 +312,9 @@ export const formSteps: FormStep[] = [
   {
     id: "contact",
     title: "Your contact details",
-    description: "Your contact information",
     fields: [
       {
-        name: "addressLine1",
+        name: "contact.addressLine1",
         label: "Address line 1",
         type: "text",
         validation: {
@@ -269,22 +326,31 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "addressLine2",
+        name: "contact.addressLine2",
         label: "Address line 2",
         type: "text",
         validation: { required: false },
       },
       {
-        name: "parish",
+        name: "contact.parish",
         label: "Parish",
         type: "select",
+        width: "medium",
         validation: {
           required: "Parish is required",
         },
         options: barbadosParishes,
       },
       {
-        name: "telephoneNumber",
+        name: "contact.email",
+        label: "Email address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "contact.telephoneNumber",
         label: "Telephone number",
         type: "tel",
         validation: {
@@ -297,23 +363,15 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      {
-        name: "email",
-        label: "Email address",
-        type: "email",
-        validation: {
-          required: "Email address is required",
-        },
-      },
     ],
   },
   {
     id: "emergency",
     title: "Emergency contact",
-    description: "Provide emergency contact details",
+    description: "If there is an emergency, who should we contact?",
     fields: [
       {
-        name: "emergencyFirstName",
+        name: "emergency.firstName",
         label: "First name",
         type: "text",
         validation: {
@@ -325,7 +383,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "emergencyLastName",
+        name: "emergency.lastName",
         label: "Last name",
         type: "text",
         validation: {
@@ -337,7 +395,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "emergencyRelationship",
+        name: "emergency.relationship",
         label: "Relationship",
         type: "text",
         validation: {
@@ -349,7 +407,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "emergencyAddressLine1",
+        name: "emergency.addressLine1",
         label: "Address line 1",
         type: "text",
         validation: {
@@ -361,14 +419,15 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "emergencyAddressLine2",
+        name: "emergency.addressLine2",
         label: "Address line 2",
         type: "text",
         validation: { required: false },
       },
       {
-        name: "emergencyParish",
+        name: "emergency.parish",
         label: "Parish",
+        width: "medium",
         type: "select",
         validation: {
           required: "Emergency contact parish is required",
@@ -376,7 +435,15 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "emergencyTelephoneNumber",
+        name: "emergency.email",
+        label: "Email address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "emergency.telephoneNumber",
         label: "Telephone number",
         type: "tel",
         validation: {
@@ -425,19 +492,18 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Thank you for your application",
+    title: "Thank you for your registering",
     description:
       "Your information has been sent to the Youth Development Programme, the coordinating programme in the Division of Youth Affairs",
     fields: [],
     steps: [
       {
         title: "What happens next",
-        content:
-          "If your application is successful, the Youth Commissioner will be in touch shortly to  confirm:",
+        content: "The Youth Commissioner will be in touch shortly to confirm:",
         items: [
-          "the location of the programme",
-          "the start date and times",
-          "what you will need to bring",
+          "The location of the programme",
+          "The start date and times",
+          "What you will need to bring",
         ],
       },
     ],
