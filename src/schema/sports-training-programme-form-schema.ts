@@ -114,7 +114,7 @@ export const formSteps: FormStep[] = [
     },
     fields: [
       {
-        name: "experienceLevel",
+        name: "experience.levelOfExperience",
         label:
           "What level of experience do you have in the sport you are interested in?",
         hidden: true,
@@ -130,7 +130,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "otherExperienceLevel",
+        name: "experience.otherExperience",
         label: "Please specify",
         type: "text",
         validation: {
@@ -141,12 +141,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "experienceLevel",
+          field: "experience.levelOfExperience",
           value: "other",
         },
       },
       {
-        name: "yearsOfExperience",
+        name: "experience.yearsOfExperience",
         label: "Years of experience",
         type: "number",
         validation: {
@@ -166,7 +166,7 @@ export const formSteps: FormStep[] = [
       "We ask this to help with scheduling and to help us see the impact of the programme",
     fields: [
       {
-        name: "employmentStatus",
+        name: "employment.status",
         label: "What is your employment status?",
         hidden: true,
         type: "radio",
@@ -181,7 +181,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "institutionName",
+        name: "employment.institutionName",
         label: "Name of institution",
         type: "text",
         validation: {
@@ -192,12 +192,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "employment.status",
           value: "studying",
         },
       },
       {
-        name: "employerName",
+        name: "employment.companyName",
         label: "Name of company or organisation",
         type: "text",
         validation: {
@@ -209,12 +209,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "employment.status",
           value: "employed",
         },
       },
       {
-        name: "otherEmploymentDetails",
+        name: "employment.otherDetails",
         label: "Please give details",
         type: "text",
         validation: {
@@ -225,7 +225,7 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "employmentStatus",
+          field: "employment.status",
           value: "other",
         },
       },
@@ -395,7 +395,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "emergencyRelationship",
+        name: "emergency.relationship",
         label: "Relationship",
         type: "text",
         validation: {
@@ -407,7 +407,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "emergencyAddressLine1",
+        name: "emergency.addressLine1",
         label: "Address line 1",
         type: "text",
         validation: {
@@ -419,13 +419,13 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "emergencyAddressLine2",
+        name: "emergency.addressLine2",
         label: "Address line 2",
         type: "text",
         validation: { required: false },
       },
       {
-        name: "emergencyParish",
+        name: "emergency.parish",
         label: "Parish",
         width: "medium",
         type: "select",
