@@ -74,7 +74,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine1",
-        label: "Address Line 1",
+        label: "Address line 1",
         type: "text",
         placeholder: "",
         validation: {
@@ -87,7 +87,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.addressLine2",
-        label: "Address Line 2",
+        label: "Address line 2",
         type: "text",
         placeholder: "",
         validation: { required: false },
@@ -104,7 +104,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.postalCode",
-        label: "Postal Code",
+        label: "Postcode",
         hint: "Optional (e.g. BB17004)",
         type: "text",
         width: "short",
@@ -156,6 +156,41 @@ export const formSteps: FormStep[] = [
             },
           ],
         },
+      },
+      {
+        name: "applicant.email",
+        label: "Email Address",
+        type: "email",
+        validation: {
+          required: "Email address is required",
+        },
+      },
+      {
+        name: "applicant.telephoneNumber",
+        label: "Telephone Number",
+        type: "tel",
+        validation: {
+          required: "Telephone number is required",
+          pattern: {
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+          },
+        },
+      },
+      {
+        name: "applicant.isBarbadosNational",
+        label: "Are you a Barbados national?",
+        hidden: true,
+        type: "radio",
+        validation: {
+          required: "Select an option",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
       },
     ],
   },
