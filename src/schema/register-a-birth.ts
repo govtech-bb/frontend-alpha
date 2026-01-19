@@ -143,11 +143,7 @@ export const formSteps: FormStep[] = [
               type: "number",
               placeholder: "",
               validation: {
-                required: "Age is required",
-                min: {
-                  value: 0,
-                  message: "Age must be 0 or greater",
-                },
+                required: false,
               },
             },
           ],
@@ -532,8 +528,10 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "birth.separator2",
-        label: "",
+        label:
+          "How many previous births has this mother had (including the one(s) you are registering now)",
         type: "heading",
+        headingSize: "small",
         validation: {},
       },
       {

@@ -155,7 +155,15 @@ export async function submitFormData({
   const arrayData = convertIndexedObjectsToArrays(cleanedData);
 
   // Convert DateObject instances to ISO date strings
-  const convertedData = convertDateObjects(arrayData as JsonValue);
+  const convertedData = convertDateObjects(arrayData as JsonValue) as Record<
+    string,
+    unknown
+  >;
+
+  // Remove father.age field to avoid backend validation error
+  if (convertedData.father && typeof convertedData.father === "object") {
+    delete (convertedData.father as Record<string, unknown>).age;
+  }
 
   const response = await fetch(`${PROCESSING_API}/forms/${formKey}/submit`, {
     method: "POST",

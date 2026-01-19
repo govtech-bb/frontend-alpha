@@ -170,6 +170,7 @@ type HeadingFormField = {
   fieldArray?: FieldArrayConfig; // For consistency with other field types (not typically used for headings)
   showHide?: ShowHideConfig; // For consistency with other field types (not typically used for headings)
   skipValidationWhenShowHideOpen?: string; // For consistency with other field types (not typically used for headings)
+  headingSize?: "small" | "medium" | "large"; // Controls the heading font size
 };
 
 export type FormField =

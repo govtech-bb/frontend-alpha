@@ -393,7 +393,16 @@ export function DynamicField({
         <div className="py-5">
           <hr className="border-neutral-grey border-t-4" />
           {field.label && field.label.trim() ? (
-            <Heading as="h2" className="mt-10">
+            <Heading
+              as={
+                field.headingSize === "small"
+                  ? "h4"
+                  : field.headingSize === "medium"
+                    ? "h3"
+                    : "h2"
+              }
+              className="mt-10"
+            >
               {field.label}
             </Heading>
           ) : null}
