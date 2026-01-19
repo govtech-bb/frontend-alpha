@@ -1,6 +1,6 @@
 ---
 title: "Register for a Youth Development Programme (YDP) Community Sports Training Programme"
-stage: "beta"
+stage: "alpha"
 ---
 
 You should complete your application in one go. At the moment, it is not possible to save your answers and come back to them later.
@@ -17,6 +17,5 @@ As well as your contact details and depending on what you’re registering for, 
 2. The names of any sport, social, youth or community groups you are part of.
 3. Your employment status to help with scheduling.
 4. The address and phone number for an emergency contact.
-
 
 <a data-start-link href="/work-employment/register-for-community-sports-training-programme/form">Start now</a>
