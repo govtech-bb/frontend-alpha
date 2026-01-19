@@ -33,7 +33,7 @@ export const formSteps: FormStep[] = [
           required: "Last name is required",
           minLength: {
             value: 2,
-            message: "Last name must be at least 2  characters",
+            message: "Last name must be at least 2 characters",
           },
           pattern: {
             value:
@@ -492,7 +492,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Thank you for your registering",
+    title: "Thank you for registering",
     description:
       "Your information has been sent to the Youth Development Programme, the coordinating programme in the Division of Youth Affairs",
     fields: [],
