@@ -13,6 +13,9 @@ export const Footer = () => (
           <Link as={NextLink} href="/terms-conditions" variant={"tertiary"}>
             Terms &amp; Conditions
           </Link>
+          <Link as={NextLink} href="https://job-boards.greenhouse.io/govtechbarbados?gh_src=ef2pb1uy9us" variant={"tertiary"}>
+            Careers
+          </Link>
         </div>
 
         <div className="-mx-[calc(50vw-50%)] border-black/25 border-t-4 lg:hidden" />
@@ -27,7 +30,7 @@ export const Footer = () => (
             width={112}
           />
           <Text as="p" className="text-white">
-            &copy; 2025 Government of Barbados
+            &copy; 2026 Government of Barbados
           </Text>
         </div>
       </div>
