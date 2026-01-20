@@ -265,6 +265,7 @@ export const formSteps: FormStep[] = [
       {
         name: "newAddress.redirectionEndDate",
         label: "Redirection end date",
+        hint: "A redirection notice lasts a maximum of six months",
         type: "date",
         validation: {
           required: "End date is required",
@@ -395,7 +396,7 @@ export const formSteps: FormStep[] = [
       {
         title: "What happens next",
         content:
-          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months",
+          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months.",
         items: [],
       },
     ],
