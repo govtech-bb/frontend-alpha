@@ -378,9 +378,11 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
   }
 
   // Handle optional fields (explicitly marked as required: false or no validation rules)
+  // Only return early if there's no pattern validation to apply
   if (
-    validation.required === false ||
-    (!validation.required && Object.keys(validation).length === 0)
+    (validation.required === false ||
+      (!validation.required && Object.keys(validation).length === 0)) &&
+    !validation.pattern
   ) {
     return z.string().optional();
   }

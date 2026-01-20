@@ -179,8 +179,16 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
                         >
                           {nestedField.label}
                         </label>
-                        <Text as="p" className="text-mid-grey-00" size="body">
-                          {nestedField.hint}
+                        <Text
+                          as="p"
+                          className={
+                            fieldError?.message
+                              ? "text-red-700"
+                              : "text-mid-grey-00"
+                          }
+                          size="body"
+                        >
+                          {fieldError?.message ?? nestedField.hint}
                         </Text>
                         <Select
                           error={fieldError?.message}
