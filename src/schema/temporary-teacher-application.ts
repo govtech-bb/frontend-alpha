@@ -282,15 +282,20 @@ export const formSteps: FormStep[] = [
     id: "applicantEducation",
     title: "Your Education",
     description: "Tell us about your education",
+    repeatable: {
+      arrayFieldName: "applicantEducation",
+      maxItems: 5,
+      addAnotherLabel: "Do you need to add another education experience?",
+    },
     fields: [
       {
-        name: "applicantEducation.nameOfInstitution",
+        name: "nameOfInstitution",
         type: "text",
         label: "Name of Institution",
         validation: { required: "This field is required" },
       },
       {
-        name: "applicantEducation.country",
+        name: "country",
         type: "text",
         label: "Country",
         validation: { required: false },
@@ -319,27 +324,17 @@ export const formSteps: FormStep[] = [
           },
         },
       },
-      {
-        name: "applicantEducation.anotherEducation",
-        label: "Do you want to add another education experience?",
-        type: "radio",
-        validation: { required: "This field is required" },
-        options: [
-          {
-            label: "Yes",
-            value: "yes",
-          },
-          {
-            label: "No",
-            value: "no",
-          },
-        ],
-      },
     ],
   },
   {
     id: "applicantQualification",
     title: "Your qualifications",
+    description: "What are your qualifications?",
+    repeatable: {
+      arrayFieldName: "qualifications",
+      maxItems: 10,
+      addAnotherLabel: "Do you want to add another qualification?",
+    },
     fields: [
       {
         name: "applicantQualification.subject",
@@ -371,25 +366,17 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: { required: "This field is required" },
       },
-      {
-        name: "applicantQualification.anotherQualification",
-        label: "Do you want to add another qualification",
-        type: "radio",
-        validation: { required: "This field is required" },
-        options: [
-          {
-            label: "Yes",
-            value: "yes",
-          },
-          { label: "No", value: "no" },
-        ],
-      },
     ],
   },
   {
     id: "applicantWorkExperience",
     title: "Your work experience",
     description: "Tell us about your work experience",
+    repeatable: {
+      arrayFieldName: "workExperiences",
+      maxItems: 5,
+      addAnotherLabel: "Add another work experience?",
+    },
     fields: [
       {
         name: "applicantWorkExperience.employerName",
@@ -441,16 +428,6 @@ export const formSteps: FormStep[] = [
         validation: { required: "This field is required" },
         type: "text",
       },
-      {
-        name: "applicantWorkExperience.anotherExperience",
-        validation: { required: "This field is required" },
-        type: "radio",
-        label: "Do you want to add another experience?",
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
     ],
   },
   {
@@ -487,6 +464,11 @@ export const formSteps: FormStep[] = [
     id: "reference",
     title: "Tell us about your reference",
     description: "",
+    repeatable: {
+      arrayFieldName: "references",
+      maxItems: 3,
+      addAnotherLabel: "Add another reference?",
+    },
     fields: [
       {
         name: "reference.title",
@@ -557,12 +539,7 @@ export const formSteps: FormStep[] = [
         type: "select",
         label: "Country",
         validation: { required: "This field is required" },
-        options: [
-          {
-            label: "Barbados",
-            value: "barbados",
-          },
-        ],
+        options: countries,
       },
       {
         name: "reference.parish",
@@ -600,16 +577,6 @@ export const formSteps: FormStep[] = [
             message: "Telephone number must be 10-15 digits",
           },
         },
-      },
-      {
-        name: "reference.anotherReference",
-        validation: { required: "This field is required" },
-        type: "radio",
-        label: "Do you want to add another reference?",
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
       },
     ],
   },
