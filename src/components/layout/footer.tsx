@@ -13,7 +13,12 @@ export const Footer = () => (
           <Link as={NextLink} href="/terms-conditions" variant={"tertiary"}>
             Terms &amp; Conditions
           </Link>
-          <Link as={NextLink} href="https://job-boards.greenhouse.io/govtechbarbados?gh_src=ef2pb1uy9us" variant={"tertiary"} target="_blank">
+          <Link
+            as={NextLink}
+            external
+            href="https://job-boards.greenhouse.io/govtechbarbados?gh_src=ef2pb1uy9us"
+            variant={"tertiary"}
+          >
             Careers
           </Link>
         </div>
