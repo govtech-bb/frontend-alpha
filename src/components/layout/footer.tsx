@@ -30,7 +30,7 @@ export const Footer = () => (
             width={112}
           />
           <Text as="p" className="text-white">
-            &copy; 2026 Government of Barbados
+            &copy; {new Date().getFullYear()} Government of Barbados
           </Text>
         </div>
       </div>
