@@ -2,6 +2,7 @@
 title: "Redirect my business mail"
 description: ""
 publish_date: 2026-01-13
+stage: alpha
 section: "Travel, ID and citizenship"
 ---
 
@@ -15,8 +16,8 @@ A redirection notice will last for 6 months.
 
 There are a separate forms if you would like to:
 
-- redirect your personal mail
-- tell the Post Office that someone has died
+- [redirect your personal mail](/travel-id-citizenship/post-office-redirection-individual/)
+- [tell the Post Office that someone has died](/travel-id-citizenship/post-office-redirection-deceased/)
 
 ## How to redirect business mail
 

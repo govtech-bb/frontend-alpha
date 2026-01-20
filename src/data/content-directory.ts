@@ -30,12 +30,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description:
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Birth Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -45,12 +47,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description:
           "Information on how to obtain a copy of a death certificate in Barbados.",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Death Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -60,12 +64,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description:
           "Information on how to obtain a copy of a marriage certificate in Barbados.",
+        protected: true,
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Marriage Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -321,45 +327,45 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
       },
       {
-        title: "Redirect My Mail (Individual)",
+        title: "Redirect my personal mail",
         slug: "post-office-redirection-individual",
-        description: "Redirect mail for an individual",
+        description: "Redirect my personal mail",
         protected: true,
         subPages: [
           { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
-            title: "Redirect My Mail (Individual) form",
+            title: "Redirect my personal mail form",
             type: "component",
             protected: true,
           },
         ],
       },
       {
-        title: "Redirect My Mail (Deceased)",
+        title: "Tell the Post Office someone has died",
         slug: "post-office-redirection-deceased",
-        description: "Redirect mail for a deceased person",
+        description: "Tell the Post Office someone has died",
         protected: true,
         subPages: [
           { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
-            title: "Redirect My Mail (Deceased) form",
+            title: "Form to tell the Post Office someone has died",
             type: "component",
             protected: true,
           },
         ],
       },
       {
-        title: "Redirect My Mail (Business)",
+        title: "Redirect my business mail",
         slug: "post-office-redirection-business",
-        description: "Redirect mail for a Business",
+        description: "Redirect my business mail",
         protected: true,
         subPages: [
           { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
-            title: "Redirect My Mail (Business) form",
+            title: "Redirect my business mail form",
             type: "component",
             protected: true,
           },
