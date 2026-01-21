@@ -697,6 +697,19 @@ The birth registration is free of charge.`,
           required: "You must confirm the declaration to continue",
         },
       },
+      {
+        name: "declaration.dateOfDeclaration",
+        label: "Date of declaration",
+        hidden: true,
+        placeholder: "For example, 12 15 2025",
+        type: "date",
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
+      },
     ],
   },
   {

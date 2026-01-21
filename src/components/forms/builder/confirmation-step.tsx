@@ -1,5 +1,5 @@
 "use client";
-import { Button, Heading, Link, Text } from "@govtech-bb/react";
+import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
@@ -93,10 +93,10 @@ export function ConfirmationPage({
         <div className="col-span-2 space-y-6 lg:space-y-8">
           {/* Reference number banner */}
           {referenceNumber && (
-            <div className="bg-neutral-200 px-6 py-5.5 text-center">
-              <p className="font-bold text-[40px] text-neutral-black">
+            <div className="bg-blue-10 px-6 py-5.5 text-center">
+              <Heading as="h2">
                 Your reference number is {referenceNumber}
-              </p>
+              </Heading>
             </div>
           )}
 
@@ -131,11 +131,7 @@ export function ConfirmationPage({
               ) : step.items && step.items.length > 0 ? (
                 <div className="space-y-4">
                   {step.items.map((item, itemIndex) => (
-                    <Text
-                      as="p"
-                      className="text-[20px] leading-normal"
-                      key={itemIndex}
-                    >
+                    <Text as="p" key={itemIndex}>
                       {item}
                     </Text>
                   ))}
@@ -153,23 +149,31 @@ export function ConfirmationPage({
               <Heading as="h3" className="pb-2">
                 {confirmationStep.contactDetails.title}
               </Heading>
-              <div className="space-y-1 text-base leading-normal">
-                <p>{confirmationStep.contactDetails.address.line1}</p>
+              <div className="space-y-1">
+                <Text as="p">
+                  {confirmationStep.contactDetails.address.line1}
+                </Text>
                 {confirmationStep.contactDetails.address.line2 && (
-                  <p>{confirmationStep.contactDetails.address.line2}</p>
+                  <Text as="p">
+                    {confirmationStep.contactDetails.address.line2}
+                  </Text>
                 )}
-                <p>{confirmationStep.contactDetails.address.city}</p>
+                <Text as="p">
+                  {confirmationStep.contactDetails.address.city}
+                </Text>
                 {confirmationStep.contactDetails.address.country && (
-                  <p>{confirmationStep.contactDetails.address.country}</p>
+                  <Text as="p">
+                    {confirmationStep.contactDetails.address.country}
+                  </Text>
                 )}
-                <p>
+                <Text as="p">
                   <span className="font-bold">Telephone:</span>{" "}
                   {confirmationStep.contactDetails.telephoneNumber}
-                </p>
-                <p>
+                </Text>
+                <Text as="p">
                   <span className="font-bold">Email:</span>{" "}
                   {confirmationStep.contactDetails.email}
-                </p>
+                </Text>
               </div>
             </div>
           )}
@@ -192,23 +196,19 @@ export function ConfirmationPage({
               <Heading as="h3" className="pb-4">
                 Help us improve this service
               </Heading>
-              <Text as="p" className="mb-4 leading-normal">
+              <Text as="p" className="mb-4">
                 We are always working to improve government services. If you
                 have a moment, you can tell us about your experience today.
               </Text>
-              <Button
+              <LinkButton
                 className="cursor-pointer"
-                onClick={() => {
-                  router.push(
-                    `/exit-survey?ref_id=${formId}&step=introduction`
-                  );
-                }}
+                href={`/exit-survey?ref_id=${formId}&step=introduction`}
                 type="button"
                 variant="secondary"
               >
                 Give feedback on this service
-              </Button>
-              <Text as="p" className="mt-4 text-neutral-black">
+              </LinkButton>
+              <Text as="p" className="mt-4 text-black-00">
                 This will take about 30 seconds. Your responses are anonymous.
               </Text>
             </div>

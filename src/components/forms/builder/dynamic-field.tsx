@@ -391,7 +391,7 @@ export function DynamicField({
     <div className={getWidthClass(field.width)} id={field.name || undefined}>
       {field.type === "heading" ? (
         <div className="py-5">
-          <hr className="border-neutral-grey border-t-4" />
+          <hr className="border-grey-00 border-t-4" />
           {field.label && field.label.trim() ? (
             <Heading
               as={

@@ -136,11 +136,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
         >
           {step.title}
         </Heading>
-        {step.description && (
-          <Text as="p" className="whitespace-pre-line leading-[1.5]">
-            {step.description}
-          </Text>
-        )}
+        {step.description && <Text as="p">{step.description}</Text>}
       </div>
 
       {/* Error Summary - only show if there are errors */}
