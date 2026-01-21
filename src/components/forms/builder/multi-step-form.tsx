@@ -832,6 +832,15 @@ export default function DynamicMultiStepForm({
     return arrayifiedData as FormData;
   };
 
+  const formatIdNumber = (idNumber: string): string => {
+    if (!idNumber) return idNumber;
+    const cleanId = idNumber.replace(/-/g, "").trim();
+    if (cleanId.length === 10 && /^\d+$/.test(cleanId)) {
+      return `${cleanId.slice(0, 6)}-${cleanId.slice(6)}`;
+    }
+    return idNumber;
+  };
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -1211,7 +1220,31 @@ export default function DynamicMultiStepForm({
       // If this is the declaration step, submit the form
       if (isDeclarationStep) {
         const formData = methods.getValues();
-        await onSubmit(formData);
+        const father =
+          formData.father && typeof formData.father === "object"
+            ? {
+                ...formData.father,
+                idNumber: (formData.father as any).idNumber
+                  ? formatIdNumber((formData.father as any).idNumber)
+                  : "",
+              }
+            : {};
+
+        const mother =
+          formData.mother && typeof formData.mother === "object"
+            ? {
+                ...formData.mother,
+                idNumber: (formData.mother as any).idNumber
+                  ? formatIdNumber((formData.mother as any).idNumber)
+                  : "",
+              }
+            : {};
+
+        await onSubmit({
+          ...formData,
+          father,
+          mother,
+        });
         return;
       }
 

@@ -106,7 +106,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: "^\\d{6}[-]?\\d{4}$",
             message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
@@ -248,7 +248,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: "^\\d{6}[-]?\\d{4}$",
             message: "Enter a valid ID number (e.g., 850101-0001)",
           },
         },
