@@ -187,13 +187,13 @@ export const formSteps: FormStep[] = [
   {
     id: "barbadosResidencyDuration",
     title: "Barbados Residency Duration",
-    description: "How long have you lived in Barbados?",
+    description: "",
     fields: [
       {
         name: "barbadosResidencyDuration.residencyDuration",
         label: "How long have you lived in Barbados?",
         hint: "For example: 2 weeks, 4 months, 1 year",
-        type: "number",
+        type: "text",
         validation: {
           required: false,
           minLength: {
@@ -271,8 +271,10 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "This field is required",
           pattern: {
-            value: "^\\+?[0-9]{10,15}$",
-            message: "Telephone number must be 10-15 digits",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -296,8 +298,9 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "country",
-        type: "text",
+        type: "select",
         label: "Country",
+        options: countries,
         validation: { required: false },
       },
       {
@@ -306,9 +309,13 @@ export const formSteps: FormStep[] = [
         type: "number",
         validation: {
           required: "This field is required",
-          minLength: {
+          min: {
             value: 1930,
             message: "Start Year must be at least 1930",
+          },
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Please enter a valid year",
           },
         },
       },
@@ -318,9 +325,9 @@ export const formSteps: FormStep[] = [
         type: "number",
         validation: {
           required: "This field is required",
-          minLength: {
-            value: 1930,
-            message: "End Year must be at least 1930.",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Please enter a valid year",
           },
         },
       },
@@ -357,6 +364,10 @@ export const formSteps: FormStep[] = [
           min: {
             value: 1930,
             message: "Year may not be before 1930",
+          },
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Please enter a valid year",
           },
         },
       },
@@ -588,28 +599,45 @@ export const formSteps: FormStep[] = [
       {
         name: "documents.certificateDiplomaTranscript",
         label: "Upload your certificates, diplomas, and transcripts",
+        // validation: { required: "This field is required" },
+        validation: { required: false },
+        type: "file",
+      },
+      // {
+      //   name: "documents.testimonials",
+      //   label: "Upload your two testimonials",
+      //   // validation: { required: false },
+      //   validation: { required: "This field is required" },
+      //   type: "fieldArray",
+      //   fieldArray: {
+      //     itemLabel: "Testimonial",
+      //     addButtonText: "Add another Testimonial",
+      //     maxItems: 2,
+      //     minItems: 2,
+      //     fields: [
+      //       {
+      //         name: "Testimonial",
+      //         label: "Upload testimonial",
+      //         type: "file",
+      //         validation: { required: "This field is required" },
+      //         // validation: { required: false },
+      //       },
+      //     ],
+      //   },
+      // },
+      {
+        name: "documents.testimonialOne",
+        label: "Upload your first testimonial",
         validation: { required: "This field is required" },
+        // validation: { required: false },
         type: "file",
       },
       {
-        name: "documents.testimonials",
-        label: "Upload your two testimonials",
+        name: "documents.testimonialTwo",
+        label: "Upload your second testimonial",
         validation: { required: "This field is required" },
-        type: "fieldArray",
-        fieldArray: {
-          itemLabel: "Testimonial",
-          addButtonText: "Add another Testimonial",
-          maxItems: 2,
-          minItems: 1,
-          fields: [
-            {
-              name: "Testimonial",
-              label: "Upload testimonial",
-              type: "file",
-              validation: { required: "This field is required" },
-            },
-          ],
-        },
+        // validation: { required: false },
+        type: "file",
       },
     ],
   },
