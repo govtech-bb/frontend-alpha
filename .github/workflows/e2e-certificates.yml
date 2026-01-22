@@ -5,6 +5,9 @@ on:
     branches: [main, prod]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Certificate Form Tests
@@ -12,10 +15,10 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
     env:
-      MAIL_FROM: 'no-reply@notify.dev.alpha.gov.bb'
-      SES_REGION: 'region'
-      FEEDBACK_TO_EMAIL: 'no-reply@notify.dev.alpha.gov.bb'
-      FEEDBACK_FROM_EMAIL: 'no-reply@notify.dev.alpha.gov.bb'
+      MAIL_FROM: "no-reply@notify.dev.alpha.gov.bb"
+      SES_REGION: "region"
+      FEEDBACK_TO_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
+      FEEDBACK_FROM_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
