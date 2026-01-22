@@ -153,7 +153,7 @@ export const formSteps: FormStep[] = [
         skipValidationWhenShowHideOpen: "usePassportInstead",
       },
       {
-        name: "applicant.passportDetails",
+        name: "passportDetails",
         label: "",
         type: "showHide",
         validation: { required: false },
@@ -266,7 +266,7 @@ export const formSteps: FormStep[] = [
           required: false,
           pattern: {
             value: "BB\\d{5}",
-            message: "Postcode is invalid for Barbados",
+            message: "Enter a valid postal code (e.g., BB17004)",
           },
         },
       },
@@ -318,7 +318,7 @@ export const formSteps: FormStep[] = [
         validation: { required: false },
       },
       {
-        name: "applicantEducation.startYear",
+        name: "startYear",
         label: "Start year",
         type: "text",
         width: "short",
@@ -335,7 +335,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantEducation.endYear",
+        name: "endYear",
         label: "End year",
         type: "text",
         width: "short",
@@ -360,21 +360,21 @@ export const formSteps: FormStep[] = [
     },
     fields: [
       {
-        name: "applicantQualification.subject",
+        name: "subject",
         label: "Subject",
         type: "text",
         validation: { required: "Subject is required" },
         width: "medium",
       },
       {
-        name: "applicantQualification.examiningBody",
+        name: "examiningBody",
         label: "Examining body",
         type: "text",
         validation: { required: "Examining body is required" },
         width: "medium",
       },
       {
-        name: "applicantQualification.year",
+        name: "year",
         label: "Year",
         type: "text",
         width: "short",
@@ -391,7 +391,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantQualification.levelGrade",
+        name: "levelGrade",
         label: "Level/Grade",
         type: "text",
         validation: { required: "Level/Grade is required" },
@@ -409,21 +409,21 @@ export const formSteps: FormStep[] = [
     },
     fields: [
       {
-        name: "applicantWorkExperience.employerName",
+        name: "employerName",
         label: "Name of employer or organization",
         type: "text",
         validation: { required: "This field is required" },
         width: "medium",
       },
       {
-        name: "applicantWorkExperience.positionHeld",
+        name: "positionHeld",
         label: "Position held",
         type: "text",
         validation: { required: "This field is required" },
         width: "medium",
       },
       {
-        name: "applicantWorkExperience.fromYear",
+        name: "fromYear",
         label: "From (year)",
         type: "text",
         validation: {
@@ -440,7 +440,7 @@ export const formSteps: FormStep[] = [
         width: "short",
       },
       {
-        name: "applicantWorkExperience.toYear",
+        name: "toYear",
         label: "To (year)",
         type: "text",
         validation: {
@@ -457,7 +457,7 @@ export const formSteps: FormStep[] = [
         width: "short",
       },
       {
-        name: "applicantWorkExperience.currentlyWorking",
+        name: "currentlyWorking",
         label: "I am currently working here",
         type: "checkbox",
         validation: {
@@ -465,7 +465,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "applicantWorkExperience.tasks",
+        name: "tasks",
         label: "Your main tasks",
         hint: "Provide a brief description of what you did in your role",
         validation: { required: "Your main tasks is required" },
@@ -519,7 +519,7 @@ export const formSteps: FormStep[] = [
     },
     fields: [
       {
-        name: "reference.title",
+        name: "title",
         label: "Title",
         type: "select",
         options: [
@@ -536,11 +536,11 @@ export const formSteps: FormStep[] = [
             value: "miss",
           },
         ],
-        validation: { required: "Miss is required" },
+        validation: { required: "Title is required" },
         width: "short",
       },
       {
-        name: "reference.firstName",
+        name: "firstName",
         type: "text",
         label: "First name",
         validation: {
@@ -556,7 +556,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "reference.lastName",
+        name: "lastName",
         type: "text",
         label: "Last name",
         validation: {
@@ -572,19 +572,19 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "reference.addressLine1",
+        name: "addressLine1",
         type: "text",
         label: "Address line 1",
         validation: { required: "Address line 1 is required" },
       },
       {
-        name: "reference.addressLine2",
+        name: "addressLine2",
         type: "text",
         label: "Address line 2",
         validation: { required: false },
       },
       {
-        name: "reference.country",
+        name: "country",
         type: "select",
         label: "Country",
         validation: { required: "Country is required" },
@@ -597,7 +597,7 @@ export const formSteps: FormStep[] = [
         width: "medium",
       },
       {
-        name: "reference.parish",
+        name: "parish",
         type: "select",
         label: "Parish",
         validation: { required: "Parish is required" },
@@ -605,32 +605,32 @@ export const formSteps: FormStep[] = [
         width: "medium",
       },
       {
-        name: "reference.postcode",
+        name: "postcode",
         type: "text",
         label: "Postcode",
         validation: {
           required: false,
           pattern: {
-            value: "BB\\d{5}",
-            message: "Postcode is invalid for Barbados",
+            value: "^BB\\d{5}$",
+            message: "Enter a valid postal code (e.g., BB17004)",
           },
         },
         width: "medium",
       },
       {
-        name: "reference.occupation",
+        name: "occupation",
         label: "Occupation",
         validation: { required: "Occupation is required" },
         type: "text",
       },
       {
-        name: "reference.emailAddress",
+        name: "emailAddress",
         type: "email",
         label: "Email address",
         validation: { required: "Email address is required" },
       },
       {
-        name: "reference.telephoneNumber",
+        name: "telephoneNumber",
         type: "text",
         label: "Telephone number",
         validation: {
