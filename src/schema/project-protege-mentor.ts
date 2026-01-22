@@ -47,7 +47,7 @@ export const formSteps: FormStep[] = [
         name: "personal.dateOfBirth",
         label: "Date of birth",
         type: "date",
-        placeholder: "For example, 27 3 2007",
+        placeholder: "For example, 03 27 2007",
         validation: {
           required: "Date of birth is required",
         },
@@ -153,7 +153,7 @@ export const formSteps: FormStep[] = [
       {
         name: "contact.postalCode",
         label: "Post code",
-        hint: "Optional (e.g. BB17004)",
+        hint: "For example, BB17004 (optional)",
         type: "text",
         width: "short",
         validation: {
@@ -226,7 +226,7 @@ export const formSteps: FormStep[] = [
         name: "mentorship.menteeLearn",
         label: "What do you think a mentee could learn from you?",
         type: "textarea",
-        hint: "You might describe an experience you've had or a challenge you've overcome that shows an admirable quality",
+        hint: "You may use an experience you've had or a challenge you've overcome that shows an admirable quality",
         rows: 5,
         validation: {
           required: "Tell us what a mentee could learn from you",
@@ -262,7 +262,7 @@ export const formSteps: FormStep[] = [
       {
         name: "preferences.sharePhoneNumber",
         label:
-          "Would you be happy for your personal phone number to be given to your mentee?",
+          "Would you agree to share your personal number with your mentee?",
         type: "radio",
         validation: {
           required: "Select whether you would share your phone number",
@@ -353,7 +353,7 @@ export const formSteps: FormStep[] = [
     id: "professionalReferee",
     title: "Tell us about your professional referee",
     description:
-      "This can be someone more senior who you've worked with, or a teacher or lecturer.",
+      "This can be someone in a supervisory role who you've worked with. Or, if you have not been part of a workforce yet, this can be a teacher or lecturer.",
     fields: [
       {
         name: "professionalReferee.firstName",
@@ -536,7 +536,8 @@ export const formSteps: FormStep[] = [
   {
     id: "confirmation",
     title: "Thank you for your application",
-    description: "",
+    description:
+      "Your information has been sent to the Youth Development Programme, the coordinating programme in the Division of Youth Affairs",
     fields: [],
     steps: [
       {
