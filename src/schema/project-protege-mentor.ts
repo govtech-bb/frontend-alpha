@@ -152,14 +152,14 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.postalCode",
-        label: "Post code",
+        label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
         width: "short",
         validation: {
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (for example, BB17004)",
           },
         },
       },
@@ -181,7 +181,7 @@ export const formSteps: FormStep[] = [
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -281,7 +281,7 @@ export const formSteps: FormStep[] = [
           pattern: {
             value: "^\\d{1,2}\\s?\\d{3}\\s?\\d{3}\\s?\\d{4}$",
             message:
-              "Please enter a valid phone number (e.g., 246 234 5678 or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 246 234 5678 or 1 246 234 5678)",
           },
         },
         conditionalOn: {
@@ -417,7 +417,7 @@ export const formSteps: FormStep[] = [
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -492,7 +492,7 @@ export const formSteps: FormStep[] = [
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -544,7 +544,6 @@ export const formSteps: FormStep[] = [
         title: "What happens next",
         content:
           "If you are shortlisted, you will be contacted by phone or email and invited for an interview.",
-        items: [""],
       },
     ],
     enableFeedback: true,

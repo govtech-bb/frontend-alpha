@@ -105,13 +105,13 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.postalCode",
         label: "Postcode",
-        hint: "Optional (e.g. BB17004)",
+        hint: "For example, BB17004 (optional)",
         type: "text",
         width: "short",
         validation: {
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (for example, BB17004)",
           },
         },
       },
@@ -119,12 +119,12 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
-        placeholder: "e.g., 850101-0001",
+        placeholder: "for example, 850101-0001",
         validation: {
           required: "ID Number is required",
           pattern: {
             value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+            message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -159,7 +159,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         validation: {
           required: "Email address is required",
@@ -167,7 +167,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
@@ -175,7 +175,7 @@ export const formSteps: FormStep[] = [
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -278,7 +278,7 @@ export const formSteps: FormStep[] = [
           required: "ID Number is required",
           pattern: {
             value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+            message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -378,7 +378,7 @@ export const formSteps: FormStep[] = [
           required: "ID Number is required",
           pattern: {
             value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+            message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
