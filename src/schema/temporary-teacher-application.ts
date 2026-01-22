@@ -27,6 +27,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.middleName",
         type: "text",
         label: "Middle name(s)",
+        hint: "If you have more than one, add them in order",
         validation: {
           minLength: {
             value: 2,
@@ -58,7 +59,8 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.dateOfBirth",
         type: "date",
-        label: "Date of Birth",
+        label: "Date of birth",
+        placeholder: "For example, 12 30 1986",
         validation: {
           required: "This field is required",
           pattern: {
@@ -87,7 +89,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.sex",
-        type: "select",
+        type: "radio",
         label: "Sex",
         options: [
           {
@@ -111,6 +113,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.maritalStatus",
         type: "select",
         label: "Marital status",
+        width: "short",
         options: [
           {
             label: "Single",
@@ -211,7 +214,7 @@ export const formSteps: FormStep[] = [
   {
     id: "contact",
     title: "Contact Details",
-    description: "Your contact information",
+    description: "",
     fields: [
       {
         name: "contact.addressLine1",
@@ -233,6 +236,7 @@ export const formSteps: FormStep[] = [
         name: "contact.country",
         type: "select",
         label: "Country",
+        width: "short",
         validation: {
           required: "This field is required",
         },
@@ -247,6 +251,7 @@ export const formSteps: FormStep[] = [
         name: "contact.parish",
         type: "select",
         label: "Parish",
+        width: "short",
         validation: {
           required: "This field is required",
         },
@@ -256,6 +261,7 @@ export const formSteps: FormStep[] = [
         name: "contact.postcode",
         type: "text",
         label: "Postcode",
+        width: "short",
         validation: { required: false },
       },
       {
@@ -282,8 +288,8 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "applicantEducation",
-    title: "Your Education",
-    description: "Tell us about your education",
+    title: "Tell us about your education",
+    description: "",
     repeatable: {
       arrayFieldName: "applicantEducation",
       maxItems: 5,
@@ -295,18 +301,21 @@ export const formSteps: FormStep[] = [
         type: "text",
         label: "Name of Institution",
         validation: { required: "This field is required" },
+        width: "medium",
       },
       {
         name: "country",
         type: "select",
         label: "Country",
+        width: "medium",
         options: countries,
         validation: { required: false },
       },
       {
         name: "applicantEducation.startYear",
         label: "Start Year",
-        type: "number",
+        type: "text",
+        width: "short",
         validation: {
           required: "This field is required",
           min: {
@@ -322,7 +331,8 @@ export const formSteps: FormStep[] = [
       {
         name: "applicantEducation.endYear",
         label: "End Year",
-        type: "number",
+        type: "text",
+        width: "short",
         validation: {
           required: "This field is required",
           pattern: {
@@ -335,8 +345,8 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "applicantQualification",
-    title: "Your qualifications",
-    description: "What are your qualifications?",
+    title: "Tell us about your qualifications",
+    description: "",
     repeatable: {
       arrayFieldName: "qualifications",
       maxItems: 10,
@@ -348,17 +358,20 @@ export const formSteps: FormStep[] = [
         label: "Subject",
         type: "text",
         validation: { required: "This field is required" },
+        width: "medium",
       },
       {
         name: "applicantQualification.examiningBody",
         label: "Examining Body",
         type: "text",
         validation: { required: "This field is required" },
+        width: "medium",
       },
       {
         name: "applicantQualification.year",
         label: "Year",
-        type: "number",
+        type: "text",
+        width: "short",
         validation: {
           required: "This field is required",
           min: {
@@ -381,8 +394,8 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "applicantWorkExperience",
-    title: "Your work experience",
-    description: "Tell us about your work experience",
+    title: "Tell us abouot your work experience",
+    description: "",
     repeatable: {
       arrayFieldName: "workExperiences",
       maxItems: 5,
@@ -394,17 +407,19 @@ export const formSteps: FormStep[] = [
         label: "Name of employer or organization",
         type: "text",
         validation: { required: "This field is required" },
+        width: "medium",
       },
       {
         name: "applicantWorkExperience.positionHeld",
         label: "Position held",
         type: "text",
         validation: { required: "This field is required" },
+        width: "medium",
       },
       {
         name: "applicantWorkExperience.fromYear",
         label: "From (year)",
-        type: "number",
+        type: "text",
         validation: {
           required: "This field is required",
           minLength: {
@@ -412,11 +427,12 @@ export const formSteps: FormStep[] = [
             message: "From (year) must be at least 1930",
           },
         },
+        width: "short",
       },
       {
         name: "applicantWorkExperience.toYear",
         label: "To (year)",
-        type: "number",
+        type: "text",
         validation: {
           required: false,
           minLength: {
@@ -424,6 +440,7 @@ export const formSteps: FormStep[] = [
             message: "To (year) must be at least 1930",
           },
         },
+        width: "short",
       },
       {
         name: "applicantWorkExperience.currentlyWorking",
@@ -437,37 +454,42 @@ export const formSteps: FormStep[] = [
         name: "applicantWorkExperience.tasks",
         label: "Your main tasks",
         validation: { required: "This field is required" },
-        type: "text",
+        type: "textarea",
+        width: "medium",
       },
     ],
   },
   {
     id: "skillsAndExperience",
-    title: "Your skills and experiences",
+    title: "Tell us about your skills and experiences",
     fields: [
       {
         name: "skillsAndExperience.athleticsGamesCraftSkills",
         label: "Athletics, games, or craft skills",
-        type: "text",
+        type: "textarea",
         validation: { required: false },
+        width: "medium",
       },
       {
         name: "skillsAndExperience.youthCommunityVolunteerGroups",
         label: "Experience in youth, community, or volunteer groups",
-        type: "text",
+        type: "textarea",
         validation: { required: false },
+        width: "medium",
       },
       {
         name: "skillsAndExperience.responsibilityPositions",
         label: "Positions of responsibility held",
-        type: "text",
+        type: "textarea",
         validation: { required: false },
+        width: "medium",
       },
       {
         name: "skillsAndExperience.extraDetails",
         label: "Anything else relevant to your application?",
-        type: "text",
+        type: "textarea",
         validation: { required: false },
+        width: "medium",
       },
     ],
   },
@@ -477,7 +499,7 @@ export const formSteps: FormStep[] = [
     description: "",
     repeatable: {
       arrayFieldName: "references",
-      maxItems: 3,
+      maxItems: 2,
       addAnotherLabel: "Add another reference?",
     },
     fields: [
@@ -599,8 +621,8 @@ export const formSteps: FormStep[] = [
       {
         name: "documents.certificateDiplomaTranscript",
         label: "Upload your certificates, diplomas, and transcripts",
-        // validation: { required: "This field is required" },
-        validation: { required: false },
+        validation: { required: "This field is required" },
+        // validation: { required: false },
         type: "file",
       },
       // {
