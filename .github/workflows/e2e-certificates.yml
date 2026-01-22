@@ -19,6 +19,7 @@ jobs:
       SES_REGION: "region"
       FEEDBACK_TO_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
       FEEDBACK_FROM_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
+      NEXT_PUBLIC_PROCESSING_API: ${{ secrets.NEXT_PUBLIC_PROCESSING_API }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
