@@ -259,14 +259,14 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contactDetails.postalCode",
-        label: "Postal code",
+        label: "Postcode",
         width: "medium",
         hint: "Optional (e.g. BB17004)",
         type: "text",
         validation: {
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (e.g., BB17004)",
           },
         },
       },

@@ -159,7 +159,7 @@ export const formSteps: FormStep[] = [
         validation: {
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (e.g., BB17004)",
           },
         },
       },

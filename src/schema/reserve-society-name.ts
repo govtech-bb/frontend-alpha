@@ -196,7 +196,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.postalCode",
-        label: "Postal Code",
+        label: "Postcode",
         hint: "Optional",
         type: "text",
         width: "medium",
@@ -204,7 +204,7 @@ export const formSteps: FormStep[] = [
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (e.g., BB17004)",
           },
         },
       },

@@ -135,7 +135,7 @@ export const formSteps: FormStep[] = [
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (e.g., BB17004)",
           },
         },
       },
@@ -319,7 +319,7 @@ export const formSteps: FormStep[] = [
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (e.g., BB17004)",
           },
         },
       },
