@@ -18,7 +18,7 @@ It shouldn’t take longer than 20 minutes.
 
 You will need a debit or credit card, and you will need to have (or create) an EZPay+ account.
 
-Each certified copy costs $5 BBD. People aged 60 and over pay $1 BBD per certificate.
+Each certified copy costs $5 BBD.
 
 The form asks for:
 

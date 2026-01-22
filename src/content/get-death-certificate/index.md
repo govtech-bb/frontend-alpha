@@ -46,7 +46,7 @@ You can request a copy on someone else’s behalf but you must disclose:
 
 ## Cost of certificates
 
-Each certified copy costs $5 BBD. People aged 60 and over pay $1 BBD per certificate.
+Each certified copy costs $5 BBD.
 
 ## After your request is processed
 
