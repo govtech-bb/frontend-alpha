@@ -544,7 +544,6 @@ export const formSteps: FormStep[] = [
         title: "What happens next",
         content:
           "If you are shortlisted, you will be contacted by phone or email and invited for an interview.",
-        items: [""],
       },
     ],
     enableFeedback: true,
