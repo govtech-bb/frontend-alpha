@@ -129,9 +129,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
         <Heading
           as="h1"
           className={`focus:outline-none ${
-            step.id === "declaration"
-              ? "inline rounded-xl bg-[#ffe53f] px-4 py-2 shadow-lg"
-              : ""
+            step.id === "declaration" ? "inline py-2" : ""
           }`}
         >
           {step.title}
