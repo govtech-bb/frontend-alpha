@@ -141,12 +141,12 @@ export const formSteps: FormStep[] = [
         label: "National Identification (ID) number",
         type: "text",
         width: "medium",
-        // placeholder: "e.g., 850101-0001",
+        // placeholder: "for example, 850101-0001",
         validation: {
           required: "ID number is required",
           pattern: {
             value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+            message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -266,7 +266,7 @@ export const formSteps: FormStep[] = [
           required: false,
           pattern: {
             value: "BB\\d{5}",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postal code (for example, BB17004)",
           },
         },
       },
@@ -286,7 +286,7 @@ export const formSteps: FormStep[] = [
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -612,7 +612,7 @@ export const formSteps: FormStep[] = [
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postal code (for example, BB17004)",
           },
         },
         width: "medium",
@@ -639,7 +639,7 @@ export const formSteps: FormStep[] = [
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
