@@ -50,7 +50,7 @@ Each certified copy costs $5 BBD.
 
 ## After your request is processed
 
-A copy of a death certificate is usually ready to collect in 2 to 3 working days.
+A copy of a death certificate is usually ready to collect in 5 to 7 business days.
 
 However, if the death registration needs a coroner’s certificate, it can take longer and is dependent on the Coroner's Office.
 
