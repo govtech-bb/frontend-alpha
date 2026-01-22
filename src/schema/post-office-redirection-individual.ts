@@ -265,6 +265,7 @@ export const formSteps: FormStep[] = [
       {
         name: "newAddress.redirectionEndDate",
         label: "Redirection end date",
+        hint: "A redirection notice lasts a maximum of six months",
         type: "date",
         validation: {
           required: "End date is required",
@@ -284,7 +285,7 @@ export const formSteps: FormStep[] = [
       "Minor dependents are persons in your care under the age of 16",
     fields: [
       {
-        name: "anyMinorDependents",
+        name: "dependents.anyMinorDependents",
         label:
           "Are there any minor dependents who also need their mail to be redirected to the new address?",
         hidden: true,
@@ -297,26 +298,26 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
-      // {
-      //   name: "dependents.numberOfMinors",
-      //   label:
-      //     "How many minor dependents need their mail sent to the new address?",
-      //   type: "number",
-      //   validation: {
-      //     required: "Number of minors is required",
-      //   },
-      //   conditionalOn: {
-      //     field: "dependents.anyMinorDependents",
-      //     value: "yes",
-      //   },
-      // },
+      {
+        name: "dependents.numberOfMinors",
+        label:
+          "How many minor dependents need their mail sent to the new address?",
+        type: "number",
+        validation: {
+          required: "Number of minors is required",
+        },
+        conditionalOn: {
+          field: "dependents.anyMinorDependents",
+          value: "yes",
+        },
+      },
     ],
   },
   {
     id: "minor-details",
     title: "Tell us about the minor dependent",
     conditionalOn: {
-      field: "anyMinorDependents",
+      field: "dependents.anyMinorDependents",
       value: "yes",
     },
     repeatable: {
@@ -395,7 +396,7 @@ export const formSteps: FormStep[] = [
       {
         title: "What happens next",
         content:
-          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months",
+          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months.",
         items: [],
       },
     ],
