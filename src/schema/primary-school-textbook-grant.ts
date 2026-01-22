@@ -307,13 +307,13 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.postalCode",
-        label: "Post code",
+        label: "Postcode",
         type: "text",
         width: "medium",
         validation: {
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (e.g., BB17004)",
           },
         },
       },

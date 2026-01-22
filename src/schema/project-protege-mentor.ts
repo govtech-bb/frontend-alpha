@@ -152,7 +152,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "contact.postalCode",
-        label: "Post code",
+        label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
         width: "short",
