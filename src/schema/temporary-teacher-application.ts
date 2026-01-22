@@ -10,16 +10,16 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.firstName",
         type: "text",
-        label: "First Name",
+        label: "First name",
         validation: {
-          required: "This field is required",
+          required: "First name is required",
           minLength: {
             value: 2,
-            message: "First Name must be at least 2 characters",
+            message: "First name must be at least 2 characters",
           },
           maxLength: {
             value: 50,
-            message: "First Name must be at least 50 characters",
+            message: "First name must be at least 50 characters",
           },
         },
       },
@@ -35,7 +35,7 @@ export const formSteps: FormStep[] = [
           },
           maxLength: {
             value: 50,
-            message: "Middle name(s) must be at least 50 characters",
+            message: "Middle name(s) must be at most 50 characters",
           },
           required: false,
         },
@@ -43,16 +43,16 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.lastName",
         type: "text",
-        label: "Last Name",
+        label: "Last name",
         validation: {
-          required: "This field is required",
+          required: "Last name is required",
           minLength: {
             value: 2,
-            message: "Last Name must be at least 2 characters",
+            message: "Last name must be at least 2 characters",
           },
           maxLength: {
             value: 50,
-            message: "Last Name must be at least 50 characters",
+            message: "Last name must be at least 50 characters",
           },
         },
       },
@@ -60,9 +60,9 @@ export const formSteps: FormStep[] = [
         name: "applicant.dateOfBirth",
         type: "date",
         label: "Date of birth",
-        placeholder: "For example, 12 30 1986",
+        placeholder: "For example, 30 12 1986",
         validation: {
-          required: "This field is required",
+          required: "Date of birth is required",
           pattern: {
             value: "^\\d{4}-\\d{2}-\\d{2}$",
             message: "Date must be in YYYY-MM-DD format",
@@ -74,7 +74,7 @@ export const formSteps: FormStep[] = [
         type: "text",
         label: "Place of birth",
         validation: {
-          required: "This field is required",
+          required: "Place of birth is required",
         },
       },
       {
@@ -102,7 +102,7 @@ export const formSteps: FormStep[] = [
           },
         ],
         validation: {
-          required: "This field is required",
+          required: "Sex is required",
           pattern: {
             value: "^(male|female)$",
             message: "Please choose male or female.",
@@ -129,7 +129,7 @@ export const formSteps: FormStep[] = [
           },
         ],
         validation: {
-          required: "Must select a marital status",
+          required: "Marital status is required",
           pattern: {
             value: "^(single|married|divorced)$",
             message: "Must select single, married, or divorced.",
@@ -138,7 +138,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.nationalIdNumber",
-        label: "National Identification (ID) Number",
+        label: "National Identification (ID) number",
         type: "text",
         width: "medium",
         // placeholder: "e.g., 850101-0001",
@@ -189,13 +189,13 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "barbadosResidencyDuration",
-    title: "Barbados Residency Duration",
-    description: "",
+    title: "How long have you lived in barbados?",
+    description: "For example: 2 weeks, 4 months, 1 year",
     fields: [
       {
         name: "barbadosResidencyDuration.residencyDuration",
-        label: "How long have you lived in Barbados?",
-        hint: "For example: 2 weeks, 4 months, 1 year",
+        label: "",
+        hint: "",
         type: "text",
         validation: {
           required: false,
@@ -219,15 +219,15 @@ export const formSteps: FormStep[] = [
       {
         name: "contact.addressLine1",
         type: "text",
-        label: "Address Line 1",
+        label: "Address line 1",
         validation: {
-          required: "This field is required",
+          required: "Address is required",
         },
       },
       {
         name: "contact.addressLine2",
         type: "text",
-        label: "Address Line 2",
+        label: "Address line 2",
         validation: {
           required: false,
         },
@@ -238,7 +238,7 @@ export const formSteps: FormStep[] = [
         label: "Country",
         width: "short",
         validation: {
-          required: "This field is required",
+          required: "Country is required",
         },
         options: [
           {
@@ -253,7 +253,7 @@ export const formSteps: FormStep[] = [
         label: "Parish",
         width: "short",
         validation: {
-          required: "This field is required",
+          required: "Parish is required",
         },
         options: barbadosParishes,
       },
@@ -262,20 +262,26 @@ export const formSteps: FormStep[] = [
         type: "text",
         label: "Postcode",
         width: "short",
-        validation: { required: false },
+        validation: {
+          required: false,
+          pattern: {
+            value: "BB\\d{5}",
+            message: "Postcode is invalid for Barbados",
+          },
+        },
       },
       {
         name: "contact.emailAddress",
         type: "email",
         label: "Email address",
-        validation: { required: "This field is required" },
+        validation: { required: "Email address is required" },
       },
       {
         name: "contact.telephoneNumber",
         type: "text",
-        label: "Telephone Number",
+        label: "Telephone number",
         validation: {
-          required: "This field is required",
+          required: "Telephone number is required",
           pattern: {
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
@@ -299,8 +305,8 @@ export const formSteps: FormStep[] = [
       {
         name: "nameOfInstitution",
         type: "text",
-        label: "Name of Institution",
-        validation: { required: "This field is required" },
+        label: "Name of institution",
+        validation: { required: "Name of institution is required" },
         width: "medium",
       },
       {
@@ -313,11 +319,11 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicantEducation.startYear",
-        label: "Start Year",
+        label: "Start year",
         type: "text",
         width: "short",
         validation: {
-          required: "This field is required",
+          required: "Start year is required",
           min: {
             value: 1930,
             message: "Start Year must be at least 1930",
@@ -330,11 +336,11 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicantEducation.endYear",
-        label: "End Year",
+        label: "End year",
         type: "text",
         width: "short",
         validation: {
-          required: "This field is required",
+          required: "End year is required",
           pattern: {
             value: "^[0-9]{4}$",
             message: "Please enter a valid year",
@@ -345,7 +351,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "applicantQualification",
-    title: "Tell us about your qualifications",
+    title: "Tell us about your qualification",
     description: "",
     repeatable: {
       arrayFieldName: "qualifications",
@@ -357,14 +363,14 @@ export const formSteps: FormStep[] = [
         name: "applicantQualification.subject",
         label: "Subject",
         type: "text",
-        validation: { required: "This field is required" },
+        validation: { required: "Subject is required" },
         width: "medium",
       },
       {
         name: "applicantQualification.examiningBody",
-        label: "Examining Body",
+        label: "Examining body",
         type: "text",
-        validation: { required: "This field is required" },
+        validation: { required: "Examining body is required" },
         width: "medium",
       },
       {
@@ -373,7 +379,7 @@ export const formSteps: FormStep[] = [
         type: "text",
         width: "short",
         validation: {
-          required: "This field is required",
+          required: "Year is required",
           min: {
             value: 1930,
             message: "Year may not be before 1930",
@@ -386,20 +392,20 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicantQualification.levelGrade",
-        label: "Level / Grade Obtained",
+        label: "Level/Grade",
         type: "text",
-        validation: { required: "This field is required" },
+        validation: { required: "Level/Grade is required" },
       },
     ],
   },
   {
     id: "applicantWorkExperience",
-    title: "Tell us abouot your work experience",
+    title: "Tell us about your work experience",
     description: "",
     repeatable: {
       arrayFieldName: "workExperiences",
       maxItems: 5,
-      addAnotherLabel: "Add another work experience?",
+      addAnotherLabel: "Do you want to add another experience?",
     },
     fields: [
       {
@@ -422,9 +428,13 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "This field is required",
-          minLength: {
+          min: {
             value: 1930,
             message: "From (year) must be at least 1930",
+          },
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Please enter a valid year",
           },
         },
         width: "short",
@@ -435,9 +445,13 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: false,
-          minLength: {
+          min: {
             value: 1930,
             message: "To (year) must be at least 1930",
+          },
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Please enter a valid year",
           },
         },
         width: "short",
@@ -453,7 +467,8 @@ export const formSteps: FormStep[] = [
       {
         name: "applicantWorkExperience.tasks",
         label: "Your main tasks",
-        validation: { required: "This field is required" },
+        hint: "Provide a brief description of what you did in your role",
+        validation: { required: "Your main tasks is required" },
         type: "textarea",
         width: "medium",
       },
@@ -461,7 +476,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "skillsAndExperience",
-    title: "Tell us about your skills and experiences",
+    title: "Tell us about your skills and experience",
     fields: [
       {
         name: "skillsAndExperience.athleticsGamesCraftSkills",
@@ -521,93 +536,110 @@ export const formSteps: FormStep[] = [
             value: "miss",
           },
         ],
-        validation: { required: "This field is required" },
+        validation: { required: "Miss is required" },
+        width: "short",
       },
       {
         name: "reference.firstName",
         type: "text",
-        label: "First Name",
+        label: "First name",
         validation: {
-          required: "This field is required",
+          required: "First name is required",
           minLength: {
             value: 2,
-            message: "First Name must be at least 2 characters",
+            message: "First name must be at least 2 characters",
           },
           maxLength: {
             value: 50,
-            message: "First Name must be at least 50 characters",
+            message: "First name must be at least 50 characters",
           },
         },
       },
       {
         name: "reference.lastName",
         type: "text",
-        label: "Last Name",
+        label: "Last name",
         validation: {
-          required: "This field is required",
+          required: "Last name is required",
           minLength: {
             value: 2,
-            message: "Last Name must be at least 2 characters",
+            message: "Last name must be at least 2 characters",
           },
           maxLength: {
             value: 50,
-            message: "Last Name must be at least 50 characters",
+            message: "Last name must be at least 50 characters",
           },
         },
       },
       {
         name: "reference.addressLine1",
         type: "text",
-        label: "Address Line 1",
-        validation: { required: "This field is required" },
+        label: "Address line 1",
+        validation: { required: "Address line 1 is required" },
       },
       {
         name: "reference.addressLine2",
         type: "text",
-        label: "Address Line 2",
+        label: "Address line 2",
         validation: { required: false },
       },
       {
         name: "reference.country",
         type: "select",
         label: "Country",
-        validation: { required: "This field is required" },
-        options: countries,
+        validation: { required: "Country is required" },
+        options: [
+          {
+            label: "Barbados",
+            value: "barbados",
+          },
+        ],
+        width: "medium",
       },
       {
         name: "reference.parish",
         type: "select",
         label: "Parish",
-        validation: { required: "This field is required" },
+        validation: { required: "Parish is required" },
         options: barbadosParishes,
+        width: "medium",
       },
       {
         name: "reference.postcode",
         type: "text",
         label: "Postcode",
-        validation: { required: false },
+        validation: {
+          required: false,
+          pattern: {
+            value: "BB\\d{5}",
+            message: "Postcode is invalid for Barbados",
+          },
+        },
+        width: "medium",
       },
       {
         name: "reference.occupation",
         label: "Occupation",
-        validation: { required: "This field is required" },
+        validation: { required: "Occupation is required" },
         type: "text",
       },
       {
         name: "reference.emailAddress",
         type: "email",
         label: "Email address",
-        validation: { required: "This field is required" },
+        validation: { required: "Email address is required" },
       },
       {
         name: "reference.telephoneNumber",
         type: "text",
-        label: "Telephone Number",
+        label: "Telephone number",
         validation: {
-          required: "This field is required",
+          required: "Telephone number is required",
           pattern: {
-            value: "^\\+?[0-9]{10,15}$",
-            message: "Telephone number must be 10-15 digits",
+            value:
+              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            message:
+              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -621,15 +653,15 @@ export const formSteps: FormStep[] = [
       {
         name: "documents.certificateDiplomaTranscript",
         label: "Upload your certificates, diplomas, and transcripts",
-        validation: { required: "This field is required" },
-        // validation: { required: false },
+        // validation: { required: "Upload your certificates, diplomas, and transcripts is required" },
+        validation: { required: false },
         type: "file",
       },
       // {
       //   name: "documents.testimonials",
       //   label: "Upload your two testimonials",
       //   // validation: { required: false },
-      //   validation: { required: "This field is required" },
+      //   validation: { required: "Upload your two testimonials is required" },
       //   type: "fieldArray",
       //   fieldArray: {
       //     itemLabel: "Testimonial",
@@ -641,7 +673,7 @@ export const formSteps: FormStep[] = [
       //         name: "Testimonial",
       //         label: "Upload testimonial",
       //         type: "file",
-      //         validation: { required: "This field is required" },
+      //         validation: { required: "Upload testimonial is required" },
       //         // validation: { required: false },
       //       },
       //     ],
@@ -650,15 +682,15 @@ export const formSteps: FormStep[] = [
       {
         name: "documents.testimonialOne",
         label: "Upload your first testimonial",
-        validation: { required: "This field is required" },
-        // validation: { required: false },
+        // validation: { required: "Upload your first testimonial is required" },
+        validation: { required: false },
         type: "file",
       },
       {
         name: "documents.testimonialTwo",
         label: "Upload your second testimonial",
-        validation: { required: "This field is required" },
-        // validation: { required: false },
+        // validation: { required: "Upload your second testimonial is required" },
+        validation: { required: false },
         type: "file",
       },
     ],
