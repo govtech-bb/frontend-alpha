@@ -152,6 +152,11 @@ export const formSteps: FormStep[] = [
       },
 
       {
+        name: "father.currentAddressHeading",
+        label: "Current address",
+        type: "heading",
+      },
+      {
         name: "father.parish",
         label: "Parish",
         type: "select",
@@ -174,6 +179,11 @@ export const formSteps: FormStep[] = [
             message: "Address must be at least 5 characters",
           },
         },
+      },
+      {
+        name: "father.seperator1",
+        label: "",
+        type: "heading",
       },
       {
         name: "father.occupation",
@@ -295,6 +305,11 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "mother.currentAddressHeading",
+        label: "Current address",
+        type: "heading",
+      },
+      {
         name: "mother.parish",
         label: "Parish",
         type: "select",
@@ -319,6 +334,11 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "mother.contactDetailsHeading",
+        label: "Contact details",
+        type: "heading",
+      },
+      {
         name: "mother.telephoneNumber",
         label: "Telephone number",
         type: "tel",
@@ -336,6 +356,7 @@ export const formSteps: FormStep[] = [
           required: "Email address is required",
         },
       },
+      { name: "mother.seperator1", label: "", type: "heading" },
       {
         name: "mother.occupation",
         label: "Occupation",
@@ -462,6 +483,13 @@ export const formSteps: FormStep[] = [
           value: "other",
         },
       },
+
+      {
+        name: "birth.separator1",
+        label: "",
+        type: "heading",
+      },
+
       {
         name: "birth.numberOfBirths",
         label: "How many births do you need to register?",
@@ -492,6 +520,11 @@ export const formSteps: FormStep[] = [
           { label: "Relative", value: "relative" },
           { label: "None", value: "none" },
         ],
+      },
+      {
+        name: "birth.separator2",
+        label: "",
+        type: "heading",
       },
       {
         name: "birth.bornAlive",

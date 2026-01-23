@@ -10,7 +10,8 @@ export type FieldType =
   | "checkbox"
   | "fieldArray"
   | "showHide"
-  | "file";
+  | "file"
+  | "heading";
 
 // Date-specific validation rules (only applicable when type === "date")
 export type DateValidationRule =
@@ -152,6 +153,15 @@ type FileFormField = BaseFormField & {
   multiple?: boolean;
 };
 
+type HeadingFormField = {
+  type: "heading";
+  name: string; // Unique identifier
+  label: string; // The heading text
+  hint?: string; // Optional description below the heading
+  conditionalOn?: ConditionalOn; // Headings can be conditional too
+  width?: "short" | "medium" | "full"; // Field width (defaults to "full")
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -160,7 +170,8 @@ export type FormField =
   | FieldArrayFormField
   | TextFormField
   | ShowHideFormField
-  | FileFormField;
+  | FileFormField
+  | HeadingFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 

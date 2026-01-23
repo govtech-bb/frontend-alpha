@@ -159,6 +159,11 @@ function createRepeatableStepInstance(
   // Create indexed field names (e.g., minorDetails.0.firstName)
   // Also update any field references (conditionalOn, skipValidationWhenShowHideOpen, showHide)
   const indexedFields: FormField[] = baseStep.fields.map((field) => {
+    // Heading fields only need name indexed
+    if (field.type === "heading") {
+      return { ...field, name: indexFieldName(field.name) };
+    }
+
     const indexed: FormField = {
       ...field,
       name: indexFieldName(field.name),
@@ -179,8 +184,8 @@ function createRepeatableStepInstance(
       );
     }
 
-    // Update showHide config with indexed field names
-    if (field.showHide) {
+    // Update showHide config with indexed field names (only for showHide fields)
+    if (field.type === "showHide" && field.showHide) {
       indexed.showHide = {
         ...field.showHide,
         stateFieldName: indexFieldName(field.showHide.stateFieldName),
@@ -947,6 +952,9 @@ export default function DynamicMultiStepForm({
 
     // Manually validate conditional fields (required and pattern)
     for (const field of visibleFields) {
+      // Skip heading fields - they don't have validation
+      if (field.type === "heading") continue;
+
       if (field.conditionalOn) {
         const fieldValue = methods.getValues(field.name as keyof FormData);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";

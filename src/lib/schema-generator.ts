@@ -74,6 +74,11 @@ function objectToZodSchema(
 }
 
 function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
+  // Heading fields don't need schema validation
+  if (field.type === "heading") {
+    return z.any().optional();
+  }
+
   let schema: z.ZodTypeAny = z.string();
 
   const validation = field.validation as NonDateFieldValidation &
@@ -560,6 +565,8 @@ export function generateFormSchema(formSteps: FormStep[]) {
 
     // Validate conditional fields (conditionalOn)
     for (const field of conditionalFields) {
+      // Skip heading fields - they don't have validation
+      if (field.type === "heading") continue;
       if (!field.conditionalOn) continue;
 
       const fieldValue = getNestedValue(
