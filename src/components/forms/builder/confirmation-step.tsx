@@ -78,12 +78,9 @@ export function ConfirmationPage({
             </Heading>
 
             {confirmationStep.description && (
-              <Text
-                as="p"
-                className="font-normal text-[32px] text-black-00 leading-[1.7] lg:leading-normal"
-              >
+              <ReactMarkdown components={markdownComponents}>
                 {confirmationStep.description}
-              </Text>
+              </ReactMarkdown>
             )}
           </div>
         </div>
@@ -93,16 +90,17 @@ export function ConfirmationPage({
 
       <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
-          {/* Reference number banner */}
-          {referenceNumber && (
-            <div className="w-fit rounded-sm bg-blue-10 px-6 py-4">
-              <Heading as="h2" className="whitespace-nowrap text-black">
-                {confirmationStep.referenceNumberLabel ??
-                  "Your reference number is"}{" "}
-                {referenceNumber}
-              </Heading>
-            </div>
-          )}
+          {/* Reference number banner - shown by default unless explicitly set to false */}
+          {referenceNumber &&
+            confirmationStep.showReferenceNumber !== false && (
+              <div className="w-fit rounded-sm bg-blue-10 px-6 py-4">
+                <Heading as="h2" className="whitespace-nowrap text-black">
+                  {confirmationStep.referenceNumberLabel ??
+                    "Your reference number is"}{" "}
+                  {referenceNumber}
+                </Heading>
+              </div>
+            )}
 
           {/* Payment content */}
           {paymentData && formSlug ? (
