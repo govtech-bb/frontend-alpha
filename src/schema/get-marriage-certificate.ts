@@ -182,7 +182,6 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.isBarbadosNational",
         label: "Are you a Barbados national?",
-        hidden: true,
         type: "radio",
         validation: {
           required: "Select an option",
@@ -353,20 +352,20 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "wife.lastName",
-        label: "Last name",
+        name: "wife.maidenName",
+        label: "Maiden name",
         type: "text",
         validation: {
-          required: "Last name is required",
+          required: "Maiden name is required",
           minLength: {
             value: 2,
-            message: "Last name must be at least 2  characters",
+            message: "Maiden name must be at least 2  characters",
           },
           pattern: {
             value:
               "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
             message:
-              "Last name must contain only letters, hyphens, or apostrophes",
+              "Maiden name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
