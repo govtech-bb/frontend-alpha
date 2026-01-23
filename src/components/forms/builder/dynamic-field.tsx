@@ -3,6 +3,7 @@ import {
   DateInput,
   type DateInputValue,
   FileUpload,
+  Heading,
   Input,
   NumberInput,
   Radio,
@@ -222,7 +223,12 @@ export function DynamicField({
         key={`${conditionalField.name}-${conditionKey}`}
       >
         <div className="border-grey-00 border-l-8 border-solid pb-4 pl-[52px]">
-          {conditionalField.type === "fieldArray" ? (
+          {/* !!! To replace, I don't think we need to show the headings here, but I'm leaving it for type safety */}
+          {conditionalField.type === "heading" ? (
+            <div className="space-y-2">
+              <Heading as="h2">{conditionalField.label}</Heading>
+            </div>
+          ) : conditionalField.type === "fieldArray" ? (
             <DynamicFieldArray field={conditionalField} />
           ) : conditionalField.type === "date" ? (
             <Controller
@@ -423,7 +429,16 @@ export function DynamicField({
 
   return (
     <div className={getWidthClass(field.width)} id={field.name}>
-      {field.type === "fieldArray" ? (
+      {field.type === "heading" ? (
+        <div className="space-y-xm">
+          <div className="py-5">
+            <hr className="border-grey-00 border-t-4" />
+          </div>
+          {field.label?.trim() ? (
+            <Heading as="h2">{field.label}</Heading>
+          ) : null}
+        </div>
+      ) : field.type === "fieldArray" ? (
         <DynamicFieldArray field={field} />
       ) : field.type === "date" ? (
         <Controller
