@@ -53,6 +53,29 @@ const generateParentNames = () => ({
 });
 
 /**
+ * Format date as DD/MM/YYYY (matches DeclarationStep format)
+ */
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+/**
+ * Build full name from applicant data (matches DeclarationStep logic)
+ */
+function buildFullName(applicant: {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+}): string {
+  return [applicant.firstName, applicant.middleName, applicant.lastName]
+    .filter(Boolean)
+    .join(" ");
+}
+
+/**
  * Log the submitted form data from the request
  */
 function logSubmittedData(request: { postDataJSON: () => unknown }) {
@@ -224,20 +247,34 @@ test.describe("Get Birth Certificate Form", () => {
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible({ timeout: 5000 });
 
-    // Check declaration checkbox (rendered as button with role="checkbox")
-    await page.locator('button[role="checkbox"]').click();
-
-    // Fill declaration date
+    // Since applicant data was provided, verify static display of name and date
+    const expectedFullName = buildFullName(applicant);
     const today = new Date();
-    await page
-      .locator("#declaration\\.dateOfDeclaration-month")
-      .fill((today.getMonth() + 1).toString());
-    await page
-      .locator("#declaration\\.dateOfDeclaration-day")
-      .fill(today.getDate().toString());
-    await page
-      .locator("#declaration\\.dateOfDeclaration-year")
-      .fill(today.getFullYear().toString());
+    const expectedDate = formatDate(today);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate)).toBeVisible();
+
+    // Verify date input fields are NOT shown (since applicant data exists)
+    await expect(
+      page.locator("#declaration\\.dateOfDeclaration-month")
+    ).not.toBeVisible();
+    await expect(
+      page.locator("#declaration\\.dateOfDeclaration-day")
+    ).not.toBeVisible();
+    await expect(
+      page.locator("#declaration\\.dateOfDeclaration-year")
+    ).not.toBeVisible();
+
+    // Check declaration checkbox (rendered as button with role="checkbox")
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toBeVisible();
+    await checkbox.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
@@ -398,19 +435,24 @@ test.describe("Get Birth Certificate Form", () => {
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible({ timeout: 5000 });
 
-    // Check declaration checkbox (rendered as button with role="checkbox")
-    await page.locator('button[role="checkbox"]').click();
-
+    // Since applicant data was provided, verify static display of name and date
+    // Note: This test doesn't fill middleName, so only firstName + lastName are shown
+    const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today = new Date();
-    await page
-      .locator("#declaration\\.dateOfDeclaration-month")
-      .fill((today.getMonth() + 1).toString());
-    await page
-      .locator("#declaration\\.dateOfDeclaration-day")
-      .fill(today.getDate().toString());
-    await page
-      .locator("#declaration\\.dateOfDeclaration-year")
-      .fill(today.getFullYear().toString());
+    const expectedDate = formatDate(today);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate)).toBeVisible();
+
+    // Check declaration checkbox (rendered as button with role="checkbox")
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toBeVisible();
+    await checkbox.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
@@ -521,5 +563,95 @@ test.describe("Get Birth Certificate Form", () => {
         name: /are you applying for your own birth certificate/i,
       })
     ).toBeVisible({ timeout: 5000 });
+  });
+
+  test("declaration step requires checkbox to be checked", async ({ page }) => {
+    const applicant = generateApplicantData();
+    const dob = generateDateOfBirth();
+    const parents = generateParentNames();
+    const numberOfCopies = faker.number.int({ min: 1, max: 5 });
+
+    // Fill out the form up to the declaration step
+    // Step 1: Applicant Details
+    await page
+      .locator('select[name="applicant.title"]')
+      .selectOption(applicant.title);
+    await page
+      .locator('input[name="applicant.firstName"]')
+      .fill(applicant.firstName);
+    await page
+      .locator('input[name="applicant.lastName"]')
+      .fill(applicant.lastName);
+    await page
+      .locator('input[name="applicant.addressLine1"]')
+      .fill(applicant.addressLine1);
+    await page
+      .locator('select[name="applicant.parish"]')
+      .selectOption(applicant.parish);
+    await page
+      .locator('input[name="applicant.idNumber"]')
+      .fill(applicant.idNumber);
+    await page.locator('input[name="applicant.email"]').fill(applicant.email);
+    await page
+      .locator('input[name="applicant.telephoneNumber"]')
+      .fill(applicant.telephoneNumber);
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 2: Applying for yourself
+    await page.getByText("Yes - the certificate is for me").click();
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 3: Birth Details
+    await page.locator("#birthDetails\\.dateOfBirth-month").fill(dob.month);
+    await page.locator("#birthDetails\\.dateOfBirth-day").fill(dob.day);
+    await page.locator("#birthDetails\\.dateOfBirth-year").fill(dob.year);
+    await page
+      .locator('input[name="birthDetails.placeOfBirth"]')
+      .fill(faker.location.city());
+    await page
+      .locator('input[name="birthDetails.placeOfBaptism"]')
+      .fill(faker.location.city());
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 4: Parents' Names
+    await page
+      .locator('input[name="parents.father.firstName"]')
+      .fill(parents.father.firstName);
+    await page
+      .locator('input[name="parents.father.lastName"]')
+      .fill(parents.father.lastName);
+    await page
+      .locator('input[name="parents.mother.firstName"]')
+      .fill(parents.mother.firstName);
+    await page
+      .locator('input[name="parents.mother.lastName"]')
+      .fill(parents.mother.lastName);
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 5: Order Details
+    await page
+      .locator('input[name="order.numberOfCopies"]')
+      .fill(numberOfCopies.toString());
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 6: Check Your Answers
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 7: Declaration - verify checkbox is required
+    await expect(
+      page.getByRole("heading", { name: /declaration/i })
+    ).toBeVisible({ timeout: 5000 });
+
+    // Verify checkbox is initially unchecked
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toHaveAttribute("aria-checked", "false");
+
+    // Try to submit without checking the checkbox
+    await page.getByRole("button", { name: /submit/i }).click();
+
+    // Should show validation error for checkbox
+    await expect(page.getByText(/there is a problem/i)).toBeVisible({
+      timeout: 3000,
+    });
   });
 });
