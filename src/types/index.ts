@@ -204,6 +204,8 @@ export type FormStep = {
   enableFeedback?: boolean; // Enable feedback section on confirmation page
   /** Custom label for the reference number (defaults to "Your submission ID is") */
   referenceNumberLabel?: string;
+  /** Whether to show the reference number on the confirmation page (defaults to true) */
+  showReferenceNumber?: boolean;
   /** Configuration for repeatable steps - when set, this step can be repeated */
   repeatable?: RepeatableStepConfig;
 };

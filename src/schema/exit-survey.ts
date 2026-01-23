@@ -117,6 +117,7 @@ Your feedback helps us improve this service. This will take about 30 seconds and
   {
     id: "thank-you",
     title: "Thank you for your feedback",
+    showReferenceNumber: false,
     description: `Your feedback has been submitted successfully. 
       
 It helps us understand what is working well and what we can improve. This supports the development of better public services for everyone in Barbados.`,
