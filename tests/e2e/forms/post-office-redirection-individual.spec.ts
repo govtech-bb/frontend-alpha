@@ -88,7 +88,8 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
 
   expect(response.data.submissionId).toBeTruthy();
   expect(response.data.formId).toBe(formId);
-  expect(response.data.status).toBe("success");
+  // Status can be "success" or "payment_required" for forms that need payment
+  expect(["success", "payment_required"]).toContain(response.data.status);
 
   console.log("✅ Form submitted successfully:");
   console.log(`   - Submission ID: ${response.data.submissionId}`);

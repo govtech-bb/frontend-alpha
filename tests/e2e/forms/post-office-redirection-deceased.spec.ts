@@ -96,7 +96,8 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
 
   expect(response.data.submissionId).toBeTruthy();
   expect(response.data.formId).toBe(formId);
-  expect(response.data.status).toBe("success");
+  // Status can be "success" or "payment_required" for forms that need payment
+  expect(["success", "payment_required"]).toContain(response.data.status);
 
   console.log("✅ Form submitted successfully:");
   console.log(`   - Submission ID: ${response.data.submissionId}`);
@@ -174,10 +175,16 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
     await page.getByText("Yes", { exact: true }).click(); // Permanent redirect
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Upload document - set files directly on the hidden input
+    // Step 6: Upload document - set files and wait for upload to complete
+    const uploadPromise1 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
     await page
       .locator('input[type="file"]')
       .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
+    await uploadPromise1; // Wait for file upload to complete
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 7: Check your answers
@@ -311,10 +318,16 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
     await page.locator("#newAddress\\.redirectionEndDate-year").fill("2027");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Upload document - set files directly on the hidden input
+    // Step 6: Upload document - set files and wait for upload to complete
+    const uploadPromise2 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
     await page
       .locator('input[type="file"]')
       .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
+    await uploadPromise2; // Wait for file upload to complete
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 7: Check your answers

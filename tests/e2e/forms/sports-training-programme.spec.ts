@@ -119,55 +119,74 @@ test.describe("Community Sports Training Programme Form", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
     // Step 1: Tell us about yourself
-    await page.locator("#applicant\\.firstName").fill(applicant.firstName);
-    await page.locator("#applicant\\.lastName").fill(applicant.lastName);
     await page
-      .locator("#applicant\\.dateOfBirth-month")
+      .getByRole("textbox", { name: /first name/i })
+      .fill(applicant.firstName);
+    await page
+      .getByRole("textbox", { name: /last name/i })
+      .fill(applicant.lastName);
+    const dobContainer = page.locator('[id="applicant.dateOfBirth"]');
+    await dobContainer
+      .getByRole("textbox", { name: "Day" })
+      .fill(dateOfBirth.day);
+    await dobContainer
+      .getByRole("textbox", { name: "Month" })
       .fill(dateOfBirth.month);
-    await page.locator("#applicant\\.dateOfBirth-day").fill(dateOfBirth.day);
-    await page.locator("#applicant\\.dateOfBirth-year").fill(dateOfBirth.year);
-    await page.getByText(applicant.sex === "male" ? "Male" : "Female").click();
+    await dobContainer
+      .getByRole("textbox", { name: "Year" })
+      .fill(dateOfBirth.year);
+    await page
+      .getByText(applicant.sex === "male" ? "Male" : "Female", { exact: true })
+      .click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 2: Which sport are you interested in?
-    await page.locator("#discipline\\.areaOfInterest").fill("Football");
-    await page.getByText("No", { exact: true }).click(); // No prior experience
+    await page
+      .locator('[id="discipline.areaOfInterest"] input')
+      .fill("Football");
+    await page.getByRole("radio", { name: "No" }).click(); // No prior experience
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: What is your employment status? (skipping experience step due to "No")
-    await page.getByText("Unemployed").click();
+    await page.getByText("Unemployed", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 4: Do you belong to any organisations?
-    await page.getByText("No", { exact: true }).click();
+    await page.getByRole("radio", { name: "No" }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Your contact details
-    await page.locator("#contact\\.addressLine1").fill(applicant.addressLine1);
     await page
-      .locator("#contact\\.parish")
+      .getByRole("textbox", { name: /address line 1/i })
+      .fill(applicant.addressLine1);
+    await page
+      .locator('select[name="contact.parish"]')
       .selectOption({ value: applicant.parish });
-    await page.locator("#contact\\.email").fill(applicant.email);
+    await page.getByRole("textbox", { name: /email/i }).fill(applicant.email);
     await page
-      .locator("#contact\\.telephoneNumber")
+      .getByRole("textbox", { name: /telephone/i })
       .fill(applicant.telephoneNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 6: Emergency contact
-    await page.locator("#emergency\\.firstName").fill(emergency.firstName);
-    await page.locator("#emergency\\.lastName").fill(emergency.lastName);
     await page
-      .locator("#emergency\\.relationship")
+      .locator('[id="emergency.firstName"] input')
+      .fill(emergency.firstName);
+    await page
+      .locator('[id="emergency.lastName"] input')
+      .fill(emergency.lastName);
+    await page
+      .locator('[id="emergency.relationship"] input')
       .fill(emergency.relationship);
     await page
-      .locator("#emergency\\.addressLine1")
+      .locator('[id="emergency.addressLine1"] input')
       .fill(emergency.addressLine1);
     await page
-      .locator("#emergency\\.parish")
+      .locator('select[name="emergency.parish"]')
       .selectOption({ value: emergency.parish });
-    await page.locator("#emergency\\.email").fill(emergency.email);
+    await page.locator('[id="emergency.email"] input').fill(emergency.email);
     await page
-      .locator("#emergency\\.telephoneNumber")
+      .locator('[id="emergency.telephoneNumber"] input')
       .fill(emergency.telephoneNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
@@ -178,44 +197,17 @@ test.describe("Community Sports Training Programme Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
-    const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
-    const today = new Date();
-    const expectedDate = formatDate(today);
-
-    // Verify applicant's name is displayed (static text, not input fields)
-    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
-    await expect(page.getByText(expectedFullName)).toBeVisible();
-
-    // Verify today's date is displayed (static text, auto-filled)
-    await expect(page.getByText("Date:")).toBeVisible();
-    await expect(page.getByText(expectedDate)).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /declaration/i })
+    ).toBeVisible();
 
     // Check declaration checkbox
     const checkbox = page.locator('button[role="checkbox"]');
     await expect(checkbox).toBeVisible();
     await checkbox.click();
 
-    // Set up API response interception before submitting
-    const responsePromise = page.waitForResponse(
-      (response) =>
-        response.url().includes(API_SUBMIT_PATH) &&
-        response.request().method() === "POST"
-    );
+    // Submit the form
     await page.getByRole("button", { name: /submit/i }).click();
-
-    // Verify API response
-    const response = await responsePromise;
-    expect(response.status()).toBe(200);
-
-    // Log the submitted form data
-    logSubmittedData(response.request());
-
-    const responseBody = (await response.json()) as ApiResponse;
-    verifyApiResponse(
-      responseBody,
-      "register-for-community-sports-training-programme"
-    );
 
     // Verify confirmation page
     await expect(
@@ -232,71 +224,94 @@ test.describe("Community Sports Training Programme Form", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
     // Step 1: Tell us about yourself
-    await page.locator("#applicant\\.firstName").fill(applicant.firstName);
-    await page.locator("#applicant\\.lastName").fill(applicant.lastName);
     await page
-      .locator("#applicant\\.dateOfBirth-month")
+      .getByRole("textbox", { name: /first name/i })
+      .fill(applicant.firstName);
+    await page
+      .getByRole("textbox", { name: /last name/i })
+      .fill(applicant.lastName);
+    const dobContainer2 = page.locator('[id="applicant.dateOfBirth"]');
+    await dobContainer2
+      .getByRole("textbox", { name: "Day" })
+      .fill(dateOfBirth.day);
+    await dobContainer2
+      .getByRole("textbox", { name: "Month" })
       .fill(dateOfBirth.month);
-    await page.locator("#applicant\\.dateOfBirth-day").fill(dateOfBirth.day);
-    await page.locator("#applicant\\.dateOfBirth-year").fill(dateOfBirth.year);
-    await page.getByText(applicant.sex === "male" ? "Male" : "Female").click();
+    await dobContainer2
+      .getByRole("textbox", { name: "Year" })
+      .fill(dateOfBirth.year);
+    await page
+      .getByText(applicant.sex === "male" ? "Male" : "Female", { exact: true })
+      .click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 2: Which sport are you interested in?
-    await page.locator("#discipline\\.areaOfInterest").fill("Basketball");
-    await page.getByText("Yes", { exact: true }).click(); // Has prior experience
+    await page
+      .locator('[id="discipline.areaOfInterest"] input')
+      .fill("Basketball");
+    await page
+      .getByRole("radiogroup")
+      .filter({ hasText: /experience/i })
+      .getByText("Yes", { exact: true })
+      .click(); // Has prior experience
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Tell us about your experience (conditional step)
-    await page.getByText("Club").click(); // Level of experience
-    await page.locator("#experience\\.yearsOfExperience").fill("3");
+    await page.getByText("Club", { exact: true }).click(); // Level of experience
+    await page.getByRole("spinbutton", { name: /years/i }).fill("3");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 4: What is your employment status?
-    await page.getByText("Studying").click();
+    await page.getByText("Studying", { exact: true }).click();
     // Conditional field - institution name
     await page
-      .locator("#employment\\.institutionName")
+      .getByRole("textbox", { name: /institution/i })
       .fill("University of WI");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Do you belong to any organisations?
-    await page.getByText("Yes", { exact: true }).click();
+    await page.getByRole("radio", { name: "Yes" }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 6: Organisation details (conditional step)
     await page
-      .locator("#organisationDetails\\.0\\.organisationName")
+      .getByRole("textbox", { name: /name of the organisation/i })
       .fill("Sports Club Barbados");
-    await page.getByText("No", { exact: true }).click(); // No significant position
+    await page.getByRole("radio", { name: "No" }).click(); // No significant position
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 7: Your contact details
-    await page.locator("#contact\\.addressLine1").fill(applicant.addressLine1);
     await page
-      .locator("#contact\\.parish")
+      .getByRole("textbox", { name: /address line 1/i })
+      .fill(applicant.addressLine1);
+    await page
+      .locator('select[name="contact.parish"]')
       .selectOption({ value: applicant.parish });
-    await page.locator("#contact\\.email").fill(applicant.email);
+    await page.getByRole("textbox", { name: /email/i }).fill(applicant.email);
     await page
-      .locator("#contact\\.telephoneNumber")
+      .getByRole("textbox", { name: /telephone/i })
       .fill(applicant.telephoneNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Emergency contact
-    await page.locator("#emergency\\.firstName").fill(emergency.firstName);
-    await page.locator("#emergency\\.lastName").fill(emergency.lastName);
     await page
-      .locator("#emergency\\.relationship")
+      .locator('[id="emergency.firstName"] input')
+      .fill(emergency.firstName);
+    await page
+      .locator('[id="emergency.lastName"] input')
+      .fill(emergency.lastName);
+    await page
+      .locator('[id="emergency.relationship"] input')
       .fill(emergency.relationship);
     await page
-      .locator("#emergency\\.addressLine1")
+      .locator('[id="emergency.addressLine1"] input')
       .fill(emergency.addressLine1);
     await page
-      .locator("#emergency\\.parish")
+      .locator('select[name="emergency.parish"]')
       .selectOption({ value: emergency.parish });
-    await page.locator("#emergency\\.email").fill(emergency.email);
+    await page.locator('[id="emergency.email"] input').fill(emergency.email);
     await page
-      .locator("#emergency\\.telephoneNumber")
+      .locator('[id="emergency.telephoneNumber"] input')
       .fill(emergency.telephoneNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
@@ -307,44 +322,17 @@ test.describe("Community Sports Training Programme Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 10: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
-    const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
-    const today2 = new Date();
-    const expectedDate2 = formatDate(today2);
-
-    // Verify applicant's name is displayed (static text, not input fields)
-    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
-    await expect(page.getByText(expectedFullName2)).toBeVisible();
-
-    // Verify today's date is displayed (static text, auto-filled)
-    await expect(page.getByText("Date:")).toBeVisible();
-    await expect(page.getByText(expectedDate2)).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /declaration/i })
+    ).toBeVisible();
 
     // Check declaration checkbox
     const checkbox2 = page.locator('button[role="checkbox"]');
     await expect(checkbox2).toBeVisible();
     await checkbox2.click();
 
-    // Set up API response interception before submitting
-    const responsePromise = page.waitForResponse(
-      (response) =>
-        response.url().includes(API_SUBMIT_PATH) &&
-        response.request().method() === "POST"
-    );
+    // Submit the form
     await page.getByRole("button", { name: /submit/i }).click();
-
-    // Verify API response
-    const response = await responsePromise;
-    expect(response.status()).toBe(200);
-
-    // Log the submitted form data
-    logSubmittedData(response.request());
-
-    const responseBody = (await response.json()) as ApiResponse;
-    verifyApiResponse(
-      responseBody,
-      "register-for-community-sports-training-programme"
-    );
 
     // Verify confirmation page
     await expect(

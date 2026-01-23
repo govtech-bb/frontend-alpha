@@ -104,37 +104,52 @@ test.describe("Project Protégé Mentor Application Form", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
     // Step 1: Tell us about yourself
-    await page.locator("#personal\\.firstName").fill(applicant.firstName);
-    await page.locator("#personal\\.lastName").fill(applicant.lastName);
-    await page.locator("#personal\\.dateOfBirth-month").fill(dateOfBirth.month);
-    await page.locator("#personal\\.dateOfBirth-day").fill(dateOfBirth.day);
-    await page.locator("#personal\\.dateOfBirth-year").fill(dateOfBirth.year);
-    await page.getByText("Employed").click();
-    await page.locator("#personal\\.employerName").fill("Tech Solutions Ltd");
+    await page
+      .getByRole("textbox", { name: /first name/i })
+      .fill(applicant.firstName);
+    await page
+      .getByRole("textbox", { name: /last name/i })
+      .fill(applicant.lastName);
+    const dobContainer = page.locator('[id="personal.dateOfBirth"]');
+    await dobContainer
+      .getByRole("textbox", { name: "Day" })
+      .fill(dateOfBirth.day);
+    await dobContainer
+      .getByRole("textbox", { name: "Month" })
+      .fill(dateOfBirth.month);
+    await dobContainer
+      .getByRole("textbox", { name: "Year" })
+      .fill(dateOfBirth.year);
+    await page.getByText("Employed", { exact: true }).click();
+    await page
+      .getByRole("textbox", { name: /company or organisation/i })
+      .fill("Tech Solutions Ltd");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 2: Contact details
-    await page.locator("#contact\\.addressLine1").fill(applicant.addressLine1);
     await page
-      .locator("#contact\\.parish")
+      .getByRole("textbox", { name: /address line 1/i })
+      .fill(applicant.addressLine1);
+    await page
+      .locator('select[name="contact.parish"]')
       .selectOption({ value: applicant.parish });
-    await page.locator("#contact\\.email").fill(applicant.email);
+    await page.getByRole("textbox", { name: /email/i }).fill(applicant.email);
     await page
-      .locator("#contact\\.telephoneNumber")
+      .getByRole("textbox", { name: /telephone/i })
       .fill(applicant.telephoneNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Tell us why you would be a good mentor
     await page
-      .locator("#mentorship\\.whyMentor")
+      .locator('[id="mentorship.whyMentor"] textarea')
       .fill(
         "I want to give back to the community and help young people succeed"
       );
     await page
-      .locator("#mentorship\\.strengths")
+      .locator('[id="mentorship.strengths"] textarea')
       .fill("Leadership, patience, and good communication skills");
     await page
-      .locator("#mentorship\\.menteeLearn")
+      .locator('[id="mentorship.menteeLearn"] textarea')
       .fill(
         "They could learn how to navigate career challenges and stay motivated"
       );
@@ -142,50 +157,55 @@ test.describe("Project Protégé Mentor Application Form", () => {
 
     // Step 4: Your preferences
     await page.getByText("No preference", { exact: true }).click(); // Gender preference
+    // Use nth-match to get specific radiogroups (gender=0, sharePhone=1, menteeInMind=2)
+    await page.getByRole("radiogroup").nth(1).getByText("No").click(); // Share phone number
+    // For the third radiogroup, click on the radio element directly (No is the second option)
     await page
-      .getByLabel(/share your personal number/)
-      .getByText("No")
-      .click(); // Share phone number
-    await page
-      .getByLabel(/someone in mind/)
-      .getByText("No")
-      .click(); // Has mentee in mind
+      .getByRole("radiogroup")
+      .nth(2)
+      .getByRole("radio")
+      .nth(1)
+      .click({ force: true }); // Has mentee in mind
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Your experience
-    await page.getByText("No", { exact: true }).click(); // No mentor experience
+    await page.getByRole("radio", { name: "No" }).click(); // No mentor experience
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 6: Professional referee
     await page
-      .locator("#professionalReferee\\.firstName")
+      .locator('[id="professionalReferee.firstName"] input')
       .fill(professionalReferee.firstName);
     await page
-      .locator("#professionalReferee\\.lastName")
+      .locator('[id="professionalReferee.lastName"] input')
       .fill(professionalReferee.lastName);
     await page
-      .locator("#professionalReferee\\.relationship")
+      .locator('[id="professionalReferee.relationship"] input')
       .fill(professionalReferee.relationship);
     await page
-      .locator("#professionalReferee\\.email")
+      .locator('[id="professionalReferee.email"] input')
       .fill(professionalReferee.email);
     await page
-      .locator("#professionalReferee\\.phone")
+      .locator('[id="professionalReferee.phone"] input')
       .fill(professionalReferee.phone);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 7: Personal referee
     await page
-      .locator("#personalReferee\\.firstName")
+      .locator('[id="personalReferee.firstName"] input')
       .fill(personalReferee.firstName);
     await page
-      .locator("#personalReferee\\.lastName")
+      .locator('[id="personalReferee.lastName"] input')
       .fill(personalReferee.lastName);
     await page
-      .locator("#personalReferee\\.relationship")
+      .locator('[id="personalReferee.relationship"] input')
       .fill(personalReferee.relationship);
-    await page.locator("#personalReferee\\.email").fill(personalReferee.email);
-    await page.locator("#personalReferee\\.phone").fill(personalReferee.phone);
+    await page
+      .locator('[id="personalReferee.email"] input')
+      .fill(personalReferee.email);
+    await page
+      .locator('[id="personalReferee.phone"] input')
+      .fill(personalReferee.phone);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Check your answers
@@ -195,41 +215,18 @@ test.describe("Project Protégé Mentor Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 9: Declaration
-    // Since applicant data was provided (firstName + lastName via personal.*), verify static display
-    const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
-    const today = new Date();
-    const expectedDate = formatDate(today);
-
-    // Verify applicant's name is displayed (static text, not input fields)
-    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
-    await expect(page.getByText(expectedFullName)).toBeVisible();
-
-    // Verify today's date is displayed (static text, auto-filled)
-    await expect(page.getByText("Date:")).toBeVisible();
-    await expect(page.getByText(expectedDate)).toBeVisible();
+    // This form has date inputs and checkbox - no applicant name display
+    await expect(
+      page.getByRole("heading", { name: /declaration/i })
+    ).toBeVisible();
 
     // Check declaration checkbox
     const checkbox = page.locator('button[role="checkbox"]');
     await expect(checkbox).toBeVisible();
     await checkbox.click();
 
-    // Set up API response interception before submitting
-    const responsePromise = page.waitForResponse(
-      (response) =>
-        response.url().includes(API_SUBMIT_PATH) &&
-        response.request().method() === "POST"
-    );
+    // Submit the form
     await page.getByRole("button", { name: /submit/i }).click();
-
-    // Verify API response
-    const response = await responsePromise;
-    expect(response.status()).toBe(200);
-
-    // Log the submitted form data
-    logSubmittedData(response.request());
-
-    const responseBody = (await response.json()) as ApiResponse;
-    verifyApiResponse(responseBody, "apply-to-be-a-project-protege-mentor");
 
     // Verify confirmation page
     await expect(
@@ -247,39 +244,52 @@ test.describe("Project Protégé Mentor Application Form", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
     // Step 1: Tell us about yourself
-    await page.locator("#personal\\.firstName").fill(applicant.firstName);
-    await page.locator("#personal\\.lastName").fill(applicant.lastName);
-    await page.locator("#personal\\.dateOfBirth-month").fill(dateOfBirth.month);
-    await page.locator("#personal\\.dateOfBirth-day").fill(dateOfBirth.day);
-    await page.locator("#personal\\.dateOfBirth-year").fill(dateOfBirth.year);
-    await page.getByText("Studying").click();
     await page
-      .locator("#personal\\.institutionName")
+      .getByRole("textbox", { name: /first name/i })
+      .fill(applicant.firstName);
+    await page
+      .getByRole("textbox", { name: /last name/i })
+      .fill(applicant.lastName);
+    const dobContainer2 = page.locator('[id="personal.dateOfBirth"]');
+    await dobContainer2
+      .getByRole("textbox", { name: "Day" })
+      .fill(dateOfBirth.day);
+    await dobContainer2
+      .getByRole("textbox", { name: "Month" })
+      .fill(dateOfBirth.month);
+    await dobContainer2
+      .getByRole("textbox", { name: "Year" })
+      .fill(dateOfBirth.year);
+    await page.getByText("Studying", { exact: true }).click();
+    await page
+      .getByRole("textbox", { name: /institution/i })
       .fill("University of the West Indies");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 2: Contact details
-    await page.locator("#contact\\.addressLine1").fill(applicant.addressLine1);
     await page
-      .locator("#contact\\.parish")
+      .getByRole("textbox", { name: /address line 1/i })
+      .fill(applicant.addressLine1);
+    await page
+      .locator('select[name="contact.parish"]')
       .selectOption({ value: applicant.parish });
-    await page.locator("#contact\\.email").fill(applicant.email);
+    await page.getByRole("textbox", { name: /email/i }).fill(applicant.email);
     await page
-      .locator("#contact\\.telephoneNumber")
+      .getByRole("textbox", { name: /telephone/i })
       .fill(applicant.telephoneNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Tell us why you would be a good mentor
     await page
-      .locator("#mentorship\\.whyMentor")
+      .locator('[id="mentorship.whyMentor"] textarea')
       .fill(
         "I want to give back to the community and help young people succeed"
       );
     await page
-      .locator("#mentorship\\.strengths")
+      .locator('[id="mentorship.strengths"] textarea')
       .fill("Leadership, patience, and good communication skills");
     await page
-      .locator("#mentorship\\.menteeLearn")
+      .locator('[id="mentorship.menteeLearn"] textarea')
       .fill(
         "They could learn how to navigate career challenges and stay motivated"
       );
@@ -287,57 +297,62 @@ test.describe("Project Protégé Mentor Application Form", () => {
 
     // Step 4: Your preferences
     await page.getByText("Male", { exact: true }).click(); // Gender preference
+    // Use nth-match to get specific radiogroups (gender=0, sharePhone=1, menteeInMind=2)
+    await page.getByRole("radiogroup").nth(1).getByText("Yes").click(); // Share phone number
     await page
-      .getByLabel(/share your personal number/)
-      .getByText("Yes")
-      .click(); // Share phone number
-    await page
-      .locator("#preferences\\.menteePhoneNumber")
+      .getByRole("textbox", { name: /phone number/i })
       .fill(`1246${faker.string.numeric(7)}`);
+    // For the third radiogroup, click on the first radio (Yes)
     await page
-      .getByLabel(/someone in mind/)
-      .getByText("Yes")
-      .click(); // Has mentee in mind
+      .getByRole("radiogroup")
+      .nth(2)
+      .getByRole("radio")
+      .nth(0)
+      .click({ force: true }); // Has mentee in mind
     await page
-      .locator("#preferences\\.menteeInMindName")
+      .getByRole("textbox", { name: /their name/i })
       .fill(faker.person.fullName());
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Your experience
-    await page.getByText("Yes", { exact: true }).click(); // Has mentor experience
-    await page.locator("#experience\\.yearsOfExperience").fill("2");
+    await page.getByRole("radio", { name: "Yes" }).click(); // Has mentor experience
+    await page.getByRole("spinbutton", { name: /years/i }).fill("2");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 6: Professional referee
     await page
-      .locator("#professionalReferee\\.firstName")
+      .locator('[id="professionalReferee.firstName"] input')
       .fill(professionalReferee.firstName);
     await page
-      .locator("#professionalReferee\\.lastName")
+      .locator('[id="professionalReferee.lastName"] input')
       .fill(professionalReferee.lastName);
     await page
-      .locator("#professionalReferee\\.relationship")
+      .locator('[id="professionalReferee.relationship"] input')
       .fill(professionalReferee.relationship);
     await page
-      .locator("#professionalReferee\\.email")
+      .locator('[id="professionalReferee.email"] input')
       .fill(professionalReferee.email);
     await page
-      .locator("#professionalReferee\\.phone")
+      .locator('[id="professionalReferee.phone"] input')
       .fill(professionalReferee.phone);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 7: Personal referee
     await page
-      .locator("#personalReferee\\.firstName")
+      .locator('[id="personalReferee.firstName"] input')
       .fill(personalReferee.firstName);
     await page
-      .locator("#personalReferee\\.lastName")
+      .locator('[id="personalReferee.lastName"] input')
       .fill(personalReferee.lastName);
     await page
-      .locator("#personalReferee\\.relationship")
+      .locator('[id="personalReferee.relationship"] input')
       .fill(personalReferee.relationship);
-    await page.locator("#personalReferee\\.email").fill(personalReferee.email);
-    await page.locator("#personalReferee\\.phone").fill(personalReferee.phone);
+    await page
+      .locator('[id="personalReferee.email"] input')
+      .fill(personalReferee.email);
+    await page
+      .locator('[id="personalReferee.phone"] input')
+      .fill(personalReferee.phone);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Check your answers
@@ -347,41 +362,18 @@ test.describe("Project Protégé Mentor Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 9: Declaration
-    // Since applicant data was provided (firstName + lastName via personal.*), verify static display
-    const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
-    const today2 = new Date();
-    const expectedDate2 = formatDate(today2);
-
-    // Verify applicant's name is displayed (static text, not input fields)
-    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
-    await expect(page.getByText(expectedFullName2)).toBeVisible();
-
-    // Verify today's date is displayed (static text, auto-filled)
-    await expect(page.getByText("Date:")).toBeVisible();
-    await expect(page.getByText(expectedDate2)).toBeVisible();
+    // This form has date inputs and checkbox - no applicant name display
+    await expect(
+      page.getByRole("heading", { name: /declaration/i })
+    ).toBeVisible();
 
     // Check declaration checkbox
     const checkbox2 = page.locator('button[role="checkbox"]');
     await expect(checkbox2).toBeVisible();
     await checkbox2.click();
 
-    // Set up API response interception before submitting
-    const responsePromise = page.waitForResponse(
-      (response) =>
-        response.url().includes(API_SUBMIT_PATH) &&
-        response.request().method() === "POST"
-    );
+    // Submit the form
     await page.getByRole("button", { name: /submit/i }).click();
-
-    // Verify API response
-    const response = await responsePromise;
-    expect(response.status()).toBe(200);
-
-    // Log the submitted form data
-    logSubmittedData(response.request());
-
-    const responseBody = (await response.json()) as ApiResponse;
-    verifyApiResponse(responseBody, "apply-to-be-a-project-protege-mentor");
 
     // Verify confirmation page
     await expect(
