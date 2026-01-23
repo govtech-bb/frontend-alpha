@@ -103,6 +103,7 @@ export type BaseFormField = {
   /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
   skipValidationWhenShowHideOpen?: string;
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
+  inputClassName?: string;
 };
 
 type DateFormField = BaseFormField & {

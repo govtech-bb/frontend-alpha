@@ -103,6 +103,7 @@ function FileUploadField({
 type DynamicFieldProps = {
   field: FormField;
   conditionalFields?: FormField[];
+  className?: string;
 };
 
 /**
@@ -759,6 +760,7 @@ export function DynamicField({
             id={field.name}
             type={field.type}
             {...register(field.name as keyof FormData)}
+            className={field.inputClassName || ""}
             placeholder={field.placeholder}
           />
         </div>
@@ -768,6 +770,7 @@ export function DynamicField({
           label={field.hidden ? "" : field.label}
           type={field.type}
           {...register(field.name as keyof FormData)}
+          className={field.inputClassName || ""}
           placeholder={field.placeholder}
         />
       )}
