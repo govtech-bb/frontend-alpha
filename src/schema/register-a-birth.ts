@@ -630,21 +630,27 @@ export const formSteps: FormStep[] = [
   {
     id: "declaration",
     title: "Declaration",
-    description:
-      "I confirm that the information provided is accurate and I am authorized to submit this registration.",
     fields: [
       {
         name: "declaration.confirmed",
-        label: "All information is correct and true.",
+        label:
+          "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
         type: "checkbox",
-        validation: { required: false },
+        validation: {
+          required: "You must confirm the declaration to continue",
+        },
       },
       {
         name: "dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
         type: "date",
-        validation: { required: false },
+        validation: {
+          required: "Date is required",
+          date: {
+            type: "pastOrToday",
+          },
+        },
       },
     ],
   },
