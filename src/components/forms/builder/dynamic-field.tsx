@@ -220,7 +220,11 @@ export function DynamicField({
 
                 return (
                   <DateInput
-                    description={conditionalField.placeholder}
+                    description={
+                      conditionalError?.message ??
+                      conditionalField.hint ??
+                      conditionalField.placeholder
+                    }
                     error={conditionalError?.message}
                     id={conditionalField.name}
                     label={
@@ -244,8 +248,16 @@ export function DynamicField({
                     {conditionalField.label}
                   </label>
                 )}
-                <Text as="p" className="text-mid-grey-00" size="body">
-                  {conditionalField.hint}
+                <Text
+                  as="p"
+                  className={
+                    conditionalError?.message
+                      ? "text-red-700"
+                      : "text-mid-grey-00"
+                  }
+                  size="body"
+                >
+                  {conditionalError?.message ?? conditionalField.hint}
                 </Text>
                 <Select
                   error={conditionalError?.message}
@@ -282,9 +294,17 @@ export function DynamicField({
                   {conditionalField.label}
                 </label>
               )}
-              {conditionalField.hint && (
-                <Text as="p" className="text-mid-grey-00" size="body">
-                  {conditionalField.hint}
+              {(conditionalField.hint || conditionalError?.message) && (
+                <Text
+                  as="p"
+                  className={
+                    conditionalError?.message
+                      ? "text-red-700"
+                      : "text-mid-grey-00"
+                  }
+                  size="body"
+                >
+                  {conditionalError?.message ?? conditionalField.hint}
                 </Text>
               )}
               <TextArea
@@ -301,7 +321,9 @@ export function DynamicField({
               name={conditionalField.name as keyof FormData}
               render={({ field: controllerField }) => (
                 <NumberInput
-                  description={conditionalField.hint}
+                  description={
+                    conditionalError?.message ?? conditionalField.hint
+                  }
                   error={conditionalError?.message}
                   label={conditionalField.hidden ? "" : conditionalField.label}
                   name={controllerField.name}
@@ -325,8 +347,16 @@ export function DynamicField({
                   {conditionalField.label}
                 </label>
               )}
-              <Text as="p" className="text-mid-grey-00" size="body">
-                {conditionalField.hint}
+              <Text
+                as="p"
+                className={
+                  conditionalError?.message
+                    ? "text-red-700"
+                    : "text-mid-grey-00"
+                }
+                size="body"
+              >
+                {conditionalError?.message ?? conditionalField.hint}
               </Text>
               <Input
                 error={conditionalError?.message}
@@ -368,7 +398,7 @@ export function DynamicField({
 
             return (
               <DateInput
-                description={field.placeholder}
+                description={error?.message ?? field.hint ?? field.placeholder}
                 error={error?.message}
                 id={field.name}
                 label={field.hidden ? "" : field.label}
@@ -388,8 +418,12 @@ export function DynamicField({
                   {field.label}
                 </label>
               )}
-              <Text as="p" className="text-mid-grey-00" size="body">
-                {field.hint}
+              <Text
+                as="p"
+                className={error?.message ? "text-red-700" : "text-mid-grey-00"}
+                size="body"
+              >
+                {error?.message ?? field.hint}
               </Text>
               <Select
                 error={error?.message}
@@ -518,13 +552,17 @@ export function DynamicField({
                               {childField.label}
                             </label>
                           )}
-                          {childField.hint && (
+                          {(childField.hint || childError?.message) && (
                             <Text
                               as="p"
-                              className="text-mid-grey-00"
+                              className={
+                                childError?.message
+                                  ? "text-red-700"
+                                  : "text-mid-grey-00"
+                              }
                               size="body"
                             >
-                              {childField.hint}
+                              {childError?.message ?? childField.hint}
                             </Text>
                           )}
                           <TextArea
@@ -541,7 +579,9 @@ export function DynamicField({
                           name={childField.name as keyof FormData}
                           render={({ field: controllerField }) => (
                             <NumberInput
-                              description={childField.hint}
+                              description={
+                                childError?.message ?? childField.hint
+                              }
                               error={childError?.message}
                               label={childField.hidden ? "" : childField.label}
                               name={controllerField.name}
@@ -604,9 +644,13 @@ export function DynamicField({
               {field.label}
             </label>
           )}
-          {field.hint && (
-            <Text as="p" className="text-mid-grey-00" size="body">
-              {field.hint}
+          {(field.hint || error?.message) && (
+            <Text
+              as="p"
+              className={error?.message ? "text-red-700" : "text-mid-grey-00"}
+              size="body"
+            >
+              {error?.message ?? field.hint}
             </Text>
           )}
           <TextArea
@@ -623,7 +667,7 @@ export function DynamicField({
           name={field.name as keyof FormData}
           render={({ field: controllerField }) => (
             <NumberInput
-              description={field.hint}
+              description={error?.message ?? field.hint}
               error={error?.message}
               label={field.hidden ? "" : field.label}
               name={controllerField.name}
@@ -644,8 +688,12 @@ export function DynamicField({
               {field.label}
             </label>
           )}
-          <Text as="p" className="text-mid-grey-00" size="body">
-            {field.hint}
+          <Text
+            as="p"
+            className={error?.message ? "text-red-700" : "text-mid-grey-00"}
+            size="body"
+          >
+            {error?.message ?? field.hint}
           </Text>
           <Input
             error={error?.message}

@@ -74,12 +74,11 @@ export const formSteps: FormStep[] = [
         label: "National Identification (ID) Number",
         type: "text",
         width: "medium",
-        // placeholder: "e.g., 850101-0001",
         validation: {
           required: "ID Number is required",
           pattern: {
             value: "^\\d{6}-\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+            message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -114,7 +113,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.email",
-        label: "Email Address",
+        label: "Email address",
         type: "email",
         validation: {
           required: "Email address is required",
@@ -122,7 +121,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.telephoneNumber",
-        label: "Telephone Number",
+        label: "Telephone number",
         type: "tel",
         validation: {
           required: "Telephone number is required",
@@ -130,7 +129,7 @@ export const formSteps: FormStep[] = [
             value:
               "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
             message:
-              "Please enter a valid phone number (e.g. 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -175,14 +174,14 @@ export const formSteps: FormStep[] = [
       {
         name: "oldAddress.postalCode",
         label: "Postcode",
-        hint: "Optional",
+        hint: "For example, BB17004 (optional)",
         type: "text",
         width: "medium",
         validation: {
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (for example, BB17004)",
           },
         },
       },
@@ -227,14 +226,14 @@ export const formSteps: FormStep[] = [
       {
         name: "newAddress.postalCode",
         label: "Postcode",
-        hint: "Optional",
+        hint: "For example, BB17004 (optional)",
         type: "text",
         width: "medium",
         validation: {
           required: false,
           pattern: {
             value: "^BB\\d{5}$",
-            message: "Enter a valid postal code (e.g., BB17004)",
+            message: "Enter a valid postcode (for example, BB17004)",
           },
         },
       },
@@ -265,6 +264,7 @@ export const formSteps: FormStep[] = [
       {
         name: "newAddress.redirectionEndDate",
         label: "Redirection end date",
+        hint: "A redirection notice lasts a maximum of six months",
         type: "date",
         validation: {
           required: "End date is required",
@@ -284,7 +284,7 @@ export const formSteps: FormStep[] = [
       "Minor dependents are persons in your care under the age of 16",
     fields: [
       {
-        name: "anyMinorDependents",
+        name: "dependents.anyMinorDependents",
         label:
           "Are there any minor dependents who also need their mail to be redirected to the new address?",
         hidden: true,
@@ -297,26 +297,26 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
-      // {
-      //   name: "dependents.numberOfMinors",
-      //   label:
-      //     "How many minor dependents need their mail sent to the new address?",
-      //   type: "number",
-      //   validation: {
-      //     required: "Number of minors is required",
-      //   },
-      //   conditionalOn: {
-      //     field: "dependents.anyMinorDependents",
-      //     value: "yes",
-      //   },
-      // },
+      {
+        name: "dependents.numberOfMinors",
+        label:
+          "How many minor dependents need their mail sent to the new address?",
+        type: "number",
+        validation: {
+          required: "Number of minors is required",
+        },
+        conditionalOn: {
+          field: "dependents.anyMinorDependents",
+          value: "yes",
+        },
+      },
     ],
   },
   {
     id: "minor-details",
     title: "Tell us about the minor dependent",
     conditionalOn: {
-      field: "anyMinorDependents",
+      field: "dependents.anyMinorDependents",
       value: "yes",
     },
     repeatable: {
@@ -395,7 +395,7 @@ export const formSteps: FormStep[] = [
       {
         title: "What happens next",
         content:
-          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months",
+          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months.",
         items: [],
       },
     ],

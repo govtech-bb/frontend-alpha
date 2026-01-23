@@ -47,7 +47,7 @@ Each certified copy costs $10 BBD if you are a Barbadian national. For non-natio
 
 ## After your request is processed
 
-A certificate is usually ready to collect in 2 to 3 working days.
+A certificate is usually ready to collect in 5 to 7 business days.
 
 A certificate can sometimes be issued on the same day, in the case of a medical or travel emergency. You will need to show proof of the emergency.
 
