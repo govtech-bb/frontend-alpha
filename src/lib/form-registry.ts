@@ -53,3 +53,33 @@ export const FORM_COMPONENTS = {
 } as const;
 
 export type FormSlug = keyof typeof FORM_COMPONENTS;
+
+/**
+ * Maps page slugs to their corresponding session storage keys.
+ * Used to clear form data when a user visits the /start page.
+ */
+export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
+  "register-for-community-sports-training-programme":
+    "community-sports-programme",
+  "apply-to-be-a-project-protege-mentor": "project-protege-mentor",
+  "get-a-primary-school-textbook-grant": "primary-school-textbook-grant",
+  "apply-to-jobstart-plus-programme": "jobstart-plus-programme",
+  "get-birth-certificate": "get-birth-certificate",
+  "get-death-certificate": "get-death-certificate",
+  "get-marriage-certificate": "get-marriage-certificate",
+  "reserve-society-name": "reserve-society-name",
+  "post-office-redirection-individual": "post-office-redirection-individual",
+  "post-office-redirection-deceased": "post-office-redirection-deceased",
+  "post-office-redirection-business": "post-office-redirection-business",
+  "request-a-fire-service-inspection": "request-a-fire-service-inspection",
+  "apply-for-conductor-licence": "apply-for-conductor-licence",
+  "sell-goods-services-beach-park": "sell-goods-services-beach-park",
+};
+
+/**
+ * Gets the session storage key for a given form slug.
+ * Returns undefined if the form slug is not recognized.
+ */
+export function getFormStorageKey(formSlug: string): string | undefined {
+  return FORM_STORAGE_KEYS[formSlug as FormSlug];
+}

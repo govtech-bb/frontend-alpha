@@ -1,9 +1,11 @@
 import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
+import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { MarkdownContent } from "@/components/markdown-content";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
 import {
   hasProtectedSubpages,
@@ -147,11 +149,18 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    // Clear form storage when visiting the /start page for a fresh form experience
+    const storageKey =
+      subPageSlug === "start" ? getFormStorageKey(pageSlug) : undefined;
+
     return (
-      <MarkdownContent
-        hasResearchAccess={hasAccess}
-        markdown={markdownContent}
-      />
+      <>
+        {storageKey && <ClearFormStorage storageKey={storageKey} />}
+        <MarkdownContent
+          hasResearchAccess={hasAccess}
+          markdown={markdownContent}
+        />
+      </>
     );
   }
 
