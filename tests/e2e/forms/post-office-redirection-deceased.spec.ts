@@ -70,33 +70,27 @@ function logSubmittedData(request: { postDataJSON: () => unknown }) {
 }
 
 /**
- * Verify the API response - note: file uploads may fail in test environment
- * because they require actual file upload URLs from a storage service
+ * Verify the API response structure and success status
  */
 function verifyApiResponse(response: ApiResponse, formId: string) {
-  // Note: This form requires file uploads which may fail in test environment
-  // because the test doesn't upload files to actual storage
-  if (response.success) {
-    expect(response.message).toBeTruthy();
-    expect(response.data).toBeTruthy();
+  // Fail fast if API returns an error
+  expect(response.success, `API returned error: ${response.message}`).toBe(
+    true
+  );
+  expect(response.message).toBeTruthy();
+  expect(response.data).toBeTruthy();
 
-    if (response.data) {
-      expect(response.data.submissionId).toBeTruthy();
-      expect(response.data.formId).toBe(formId);
-      expect(response.data.status).toBe("success");
-      console.log("✅ Form submitted successfully:");
-      console.log(`   - Submission ID: ${response.data.submissionId}`);
-      console.log(`   - Status: ${response.data.status}`);
-    }
-  } else {
-    // File upload validation may fail in test environment
-    console.log(
-      "⚠️ Form submission returned validation error (expected for file uploads in test env)"
-    );
-    console.log(`   - Message: ${response.message}`);
-    // The form data was still sent - just the backend file processing failed
-    expect(response.message).toBeTruthy();
+  if (!response.data) {
+    throw new Error("Response data is undefined");
   }
+
+  expect(response.data.submissionId).toBeTruthy();
+  expect(response.data.formId).toBe(formId);
+  expect(response.data.status).toBe("success");
+
+  console.log("✅ Form submitted successfully:");
+  console.log(`   - Submission ID: ${response.data.submissionId}`);
+  console.log(`   - Status: ${response.data.status}`);
 }
 
 test.describe("Post Office Redirection (Deceased) Form", () => {
@@ -217,15 +211,10 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
     const responseBody = (await response.json()) as ApiResponse;
     verifyApiResponse(responseBody, "post-office-redirection-deceased");
 
-    // Verify confirmation page if submission succeeded, otherwise verify error is shown
-    if (responseBody.success) {
-      await expect(
-        page.getByRole("heading", { name: /application submitted/i })
-      ).toBeVisible();
-    } else {
-      // File upload validation failed - this is expected in test environment
-      await expect(page.getByText(/there was a problem/i)).toBeVisible();
-    }
+    // Verify confirmation page
+    await expect(
+      page.getByRole("heading", { name: /application submitted/i })
+    ).toBeVisible();
   });
 
   test("complete form - temporary redirection", async ({ page }) => {
@@ -353,15 +342,10 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
     const responseBody = (await response.json()) as ApiResponse;
     verifyApiResponse(responseBody, "post-office-redirection-deceased");
 
-    // Verify confirmation page if submission succeeded, otherwise verify error is shown
-    if (responseBody.success) {
-      await expect(
-        page.getByRole("heading", { name: /application submitted/i })
-      ).toBeVisible();
-    } else {
-      // File upload validation failed - this is expected in test environment
-      await expect(page.getByText(/there was a problem/i)).toBeVisible();
-    }
+    // Verify confirmation page
+    await expect(
+      page.getByRole("heading", { name: /application submitted/i })
+    ).toBeVisible();
   });
 
   test("validates required fields on first step", async ({ page }) => {
