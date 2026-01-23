@@ -62,6 +62,16 @@ const generateBankDetails = () => ({
 });
 
 /**
+ * Format date as DD/MM/YYYY (matches DeclarationStep format)
+ */
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+/**
  * Log the submitted form data from the request
  */
 function logSubmittedData(request: { postDataJSON: () => unknown }) {
@@ -189,7 +199,23 @@ test.describe("Primary School Textbook Grant Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Declaration
-    await page.locator('button[role="checkbox"]').click();
+    // Since applicant data was provided (firstName + lastName only), verify static display
+    const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
+    const today = new Date();
+    const expectedDate = formatDate(today);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate)).toBeVisible();
+
+    // Check declaration checkbox
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toBeVisible();
+    await checkbox.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
@@ -326,7 +352,23 @@ test.describe("Primary School Textbook Grant Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 6: Declaration
-    await page.locator('button[role="checkbox"]').click();
+    // Since applicant data was provided (firstName + lastName only), verify static display
+    const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
+    const today2 = new Date();
+    const expectedDate2 = formatDate(today2);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName2)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate2)).toBeVisible();
+
+    // Check declaration checkbox
+    const checkbox2 = page.locator('button[role="checkbox"]');
+    await expect(checkbox2).toBeVisible();
+    await checkbox2.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(

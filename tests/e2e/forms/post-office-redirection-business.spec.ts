@@ -47,6 +47,16 @@ const generateFutureDate = () => {
 };
 
 /**
+ * Format date as DD/MM/YYYY (matches DeclarationStep format)
+ */
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+/**
  * Log the submitted form data from the request
  */
 function logSubmittedData(request: { postDataJSON: () => unknown }) {
@@ -151,18 +161,23 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Declaration
-    await page.locator('button[role="checkbox"]').click();
-    // Fill date of declaration (today's date)
+    // Since applicant data was provided (firstName + lastName only), verify static display
+    const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today1 = new Date();
-    await page
-      .getByRole("textbox", { name: "Day" })
-      .fill(today1.getDate().toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Month" })
-      .fill((today1.getMonth() + 1).toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Year" })
-      .fill(today1.getFullYear().toString());
+    const expectedDate = formatDate(today1);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate)).toBeVisible();
+
+    // Check declaration checkbox
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toBeVisible();
+    await checkbox.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
@@ -279,18 +294,23 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Declaration
-    await page.locator('button[role="checkbox"]').click();
-    // Fill date of declaration (today's date)
+    // Since applicant data was provided (firstName + lastName only), verify static display
+    const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
     const today2 = new Date();
-    await page
-      .getByRole("textbox", { name: "Day" })
-      .fill(today2.getDate().toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Month" })
-      .fill((today2.getMonth() + 1).toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Year" })
-      .fill(today2.getFullYear().toString());
+    const expectedDate2 = formatDate(today2);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName2)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate2)).toBeVisible();
+
+    // Check declaration checkbox
+    const checkbox2 = page.locator('button[role="checkbox"]');
+    await expect(checkbox2).toBeVisible();
+    await checkbox2.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(

@@ -50,6 +50,16 @@ const generatePastDate = () => {
 };
 
 /**
+ * Format date as DD/MM/YYYY (matches DeclarationStep format)
+ */
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+/**
  * Log the submitted form data from the request
  */
 function logSubmittedData(request: { postDataJSON: () => unknown }) {
@@ -140,18 +150,23 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Declaration
-    await page.locator('button[role="checkbox"]').click();
-    // Fill date of declaration (today's date)
+    // Since applicant data was provided (firstName + lastName only), verify static display
+    const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today = new Date();
-    await page
-      .getByRole("textbox", { name: "Day" })
-      .fill(today.getDate().toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Month" })
-      .fill((today.getMonth() + 1).toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Year" })
-      .fill(today.getFullYear().toString());
+    const expectedDate = formatDate(today);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate)).toBeVisible();
+
+    // Check declaration checkbox
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toBeVisible();
+    await checkbox.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
@@ -274,18 +289,23 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 9: Declaration
-    await page.locator('button[role="checkbox"]').click();
-    // Fill date of declaration (today's date)
+    // Since applicant data was provided (firstName + lastName only), verify static display
+    const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
     const today2 = new Date();
-    await page
-      .getByRole("textbox", { name: "Day" })
-      .fill(today2.getDate().toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Month" })
-      .fill((today2.getMonth() + 1).toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Year" })
-      .fill(today2.getFullYear().toString());
+    const expectedDate2 = formatDate(today2);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName2)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate2)).toBeVisible();
+
+    // Check declaration checkbox
+    const checkbox2 = page.locator('button[role="checkbox"]');
+    await expect(checkbox2).toBeVisible();
+    await checkbox2.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
@@ -390,18 +410,23 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Declaration
-    await page.locator('button[role="checkbox"]').click();
-    // Fill date of declaration (today's date)
+    // Since applicant data was provided (firstName + lastName only), verify static display
+    const expectedFullName3 = `${applicant.firstName} ${applicant.lastName}`;
     const today3 = new Date();
-    await page
-      .getByRole("textbox", { name: "Day" })
-      .fill(today3.getDate().toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Month" })
-      .fill((today3.getMonth() + 1).toString().padStart(2, "0"));
-    await page
-      .getByRole("textbox", { name: "Year" })
-      .fill(today3.getFullYear().toString());
+    const expectedDate3 = formatDate(today3);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName3)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate3)).toBeVisible();
+
+    // Check declaration checkbox
+    const checkbox3 = page.locator('button[role="checkbox"]');
+    await expect(checkbox3).toBeVisible();
+    await checkbox3.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(

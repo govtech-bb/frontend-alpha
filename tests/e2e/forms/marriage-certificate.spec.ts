@@ -56,6 +56,29 @@ const generateDateOfMarriage = () => ({
 });
 
 /**
+ * Format date as DD/MM/YYYY (matches DeclarationStep format)
+ */
+function formatDate(date: Date): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+/**
+ * Build full name from applicant data (matches DeclarationStep logic)
+ */
+function buildFullName(applicant: {
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+}): string {
+  return [applicant.firstName, applicant.middleName, applicant.lastName]
+    .filter(Boolean)
+    .join(" ");
+}
+
+/**
  * Log the submitted form data from the request
  */
 function logSubmittedData(request: { postDataJSON: () => unknown }) {
@@ -246,20 +269,23 @@ test.describe("Get Marriage Certificate Form", () => {
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible({ timeout: 5000 });
 
-    // Check declaration checkbox (rendered as button with role="checkbox")
-    await page.locator('button[role="checkbox"]').click();
-
-    // Fill declaration date (note: field is "dateOfDeclaration" not "declaration.dateOfDeclaration")
+    // Since applicant data was provided, verify static display of name and date
+    const expectedFullName = buildFullName(applicant);
     const today = new Date();
-    await page
-      .locator("#dateOfDeclaration-month")
-      .fill((today.getMonth() + 1).toString());
-    await page
-      .locator("#dateOfDeclaration-day")
-      .fill(today.getDate().toString());
-    await page
-      .locator("#dateOfDeclaration-year")
-      .fill(today.getFullYear().toString());
+    const expectedDate = formatDate(today);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate)).toBeVisible();
+
+    // Check declaration checkbox (rendered as button with role="checkbox")
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toBeVisible();
+    await checkbox.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
@@ -416,18 +442,23 @@ test.describe("Get Marriage Certificate Form", () => {
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible({ timeout: 5000 });
 
-    await page.locator('button[role="checkbox"]').click();
-
+    // Since applicant data was provided (no middleName filled), verify static display
+    const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today = new Date();
-    await page
-      .locator("#dateOfDeclaration-month")
-      .fill((today.getMonth() + 1).toString());
-    await page
-      .locator("#dateOfDeclaration-day")
-      .fill(today.getDate().toString());
-    await page
-      .locator("#dateOfDeclaration-year")
-      .fill(today.getFullYear().toString());
+    const expectedDate = formatDate(today);
+
+    // Verify applicant's name is displayed (static text, not input fields)
+    await expect(page.getByText(`Applicant's name:`)).toBeVisible();
+    await expect(page.getByText(expectedFullName)).toBeVisible();
+
+    // Verify today's date is displayed (static text, auto-filled)
+    await expect(page.getByText("Date:")).toBeVisible();
+    await expect(page.getByText(expectedDate)).toBeVisible();
+
+    // Check declaration checkbox (rendered as button with role="checkbox")
+    const checkbox = page.locator('button[role="checkbox"]');
+    await expect(checkbox).toBeVisible();
+    await checkbox.click();
 
     // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
