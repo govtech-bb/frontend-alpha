@@ -8,7 +8,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import {
+  checkConditionalRule,
+  getNestedValue,
+  indexConditionalOn,
+} from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
@@ -160,12 +164,12 @@ function createRepeatableStepInstance(
       name: indexFieldName(field.name),
     };
 
-    // Update conditionalOn.field reference to include the array index
+    // Update conditionalOn field references to include the array index
     if (field.conditionalOn) {
-      indexed.conditionalOn = {
-        ...field.conditionalOn,
-        field: indexFieldName(field.conditionalOn.field),
-      };
+      indexed.conditionalOn = indexConditionalOn(
+        field.conditionalOn,
+        indexFieldName
+      );
     }
 
     // Update skipValidationWhenShowHideOpen reference
@@ -185,10 +189,10 @@ function createRepeatableStepInstance(
           name: indexFieldName(nestedField.name),
           // Also update conditionalOn in nested fields if present
           ...(nestedField.conditionalOn && {
-            conditionalOn: {
-              ...nestedField.conditionalOn,
-              field: indexFieldName(nestedField.conditionalOn.field),
-            },
+            conditionalOn: indexConditionalOn(
+              nestedField.conditionalOn,
+              indexFieldName
+            ),
           }),
         })),
       };
@@ -218,11 +222,11 @@ function createRepeatableStepInstance(
   let stepConditionalOn = baseStep.conditionalOn;
 
   if (isSubStep && baseStep.conditionalOn) {
-    // Sub-steps: index the conditionalOn.field reference (e.g., isParentOrGuardian -> beneficiaries.0.isParentOrGuardian)
-    stepConditionalOn = {
-      ...baseStep.conditionalOn,
-      field: indexFieldName(baseStep.conditionalOn.field),
-    };
+    // Sub-steps: index the conditionalOn field references (e.g., isParentOrGuardian -> beneficiaries.0.isParentOrGuardian)
+    stepConditionalOn = indexConditionalOn(
+      baseStep.conditionalOn,
+      indexFieldName
+    );
   } else if (index > 0 && !isSubStep) {
     // Primary steps after the first: conditional on previous "add another" being "yes"
     stepConditionalOn = {
@@ -686,8 +690,7 @@ export default function DynamicMultiStepForm({
       // Check if step is visible (for conditional steps)
       const isVisible =
         !step.conditionalOn ||
-        getNestedValue<unknown>(cleanedData, step.conditionalOn.field) ===
-          step.conditionalOn.value;
+        checkConditionalRule(step.conditionalOn, cleanedData);
 
       for (const field of step.fields) {
         const fieldParts = field.name?.split(".");
@@ -713,12 +716,7 @@ export default function DynamicMultiStepForm({
     for (const step of conditionalSteps) {
       if (!step.conditionalOn) continue;
 
-      const watchedValue = getNestedValue<unknown>(
-        cleanedData,
-        step.conditionalOn.field
-      );
-
-      const isVisible = watchedValue === step.conditionalOn.value;
+      const isVisible = checkConditionalRule(step.conditionalOn, cleanedData);
 
       // Only delete simple (non-nested) fields from hidden steps
       if (!isVisible) {
@@ -813,11 +811,10 @@ export default function DynamicMultiStepForm({
     if (!step.conditionalOn) return true;
 
     const formValues = methods.getValues();
-    const watchedValue = getNestedValue<unknown>(
-      formValues as Record<string, unknown>,
-      step.conditionalOn.field
+    return checkConditionalRule(
+      step.conditionalOn,
+      formValues as Record<string, unknown>
     );
-    return watchedValue === step.conditionalOn.value;
   };
 
   // Helper function to find the next visible step index
@@ -880,10 +877,8 @@ export default function DynamicMultiStepForm({
         if (!field.conditionalOn) return true;
 
         // Check if conditional field should be visible
-        const watchedValue = methods.watch(
-          field.conditionalOn.field as keyof FormData
-        );
-        return watchedValue === field.conditionalOn.value;
+        const formValues = methods.getValues() as Record<string, unknown>;
+        return checkConditionalRule(field.conditionalOn, formValues);
       }
     );
 

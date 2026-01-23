@@ -15,7 +15,12 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import {
+  checkConditionalRule,
+  conditionalHasValue,
+  conditionalReferencesField,
+  getNestedValue,
+} from "@/lib/utils";
 import { uploadFile } from "@/services/api";
 import type { FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
@@ -140,13 +145,17 @@ export function DynamicField({
   // Clear conditional field values when they shouldn't be shown
   // biome-ignore lint/correctness/useExhaustiveDependencies: conditionalFields is derived from static schema and causes infinite loop if included
   useEffect(() => {
+    const formValues = getValues() as Record<string, unknown>;
+
     for (const conditionalField of conditionalFields) {
       if (
         conditionalField.conditionalOn &&
-        conditionalField.conditionalOn.field === field.name
+        conditionalReferencesField(conditionalField.conditionalOn, field.name)
       ) {
-        const shouldShow =
-          currentFieldValue === conditionalField.conditionalOn.value;
+        const shouldShow = checkConditionalRule(
+          conditionalField.conditionalOn,
+          formValues
+        );
         const currentValue = getValues(conditionalField.name as keyof FormData);
 
         // Only clear if field should be hidden AND has a value
@@ -156,8 +165,9 @@ export function DynamicField({
           const anotherFieldWithSameNameIsShown = conditionalFields.some(
             (cf) =>
               cf.name === conditionalField.name &&
-              cf.conditionalOn?.field === field.name &&
-              currentFieldValue === cf.conditionalOn?.value
+              cf.conditionalOn &&
+              conditionalReferencesField(cf.conditionalOn, field.name) &&
+              checkConditionalRule(cf.conditionalOn, formValues)
           );
 
           // Only clear if no other conditional field with this name is visible
@@ -192,17 +202,24 @@ export function DynamicField({
       errors as Record<string, unknown>,
       conditionalField.name
     );
-    const watchedValue = conditionalField.conditionalOn
-      ? watch(conditionalField.conditionalOn.field as keyof FormData)
-      : null;
-    const shouldShow = watchedValue === conditionalField.conditionalOn?.value;
+    const formValues = watch() as Record<string, unknown>;
+    const shouldShow = conditionalField.conditionalOn
+      ? checkConditionalRule(conditionalField.conditionalOn, formValues)
+      : false;
 
     if (!shouldShow) return null;
+
+    // Create a stable key from conditionalOn values
+    const conditionKey = conditionalField.conditionalOn
+      ? Array.isArray(conditionalField.conditionalOn)
+        ? conditionalField.conditionalOn.map((r) => r.value).join("-")
+        : conditionalField.conditionalOn.value
+      : "";
 
     return (
       <div
         className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-5 motion-safe:animate-in motion-safe:duration-200"
-        key={`${conditionalField.name}-${conditionalField.conditionalOn?.value}`}
+        key={`${conditionalField.name}-${conditionKey}`}
       >
         <div className="border-grey-00 border-l-8 border-solid pb-4 pl-[52px]">
           {conditionalField.type === "fieldArray" ? (
@@ -497,7 +514,11 @@ export function DynamicField({
                   />
                   {/* Render conditional fields that match this option */}
                   {conditionalFields
-                    .filter((cf) => cf.conditionalOn?.value === option.value)
+                    .filter(
+                      (cf) =>
+                        cf.conditionalOn &&
+                        conditionalHasValue(cf.conditionalOn, option.value)
+                    )
                     .map((cf) => renderConditionalField(cf))}
                 </Fragment>
               ))}
