@@ -509,6 +509,7 @@ export const formSteps: FormStep[] = [
         name: "birth.attendantAtBirth",
         label: "Attendant at birth",
         type: "select",
+        width: "medium",
         validation: {
           required: false,
         },
@@ -531,6 +532,7 @@ export const formSteps: FormStep[] = [
         label: "Born alive",
         type: "text",
         placeholder: "",
+        inputClassName: "w-20",
         validation: {
           required: false,
           pattern: {
@@ -544,6 +546,7 @@ export const formSteps: FormStep[] = [
         label: "Still born",
         type: "text",
         placeholder: "",
+        inputClassName: "w-20",
         validation: {
           required: false,
           pattern: {
@@ -557,6 +560,7 @@ export const formSteps: FormStep[] = [
         label: "Total still alive",
         type: "text",
         placeholder: "",
+        inputClassName: "w-20",
         validation: {
           required: false,
           pattern: {
@@ -623,6 +627,7 @@ export const formSteps: FormStep[] = [
         name: "child.sexAtBirth",
         label: "Sex",
         type: "select",
+        width: "short",
         validation: {
           required: "Sex at birth is required",
         },
@@ -644,6 +649,7 @@ export const formSteps: FormStep[] = [
         name: "order.numberOfCopies",
         label: "Number of Copies",
         type: "number",
+        width: "short",
         validation: {
           required: "Number of copies is required",
           min: {
