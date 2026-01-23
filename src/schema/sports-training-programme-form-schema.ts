@@ -496,17 +496,13 @@ export const formSteps: FormStep[] = [
     description:
       "Your information has been sent to the Youth Development Programme, the coordinating programme in the Division of Youth Affairs",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "The Youth Commissioner will be in touch shortly to confirm:",
-        items: [
-          "The location of the programme",
-          "The start date and times",
-          "What you will need to bring",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+The Youth Commissioner will be in touch shortly to confirm:
+
+- The location of the programme
+- The start date and times
+- What you will need to bring`,
     enableFeedback: true,
   },
 ];

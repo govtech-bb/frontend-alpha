@@ -332,16 +332,13 @@ export const formSteps: FormStep[] = [
     title: "Application submitted",
     description: "Your application has been submitted successfully",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "We will review the information you provided.",
-        items: [
-          "If we need more information or documents, we will contact you",
-          "Once approved, mail will be redirected to the address you specified",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+We will review the information you provided.
+
+If we need more information or documents, we will contact you
+
+Once approved, mail will be redirected to the address you specified`,
     enableFeedback: true,
   },
 ];

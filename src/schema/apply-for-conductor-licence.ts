@@ -425,18 +425,15 @@ export const formSteps: FormStep[] = [
     description:
       "Your information has been sent to the Barbados Transport Authority",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content:
-          "We will review your application and any supporting information.",
-        items: [
-          "If we need further details, we will contact you using the email address you provided.",
-          "You will receive an email confirming this submission.",
-          "If you do not receive the confirmation email within a few minutes, check your junk or spam folder.",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+We will review your application and any supporting information.
+
+If we need further details, we will contact you using the email address you provided.
+
+You will receive an email confirming this submission.
+
+If you do not receive the confirmation email within a few minutes, check your junk or spam folder.`,
     enableFeedback: true,
   },
 ];

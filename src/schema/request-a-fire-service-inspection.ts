@@ -195,16 +195,11 @@ export const formSteps: FormStep[] = [
     title: "Your request for a Fire Service inspection has been submitted.",
     description: "We have received your request for a Fire Service inspection.",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "The Fire Service will review your request.",
-        items: [
-          "If they need more information, they will contact you using the details you provided.",
-          "An inspection visit will be scheduled if your request can proceed.",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+- The Fire Service will review your request.
+- If they need more information, they will contact you using the details you provided.
+- An inspection visit will be scheduled if your request can proceed.`,
     enableFeedback: true,
   },
 ];

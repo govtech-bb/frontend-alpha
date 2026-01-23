@@ -18,8 +18,8 @@ type ListItemProps = ComponentPropsWithoutRef<"li">;
 type AnchorProps = ComponentPropsWithoutRef<"a">;
 type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
 
-// Custom components for react-markdown
-const components: Components = {
+// Custom components for react-markdown (exported for reuse in other markdown renderers)
+export const markdownComponents: Components = {
   h1: ({ children, ...props }: HeadingProps) => (
     <Heading as="h1" {...props}>
       {children}
@@ -163,7 +163,7 @@ export const MarkdownContent = ({
           )}
         </div>
         <ReactMarkdown
-          components={components}
+          components={markdownComponents}
           rehypePlugins={[
             rehypeRaw,
             [rehypeHideStartLinks, { hasResearchAccess }],

@@ -550,17 +550,13 @@ export const formSteps: FormStep[] = [
     description:
       "Your information has been sent to the our National Conservation Commission",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "If your application is successful, you will need to provide:",
-        items: [
-          "a Police Certificate of Character",
-          "2 recent references",
-          "2 passport-sized photographs",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+If your application is successful, you will need to provide:
+
+- a Police Certificate of Character
+- 2 recent references
+- 2 passport-sized photographs`,
     enableFeedback: true,
   },
 ];
