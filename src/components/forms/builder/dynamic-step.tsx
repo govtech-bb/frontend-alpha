@@ -45,7 +45,8 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
         }
       }
 
-      if (field) {
+      // Skip heading fields - they don't have validation
+      if (field && field.type !== "heading") {
         const escapedSelector = `#${CSS.escape(fieldName)}`;
 
         // If it's a field error with a direct message
