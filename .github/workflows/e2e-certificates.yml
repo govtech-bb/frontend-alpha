@@ -1,4 +1,4 @@
-name: E2E Certificate Forms
+name: E2E Form Tests
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   test:
-    name: Certificate Form Tests
+    name: Form Tests
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
@@ -36,17 +36,13 @@ jobs:
       - name: Build Next.js app
         run: npm run build
 
-      - name: Run Certificate E2E Tests
-        run: |
-          npx playwright test \
-            tests/e2e/forms/birth-certificate.spec.ts \
-            tests/e2e/forms/death-certificate.spec.ts \
-            tests/e2e/forms/marriage-certificate.spec.ts
+      - name: Run Form E2E Tests
+        run: npx playwright test tests/e2e/forms/
 
       - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-certificates
+          name: playwright-report-forms
           path: playwright-report
           retention-days: 7
