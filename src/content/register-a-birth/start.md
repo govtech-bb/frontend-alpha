@@ -1,23 +1,24 @@
 ---
-title: "Register a Birth"
+title: "Register a birth"
 stage: "alpha"
-publish_date: 2025-11-03
+publish_date: 2026-01-23
 ---
 
-You can pre-register the birth online. It should take around 10 minutes.
+You should complete the registration form in one go. At the moment, it is not possible to save your answers and come back to them later.
 
-To complete the registration, the parent(s) or guardian(s) must then visit the Registration Department to sign the birth register in person. 
+## How long does it take?
 
+It should take no longer than 15 minutes to pre-register a birth online.
 
-<a data-start-link href="/family-birth-relationships/register-a-birth/form">Start now</a>
+To complete the registration, the parent(s) or guardian(s) must then visit the Registration Department to sign the birth register in person.
 
-## Information you need for pre-registering a birth online
+## What you will need
 
-You should know:
+You will need to know:
 
 - child’s place and date of the birth
 
-- child’s first name, middle names, last name and sex 
+- child’s first name, middle names, last name and sex
 
 - parents’ first names, middle names, last names and current address(es)
 
@@ -27,8 +28,10 @@ You should know:
 
 - whether the father wants to be named on the official records
 
-- parents’ National Identity number (or passport number for foreign nationals) 
+- parents’ National Identity number (or passport number for foreign nationals)
 
 - parents’ occupations
 
 - how many certified copies of the birth certificate you would like to buy
+
+<a data-start-link href="/family-birth-relationships/register-a-birth/form">Start now</a>
