@@ -35,10 +35,17 @@ const generateApplicantData = () => ({
   telephoneNumber: `1246${faker.string.numeric(7)}`,
 });
 
-const generateSpouseData = () => ({
+const generateHusbandData = () => ({
   firstName: faker.person.firstName(),
   middleName: faker.person.middleName(),
   lastName: faker.person.lastName(),
+  idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
+});
+
+const generateWifeData = () => ({
+  firstName: faker.person.firstName(),
+  middleName: faker.person.middleName(),
+  maidenName: faker.person.lastName(),
   idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
 });
 
@@ -107,8 +114,8 @@ test.describe("Get Marriage Certificate Form", () => {
 
   test("complete form - applying for yourself", async ({ page }) => {
     const applicant = generateApplicantData();
-    const husband = generateSpouseData();
-    const wife = generateSpouseData();
+    const husband = generateHusbandData();
+    const wife = generateWifeData();
     const marriageDate = generateDateOfMarriage();
     const numberOfCopies = faker.number.int({ min: 1, max: 5 });
 
@@ -187,7 +194,7 @@ test.describe("Get Marriage Certificate Form", () => {
 
     await page.locator('input[name="wife.firstName"]').fill(wife.firstName);
     await page.locator('input[name="wife.middleName"]').fill(wife.middleName);
-    await page.locator('input[name="wife.lastName"]').fill(wife.lastName);
+    await page.locator('input[name="wife.maidenName"]').fill(wife.maidenName);
     await page.locator('input[name="wife.idNumber"]').fill(wife.idNumber);
 
     await page.getByRole("button", { name: /continue/i }).click();
@@ -283,8 +290,8 @@ test.describe("Get Marriage Certificate Form", () => {
 
   test("complete form - applying for someone else", async ({ page }) => {
     const applicant = generateApplicantData();
-    const husband = generateSpouseData();
-    const wife = generateSpouseData();
+    const husband = generateHusbandData();
+    const wife = generateWifeData();
     const marriageDate = generateDateOfMarriage();
     const numberOfCopies = faker.number.int({ min: 1, max: 3 });
 
@@ -346,7 +353,7 @@ test.describe("Get Marriage Certificate Form", () => {
     ).toBeVisible({ timeout: 5000 });
 
     await page.locator('input[name="wife.firstName"]').fill(wife.firstName);
-    await page.locator('input[name="wife.lastName"]').fill(wife.lastName);
+    await page.locator('input[name="wife.maidenName"]').fill(wife.maidenName);
     await page.locator('input[name="wife.idNumber"]').fill(wife.idNumber);
 
     await page.getByRole("button", { name: /continue/i }).click();
