@@ -100,7 +100,7 @@ export const formSteps: FormStep[] = [
 
       {
         name: "father.idNumber",
-        label: "National Identification (ID) Number",
+        label: "Barbados National Identification (ID) Number",
         width: "medium",
         type: "text",
         placeholder: "",
@@ -233,7 +233,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "mother.idNumber",
-        label: "National Identification (ID) Number",
+        label: "Barbados National Identification (ID) Number",
         type: "text",
         placeholder: "",
         validation: {
