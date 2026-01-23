@@ -13,6 +13,7 @@ import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
+import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
 
 /**
@@ -1214,11 +1215,16 @@ export default function DynamicMultiStepForm({
             </div>
           </div>
         )}
-        {/* Current Step - Show Review or Regular Step */}
+        {/* Current Step - Show Review, Declaration, or Regular Step */}
         {isReviewStep ? (
           <ReviewStep
             formSteps={expandedFormSteps}
             onEdit={handleEditFromReview}
+          />
+        ) : isDeclarationStep ? (
+          <DeclarationStep
+            serviceTitle={serviceTitle}
+            step={expandedFormSteps[currentStep]}
           />
         ) : (
           <DynamicStep
