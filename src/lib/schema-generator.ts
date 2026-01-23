@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { checkConditionalRule } from "@/lib/utils";
 import {
   createDateSchema,
   dateValidation,
@@ -561,15 +562,14 @@ export function generateFormSchema(formSteps: FormStep[]) {
     for (const field of conditionalFields) {
       if (!field.conditionalOn) continue;
 
-      const parentValue = getNestedValue(
-        data as Record<string, unknown>,
-        field.conditionalOn.field
-      );
       const fieldValue = getNestedValue(
         data as Record<string, unknown>,
         field.name
       );
-      const isVisible = parentValue === field.conditionalOn.value;
+      const isVisible = checkConditionalRule(
+        field.conditionalOn,
+        data as Record<string, unknown>
+      );
 
       if (
         isVisible &&
@@ -603,10 +603,11 @@ export function generateFormSchema(formSteps: FormStep[]) {
               for (const nestedField of field.fieldArray.fields) {
                 if (!nestedField.conditionalOn) continue;
 
-                const parentValue = item[nestedField.conditionalOn.field];
                 const fieldValue = item[nestedField.name];
-                const isVisible =
-                  parentValue === nestedField.conditionalOn.value;
+                const isVisible = checkConditionalRule(
+                  nestedField.conditionalOn,
+                  item
+                );
 
                 if (
                   isVisible &&

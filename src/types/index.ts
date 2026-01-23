@@ -51,6 +51,9 @@ export type ConditionalRule = {
   value: string; // The value that triggers this field to show
 };
 
+/** Single rule or array of rules (OR logic - any matching rule shows the element) */
+export type ConditionalOn = ConditionalRule | ConditionalRule[];
+
 export type NestedFormField = {
   name: string;
   label: string;
@@ -61,7 +64,7 @@ export type NestedFormField = {
   validation: NonDateFieldValidation | DateFieldValidation;
   options?: SelectOption[];
   rows?: number;
-  conditionalOn?: ConditionalRule; // For conditional fields within field arrays
+  conditionalOn?: ConditionalOn; // For conditional fields within field arrays
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
@@ -93,7 +96,7 @@ export type BaseFormField = {
   validation: ValidationRule;
   options?: SelectOption[]; // For select and radio fields
   rows?: number; // For textarea
-  conditionalOn?: ConditionalRule; // For conditional fields
+  conditionalOn?: ConditionalOn; // For conditional fields
   fieldArray?: FieldArrayConfig; // For fieldArray type
   showHide?: ShowHideConfig; // For showHide type (collapsible disclosure)
   /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
@@ -197,7 +200,7 @@ export type FormStep = {
   title: string;
   description?: string;
   fields: FormField[];
-  conditionalOn?: ConditionalRule; // For conditional steps
+  conditionalOn?: ConditionalOn; // For conditional steps
   /** Markdown content for confirmation page body (replaces steps array) */
   bodyContent?: string;
   contactDetails?: ContactDetails; // For confirmation pages

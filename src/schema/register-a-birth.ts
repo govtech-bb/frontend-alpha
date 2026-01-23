@@ -53,10 +53,13 @@ export const formSteps: FormStep[] = [
     id: "father-details",
     title: "Tell us about the child's father",
     description: "",
-    conditionalOn: {
-      field: "includeFatherDetails",
-      value: "yes",
-    },
+    conditionalOn: [
+      {
+        field: "includeFatherDetails",
+        value: "yes",
+      },
+      { field: "marriageStatus", value: "yes" },
+    ],
     fields: [
       {
         name: "father.firstName",
