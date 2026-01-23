@@ -60,48 +60,42 @@ function logSubmittedData(request: { postDataJSON: () => unknown }) {
 }
 
 /**
- * Verify the API response - note: API may have stricter validation than the form
- * (e.g. maiden name field expected by API but not in form schema)
+ * Verify the API response - expects success
  */
 function verifyApiResponse(response: ApiResponse, formId: string) {
-  if (response.success) {
-    expect(response.message).toBeTruthy();
-    expect(response.data).toBeTruthy();
+  // Fail fast if API returns an error
+  expect(response.success, `API returned error: ${response.message}`).toBe(
+    true
+  );
+  expect(response.message).toBeTruthy();
+  expect(response.data).toBeTruthy();
 
-    // Type guard to ensure data exists for subsequent checks
-    if (!response.data) {
-      throw new Error("Response data is undefined");
-    }
+  // Type guard to ensure data exists for subsequent checks
+  if (!response.data) {
+    throw new Error("Response data is undefined");
+  }
 
-    expect(response.data.submissionId).toBeTruthy();
-    expect(response.data.formId).toBe(formId);
-    expect(response.data.status).toBeTruthy();
-    expect(response.data.processedAt).toBeTruthy();
+  expect(response.data.submissionId).toBeTruthy();
+  expect(response.data.formId).toBe(formId);
+  expect(response.data.status).toBeTruthy();
+  expect(response.data.processedAt).toBeTruthy();
 
-    // If payment is required, verify payment fields
-    if (response.data.paymentRequired) {
-      expect(response.data.paymentUrl).toBeTruthy();
-      expect(response.data.paymentToken).toBeTruthy();
-      expect(response.data.paymentId).toBeTruthy();
-      expect(response.data.amount).toBeGreaterThan(0);
-    }
+  // If payment is required, verify payment fields
+  if (response.data.paymentRequired) {
+    expect(response.data.paymentUrl).toBeTruthy();
+    expect(response.data.paymentToken).toBeTruthy();
+    expect(response.data.paymentId).toBeTruthy();
+    expect(response.data.amount).toBeGreaterThan(0);
+  }
 
-    console.log("✅ API Response verified:");
-    console.log(`   - Submission ID: ${response.data.submissionId}`);
-    console.log(`   - Status: ${response.data.status}`);
-    console.log(
-      `   - Payment Required: ${response.data.paymentRequired ?? false}`
-    );
-    if (response.data.referenceNumber) {
-      console.log(`   - Reference Number: ${response.data.referenceNumber}`);
-    }
-  } else {
-    // API validation may fail due to fields expected by API but not in form
-    console.log(
-      "⚠️ Form submission returned validation error (API expects fields not in form):"
-    );
-    console.log(`   - Message: ${response.message}`);
-    expect(response.message).toBeTruthy();
+  console.log("✅ API Response verified:");
+  console.log(`   - Submission ID: ${response.data.submissionId}`);
+  console.log(`   - Status: ${response.data.status}`);
+  console.log(
+    `   - Payment Required: ${response.data.paymentRequired ?? false}`
+  );
+  if (response.data.referenceNumber) {
+    console.log(`   - Reference Number: ${response.data.referenceNumber}`);
   }
 }
 
@@ -281,15 +275,10 @@ test.describe("Get Marriage Certificate Form", () => {
     const responseBody = (await response.json()) as ApiResponse;
     verifyApiResponse(responseBody, "get-marriage-certificate");
 
-    // Verify UI navigated to confirmation or shows error (API may reject due to missing fields)
-    if (responseBody.success) {
-      await expect(
-        page.getByRole("heading", { name: /submission|confirmation|saved/i })
-      ).toBeVisible({ timeout: 10_000 });
-    } else {
-      // API validation failed - this is expected when API expects fields not in form
-      await expect(page.getByText(/there was a problem/i)).toBeVisible();
-    }
+    // Verify UI navigated to confirmation
+    await expect(
+      page.getByRole("heading", { name: /submission|confirmation|saved/i })
+    ).toBeVisible({ timeout: 10_000 });
   });
 
   test("complete form - applying for someone else", async ({ page }) => {
@@ -453,15 +442,10 @@ test.describe("Get Marriage Certificate Form", () => {
     const responseBody = (await response.json()) as ApiResponse;
     verifyApiResponse(responseBody, "get-marriage-certificate");
 
-    // Verify UI navigated to confirmation or shows error (API may reject due to missing fields)
-    if (responseBody.success) {
-      await expect(
-        page.getByRole("heading", { name: /submission|confirmation|saved/i })
-      ).toBeVisible({ timeout: 10_000 });
-    } else {
-      // API validation failed - this is expected when API expects fields not in form
-      await expect(page.getByText(/there was a problem/i)).toBeVisible();
-    }
+    // Verify UI navigated to confirmation
+    await expect(
+      page.getByRole("heading", { name: /submission|confirmation|saved/i })
+    ).toBeVisible({ timeout: 10_000 });
   });
 
   test("validates required fields on first step", async ({ page }) => {
