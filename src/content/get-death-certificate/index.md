@@ -9,7 +9,7 @@ This service can be used to get a copy of a death certificate for anyone whose d
 
 Most copies of death certificates are requested soon after the death takes place and is registered.
 
-However, copies for a deceased Barbadian citizen can be requested at any point. They are essential for sorting out the deceased’s estate, and for insurance purposes.
+However, copiesssss for a deceased Barbadian citizen can be requested at any point. They are essential for sorting out the deceased’s estate, and for insurance purposes.
 
 You can request a copy on someone else’s behalf but you must disclose:
 
