@@ -5,13 +5,13 @@ featured: false
 publish_date: 2025-12-12
 ---
 
-This service can be used to get a copy of a birth certificate for anyone whose birth was registered in Barbados.
+This servicessss can be used to get a copy of a birth certificate for anyone whose birth was registered in Barbados.
 
 Most copies of birth certificates are requested at the same time a birth is registered as part of the [Register a birth service](/family-birth-relationships/register-a-birth). A copy is essential for access to certain public services and welfare support.
 
 However, copies for Barbadian citizens can be requested at any point. They are needed as official identification so you can apply for a passport or driving licence, and as proof of identity in financial or legal-related matters such as opening a bank account or getting married.
 
-You can request a copy on someone else’s behalf but you must disclose:
+You can request a copy on someone elseâs behalf but you must disclose:
 
 - your relationship to them
 - why you need the certificate
@@ -55,7 +55,7 @@ If you complete the paper form, you will be given a receipt when you return it t
 
 ## If basic information is unknown
 
-There are circumstances when you may not be able to provide all the information asked for in the form. For example, if there is estrangement in the family, or if the birth was registered in Barbados a significant time ago. In these cases you must complete a paper form and provide as much information as you can – the more details you can give, the better the chance of finding the records you are looking for.
+There are circumstances when you may not be able to provide all the information asked for in the form. For example, if there is estrangement in the family, or if the birth was registered in Barbados a significant time ago. In these cases you must complete a paper form and provide as much information as you can â the more details you can give, the better the chance of finding the records you are looking for.
 
 ## Get a copy of a birth certificate if you live overseas
 
