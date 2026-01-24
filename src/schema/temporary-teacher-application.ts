@@ -190,6 +190,11 @@ export const formSteps: FormStep[] = [
   {
     id: "barbadosResidencyDuration",
     title: "How long have you lived in barbados?",
+    conditionalOn: {
+      field: "applicant.nationality",
+      value: "barbados",
+      operator: "notEquals",
+    },
     description: "For example: 2 weeks, 4 months, 1 year",
     fields: [
       {
@@ -236,16 +241,11 @@ export const formSteps: FormStep[] = [
         name: "contact.country",
         type: "select",
         label: "Country",
-        width: "short",
+        width: "medium",
         validation: {
           required: "Country is required",
         },
-        options: [
-          {
-            label: "Barbados",
-            value: "barbados",
-          },
-        ],
+        options: countries,
       },
       {
         name: "contact.parish",
@@ -256,6 +256,10 @@ export const formSteps: FormStep[] = [
           required: "Parish is required",
         },
         options: barbadosParishes,
+        conditionalOn: {
+          field: "contact.country",
+          value: "barbados",
+        },
       },
       {
         name: "contact.postcode",
@@ -320,11 +324,12 @@ export const formSteps: FormStep[] = [
       {
         name: "startYear",
         label: "Start year",
-        type: "text",
+        type: "text", //NOTE: If we change to type: number, do we add validations to check length?
         width: "short",
         validation: {
           required: "Start year is required",
           min: {
+            //NOTE: This does not work with type:text
             value: 1930,
             message: "Start Year must be at least 1930",
           },
@@ -335,9 +340,9 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "endYear",
+        name: "endYear", //TODO: Validate that this value is after the start year
         label: "End year",
-        type: "text",
+        type: "number",
         width: "short",
         validation: {
           required: "End year is required",
@@ -425,7 +430,7 @@ export const formSteps: FormStep[] = [
       {
         name: "fromYear",
         label: "From (year)",
-        type: "text",
+        type: "text", //NOTE: See previous notes for year field
         validation: {
           required: "This field is required",
           min: {
@@ -440,7 +445,7 @@ export const formSteps: FormStep[] = [
         width: "short",
       },
       {
-        name: "toYear",
+        name: "toYear", //TODO: This field may need a 'skipValidation' rule
         label: "To (year)",
         type: "text",
         validation: {
@@ -457,7 +462,7 @@ export const formSteps: FormStep[] = [
         width: "short",
       },
       {
-        name: "currentlyWorking",
+        name: "currentlyWorking", //TODO: If this checkbox is set to 'true' then the 'toYear' field is not required
         label: "I am currently working here",
         type: "checkbox",
         validation: {
@@ -483,28 +488,24 @@ export const formSteps: FormStep[] = [
         label: "Athletics, games, or craft skills",
         type: "textarea",
         validation: { required: false },
-        width: "medium",
       },
       {
         name: "skillsAndExperience.youthCommunityVolunteerGroups",
         label: "Experience in youth, community, or volunteer groups",
         type: "textarea",
         validation: { required: false },
-        width: "medium",
       },
       {
         name: "skillsAndExperience.responsibilityPositions",
         label: "Positions of responsibility held",
         type: "textarea",
         validation: { required: false },
-        width: "medium",
       },
       {
         name: "skillsAndExperience.extraDetails",
         label: "Anything else relevant to your application?",
         type: "textarea",
         validation: { required: false },
-        width: "medium",
       },
     ],
   },
@@ -588,21 +589,17 @@ export const formSteps: FormStep[] = [
         type: "select",
         label: "Country",
         validation: { required: "Country is required" },
-        options: [
-          {
-            label: "Barbados",
-            value: "barbados",
-          },
-        ],
+        options: countries,
         width: "medium",
       },
       {
+        //TODO: This field should only be displayed when 'country' equals 'barbados'
         name: "parish",
         type: "select",
-        label: "Parish",
-        validation: { required: "Parish is required" },
-        options: barbadosParishes,
         width: "medium",
+        label: "Parish",
+        validation: { required: false },
+        options: barbadosParishes,
       },
       {
         name: "postcode",
