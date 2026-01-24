@@ -5,7 +5,7 @@ featured: false
 publish_date: 2025-12-15
 ---
 
-This service can be used to get a copy of a death certificate for anyone whose death was registered in Barbados.
+These service(s) can be used to get a copy of a death certificate for anyone whose death was registered in Barbados.
 
 Most copies of death certificates are requested soon after the death takes place and is registered.
 
