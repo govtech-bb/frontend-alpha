@@ -7,7 +7,7 @@ export default function TemporaryTeacherApplicationForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      serviceTitle="Apply for being a Temporary Teacher"
+      serviceTitle="Apply to be a Temporary Teacher"
       storageKey="temporary-teacher-application"
     />
   );
