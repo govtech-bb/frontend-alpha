@@ -5,7 +5,7 @@ featured: false
 publish_date: 2025-12-12
 ---
 
-These services can be used to get a copy of a birth certificate for anyone whose birth was registered in Barbados.
+These service(s) can be used to get a copy of a birth certificate for anyone whose birth was registered in Barbados.
 
 Most copies of birth certificates are requested at the same time a birth is registered as part of the [Register a birth service](/family-birth-relationships/register-a-birth). A copy is essential for access to certain public services and welfare support.
 
