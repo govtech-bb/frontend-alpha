@@ -5,7 +5,9 @@ featured: false
 publish_date: 2025-12-12
 ---
 
-These service(s) can be used to get a copy of a birth certificate for anyone whose birth was registered in Barbados.
+These service(s)ssss can be used to get a copy of a birth certificate for anyone whose birth was registered in # Barbados.
+
+## Heading
 
 Most copies of birth certificates are requested at the same time a birth is registered as part of the [Register a birth service](/family-birth-relationships/register-a-birth). A copy is essential for access to certain public services and welfare support.
 
@@ -24,7 +26,8 @@ There are 2 ways to get a copy of a birth certificate. You can:
 
 1. #### Request a copy online
 
-   You must pay online so you will need a debit or credit card, and you will need to have (or create) an EZPay+ account.<br />
+   You must pay online so you will need a debit or credit card, and you will need to have (or create) an EZPay+ account.
+
    Every question is compulsory so if you are unsure about the basic information asked for, you should complete the paper form instead.
 
    <a data-start-link href="/family-birth-relationships/get-birth-certificate/start">Complete the online form</a>
