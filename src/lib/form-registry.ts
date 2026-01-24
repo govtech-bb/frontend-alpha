@@ -77,6 +77,7 @@ export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
   "request-a-fire-service-inspection": "request-a-fire-service-inspection",
   "apply-for-conductor-licence": "apply-for-conductor-licence",
   "sell-goods-services-beach-park": "sell-goods-services-beach-park",
+  "temporary-teacher-application": "temporary-teacher-application",
 };
 
 /**
