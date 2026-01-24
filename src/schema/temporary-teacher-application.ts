@@ -698,14 +698,15 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your application has been submitted",
-    description: "",
+    title: "Your application to be a temporary teacher has been submitted",
+    description: "Thank you. We have received your application",
     fields: [],
     steps: [
       {
-        title: "What happens next",
+        title: "What you need to know",
         content: "",
         items: [
+          //TODO: See outstanding PR that allows for using markdown content
           "Your application will be reviewed.",
           "You may be contacted if more information is needed.",
           "You will be informed of the outcome.",
