@@ -529,9 +529,11 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "birth.separator2",
-        label: "",
+        name: "birth.textLabel1",
+        label:
+          "How many births has this mother had in total (including the one(s) you are registering now)",
         type: "heading",
+        as: "h3",
       },
       {
         name: "birth.bornAlive",

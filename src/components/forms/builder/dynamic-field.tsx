@@ -224,10 +224,21 @@ export function DynamicField({
         key={`${conditionalField.name}-${conditionKey}`}
       >
         <div className="border-grey-00 border-l-8 border-solid pb-4 pl-[52px]">
-          {/* !!! To replace, I don't think we need to show the headings here, but I'm leaving it for type safety */}
           {conditionalField.type === "heading" ? (
-            <div className="space-y-2">
-              <Heading as="h2">{conditionalField.label}</Heading>
+            <div className="space-y-xm">
+              <div className="py-5">
+                <hr className="border-grey-00 border-t-4" />
+              </div>
+              {conditionalField.label?.trim() && (
+                <Heading as={conditionalField.as ?? "h2"}>
+                  {conditionalField.label}
+                </Heading>
+              )}
+              {conditionalField.hint?.trim() && (
+                <Text as="p" className="text-mid-grey-00" size="body">
+                  {conditionalField.hint}
+                </Text>
+              )}
             </div>
           ) : conditionalField.type === "fieldArray" ? (
             <DynamicFieldArray field={conditionalField} />
@@ -435,9 +446,14 @@ export function DynamicField({
           <div className="py-5">
             <hr className="border-grey-00 border-t-4" />
           </div>
-          {field.label?.trim() ? (
-            <Heading as="h2">{field.label}</Heading>
-          ) : null}
+          {field.label?.trim() && (
+            <Heading as={field.as ?? "h2"}>{field.label}</Heading>
+          )}
+          {field.hint?.trim() && (
+            <Text as="p" className="text-mid-grey-00" size="body">
+              {field.hint}
+            </Text>
+          )}
         </div>
       ) : field.type === "fieldArray" ? (
         <DynamicFieldArray field={field} />
