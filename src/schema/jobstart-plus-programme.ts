@@ -841,20 +841,22 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your application has been submitted",
+    title: "Thank you for your application",
     description: "",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "",
-        items: [
-          "Your application will be reviewed.",
-          "You may be contacted if more information is needed.",
-          "You will be informed of the outcome.",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+- We will review your application to confirm you meet the eligibility requirements.
+- If we need more details, we will contact you using the information you have provided.
+- If eligible, you will be added to our programme database.
+- You will be contacted about upcoming placements, interviews, or orientation sessions.
+
+If you have questions, please contact the Job Start Plus team, email: 
+jobstartplus@labour.gov.bb, or call the Ministry of Labour at (246) 535-1400 
+between the hours of 8:30 up 4:30 Monday to Friday.
+
+Thank you for your interest in the Job Start Plus Programme.
+`,
     enableFeedback: true,
   },
 ];

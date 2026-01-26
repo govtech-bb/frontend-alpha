@@ -390,14 +390,11 @@ export const formSteps: FormStep[] = [
     description:
       "The Barbados Postal Service will process your redirection request when you have made the payment.",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content:
-          "When you have submitted both your request and your payment, the Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. Your redirection notice will last for 6 months.",
-        items: [],
-      },
-    ],
+    bodyContent: `## What happens next
+
+When you have submitted both your request and your payment, the Barbados Postal Service 
+will begin to deliver your mail to your new address from the start date you gave on the form.
+Your redirection notice will last for 6 months.`,
     enableFeedback: true,
   },
 ];

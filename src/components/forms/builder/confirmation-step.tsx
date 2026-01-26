@@ -2,7 +2,10 @@
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
+import { markdownComponents } from "@/components/markdown-content";
 import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import type { FormStep } from "@/types";
@@ -30,7 +33,7 @@ export function ConfirmationPage({
   confirmationStep,
   customerEmail,
   customerName,
-  referenceNumber: _referenceNumber,
+  referenceNumber,
   onReset: _onReset,
   formId,
   paymentData,
@@ -75,12 +78,9 @@ export function ConfirmationPage({
             </Heading>
 
             {confirmationStep.description && (
-              <Text
-                as="p"
-                className="font-normal text-[32px] text-black-00 leading-[1.7] lg:leading-normal"
-              >
+              <ReactMarkdown components={markdownComponents}>
                 {confirmationStep.description}
-              </Text>
+              </ReactMarkdown>
             )}
           </div>
         </div>
@@ -90,6 +90,18 @@ export function ConfirmationPage({
 
       <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
+          {/* Reference number banner - shown by default unless explicitly set to false */}
+          {referenceNumber &&
+            confirmationStep.showReferenceNumber !== false && (
+              <div className="w-fit rounded-sm bg-blue-10 px-6 py-4">
+                <Heading as="h2" className="whitespace-nowrap text-black">
+                  {confirmationStep.referenceNumberLabel ??
+                    "Your reference number is"}{" "}
+                  {referenceNumber}
+                </Heading>
+              </div>
+            )}
+
           {/* Payment content */}
           {paymentData && formSlug ? (
             <PaymentBlock
@@ -99,32 +111,17 @@ export function ConfirmationPage({
               paymentData={paymentData}
             />
           ) : null}
-          {/* Dynamic steps content */}
-          {confirmationStep.steps?.map((step, index) => (
-            <div key={index}>
-              {step.title && (
-                <Heading as="h2" className="pb-4 lg:pb-2">
-                  {step.title}
-                </Heading>
-              )}
-              {step.content && <Text as="p">{step.content}</Text>}
-              {step.items && step.items.length > 0 && step.content ? (
-                <ul className="list-disc pl-7 text-[20px] leading-normal">
-                  {step.items.map((item, itemIndex) => (
-                    <li key={itemIndex}>{item}</li>
-                  ))}
-                </ul>
-              ) : step.items && step.items.length > 0 ? (
-                <div className="space-y-4">
-                  {step.items.map((item, itemIndex) => (
-                    <Text as="p" key={itemIndex}>
-                      {item}
-                    </Text>
-                  ))}
-                </div>
-              ) : null}
+          {/* Body content rendered from markdown */}
+          {confirmationStep.bodyContent && (
+            <div className="space-y-4">
+              <ReactMarkdown
+                components={markdownComponents}
+                remarkPlugins={[remarkGfm]}
+              >
+                {confirmationStep.bodyContent}
+              </ReactMarkdown>
             </div>
-          ))}
+          )}
 
           {/* Contact details */}
           {confirmationStep.contactDetails && (

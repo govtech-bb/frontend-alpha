@@ -524,20 +524,30 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Your submission has been saved",
+    title: "Thank you for your request",
     description:
       "Review the answers you've given carefully. Incorrect information may be difficult to change after registration.",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "",
-        items: [
-          "The child's school will confirm if they are eligible for the grant.",
-          "You will receive $100 BBD per eligible child in the bank account you provided details for",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+- Your application has been sent to the principal of the child’s school for review.
+- The school will check that:
+  - the child is eligible, and
+  - no other claim has been submitted for the same child in this academic year.
+- Once the principal approves the application, the payment details you provided will be added to the system.
+- If approved, **BDS $100** will be paid to the bank account you provided.
+
+### Need help?
+
+If you have questions about your application, contact the Ministry of Educational Transformation:
+
+**Ministry of Educational Transformation**
+**Telephone:** (246) 535-0600 
+**Email:** info@mes.gov.bb
+ 
+Keep a copy of this application for your records.
+
+`,
     enableFeedback: true,
   },
 ];

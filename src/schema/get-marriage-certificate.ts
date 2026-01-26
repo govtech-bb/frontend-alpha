@@ -557,16 +557,12 @@ export const formSteps: FormStep[] = [
     title: "Your submission has been saved",
     description: "Complete your payment below to finalize your submission",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "You will receive a confirmation email with:",
-        items: [
-          "Your application reference number",
-          "the cost of the certificate(s)",
-          "the expected completion date",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+You will receive a confirmation email with:
+
+- Your application reference number
+- the cost of the certificate(s)
+- the expected completion date`,
   },
 ];

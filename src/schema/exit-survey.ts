@@ -4,8 +4,9 @@ export const formSteps: FormStep[] = [
   {
     id: "introduction",
     title: "Help us improve this service",
-    description:
-      "Thank you for submitting your information. Your feedback helps us improve this service. This will take about 30 seconds and includes 4 short questions.",
+    description: `Thank you for submitting your information. 
+      
+Your feedback helps us improve this service. This will take about 30 seconds and includes 4 short questions.`,
     fields: [],
   },
   {
@@ -116,19 +117,20 @@ export const formSteps: FormStep[] = [
   {
     id: "thank-you",
     title: "Thank you for your feedback",
-    description: "Your feedback has been submitted successfully.",
+    showReferenceNumber: false,
+    description: `Your feedback has been submitted successfully. 
+      
+It helps us understand what is working well and what we can improve. This supports the development of better public services for everyone in Barbados.`,
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "",
-        items: [
-          "We will review the feedback we receive to identify ways to improve this service and the website.",
-          "Your responses are combined with other feedback and used to inform future updates.",
-          "You do not need to do anything else.",
-          "You can now close this page or return to alpha.gov.bb for more services and information..",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+We will review the feedback we receive to identify ways to improve this service and the website.
+
+Your responses are combined with other feedback and used to inform future updates.
+
+You do not need to do anything else.
+
+You can now close this page or [return to alpha.gov.bb](https://www.alpha.gov.bb) for more services and information.
+`,
   },
 ];

@@ -161,12 +161,6 @@ export type FormField =
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
-export type ConfirmationStepItem = {
-  title: string;
-  content: string;
-  items?: string[];
-};
-
 export type ContactDetails = {
   title: string;
   telephoneNumber: string;
@@ -204,9 +198,14 @@ export type FormStep = {
   description?: string;
   fields: FormField[];
   conditionalOn?: ConditionalRule; // For conditional steps
-  steps?: ConfirmationStepItem[]; // For confirmation pages
+  /** Markdown content for confirmation page body (replaces steps array) */
+  bodyContent?: string;
   contactDetails?: ContactDetails; // For confirmation pages
   enableFeedback?: boolean; // Enable feedback section on confirmation page
+  /** Custom label for the reference number (defaults to "Your submission ID is") */
+  referenceNumberLabel?: string;
+  /** Whether to show the reference number on the confirmation page (defaults to true) */
+  showReferenceNumber?: boolean;
   /** Configuration for repeatable steps - when set, this step can be repeated */
   repeatable?: RepeatableStepConfig;
 };
