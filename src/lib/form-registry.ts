@@ -59,6 +59,7 @@ export type FormSlug = keyof typeof FORM_COMPONENTS;
  * Used to clear form data when a user visits the /start page.
  */
 export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
+  "register-a-birth": "register-a-birth",
   "register-for-community-sports-training-programme":
     "community-sports-programme",
   "apply-to-be-a-project-protege-mentor": "project-protege-mentor",
