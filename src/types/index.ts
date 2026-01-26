@@ -161,6 +161,8 @@ type HeadingFormField = {
   hint?: string; // Optional description below the heading
   conditionalOn?: ConditionalOn; // Headings can be conditional too
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
+  /** Heading level. Defaults to "h2" */
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 };
 
 export type FormField =
