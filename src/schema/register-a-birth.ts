@@ -107,8 +107,8 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}[-]?\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+            value: "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 991231-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -249,8 +249,8 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}[-]?\\d{4}$",
-            message: "Enter a valid ID number (e.g., 850101-0001)",
+            value: "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])-\\d{4}$",
+            message: "Enter a valid ID number (e.g., 991231-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -343,7 +343,7 @@ export const formSteps: FormStep[] = [
         label: "Telephone number",
         type: "tel",
         placeholder: "",
-       validation: {
+        validation: {
           required: "Telephone number is required",
           pattern: {
             value:
