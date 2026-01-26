@@ -6,8 +6,10 @@ export const formSteps: FormStep[] = [
     id: "marriage-status",
     title:
       "When the child was born, were the mother and father married to each other?",
-    description:
-      "We ask this because your answer might determine:\n• the surname of the child\n• who can register the birth",
+    description: `We ask this because your answer might determine:
+
+- the surname of the child
+- who can register the birth`,
     fields: [
       {
         name: "marriageStatus",
