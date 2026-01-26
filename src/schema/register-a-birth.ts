@@ -704,17 +704,19 @@ export const formSteps: FormStep[] = [
     title: "Thank you for pre-registering a birth",
     description: "The Registration Department has received your information.",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content:
-          "The Registration Department will contact you within 3 working days and invite you to visit, in person, to sign the birth register.\n\nShow your reference number to the Applications Desk at the Registration Department. You will need to:",
-        items: [
-          "Sign the register and complete the registration.",
-          "Collect your copy or copies of the birth certificate. You will be able to pay in cash or by card.",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+The Registration Department will contact you within 3 working days and invite you to visit, in person, to sign the birth register.
+
+Show your reference number to the Applications Desk at the Registration Department. You will need to:
+
+1. Sign the register and complete the registration.
+2. Collect your copy or copies of the birth certificate. You will be able to pay in cash or by card.
+
+### Who must attend the appointment
+
+[See what you need to bring with you](https://alpha.gov.bb/)
+[Who should register a birth?](https://alpha.gov.bb/)`,
     enableFeedback: true,
   },
 ];
