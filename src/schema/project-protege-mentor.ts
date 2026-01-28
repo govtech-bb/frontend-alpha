@@ -3,12 +3,12 @@ import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
   {
-    id: "personal",
+    id: "applicant",
     title: "Tell us about yourself",
     description: "",
     fields: [
       {
-        name: "personal.firstName",
+        name: "applicant.firstName",
         label: "First name",
         type: "text",
         validation: {
@@ -26,7 +26,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personal.lastName",
+        name: "applicant.lastName",
         label: "Last name",
         type: "text",
         validation: {
@@ -44,7 +44,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personal.dateOfBirth",
+        name: "applicant.dateOfBirth",
         label: "Date of birth",
         type: "date",
         placeholder: "For example, 03 27 2007",
@@ -53,7 +53,7 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "personal.employmentStatus",
+        name: "applicant.employmentStatus",
         label: "What is your employment status?",
         type: "radio",
         validation: {
@@ -67,7 +67,7 @@ export const formSteps: FormStep[] = [
         ],
       },
       {
-        name: "personal.institutionName",
+        name: "applicant.institutionName",
         label: "Name of institution",
         type: "text",
         validation: {
@@ -78,12 +78,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "personal.employmentStatus",
+          field: "applicant.employmentStatus",
           value: "studying",
         },
       },
       {
-        name: "personal.employerName",
+        name: "applicant.employerName",
         label: "Name of company or organisation",
         type: "text",
         validation: {
@@ -95,12 +95,12 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "personal.employmentStatus",
+          field: "applicant.employmentStatus",
           value: "employed",
         },
       },
       {
-        name: "personal.otherEmploymentDetails",
+        name: "applicant.otherEmploymentDetails",
         label: "Please give details",
         type: "text",
         validation: {
@@ -111,7 +111,7 @@ export const formSteps: FormStep[] = [
           },
         },
         conditionalOn: {
-          field: "personal.employmentStatus",
+          field: "applicant.employmentStatus",
           value: "other",
         },
       },
