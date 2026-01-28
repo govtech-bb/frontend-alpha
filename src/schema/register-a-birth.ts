@@ -146,7 +146,15 @@ export const formSteps: FormStep[] = [
               type: "number",
               placeholder: "",
               validation: {
-                required: false,
+                required: "Age is required",
+                min: {
+                  value: 12,
+                  message: "Age must be 12 or greater",
+                },
+                max: {
+                  value: 120,
+                  message: "Age must be less than or equal to 120",
+                },
               },
             },
           ],
@@ -290,8 +298,12 @@ export const formSteps: FormStep[] = [
               validation: {
                 required: "Age is required",
                 min: {
-                  value: 0,
-                  message: "Age must be 0 or greater",
+                  value: 12,
+                  message: "Age must be 12 or greater",
+                },
+                max: {
+                  value: 120,
+                  message: "Age must be less than or equal to 120",
                 },
               },
             },
@@ -504,7 +516,7 @@ export const formSteps: FormStep[] = [
         type: "radio",
         placeholder: "",
         validation: {
-          required: "Select a location",
+          required: "Number of births is required",
         },
         options: [
           { label: "Single", value: "single" },

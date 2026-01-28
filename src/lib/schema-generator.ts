@@ -508,7 +508,8 @@ export function generateFormSchema(formSteps: FormStep[]) {
         // Add child field schemas as optional - they'll be validated conditionally via superRefine
         for (const childField of field.showHide.fields) {
           // Make child fields optional at schema level
-          setNestedValue(schemaShape, childField.name, z.string().optional());
+          const childSchema = createFieldSchema(childField);
+          setNestedValue(schemaShape, childField.name, childSchema);
         }
       }
     }
