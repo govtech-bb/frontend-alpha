@@ -88,13 +88,13 @@ export function ConfirmationPage({
 
       {/* Main content */}
 
-      <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
+      <div className="container space-y-6 overflow-hidden py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
           {/* Reference number banner - shown by default unless explicitly set to false */}
           {referenceNumber &&
             confirmationStep.showReferenceNumber !== false && (
-              <div className="w-fit rounded-sm bg-blue-10 px-6 py-4">
-                <Heading as="h2" className="whitespace-nowrap text-black">
+              <div className="rounded-sm bg-blue-10 px-6 py-4 lg:w-fit">
+                <Heading as="h2" className="text-black lg:whitespace-nowrap">
                   {confirmationStep.referenceNumberLabel ??
                     "Your reference number is"}{" "}
                   {referenceNumber}
