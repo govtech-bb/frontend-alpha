@@ -499,7 +499,7 @@ export const formSteps: FormStep[] = [
         type: "select",
         width: "medium",
         validation: {
-          required: false,
+          required: "Attendant At Birth is required",
         },
         options: [
           { label: "", value: "" },
