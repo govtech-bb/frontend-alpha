@@ -719,7 +719,7 @@ Show your reference number to the Applications Desk at the Registration Departme
 
 ### Who must attend the appointment
 
-[See what you need to bring with you](https://alpha.gov.bb/)
+[See what you need to bring with you](https://alpha.gov.bb/)  
 [Who should register a birth?](https://alpha.gov.bb/)`,
     enableFeedback: true,
   },
