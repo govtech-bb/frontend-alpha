@@ -435,10 +435,16 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Parish is required",
         },
-        conditionalOn: {
-          field: "birth.placeOfBirth",
-          value: "residential",
-        },
+        conditionalOn: [
+          {
+            field: "birth.placeOfBirth",
+            value: "residential",
+          },
+          {
+            field: "birth.placeOfBirth",
+            value: "other",
+          },
+        ],
         options: barbadosParishes,
       },
       {
@@ -454,42 +460,16 @@ export const formSteps: FormStep[] = [
             message: "Address must be at least 5 characters",
           },
         },
-        conditionalOn: {
-          field: "birth.placeOfBirth",
-          value: "residential",
-        },
-      },
-      {
-        name: "birth.parish",
-        label: "Parish",
-        type: "select",
-        width: "medium",
-        validation: {
-          required: "Parish is required",
-        },
-        conditionalOn: {
-          field: "birth.placeOfBirth",
-          value: "other",
-        },
-        options: barbadosParishes,
-      },
-      {
-        name: "birth.streetAddress",
-        label: "Street address",
-        type: "textarea",
-        placeholder: "",
-        rows: 3,
-        validation: {
-          required: "Street address is required",
-          minLength: {
-            value: 5,
-            message: "Address must be at least 5 characters",
+        conditionalOn: [
+          {
+            field: "birth.placeOfBirth",
+            value: "residential",
           },
-        },
-        conditionalOn: {
-          field: "birth.placeOfBirth",
-          value: "other",
-        },
+          {
+            field: "birth.placeOfBirth",
+            value: "other",
+          },
+        ],
       },
 
       {
