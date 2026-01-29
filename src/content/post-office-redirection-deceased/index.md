@@ -29,11 +29,11 @@ You can [read more about Letters Testamentary and Letters of Administration](htt
 
 There are 2 ways to do this. You can:
 
-1. Tell the Post Office online
+1. #### Tell the Post Office online
 
    <a data-start-link href="/travel-id-citizenship/post-office-redirection-deceased/start">Complete the online form</a>
 
-2. Complete a paper form and return it to any Post Office
+2. #### Complete a paper form and return it to any Post Office
 
    You can either:
    
