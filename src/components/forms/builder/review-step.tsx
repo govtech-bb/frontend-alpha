@@ -156,7 +156,12 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
   return (
     <div className="space-y-6 lg:w-2/3 lg:space-y-8">
       <div>
-        <Heading className="mb-4 focus:outline-none" size="h1">
+        <Heading
+          className="mb-4 focus:outline-none"
+          id="step-heading"
+          size="h1"
+          tabIndex={-1}
+        >
           Check your answers
         </Heading>
         <Text as="p">Review the answers you&apos;ve given carefully.</Text>

@@ -115,7 +115,12 @@ export function DeclarationStep({ step, serviceTitle }: DeclarationStepProps) {
             {serviceTitle}
           </Text>
         </div>
-        <Heading as="h1" className="focus:outline-none">
+        <Heading
+          as="h1"
+          className="focus:outline-none"
+          id="step-heading"
+          tabIndex={-1}
+        >
           {step.title}
         </Heading>
       </div>

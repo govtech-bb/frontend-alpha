@@ -842,6 +842,19 @@ export default function DynamicMultiStepForm({
     return 0;
   };
 
+  const scrollToStepHeading = () => {
+    // Scroll to top instantly to avoid fighting with React re-renders (form steps are dynamic)
+    window.scrollTo({ top: 0, behavior: "instant" });
+
+    // Focus the heading after form steps are rendered
+    setTimeout(() => {
+      const heading = document.getElementById("step-heading");
+      if (heading) {
+        heading.focus({ preventScroll: true });
+      }
+    }, 100);
+  };
+
   const nextStep = async () => {
     // Check if current step is the review step (has no fields)
     const currentStepData = expandedFormSteps[currentStep];
@@ -1014,6 +1027,7 @@ export default function DynamicMultiStepForm({
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
       setCurrentStep(nextVisibleStep);
+      scrollToStepHeading();
     } else {
       // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
       const errorSummary = document.querySelector("#error-summary");
@@ -1041,12 +1055,14 @@ export default function DynamicMultiStepForm({
   const handleEditFromReview = (stepIndex: number) => {
     isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
+    scrollToStepHeading();
   };
 
   const prevStep = () => {
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);
     setCurrentStep(prevVisibleStep);
+    scrollToStepHeading();
   };
 
   const handleReset = () => {
