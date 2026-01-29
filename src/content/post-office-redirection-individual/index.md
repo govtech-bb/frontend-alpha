@@ -8,7 +8,8 @@ section: "Travel, ID and citizenship"
 
 You should use this service to tell the Post Office that you would like to change the address that your mail gets delivered to. You must complete one redirection notice per household.
 
-Who can use this service?
+## Who can use this service
+
 If you are an adult (18 years old or over), you can complete a redirection form to redirect mail addressed to you. You should also use this service to redirect the post of your dependants.
 
 Dependants are:
@@ -44,29 +45,28 @@ There are 2 ways to redirect your personal mail. You can:
 
    You must complete the paper form by hand and return it to any Post Office. 
 
-
-## What you will need to share
+### What you will need to share
 
 Along with your personal details, the redirection form asks you to share:
 
-* the name and National Identification number of every person who wants to redirect their mail  
-* the old address  
-* the new address  
-* start date of redirection   
-* end date of the redirection 
+* the name and National Identification number of every person who wants to redirect their mail
+* the old address
+* the new address
+* start date of redirection
+* end date of the redirection
 
-## After you have submitted the form
+### After you have submitted the form
 
 Everyone who is 18 years old and over who wants to redirect their personal mail must visit any Post Office, in person, to:
 
-1. Sign the form.  
+1. Sign the form.
 2. Verify their identity with their National ID card.
 
 For households who complete the online redirection form, the Post Office cashier will ask for the reference number on the confirmation email.
 
-## After the Post Office has processed your request  
-The Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form. 
+## After the Post Office has processed your request
+The Barbados Postal Service will begin to deliver your mail to your new address from the start date you gave on the form.
 
-Your redirection notice will last for a maximum of 6 months. After the notice has expired, all mail will be delivered to the address it has on it. Therefore, you should update the relevant people and businesses on your new address. 
+Your redirection notice will last for a maximum of 6 months. After the notice has expired, all mail will be delivered to the address it has on it. Therefore, you should update the relevant people and businesses on your new address.
 
-The Post Office is responsible for this service. 
+The Post Office is responsible for this service.

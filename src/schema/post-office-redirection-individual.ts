@@ -40,6 +40,25 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "applicant.middleName",
+        label: "Middle name(s)",
+        type: "text",
+        hint: "Enter all middle names in order",
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
         name: "applicant.lastName",
         label: "Last name",
         type: "text",
@@ -238,40 +257,20 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "newAddress.isMovingPermanent",
-        label: "Are you moving permanently?",
-        type: "radio",
-        validation: {
-          required: "Select an option",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-      {
         name: "newAddress.redirectionStartDate",
-        label: "Redirection start date",
+        label: "When do you want the redirection to start?",
         type: "date",
         validation: {
           required: "Start date is required",
         },
-        conditionalOn: {
-          field: "newAddress.isMovingPermanent",
-          value: "no",
-        },
       },
       {
         name: "newAddress.redirectionEndDate",
-        label: "Redirection end date",
-        hint: "A redirection notice lasts a maximum of six months",
+        label: "When do you want the redirection to end?",
+        hint: "A redirection notice lasts for a maximum of 6 months.",
         type: "date",
         validation: {
           required: "End date is required",
-        },
-        conditionalOn: {
-          field: "newAddress.isMovingPermanent",
-          value: "no",
         },
       },
     ],
@@ -281,7 +280,7 @@ export const formSteps: FormStep[] = [
     title:
       "Are there any minor dependents who also need their mail to be redirected to the new address?",
     description:
-      "Minor dependents are persons in your care under the age of 16",
+      "Dependants are children under 18 or vulnerable relatives (those with physical or mental infirmity or care needs)",
     fields: [
       {
         name: "dependents.anyMinorDependents",
@@ -297,24 +296,11 @@ export const formSteps: FormStep[] = [
           { label: "No", value: "no" },
         ],
       },
-      {
-        name: "dependents.numberOfMinors",
-        label:
-          "How many minor dependents need their mail sent to the new address?",
-        type: "number",
-        validation: {
-          required: "Number of minors is required",
-        },
-        conditionalOn: {
-          field: "dependents.anyMinorDependents",
-          value: "yes",
-        },
-      },
     ],
   },
   {
     id: "minor-details",
-    title: "Tell us about the minor dependent",
+    title: "Tell us about your dependent(s)",
     conditionalOn: {
       field: "dependents.anyMinorDependents",
       value: "yes",
@@ -338,6 +324,25 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "middleName",
+        label: "Middle name(s)",
+        type: "text",
+        hint: "Enter all middle names in order",
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
         name: "lastName",
         label: "Last name",
         type: "text",
@@ -346,6 +351,114 @@ export const formSteps: FormStep[] = [
           minLength: {
             value: 2,
             message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (for example, 850101-0001)",
+          },
+        },
+      },
+    ],
+  },
+
+  {
+    id: "adult-dependents",
+    title:
+      "Are there any adults who also need their mail to be redirected to the new address?",
+    description:
+      "Adults are members of the household who are 18 years old and over",
+    fields: [
+      {
+        name: "adult.anyAdults",
+        label:
+          "Are there any adults who also need their mail to be redirected to the new address?",
+        hidden: true,
+        type: "radio",
+        validation: {
+          required: "Select an option",
+        },
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "adult-details",
+    title: "Tell us about the adult(s)",
+    conditionalOn: {
+      field: "adult.anyAdults",
+      value: "yes",
+    },
+    repeatable: {
+      arrayFieldName: "adultDetails",
+      maxItems: 10,
+      addAnotherLabel: "Do you need to add another adult?",
+    },
+    fields: [
+      {
+        name: "firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "middleName",
+        label: "Middle name(s)",
+        type: "text",
+        hint: "Enter all middle names in order",
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
       },
