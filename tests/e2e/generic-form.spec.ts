@@ -61,7 +61,7 @@ function generateFieldData(field: FormField): TestDataValue {
           return faker.location.secondaryAddress();
         }
       }
-      if (field.name.includes("postalCode") || field.name.includes("postal")) {
+      if (field.name.includes("postcode") || field.name.includes("postal")) {
         return `BB${faker.string.numeric(5)}`;
       }
       if (field.name.includes("idNumber") || field.name.includes("idNo")) {

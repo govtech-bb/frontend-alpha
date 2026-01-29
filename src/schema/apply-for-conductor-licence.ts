@@ -123,7 +123,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "contactDetails.postalCode",
+        name: "contactDetails.postcode",
         label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
