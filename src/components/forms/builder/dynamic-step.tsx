@@ -3,7 +3,11 @@ import { type FieldError, useFormContext } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import { markdownComponents } from "@/components/markdown-content";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import {
+  checkConditionalRule,
+  conditionalReferencesField,
+  getNestedValue,
+} from "@/lib/utils";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
@@ -30,13 +34,19 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
 
       // Skip errors for fields that are conditionally hidden
       if (field?.conditionalOn) {
-        const watchedValue = watch(field.conditionalOn.field as keyof FormData);
-        if (watchedValue !== field.conditionalOn.value) {
+        const formValues = watch();
+        if (
+          !checkConditionalRule(
+            field.conditionalOn,
+            formValues as Record<string, unknown>
+          )
+        ) {
           return null; // Don't show error if field is hidden
         }
       }
 
-      if (field) {
+      // Skip heading fields - they don't have validation
+      if (field && field.type !== "heading") {
         const escapedSelector = `#${CSS.escape(fieldName)}`;
 
         // If it's a field error with a direct message
@@ -101,7 +111,9 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
           .map((field) => {
             // Find conditional fields that depend on this field
             const conditionalFields = step.fields.filter(
-              (f) => f.conditionalOn?.field === field.name
+              (f) =>
+                f.conditionalOn &&
+                conditionalReferencesField(f.conditionalOn, field.name)
             );
             return (
               <DynamicField

@@ -4,7 +4,7 @@ import { Button, Heading, Text } from "@govtech-bb/react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { checkConditionalRule, getNestedValue } from "@/lib/utils";
 import type { DateObject, FormStep } from "@/types";
 
 type ReviewStepProps = {
@@ -35,14 +35,14 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
       }
 
       // Exclude conditional steps that don't meet their conditions
-      if (step.conditionalOn) {
-        const watchedValue = getNestedValue<unknown>(
-          formValues as Record<string, unknown>,
-          step.conditionalOn.field
-        );
-        if (watchedValue !== step.conditionalOn.value) {
-          return null;
-        }
+      if (
+        step.conditionalOn &&
+        !checkConditionalRule(
+          step.conditionalOn,
+          formValues as Record<string, unknown>
+        )
+      ) {
+        return null;
       }
 
       // Create section data with original step index
@@ -55,14 +55,14 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           );
 
           // Skip conditional fields that shouldn't be shown
-          if (field.conditionalOn) {
-            const watchedValue = getNestedValue<unknown>(
-              formValues as Record<string, unknown>,
-              field.conditionalOn.field
-            );
-            if (watchedValue !== field.conditionalOn.value) {
-              return null; // Don't show if condition not met
-            }
+          if (
+            field.conditionalOn &&
+            !checkConditionalRule(
+              field.conditionalOn,
+              formValues as Record<string, unknown>
+            )
+          ) {
+            return null; // Don't show if condition not met
           }
 
           // Skip empty optional fields (but allow 0 for number fields)
