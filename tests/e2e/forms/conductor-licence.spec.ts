@@ -27,7 +27,7 @@ const generateApplicantData = () => ({
     "st-philip",
     "st-thomas",
   ]),
-  postalCode: `BB${faker.string.numeric(5)}`,
+  postcode: `BB${faker.string.numeric(5)}`,
   email: "testing@govtech.bb",
   telephoneNumber: `1246${faker.string.numeric(7)}`,
   addressLine1: faker.location.streetAddress(),
