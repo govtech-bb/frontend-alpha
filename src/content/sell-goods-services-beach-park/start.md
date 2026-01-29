@@ -8,13 +8,19 @@ You should complete your application in one go. At the moment, it is not possibl
 
 ## How long does it take?
 
-It shouldn’t take longer than 10 minutes.
+It should not take more than 10 minutes.
 
-### What you will need
+## What you will need
 
-As well as your contact details, the application form asks you:
+As well as your contact details, the application form asks you to give:
 
-- the names of 2 trustworthy and respected referees who can later provide references
-- where your goods are made
+1. The name and contact details of 2 referees (one professional and one you know in a personal capacity). They will be asked to provide references if your application is successful.
+
+2. 2 testimonials from people who can vouch for you. They must not be from the same 2 people you have named as referees.
+
+You will also be asked to upload:
+
+- a [Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
+- 2 passport-sized photos of yourself
 
 <a data-start-link href="/business-trade/sell-goods-services-beach-park/form">Start now</a>
