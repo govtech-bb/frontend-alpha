@@ -49,6 +49,7 @@ export type SelectOption = {
 export type ConditionalRule = {
   field: string; // The field name to watch
   value: string; // The value that triggers this field to show
+  operator?: "equals" | "notEquals"; // Comparison operator (defaults to "equals")
 };
 
 export type NestedFormField = {

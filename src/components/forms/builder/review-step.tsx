@@ -40,7 +40,12 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           formValues as Record<string, unknown>,
           step.conditionalOn.field
         );
-        if (watchedValue !== step.conditionalOn.value) {
+        const operator = step.conditionalOn.operator ?? "equals";
+        const conditionMet =
+          operator === "notEquals"
+            ? watchedValue !== step.conditionalOn.value
+            : watchedValue === step.conditionalOn.value;
+        if (!conditionMet) {
           return null;
         }
       }
@@ -60,7 +65,12 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
               formValues as Record<string, unknown>,
               field.conditionalOn.field
             );
-            if (watchedValue !== field.conditionalOn.value) {
+            const operator = field.conditionalOn.operator ?? "equals";
+            const conditionMet =
+              operator === "notEquals"
+                ? watchedValue !== field.conditionalOn.value
+                : watchedValue === field.conditionalOn.value;
+            if (!conditionMet) {
               return null; // Don't show if condition not met
             }
           }

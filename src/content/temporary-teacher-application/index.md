@@ -2,7 +2,6 @@
 title: "Apply for a position as a temporary teacher"
 featured: false
 stage: "alpha"
-publish_date: 2026-01-15
 ---
 
 If you want to be a temporary teacher in a government-funded primary school in Barbados, you must apply. If your application meets the requirements and a suitable position becomes available, you may be contacted for an interview.
@@ -39,7 +38,7 @@ You can upload these and submit them with your online application.
 
 If you meet the qualification requirements and a suitable position becomes available, you will be invited for an interview. At this point you will need to share:
 
-1. Certified copies of your academic and teaching qualifications. You can get them certified by a Justice of the peace.
+1. Certified copies of your academic and teaching qualifications. You can get them certified by a Justice of the pace.
 
 2. Proof of citizenship, for example, your passport or ID card. Or, proof of your immigration status and your work permit.
 
@@ -48,3 +47,5 @@ If you meet the qualification requirements and a suitable position becomes avail
 ## Successful applicants
 
 If you are successful, you will receive a letter of appointment.
+
+<a data-start-link href="/education-youth-learning/temporary-teacher-application/start">Complete the online form</a>
