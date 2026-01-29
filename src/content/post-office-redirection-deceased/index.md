@@ -52,12 +52,19 @@ Along with your contact details, the redirection form asks you to share:
 * start date of redirection
 * end date of the redirection (a redirection notice lasts a maximum of 6 months)
 
-### After you have submitted the form
+## After you have submitted the form
 
 You must visit any Post Office, in person, to:
 
-1. Sign the form.  
-2. Verify your identity with your National ID card.  
+1. Sign the form.
+2. Verify your identity with your National ID card.
 3. Present proof you have authority to act on behalf of the deceased person. This could be the Letters Testamentary or the Letters of Administration.
 
 If you complete the online redirection form, the Post Office cashier will ask for the reference number on the confirmation email.
+
+## After the Post Office has processed your request
+
+The Barbados Postal Service will begin to deliver the mail to the new address from the start date you gave on the form. The redirection notice will last for 6 months.
+
+
+The Post Office is responsible for this service.
