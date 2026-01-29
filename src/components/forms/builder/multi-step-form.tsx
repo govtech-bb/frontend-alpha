@@ -783,7 +783,9 @@ export default function DynamicMultiStepForm({
 
         // Mark as submitted in store with customer name and payment data
         markAsSubmitted(
-          result.data?.submissionId || "N/A",
+          result.data?.integrations?.opencrvs?.trackingId ||
+            result.data?.submissionId ||
+            "N/A",
           customerName,
           apiPaymentData
         );
