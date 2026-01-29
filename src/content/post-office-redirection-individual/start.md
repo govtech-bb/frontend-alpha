@@ -13,12 +13,10 @@ It shouldn’t take longer than 10 minutes.
 
 ## What you will need
 
-Along with your personal details, the redirection form asks you to share:
-
-* the name and National Identification number of every person who wants to redirect their mail  
-* the old address  
-* the new address  
-* start date of redirection   
-* end date of the redirection 
+* the name and National Identification number of every person who wants to redirect their mail
+* the old address
+* the new address
+* start date of redirection
+* end date of the redirection
 
 <a data-start-link href="/travel-id-citizenship/post-office-redirection-individual/form">Start now</a>
