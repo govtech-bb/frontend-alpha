@@ -448,13 +448,9 @@ export const formSteps: FormStep[] = [
         width: "short",
         validation: {
           required: "Start year is required",
-          minLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Start year must be a valid year",
           },
         },
       },
@@ -465,13 +461,9 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "End year is required",
-          minLength: {
-            value: 4,
-            message: "End year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "End year must be a valid year",
           },
         },
       },
@@ -487,7 +479,7 @@ export const formSteps: FormStep[] = [
         width: "medium",
         type: "text",
         validation: {
-          required: "Field is required",
+          required: "Name of secondary school is required",
           minLength: {
             value: 5,
             message: "Name must be at least 5 characters",
@@ -500,14 +492,10 @@ export const formSteps: FormStep[] = [
         width: "short",
         type: "text",
         validation: {
-          required: "Field is required",
-          minLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
+          required: "Start year is required",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Start year must be a valid year",
           },
         },
       },
@@ -517,14 +505,10 @@ export const formSteps: FormStep[] = [
         width: "short",
         type: "text",
         validation: {
-          required: "Field is required",
-          minLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End year must be 4 characters",
+          required: "End year is required",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "End year must be a valid year",
           },
         },
       },
@@ -580,13 +564,9 @@ export const formSteps: FormStep[] = [
         placeholder: "",
         validation: {
           required: false,
-          minLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Start year must be a valid year",
           },
         },
       },
@@ -598,13 +578,9 @@ export const formSteps: FormStep[] = [
         placeholder: "",
         validation: {
           required: false,
-          minLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "End year must be a valid year",
           },
         },
       },
@@ -720,7 +696,7 @@ export const formSteps: FormStep[] = [
         type: "textarea",
         rows: 5,
         validation: {
-          required: "Field is required",
+          required: "Main tasks is required",
           minLength: {
             value: 5,
             message: "Main tasks must be at least 5 characters",
@@ -739,7 +715,7 @@ export const formSteps: FormStep[] = [
         width: "medium",
         type: "textarea",
         validation: {
-          required: "Field is required",
+          required: "Interests is required",
           minLength: {
             value: 5,
             message: "This must be at least 5 characters",
@@ -771,7 +747,7 @@ export const formSteps: FormStep[] = [
         type: "radio",
         rows: 5,
         validation: {
-          required: "Field is required",
+          required: "This field is required",
         },
         options: [
           { label: "Yes", value: "yes" },
@@ -797,7 +773,7 @@ export const formSteps: FormStep[] = [
         type: "textarea",
         rows: 5,
         validation: {
-          required: "Field is required",
+          required: "Short Term Goals is required",
           minLength: {
             value: 5,
             message: "This must be at least 5 characters",
