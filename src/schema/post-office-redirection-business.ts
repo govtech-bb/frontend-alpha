@@ -77,6 +77,48 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "applicant.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (for example, 850101-0001)",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+      {
+        name: "applicant.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
         name: "applicant.email",
         label: "Email address",
         type: "email",
@@ -114,6 +156,19 @@ export const formSteps: FormStep[] = [
           minLength: {
             value: 5,
             message: "Business name must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "registrationNumber",
+        label: "Registration number",
+        type: "text",
+        placeholder: "",
+        validation: {
+          required: "Registration number is required",
+          minLength: {
+            value: 5,
+            message: "Registration number must be at least 5 characters",
           },
         },
       },
@@ -171,20 +226,21 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "permission-details",
-    title: "Tell us what permission you have to act for this business",
+    id: "position-details",
+    title: "Tell us what position you hold in the business",
     fields: [
       {
-        name: "permissionDetails",
-        label: "Permission details",
-        hint: "For example, director, manager, authorised employee, or appointed agent",
+        name: "positionDetails",
+        label: "Position",
+        hidden: true,
+        hint: "For example, are you a director, manager, or an appointed agent?",
         type: "text",
         placeholder: "",
         validation: {
-          required: "Permission details is required",
+          required: "Position is required",
           minLength: {
             value: 5,
-            message: "Permission details must be at least 5 characters",
+            message: "Position must be at least 5 characters",
           },
         },
       },
@@ -240,60 +296,41 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "newAddress.isMovingPermanent",
-        label: "Are you moving permanently?",
-        type: "radio",
-        validation: {
-          required: "Select an option",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-      {
         name: "newAddress.redirectionStartDate",
-        label: "Redirection start date",
+        label: "When do you want the redirection to start?",
         type: "date",
         validation: {
           required: "Start date is required",
         },
-        conditionalOn: {
-          field: "newAddress.isMovingPermanent",
-          value: "no",
-        },
       },
       {
         name: "newAddress.redirectionEndDate",
-        label: "Redirection end date",
+        label: "When do you want the redirection to end?",
+        hint: "A redirection notice lasts for a maximum of 6 months.",
         type: "date",
         validation: {
           required: "End date is required",
         },
-        conditionalOn: {
-          field: "newAddress.isMovingPermanent",
-          value: "no",
-        },
       },
     ],
   },
-  {
-    id: "upload-document",
-    title: "Upload supporting documents",
-    description:
-      "For example, a letter of authorisation, company resolution, or official company stamp. ",
-    fields: [
-      {
-        type: "file",
-        name: "uploadDocument",
-        label: "Upload a file",
-        hint: "Attach a .pdf, .docx or .png file",
-        validation: {
-          required: "Please upload a document",
-        },
-      },
-    ],
-  },
+  // {
+  //   id: "upload-document",
+  //   title: "Upload supporting documents",
+  //   description:
+  //     "For example, a letter of authorisation, company resolution, or official company stamp. ",
+  //   fields: [
+  //     {
+  //       type: "file",
+  //       name: "uploadDocument",
+  //       label: "Upload a file",
+  //       hint: "Attach a .pdf, .docx or .png file",
+  //       validation: {
+  //         required: "Please upload a document",
+  //       },
+  //     },
+  //   ],
+  // },
   {
     id: "check-your-answers",
     title: "Check your answers",
