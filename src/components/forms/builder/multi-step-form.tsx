@@ -984,6 +984,65 @@ export default function DynamicMultiStepForm({
           }
         }
       }
+
+      // Manually validate showHide child fields when showHide is open
+      if (field.type === "showHide" && field.showHide) {
+        const showHideState = methods.getValues(
+          field.showHide.stateFieldName as keyof FormData
+        );
+
+        if (showHideState === "open") {
+          for (const childField of field.showHide.fields) {
+            const childValue = methods.getValues(
+              childField.name as keyof FormData
+            );
+            const stringValue =
+              typeof childValue === "string" ? childValue : "";
+
+            // Check required validation
+            const isEmpty =
+              childValue === undefined ||
+              childValue === null ||
+              childValue === "" ||
+              (typeof childValue === "string" && childValue.trim() === "") ||
+              (typeof childValue === "number" && Number.isNaN(childValue));
+
+            if (childField.validation.required && isEmpty) {
+              methods.setError(childField.name as keyof FormData, {
+                type: "required",
+                message: childField.validation.required,
+              });
+              isValid = false;
+              continue;
+            }
+
+            // Check minLength validation
+            if (
+              childField.validation.minLength &&
+              stringValue &&
+              stringValue.length < childField.validation.minLength.value
+            ) {
+              methods.setError(childField.name as keyof FormData, {
+                type: "minLength",
+                message: childField.validation.minLength.message,
+              });
+              isValid = false;
+            }
+
+            // Check pattern validation
+            if (childField.validation.pattern && stringValue) {
+              const regex = new RegExp(childField.validation.pattern.value);
+              if (!regex.test(stringValue)) {
+                methods.setError(childField.name as keyof FormData, {
+                  type: "pattern",
+                  message: childField.validation.pattern.message,
+                });
+                isValid = false;
+              }
+            }
+          }
+        }
+      }
     }
 
     if (isValid) {
