@@ -518,7 +518,7 @@ export const formSteps: FormStep[] = [
     id: "post-secondary-tertiary-training",
     title: "Post-secondary and tertiary training",
     description:
-      "Add information about college, university and training courses you have completed",
+      "Add information about college, university and training courses you have completed.",
     repeatable: {
       arrayFieldName: "postSecondaryEducation",
       maxItems: 10,
@@ -527,7 +527,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "institutionName",
-        label: "Name of Institution",
+        label: "Name of institution",
         width: "medium",
         type: "text",
         placeholder: "",
@@ -535,7 +535,7 @@ export const formSteps: FormStep[] = [
           required: false,
           minLength: {
             value: 5,
-            message: "Name of Institution must be at least 5 characters",
+            message: "Name of institution must be at least 5 characters",
           },
         },
       },
@@ -558,7 +558,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "startYear",
-        label: "Start Year",
+        label: "Start year",
         width: "short",
         type: "text",
         placeholder: "",
@@ -572,7 +572,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "endYear",
-        label: "End Year",
+        label: "End year",
         width: "short",
         type: "text",
         placeholder: "",
@@ -653,9 +653,9 @@ export const formSteps: FormStep[] = [
       {
         name: "startDate",
         label: "When did you start this job?",
-        hint: "Provide the month and year (eg 12, 2023)",
+        hint: "Provide the month and year (for example, December 2023)",
         type: "text",
-        width: "short",
+        width: "medium",
         placeholder: "",
         validation: {
           required: "Start date is required",
@@ -668,9 +668,9 @@ export const formSteps: FormStep[] = [
       {
         name: "endDate",
         label: "When did you end this job?",
-        hint: "Provide the month and year (eg 12, 2023)",
+        hint: "Provide the month and year (for example, December 2023)",
         type: "text",
-        width: "short",
+        width: "medium",
         placeholder: "",
         validation: {
           required: false,
@@ -691,7 +691,7 @@ export const formSteps: FormStep[] = [
       {
         name: "mainTasks",
         label: "Your main tasks",
-        hint: "Provide a brief description of what you did in your role",
+        hint: "Provide a brief description of what you did in your role.",
         width: "medium",
         type: "textarea",
         rows: 5,
@@ -707,11 +707,12 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "eligibility-interests",
-    title: "Tell us about your areas of interests",
+    title: "Tell us about your areas of interest",
     fields: [
       {
         name: "eligibility.interests",
         label: "What type of jobs or trades are you interested in?",
+        hint: "For example, chef or carpentry",
         width: "medium",
         type: "textarea",
         validation: {
@@ -726,11 +727,11 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "eligibility-age",
-    title: "Are you 18 and over?",
+    title: "Are you 18 or over?",
     fields: [
       {
         name: "eligibility.areYouOver18",
-        label: "Are you 18 and over?",
+        label: "Are you 18 or over?",
         hidden: true,
         type: "radio",
         validation: {
@@ -743,7 +744,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "eligibility.willingToWorkAtNight",
-        label: "Are you willing to work at night?",
+        label: "Are you willing to work some night shifts?",
         type: "radio",
         rows: 5,
         validation: {
@@ -817,8 +818,9 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Thank you for your application",
-    description: "",
+    title: "Thank you for registering",
+    description:
+      "Your information has been sent to the Ministry of Labour, Social Security and Third Sector.",
     fields: [],
     bodyContent: `## What happens next
 
@@ -826,10 +828,6 @@ export const formSteps: FormStep[] = [
 - If we need more details, we will contact you using the information you have provided.
 - If eligible, you will be added to our programme database.
 - You will be contacted about upcoming placements, interviews, or orientation sessions.
-
-If you have questions, please contact the Job Start Plus team, email: 
-jobstartplus@labour.gov.bb, or call the Ministry of Labour at (246) 535-1400 
-between the hours of 8:30 up 4:30 Monday to Friday.
 
 Thank you for your interest in the Job Start Plus Programme.
 `,
