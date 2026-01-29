@@ -75,7 +75,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.dateOfBirth",
         label: "Date of birth",
-        placeholder: "For example, 12 30 1986",
+        placeholder: "For example, 30 12 1986",
         type: "date",
         validation: {
           required: "Date of birth is required",
@@ -119,9 +119,9 @@ export const formSteps: FormStep[] = [
         placeholder: "",
         validation: {
           required: "ID Number is required",
-          minLength: {
-            value: 2,
-            message: "ID Number must be at least 2 characters",
+          pattern: {
+            value: "^\\d{6}-\\d{4}$",
+            message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
         // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
@@ -448,13 +448,9 @@ export const formSteps: FormStep[] = [
         width: "short",
         validation: {
           required: "Start year is required",
-          minLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Start year must be a valid year",
           },
         },
       },
@@ -465,13 +461,9 @@ export const formSteps: FormStep[] = [
         type: "text",
         validation: {
           required: "End year is required",
-          minLength: {
-            value: 4,
-            message: "End year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "End year must be a valid year",
           },
         },
       },
@@ -487,7 +479,7 @@ export const formSteps: FormStep[] = [
         width: "medium",
         type: "text",
         validation: {
-          required: "Field is required",
+          required: "Name of secondary school is required",
           minLength: {
             value: 5,
             message: "Name must be at least 5 characters",
@@ -500,14 +492,10 @@ export const formSteps: FormStep[] = [
         width: "short",
         type: "text",
         validation: {
-          required: "Field is required",
-          minLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start year must be 4 characters",
+          required: "Start year is required",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Start year must be a valid year",
           },
         },
       },
@@ -517,14 +505,10 @@ export const formSteps: FormStep[] = [
         width: "short",
         type: "text",
         validation: {
-          required: "Field is required",
-          minLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End year must be 4 characters",
+          required: "End year is required",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "End year must be a valid year",
           },
         },
       },
@@ -534,7 +518,7 @@ export const formSteps: FormStep[] = [
     id: "post-secondary-tertiary-training",
     title: "Post-secondary and tertiary training",
     description:
-      "Add information about college, university and training courses you have completed",
+      "Add information about college, university and training courses you have completed.",
     repeatable: {
       arrayFieldName: "postSecondaryEducation",
       maxItems: 10,
@@ -543,7 +527,7 @@ export const formSteps: FormStep[] = [
     fields: [
       {
         name: "institutionName",
-        label: "Name of Institution",
+        label: "Name of institution",
         width: "medium",
         type: "text",
         placeholder: "",
@@ -551,7 +535,7 @@ export const formSteps: FormStep[] = [
           required: false,
           minLength: {
             value: 5,
-            message: "Name of Institution must be at least 5 characters",
+            message: "Name of institution must be at least 5 characters",
           },
         },
       },
@@ -574,37 +558,29 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "startYear",
-        label: "Start Year",
+        label: "Start year",
         width: "short",
         type: "text",
         placeholder: "",
         validation: {
           required: false,
-          minLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "Start Year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "Start year must be a valid year",
           },
         },
       },
       {
         name: "endYear",
-        label: "End Year",
+        label: "End year",
         width: "short",
         type: "text",
         placeholder: "",
         validation: {
           required: false,
-          minLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
-          },
-          maxLength: {
-            value: 4,
-            message: "End Year must be 4 characters",
+          pattern: {
+            value: "^[0-9]{4}$",
+            message: "End year must be a valid year",
           },
         },
       },
@@ -677,9 +653,9 @@ export const formSteps: FormStep[] = [
       {
         name: "startDate",
         label: "When did you start this job?",
-        hint: "Provide the month and year (eg 12, 2023)",
+        hint: "Provide the month and year (for example, December 2023)",
         type: "text",
-        width: "short",
+        width: "medium",
         placeholder: "",
         validation: {
           required: "Start date is required",
@@ -692,9 +668,9 @@ export const formSteps: FormStep[] = [
       {
         name: "endDate",
         label: "When did you end this job?",
-        hint: "Provide the month and year (eg 12, 2023)",
+        hint: "Provide the month and year (for example, December 2023)",
         type: "text",
-        width: "short",
+        width: "medium",
         placeholder: "",
         validation: {
           required: false,
@@ -715,12 +691,12 @@ export const formSteps: FormStep[] = [
       {
         name: "mainTasks",
         label: "Your main tasks",
-        hint: "Provide a brief description of what you did in your role",
+        hint: "Provide a brief description of what you did in your role.",
         width: "medium",
         type: "textarea",
         rows: 5,
         validation: {
-          required: "Field is required",
+          required: "Main tasks is required",
           minLength: {
             value: 5,
             message: "Main tasks must be at least 5 characters",
@@ -731,15 +707,16 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "eligibility-interests",
-    title: "Tell us about your areas of interests",
+    title: "Tell us about your areas of interest",
     fields: [
       {
         name: "eligibility.interests",
         label: "What type of jobs or trades are you interested in?",
+        hint: "For example, chef or carpentry",
         width: "medium",
         type: "textarea",
         validation: {
-          required: "Field is required",
+          required: "Interests is required",
           minLength: {
             value: 5,
             message: "This must be at least 5 characters",
@@ -750,11 +727,11 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "eligibility-age",
-    title: "Are you 18 and over?",
+    title: "Are you 18 or over?",
     fields: [
       {
         name: "eligibility.areYouOver18",
-        label: "Are you 18 and over?",
+        label: "Are you 18 or over?",
         hidden: true,
         type: "radio",
         validation: {
@@ -767,11 +744,11 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "eligibility.willingToWorkAtNight",
-        label: "Are you willing to work at night?",
+        label: "Are you willing to work some night shifts?",
         type: "radio",
         rows: 5,
         validation: {
-          required: "Field is required",
+          required: "This field is required",
         },
         options: [
           { label: "Yes", value: "yes" },
@@ -797,7 +774,7 @@ export const formSteps: FormStep[] = [
         type: "textarea",
         rows: 5,
         validation: {
-          required: "Field is required",
+          required: "Short Term Goals is required",
           minLength: {
             value: 5,
             message: "This must be at least 5 characters",
@@ -841,8 +818,9 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Thank you for your application",
-    description: "",
+    title: "Thank you for registering",
+    description:
+      "Your information has been sent to the Ministry of Labour, Social Security and Third Sector.",
     fields: [],
     bodyContent: `## What happens next
 
@@ -850,10 +828,6 @@ export const formSteps: FormStep[] = [
 - If we need more details, we will contact you using the information you have provided.
 - If eligible, you will be added to our programme database.
 - You will be contacted about upcoming placements, interviews, or orientation sessions.
-
-If you have questions, please contact the Job Start Plus team, email: 
-jobstartplus@labour.gov.bb, or call the Ministry of Labour at (246) 535-1400 
-between the hours of 8:30 up 4:30 Monday to Friday.
 
 Thank you for your interest in the Job Start Plus Programme.
 `,
