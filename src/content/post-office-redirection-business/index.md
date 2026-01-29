@@ -27,11 +27,11 @@ There are 2 ways to redirect your business mail. You can:
 
 1. #### Tell the Post Office online
 
-   You can complete the redirection form online. You must pay $30 BBD online as part of the process so you will need a credit or debit card, and you will need to have (or create) an EZPay+ account.
+   <!-- You can complete the redirection form online. You must pay $30 BBD online as part of the process so you will need a credit or debit card, and you will need to have (or create) an EZPay+ account. -->
 
-   <a data-start-link href="/travel-id-citizenship/post-office-redirection-business/start">Online redirection</a>
+   <a data-start-link href="/travel-id-citizenship/post-office-redirection-business/start">Complete online form</a>
 
-2. #### Get a paper redirection form
+2. #### Complete a paper redirection form
 
    You can either:
    1. [Download and print the form](https://www.gov.bb/media_files/PostOffice_RedirNotice.pdf) from the Barbados Postal Service website.
@@ -44,7 +44,6 @@ There are 2 ways to redirect your business mail. You can:
 The redirection form asks you to share:
 
 - the full name and National Identification number of the person applying on behalf of the business
-- the Certificate of Incorporation with the official stamp
 - the business registration number
 - the old address
 - the new address
@@ -56,8 +55,8 @@ The redirection form asks you to share:
 The person who is applying on behalf of the business must visit any Post Office, in person, to:
 
 1. Sign the form.
-2. Verify their identity with their National ID card.
-3. Show the Certificate of Incorporation.
+2. Verify your identity with your National ID card.
+3. Present the Certificate of Incorporation with the official stamp.
 
 If you complete the online redirection form, the Post Office cashier will ask for the reference number on the confirmation email.
 

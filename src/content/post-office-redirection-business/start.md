@@ -13,7 +13,7 @@ It shouldn’t take longer than 10 minutes.
 
 ## What you will need
 
-You will need a debit or credit card because you must pay $30 BBD online as part of the process. You will also need to have (or create) an EZPay+ account.
+<!-- You will need a debit or credit card because you must pay $30 BBD online as part of the process. You will also need to have (or create) an EZPay+ account. -->
 
 You will need to share:
 
