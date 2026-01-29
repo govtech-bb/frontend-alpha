@@ -362,22 +362,22 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
-  {
-    id: "upload-document",
-    title: "Upload supporting document",
-    description: "You must upload a Power of Attorney",
-    fields: [
-      {
-        type: "file",
-        name: "uploadDocument",
-        label: "Upload a file",
-        hint: "Attach a .pdf, .docx or .png file",
-        validation: {
-          required: "Please upload a document",
-        },
-      },
-    ],
-  },
+  // {
+  //   id: "upload-document",
+  //   title: "Upload supporting document",
+  //   description: "You must upload a Power of Attorney",
+  //   fields: [
+  //     {
+  //       type: "file",
+  //       name: "uploadDocument",
+  //       label: "Upload a file",
+  //       hint: "Attach a .pdf, .docx or .png file",
+  //       validation: {
+  //         required: "Please upload a document",
+  //       },
+  //     },
+  //   ],
+  // },
   {
     id: "check-your-answers",
     title: "Check your answers",
