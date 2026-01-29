@@ -191,7 +191,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "oldAddress.postalCode",
+        name: "oldAddress.postcode",
         label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
@@ -243,7 +243,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "newAddress.postalCode",
+        name: "newAddress.postcode",
         label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
