@@ -60,7 +60,7 @@ If the outcome is positive, you will be asked to visit the National Conservation
 1. A letter of authorisation.
 2. A licence book outlining the conditions of where and what you can sell.
 
-The NCC will let you know when your vendor identification is ready to collect. 
+The NCC will let you know when your vendor identification is ready to collect.
 
 ## Paying for your licence
 
