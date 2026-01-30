@@ -14,7 +14,7 @@ A common use case is if your business is moving offices.
 
 A redirection notice will last for 6 months.
 
-There are a separate forms if you would like to:
+There are separate forms if you would like to:
 
 - [redirect your personal mail](/travel-id-citizenship/post-office-redirection-individual/)
 - [tell the Post Office that someone has died](/travel-id-citizenship/post-office-redirection-deceased/)
