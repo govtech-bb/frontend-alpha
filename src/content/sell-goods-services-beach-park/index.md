@@ -53,13 +53,14 @@ You will also be asked to provide:
 
 ## After you apply
 
-The NCC sends a special projects manager to the general location where you would like to sell goods or services. They will assess how crowded with other vendors it is and determine if there is a specific area you could sell in.
+Representatives from the NCC will invite you to meet with them at the location where you would like to sell goods or services. They will assess suitability and determine if there is a specific area you could sell in.
 
 If the outcome is positive, you will be asked to visit the National Conservation Commission to collect:
 
 1. A letter of authorisation.
 2. A licence book outlining the conditions of where and what you can sell.
-3. Your vendor identification.
+
+The NCC will let you know when your vendor identification is ready to collect. 
 
 ## Paying for your licence
 
