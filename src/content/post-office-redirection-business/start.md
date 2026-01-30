@@ -17,9 +17,8 @@ It shouldn’t take longer than 10 minutes.
 
 You will need to share:
 
-- the full name and National Identification number of the person applying on behalf of the business
-- the Certificate of Incorporation with the official stamp
-- the business registration number
+- the name and National Identification number of the person applying
+- name(s) of every other person who also wants to redirect their mail
 - the old address
 - the new address
 - start date of redirection
