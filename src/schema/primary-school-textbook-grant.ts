@@ -1,4 +1,5 @@
 import { barbadosParishes } from "@/data/constants";
+import { primarySchools } from "@/data/schools";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -79,10 +80,43 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "sex",
+        label: "Sex",
+        type: "radio",
+        validation: {
+          required: "Please select the child's sex",
+        },
+        options: [
+          { label: "Male", value: "male" },
+          { label: "Female", value: "female" },
+        ],
+      },
+      {
+        name: "school",
+        label: "Name of institution",
+        type: "select",
+        validation: {
+          required: "Please select the child's school.",
+        },
+        options: primarySchools,
+      },
+      {
+        name: "principalName",
+        label: "Name of Principal",
+        type: "text",
+        validation: {
+          required: "Principal's name is required",
+          minLength: {
+            value: 2,
+            message: "Principal's name must be at least 2 characters",
+          },
+        },
+      },
+      {
         name: "classNumber",
         label: "Which class are they currently in?",
         hint: "If they are between school years, add the class they are going into",
-        type: "select" as const,
+        type: "select",
         validation: {
           required: "Class number is required",
         },
@@ -97,7 +131,7 @@ export const formSteps: FormStep[] = [
       {
         name: "isParentOrGuardian",
         label: "Are you the parent or guardian?",
-        type: "radio" as const,
+        type: "radio",
         validation: {
           required: "Relationship is required",
         },
@@ -109,7 +143,7 @@ export const formSteps: FormStep[] = [
       {
         name: "relationshipDescription",
         label: "What is your relationship with the child?",
-        type: "text" as const,
+        type: "text",
         validation: {
           required: "Please describe your relationship",
           minLength: {
@@ -142,7 +176,7 @@ export const formSteps: FormStep[] = [
       {
         name: "guardian.firstName",
         label: "First name",
-        type: "text" as const,
+        type: "text",
         validation: {
           required: "First name is required",
           minLength: {
@@ -160,7 +194,7 @@ export const formSteps: FormStep[] = [
       {
         name: "guardian.lastName",
         label: "Last name",
-        type: "text" as const,
+        type: "text",
         validation: {
           required: "Last name is required",
           minLength: {
@@ -178,7 +212,7 @@ export const formSteps: FormStep[] = [
       {
         name: "guardian.idNumber",
         label: "National Identification (ID) number",
-        type: "text" as const,
+        type: "text",
         width: "medium",
         validation: {
           required: "ID number is required",
@@ -192,7 +226,7 @@ export const formSteps: FormStep[] = [
       {
         name: "guardian.passportDetails",
         label: "",
-        type: "showHide" as const,
+        type: "showHide",
         validation: { required: false },
         showHide: {
           summary: "Use passport number instead",
@@ -219,7 +253,7 @@ export const formSteps: FormStep[] = [
       {
         name: "guardian.tamisNumber",
         label: "TAMIS number",
-        type: "number" as const,
+        type: "number",
         width: "medium",
         validation: {
           required: "TAMIS number is required",
