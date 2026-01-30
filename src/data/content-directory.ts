@@ -31,12 +31,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Get a Birth Certificate form",
             type: "component",
-            protected: true,
           },
         ],
       },
@@ -47,12 +46,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a copy of a death certificate in Barbados.",
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Get a Death Certificate form",
             type: "component",
-            protected: true,
           },
         ],
       },
@@ -63,12 +61,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a copy of a marriage certificate in Barbados.",
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Get a Marriage Certificate form",
             type: "component",
-            protected: true,
           },
         ],
       },
@@ -327,14 +324,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect my personal mail",
         slug: "post-office-redirection-individual",
         description: "Redirect my personal mail",
-        protected: true,
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Redirect my personal mail form",
             type: "component",
-            protected: true,
           },
         ],
       },
@@ -342,14 +337,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Tell the Post Office someone has died",
         slug: "post-office-redirection-deceased",
         description: "Tell the Post Office someone has died",
-        protected: true,
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Form to tell the Post Office someone has died",
             type: "component",
-            protected: true,
           },
         ],
       },
@@ -357,14 +350,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         title: "Redirect my business mail",
         slug: "post-office-redirection-business",
         description: "Redirect my business mail",
-        protected: true,
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Redirect my business mail form",
             type: "component",
-            protected: true,
           },
         ],
       },
