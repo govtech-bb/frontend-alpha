@@ -10,6 +10,8 @@ You should complete your application in one go. At the moment, it is not possibl
 
 You cannot use the online service if you would like the certificate to be sent overseas. Instead, contact the Registration Department.
 
+You cannot apply online for a certificate of cause of death. You must go to the Registration Department and fill out a paper form.
+
 ## How long does it take?
 
 It shouldn’t take longer than 20 minutes.
