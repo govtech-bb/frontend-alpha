@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { expect, test } from "@playwright/test";
+import { primarySchoolSlugs } from "@/data/primary-schools";
 import type { ApiResponse } from "@/types";
 
 const FORM_URL =
@@ -15,6 +16,7 @@ const generateChildData = () => ({
   lastName: faker.person.lastName(),
   idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
   classNumber: faker.helpers.arrayElement(["1", "2", "3", "4"]),
+  school: faker.helpers.arrayElement(primarySchoolSlugs),
 });
 
 const generateApplicantData = () => ({
@@ -129,6 +131,9 @@ test.describe("Primary School Textbook Grant Form", () => {
     await page
       .locator('select[name="beneficiaries.0.classNumber"]')
       .selectOption(child.classNumber);
+    await page
+      .locator('select[name="beneficiaries.0.school"]')
+      .selectOption(child.school);
     // Select Yes for "Are you the parent or guardian?"
     // Find the text "Yes" that follows the question text
     await page
@@ -265,6 +270,9 @@ test.describe("Primary School Textbook Grant Form", () => {
     await page
       .locator('select[name="beneficiaries.0.classNumber"]')
       .selectOption(child.classNumber);
+    await page
+      .locator('select[name="beneficiaries.0.school"]')
+      .selectOption(child.school);
     // Select No for "Are you the parent or guardian?"
     await page
       .locator("text=Are you the parent or guardian?")
@@ -411,6 +419,9 @@ test.describe("Primary School Textbook Grant Form", () => {
     await expect(
       page.getByText(/id number is required/i).first()
     ).toBeVisible();
+    await expect(
+      page.getByText(/please select the child's school/i).first()
+    ).toBeVisible();
   });
 
   test("validates ID number format", async ({ page }) => {
@@ -426,6 +437,9 @@ test.describe("Primary School Textbook Grant Form", () => {
     await page
       .locator('select[name="beneficiaries.0.classNumber"]')
       .selectOption("1");
+    await page
+      .locator('select[name="beneficiaries.0.school"]')
+      .selectOption(primarySchoolSlugs[0]);
     // Select Yes for "Are you the parent or guardian?" - use nth(0) for first radiogroup
     await page
       .locator('[role="radiogroup"]')

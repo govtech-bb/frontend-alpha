@@ -1,4 +1,5 @@
 import { barbadosParishes } from "@/data/constants";
+import { primarySchoolsSelectOptions } from "@/data/primary-schools";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -93,6 +94,16 @@ export const formSteps: FormStep[] = [
           { label: "Class 3", value: "3" },
           { label: "Class 4", value: "4" },
         ],
+      },
+      {
+        name: "school",
+        label: "Child's school",
+        hint: "The application will be sent to the principal of this school for review.",
+        type: "select" as const,
+        validation: {
+          required: "Please select the child's school.",
+        },
+        options: primarySchoolsSelectOptions,
       },
       {
         name: "isParentOrGuardian",
