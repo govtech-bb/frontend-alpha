@@ -94,7 +94,7 @@ function generateFieldData(field: FormField): TestDataValue {
     }
 
     case "email":
-      return faker.internet.email();
+      return "testing@govtech.bb";
 
     case "tel":
       return `246 ${faker.string.numeric(3)} ${faker.string.numeric(4)}`;

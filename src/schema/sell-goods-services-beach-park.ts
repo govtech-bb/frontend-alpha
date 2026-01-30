@@ -41,7 +41,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.middleName",
-        label: "Middle name",
+        label: "Middle name(s)",
         type: "text",
         validation: {
           required: false,
@@ -74,7 +74,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.dateOfBirth",
         label: "Date of birth",
-        placeholder: "For example, 12 30 1986",
+        placeholder: "For example, 30 12 1986",
         type: "date",
         validation: {
           required: "Date of birth is required",
@@ -207,7 +207,7 @@ export const formSteps: FormStep[] = [
     id: "goods-or-services",
     title: "Would you like to sell goods or services?",
     description:
-      "For example, goods are physical items such as food or memorabilia. Services are experiences like massages or horse rides.",
+      "Goods are physical items such as food or memorabilia. Services are experiences like massages or paddle boarding.",
     fields: [
       {
         name: "selling.goodsOrServices",
@@ -222,47 +222,60 @@ export const formSteps: FormStep[] = [
           { label: "Services", value: "services" },
         ],
       },
-      {
-        name: "selling.manufacturingLocation",
-        label: "Where are the goods made?",
-        hint: "Select a country",
-        type: "text",
-        validation: {
-          required: "Location is required",
-          minLength: {
-            value: 2,
-            message: "Location must be at least 2 characters",
-          },
-        },
-        conditionalOn: {
-          field: "selling.goodsOrServices",
-          value: "goods",
-        },
-      },
     ],
   },
   {
-    id: "business-details",
-    title: "Tell us about your goods or services",
+    id: "goods-details",
+    title: "Tell us about the goods you would like to sell",
+    conditionalOn: {
+      field: "selling.goodsOrServices",
+      value: "goods",
+    },
     fields: [
       {
-        name: "business.descriptionOfGoodsOrServices",
-        label: "Describe the goods or services you would like to sell",
-        hint: "For example, fresh, locally-sourced fruit or 20-minute jet ski rides",
-        type: "text",
+        name: "goods.from",
+        label: "Where are the goods from?",
+        type: "radio",
+        validation: {
+          required: "Select an option",
+        },
+        options: [
+          { label: "Local (Barbados)", value: "barbados" },
+          { label: "Imported", value: "imported" },
+        ],
+      },
+      {
+        name: "goods.manufacturingLocation",
+        label: "Which country are the goods from?",
+        hint: "Select a country",
+        type: "select",
+        options: countries,
         validation: {
           required: "Location is required",
+        },
+        conditionalOn: {
+          field: "goods.from",
+          value: "imported",
+        },
+      },
+      {
+        name: "goods.description",
+        label: "Describe the goods you would like to sell",
+        type: "text",
+        hint: "For example, fresh, locally-sourced fruit",
+        validation: {
+          required: "Description of goods is required",
           minLength: {
             value: 2,
-            message: "Location must be at least 2 characters",
+            message: "Description of goods must be at least 2 characters",
           },
         },
       },
       {
-        name: "business.intendedPlaceOfDoingBusiness",
-        label: "Where do you intend to sell your goods or services?",
-        hint: "For example, in front of Copacabana Beach Club in Carlisle Bay",
+        name: "goods.intendedLocation",
+        label: "Where do you intend to sell your goods?",
         type: "text",
+        hint: "For example, Brownes Beach",
         validation: {
           required: "Place of doing business is required",
           minLength: {
@@ -273,6 +286,74 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
+  {
+    id: "services-details",
+    title: "Tell us about your services",
+    conditionalOn: {
+      field: "selling.goodsOrServices",
+      value: "services",
+    },
+    fields: [
+      {
+        name: "services.description",
+        label: "Describe the services you would like to offer",
+        type: "text",
+        hint: "For example, 20-minute jet ski rides",
+        validation: {
+          required: "Description of services is required",
+          minLength: {
+            value: 2,
+            message: "Description of services must be at least 2 characters",
+          },
+        },
+      },
+      {
+        name: "services.intendedLocation",
+        label: "Where do you intend to offer this service?",
+        type: "text",
+        hint: "For example, Brownes Beach",
+        validation: {
+          required: "Place of doing business is required",
+          minLength: {
+            value: 2,
+            message: "Place of doing business must be at least 2 characters",
+          },
+        },
+      },
+    ],
+  },
+  // {
+  //   id: "business-details",
+  //   title: "Tell us about your goods or services",
+  //   fields: [
+  //     {
+  //       name: "business.descriptionOfGoodsOrServices",
+  //       label: "Describe the goods or services you would like to sell",
+  //       hint: "For example, fresh, locally-sourced fruit or 20-minute jet ski rides",
+  //       type: "text",
+  //       validation: {
+  //         required: "Location is required",
+  //         minLength: {
+  //           value: 2,
+  //           message: "Location must be at least 2 characters",
+  //         },
+  //       },
+  //     },
+  //     {
+  //       name: "business.intendedPlaceOfDoingBusiness",
+  //       label: "Where do you intend to sell your goods or services?",
+  //       hint: "For example, in front of Copacabana Beach Club in Carlisle Bay",
+  //       type: "text",
+  //       validation: {
+  //         required: "Place of doing business is required",
+  //         minLength: {
+  //           value: 2,
+  //           message: "Place of doing business must be at least 2 characters",
+  //         },
+  //       },
+  //     },
+  //   ],
+  // },
   {
     id: "professional-referee",
     title: "Tell us about your professional referee",
@@ -512,6 +593,33 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "document-uploads",
+    title: "Upload supporting documents",
+    description:
+      "Provide a Police Certificate of Character and 2 passport-sized photos",
+    fields: [
+      {
+        name: "documents.policeCertificate",
+        label: "Upload a Police Certificate of Character",
+        hint: "Attach a .pdf, .docx or .png file.",
+        type: "file",
+        validation: {
+          required: "Police Certificate of Character is required",
+        },
+      },
+      {
+        name: "documents.passportPhotos",
+        label: "Upload 2 passport-sized photos",
+        hint: "Attach a .pdf, .docx or .png file.",
+        multiple: true,
+        type: "file",
+        validation: {
+          required: "Passport-sized photos are required",
+        },
+      },
+    ],
+  },
+  {
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
@@ -519,12 +627,11 @@ export const formSteps: FormStep[] = [
   {
     id: "declaration",
     title: "Declaration",
-    description:
-      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
     fields: [
       {
         name: "declaration.confirmed",
-        label: "All information is correct and true.",
+        label:
+          "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
         type: "checkbox",
         validation: {
           required: "You must confirm the declaration to continue",
@@ -534,7 +641,7 @@ export const formSteps: FormStep[] = [
         name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
-        placeholder: "For example, 12 15 2025",
+        placeholder: "",
         type: "date",
         validation: {
           required: "Date is required",
@@ -551,17 +658,13 @@ export const formSteps: FormStep[] = [
     description:
       "Your information has been sent to the our National Conservation Commission",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "If your application is successful, you will need to provide:",
-        items: [
-          "a Police Certificate of Character",
-          "2 recent references",
-          "2 passport-sized photographs",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+If your application is successful, you will need to provide:
+
+- a Police Certificate of Character
+- 2 recent references
+- 2 passport-sized photographs`,
     enableFeedback: true,
   },
 ];

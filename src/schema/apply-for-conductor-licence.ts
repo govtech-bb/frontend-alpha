@@ -76,7 +76,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.dateOfBirth",
         label: "Date of birth",
-        placeholder: "For example, 12 30 1986",
+        placeholder: "For example, 30 12 1986",
         type: "date",
         validation: {
           required: "Date of birth is required",
@@ -394,12 +394,11 @@ export const formSteps: FormStep[] = [
   {
     id: "declaration",
     title: "Declaration",
-    description:
-      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
     fields: [
       {
         name: "declaration.confirmed",
-        label: "All information is correct and true.",
+        label:
+          "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
         type: "checkbox",
         validation: {
           required: "You must confirm the declaration to continue",
@@ -407,7 +406,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "declaration.dateOfDeclaration",
-        label: "Date of Declaration",
+        label: "Date of declaration",
         hidden: true,
         placeholder: "",
         type: "date",
@@ -426,18 +425,15 @@ export const formSteps: FormStep[] = [
     description:
       "Your information has been sent to the Barbados Transport Authority",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content:
-          "We will review your application and any supporting information.",
-        items: [
-          "If we need further details, we will contact you using the email address you provided.",
-          "You will receive an email confirming this submission.",
-          "If you do not receive the confirmation email within a few minutes, check your junk or spam folder.",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+We will review your application and any supporting information.
+
+If we need further details, we will contact you using the email address you provided.
+
+You will receive an email confirming this submission.
+
+If you do not receive the confirmation email within a few minutes, check your junk or spam folder.`,
     enableFeedback: true,
   },
 ];

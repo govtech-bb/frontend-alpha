@@ -1,5 +1,7 @@
 import { ErrorSummary, Heading, Text } from "@govtech-bb/react";
 import { type FieldError, useFormContext } from "react-hook-form";
+import ReactMarkdown from "react-markdown";
+import { markdownComponents } from "@/components/markdown-content";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import type { FormStep } from "@/types";
@@ -71,10 +73,19 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
             {serviceTitle}
           </Text>
         </div>
-        <Heading as="h1" className="focus:outline-none">
+        <Heading
+          as="h1"
+          className="focus:outline-none"
+          id="step-heading"
+          tabIndex={-1}
+        >
           {step.title}
         </Heading>
-        {step.description && <Text as="p">{step.description}</Text>}
+        {step.description && (
+          <ReactMarkdown components={markdownComponents}>
+            {step.description}
+          </ReactMarkdown>
+        )}
       </div>
 
       {/* Error Summary - only show if there are errors */}

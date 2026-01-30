@@ -91,8 +91,8 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "old-address",
-    title: "Old address of the deceased person",
+    id: "address",
+    title: "Address of the deceased person",
     fields: [
       {
         name: "oldAddress.addressLine1",
@@ -179,6 +179,25 @@ export const formSteps: FormStep[] = [
         },
       },
       {
+        name: "applicant.middleName",
+        label: "Middle name(s)",
+        hint: "Optional. Enter only if known.",
+        type: "text",
+        validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
         name: "applicant.lastName",
         label: "Last name",
         type: "text",
@@ -198,7 +217,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "applicant.relationshipToDeceased",
-        label: "What is your relationship to the person?",
+        label: "What is your relationship to the deceased person?",
         type: "select",
         validation: {
           required: "Relationship is required",
@@ -257,13 +276,14 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "permission-details",
-    title: "Tell us what permission you have to act on behalf of the estate",
+    title:
+      "What authority do you have to act on behalf of the deceased person?",
     fields: [
       {
         name: "permissionDetails",
-        label: "Permission details",
+        label: "",
         type: "text",
-        hint: "This should match the Power of Attorney you upload",
+        hint: "For example, I am executor of the will, or I have letters of Administration",
         validation: {
           required: "Permission details is required",
           minLength: {
@@ -324,59 +344,40 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "newAddress.isRedirectPermanent",
-        label: "Are you redirecting their mail permanently?",
-        type: "radio",
-        validation: {
-          required: "Select an option",
-        },
-        options: [
-          { label: "Yes", value: "yes" },
-          { label: "No", value: "no" },
-        ],
-      },
-      {
         name: "newAddress.redirectionStartDate",
-        label: "Redirection start date",
+        label: "When do you want the redirection to start?",
         type: "date",
         validation: {
           required: "Start date is required",
         },
-        conditionalOn: {
-          field: "newAddress.isRedirectPermanent",
-          value: "no",
-        },
       },
       {
         name: "newAddress.redirectionEndDate",
-        label: "Redirection end date",
+        label: "When do you want the redirection to end?",
+        hint: "A redirection notice lasts for a maximum of 6 months",
         type: "date",
         validation: {
           required: "End date is required",
         },
-        conditionalOn: {
-          field: "newAddress.isRedirectPermanent",
-          value: "no",
-        },
       },
     ],
   },
-  {
-    id: "upload-document",
-    title: "Upload supporting document",
-    description: "You must upload a Power of Attorney",
-    fields: [
-      {
-        type: "file",
-        name: "uploadDocument",
-        label: "Upload a file",
-        hint: "Attach a .pdf, .docx or .png file",
-        validation: {
-          required: "Please upload a document",
-        },
-      },
-    ],
-  },
+  // {
+  //   id: "upload-document",
+  //   title: "Upload supporting document",
+  //   description: "You must upload a Power of Attorney",
+  //   fields: [
+  //     {
+  //       type: "file",
+  //       name: "uploadDocument",
+  //       label: "Upload a file",
+  //       hint: "Attach a .pdf, .docx or .png file",
+  //       validation: {
+  //         required: "Please upload a document",
+  //       },
+  //     },
+  //   ],
+  // },
   {
     id: "check-your-answers",
     title: "Check your answers",
@@ -385,12 +386,11 @@ export const formSteps: FormStep[] = [
   {
     id: "declaration",
     title: "Declaration",
-    description:
-      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
     fields: [
       {
         name: "declaration.confirmed",
-        label: "All information is correct and true.",
+        label:
+          "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
         type: "checkbox",
         validation: {
           required: "You must confirm the declaration to continue",
@@ -400,7 +400,7 @@ export const formSteps: FormStep[] = [
         name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
-        placeholder: "For example, 07 11 1999",
+        placeholder: "",
         type: "date",
         validation: {
           required: "Date is required",
@@ -413,19 +413,16 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "confirmation",
-    title: "Application submitted",
+    title: "Thank you for your request",
     description: "Your application has been submitted successfully",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "We will review the information you provided",
-        items: [
-          "If we need more information or documents, we will contact you",
-          "Once approved, mail will be redirected to the address you specified",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+We will review the information you provided.
+
+If we need more information or documents, we will contact you
+
+Once approved, mail will be redirected to the address you specified`,
     enableFeedback: true,
   },
 ];

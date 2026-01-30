@@ -165,12 +165,11 @@ export const formSteps: FormStep[] = [
   {
     id: "declaration",
     title: "Declaration",
-    description:
-      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
     fields: [
       {
         name: "declaration.confirmed",
-        label: "All information is correct and true.",
+        label:
+          "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
         type: "checkbox",
         validation: {
           required: "You must confirm the declaration to continue",
@@ -178,7 +177,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "declaration.dateOfDeclaration",
-        label: "Date of Declaration",
+        label: "Date of declaration",
         hidden: true,
         placeholder: "",
         type: "date",
@@ -196,16 +195,11 @@ export const formSteps: FormStep[] = [
     title: "Your request for a Fire Service inspection has been submitted.",
     description: "We have received your request for a Fire Service inspection.",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "The Fire Service will review your request.",
-        items: [
-          "If they need more information, they will contact you using the details you provided.",
-          "An inspection visit will be scheduled if your request can proceed.",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+- The Fire Service will review your request.
+- If they need more information, they will contact you using the details you provided.
+- An inspection visit will be scheduled if your request can proceed.`,
     enableFeedback: true,
   },
 ];

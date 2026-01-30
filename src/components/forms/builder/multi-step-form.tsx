@@ -13,6 +13,7 @@ import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
+import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
 
 /**
@@ -841,6 +842,19 @@ export default function DynamicMultiStepForm({
     return 0;
   };
 
+  const scrollToStepHeading = () => {
+    // Scroll to top instantly to avoid fighting with React re-renders (form steps are dynamic)
+    window.scrollTo({ top: 0, behavior: "instant" });
+
+    // Focus the heading after form steps are rendered
+    setTimeout(() => {
+      const heading = document.getElementById("step-heading");
+      if (heading) {
+        heading.focus({ preventScroll: true });
+      }
+    }, 100);
+  };
+
   const nextStep = async () => {
     // Check if current step is the review step (has no fields)
     const currentStepData = expandedFormSteps[currentStep];
@@ -970,6 +984,65 @@ export default function DynamicMultiStepForm({
           }
         }
       }
+
+      // Manually validate showHide child fields when showHide is open
+      if (field.type === "showHide" && field.showHide) {
+        const showHideState = methods.getValues(
+          field.showHide.stateFieldName as keyof FormData
+        );
+
+        if (showHideState === "open") {
+          for (const childField of field.showHide.fields) {
+            const childValue = methods.getValues(
+              childField.name as keyof FormData
+            );
+            const stringValue =
+              typeof childValue === "string" ? childValue : "";
+
+            // Check required validation
+            const isEmpty =
+              childValue === undefined ||
+              childValue === null ||
+              childValue === "" ||
+              (typeof childValue === "string" && childValue.trim() === "") ||
+              (typeof childValue === "number" && Number.isNaN(childValue));
+
+            if (childField.validation.required && isEmpty) {
+              methods.setError(childField.name as keyof FormData, {
+                type: "required",
+                message: childField.validation.required,
+              });
+              isValid = false;
+              continue;
+            }
+
+            // Check minLength validation
+            if (
+              childField.validation.minLength &&
+              stringValue &&
+              stringValue.length < childField.validation.minLength.value
+            ) {
+              methods.setError(childField.name as keyof FormData, {
+                type: "minLength",
+                message: childField.validation.minLength.message,
+              });
+              isValid = false;
+            }
+
+            // Check pattern validation
+            if (childField.validation.pattern && stringValue) {
+              const regex = new RegExp(childField.validation.pattern.value);
+              if (!regex.test(stringValue)) {
+                methods.setError(childField.name as keyof FormData, {
+                  type: "pattern",
+                  message: childField.validation.pattern.message,
+                });
+                isValid = false;
+              }
+            }
+          }
+        }
+      }
     }
 
     if (isValid) {
@@ -1013,6 +1086,7 @@ export default function DynamicMultiStepForm({
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
       setCurrentStep(nextVisibleStep);
+      scrollToStepHeading();
     } else {
       // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
       const errorSummary = document.querySelector("#error-summary");
@@ -1040,12 +1114,14 @@ export default function DynamicMultiStepForm({
   const handleEditFromReview = (stepIndex: number) => {
     isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
+    scrollToStepHeading();
   };
 
   const prevStep = () => {
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);
     setCurrentStep(prevVisibleStep);
+    scrollToStepHeading();
   };
 
   const handleReset = () => {
@@ -1214,11 +1290,16 @@ export default function DynamicMultiStepForm({
             </div>
           </div>
         )}
-        {/* Current Step - Show Review or Regular Step */}
+        {/* Current Step - Show Review, Declaration, or Regular Step */}
         {isReviewStep ? (
           <ReviewStep
             formSteps={expandedFormSteps}
             onEdit={handleEditFromReview}
+          />
+        ) : isDeclarationStep ? (
+          <DeclarationStep
+            serviceTitle={serviceTitle}
+            step={expandedFormSteps[currentStep]}
           />
         ) : (
           <DynamicStep

@@ -237,7 +237,7 @@ export const PaymentBlock = ({ paymentData }: Props) => {
         </Text>
         <Text as="p">
           <span className="font-bold">Amount:</span> $
-          {paymentData.amount.toFixed(2)}
+          {Number(paymentData.amount).toFixed(2)}
         </Text>
         {paymentData.numberOfCopies && (
           <Text as="p">

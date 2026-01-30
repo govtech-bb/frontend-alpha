@@ -337,6 +337,29 @@ export function DynamicField({
                 />
               )}
             />
+          ) : conditionalField.type === "radio" && conditionalField.options ? (
+            <Controller
+              control={control}
+              name={conditionalField.name as keyof FormData}
+              render={({ field: controllerField }) => (
+                <RadioGroup
+                  description={conditionalField.hint}
+                  error={conditionalError?.message}
+                  label={conditionalField.hidden ? "" : conditionalField.label}
+                  onValueChange={controllerField.onChange}
+                  value={controllerField.value as string}
+                >
+                  {conditionalField.options?.map((option) => (
+                    <Radio
+                      id={`${conditionalField.name}-${option.value}`}
+                      key={option.value}
+                      label={option.label}
+                      value={option.value}
+                    />
+                  ))}
+                </RadioGroup>
+              )}
+            />
           ) : conditionalField.hint ? (
             <div className="flex flex-col gap-1">
               {!conditionalField.hidden && (

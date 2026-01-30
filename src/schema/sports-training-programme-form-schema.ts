@@ -465,12 +465,11 @@ export const formSteps: FormStep[] = [
   {
     id: "declaration",
     title: "Declaration",
-    description:
-      "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
     fields: [
       {
         name: "declaration.confirmed",
-        label: "All information is correct and true.",
+        label:
+          "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
         type: "checkbox",
         validation: {
           required: "You must confirm the declaration to continue",
@@ -480,7 +479,7 @@ export const formSteps: FormStep[] = [
         name: "declaration.dateOfDeclaration",
         label: "Date of declaration",
         hidden: true,
-        placeholder: "For example, 12 15 2025",
+        placeholder: "",
         type: "date",
         validation: {
           required: "Date is required",
@@ -497,17 +496,13 @@ export const formSteps: FormStep[] = [
     description:
       "Your information has been sent to the Youth Development Programme, the coordinating programme in the Division of Youth Affairs",
     fields: [],
-    steps: [
-      {
-        title: "What happens next",
-        content: "The Youth Commissioner will be in touch shortly to confirm:",
-        items: [
-          "The location of the programme",
-          "The start date and times",
-          "What you will need to bring",
-        ],
-      },
-    ],
+    bodyContent: `## What happens next
+
+The Youth Commissioner will be in touch shortly to confirm:
+
+- The location of the programme
+- The start date and times
+- What you will need to bring`,
     enableFeedback: true,
   },
 ];
