@@ -864,11 +864,22 @@ export const formSteps: FormStep[] = [
     fields: [],
     bodyContent: `## What happens next
 
-If your application is successful, you will need to provide:
+You will meet with representatives from the NCC at the location where you would like to sell goods or services. They will assess suitability.
 
-- a Police Certificate of Character
-- 2 recent references
-- 2 passport-sized photographs`,
+If the outcome is positive, you will need to visit the National Conservation Commission to collect:
+A letter of authorisation.
+
+A licence book outlining the conditions of where and what you can sell.
+Your vendor identification.
+
+###Paying for your licence
+
+The prices include VAT.
+
+- Licence: $117.50 
+- A watersports licence costs $176.25 
+- Licence book: $11.75 
+- ID badge: $12.87`,
     enableFeedback: true,
   },
 ];
