@@ -501,13 +501,17 @@ export const formSteps: FormStep[] = [
     id: "confirmation",
     title: "Thank you for your request",
     description:
-      "The Barbados Postal Service will process your redirection request when you have made the payment.",
+      "Your information has been sent to the Barbados Postal Service.",
     fields: [],
+    showReferenceNumber: true,
     bodyContent: `## What happens next
 
-When you have submitted both your request and your payment, the Barbados Postal Service 
-will begin to deliver your mail to your new address from the start date you gave on the form.
-Your redirection notice will last for 6 months.`,
+Everyone who is 18 years old and over who wants to redirect their personal mail must visit any Post Office, in person, to:
+
+1. Sign the form.
+2. Verify their identity with their National ID card.
+
+The Post Office cashier will ask for the reference number above. You can find a record of it on your confirmation email.`,
     enableFeedback: true,
   },
 ];
