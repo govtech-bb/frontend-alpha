@@ -6,7 +6,7 @@ stage: alpha
 section: "Travel, ID and citizenship"
 ---
 
-You can use this service to tell the Post Office that someone has died and therefore you would like to redirect their mail to a different address. 
+You can use this service to tell the Post Office that someone has died and therefore you would like to redirect their mail to a different address.
 
 A redirection notice will last for 6 months.
 
@@ -27,7 +27,7 @@ You can [read more about Letters Testamentary and Letters of Administration](htt
 
 ### Complete the form
 
-There are 2 ways to do this. You can:
+There are 2 ways to redirect their mail. You can:
 
 1. #### Tell the Post Office online
 
@@ -36,7 +36,6 @@ There are 2 ways to do this. You can:
 2. #### Complete a paper form and return it to any Post Office
 
    You can either:
-   
    1. [Download and print the form](https://www.gov.bb/media_files/PostOffice_RedirNotice.pdf) from the Barbados Postal Service website.
    1. Collect a paper form from any Post Office.
 
@@ -46,11 +45,11 @@ Whether you complete the form online or on paper, you will need to pay $13 BBD b
 
 Along with your contact details, the redirection form asks you to share:
 
-* your details, including your relationship to the person who has died
-* details of the person who has died, including their address
-* where mail should be redirected to
-* start date of redirection
-* end date of the redirection (a redirection notice lasts a maximum of 6 months)
+- your details, including your relationship to the person who has died
+- details of the person who has died, including their address
+- where mail should be redirected to
+- start date of redirection
+- end date of the redirection (a redirection notice lasts a maximum of 6 months)
 
 ## After you have submitted the form
 
@@ -65,6 +64,5 @@ If you complete the online redirection form, the Post Office cashier will ask fo
 ## After the Post Office has processed your request
 
 The Barbados Postal Service will begin to deliver the mail to the new address from the start date you gave on the form. The redirection notice will last for 6 months.
-
 
 The Post Office is responsible for this service.
