@@ -25,6 +25,8 @@ You can request a copy on someone else’s behalf but you must disclose:
    You must pay online so you will need a debit or credit card, and you will need to have (or create) an EZPay+ account.
    Every question is compulsory so if you are unsure about the basic information asked for, you should complete the paper form instead.
 
+   You currently cannot apply for a certificate of cause of death online. You must go to the Registration Department and fill out a paper form.
+
    <a data-start-link href="/family-birth-relationships/get-death-certificate/start">Complete the online form</a>
 
 2. #### Get a paper Application for death certificate form from the Registration Department
