@@ -366,13 +366,13 @@ export const formSteps: FormStep[] = [
           required: "Place of death is required",
         },
       },
-      {
-        name: "deceased.causeOfDeath",
-        label: "Cause of death",
-        hint: "Leave blank if you do not know",
-        type: "text",
-        validation: { required: false },
-      },
+      // {
+      //   name: "deceased.causeOfDeath",
+      //   label: "Cause of death",
+      //   hint: "Leave blank if you do not know",
+      //   type: "text",
+      //   validation: { required: false },
+      // },
     ],
   },
 
