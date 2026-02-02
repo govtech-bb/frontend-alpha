@@ -43,25 +43,26 @@ Registration is open throughout the year.
 There are 2 ways to register. You can:
 
 1. #### Complete the online form
+
    <a data-start-link href="/work-employment/apply-to-jobstart-plus-programme/start">Register now</a>
 
 2. #### Get a paper form from the Ministry of Labour, Social Security and Third Seectorr
 
-You must complete it by hand and return it to the department.
+   You must complete it by hand and return it to the department.
 
-Ministry of Labour, Social Security and Third Sector,  
-3rd Floor West,  
-Warrens Office Complex,  
-Warrens Close,  
-St. Michael
+   Ministry of Labour, Social Security and Third Sector,  
+   3rd Floor West,  
+   Warrens Office Complex,  
+   Warrens Close,  
+   St. Michael
 
 ## After you have registered
 
 Once your registration has been processed, you will be invited to an assessment. Organisers will evaluate:
 
-* your readiness to work
-* your suitablity for the programme
-* any additional support you need
+- your readiness to work
+- your suitablity for the programme
+- any additional support you need
 
 You will then receive the schedule for the World of Work trainingg and what you will need to bring.
 
