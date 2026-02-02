@@ -135,12 +135,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Register for a Youth Development Programme (YDP) Community Sports Training programme",
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Register for Training Form",
             type: "component",
-            protected: true,
           },
         ],
       },
@@ -164,12 +163,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         slug: "apply-to-jobstart-plus-programme",
         description: "Apply to the JobSTART Plus Programme",
         subPages: [
-          { slug: "start", type: "markdown", protected: true },
+          { slug: "start", type: "markdown" },
           {
             slug: "form",
             title: "Registering for JobStart Plus",
             type: "component",
-            protected: true,
           },
         ],
       },
