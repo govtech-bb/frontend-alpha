@@ -593,6 +593,210 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "first-testimonial",
+    title: "First testimonial",
+    description:
+      "Provide 2 or 3 sentences from someone who can speak about your character. For example, they might be a community leader or mentor. They must not be someone you named as a referee earlier in this application.",
+    fields: [
+      {
+        name: "firstTestimonial.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "firstTestimonial.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "firstTestimonial.relationship",
+        label: "Relationship",
+        type: "select",
+        validation: {
+          required: "Relationship is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Community leader", value: "community-leader" },
+          { label: "Mentor", value: "mentor" },
+          { label: "Religious leader", value: "religious-leader" },
+          { label: "Teacher", value: "teacher" },
+          { label: "Coach", value: "coach" },
+          { label: "Neighbour", value: "neighbour" },
+          { label: "Other", value: "other" },
+        ],
+      },
+      {
+        name: "firstTestimonial.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "firstTestimonial.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        validation: { required: false },
+      },
+      {
+        name: "firstTestimonial.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "firstTestimonial.testimonial",
+        label: "Testimonial",
+        type: "textarea",
+        validation: {
+          required: "Testimonial is required",
+          minLength: {
+            value: 10,
+            message: "Testimonial must be at least 10 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: "second-testimonial",
+    title: "Second testimonial",
+    description:
+      "Provide 2 or 3 sentences from someone who can speak about your character. For example, they might be a community leader or mentor. They must not be someone you named as a referee earlier in this application.",
+    fields: [
+      {
+        name: "secondTestimonial.firstName",
+        label: "First name",
+        type: "text",
+        validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "secondTestimonial.lastName",
+        label: "Last name",
+        type: "text",
+        validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
+          pattern: {
+            value:
+              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "secondTestimonial.relationship",
+        label: "Relationship",
+        type: "select",
+        validation: {
+          required: "Relationship is required",
+        },
+        options: [
+          { label: "", value: "" },
+          { label: "Community leader", value: "community-leader" },
+          { label: "Mentor", value: "mentor" },
+          { label: "Religious leader", value: "religious-leader" },
+          { label: "Teacher", value: "teacher" },
+          { label: "Coach", value: "coach" },
+          { label: "Neighbour", value: "neighbour" },
+          { label: "Other", value: "other" },
+        ],
+      },
+      {
+        name: "secondTestimonial.addressLine1",
+        label: "Address line 1",
+        type: "text",
+        validation: {
+          required: "Address line 1 is required",
+          minLength: {
+            value: 5,
+            message: "Address must be at least 5 characters",
+          },
+        },
+      },
+      {
+        name: "secondTestimonial.addressLine2",
+        label: "Address line 2",
+        type: "text",
+        validation: { required: false },
+      },
+      {
+        name: "secondTestimonial.parish",
+        label: "Parish",
+        type: "select",
+        width: "medium",
+        validation: {
+          required: "Parish is required",
+        },
+        options: barbadosParishes,
+      },
+      {
+        name: "secondTestimonial.testimonial",
+        label: "Testimonial",
+        type: "textarea",
+        validation: {
+          required: "Testimonial is required",
+          minLength: {
+            value: 10,
+            message: "Testimonial must be at least 10 characters",
+          },
+        },
+      },
+    ],
+  },
+  {
     id: "document-uploads",
     title: "Upload supporting documents",
     description:
@@ -656,15 +860,28 @@ export const formSteps: FormStep[] = [
     id: "confirmation",
     title: "Thank you for your application",
     description:
-      "Your information has been sent to the our National Conservation Commission",
+      "Your information has been sent to the our National Conservation Commission (NCC)",
     fields: [],
     bodyContent: `## What happens next
 
-If your application is successful, you will need to provide:
+You will meet with representatives from the NCC at the location where you would like to sell goods or services. They will assess suitability.
 
-- a Police Certificate of Character
-- 2 recent references
-- 2 passport-sized photographs`,
+If the outcome is positive, you will need to visit the National Conservation Commission to collect:
+
+1. A letter of authorisation.
+2. A licence book outlining the conditions of where and what you can sell.
+3. Your vendor identification.
+
+## Paying for your licence
+You can pay for your vendor documentation in cash or by card when you visit the NCC.
+
+The prices include VAT.
+
+• Licence: $117.50
+A watersports licence costs $176.25
+• Licence book: $11.75
+• ID badge: $12.87
+`,
     enableFeedback: true,
   },
 ];
