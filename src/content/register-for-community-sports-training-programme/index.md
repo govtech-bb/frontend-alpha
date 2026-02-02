@@ -13,6 +13,8 @@ New programmes begin throughout the year.
 
 ### Complete the form
 
+There are 2 ways to complete the form. You can:
+
 1. #### Complete the online form
 
    <a data-start-link href="/work-employment/register-for-community-sports-training-programme/start">Register now</a>

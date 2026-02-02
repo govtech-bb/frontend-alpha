@@ -34,22 +34,36 @@ Job starters are given a stipend to cover lunch and travel expenses.
 
 ## When to register
 
-Registration is open between March and April each year. The training begins in May.
+Registration is open throughout the year.
 
 ## How to register
 
 ### Complete the form
 
-When registration is open, you can register by completing the online form.
+There are 2 ways to register. You can:
 
-<a data-start-link href="/work-employment/apply-to-jobstart-plus-programme/start">Register now</a>
+1. #### Complete the online form
 
-<!-- Registration is open now. The deadline is [date] and the training will begin in May.
- 
-[Button to start page] Register now -->
+   <a data-start-link href="/work-employment/apply-to-jobstart-plus-programme/start">Register now</a>
+
+2. #### Get a paper form from the Ministry of Labour, Social Security and Third Seectorr
+
+   You must complete it by hand and return it to the department.
+
+   Ministry of Labour, Social Security and Third Sector,  
+   3rd Floor West,  
+   Warrens Office Complex,  
+   Warrens Close,  
+   St. Michael
 
 ## After you have registered
 
-Once your registration has been processed, you will be sent the schedule and what you will need to bring. A session may be scheduled with a psychologist so they can assess your cognitive abilities.
+Once your registration has been processed, you will be invited to an assessment. Organisers will evaluate:
 
-The initiative is owned by the Ministry of Labour, Social Security and Third Sector
+- your readiness to work
+- your suitablity for the programme
+- any additional support you need
+
+You will then receive the schedule for the World of Work trainingg and what you will need to bring.
+
+The initiative is owned by the Ministry of Labour, Social Security and Third Sector.
