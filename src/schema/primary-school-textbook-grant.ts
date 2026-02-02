@@ -10,7 +10,8 @@ export const formSteps: FormStep[] = [
     repeatable: {
       arrayFieldName: "beneficiaries",
       maxItems: 10,
-      addAnotherLabel: "Do you need to add another child?",
+      addAnotherLabel: "Do you have another child at the same school?",
+      sharedFields: ["school", "principalName"],
     },
     fields: [
       {
