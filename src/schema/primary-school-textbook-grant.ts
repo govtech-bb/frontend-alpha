@@ -99,10 +99,11 @@ export const formSteps: FormStep[] = [
           required: "Please select the child's school.",
         },
         options: primarySchools,
+        width: "short",
       },
       {
         name: "principalName",
-        label: "Name of Principal",
+        label: "Name of principal",
         type: "text",
         validation: {
           required: "Principal's name is required",
@@ -111,22 +112,17 @@ export const formSteps: FormStep[] = [
             message: "Principal's name must be at least 2 characters",
           },
         },
+        width: "short",
       },
       {
         name: "classNumber",
         label: "Which class are they currently in?",
         hint: "If they are between school years, add the class they are going into",
-        type: "select",
+        type: "text",
         validation: {
           required: "Class number is required",
         },
-        options: [
-          { label: "", value: "" },
-          { label: "Class 1", value: "1" },
-          { label: "Class 2", value: "2" },
-          { label: "Class 3", value: "3" },
-          { label: "Class 4", value: "4" },
-        ],
+        width: "short",
       },
       {
         name: "isParentOrGuardian",
@@ -160,9 +156,8 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "guardian-details",
-    title: "Tell us about the child's guardian",
-    description:
-      "Please provide the details of the child's legal guardian who will be responsible for the grant.",
+    title: "Tell us about the parent or guardian",
+    description: "",
     repeatable: {
       arrayFieldName: "beneficiaries",
       maxItems: 10,
@@ -253,17 +248,14 @@ export const formSteps: FormStep[] = [
       {
         name: "guardian.tamisNumber",
         label: "TAMIS number",
-        type: "number",
+        type: "text",
         width: "medium",
         validation: {
           required: "TAMIS number is required",
           pattern: {
-            value: "^\\d+$",
-            message: "Please enter numbers only",
-          },
-          minLength: {
-            value: 2,
-            message: "TAMIS number must be at least 2 characters",
+            value: "^\\d{10,15}$",
+            message:
+              "TAMIS number is between 10 to 15 digits. Example TAMIS number: 1234567890",
           },
         },
       },
@@ -418,17 +410,14 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.tamisNumber",
         label: "TAMIS number",
-        type: "number",
+        type: "text",
         width: "medium",
         validation: {
-          required: "TAMIS Number is required",
+          required: "TAMIS number is required",
           pattern: {
-            value: "^\\d+$",
-            message: "Please enter numbers only",
-          },
-          minLength: {
-            value: 2,
-            message: "TAMIS number must be at least 2 characters",
+            value: "^\\d{10,15}$",
+            message:
+              "TAMIS number is between 10 to 15 digits. Example TAMIS number: 1234567890",
           },
         },
         skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
