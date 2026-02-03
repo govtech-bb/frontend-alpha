@@ -484,33 +484,37 @@ export function DynamicField({
         <Controller
           control={control}
           name={field.name as keyof FormData}
-          render={({ field: controllerField }) => (
-            <RadioGroup
-              description={field.hint}
-              error={error?.message}
-              label={field.hidden ? "" : field.label}
-              onValueChange={controllerField.onChange}
-              value={controllerField.value as string}
-            >
-              {field.options?.map((option) => (
-                <Fragment key={option.value}>
-                  <Radio
-                    id={option.value}
-                    label={option.label}
-                    value={option.value}
-                  />
-                  {/* Render conditional fields that match this option */}
-                  {conditionalFields
-                    .filter(
-                      (cf) =>
-                        cf.conditionalOn &&
-                        conditionalHasValue(cf.conditionalOn, option.value)
-                    )
-                    .map((cf) => renderConditionalField(cf))}
-                </Fragment>
-              ))}
-            </RadioGroup>
-          )}
+          render={({ field: controllerField }) => {
+            const currentValue = controllerField.value as string;
+            return (
+              <RadioGroup
+                description={field.hint}
+                error={error?.message}
+                label={field.hidden ? "" : field.label}
+                onValueChange={controllerField.onChange}
+                value={currentValue}
+              >
+                {field.options?.map((option) => (
+                  <Fragment key={option.value}>
+                    <Radio
+                      id={option.value}
+                      label={option.label}
+                      value={option.value}
+                    />
+                    {/* Render conditional fields for this option only when this option is selected */}
+                    {currentValue === option.value &&
+                      conditionalFields
+                        .filter(
+                          (cf) =>
+                            cf.conditionalOn &&
+                            conditionalHasValue(cf.conditionalOn, option.value)
+                        )
+                        .map((cf) => renderConditionalField(cf))}
+                  </Fragment>
+                ))}
+              </RadioGroup>
+            );
+          }}
         />
       ) : field.type === "checkbox" ? (
         <Controller
