@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import type { ConditionalOn } from "@/types";
 import type { InformationContent } from "@/types/content";
 
 export function cn(...inputs: ClassValue[]) {
@@ -48,3 +49,21 @@ export const findCategoryByPageSlug = (
   INFORMATION_ARCHITECTURE.find((category) =>
     category.pages.some((page) => page.slug === slug)
   );
+
+export function checkConditionalRule(
+  conditionalOn: ConditionalOn,
+  formValues: Record<string, unknown>
+): boolean {
+  const rules = Array.isArray(conditionalOn) ? conditionalOn : [conditionalOn];
+  return rules.some(
+    (rule) => getNestedValue<unknown>(formValues, rule.field) === rule.value
+  );
+}
+
+export function conditionalHasValue(
+  conditionalOn: ConditionalOn,
+  value: string
+): boolean {
+  const rules = Array.isArray(conditionalOn) ? conditionalOn : [conditionalOn];
+  return rules.some((rule) => rule.value === value);
+}

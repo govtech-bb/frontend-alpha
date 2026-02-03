@@ -15,7 +15,11 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import {
+  checkConditionalRule,
+  conditionalHasValue,
+  getNestedValue,
+} from "@/lib/utils";
 import { uploadFile } from "@/services/api";
 import type { FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
@@ -192,10 +196,10 @@ export function DynamicField({
       errors as Record<string, unknown>,
       conditionalField.name
     );
-    const watchedValue = conditionalField.conditionalOn
-      ? watch(conditionalField.conditionalOn.field as keyof FormData)
-      : null;
-    const shouldShow = watchedValue === conditionalField.conditionalOn?.value;
+    const formValues = watch() as Record<string, unknown>;
+    const shouldShow = conditionalField.conditionalOn
+      ? checkConditionalRule(conditionalField.conditionalOn, formValues)
+      : false;
 
     if (!shouldShow) return null;
 
@@ -497,7 +501,11 @@ export function DynamicField({
                   />
                   {/* Render conditional fields that match this option */}
                   {conditionalFields
-                    .filter((cf) => cf.conditionalOn?.value === option.value)
+                    .filter(
+                      (cf) =>
+                        cf.conditionalOn &&
+                        conditionalHasValue(cf.conditionalOn, option.value)
+                    )
                     .map((cf) => renderConditionalField(cf))}
                 </Fragment>
               ))}

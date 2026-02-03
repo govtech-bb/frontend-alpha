@@ -51,6 +51,9 @@ export type ConditionalRule = {
   value: string; // The value that triggers this field to show
 };
 
+/** Single rule or array of rules (OR logic - any matching rule shows the element) */
+export type ConditionalOn = ConditionalRule | ConditionalRule[];
+
 export type NestedFormField = {
   name: string;
   label: string;
