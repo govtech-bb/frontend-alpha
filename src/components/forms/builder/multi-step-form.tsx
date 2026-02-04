@@ -1055,7 +1055,14 @@ export default function DynamicMultiStepForm({
                 childField.name as keyof FormData
               );
 
-              const value = Number(rawValue); // empty values already handled in required
+              if (
+                rawValue === "" ||
+                rawValue === null ||
+                rawValue === undefined
+              )
+                continue;
+
+              const value = Number(rawValue);
 
               if (Number.isNaN(value)) continue;
 
