@@ -10,7 +10,8 @@ export type FieldType =
   | "checkbox"
   | "fieldArray"
   | "showHide"
-  | "file";
+  | "file"
+  | "heading";
 
 // Date-specific validation rules (only applicable when type === "date")
 export type DateValidationRule =
@@ -51,6 +52,9 @@ export type ConditionalRule = {
   value: string; // The value that triggers this field to show
 };
 
+/** Single rule or array of rules (OR logic - any matching rule shows the element) */
+export type ConditionalOn = ConditionalRule | ConditionalRule[];
+
 export type NestedFormField = {
   name: string;
   label: string;
@@ -61,7 +65,7 @@ export type NestedFormField = {
   validation: NonDateFieldValidation | DateFieldValidation;
   options?: SelectOption[];
   rows?: number;
-  conditionalOn?: ConditionalRule; // For conditional fields within field arrays
+  conditionalOn?: ConditionalOn; // For conditional fields within field arrays
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
 };
 
@@ -93,12 +97,13 @@ export type BaseFormField = {
   validation: ValidationRule;
   options?: SelectOption[]; // For select and radio fields
   rows?: number; // For textarea
-  conditionalOn?: ConditionalRule; // For conditional fields
+  conditionalOn?: ConditionalOn; // For conditional fields
   fieldArray?: FieldArrayConfig; // For fieldArray type
   showHide?: ShowHideConfig; // For showHide type (collapsible disclosure)
   /** Field name of ShowHide state - when this state is "open", validation is skipped for this field */
   skipValidationWhenShowHideOpen?: string;
   width?: "short" | "medium" | "full"; // Field width (defaults to "full")
+  inputClassName?: string;
 };
 
 type DateFormField = BaseFormField & {
@@ -149,6 +154,17 @@ type FileFormField = BaseFormField & {
   multiple?: boolean;
 };
 
+type HeadingFormField = {
+  type: "heading";
+  name: string; // Unique identifier
+  label: string; // The heading text
+  hint?: string; // Optional description below the heading
+  conditionalOn?: ConditionalOn; // Headings can be conditional too
+  width?: "short" | "medium" | "full"; // Field width (defaults to "full")
+  /** Heading level. Defaults to "h2" */
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+};
+
 export type FormField =
   | DateFormField
   | OptionFormField
@@ -157,7 +173,8 @@ export type FormField =
   | FieldArrayFormField
   | TextFormField
   | ShowHideFormField
-  | FileFormField;
+  | FileFormField
+  | HeadingFormField;
 
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
@@ -197,7 +214,7 @@ export type FormStep = {
   title: string;
   description?: string;
   fields: FormField[];
-  conditionalOn?: ConditionalRule; // For conditional steps
+  conditionalOn?: ConditionalOn; // For conditional steps
   /** Markdown content for confirmation page body (replaces steps array) */
   bodyContent?: string;
   contactDetails?: ContactDetails; // For confirmation pages
@@ -225,6 +242,11 @@ export type ApiResponse = {
     amount?: number;
     description?: string;
     numberOfCopies?: number;
+    integrations?: {
+      opencrvs?: {
+        trackingId?: string;
+      };
+    };
   };
   errors?: { field: string; message: string; code: string }[];
   message?: string;
