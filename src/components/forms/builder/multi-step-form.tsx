@@ -156,14 +156,15 @@ function createRepeatableStepInstance(
   const isSharedField = (fieldName: string) => sharedFields.includes(fieldName);
 
   // Create indexed field names (e.g., minorDetails.0.firstName)
-  // Shared fields are prefixed with arrayFieldName but not indexed, and only appear on first instance
+  // Shared fields go to {arrayFieldName}Shared (e.g., beneficiariesShared.school)
+  // and only appear on first instance
   const indexedFields: FormField[] = [];
 
   for (const field of baseStep.fields) {
     // Check if this is a shared field
     if (isSharedField(field.name)) {
       if (index === 0) {
-        const prefixedName = `${arrayFieldName}.${field.name}`;
+        const prefixedName = `${arrayFieldName}Shared.${field.name}`;
         indexedFields.push({
           ...field,
           name: prefixedName,
