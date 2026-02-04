@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { checkConditionalRule } from "@/lib/utils";
 import {
   createDateSchema,
   dateValidation,
@@ -73,6 +74,11 @@ function objectToZodSchema(
 }
 
 function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
+  // Heading fields don't need schema validation
+  if (field.type === "heading") {
+    return z.any().optional();
+  }
+
   let schema: z.ZodTypeAny = z.string();
 
   const validation = field.validation as NonDateFieldValidation &
@@ -567,17 +573,18 @@ export function generateFormSchema(formSteps: FormStep[]) {
 
     // Validate conditional fields (conditionalOn)
     for (const field of conditionalFields) {
+      // Skip heading fields - they don't have validation
+      if (field.type === "heading") continue;
       if (!field.conditionalOn) continue;
 
-      const parentValue = getNestedValue(
-        data as Record<string, unknown>,
-        field.conditionalOn.field
-      );
       const fieldValue = getNestedValue(
         data as Record<string, unknown>,
         field.name
       );
-      const isVisible = parentValue === field.conditionalOn.value;
+      const isVisible = checkConditionalRule(
+        field.conditionalOn,
+        data as Record<string, unknown>
+      );
 
       if (
         isVisible &&
@@ -611,10 +618,11 @@ export function generateFormSchema(formSteps: FormStep[]) {
               for (const nestedField of field.fieldArray.fields) {
                 if (!nestedField.conditionalOn) continue;
 
-                const parentValue = item[nestedField.conditionalOn.field];
                 const fieldValue = item[nestedField.name];
-                const isVisible =
-                  parentValue === nestedField.conditionalOn.value;
+                const isVisible = checkConditionalRule(
+                  nestedField.conditionalOn,
+                  item
+                );
 
                 if (
                   isVisible &&
