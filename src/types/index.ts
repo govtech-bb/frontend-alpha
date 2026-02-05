@@ -190,6 +190,10 @@ export type RepeatableStepConfig = {
    * (e.g., guardian details that appear after each child entry when applicable)
    */
   skipAddAnother?: boolean;
+  /**
+   * Field names that are shared across all repeatable instances.
+   */
+  sharedFields?: string[];
 };
 
 export type FormStep = {
