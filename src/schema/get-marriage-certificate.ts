@@ -355,6 +355,7 @@ export const formSteps: FormStep[] = [
         name: "wife.maidenName",
         label: "Maiden name",
         type: "text",
+        hint: "This is their last name before marriage",
         validation: {
           required: "Maiden name is required",
           minLength: {
