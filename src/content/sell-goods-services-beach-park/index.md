@@ -46,10 +46,10 @@ You will need to give:
 
 2. 2 testimonials from people who can vouch for you. They must not be from the same 2 people you have named as referees.
 
-You will also be asked to provide:
+You will also be asked to upload:
 
 - a [Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
-- 2 passport-sized pictures
+- 2 passport-sized pictures of yourself
 
 ## After you apply
 
