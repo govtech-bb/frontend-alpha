@@ -2,7 +2,7 @@
 title: "Register for Job Start Plus"
 stage: "alpha"
 featured: false
-publish_date: 2025-12-08
+publish_date: 2026-02-06
 ---
 
 [Job Start Plus](https://labour.gov.bb/jobstartplus/) is a training programme for young people aimed at preparing them for the workplace. It offers career guidance and tailored training to develop relevant skills and build confidence. There’s also the opportunity to be placed in a place of work.
