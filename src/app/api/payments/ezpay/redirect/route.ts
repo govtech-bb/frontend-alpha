@@ -43,15 +43,7 @@ export function GET(request: NextRequest) {
   const transactionNumber = searchParams.get("tx");
   const paymentStatus = searchParams.get("payment_status") || "failed";
 
-  let origin: string;
-
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    origin = process.env.NEXT_PUBLIC_APP_URL;
-  } else {
-    const host = request.headers.get("host") || request.nextUrl.host;
-    const protocol = host.includes("localhost") ? "http" : "https";
-    origin = `${protocol}://${host}`;
-  }
+  const origin = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;
 
   // Find form by reverse-mapping the reference prefix to a form slug
   // const prefix = referenceNumber ? extractPrefix(referenceNumber) : null;
