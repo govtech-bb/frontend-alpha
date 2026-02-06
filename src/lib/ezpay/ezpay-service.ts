@@ -172,23 +172,25 @@ export const verifyPayment = async (
     throw new Error("Either transactionNumber or reference is required");
   }
 
-  // Build JSON body based on which parameter is provided
-  const requestBody: Record<string, string> = {};
+  const formData = new FormData();
 
   if (params.transactionNumber) {
-    requestBody.transaction_number = params.transactionNumber;
+    formData.append("transaction_number", params.transactionNumber);
   } else if (params.reference) {
-    requestBody.reference = params.reference;
+    formData.append("reference", params.reference);
   }
 
   const response = await fetch(`${baseUrl}/check_api`, {
     method: "POST",
     headers: {
       EZPluginKey: apiKey,
-      "Content-Type": "application/json",
     },
-    body: JSON.stringify(requestBody),
+    body: formData,
   });
+
+  if (!response.ok) {
+    throw new Error(`EZPay verify failed: ${response.status}`);
+  }
 
   return response.json();
 };

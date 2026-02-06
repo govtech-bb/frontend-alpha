@@ -146,15 +146,35 @@ function createRepeatableStepInstance(
   const config = baseStep.repeatable;
   if (!config) return baseStep;
 
-  const { arrayFieldName, addAnotherLabel } = config;
+  const { arrayFieldName, addAnotherLabel, sharedFields = [] } = config;
 
   // Helper to prefix a field name with the array path
   const indexFieldName = (fieldName: string) =>
     `${arrayFieldName}.${index}.${fieldName}`;
 
+  // Helper to check if a field is shared (not indexed)
+  const isSharedField = (fieldName: string) => sharedFields.includes(fieldName);
+
   // Create indexed field names (e.g., minorDetails.0.firstName)
-  // Also update any field references (conditionalOn, skipValidationWhenShowHideOpen, showHide)
-  const indexedFields: FormField[] = baseStep.fields.map((field) => {
+  // Shared fields go to {arrayFieldName}Shared (e.g., beneficiariesShared.school)
+  // and only appear on first instance
+  const indexedFields: FormField[] = [];
+
+  for (const field of baseStep.fields) {
+    // Check if this is a shared field
+    if (isSharedField(field.name)) {
+      if (index === 0) {
+        const prefixedName = `${arrayFieldName}Shared.${field.name}`;
+        indexedFields.push({
+          ...field,
+          name: prefixedName,
+        });
+      }
+      // Skip shared fields on subsequent instances
+      continue;
+    }
+
+    // Regular field - apply indexing
     const indexed: FormField = {
       ...field,
       name: indexFieldName(field.name),
@@ -194,8 +214,8 @@ function createRepeatableStepInstance(
       };
     }
 
-    return indexed;
-  });
+    indexedFields.push(indexed);
+  }
 
   // Add "add another" radio field if this step should have it
   if (shouldAddAnotherField) {
