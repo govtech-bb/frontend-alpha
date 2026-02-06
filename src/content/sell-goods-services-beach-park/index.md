@@ -1,7 +1,7 @@
 ---
 title: "Apply for a licence to sell goods or services at a beach or park"
 stage: "alpha"
-publish_date: 2026-01-14
+publish_date: 2026-02-06
 ---
 
 If you would like to sell goods or services on a beach or in a park, you must have a valid licence. You can apply for one here.
