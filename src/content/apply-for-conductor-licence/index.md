@@ -1,7 +1,7 @@
 ---
 title: "Apply for a conductor's licence"
 stage: "alpha"
-publish_date: 2025-12-15
+publish_date: 2026-02-06
 ---
 
 If you are 18 years old or older, you can use this service to apply for a licence to become a conductor on a bus.
