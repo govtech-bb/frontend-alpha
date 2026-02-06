@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Heading, Text } from "@govtech-bb/react";
+import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
@@ -194,7 +195,14 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
             {section.items.map((item, index) => (
               <div className="flex flex-col sm:flex-row lg:gap-x-2" key={index}>
                 <dt className="font-bold sm:w-1/3">{item.label}</dt>
-                <dd className="sm:w-2/3">{item.value}</dd>
+                <dd className="sm:w-2/3">
+                  {item.value.split("\n").map((line, idx) => (
+                    <Fragment key={idx}>
+                      {line}
+                      <br />
+                    </Fragment>
+                  ))}
+                </dd>
               </div>
             ))}
           </dl>

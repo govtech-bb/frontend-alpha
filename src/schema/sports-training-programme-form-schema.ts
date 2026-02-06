@@ -243,7 +243,7 @@ export const formSteps: FormStep[] = [
         hidden: true,
         type: "radio",
         validation: {
-          required: "Organizational membership is required",
+          required: "Organisational membership is required",
         },
         options: [
           { label: "Yes", value: "yes" },
@@ -254,7 +254,7 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "organisation-details",
-    title: "Do you belong to any organisations?",
+    title: "Tell us about your organisations",
     description:
       "For example, a sports or social group, or a youth and community club",
     conditionalOn: {
