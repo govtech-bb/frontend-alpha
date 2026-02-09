@@ -609,7 +609,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Date of birth is required",
           date: {
-            type: "past",
+            type: "pastOrToday",
           },
         },
       },
