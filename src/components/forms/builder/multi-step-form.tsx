@@ -1045,6 +1045,43 @@ export default function DynamicMultiStepForm({
                 isValid = false;
               }
             }
+
+            // Check number min/max for showHide nested number fields
+            if (childField.type === "number" && childField.validation) {
+              const { min, max } = childField.validation;
+              if (!(min || max)) continue;
+
+              const rawValue = methods.getValues(
+                childField.name as keyof FormData
+              );
+
+              if (
+                rawValue === "" ||
+                rawValue === null ||
+                rawValue === undefined
+              )
+                continue;
+
+              const value = Number(rawValue);
+
+              if (Number.isNaN(value)) continue;
+
+              if (min && value < min.value) {
+                methods.setError(childField.name as keyof FormData, {
+                  type: "min",
+                  message: min.message,
+                });
+                isValid = false;
+              }
+
+              if (max && value > max.value) {
+                methods.setError(childField.name as keyof FormData, {
+                  type: "max",
+                  message: max.message,
+                });
+                isValid = false;
+              }
+            }
           }
         }
       }
