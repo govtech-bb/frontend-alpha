@@ -3,6 +3,12 @@
 import type { ErrorItem } from "@govtech-bb/react";
 import { Button, ErrorSummary, Text, TextArea } from "@govtech-bb/react";
 import { useEffect, useRef, useState } from "react";
+import {
+  buildEventName,
+  FORM_SUBMIT_STATUS,
+  TRACKED_EVENTS,
+  trackEvent,
+} from "@/lib/analytics";
 
 type FormErrors = {
   visitReason?: string;
@@ -10,6 +16,8 @@ type FormErrors = {
 };
 
 export function SimpleFeedbackForm() {
+  const submitEventName = buildEventName("feedback", TRACKED_EVENTS.SUBMIT);
+
   const [formData, setFormData] = useState({
     visitReason: "",
     whatWentWrong: "",
@@ -87,11 +95,20 @@ export function SimpleFeedbackForm() {
           whatWentWrong: "",
           referrer: formData.referrer,
         });
+        trackEvent(submitEventName, {
+          status: FORM_SUBMIT_STATUS.SUCCESS,
+        });
       } else {
         setSubmitStatus("error");
+        trackEvent(submitEventName, {
+          status: FORM_SUBMIT_STATUS.FAILURE,
+        });
       }
     } catch (_error) {
       setSubmitStatus("error");
+      trackEvent(submitEventName, {
+        status: FORM_SUBMIT_STATUS.FAILURE,
+      });
     } finally {
       setIsSubmitting(false);
     }

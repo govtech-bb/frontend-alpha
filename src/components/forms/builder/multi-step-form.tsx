@@ -7,6 +7,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
+import {
+  buildEventName,
+  FORM_SUBMIT_STATUS,
+  TRACKED_EVENTS,
+  trackEvent,
+} from "@/lib/analytics";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
@@ -769,6 +775,8 @@ export default function DynamicMultiStepForm({
     setIsSubmitting(true);
     setSubmissionError(null);
 
+    const submitEventName = buildEventName(storageKey, TRACKED_EVENTS.SUBMIT);
+
     try {
       // Extract customer name before cleaning data
       const applicantFirstName = (data["applicant.firstName"] as string) || "";
@@ -804,6 +812,10 @@ export default function DynamicMultiStepForm({
           customerName,
           apiPaymentData
         );
+        trackEvent(submitEventName, {
+          serviceTitle,
+          status: FORM_SUBMIT_STATUS.SUCCESS,
+        });
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -812,6 +824,10 @@ export default function DynamicMultiStepForm({
             message: err.message,
           })),
         });
+        trackEvent(submitEventName, {
+          serviceTitle,
+          status: FORM_SUBMIT_STATUS.FAILURE,
+        });
       }
     } catch (error) {
       setSubmissionError({
@@ -819,6 +835,10 @@ export default function DynamicMultiStepForm({
           error instanceof Error
             ? error.message
             : "An error occurred during submission",
+      });
+      trackEvent(submitEventName, {
+        serviceTitle,
+        status: FORM_SUBMIT_STATUS.FAILURE,
       });
     } finally {
       setIsSubmitting(false);
