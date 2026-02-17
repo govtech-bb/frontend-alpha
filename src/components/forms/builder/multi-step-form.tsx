@@ -22,6 +22,14 @@ import { ConfirmationPage } from "./confirmation-step";
 import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
 
+function getFormContext(
+  pathname: string,
+  formName: string
+): { form: string; category: string } {
+  const segments = pathname.split("/").filter(Boolean);
+  return { form: formName, category: segments[0] ?? "" };
+}
+
 /**
  * Sets a nested value in an object using dot notation path
  * Creates intermediate objects as needed
@@ -388,6 +396,11 @@ export default function DynamicMultiStepForm({
   const pathname = usePathname();
   const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
 
+  const { form, category } = useMemo(
+    () => getFormContext(pathname, storageKey),
+    [pathname, storageKey]
+  );
+
   // Get store hook (uses singleton cache internally)
   const useFormStore = createFormStore(storageKey);
 
@@ -409,6 +422,11 @@ export default function DynamicMultiStepForm({
     markAsSubmitted,
     clearFormDataKeepSubmission,
   } = useFormStore();
+
+  console.log("Form render", {
+    currentStep,
+    completedSteps,
+  });
 
   const [isFormReady, setIsFormReady] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -442,6 +460,8 @@ export default function DynamicMultiStepForm({
     () => expandFormSteps(formSteps, repeatableCounts),
     [formSteps, repeatableCounts]
   );
+
+  console.log("Expanded form steps", expandedFormSteps);
 
   // Generate schema dynamically from the expanded formSteps
   const formSchema = useMemo(
@@ -816,6 +836,11 @@ export default function DynamicMultiStepForm({
           serviceTitle,
           status: FORM_SUBMIT_STATUS.SUCCESS,
         });
+        trackEvent(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
+          form,
+          category,
+          status: FORM_SUBMIT_STATUS.SUCCESS,
+        });
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -828,6 +853,11 @@ export default function DynamicMultiStepForm({
           serviceTitle,
           status: FORM_SUBMIT_STATUS.FAILURE,
         });
+        trackEvent(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
+          form,
+          category,
+          status: FORM_SUBMIT_STATUS.FAILURE,
+        });
       }
     } catch (error) {
       setSubmissionError({
@@ -838,6 +868,11 @@ export default function DynamicMultiStepForm({
       });
       trackEvent(submitEventName, {
         serviceTitle,
+        status: FORM_SUBMIT_STATUS.FAILURE,
+      });
+      trackEvent(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
+        form,
+        category,
         status: FORM_SUBMIT_STATUS.FAILURE,
       });
     } finally {
@@ -882,6 +917,22 @@ export default function DynamicMultiStepForm({
     return 0;
   };
 
+  const trackStepComplete = useCallback(
+    (stepIndex: number) => {
+      const step = String(stepIndex);
+
+      trackEvent(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
+        form,
+        category,
+        step,
+      });
+
+      const stepSpecificEventName = `${form}-${TRACKED_EVENTS.SUBMIT_STEP}-${stepIndex}`;
+      trackEvent(stepSpecificEventName, { category });
+    },
+    [form, category]
+  );
+
   const scrollToStepHeading = () => {
     // Scroll to top instantly to avoid fighting with React re-renders (form steps are dynamic)
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -905,6 +956,7 @@ export default function DynamicMultiStepForm({
     if (isReviewStep) {
       // Review step complete, just move to next step
       markStepComplete(currentStep);
+      trackStepComplete(currentStep);
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
       setCurrentStep(nextVisibleStep);
@@ -1088,6 +1140,7 @@ export default function DynamicMultiStepForm({
     if (isValid) {
       // Mark current step as complete
       markStepComplete(currentStep);
+      trackStepComplete(currentStep);
 
       // If this is the declaration step, submit the form
       if (isDeclarationStep) {

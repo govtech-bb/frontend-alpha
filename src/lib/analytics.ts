@@ -8,6 +8,9 @@ declare global {
 
 export const TRACKED_EVENTS = {
   SUBMIT: "submit",
+  SUBMIT_STEP: "submit_step",
+  FORM_STEP_COMPLETE_EVENT: "form-step-complete",
+  FORM_SUBMIT_EVENT: "form-submit",
 } as const;
 
 export const FORM_SUBMIT_STATUS = {
