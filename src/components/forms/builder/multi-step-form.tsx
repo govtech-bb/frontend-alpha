@@ -2,11 +2,17 @@
 
 import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useOpenPanel } from "@openpanel/nextjs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
+import {
+  FORM_SUBMIT_STATUS,
+  TRACKED_EVENTS,
+  type TYPE_FORM_SUBMIT_STATUS,
+} from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
@@ -15,6 +21,14 @@ import type { FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
+
+function getFormContext(
+  pathname: string,
+  formName: string
+): { form: string; category: string } {
+  const segments = pathname.split("/").filter(Boolean);
+  return { form: formName, category: segments[0] ?? "" };
+}
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -377,10 +391,16 @@ export default function DynamicMultiStepForm({
   serviceTitle,
   storageKey = "multi-step-form-storage",
 }: DynamicMultiStepFormProps) {
+  const op = useOpenPanel();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
+
+  const { form, category } = useMemo(
+    () => getFormContext(pathname, storageKey),
+    [pathname, storageKey]
+  );
 
   // Get store hook (uses singleton cache internally)
   const useFormStore = createFormStore(storageKey);
@@ -765,6 +785,13 @@ export default function DynamicMultiStepForm({
     return arrayifiedData as FormData;
   };
 
+  const trackFormSubmission = useCallback(
+    (status: TYPE_FORM_SUBMIT_STATUS) => {
+      op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, { form, category, status });
+    },
+    [op, form, category]
+  );
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -804,6 +831,7 @@ export default function DynamicMultiStepForm({
           customerName,
           apiPaymentData
         );
+        trackFormSubmission(FORM_SUBMIT_STATUS.SUCCESS);
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -812,6 +840,7 @@ export default function DynamicMultiStepForm({
             message: err.message,
           })),
         });
+        trackFormSubmission(FORM_SUBMIT_STATUS.FAILURE);
       }
     } catch (error) {
       setSubmissionError({
@@ -820,6 +849,7 @@ export default function DynamicMultiStepForm({
             ? error.message
             : "An error occurred during submission",
       });
+      trackFormSubmission(FORM_SUBMIT_STATUS.FAILURE);
     } finally {
       setIsSubmitting(false);
     }
@@ -862,6 +892,18 @@ export default function DynamicMultiStepForm({
     return 0;
   };
 
+  const trackStepComplete = useCallback(
+    (stepIndex: number) => {
+      op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
+        form,
+        category,
+        step: stepIndex,
+        stepName: expandedFormSteps[stepIndex]?.id ?? "",
+      });
+    },
+    [op, form, category, expandedFormSteps]
+  );
+
   const scrollToStepHeading = () => {
     // Scroll to top instantly to avoid fighting with React re-renders (form steps are dynamic)
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -885,6 +927,7 @@ export default function DynamicMultiStepForm({
     if (isReviewStep) {
       // Review step complete, just move to next step
       markStepComplete(currentStep);
+      trackStepComplete(currentStep);
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
       setCurrentStep(nextVisibleStep);
@@ -1068,6 +1111,7 @@ export default function DynamicMultiStepForm({
     if (isValid) {
       // Mark current step as complete
       markStepComplete(currentStep);
+      trackStepComplete(currentStep);
 
       // If this is the declaration step, submit the form
       if (isDeclarationStep) {
