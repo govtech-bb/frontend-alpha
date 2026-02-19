@@ -10,6 +10,7 @@ import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import {
   FORM_SUBMIT_STATUS,
+  getShortFormName,
   TRACKED_EVENTS,
   type TYPE_FORM_SUBMIT_STATUS,
 } from "@/lib/openpanel";
@@ -787,7 +788,11 @@ export default function DynamicMultiStepForm({
 
   const trackFormSubmission = useCallback(
     (status: TYPE_FORM_SUBMIT_STATUS) => {
-      op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, { form, category, status });
+      op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
+        form: getShortFormName(form),
+        category,
+        status,
+      });
     },
     [op, form, category]
   );
@@ -895,7 +900,7 @@ export default function DynamicMultiStepForm({
   const trackStepComplete = useCallback(
     (stepIndex: number) => {
       op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
-        form,
+        form: getShortFormName(form),
         category,
         step: stepIndex,
         stepName: expandedFormSteps[stepIndex]?.id ?? "",
