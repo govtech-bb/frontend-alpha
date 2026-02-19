@@ -802,6 +802,17 @@ export default function DynamicMultiStepForm({
     [op, form, category, expandedFormSteps]
   );
 
+  const trackRemoveItem = useCallback(
+    (fieldName: string) => {
+      op.track(TRACKED_EVENTS.FORM_REMOVE_ITEM_EVENT, {
+        ...getFormBaseContext(form, category),
+        step: expandedFormSteps[currentStep]?.id ?? "",
+        field: fieldName,
+      });
+    },
+    [op, form, category, expandedFormSteps, currentStep]
+  );
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -1148,6 +1159,11 @@ export default function DynamicMultiStepForm({
           addAnotherField.name as keyof FormData
         );
         if (addAnotherValue === "yes") {
+          op.track(TRACKED_EVENTS.FORM_ADD_ANOTHER_EVENT, {
+            ...getFormBaseContext(form, category),
+            step: currentStepData.id,
+          });
+
           // Extract base step ID from the field name: _addAnother_{baseStepId}_{index}
           const match = addAnotherField.name.match(/^_addAnother_(.+)_(\d+)$/);
           if (match) {
@@ -1424,6 +1440,7 @@ export default function DynamicMultiStepForm({
           />
         ) : (
           <DynamicStep
+            onRemoveItem={trackRemoveItem}
             serviceTitle={serviceTitle}
             step={expandedFormSteps[currentStep]}
           />

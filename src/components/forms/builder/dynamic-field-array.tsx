@@ -36,9 +36,13 @@ type FieldArrayField = FormField & {
 
 type DynamicFieldArrayProps = {
   field: FieldArrayField;
+  onRemoveItem?: (fieldName: string) => void;
 };
 
-export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
+export function DynamicFieldArray({
+  field,
+  onRemoveItem,
+}: DynamicFieldArrayProps) {
   const {
     register,
     control,
@@ -114,6 +118,7 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
   const handleRemove = (index: number) => {
     if (fields.length > minItems) {
       remove(index);
+      onRemoveItem?.(field.name);
     }
   };
 

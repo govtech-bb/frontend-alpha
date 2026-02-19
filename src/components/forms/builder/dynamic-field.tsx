@@ -97,6 +97,7 @@ function FileUploadField({
 type DynamicFieldProps = {
   field: FormField;
   conditionalFields?: FormField[];
+  onRemoveItem?: (fieldName: string) => void;
 };
 
 /**
@@ -118,6 +119,7 @@ function getWidthClass(width?: "short" | "medium" | "full"): string {
 export function DynamicField({
   field,
   conditionalFields = [],
+  onRemoveItem,
 }: DynamicFieldProps) {
   const {
     register,
@@ -206,7 +208,10 @@ export function DynamicField({
       >
         <div className="border-grey-00 border-l-8 border-solid pb-4 pl-[52px]">
           {conditionalField.type === "fieldArray" ? (
-            <DynamicFieldArray field={conditionalField} />
+            <DynamicFieldArray
+              field={conditionalField}
+              onRemoveItem={onRemoveItem}
+            />
           ) : conditionalField.type === "date" ? (
             <Controller
               control={control}
@@ -407,7 +412,7 @@ export function DynamicField({
   return (
     <div className={getWidthClass(field.width)} id={field.name}>
       {field.type === "fieldArray" ? (
-        <DynamicFieldArray field={field} />
+        <DynamicFieldArray field={field} onRemoveItem={onRemoveItem} />
       ) : field.type === "date" ? (
         <Controller
           control={control}

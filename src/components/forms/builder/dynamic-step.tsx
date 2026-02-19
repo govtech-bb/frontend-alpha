@@ -10,9 +10,14 @@ import { DynamicField } from "./dynamic-field";
 type DynamicStepProps = {
   step: FormStep;
   serviceTitle: string;
+  onRemoveItem?: (fieldName: string) => void;
 };
 
-export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
+export function DynamicStep({
+  step,
+  serviceTitle,
+  onRemoveItem,
+}: DynamicStepProps) {
   const {
     formState: { errors },
     watch,
@@ -108,6 +113,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
                 conditionalFields={conditionalFields}
                 field={field}
                 key={field.name}
+                onRemoveItem={onRemoveItem}
               />
             );
           })}

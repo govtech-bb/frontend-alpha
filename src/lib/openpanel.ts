@@ -5,6 +5,8 @@ export const TRACKED_EVENTS = {
   FORM_STEP_BACK_EVENT: "form-step-back",
   FORM_STEP_EDIT_EVENT: "form-step-edit",
   FORM_STEP_COMPLETE_EVENT: "form-step-complete",
+  FORM_ADD_ANOTHER_EVENT: "form-add-another",
+  FORM_REMOVE_ITEM_EVENT: "form-remove-item",
   FORM_SUBMIT_EVENT: "form-submit",
   FORM_SUBMIT_ERROR_EVENT: "form-submit-error",
   FORM_VALIDATION_ERROR_EVENT: "form-validation-error",
