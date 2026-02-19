@@ -4,7 +4,11 @@ import type { ErrorItem } from "@govtech-bb/react";
 import { Button, ErrorSummary, Text, TextArea } from "@govtech-bb/react";
 import { useOpenPanel } from "@openpanel/nextjs";
 import { useEffect, useRef, useState } from "react";
-import { FORM_NAMES, getBasePayload, TRACKED_EVENTS } from "@/lib/openpanel";
+import {
+  FORM_NAMES,
+  getFormBaseContext,
+  TRACKED_EVENTS,
+} from "@/lib/openpanel";
 
 type FormErrors = {
   visitReason?: string;
@@ -57,7 +61,7 @@ export function SimpleFeedbackForm() {
   const trackFormSubmitError = () => {
     op.track(
       TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
-      getBasePayload(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
+      getFormBaseContext(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
     );
   };
 
@@ -100,7 +104,7 @@ export function SimpleFeedbackForm() {
         });
         op.track(
           TRACKED_EVENTS.FORM_SUBMIT_EVENT,
-          getBasePayload(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
+          getFormBaseContext(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
         );
       } else {
         setSubmitStatus("error");

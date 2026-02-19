@@ -8,7 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
-import { getBasePayload, TRACKED_EVENTS } from "@/lib/openpanel";
+import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
@@ -784,14 +784,14 @@ export default function DynamicMultiStepForm({
   const trackFormSubmitError = useCallback(() => {
     op.track(
       TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
-      getBasePayload(form, category)
+      getFormBaseContext(form, category)
     );
   }, [op, form, category]);
 
   const trackStepComplete = useCallback(
     (stepIndex: number) => {
       op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
-        ...getBasePayload(form, category),
+        ...getFormBaseContext(form, category),
         step: expandedFormSteps[stepIndex]?.id ?? "",
       });
     },
@@ -839,7 +839,7 @@ export default function DynamicMultiStepForm({
         );
         op.track(
           TRACKED_EVENTS.FORM_SUBMIT_EVENT,
-          getBasePayload(form, category)
+          getFormBaseContext(form, category)
         );
       } else {
         setSubmissionError({
@@ -1174,7 +1174,7 @@ export default function DynamicMultiStepForm({
 
   const handleEditFromReview = (stepIndex: number) => {
     op.track(TRACKED_EVENTS.FORM_STEP_EDIT_EVENT, {
-      ...getBasePayload(form, category),
+      ...getFormBaseContext(form, category),
       step: expandedFormSteps[stepIndex]?.id ?? "",
     });
     isProgrammaticNavigation.current = true;
@@ -1184,7 +1184,7 @@ export default function DynamicMultiStepForm({
 
   const prevStep = () => {
     op.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
-      ...getBasePayload(form, category),
+      ...getFormBaseContext(form, category),
       step: expandedFormSteps[currentStep]?.id ?? "",
     });
     isProgrammaticNavigation.current = true;

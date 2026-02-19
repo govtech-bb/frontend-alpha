@@ -60,7 +60,7 @@ export function getShortName(mapType: ShortNameMapType, key: string): string {
   return map[key] ?? key;
 }
 
-export function getBasePayload(
+export function getFormBaseContext(
   form: string,
   category: string
 ): { form: string; category: string } {
