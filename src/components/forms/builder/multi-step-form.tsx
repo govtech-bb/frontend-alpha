@@ -10,6 +10,7 @@ import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import {
   FORM_SUBMIT_STATUS,
+  getShortCategoryName,
   getShortFormName,
   TRACKED_EVENTS,
   type TYPE_FORM_SUBMIT_STATUS,
@@ -790,7 +791,7 @@ export default function DynamicMultiStepForm({
     (status: TYPE_FORM_SUBMIT_STATUS) => {
       op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
         form: getShortFormName(form),
-        category,
+        category: getShortCategoryName(category),
         status,
       });
     },
@@ -901,7 +902,7 @@ export default function DynamicMultiStepForm({
     (stepIndex: number) => {
       op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
         form: getShortFormName(form),
-        category,
+        category: getShortCategoryName(category),
         step: stepIndex,
         stepName: expandedFormSteps[stepIndex]?.id ?? "",
       });

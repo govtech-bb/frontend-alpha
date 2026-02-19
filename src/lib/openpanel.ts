@@ -37,3 +37,16 @@ export const FORM_LONG_TO_SHORT: Record<string, string> = {
 export function getShortFormName(longFormName: string): string {
   return FORM_LONG_TO_SHORT[longFormName] ?? longFormName;
 }
+
+export const CATEGORY_LONG_TO_SHORT: Record<string, string> = {
+  "family-birth-relationships": "family",
+  "work-employment": "employment",
+  "money-financial-support": "financial",
+  "travel-id-citizenship": "travel",
+  "business-trade": "business",
+  "public-safety": "safety",
+};
+
+export function getShortCategoryName(longCategoryName: string): string {
+  return CATEGORY_LONG_TO_SHORT[longCategoryName] ?? longCategoryName;
+}
