@@ -9,11 +9,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import {
-  FORM_SUBMIT_STATUS,
   getShortName,
   SHORT_NAME_MAP_TYPE,
   TRACKED_EVENTS,
-  type TYPE_FORM_SUBMIT_STATUS,
 } from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
@@ -787,17 +785,6 @@ export default function DynamicMultiStepForm({
     return arrayifiedData as FormData;
   };
 
-  const trackFormSubmission = useCallback(
-    (status: TYPE_FORM_SUBMIT_STATUS) => {
-      op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
-        form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
-        category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
-        status,
-      });
-    },
-    [op, form, category]
-  );
-
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -837,7 +824,10 @@ export default function DynamicMultiStepForm({
           customerName,
           apiPaymentData
         );
-        trackFormSubmission(FORM_SUBMIT_STATUS.SUCCESS);
+        op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
+          form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
+          category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+        });
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -846,7 +836,10 @@ export default function DynamicMultiStepForm({
             message: err.message,
           })),
         });
-        trackFormSubmission(FORM_SUBMIT_STATUS.FAILURE);
+        op.track(TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT, {
+          form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
+          category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+        });
       }
     } catch (error) {
       setSubmissionError({
@@ -855,7 +848,10 @@ export default function DynamicMultiStepForm({
             ? error.message
             : "An error occurred during submission",
       });
-      trackFormSubmission(FORM_SUBMIT_STATUS.FAILURE);
+      op.track(TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT, {
+        form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
+        category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -903,8 +899,7 @@ export default function DynamicMultiStepForm({
       op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
         form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
         category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
-        step: stepIndex,
-        stepName: expandedFormSteps[stepIndex]?.id ?? "",
+        step: expandedFormSteps[stepIndex]?.id ?? "",
       });
     },
     [op, form, category, expandedFormSteps]
@@ -1182,12 +1177,22 @@ export default function DynamicMultiStepForm({
   };
 
   const handleEditFromReview = (stepIndex: number) => {
+    op.track(TRACKED_EVENTS.FORM_STEP_EDIT_EVENT, {
+      form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
+      category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+      step: expandedFormSteps[stepIndex]?.id ?? "",
+    });
     isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
     scrollToStepHeading();
   };
 
   const prevStep = () => {
+    op.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
+      form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
+      category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+      step: expandedFormSteps[currentStep]?.id ?? "",
+    });
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);
     setCurrentStep(prevVisibleStep);

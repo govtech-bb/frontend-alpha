@@ -4,12 +4,7 @@ import type { ErrorItem } from "@govtech-bb/react";
 import { Button, ErrorSummary, Text, TextArea } from "@govtech-bb/react";
 import { useOpenPanel } from "@openpanel/nextjs";
 import { useEffect, useRef, useState } from "react";
-import {
-  FORM_NAMES,
-  FORM_SUBMIT_STATUS,
-  TRACKED_EVENTS,
-  type TYPE_FORM_SUBMIT_STATUS,
-} from "@/lib/openpanel";
+import { FORM_NAMES, TRACKED_EVENTS } from "@/lib/openpanel";
 
 type FormErrors = {
   visitReason?: string;
@@ -59,13 +54,6 @@ export function SimpleFeedbackForm() {
     return errors;
   };
 
-  const trackFormSubmission = (status: TYPE_FORM_SUBMIT_STATUS) => {
-    op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
-      form: FORM_NAMES.SIMPLE_FEEDBACK_FORM,
-      status,
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowValidation(true);
@@ -103,14 +91,23 @@ export function SimpleFeedbackForm() {
           whatWentWrong: "",
           referrer: formData.referrer,
         });
-        trackFormSubmission(FORM_SUBMIT_STATUS.SUCCESS);
+        op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
+          form: FORM_NAMES.SIMPLE_FEEDBACK_FORM,
+          category: "feedback",
+        });
       } else {
         setSubmitStatus("error");
-        trackFormSubmission(FORM_SUBMIT_STATUS.FAILURE);
+        op.track(TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT, {
+          form: FORM_NAMES.SIMPLE_FEEDBACK_FORM,
+          category: "feedback",
+        });
       }
     } catch (_error) {
       setSubmitStatus("error");
-      trackFormSubmission(FORM_SUBMIT_STATUS.FAILURE);
+      op.track(TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT, {
+        form: FORM_NAMES.SIMPLE_FEEDBACK_FORM,
+        category: "feedback",
+      });
     } finally {
       setIsSubmitting(false);
     }
