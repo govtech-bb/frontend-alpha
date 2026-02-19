@@ -15,6 +15,14 @@ export const FORM_NAMES = {
   SIMPLE_FEEDBACK_FORM: "simple-feedback-form",
 } as const;
 
+export const SHORT_NAME_MAP_TYPE = {
+  FORM: "FORM",
+  CATEGORY: "CATEGORY",
+} as const;
+
+export type ShortNameMapType =
+  (typeof SHORT_NAME_MAP_TYPE)[keyof typeof SHORT_NAME_MAP_TYPE];
+
 export const FORM_LONG_TO_SHORT: Record<string, string> = {
   "get-birth-certificate": "birth-cert",
   "get-death-certificate": "death-cert",
@@ -32,11 +40,7 @@ export const FORM_LONG_TO_SHORT: Record<string, string> = {
   "reserve-society-name": "society-name",
   "request-a-fire-service-inspection": "fire-inspection",
   "exit-survey": "exit-survey",
-} as const;
-
-export function getShortFormName(longFormName: string): string {
-  return FORM_LONG_TO_SHORT[longFormName] ?? longFormName;
-}
+};
 
 export const CATEGORY_LONG_TO_SHORT: Record<string, string> = {
   "family-birth-relationships": "family",
@@ -47,6 +51,15 @@ export const CATEGORY_LONG_TO_SHORT: Record<string, string> = {
   "public-safety": "safety",
 };
 
-export function getShortCategoryName(longCategoryName: string): string {
-  return CATEGORY_LONG_TO_SHORT[longCategoryName] ?? longCategoryName;
+export const SHORT_NAME_MAPS: Record<
+  ShortNameMapType,
+  Record<string, string>
+> = {
+  [SHORT_NAME_MAP_TYPE.FORM]: FORM_LONG_TO_SHORT,
+  [SHORT_NAME_MAP_TYPE.CATEGORY]: CATEGORY_LONG_TO_SHORT,
+};
+
+export function getShortName(mapType: ShortNameMapType, key: string): string {
+  const map = SHORT_NAME_MAPS[mapType];
+  return map[key] ?? key;
 }
