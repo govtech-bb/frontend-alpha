@@ -8,6 +8,7 @@ import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { markdownComponents } from "@/components/markdown-content";
 import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { getFormShortIdFromSlug, trackEvent } from "@/lib/analytics";
 import type { FormStep } from "@/types";
 
 type PaymentData = {
@@ -165,6 +166,11 @@ export function ConfirmationPage({
               </Text>
               <LinkButton
                 href={`/exit-survey?ref_id=${formId}&step=introduction`}
+                onClick={() => {
+                  trackEvent("form-feedback-start", {
+                    form: getFormShortIdFromSlug(formSlug ?? ""),
+                  });
+                }}
                 variant="secondary"
               >
                 Give feedback on this service
