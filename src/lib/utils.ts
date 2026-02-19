@@ -28,6 +28,12 @@ export function getNestedValue<T>(
   return result as T | undefined;
 }
 
+export function isEmpty(value: unknown): boolean {
+  if (value === undefined || value === null) return true;
+  if (typeof value === "string") return value.trim() === "";
+  return false;
+}
+
 export function findSubPageTitleFromPath(
   data: InformationContent[],
   path: string

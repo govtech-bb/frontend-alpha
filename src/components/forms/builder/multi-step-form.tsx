@@ -10,7 +10,7 @@ import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, isEmpty } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
@@ -1149,6 +1149,49 @@ export default function DynamicMultiStepForm({
       setCurrentStep(nextVisibleStep);
       scrollToStepHeading();
     } else {
+      const errorsObj = methods.formState.errors as Record<string, unknown>;
+      const formValues = methods.getValues() as Record<string, unknown>;
+      const validationErrors: { field: string; type: string }[] = [];
+
+      const toAnalyticsErrorType = (
+        rawType: string,
+        fieldName: string
+      ): string => {
+        switch (rawType) {
+          case "too_small": {
+            const value = getNestedValue(formValues, fieldName);
+            return isEmpty(value) ? "required" : "minLength";
+          }
+          case "invalid_format":
+          case "invalid_string":
+            return "pattern";
+          default:
+            return rawType;
+        }
+      };
+
+      for (const fieldName of currentFieldNames) {
+        const err = getNestedValue(errorsObj, fieldName) as
+          | { type?: string }
+          | undefined;
+        if (err?.type) {
+          validationErrors.push({
+            field: fieldName,
+            type: toAnalyticsErrorType(err.type, fieldName),
+          });
+        }
+      }
+
+      if (validationErrors.length > 0) {
+        op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
+          ...getFormBaseContext(form, category),
+          step: expandedFormSteps[currentStep]?.id ?? "",
+          errorCount: validationErrors.length,
+          fields: validationErrors.map((e) => e.field).join(","),
+          errorTypes: validationErrors.map((e) => e.type).join(","),
+        });
+      }
+
       // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
       const errorSummary = document.querySelector("#error-summary");
       if (errorSummary) {

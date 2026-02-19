@@ -5,6 +5,7 @@ export const TRACKED_EVENTS = {
   FORM_STEP_COMPLETE_EVENT: "form-step-complete",
   FORM_SUBMIT_EVENT: "form-submit",
   FORM_SUBMIT_ERROR_EVENT: "form-submit-error",
+  FORM_VALIDATION_ERROR_EVENT: "form-validation-error",
 } as const;
 
 export const FORM_NAMES = {
