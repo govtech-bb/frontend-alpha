@@ -40,7 +40,12 @@ export default function RootLayout({
       <body
         className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased`}
       >
-        <OpenPanelComponent clientId={OPENPANEL_SITE_ID} />
+        <OpenPanelComponent
+          clientId={OPENPANEL_SITE_ID}
+          trackAttributes={true}
+          trackOutgoingLinks={true}
+          trackScreenViews={true}
+        />
         <Header />
         {children}
         <Footer />
