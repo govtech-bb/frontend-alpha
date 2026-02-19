@@ -37,10 +37,10 @@ export default function RootLayout({
 
   return (
     <html className="bg-blue-100" lang="en">
-      <OpenPanelComponent clientId={OPENPANEL_SITE_ID} />
       <body
         className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased`}
       >
+        <OpenPanelComponent clientId={OPENPANEL_SITE_ID} />
         <Header />
         {children}
         <Footer />
