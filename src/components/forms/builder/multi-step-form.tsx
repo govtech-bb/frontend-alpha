@@ -854,6 +854,22 @@ export default function DynamicMultiStepForm({
           })),
         });
         trackFormSubmitError();
+        if (result.errors?.length) {
+          const fields = result.errors.map((error) => error.field).join(",");
+          const errorTypes = result.errors
+            .map((error) =>
+              toAnalyticsErrorType(error.code, error.field, data, error.message)
+            )
+            .join(",");
+
+          op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
+            ...getFormBaseContext(form, category),
+            step: "submission",
+            errorCount: result.errors.length,
+            fields,
+            errorTypes,
+          });
+        }
       }
     } catch (error) {
       setSubmissionError({
