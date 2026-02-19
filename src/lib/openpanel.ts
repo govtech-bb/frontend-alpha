@@ -1,3 +1,5 @@
+import { getNestedValue, isEmpty } from "./utils";
+
 export const TRACKED_EVENTS = {
   FORM_START_EVENT: "form-start",
   FORM_STEP_BACK_EVENT: "form-step-back",
@@ -70,3 +72,50 @@ export function getFormBaseContext(
     category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
   };
 }
+
+const MESSAGE_CATEGORIES: Record<
+  "required" | "minLength" | "pattern",
+  string[]
+> = {
+  required: ["required"],
+  minLength: ["at least"],
+  pattern: ["contain only", "valid"],
+};
+
+function categorizeByMessage(
+  message?: string
+): "required" | "minLength" | "pattern" | null {
+  if (!message) return null;
+
+  const lower = message.toLowerCase();
+
+  for (const [category, keywords] of Object.entries(MESSAGE_CATEGORIES)) {
+    if (keywords.some((word) => lower.includes(word))) {
+      return category as "required" | "minLength" | "pattern";
+    }
+  }
+
+  return null;
+}
+
+export const toAnalyticsErrorType = (
+  rawType: string,
+  fieldName: string,
+  formValues: Record<string, any>,
+  message?: string
+): "required" | "minLength" | "pattern" | "other" => {
+  const fromMessage = categorizeByMessage(message);
+  if (fromMessage) return fromMessage;
+
+  switch (rawType) {
+    case "too_small": {
+      const value = getNestedValue(formValues, fieldName);
+      return isEmpty(value) ? "required" : "minLength";
+    }
+    case "invalid_format":
+    case "invalid_string":
+      return "pattern";
+    default:
+      return "other";
+  }
+};

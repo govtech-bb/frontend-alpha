@@ -8,9 +8,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
-import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
+import {
+  getFormBaseContext,
+  TRACKED_EVENTS,
+  toAnalyticsErrorType,
+} from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue, isEmpty } from "@/lib/utils";
+import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
@@ -1153,31 +1157,20 @@ export default function DynamicMultiStepForm({
       const formValues = methods.getValues() as Record<string, unknown>;
       const validationErrors: { field: string; type: string }[] = [];
 
-      const toAnalyticsErrorType = (
-        rawType: string,
-        fieldName: string
-      ): string => {
-        switch (rawType) {
-          case "too_small": {
-            const value = getNestedValue(formValues, fieldName);
-            return isEmpty(value) ? "required" : "minLength";
-          }
-          case "invalid_format":
-          case "invalid_string":
-            return "pattern";
-          default:
-            return rawType;
-        }
-      };
-
       for (const fieldName of currentFieldNames) {
-        const err = getNestedValue(errorsObj, fieldName) as
-          | { type?: string }
+        const error = getNestedValue(errorsObj, fieldName) as
+          | { type?: string; message?: string }
           | undefined;
-        if (err?.type) {
+
+        if (error?.type) {
           validationErrors.push({
             field: fieldName,
-            type: toAnalyticsErrorType(err.type, fieldName),
+            type: toAnalyticsErrorType(
+              error.type,
+              fieldName,
+              formValues,
+              error?.message
+            ),
           });
         }
       }
