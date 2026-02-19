@@ -8,11 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
-import {
-  getShortName,
-  SHORT_NAME_MAP_TYPE,
-  TRACKED_EVENTS,
-} from "@/lib/openpanel";
+import { getBasePayload, TRACKED_EVENTS } from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
@@ -785,6 +781,23 @@ export default function DynamicMultiStepForm({
     return arrayifiedData as FormData;
   };
 
+  const trackFormSubmitError = useCallback(() => {
+    op.track(
+      TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
+      getBasePayload(form, category)
+    );
+  }, [op, form, category]);
+
+  const trackStepComplete = useCallback(
+    (stepIndex: number) => {
+      op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
+        ...getBasePayload(form, category),
+        step: expandedFormSteps[stepIndex]?.id ?? "",
+      });
+    },
+    [op, form, category, expandedFormSteps]
+  );
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -824,10 +837,10 @@ export default function DynamicMultiStepForm({
           customerName,
           apiPaymentData
         );
-        op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
-          form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
-          category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
-        });
+        op.track(
+          TRACKED_EVENTS.FORM_SUBMIT_EVENT,
+          getBasePayload(form, category)
+        );
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -836,10 +849,7 @@ export default function DynamicMultiStepForm({
             message: err.message,
           })),
         });
-        op.track(TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT, {
-          form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
-          category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
-        });
+        trackFormSubmitError();
       }
     } catch (error) {
       setSubmissionError({
@@ -848,10 +858,7 @@ export default function DynamicMultiStepForm({
             ? error.message
             : "An error occurred during submission",
       });
-      op.track(TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT, {
-        form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
-        category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
-      });
+      trackFormSubmitError();
     } finally {
       setIsSubmitting(false);
     }
@@ -893,17 +900,6 @@ export default function DynamicMultiStepForm({
     // If no visible step found, return 0
     return 0;
   };
-
-  const trackStepComplete = useCallback(
-    (stepIndex: number) => {
-      op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
-        form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
-        category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
-        step: expandedFormSteps[stepIndex]?.id ?? "",
-      });
-    },
-    [op, form, category, expandedFormSteps]
-  );
 
   const scrollToStepHeading = () => {
     // Scroll to top instantly to avoid fighting with React re-renders (form steps are dynamic)
@@ -1178,8 +1174,7 @@ export default function DynamicMultiStepForm({
 
   const handleEditFromReview = (stepIndex: number) => {
     op.track(TRACKED_EVENTS.FORM_STEP_EDIT_EVENT, {
-      form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
-      category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+      ...getBasePayload(form, category),
       step: expandedFormSteps[stepIndex]?.id ?? "",
     });
     isProgrammaticNavigation.current = true;
@@ -1189,8 +1184,7 @@ export default function DynamicMultiStepForm({
 
   const prevStep = () => {
     op.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
-      form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
-      category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+      ...getBasePayload(form, category),
       step: expandedFormSteps[currentStep]?.id ?? "",
     });
     isProgrammaticNavigation.current = true;

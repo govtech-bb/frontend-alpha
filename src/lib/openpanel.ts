@@ -59,3 +59,13 @@ export function getShortName(mapType: ShortNameMapType, key: string): string {
   const map = SHORT_NAME_MAPS[mapType];
   return map[key] ?? key;
 }
+
+export function getBasePayload(
+  form: string,
+  category: string
+): { form: string; category: string } {
+  return {
+    form: getShortName(SHORT_NAME_MAP_TYPE.FORM, form),
+    category: getShortName(SHORT_NAME_MAP_TYPE.CATEGORY, category),
+  };
+}
