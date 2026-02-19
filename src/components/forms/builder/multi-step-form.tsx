@@ -10,6 +10,7 @@ import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import {
   getFormBaseContext,
+  getStepForTracking,
   TRACKED_EVENTS,
   toAnalyticsErrorType,
 } from "@/lib/openpanel";
@@ -794,9 +795,11 @@ export default function DynamicMultiStepForm({
 
   const trackStepComplete = useCallback(
     (stepIndex: number) => {
+      const stepId = expandedFormSteps[stepIndex]?.id ?? "";
+
       op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
         ...getFormBaseContext(form, category),
-        step: expandedFormSteps[stepIndex]?.id ?? "",
+        step: getStepForTracking(form, stepId),
       });
     },
     [op, form, category, expandedFormSteps]
@@ -804,9 +807,11 @@ export default function DynamicMultiStepForm({
 
   const trackRemoveItem = useCallback(
     (fieldName: string) => {
+      const stepId = expandedFormSteps[currentStep]?.id ?? "";
+
       op.track(TRACKED_EVENTS.FORM_REMOVE_ITEM_EVENT, {
         ...getFormBaseContext(form, category),
-        step: expandedFormSteps[currentStep]?.id ?? "",
+        step: getStepForTracking(form, stepId),
         field: fieldName,
       });
     },
@@ -875,7 +880,7 @@ export default function DynamicMultiStepForm({
 
           op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
             ...getFormBaseContext(form, category),
-            step: "submission",
+            step: getStepForTracking(form, "submission"),
             errorCount: result.errors.length,
             fields,
             errorTypes,
@@ -1161,7 +1166,7 @@ export default function DynamicMultiStepForm({
         if (addAnotherValue === "yes") {
           op.track(TRACKED_EVENTS.FORM_ADD_ANOTHER_EVENT, {
             ...getFormBaseContext(form, category),
-            step: currentStepData.id,
+            step: getStepForTracking(form, currentStepData.id),
           });
 
           // Extract base step ID from the field name: _addAnother_{baseStepId}_{index}
@@ -1208,9 +1213,11 @@ export default function DynamicMultiStepForm({
       }
 
       if (validationErrors.length > 0) {
+        const stepId = expandedFormSteps[currentStep]?.id ?? "";
+
         op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
           ...getFormBaseContext(form, category),
-          step: expandedFormSteps[currentStep]?.id ?? "",
+          step: getStepForTracking(form, stepId),
           errorCount: validationErrors.length,
           fields: validationErrors.map((e) => e.field).join(","),
           errorTypes: validationErrors.map((e) => e.type).join(","),
@@ -1241,9 +1248,11 @@ export default function DynamicMultiStepForm({
   };
 
   const handleEditFromReview = (stepIndex: number) => {
+    const stepId = expandedFormSteps[stepIndex]?.id ?? "";
+
     op.track(TRACKED_EVENTS.FORM_STEP_EDIT_EVENT, {
       ...getFormBaseContext(form, category),
-      step: expandedFormSteps[stepIndex]?.id ?? "",
+      step: getStepForTracking(form, stepId),
     });
     isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
@@ -1251,9 +1260,11 @@ export default function DynamicMultiStepForm({
   };
 
   const prevStep = () => {
+    const stepId = expandedFormSteps[currentStep]?.id ?? "";
+
     op.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
       ...getFormBaseContext(form, category),
-      step: expandedFormSteps[currentStep]?.id ?? "",
+      step: getStepForTracking(form, stepId),
     });
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);

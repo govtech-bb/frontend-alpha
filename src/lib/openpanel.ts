@@ -75,6 +75,11 @@ export function getFormBaseContext(
   };
 }
 
+export function getStepForTracking(form: string, stepId: string): string {
+  const formShort = getShortName(SHORT_NAME_MAP_TYPE.FORM, form);
+  return `${formShort}-${stepId}`;
+}
+
 const MESSAGE_CATEGORIES: Record<
   "required" | "minLength" | "pattern",
   string[]
