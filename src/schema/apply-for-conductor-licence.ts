@@ -259,7 +259,7 @@ export const formSteps: FormStep[] = [
       {
         name: "dateOfEndorsement",
         label: "Date of endorsement",
-        placeholder: "For example, 12 15 2025",
+        placeholder: "For example, 15 12 2025",
         type: "date",
         validation: {
           required: "Date of endorsement is required",

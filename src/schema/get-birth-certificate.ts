@@ -295,7 +295,7 @@ export const formSteps: FormStep[] = [
       {
         name: "dateOfDeath",
         label: "Date of death",
-        placeholder: "For example, March 15, 2023",
+        placeholder: "For example, 15 3 2023",
         type: "date",
         validation: {
           required: "Date of death is required",
@@ -700,7 +700,6 @@ export const formSteps: FormStep[] = [
         hidden: true,
         type: "number",
         width: "short",
-        // placeholder: "For example, 2",
         validation: {
           required: "Number of copies is required",
           min: {
