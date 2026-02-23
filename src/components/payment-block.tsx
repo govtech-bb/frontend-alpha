@@ -1,8 +1,13 @@
 "use client";
 
 import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  getCategoryShortId,
+  getFormShortIdFromSlug,
+  trackEvent,
+} from "@/lib/analytics";
 import type { EZPayVerifyResponse } from "@/lib/ezpay/types";
 
 type PaymentData = {
@@ -21,8 +26,10 @@ type Props = {
   customerName?: string;
 };
 
-export const PaymentBlock = ({ paymentData }: Props) => {
+export const PaymentBlock = ({ paymentData, formId }: Props) => {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const categorySlug = pathname.split("/").filter(Boolean)[0];
   const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
@@ -260,7 +267,16 @@ export const PaymentBlock = ({ paymentData }: Props) => {
             Verifying...
           </Button>
         ) : (
-          <LinkButton href={paymentData.paymentUrl} variant="primary">
+          <LinkButton
+            href={paymentData.paymentUrl}
+            onClick={() => {
+              trackEvent("form-payment-initiated", {
+                form: getFormShortIdFromSlug(formId),
+                category: getCategoryShortId(categorySlug),
+              });
+            }}
+            variant="primary"
+          >
             Continue to payment
           </LinkButton>
         )

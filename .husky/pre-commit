@@ -1,4 +1,9 @@
 #!/bin/sh
+
+# nvm/fnm install node outside the default PATH; source nvm if available
+# so that npx/node are found when git runs this hook from a non-interactive shell
+[ -s "$HOME/.nvm/nvm.sh" ] && . "$HOME/.nvm/nvm.sh"
+
 # Exit on any error
 set -e
 
