@@ -103,7 +103,7 @@ export function SimpleFeedbackForm() {
           referrer: formData.referrer,
         });
         op.track(
-          TRACKED_EVENTS.FORM_SUBMIT_EVENT,
+          TRACKED_EVENTS.FEEDBACK_SUBMIT_EVENT,
           getFormBaseContext(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
         );
       } else {

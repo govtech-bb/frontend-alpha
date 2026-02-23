@@ -9,6 +9,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import {
+  FORM_NAMES,
   getFormBaseContext,
   getStepForTracking,
   TRACKED_EVENTS,
@@ -857,10 +858,26 @@ export default function DynamicMultiStepForm({
           customerName,
           apiPaymentData
         );
-        op.track(
-          TRACKED_EVENTS.FORM_SUBMIT_EVENT,
-          getFormBaseContext(form, category)
-        );
+        if (storageKey !== FORM_NAMES.EXIT_SURVEY) {
+          op.track(
+            TRACKED_EVENTS.FORM_SUBMIT_EVENT,
+            getFormBaseContext(form, category)
+          );
+        } else {
+          const ratingFields: Record<string, string | undefined> = {
+            rating_difficulty: data.difficultyRating as string | undefined,
+            rating_clarity: data.clarityRating as string | undefined,
+          };
+
+          const feedbackPayload: Record<string, string> = {
+            ...getFormBaseContext(form, category),
+            ...(Object.fromEntries(
+              Object.entries(ratingFields).filter(([, value]) => value)
+            ) as Record<string, string>),
+          };
+
+          op.track(TRACKED_EVENTS.FEEDBACK_SUBMIT_EVENT, feedbackPayload);
+        }
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -869,7 +886,6 @@ export default function DynamicMultiStepForm({
             message: err.message,
           })),
         });
-        trackFormSubmitError();
         if (result.errors?.length) {
           const fields = result.errors.map((error) => error.field).join(",");
           const errorTypes = result.errors
@@ -886,6 +902,7 @@ export default function DynamicMultiStepForm({
             errorTypes,
           });
         }
+        trackFormSubmitError();
       }
     } catch (error) {
       setSubmissionError({

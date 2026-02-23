@@ -10,10 +10,13 @@ export const TRACKED_EVENTS = {
   FORM_SUBMIT_EVENT: "form-submit",
   FORM_SUBMIT_ERROR_EVENT: "form-submit-error",
   FORM_VALIDATION_ERROR_EVENT: "form-validation-error",
+  FEEDBACK_START_EVENT: "feedback-start",
+  FEEDBACK_SUBMIT_EVENT: "feedback-submit",
 } as const;
 
 export const FORM_NAMES = {
   SIMPLE_FEEDBACK_FORM: "simple-feedback-form",
+  EXIT_SURVEY: "exit-survey",
 } as const;
 
 export const SHORT_NAME_MAP_TYPE = {
