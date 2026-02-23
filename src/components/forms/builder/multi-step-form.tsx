@@ -2,11 +2,19 @@
 
 import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useOpenPanel } from "@openpanel/nextjs";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
+import {
+  FORM_NAMES,
+  getFormBaseContext,
+  getStepForTracking,
+  TRACKED_EVENTS,
+  toAnalyticsErrorType,
+} from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
@@ -15,6 +23,14 @@ import type { FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
+
+function getFormContext(
+  pathname: string,
+  formName: string
+): { form: string; category: string } {
+  const segments = pathname.split("/").filter(Boolean);
+  return { form: formName, category: segments[0] ?? "" };
+}
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -377,10 +393,16 @@ export default function DynamicMultiStepForm({
   serviceTitle,
   storageKey = "multi-step-form-storage",
 }: DynamicMultiStepFormProps) {
+  const op = useOpenPanel();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
+
+  const { form, category } = useMemo(
+    () => getFormContext(pathname, storageKey),
+    [pathname, storageKey]
+  );
 
   // Get store hook (uses singleton cache internally)
   const useFormStore = createFormStore(storageKey);
@@ -416,6 +438,7 @@ export default function DynamicMultiStepForm({
     details?: string;
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
+  const paymentStatusTrackedRef = useRef<string | null>(null);
 
   // Track instance counts for repeatable steps (key: base step ID, value: count)
   const [repeatableCounts, setRepeatableCounts] = useState<
@@ -604,8 +627,14 @@ export default function DynamicMultiStepForm({
     const tx = searchParams?.get("tx");
 
     if (paymentStatus) {
+      const context = getFormBaseContext(form, category);
+
       switch (paymentStatus) {
         case "Success":
+          if (paymentStatusTrackedRef.current !== "Success") {
+            paymentStatusTrackedRef.current = "Success";
+            op.track(TRACKED_EVENTS.PAYMENT_SUCCESS_EVENT, context);
+          }
           setPaymentMessage({
             type: "success",
             message: "Payment successful!",
@@ -624,6 +653,10 @@ export default function DynamicMultiStepForm({
           });
           break;
         case "Failed":
+          if (paymentStatusTrackedRef.current !== "Failed") {
+            paymentStatusTrackedRef.current = "Failed";
+            op.track(TRACKED_EVENTS.PAYMENT_FAILED_EVENT, context);
+          }
           setPaymentMessage({
             type: "error",
             message: "Payment failed",
@@ -633,6 +666,10 @@ export default function DynamicMultiStepForm({
           });
           break;
         case "error": {
+          if (paymentStatusTrackedRef.current !== "error") {
+            paymentStatusTrackedRef.current = "error";
+            op.track(TRACKED_EVENTS.PAYMENT_ERROR_EVENT, context);
+          }
           const errorMessage = searchParams?.get("payment_error");
           setPaymentMessage({
             type: "error",
@@ -653,7 +690,7 @@ export default function DynamicMultiStepForm({
       //   window.history.replaceState({}, '', window.location.pathname);
       // }, 100);
     }
-  }, [_hasHydrated, searchParams, paymentData]);
+  }, [_hasHydrated, searchParams, paymentData, form, category, op]);
 
   // Watch form changes and sync with Zustand (debounced)
   // Converts indexed objects to arrays before storing
@@ -765,6 +802,38 @@ export default function DynamicMultiStepForm({
     return arrayifiedData as FormData;
   };
 
+  const trackFormSubmitError = useCallback(() => {
+    op.track(
+      TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
+      getFormBaseContext(form, category)
+    );
+  }, [op, form, category]);
+
+  const trackStepComplete = useCallback(
+    (stepIndex: number) => {
+      const stepId = expandedFormSteps[stepIndex]?.id ?? "";
+
+      op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
+        ...getFormBaseContext(form, category),
+        step: getStepForTracking(form, stepId),
+      });
+    },
+    [op, form, category, expandedFormSteps]
+  );
+
+  const trackRemoveItem = useCallback(
+    (fieldName: string) => {
+      const stepId = expandedFormSteps[currentStep]?.id ?? "";
+
+      op.track(TRACKED_EVENTS.FORM_REMOVE_ITEM_EVENT, {
+        ...getFormBaseContext(form, category),
+        step: getStepForTracking(form, stepId),
+        field: fieldName,
+      });
+    },
+    [op, form, category, expandedFormSteps, currentStep]
+  );
+
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
@@ -804,6 +873,26 @@ export default function DynamicMultiStepForm({
           customerName,
           apiPaymentData
         );
+        if (storageKey !== FORM_NAMES.EXIT_SURVEY) {
+          op.track(
+            TRACKED_EVENTS.FORM_SUBMIT_EVENT,
+            getFormBaseContext(form, category)
+          );
+        } else {
+          const ratingFields: Record<string, string | undefined> = {
+            rating_difficulty: data.difficultyRating as string | undefined,
+            rating_clarity: data.clarityRating as string | undefined,
+          };
+
+          const feedbackPayload: Record<string, string> = {
+            ...getFormBaseContext(form, category),
+            ...(Object.fromEntries(
+              Object.entries(ratingFields).filter(([, value]) => value)
+            ) as Record<string, string>),
+          };
+
+          op.track(TRACKED_EVENTS.FEEDBACK_SUBMIT_EVENT, feedbackPayload);
+        }
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -812,6 +901,23 @@ export default function DynamicMultiStepForm({
             message: err.message,
           })),
         });
+        if (result.errors?.length) {
+          const fields = result.errors.map((error) => error.field).join(",");
+          const errorTypes = result.errors
+            .map((error) =>
+              toAnalyticsErrorType(error.code, error.field, data, error.message)
+            )
+            .join(",");
+
+          op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
+            ...getFormBaseContext(form, category),
+            step: getStepForTracking(form, "submission"),
+            errorCount: result.errors.length,
+            fields,
+            errorTypes,
+          });
+        }
+        trackFormSubmitError();
       }
     } catch (error) {
       setSubmissionError({
@@ -820,6 +926,7 @@ export default function DynamicMultiStepForm({
             ? error.message
             : "An error occurred during submission",
       });
+      trackFormSubmitError();
     } finally {
       setIsSubmitting(false);
     }
@@ -885,6 +992,7 @@ export default function DynamicMultiStepForm({
     if (isReviewStep) {
       // Review step complete, just move to next step
       markStepComplete(currentStep);
+      trackStepComplete(currentStep);
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
       setCurrentStep(nextVisibleStep);
@@ -1068,6 +1176,7 @@ export default function DynamicMultiStepForm({
     if (isValid) {
       // Mark current step as complete
       markStepComplete(currentStep);
+      trackStepComplete(currentStep);
 
       // If this is the declaration step, submit the form
       if (isDeclarationStep) {
@@ -1087,6 +1196,11 @@ export default function DynamicMultiStepForm({
           addAnotherField.name as keyof FormData
         );
         if (addAnotherValue === "yes") {
+          op.track(TRACKED_EVENTS.FORM_ADD_ANOTHER_EVENT, {
+            ...getFormBaseContext(form, category),
+            step: getStepForTracking(form, currentStepData.id),
+          });
+
           // Extract base step ID from the field name: _addAnother_{baseStepId}_{index}
           const match = addAnotherField.name.match(/^_addAnother_(.+)_(\d+)$/);
           if (match) {
@@ -1108,6 +1222,40 @@ export default function DynamicMultiStepForm({
       setCurrentStep(nextVisibleStep);
       scrollToStepHeading();
     } else {
+      const errorsObj = methods.formState.errors as Record<string, unknown>;
+      const formValues = methods.getValues() as Record<string, unknown>;
+      const validationErrors: { field: string; type: string }[] = [];
+
+      for (const fieldName of currentFieldNames) {
+        const error = getNestedValue(errorsObj, fieldName) as
+          | { type?: string; message?: string }
+          | undefined;
+
+        if (error?.type) {
+          validationErrors.push({
+            field: fieldName,
+            type: toAnalyticsErrorType(
+              error.type,
+              fieldName,
+              formValues,
+              error?.message
+            ),
+          });
+        }
+      }
+
+      if (validationErrors.length > 0) {
+        const stepId = expandedFormSteps[currentStep]?.id ?? "";
+
+        op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
+          ...getFormBaseContext(form, category),
+          step: getStepForTracking(form, stepId),
+          errorCount: validationErrors.length,
+          fields: validationErrors.map((e) => e.field).join(","),
+          errorTypes: validationErrors.map((e) => e.type).join(","),
+        });
+      }
+
       // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
       const errorSummary = document.querySelector("#error-summary");
       if (errorSummary) {
@@ -1132,12 +1280,24 @@ export default function DynamicMultiStepForm({
   };
 
   const handleEditFromReview = (stepIndex: number) => {
+    const stepId = expandedFormSteps[stepIndex]?.id ?? "";
+
+    op.track(TRACKED_EVENTS.FORM_STEP_EDIT_EVENT, {
+      ...getFormBaseContext(form, category),
+      step: getStepForTracking(form, stepId),
+    });
     isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
     scrollToStepHeading();
   };
 
   const prevStep = () => {
+    const stepId = expandedFormSteps[currentStep]?.id ?? "";
+
+    op.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
+      ...getFormBaseContext(form, category),
+      step: getStepForTracking(form, stepId),
+    });
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);
     setCurrentStep(prevVisibleStep);
@@ -1323,6 +1483,7 @@ export default function DynamicMultiStepForm({
           />
         ) : (
           <DynamicStep
+            onRemoveItem={trackRemoveItem}
             serviceTitle={serviceTitle}
             step={expandedFormSteps[currentStep]}
           />
