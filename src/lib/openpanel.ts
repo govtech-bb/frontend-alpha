@@ -12,6 +12,10 @@ export const TRACKED_EVENTS = {
   FORM_VALIDATION_ERROR_EVENT: "form-validation-error",
   FEEDBACK_START_EVENT: "feedback-start",
   FEEDBACK_SUBMIT_EVENT: "feedback-submit",
+  PAYMENT_INITIATED_EVENT: "payment-initiated",
+  PAYMENT_SUCCESS_EVENT: "payment-success",
+  PAYMENT_FAILED_EVENT: "payment-failed",
+  PAYMENT_ERROR_EVENT: "payment-error",
 } as const;
 
 export const FORM_NAMES = {

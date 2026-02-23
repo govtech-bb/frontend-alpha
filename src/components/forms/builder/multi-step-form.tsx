@@ -438,6 +438,7 @@ export default function DynamicMultiStepForm({
     details?: string;
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
+  const paymentStatusTrackedRef = useRef<string | null>(null);
 
   // Track instance counts for repeatable steps (key: base step ID, value: count)
   const [repeatableCounts, setRepeatableCounts] = useState<
@@ -626,8 +627,14 @@ export default function DynamicMultiStepForm({
     const tx = searchParams?.get("tx");
 
     if (paymentStatus) {
+      const context = getFormBaseContext(form, category);
+
       switch (paymentStatus) {
         case "Success":
+          if (paymentStatusTrackedRef.current !== "Success") {
+            paymentStatusTrackedRef.current = "Success";
+            op.track(TRACKED_EVENTS.PAYMENT_SUCCESS_EVENT, context);
+          }
           setPaymentMessage({
             type: "success",
             message: "Payment successful!",
@@ -646,6 +653,10 @@ export default function DynamicMultiStepForm({
           });
           break;
         case "Failed":
+          if (paymentStatusTrackedRef.current !== "Failed") {
+            paymentStatusTrackedRef.current = "Failed";
+            op.track(TRACKED_EVENTS.PAYMENT_FAILED_EVENT, context);
+          }
           setPaymentMessage({
             type: "error",
             message: "Payment failed",
@@ -655,6 +666,10 @@ export default function DynamicMultiStepForm({
           });
           break;
         case "error": {
+          if (paymentStatusTrackedRef.current !== "error") {
+            paymentStatusTrackedRef.current = "error";
+            op.track(TRACKED_EVENTS.PAYMENT_ERROR_EVENT, context);
+          }
           const errorMessage = searchParams?.get("payment_error");
           setPaymentMessage({
             type: "error",
@@ -675,7 +690,7 @@ export default function DynamicMultiStepForm({
       //   window.history.replaceState({}, '', window.location.pathname);
       // }, 100);
     }
-  }, [_hasHydrated, searchParams, paymentData]);
+  }, [_hasHydrated, searchParams, paymentData, form, category, op]);
 
   // Watch form changes and sync with Zustand (debounced)
   // Converts indexed objects to arrays before storing
