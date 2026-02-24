@@ -930,10 +930,10 @@ export default function DynamicMultiStepForm({
         });
 
         if (storageKey !== FORM_NAMES.EXIT_SURVEY) {
-          op.track(
-            TRACKED_EVENTS.FORM_SUBMIT_EVENT,
-            getFormBaseContext(form, category)
-          );
+          op.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
+            ...getFormBaseContext(form, category),
+            duration: `${durationSeconds} seconds`,
+          });
         } else {
           const ratingFields: Record<string, string | undefined> = {
             rating_difficulty: data.difficultyRating as string | undefined,
