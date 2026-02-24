@@ -21,9 +21,19 @@ type Props = {
   customerName?: string;
 };
 
+function PaymentRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex gap-s">
+      <Text as="p" className="flex-1 font-bold">
+        {label}
+      </Text>
+      <Text as="p">{value}</Text>
+    </div>
+  );
+}
+
 export const PaymentBlock = ({ paymentData }: Props) => {
   const searchParams = useSearchParams();
-  const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
     status: "Success" | "Failed" | "Initiated" | null;
@@ -33,16 +43,13 @@ export const PaymentBlock = ({ paymentData }: Props) => {
     details?: string;
   }>({ status: null });
 
-  // Check transaction status on mount if URL params are present
   useEffect(() => {
     const verifyTransaction = async () => {
       const tx = searchParams?.get("tx");
       const ref = searchParams?.get("ref");
 
-      // Only verify if we have transaction number and haven't verified yet
       if (tx && !paymentStatus.status) {
         setVerifying(true);
-        setError(null);
 
         try {
           const response = await fetch("/api/ezpay/verify-payment", {
@@ -66,7 +73,6 @@ export const PaymentBlock = ({ paymentData }: Props) => {
               details: data._details,
             });
 
-            // Clear URL params after verification to prevent re-checking
             if (window.history.replaceState) {
               const newUrl =
                 window.location.pathname +
@@ -76,13 +82,7 @@ export const PaymentBlock = ({ paymentData }: Props) => {
                   .replace(/\?$/, "");
               window.history.replaceState({}, "", newUrl);
             }
-          } else {
-            setError(result.error || "Failed to verify payment");
           }
-        } catch (err) {
-          const errorMessage =
-            err instanceof Error ? err.message : "Unknown error";
-          setError(`Verification error: ${errorMessage}`);
         } finally {
           setVerifying(false);
         }
@@ -92,167 +92,124 @@ export const PaymentBlock = ({ paymentData }: Props) => {
     verifyTransaction();
   }, [searchParams, paymentStatus.status]);
 
-  // If payment is successful, show success message
   if (paymentStatus.status === "Success") {
     return (
-      <div className="space-y-6 border-green-500 border-l-4 bg-green-50 p-6">
-        <div>
-          <Heading as="h2" className="text-green-800">
-            Payment Successful ✓
-          </Heading>
-          <Text as="p" className="text-green-700">
-            Your payment has been processed successfully
+      <div className="flex flex-col gap-xm rounded bg-green-00 p-xm text-white-00">
+        <div className="flex flex-col gap-xxs border-grey-00 border-b pb-xm">
+          <Heading as="h2">Your payment was successful</Heading>
+          <Text as="p">
+            Your payment has been received. We've sent a confirmation email to
+            the address you provided.
           </Text>
         </div>
-        <div className="space-y-2">
-          <Text as="p" className="text-green-900">
-            <span className="font-bold">Service:</span>{" "}
-            {paymentData.description}
-          </Text>
-          <Text as="p" className="text-green-900">
-            <span className="font-bold">Amount:</span> $
-            {paymentStatus.amount || paymentData.amount.toFixed(2)}
-          </Text>
-          {paymentData.numberOfCopies && (
-            <Text as="p" className="text-green-900">
-              <span className="font-bold">Number of Copies:</span>{" "}
-              {paymentData.numberOfCopies}
-            </Text>
-          )}
+        <div className="flex flex-col gap-s">
+          <PaymentRow label="Service:" value={paymentData.description} />
+          <PaymentRow
+            label="Amount:"
+            value={`$${paymentStatus.amount || paymentData.amount.toFixed(2)}`}
+          />
           {paymentStatus.transactionNumber && (
-            <Text as="p" className="text-green-900">
-              <span className="font-bold">Transaction Number:</span>{" "}
-              {paymentStatus.transactionNumber}
-            </Text>
+            <PaymentRow
+              label="Reference number:"
+              value={paymentStatus.transactionNumber}
+            />
           )}
-          {paymentStatus.processor && (
-            <Text as="p" className="text-green-900">
-              <span className="font-bold">Payment Method:</span>{" "}
-              {paymentStatus.processor}
-            </Text>
-          )}
+          <PaymentRow
+            label="Date:"
+            value={new Date().toLocaleDateString("en-GB")}
+          />
         </div>
       </div>
     );
   }
 
-  // If payment failed, show error state
   if (paymentStatus.status === "Failed") {
     return (
-      <div className="space-y-6 border-red-500 border-l-4 bg-red-50 p-6">
-        <div>
-          <Heading as="h2" className="text-red-800">
-            Payment Failed
+      <div className="flex flex-col gap-xm rounded bg-red-00 p-xm text-white-00">
+        <div className="flex flex-col gap-xxs border-grey-00 border-b pb-xm">
+          <Heading as="h2">
+            Unfortunately, your payment was unsuccessful
           </Heading>
-          <Text as="p" className="text-red-700">
-            Your payment could not be processed
+          <Text as="p">
+            Your payment could not be processed. You have not been charged.
           </Text>
         </div>
-        <div className="space-y-2">
-          <Text as="p" className="text-red-900">
-            <span className="font-bold">Service:</span>{" "}
-            {paymentData.description}
-          </Text>
-          <Text as="p" className="text-red-900">
-            <span className="font-bold">Amount:</span> $
-            {paymentData.amount.toFixed(2)}
-          </Text>
-          {paymentData.numberOfCopies && (
-            <Text as="p" className="text-red-900">
-              <span className="font-bold">Number of Copies:</span>{" "}
-              {paymentData.numberOfCopies}
-            </Text>
-          )}
-          {paymentStatus.transactionNumber && (
-            <Text as="p" className="text-red-900">
-              <span className="font-bold">Transaction Number:</span>{" "}
-              {paymentStatus.transactionNumber}
-            </Text>
-          )}
-        </div>
+        <Text as="p">
+          Try paying again. If the problem continues, check with your bank or
+          try a different payment method.
+        </Text>
+        {paymentData.paymentUrl && (
+          <LinkButton href={paymentData.paymentUrl} variant="secondary">
+            Try again
+          </LinkButton>
+        )}
       </div>
     );
   }
 
-  // If payment initiated (Direct Debit), show pending state
   if (paymentStatus.status === "Initiated") {
     return (
-      <div className="space-y-6 border-amber-500 border-l-4 bg-amber-50 p-6">
-        <div>
-          <Heading as="h2" className="text-amber-800">
-            Payment Initiated
-          </Heading>
-          <Text as="p" className="text-amber-700">
-            Your Direct Debit payment is being processed
-          </Text>
+      <div className="flex flex-col gap-xm rounded bg-green-00 p-xm text-white-00">
+        <div className="flex flex-col gap-xxs border-grey-00 border-b pb-xm">
+          <Heading as="h2">Payment Initiated</Heading>
+          <Text as="p">Your Direct Debit payment is being processed</Text>
         </div>
-        <div className="space-y-2">
-          <Text as="p" className="text-amber-900">
-            <span className="font-bold">Service:</span>{" "}
-            {paymentData.description}
-          </Text>
-          <Text as="p" className="text-amber-900">
-            <span className="font-bold">Amount:</span> $
-            {paymentStatus.amount || paymentData.amount.toFixed(2)}
-          </Text>
+        <div className="flex flex-col gap-s">
+          <PaymentRow label="Service:" value={paymentData.description} />
+          <PaymentRow
+            label="Amount:"
+            value={`$${paymentStatus.amount || paymentData.amount.toFixed(2)}`}
+          />
           {paymentData.numberOfCopies && (
-            <Text as="p" className="text-amber-900">
-              <span className="font-bold">Number of Copies:</span>{" "}
-              {paymentData.numberOfCopies}
-            </Text>
+            <PaymentRow
+              label="Number of Copies:"
+              value={String(paymentData.numberOfCopies)}
+            />
           )}
           {paymentStatus.transactionNumber && (
-            <Text as="p" className="text-amber-900">
-              <span className="font-bold">Transaction Number:</span>{" "}
-              {paymentStatus.transactionNumber}
-            </Text>
+            <PaymentRow
+              label="Transaction Number:"
+              value={paymentStatus.transactionNumber}
+            />
           )}
         </div>
-        <Text as="p" className="text-amber-700 italic">
+        <Text as="p" className="italic">
           Your payment will settle in approximately 5 business days.
         </Text>
       </div>
     );
   }
 
-  // Default payment form (no status yet)
-  return (
-    <div className="space-y-6 bg-blue-10 p-6">
-      {/* Verifying State */}
-      {verifying && (
-        <div className="rounded border border-blue-200 bg-blue-50 p-4">
-          <p className="text-blue-700">Verifying payment status...</p>
-        </div>
-      )}
+  const unitPrice =
+    paymentData.numberOfCopies && paymentData.numberOfCopies > 0
+      ? paymentData.amount / paymentData.numberOfCopies
+      : null;
 
-      <div className="border-gray-300 border-b-2 pb-6">
+  return (
+    <div className="flex flex-col gap-xm rounded bg-blue-10 p-xm">
+      <div className="flex flex-col gap-xxs border-mid-grey-00 border-b pb-xm">
         <Heading as="h2">Complete your payment</Heading>
         <Text as="p">
           Please review and complete your payment to finalize your submission
         </Text>
       </div>
-      <div>
-        <Text as="p">
-          <span className="font-bold">Service:</span> {paymentData.description}
-        </Text>
-        <Text as="p">
-          <span className="font-bold">Amount:</span> $
-          {Number(paymentData.amount).toFixed(2)}
-        </Text>
-        {paymentData.numberOfCopies && (
-          <Text as="p">
-            <span className="font-bold">Number of Copies:</span>{" "}
-            {paymentData.numberOfCopies}
-          </Text>
-        )}
-      </div>
 
-      {/* Error Display */}
-      {error && (
-        <div className="rounded border border-red-200 bg-red-50 p-4">
-          <p className="text-red-700">{error}</p>
-        </div>
-      )}
+      <div className="flex flex-col gap-s">
+        <PaymentRow label="Service:" value={paymentData.description} />
+        {unitPrice !== null && (
+          <PaymentRow label="Unit price:" value={`$${unitPrice.toFixed(2)}`} />
+        )}
+        {paymentData.numberOfCopies && (
+          <PaymentRow
+            label="Quantity:"
+            value={String(paymentData.numberOfCopies)}
+          />
+        )}
+        <PaymentRow
+          label="Amount:"
+          value={`$${Number(paymentData.amount).toFixed(2)}`}
+        />
+      </div>
 
       {paymentData.paymentUrl ? (
         verifying ? (
@@ -265,7 +222,7 @@ export const PaymentBlock = ({ paymentData }: Props) => {
           </LinkButton>
         )
       ) : null}
-      <Text as="p" className="text-gray-500 italic">
+      <Text as="p" className="text-mid-grey-00 italic">
         You will be redirected to EZ Pay to securely complete your payment.
       </Text>
     </div>
