@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { figtree } from "@/lib/fonts";
 import "./globals.css";
 import { OpenPanelComponent } from "@openpanel/nextjs";
-import { Analytics } from "@/components/analytics";
+import { AnalyticsProvider } from "@/components/analytics-provider";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
@@ -46,11 +46,12 @@ export default function RootLayout({
           trackOutgoingLinks={true}
           trackScreenViews={true}
         />
-        <Header />
-        {children}
-        <Footer />
+        <AnalyticsProvider>
+          <Header />
+          {children}
+          <Footer />
+        </AnalyticsProvider>
       </body>
-      <Analytics />
     </html>
   );
 }

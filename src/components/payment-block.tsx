@@ -4,6 +4,11 @@ import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
 import { useOpenPanel } from "@openpanel/nextjs";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  getCategoryShortId,
+  getFormShortIdFromSlug,
+  trackEvent,
+} from "@/lib/analytics";
 import type { EZPayVerifyResponse } from "@/lib/ezpay/types";
 import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 
@@ -280,12 +285,16 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
         ) : (
           <LinkButton
             href={paymentData.paymentUrl}
-            onClick={() =>
+            onClick={() => {
+              trackEvent("form-payment-initiated", {
+                form: getFormShortIdFromSlug(formId),
+                category: getCategoryShortId(categorySlug),
+              });
               op.track(
                 TRACKED_EVENTS.PAYMENT_INITIATED_EVENT,
                 getFormBaseContext(formId, categorySlug)
-              )
-            }
+              );
+            }}
             variant="primary"
           >
             Continue to payment

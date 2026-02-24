@@ -9,6 +9,7 @@ import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { markdownComponents } from "@/components/markdown-content";
 import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { getFormShortIdFromSlug, trackEvent } from "@/lib/analytics";
 import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 import type { FormStep } from "@/types";
 
@@ -168,12 +169,15 @@ export function ConfirmationPage({
               </Text>
               <LinkButton
                 href={`/exit-survey?ref_id=${formId}&step=introduction`}
-                onClick={() =>
+                onClick={() => {
+                  trackEvent("form-feedback-start", {
+                    form: getFormShortIdFromSlug(formSlug ?? ""),
+                  });
                   op.track(
                     TRACKED_EVENTS.FEEDBACK_START_EVENT,
                     getFormBaseContext(formId, categorySlug)
-                  )
-                }
+                  );
+                }}
                 variant="secondary"
               >
                 Give feedback on this service

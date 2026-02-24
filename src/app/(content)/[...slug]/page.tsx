@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { MarkdownContent } from "@/components/markdown-content";
+import { PageViewTracker } from "@/components/page-view-tracker";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
@@ -103,10 +104,18 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     return (
-      <MarkdownContent
-        hasResearchAccess={hasAccess}
-        markdown={markdownContent}
-      />
+      <>
+        <PageViewTracker
+          categorySlug={categorySlug}
+          eventName="entry-point"
+          formSlug={pageSlug}
+          pageUrl={`/${categorySlug}/${pageSlug}`}
+        />
+        <MarkdownContent
+          hasResearchAccess={hasAccess}
+          markdown={markdownContent}
+        />
+      </>
     );
   }
 
@@ -156,6 +165,14 @@ export default async function Page({ params }: ContentPageProps) {
     return (
       <>
         {storageKey && <ClearFormStorage storageKey={storageKey} />}
+        {subPageSlug === "start" && (
+          <PageViewTracker
+            categorySlug={categorySlug}
+            eventName="start-page"
+            formSlug={pageSlug}
+            pageUrl={`/${categorySlug}/${pageSlug}/${subPageSlug}`}
+          />
+        )}
         <MarkdownContent
           hasResearchAccess={hasAccess}
           markdown={markdownContent}
