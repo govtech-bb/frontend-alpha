@@ -735,7 +735,6 @@ export default function DynamicMultiStepForm({
     paymentData,
     form,
     category,
-    op,
     formShortId,
     categoryShortId,
   ]);
@@ -855,7 +854,7 @@ export default function DynamicMultiStepForm({
       TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
       getFormBaseContext(form, category)
     );
-  }, [op, form, category]);
+  }, [form, category]);
 
   const trackStepComplete = useCallback(
     (stepIndex: number) => {
@@ -866,7 +865,7 @@ export default function DynamicMultiStepForm({
         step: getStepForTracking(form, stepId),
       });
     },
-    [op, form, category, expandedFormSteps]
+    [form, category, expandedFormSteps]
   );
 
   const onSubmit = async (data: FormData) => {
