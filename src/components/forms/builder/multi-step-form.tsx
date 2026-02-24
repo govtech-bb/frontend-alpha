@@ -400,8 +400,8 @@ export default function DynamicMultiStepForm({
   const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
 
   const { form, category } = useMemo(
-    () => getFormContext(pathname, storageKey),
-    [pathname, storageKey]
+    () => getFormContext(pathname, formId),
+    [pathname, formId]
   );
 
   // Get store hook (uses singleton cache internally)
