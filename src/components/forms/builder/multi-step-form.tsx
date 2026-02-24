@@ -413,8 +413,8 @@ export default function DynamicMultiStepForm({
   const categoryShortId = getCategoryShortId(categorySlug);
 
   const { form, category } = useMemo(
-    () => getFormContext(pathname, storageKey),
-    [pathname, storageKey]
+    () => getFormContext(pathname, formId),
+    [pathname, formId]
   );
 
   // Get store hook (uses singleton cache internally)
