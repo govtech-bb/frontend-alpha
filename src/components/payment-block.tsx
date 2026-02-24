@@ -52,7 +52,7 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
       TRACKED_EVENTS.PAYMENT_ERROR_EVENT,
       getFormBaseContext(formId, categorySlug)
     );
-  }, [op, formId, categorySlug]);
+  }, [formId, categorySlug]);
 
   // Check transaction status on mount if URL params are present
   useEffect(() => {
