@@ -2,7 +2,13 @@
 
 import type { ErrorItem } from "@govtech-bb/react";
 import { Button, ErrorSummary, Text, TextArea } from "@govtech-bb/react";
+import { useOpenPanel } from "@openpanel/nextjs";
 import { useEffect, useRef, useState } from "react";
+import {
+  FORM_NAMES,
+  getFormBaseContext,
+  TRACKED_EVENTS,
+} from "@/lib/openpanel";
 
 type FormErrors = {
   visitReason?: string;
@@ -10,6 +16,8 @@ type FormErrors = {
 };
 
 export function SimpleFeedbackForm() {
+  const op = useOpenPanel();
+
   const [formData, setFormData] = useState({
     visitReason: "",
     whatWentWrong: "",
@@ -50,6 +58,13 @@ export function SimpleFeedbackForm() {
     return errors;
   };
 
+  const trackFormSubmitError = () => {
+    op.track(
+      TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
+      getFormBaseContext(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
+    );
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowValidation(true);
@@ -87,11 +102,17 @@ export function SimpleFeedbackForm() {
           whatWentWrong: "",
           referrer: formData.referrer,
         });
+        op.track(
+          TRACKED_EVENTS.FEEDBACK_SUBMIT_EVENT,
+          getFormBaseContext(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
+        );
       } else {
         setSubmitStatus("error");
+        trackFormSubmitError();
       }
     } catch (_error) {
       setSubmitStatus("error");
+      trackFormSubmitError();
     } finally {
       setIsSubmitting(false);
     }

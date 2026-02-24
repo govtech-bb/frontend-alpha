@@ -1,5 +1,6 @@
 "use client";
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import { useOpenPanel } from "@openpanel/nextjs";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -9,6 +10,7 @@ import { markdownComponents } from "@/components/markdown-content";
 import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFormShortIdFromSlug, trackEvent } from "@/lib/analytics";
+import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 import type { FormStep } from "@/types";
 
 type PaymentData = {
@@ -39,6 +41,7 @@ export function ConfirmationPage({
   formId,
   paymentData,
 }: ConfirmationPageProps) {
+  const op = useOpenPanel();
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
@@ -170,6 +173,10 @@ export function ConfirmationPage({
                   trackEvent("form-feedback-start", {
                     form: getFormShortIdFromSlug(formSlug ?? ""),
                   });
+                  op.track(
+                    TRACKED_EVENTS.FEEDBACK_START_EVENT,
+                    getFormBaseContext(formId, categorySlug)
+                  );
                 }}
                 variant="secondary"
               >

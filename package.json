@@ -24,6 +24,7 @@
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.0.3",
+    "@openpanel/nextjs": "^1.1.4",
     "@react-email/components": "^0.5.7",
     "@react-email/render": "^1.4.0",
     "@tanstack/react-form": "^1.23.8",

@@ -2,6 +2,7 @@ import { textVariants } from "@govtech-bb/react";
 import type { Metadata } from "next";
 import { figtree } from "@/lib/fonts";
 import "./globals.css";
+import { OpenPanelComponent } from "@openpanel/nextjs";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -32,11 +33,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const OPENPANEL_SITE_ID = process.env.NEXT_PUBLIC_OPENPANEL_SITE_ID || "";
+
   return (
     <html className="bg-blue-100" lang="en">
       <body
         className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased`}
       >
+        <OpenPanelComponent
+          clientId={OPENPANEL_SITE_ID}
+          trackAttributes={true}
+          trackOutgoingLinks={true}
+          trackScreenViews={true}
+        />
         <AnalyticsProvider>
           <Header />
           {children}

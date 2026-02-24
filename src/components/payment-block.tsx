@@ -1,14 +1,16 @@
 "use client";
 
 import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
+import { useOpenPanel } from "@openpanel/nextjs";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getCategoryShortId,
   getFormShortIdFromSlug,
   trackEvent,
 } from "@/lib/analytics";
 import type { EZPayVerifyResponse } from "@/lib/ezpay/types";
+import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 
 type PaymentData = {
   amount: number;
@@ -27,9 +29,10 @@ type Props = {
 };
 
 export const PaymentBlock = ({ paymentData, formId }: Props) => {
-  const searchParams = useSearchParams();
+  const op = useOpenPanel();
   const pathname = usePathname();
-  const categorySlug = pathname.split("/").filter(Boolean)[0];
+  const searchParams = useSearchParams();
+  const categorySlug = pathname.split("/").filter(Boolean)[0] ?? "";
   const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
@@ -39,6 +42,17 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
     processor?: string;
     details?: string;
   }>({ status: null });
+
+  const paymentErrorTrackedRef = useRef(false);
+
+  const trackPaymentError = useCallback(() => {
+    if (paymentErrorTrackedRef.current) return;
+    paymentErrorTrackedRef.current = true;
+    op.track(
+      TRACKED_EVENTS.PAYMENT_ERROR_EVENT,
+      getFormBaseContext(formId, categorySlug)
+    );
+  }, [formId, categorySlug]);
 
   // Check transaction status on mount if URL params are present
   useEffect(() => {
@@ -84,9 +98,11 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
               window.history.replaceState({}, "", newUrl);
             }
           } else {
+            trackPaymentError();
             setError(result.error || "Failed to verify payment");
           }
         } catch (err) {
+          trackPaymentError();
           const errorMessage =
             err instanceof Error ? err.message : "Unknown error";
           setError(`Verification error: ${errorMessage}`);
@@ -97,7 +113,7 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
     };
 
     verifyTransaction();
-  }, [searchParams, paymentStatus.status]);
+  }, [searchParams, paymentStatus.status, trackPaymentError]);
 
   // If payment is successful, show success message
   if (paymentStatus.status === "Success") {
@@ -274,6 +290,10 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
                 form: getFormShortIdFromSlug(formId),
                 category: getCategoryShortId(categorySlug),
               });
+              op.track(
+                TRACKED_EVENTS.PAYMENT_INITIATED_EVENT,
+                getFormBaseContext(formId, categorySlug)
+              );
             }}
             variant="primary"
           >

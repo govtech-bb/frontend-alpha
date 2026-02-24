@@ -6,7 +6,8 @@ import {
   Select,
   Text,
 } from "@govtech-bb/react";
-import { usePathname } from "next/navigation";
+import { useOpenPanel } from "@openpanel/nextjs";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import {
@@ -14,6 +15,11 @@ import {
   getFormShortIdFromSlug,
   trackEvent,
 } from "@/lib/analytics";
+import {
+  getFormBaseContext,
+  getStepForTracking,
+  TRACKED_EVENTS,
+} from "@/lib/openpanel";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import type { FieldArrayConfig, FormField } from "@/types";
@@ -45,10 +51,13 @@ type DynamicFieldArrayProps = {
 };
 
 export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
+  const op = useOpenPanel();
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
   const formSlug = pathSegments[1] ?? "";
   const categorySlug = pathSegments[0] ?? "";
+  const searchParams = useSearchParams();
+  const stepId = searchParams?.get("step") ?? "";
 
   const {
     register,
@@ -128,6 +137,11 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
       trackEvent("form-remove-item", {
         form: getFormShortIdFromSlug(formSlug),
         category: getCategoryShortId(categorySlug),
+        field: field.name,
+      });
+      op.track(TRACKED_EVENTS.FORM_REMOVE_ITEM_EVENT, {
+        ...getFormBaseContext(formSlug, categorySlug),
+        step: getStepForTracking(formSlug, stepId),
         field: field.name,
       });
     }
