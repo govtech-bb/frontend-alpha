@@ -47,7 +47,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.dateOfBirth",
         label: "Date of birth",
         type: "date",
-        placeholder: "For example, 03 27 2007",
+        placeholder: "For example, 27 03 2007",
         validation: {
           required: "Date of birth is required",
         },
@@ -151,7 +151,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "contact.postalCode",
+        name: "contact.postcode",
         label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
@@ -179,9 +179,9 @@ export const formSteps: FormStep[] = [
           required: "Telephone number is required",
           pattern: {
             value:
-              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
             message:
-              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -415,9 +415,9 @@ export const formSteps: FormStep[] = [
           required: "Enter the referee's phone number",
           pattern: {
             value:
-              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
             message:
-              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -490,9 +490,9 @@ export const formSteps: FormStep[] = [
           required: "Enter the referee's phone number",
           pattern: {
             value:
-              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
             message:
-              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },

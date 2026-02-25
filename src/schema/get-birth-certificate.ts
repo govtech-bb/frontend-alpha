@@ -104,7 +104,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "applicant.postalCode",
+        name: "applicant.postcode",
         label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
@@ -175,9 +175,9 @@ export const formSteps: FormStep[] = [
           required: "Telephone number is required",
           pattern: {
             value:
-              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
             message:
-              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -295,7 +295,7 @@ export const formSteps: FormStep[] = [
       {
         name: "dateOfDeath",
         label: "Date of death",
-        placeholder: "For example, March 15, 2023",
+        placeholder: "For example, 15 3 2023",
         type: "date",
         validation: {
           required: "Date of death is required",
@@ -700,7 +700,6 @@ export const formSteps: FormStep[] = [
         hidden: true,
         type: "number",
         width: "short",
-        // placeholder: "For example, 2",
         validation: {
           required: "Number of copies is required",
           min: {

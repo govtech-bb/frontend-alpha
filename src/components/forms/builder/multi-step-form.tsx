@@ -117,6 +117,32 @@ function getOrdinalWord(n: number): string {
 }
 
 /**
+ * Normalized a phone number to be 11 digits regardless of valid input. (CONSISTENCY!)
+ */
+function normalizePhoneNumber(phoneValue: string): string {
+  if (!phoneValue || typeof phoneValue !== "string") {
+    return phoneValue;
+  }
+
+  const digitsOnly = phoneValue.replace(/\D/g, "");
+  const digitCount = digitsOnly.length;
+
+  if (digitCount === 7) {
+    return `1246${digitsOnly}`;
+  }
+
+  if (digitCount === 10) {
+    return `1${digitsOnly}`;
+  }
+
+  if (digitCount === 11) {
+    return digitsOnly;
+  }
+
+  return phoneValue;
+}
+
+/**
  * Updates a step title with ordinal numbering for subsequent instances.
  * Replaces "the X" with "the second X", "the third X", etc.
  * Only applies to instances after the first (index > 0).
@@ -762,6 +788,25 @@ export default function DynamicMultiStepForm({
     // Convert indexed objects (e.g., { "0": {...}, "1": {...} }) to arrays
     const arrayifiedData = convertIndexedObjectsToArrays(cleanedData);
 
+    // Normalize phone numbers (type: "tel") to 11-digit format
+    for (const step of expandedFormSteps) {
+      for (const field of step.fields) {
+        if (field.type === "tel") {
+          const currentValue = getNestedValue<string>(
+            arrayifiedData as Record<string, unknown>,
+            field.name
+          );
+          if (currentValue) {
+            const normalized = normalizePhoneNumber(currentValue);
+            setNestedValue(
+              arrayifiedData as Record<string, unknown>,
+              field.name,
+              normalized
+            );
+          }
+        }
+      }
+    }
     return arrayifiedData as FormData;
   };
 

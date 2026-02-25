@@ -29,7 +29,7 @@ const generateApplicantData = () => ({
     "st-philip",
     "st-thomas",
   ]),
-  postalCode: `BB${faker.string.numeric(5)}`,
+  postcode: `BB${faker.string.numeric(5)}`,
   idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
   email: "testing@govtech.bb",
   telephoneNumber: `1246${faker.string.numeric(7)}`,
@@ -162,8 +162,8 @@ test.describe("Get Birth Certificate Form", () => {
       .locator('select[name="applicant.parish"]')
       .selectOption(applicant.parish);
     await page
-      .locator('input[name="applicant.postalCode"]')
-      .fill(applicant.postalCode);
+      .locator('input[name="applicant.postcode"]')
+      .fill(applicant.postcode);
     await page
       .locator('input[name="applicant.idNumber"]')
       .fill(applicant.idNumber);
