@@ -176,11 +176,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         slug: "apply-for-conductor-licence",
         description: "",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Conductor Licence Application",
             type: "component",
+            protected: true,
           },
         ],
       },
