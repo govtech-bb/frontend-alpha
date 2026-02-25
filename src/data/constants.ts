@@ -1,5 +1,44 @@
 import type { SelectOption } from "@/types";
 
+/**
+ * Validates a name field: letters (including accented), hyphens, and apostrophes only.
+ * Leading and trailing whitespace is permitted; internal spaces are not.
+ */
+export const NAME_REGEX =
+  "^\\s*[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ\\s'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?\\s*$";
+
+/**
+ * Validates phone numbers in Caribbean and international formats.
+ * Accepts:
+ *   - 7-digit local (e.g. 2345678 or 234-5678 or 234 5678)
+ *   - 10-digit with no country code (e.g. 246-234-5678 or 246 234 5678)
+ *   - 11-digit with 1-digit country code (e.g. 1-246-234-5678 or 1 246 234 5678)
+ *   - 12-digit with 2-digit country code (e.g. 44-207-234-5678 or 44 207 234 5678)
+ * Hyphens and spaces are accepted as separators.
+ */
+export const PHONE_REGEX =
+  "^\\d{3}[- ]?\\d{4}$|^(?:\\d{1,2}[- ]?)?\\d{3}[- ]?\\d{3}[- ]?\\d{4}$";
+
+/** Barbados postcode — BB followed by 5 digits (e.g. BB12345). */
+export const POSTCODE_REGEX = "^BB\\d{5}$";
+
+/**
+ * Barbados National ID number — 6 digits, hyphen, 4 digits (e.g. 123456-7890).
+ */
+export const NID_REGEX = "^\\d{6}-\\d{4}$";
+
+/** National Insurance Scheme (NIS) number — exactly 6 digits (e.g. 123456). */
+export const NIS_NUMBER_REGEX = "^\\d{6}$";
+
+/** TAMIS number — 10 to 15 digits. */
+export const TAMIS_NUMBER_REGEX = "^\\d{10,15}$";
+
+/** 4-digit calendar year (e.g. 2024). */
+export const YEAR_REGEX = "^[0-9]{4}$";
+
+/** One or more digits only — use for whole number fields. */
+export const DIGITS_REGEX = "^[0-9]+$";
+
 export const barbadosParishes: SelectOption[] = [
   { label: "Select a parish", value: "" },
   { label: "Christ Church", value: "christ-church" },

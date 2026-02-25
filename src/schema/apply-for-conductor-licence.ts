@@ -1,4 +1,9 @@
-import { barbadosParishes } from "@/data/constants";
+import {
+  barbadosParishes,
+  NAME_REGEX,
+  PHONE_REGEX,
+  POSTCODE_REGEX,
+} from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -33,8 +38,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -48,8 +52,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -66,8 +69,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -131,7 +133,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -151,8 +153,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
+            value: PHONE_REGEX,
             message:
               "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },

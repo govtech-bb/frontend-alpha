@@ -1,4 +1,11 @@
-import { barbadosParishes } from "@/data/constants";
+import {
+  barbadosParishes,
+  NAME_REGEX,
+  NID_REGEX,
+  PHONE_REGEX,
+  POSTCODE_REGEX,
+  TAMIS_NUMBER_REGEX,
+} from "@/data/constants";
 import { primarySchools } from "@/data/schools";
 import type { FormStep } from "@/types";
 
@@ -46,7 +53,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "ID number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: NID_REGEX,
             message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
@@ -180,8 +187,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -198,8 +204,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -213,7 +218,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "ID number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: NID_REGEX,
             message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
@@ -254,7 +259,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "TAMIS number is required",
           pattern: {
-            value: "^\\d{10,15}$",
+            value: TAMIS_NUMBER_REGEX,
             message:
               "TAMIS number is between 10 to 15 digits. Example TAMIS number: 1234567890",
           },
@@ -273,7 +278,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "First name is required",
           pattern: {
-            value: "^[A-Za-z\\s'-]+$",
+            value: NAME_REGEX,
             message:
               "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
           },
@@ -290,7 +295,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Last name is required",
           pattern: {
-            value: "^[A-Za-z\\s'-]+$",
+            value: NAME_REGEX,
             message:
               "Please enter a valid name using only letters, spaces, hyphens, and apostrophes",
           },
@@ -339,7 +344,7 @@ export const formSteps: FormStep[] = [
         width: "medium",
         validation: {
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -360,8 +365,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
+            value: PHONE_REGEX,
             message:
               "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
@@ -375,7 +379,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: NID_REGEX,
             message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
@@ -416,7 +420,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "TAMIS number is required",
           pattern: {
-            value: "^\\d{10,15}$",
+            value: TAMIS_NUMBER_REGEX,
             message:
               "TAMIS number is between 10 to 15 digits. Example TAMIS number: 1234567890",
           },

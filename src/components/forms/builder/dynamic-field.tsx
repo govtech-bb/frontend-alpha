@@ -12,10 +12,10 @@ import {
   Text,
   TextArea,
 } from "@govtech-bb/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, normalizeTextValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
 import type { FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
@@ -127,6 +127,29 @@ export function DynamicField({
     setValue,
     getValues,
   } = useFormContext<FormData>();
+
+  /**
+   * Wraps `register` for text/tel/textarea fields to normalize the value on blur:
+   * strips leading whitespace and trailing whitespace or full stops before validation runs.
+   */
+  const textRegister = useCallback(
+    (name: keyof FormData) => {
+      const { onBlur: _onBlur, ...rest } = register(name);
+      return {
+        ...rest,
+        onBlur: (
+          e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          const normalized = normalizeTextValue(e.target.value);
+          setValue(name, normalized as FormData[keyof FormData], {
+            shouldValidate: true,
+            shouldTouch: true,
+          });
+        },
+      };
+    },
+    [register, setValue]
+  );
 
   // Support nested field names (e.g., "guardian.firstName")
   const error = getNestedValue<FieldError>(
@@ -308,7 +331,7 @@ export function DynamicField({
                 </Text>
               )}
               <TextArea
-                {...register(conditionalField.name as keyof FormData)}
+                {...textRegister(conditionalField.name as keyof FormData)}
                 error={conditionalError?.message}
                 id={conditionalField.name}
                 placeholder={conditionalField.placeholder}
@@ -386,7 +409,7 @@ export function DynamicField({
                 id={conditionalField.name}
                 placeholder={conditionalField.placeholder}
                 type={conditionalField.type}
-                {...register(conditionalField.name as keyof FormData)}
+                {...textRegister(conditionalField.name as keyof FormData)}
               />
             </div>
           ) : (
@@ -396,7 +419,7 @@ export function DynamicField({
               label={conditionalField.hidden ? "" : conditionalField.label}
               placeholder={conditionalField.placeholder}
               type={conditionalField.type}
-              {...register(conditionalField.name as keyof FormData)}
+              {...textRegister(conditionalField.name as keyof FormData)}
             />
           )}
         </div>
@@ -589,7 +612,7 @@ export function DynamicField({
                             </Text>
                           )}
                           <TextArea
-                            {...register(childField.name as keyof FormData)}
+                            {...textRegister(childField.name as keyof FormData)}
                             error={childError?.message}
                             id={childField.name}
                             placeholder={childField.placeholder}
@@ -629,7 +652,7 @@ export function DynamicField({
                           label={childField.hidden ? "" : childField.label}
                           placeholder={childField.placeholder}
                           type={childField.type}
-                          {...register(childField.name as keyof FormData)}
+                          {...textRegister(childField.name as keyof FormData)}
                         />
                       )}
                     </div>
@@ -677,7 +700,7 @@ export function DynamicField({
             </Text>
           )}
           <TextArea
-            {...register(field.name as keyof FormData)}
+            {...textRegister(field.name as keyof FormData)}
             error={error?.message}
             id={field.name}
             placeholder={field.placeholder}
@@ -722,7 +745,7 @@ export function DynamicField({
             error={error?.message}
             id={field.name}
             type={field.type}
-            {...register(field.name as keyof FormData)}
+            {...textRegister(field.name as keyof FormData)}
             placeholder={field.placeholder}
           />
         </div>
@@ -731,7 +754,7 @@ export function DynamicField({
           error={error?.message}
           label={field.hidden ? "" : field.label}
           type={field.type}
-          {...register(field.name as keyof FormData)}
+          {...textRegister(field.name as keyof FormData)}
           placeholder={field.placeholder}
         />
       )}
