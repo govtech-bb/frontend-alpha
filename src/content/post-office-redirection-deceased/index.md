@@ -1,7 +1,7 @@
 ---
 title: "Tell the Post Office someone has died"
 description: ""
-publish_date: 2026-01-15
+publish_date: 2026-01-30
 stage: alpha
 section: "Travel, ID and citizenship"
 ---

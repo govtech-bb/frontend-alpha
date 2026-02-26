@@ -2,7 +2,7 @@
 title: "EZPay"
 description: "An overview of the Government of Barbados' EZpay+ payments platform, detailing its purpose, registration requirements, and available payment methods for various government services."
 source_url: https://www.gov.bb/Citizens/ezpay
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Work and Employment"
 ---
 

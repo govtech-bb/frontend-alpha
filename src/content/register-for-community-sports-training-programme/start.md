@@ -1,6 +1,7 @@
 ---
 title: "Register for a Youth Development Programme (YDP) Community Sports Training Programme"
 stage: "alpha"
+publish_date: 2026-01-19
 ---
 
 You should complete your application in one go. At the moment, it is not possible to save your answers and come back to them later.

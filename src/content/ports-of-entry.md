@@ -2,7 +2,7 @@
 title: "Ports of Entry"
 description: "Information on the various ports of entry into Barbados, including the Bridgetown Port, Grantley Adams International Airport, and Port Saint Charles."
 source_url: https://www.gov.bb/Visit-Barbados/ports-of-entry
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Travel, ID and Citizenship"
 ---
 
