@@ -22,6 +22,20 @@ const nextConfig: NextConfig = {
   // removes: x-powered-by: Next.js
   poweredByHeader: false,
   pageExtensions: ["md", "mdx", "ts", "tsx"],
+  async redirects() {
+    return [
+      {
+        source: "/government",
+        destination: "/",
+        permanent: false,
+      },
+      {
+        source: "/government/directory/profile",
+        destination: "/government/directory",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

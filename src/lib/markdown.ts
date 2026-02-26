@@ -28,7 +28,7 @@ export async function getMarkdownContent(slugPath: string[]) {
       if (!fileContent) {
         return null;
       }
-    } else {
+    } else if (slugPath.length === 2) {
       // Sub-page: content/register-a-birth/start.md
       const filePath = path.join(
         contentDirectory,
@@ -36,6 +36,19 @@ export async function getMarkdownContent(slugPath: string[]) {
         `${slugPath[1]}.md`
       );
       fileContent = await fs.readFile(filePath, "utf8");
+    } else if (slugPath.length === 3) {
+      // Nested directory page: content/directory/state-bodies/accreditation-council.md
+      const filePath = path.join(
+        contentDirectory,
+        slugPath[0],
+        slugPath[1],
+        `${slugPath[2]}.md`
+      );
+      fileContent = await fs.readFile(filePath, "utf8");
+    }
+
+    if (!fileContent) {
+      return null;
     }
 
     const { data, content } = matter(fileContent);
