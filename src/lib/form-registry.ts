@@ -31,6 +31,9 @@ export const FORM_COMPONENTS = {
   "reserve-society-name": lazy(
     () => import("@/components/forms/reserve-society-name-form")
   ),
+  "reserve-company-name": lazy(
+    () => import("@/components/forms/reserve-company-name")
+  ),
   "post-office-redirection-individual": lazy(
     () => import("@/components/forms/post-office-redirection-individual-form")
   ),

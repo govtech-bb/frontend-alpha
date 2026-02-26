@@ -502,15 +502,19 @@ export default function DynamicMultiStepForm({
         } else if (field.type === "fieldArray") {
           const minItems = field.fieldArray?.minItems ?? 1;
           if (minItems > 0) {
-            if (field.fieldArray?.fields) {
-              const initialItem: Record<string, string> = {};
-              for (const f of field.fieldArray.fields) {
-                initialItem[f.name] = "";
+            const items: Record<string, string>[] = [];
+            for (let i = 0; i < minItems; i++) {
+              if (field.fieldArray?.fields) {
+                const initialItem: Record<string, string> = {};
+                for (const f of field.fieldArray.fields) {
+                  initialItem[f.name] = "";
+                }
+                items.push(initialItem);
+              } else {
+                items.push({ value: "" });
               }
-              defaultValue = [initialItem];
-            } else {
-              defaultValue = [{ value: "" }];
             }
+            defaultValue = items;
           } else {
             defaultValue = [];
           }

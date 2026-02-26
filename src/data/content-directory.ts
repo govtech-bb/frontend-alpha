@@ -379,6 +379,20 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on registering a business name in Barbados, including requirements and procedures, with a link to the CAIPO website for more details.",
       },
       {
+        title: "Reserve a company name",
+        slug: "reserve-company-name",
+        description:
+          "Reserve a name for a new company, company name change, or merger.",
+        subPages: [
+          {
+            slug: "form",
+            title: "Reserve a company name",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
+      {
         title: "Business policies and law",
         slug: "business-policies-and-law",
         source_url: "https://www.gov.bb/Business/policies-laws",
