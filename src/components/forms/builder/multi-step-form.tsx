@@ -443,6 +443,34 @@ export default function DynamicMultiStepForm({
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
 
+  // Helper function to infer repeatable counts from restored form data
+  // This ensures the schema matches the restored data after page refresh
+  const inferRepeatableCountsFromFormData = useCallback(
+    (savedFormData: Partial<FormData>): Record<string, number> => {
+      const counts: Record<string, number> = {};
+      for (const step of formSteps) {
+        if (step.repeatable) {
+          const arrayFieldName = step.repeatable.arrayFieldName;
+          const arrayData = savedFormData[arrayFieldName as keyof FormData] as
+            | Record<string, unknown>
+            | undefined;
+
+          if (arrayData && typeof arrayData === "object") {
+            // Count the number of numeric keys (instances)
+            const instanceCount = Object.keys(arrayData).filter((key) =>
+              /^\d+$/.test(key)
+            ).length;
+            counts[step.id] = Math.max(1, instanceCount);
+          } else {
+            counts[step.id] = 1;
+          }
+        }
+      }
+      return counts;
+    },
+    [formSteps]
+  );
+
   // Track instance counts for repeatable steps (key: base step ID, value: count)
   const [repeatableCounts, setRepeatableCounts] = useState<
     Record<string, number>
@@ -456,6 +484,12 @@ export default function DynamicMultiStepForm({
     }
     return initial;
   });
+
+  // Flag to track if repeatable counts have been synced with restored form data
+  const [repeatableCountsSynced, setRepeatableCountsSynced] = useState(false);
+
+  // Schema version counter - used to force form re-initialization when schema changes
+  const [schemaVersion, setSchemaVersion] = useState(0);
 
   // Expand form steps based on current repeatable counts
   const expandedFormSteps = useMemo(
@@ -603,9 +637,48 @@ export default function DynamicMultiStepForm({
     }
   }, [_hasHydrated, searchParams, completedSteps, currentStep, setCurrentStep]);
 
-  // Load saved form data on mount
+  // Sync repeatable counts from restored form data before loading values
+  // This ensures the schema matches the restored data structure
   useEffect(() => {
-    if (!(_hasHydrated && !isFormReady)) return;
+    if (!_hasHydrated || repeatableCountsSynced) return;
+
+    if (formData && Object.keys(formData).length > 0) {
+      const inferredCounts = inferRepeatableCountsFromFormData(formData);
+      // Check if the inferred counts differ from current counts
+      const countsChanged = Object.keys(inferredCounts).some(
+        (key) => inferredCounts[key] !== repeatableCounts[key]
+      );
+      if (countsChanged) {
+        setRepeatableCounts(inferredCounts);
+        // Increment schema version to trigger form re-initialization
+        setSchemaVersion((v) => v + 1);
+      }
+    }
+    setRepeatableCountsSynced(true);
+  }, [
+    _hasHydrated,
+    formData,
+    repeatableCountsSynced,
+    repeatableCounts,
+    inferRepeatableCountsFromFormData,
+  ]);
+
+  // Re-initialize form when schema version changes (after repeatable counts sync)
+  // This ensures the zodResolver uses the updated schema
+  const previousSchemaVersion = useRef(schemaVersion);
+  useEffect(() => {
+    if (schemaVersion > 0 && schemaVersion !== previousSchemaVersion.current) {
+      // Reset the form to pick up the new resolver
+      // We need to get current values and re-set them after reset
+      const currentValues = methods.getValues();
+      methods.reset(currentValues);
+      previousSchemaVersion.current = schemaVersion;
+    }
+  }, [schemaVersion, methods]);
+
+  // Load saved form data on mount (after repeatable counts are synced)
+  useEffect(() => {
+    if (!(_hasHydrated && repeatableCountsSynced && !isFormReady)) return;
 
     if (formData && Object.keys(formData).length > 0) {
       // Reset form with saved data
@@ -620,7 +693,7 @@ export default function DynamicMultiStepForm({
       }
     }
     setIsFormReady(true);
-  }, [_hasHydrated, formData, methods, isFormReady]); // Run only once on mount
+  }, [_hasHydrated, repeatableCountsSynced, formData, methods, isFormReady]); // Run only once after counts are synced
 
   // Check for payment status on mount
   useEffect(() => {
@@ -882,6 +955,11 @@ export default function DynamicMultiStepForm({
       formValues as Record<string, unknown>,
       step.conditionalOn.field
     );
+
+    const operator = step.conditionalOn.operator ?? "equals";
+    if (operator === "notEquals") {
+      return watchedValue !== step.conditionalOn.value;
+    }
     return watchedValue === step.conditionalOn.value;
   };
 
@@ -1010,10 +1088,57 @@ export default function DynamicMultiStepForm({
       }
     }
 
-    // Trigger standard validation
-    let isValid = await methods.trigger(
-      currentFieldNames as (keyof FormData)[]
-    );
+    // Helper to transform arrays to objects with numeric string keys
+    // This is needed because react-hook-form stores field.0.name as arrays
+    // but our schema expects objects with "0" keys
+    const transformArraysToObjects = (data: unknown): unknown => {
+      if (Array.isArray(data)) {
+        const obj: Record<string, unknown> = {};
+        for (let i = 0; i < data.length; i++) {
+          obj[String(i)] = transformArraysToObjects(data[i]);
+        }
+        return obj;
+      }
+      if (data !== null && typeof data === "object") {
+        const result: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(data)) {
+          result[key] = transformArraysToObjects(value);
+        }
+        return result;
+      }
+      return data;
+    };
+
+    // Validate using the current schema directly to avoid stale resolver issues
+    // This ensures we always use the latest schema even if the resolver wasn't updated
+    const allFormValues = methods.getValues();
+
+    // Transform form values to match schema structure (arrays -> objects with numeric keys)
+    // React-hook-form stores fields like "array.0.field" as arrays, but our schema expects objects
+    const transformedValues = transformArraysToObjects(allFormValues);
+
+    const schemaResult = formSchema.safeParse(transformedValues);
+
+    // Clear previous errors for fields we're validating
+    for (const fieldName of currentFieldNames) {
+      methods.clearErrors(fieldName as keyof FormData);
+    }
+
+    // Check if any of the current step's fields have validation errors
+    let isValid = true;
+    if (!schemaResult.success) {
+      for (const issue of schemaResult.error.issues) {
+        const errorPath = issue.path.join(".");
+        // Only set errors for fields in the current step
+        if (currentFieldNames.includes(errorPath)) {
+          methods.setError(errorPath as keyof FormData, {
+            type: "manual",
+            message: issue.message,
+          });
+          isValid = false;
+        }
+      }
+    }
 
     // Manually validate conditional fields (required and pattern)
     for (const field of visibleFields) {

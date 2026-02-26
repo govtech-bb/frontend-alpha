@@ -40,7 +40,7 @@ export const YEAR_REGEX = "^[0-9]{4}$";
 export const DIGITS_REGEX = "^[0-9]+$";
 
 export const barbadosParishes: SelectOption[] = [
-  { label: "Select a parish", value: "" },
+  { label: "Select", value: "" },
   { label: "Christ Church", value: "christ-church" },
   { label: "St. Andrew", value: "st-andrew" },
   { label: "St. George", value: "st-george" },
@@ -55,6 +55,7 @@ export const barbadosParishes: SelectOption[] = [
 ];
 
 export const countries: SelectOption[] = [
+  { label: "Select", value: "" },
   { label: "Afghanistan", value: "afghanistan" },
   { label: "Albania", value: "albania" },
   { label: "Algeria", value: "algeria" },
