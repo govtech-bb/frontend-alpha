@@ -1,6 +1,7 @@
 ---
 title: "Terms & Conditions"
 source_url: https://www.gov.bb/terms-conditions
+publish_date: 2025-10-15
 ---
 
 ### Ownership of Website Content

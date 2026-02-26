@@ -1,7 +1,7 @@
 ---
 title: "Redirect my personal mail"
 description: ""
-publish_date: 2026-01-16
+publish_date: 2026-01-29
 section: "Travel, ID and citizenship"
 ---
 

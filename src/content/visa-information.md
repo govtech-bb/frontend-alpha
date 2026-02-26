@@ -2,7 +2,7 @@
 title: "Visa information"
 description: "Details on how to apply for a visa, including required forms, passport photos, and contact information for Barbados Immigration Department offices."
 source_url: https://www.gov.bb/Visit-Barbados/visa-information
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Travel, ID and Citizenship"
 ---
 

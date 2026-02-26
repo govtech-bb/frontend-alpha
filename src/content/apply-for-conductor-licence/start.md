@@ -1,7 +1,7 @@
 ---
 title: "Apply for a conductor's licence"
 stage: "alpha"
-publish_date: 2025-12-15
+publish_date: 2026-01-13
 ---
 
 You should complete your application in one go. At the moment, it is not possible to save your answers and come back to them later.

@@ -2,7 +2,7 @@
 title: "Report elderly abuse"
 stage: "alpha"
 featured: false
-publish_date: 2025-10-17
+publish_date: 2025-11-12
 ---
 
 If you are concerned about the welfare of an elderly person, you should use this service to report it to the authorities so they can investigate and intervene.
