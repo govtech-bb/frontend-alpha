@@ -9,6 +9,7 @@ export function initDatadog() {
 
   // Check if already initialized
   if (window.DD_RUM) {
+    console.log("[Datadog] Already initialized");
     return;
   }
 
@@ -21,6 +22,14 @@ export function initDatadog() {
   const env = process.env.NEXT_PUBLIC_DD_ENV || "sandbox";
   const service = process.env.NEXT_PUBLIC_DD_SERVICE || "alpha-portal";
   const version = process.env.NEXT_PUBLIC_DD_VERSION || "1.0.0";
+
+  console.log("[Datadog] Initializing RUM SDK", {
+    applicationId,
+    clientToken: clientToken.substring(0, 10) + "...",
+    env,
+    service,
+    version,
+  });
 
   datadogRum.init({
     applicationId,
@@ -52,4 +61,6 @@ export function initDatadog() {
 
   // Start session replay recording
   datadogRum.startSessionReplayRecording();
+
+  console.log("[Datadog] RUM SDK initialized successfully");
 }
