@@ -157,7 +157,7 @@ export function DynamicField({
         ) => {
           const normalized = normalizeTextValue(e.target.value);
           setValue(name, normalized as FormData[keyof FormData], {
-            shouldValidate: true,
+            shouldValidate: false,
             shouldTouch: true,
           });
         },
