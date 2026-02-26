@@ -185,6 +185,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Apply for a job at the National Conservation Commission",
+        slug: "apply-for-job-at-ncc",
+        description:
+          "Apply for employment opportunities at the National Conservation Commission",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Apply for a job at the National Conservation Commission",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
     ],
   },
   {
