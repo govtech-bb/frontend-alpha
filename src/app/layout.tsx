@@ -37,11 +37,11 @@ export default function RootLayout({
       <body
         className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased`}
       >
+        <Analytics />
         <Header />
         {children}
         <Footer />
       </body>
-      <Analytics />
     </html>
   );
 }
