@@ -9,7 +9,17 @@ export function initDatadog() {
 
   // Check if already initialized
   if (window.DD_RUM) {
-    console.log("[Datadog] Already initialized");
+    console.log("[Datadog] SDK already loaded, checking initialization status");
+    try {
+      const context = window.DD_RUM.getInternalContext?.();
+      console.log("[Datadog] Internal context:", {
+        hasContext: !!context,
+        sessionId: context?.session_id,
+        applicationId: context?.application_id,
+      });
+    } catch (error) {
+      console.error("[Datadog] Error checking context:", error);
+    }
     return;
   }
 
