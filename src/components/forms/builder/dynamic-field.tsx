@@ -12,8 +12,10 @@ import {
   Text,
   TextArea,
 } from "@govtech-bb/react";
+import { useMaskito } from "@maskito/react";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { Controller, type FieldError, useFormContext } from "react-hook-form";
+import { masks } from "@/lib/masks";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue, normalizeTextValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
@@ -128,6 +130,12 @@ export function DynamicField({
     getValues,
   } = useFormContext<FormData>();
 
+  // Input mask (e.g., "nid" for National ID format xxxxxx-xxxx)
+  const maskType = "mask" in field && field.mask ? field.mask : undefined;
+  const maskitoRef = useMaskito({
+    options: maskType ? masks[maskType] : undefined,
+  });
+
   /**
    * Wraps `register` for text/tel/textarea fields to normalize the value on blur:
    * strips leading whitespace and trailing whitespace or full stops before validation runs.
@@ -149,6 +157,33 @@ export function DynamicField({
       };
     },
     [register, setValue]
+  );
+
+  /**
+   * Like textRegister but merges the Maskito ref for masked inputs.
+   * TODO: remove duplication with textRegister
+   */
+  const maskedTextRegister = useCallback(
+    (name: keyof FormData) => {
+      const { onBlur: _onBlur, ref: registerRef, ...rest } = register(name);
+      return {
+        ...rest,
+        ref: (node: HTMLInputElement | null) => {
+          maskitoRef(node);
+          registerRef(node);
+        },
+        onBlur: (
+          e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          const normalized = normalizeTextValue(e.target.value);
+          setValue(name, normalized as FormData[keyof FormData], {
+            shouldValidate: true,
+            shouldTouch: true,
+          });
+        },
+      };
+    },
+    [register, setValue, maskitoRef]
   );
 
   // Support nested field names (e.g., "guardian.firstName")
@@ -745,7 +780,9 @@ export function DynamicField({
             error={error?.message}
             id={field.name}
             type={field.type}
-            {...textRegister(field.name as keyof FormData)}
+            {...(maskType ? maskedTextRegister : textRegister)(
+              field.name as keyof FormData
+            )}
             placeholder={field.placeholder}
           />
         </div>
@@ -754,7 +791,9 @@ export function DynamicField({
           error={error?.message}
           label={field.hidden ? "" : field.label}
           type={field.type}
-          {...textRegister(field.name as keyof FormData)}
+          {...(maskType ? maskedTextRegister : textRegister)(
+            field.name as keyof FormData
+          )}
           placeholder={field.placeholder}
         />
       )}
