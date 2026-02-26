@@ -1,9 +1,7 @@
-import { datadogRum } from "@datadog/browser-rum";
-import { reactPlugin } from "@datadog/browser-rum-react";
-
-export function initDatadog() {
+export async function initDatadog() {
   // Only initialize in browser environment
   if (typeof window === "undefined") {
+    console.log("[Datadog] Skipping initialization - server side");
     return;
   }
 
@@ -41,36 +39,38 @@ export function initDatadog() {
     version,
   });
 
-  datadogRum.init({
-    applicationId,
-    clientToken,
-    site: "us5.datadoghq.com",
-    service,
-    env,
-    version,
-    sessionSampleRate: 100,
-    sessionReplaySampleRate: 20, // Recommended: 20% to balance cost and coverage
-    trackResources: true,
-    trackUserInteractions: true,
-    trackLongTasks: true,
-    defaultPrivacyLevel: "mask-user-input",
+  try {
+    // Dynamic import to ensure this only runs in the browser
+    const { datadogRum } = await import("@datadog/browser-rum");
+    const { reactPlugin } = await import("@datadog/browser-rum-react");
 
-    // React plugin for better component tracking
-    plugins: [
-      reactPlugin({ router: false }), // Set to true if using React Router
-    ],
+    datadogRum.init({
+      applicationId,
+      clientToken,
+      site: "us5.datadoghq.com",
+      service,
+      env,
+      version,
+      sessionSampleRate: 100,
+      sessionReplaySampleRate: 20,
+      trackResources: true,
+      trackUserInteractions: true,
+      trackLongTasks: true,
+      defaultPrivacyLevel: "mask-user-input",
+      plugins: [reactPlugin({ router: false })],
+      allowedTracingUrls: [
+        "https://dev.api.alpha.gov.bb",
+        /https:\/\/dev\.api\.alpha\.gov\.bb\/.*/,
+        "https://api.alpha.gov.bb",
+        /https:\/\/api\.alpha\.gov\.bb\/.*/,
+      ],
+    });
 
-    // Enable distributed tracing to backend API
-    allowedTracingUrls: [
-      "https://dev.api.alpha.gov.bb",
-      /https:\/\/dev\.api\.alpha\.gov\.bb\/.*/,
-      "https://api.alpha.gov.bb",
-      /https:\/\/api\.alpha\.gov\.bb\/.*/,
-    ],
-  });
+    // Start session replay recording
+    datadogRum.startSessionReplayRecording();
 
-  // Start session replay recording
-  datadogRum.startSessionReplayRecording();
-
-  console.log("[Datadog] RUM SDK initialized successfully");
+    console.log("[Datadog] RUM SDK initialized successfully");
+  } catch (error) {
+    console.error("[Datadog] Failed to initialize RUM SDK:", error);
+  }
 }

@@ -5,7 +5,10 @@ import { initDatadog } from "@/lib/datadog";
 
 export const DatadogRUM = () => {
   useEffect(() => {
-    initDatadog();
+    // Call the async init function
+    initDatadog().catch((error) => {
+      console.error("[Datadog] Initialization error:", error);
+    });
   }, []);
 
   return null;
