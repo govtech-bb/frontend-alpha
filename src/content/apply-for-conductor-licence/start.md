@@ -19,5 +19,14 @@ You will need to share:
 - the details of any endorsements you have (or have had) such as penalty points on your conductor’s or driver’s licence
 - the reason why you are (or have been) disqualified from getting a conductor’s or driver’s licence
 - whether you have ever been convicted in a criminal court
+- a copy of your [Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
+
+### What happens after you apply
+
+We will review your application.
+
+You may be invited to attend an in-person oral test as part of the application process.
+
+We will contact you if you need to attend.
 
 <a data-start-link href="/work-employment/apply-for-conductor-licence/form">Start now</a>

@@ -1,6 +1,7 @@
 import {
   barbadosParishes,
   NAME_REGEX,
+  NID_REGEX,
   PHONE_REGEX,
   POSTCODE_REGEX,
 } from "@/data/constants";
@@ -85,6 +86,48 @@ export const formSteps: FormStep[] = [
           date: {
             type: "past",
           },
+        },
+      },
+      {
+        name: "applicant.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        width: "medium",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: NID_REGEX,
+            message: "Enter a valid ID number (for example, 850101-0001)",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+      {
+        name: "applicant.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
         },
       },
     ],
@@ -388,6 +431,21 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "document-uploads",
+    title: "Upload supporting documents",
+    fields: [
+      {
+        name: "documents.policeCertificate",
+        label: "Upload a Police Certificate of Character",
+        hint: "Attach a .pdf, .docx or .png file.",
+        type: "file",
+        validation: {
+          required: "Police Certificate of Character is required",
+        },
+      },
+    ],
+  },
+  {
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
@@ -424,15 +482,19 @@ export const formSteps: FormStep[] = [
     id: "confirmation",
     title: "Thank you for your application",
     description:
-      "Your information has been sent to the Barbados Transport Authority",
+      "Your application for a conductor's licence has been submitted",
     fields: [],
     bodyContent: `## What happens next
 
-We will review your application and any supporting information.
+We will review the information and documents you provided.
 
-If we need further details, we will contact you using the email address you provided.
+If we need more information, we will contact you using the email address or phone number in your application.
 
-You will receive an email confirming this submission.
+You may be invited to attend an in-person oral test as part of the application process. 
+
+We will contact you if you need to attend.
+
+You do not need to do anything else at this time.
 
 If you do not receive the confirmation email within a few minutes, check your junk or spam folder.`,
     enableFeedback: true,
