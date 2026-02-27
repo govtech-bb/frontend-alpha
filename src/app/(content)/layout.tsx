@@ -8,7 +8,7 @@ export default function EntryPointLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <main className="w-full overflow-hidden">
       <div className="bg-blue-10">
         <div className="container">
           <StageBanner stage="alpha" />
