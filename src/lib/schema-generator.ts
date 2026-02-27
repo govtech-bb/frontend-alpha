@@ -357,24 +357,52 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
     return schema;
   }
 
-  // Handle file uploads (stores File[] array, but we validate based on uploaded URLs)
+  // Handle file uploads (stores File[] array, but we validate based on count)
   if (field.type === "file") {
-    // File fields store File[] objects which can't be serialized to JSON
-    // The actual validation is that files were uploaded (array has items)
-    // We use z.any() since File objects don't have a Zod type
-    if (validation.required) {
-      return z.any().refine(
-        (val) => {
-          // Check if it's an array with at least one file
-          if (Array.isArray(val) && val.length > 0) return true;
-          // Also accept if it's already been converted to URLs (string array)
-          if (typeof val === "string" && val.length > 0) return true;
-          return false;
-        },
-        { message: validation.required || "Please upload a file" }
-      );
+    // File fields store File[] objects which can't be serialized to JSON.
+    // We validate them using item-count rules (required/minItems/maxItems/exactItems).
+    const hasCountValidation =
+      validation.required || (validation as NonDateFieldValidation).exactItems;
+
+    // No validation rules: allow anything / undefined
+    if (!hasCountValidation) {
+      return z.any().optional();
     }
-    return z.any().optional();
+
+    const exactItems = (validation as NonDateFieldValidation).exactItems;
+
+    const getFileCount = (val: unknown): number => {
+      if (Array.isArray(val)) {
+        return val.length;
+      }
+      if (typeof val === "string") {
+        // Historical behaviour: any non-empty string was treated as "has a file"
+        return val.length > 0 ? 1 : 0;
+      }
+      return 0;
+    };
+
+    return z.any().superRefine((val, ctx) => {
+      const count = getFileCount(val);
+
+      // Required: at least one file
+      if (validation.required && count === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: validation.required || "Please upload a file",
+        });
+        return;
+      }
+
+      // Exact items (e.g. exactly 2 passport photos)
+      if (exactItems && count !== exactItems.value && count !== 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: exactItems.message,
+        });
+        return;
+      }
+    });
   }
 
   // Handle optional fields (explicitly marked as required: false or no validation rules)
