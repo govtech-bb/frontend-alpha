@@ -1,5 +1,6 @@
 import Script from "next/script";
 import { DatadogRUM } from "./datadog-rum";
+import { MatomoAnalytics } from "./matomo-analytics";
 
 export const Analytics = () => {
   const websiteId = process.env.NEXT_PUBLIC_UMAMI_SITE_ID;
@@ -8,6 +9,9 @@ export const Analytics = () => {
     <>
       {/* Datadog Real User Monitoring */}
       <DatadogRUM />
+
+      {/* Matomo Analytics */}
+      <MatomoAnalytics />
 
       {/* Umami Analytics */}
       {websiteId && (
