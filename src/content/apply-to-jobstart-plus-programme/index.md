@@ -46,7 +46,7 @@ There are 2 ways to register. You can:
 
    <a data-start-link href="/work-employment/apply-to-jobstart-plus-programme/start">Register now</a>
 
-2. #### Get a paper form from the Ministry of Labour, Social Security and Third Seectorr
+2. #### Get a paper form from the Ministry of Labour, Social Security and Third Sector
 
    You must complete it by hand and return it to the department.
 
