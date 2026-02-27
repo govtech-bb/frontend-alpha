@@ -1,3 +1,5 @@
+import type { MaskType } from "@/lib/masks";
+
 export type FieldType =
   | "text"
   | "email"
@@ -132,6 +134,8 @@ type FieldArrayFormField = BaseFormField & {
 type TextFormField = BaseFormField & {
   type: "text" | "email" | "number" | "tel";
   validation: NonDateFieldValidation;
+  /** Input mask to apply (e.g., "nid" for National ID format xxxxxx-xxxx) */
+  mask?: MaskType;
 };
 
 type ShowHideFormField = BaseFormField & {

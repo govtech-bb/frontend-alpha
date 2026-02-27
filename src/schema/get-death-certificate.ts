@@ -123,6 +123,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         placeholder: "for example, 850101-0001",
         validation: {
           required: "ID Number is required",
@@ -349,6 +350,7 @@ export const formSteps: FormStep[] = [
         label: "National Identification (ID) Number",
         hint: "Enter only if known",
         type: "text",
+        mask: "nid",
         validation: {
           pattern: {
             value: NID_REGEX,
