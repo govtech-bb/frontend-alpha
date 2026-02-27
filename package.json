@@ -14,7 +14,7 @@
     "test:e2e:update:linux": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.57.0-jammy sh -c 'npm ci && npm run build && npx playwright test visual --update-snapshots'",
     "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:report": "playwright show-report",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "dependencies": {
     "@aws-sdk/client-sesv2": "^3.891.0",
