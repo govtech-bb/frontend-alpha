@@ -65,5 +65,13 @@ export function trackEvent(
     return;
   }
 
-  window._paq.push(["trackEvent", category, action, name, value]);
+  const eventData: Array<string | number> = ["trackEvent", category, action];
+  if (name !== undefined) {
+    eventData.push(name);
+    if (value !== undefined) {
+      eventData.push(value);
+    }
+  }
+
+  window._paq.push(eventData);
 }
