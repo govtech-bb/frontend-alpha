@@ -49,7 +49,7 @@ export const formSteps: FormStep[] = [
       {
         name: "applicant.dateOfBirth",
         label: "Date of birth",
-        hint: "For example, 3 27 2007",
+        hint: "For example, 27 03 2007",
         type: "date",
         validation: {
           required: "Date of birth is required",
