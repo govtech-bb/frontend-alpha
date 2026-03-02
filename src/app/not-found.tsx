@@ -28,7 +28,7 @@ export default function NotFound() {
         <div className="flex flex-col gap-xm md:flex-row">
           {/* <Button
             asChild
-            children={<a href="/(content)">Browse service directory</a>}
+            children={<a href="/">Browse service directory</a>}
             variant="secondary"
           /> */}
           <Button
