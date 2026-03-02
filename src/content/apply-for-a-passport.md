@@ -2,7 +2,7 @@
 title: "Apply for a passport"
 description: "This article provides detailed instructions for citizens of Barbados on how to apply for a passport, including requirements, application forms, collection procedures, and fee schedules."
 source_url: https://www.gov.bb/Citizens/apply-passport
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Travel, ID and Citizenship"
 ---
 

@@ -4,6 +4,7 @@ description: "Details the mission, acting chief welfare officer, and contact inf
 source_url: https://www.gov.bb/Departments/welfare
 extraction_date: 2025-10-14
 section: "Government, Democracy and Civic Life"
+publish_date: 2025-10-15
 ---
 
 ## Welfare Department

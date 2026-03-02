@@ -2,7 +2,7 @@
 title: "Jobseekers"
 description: "Learn about various employment opportunities in Barbados, including overseas programs, guidance for job seekers, and public sector positions, provided by the Ministry of Labour and Social Partnership Relations."
 source_url: https://www.gov.bb/Citizens/job-seekers
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Work and Employment"
 ---
 

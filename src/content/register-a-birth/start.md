@@ -1,7 +1,7 @@
 ---
 title: "Register a Birth"
 stage: "alpha"
-publish_date: 2025-11-03
+publish_date: 2026-01-13
 ---
 
 You can pre-register the birth online. It should take around 10 minutes.

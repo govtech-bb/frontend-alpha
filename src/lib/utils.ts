@@ -42,6 +42,14 @@ export function findSubPageTitleFromPath(
   return subPage?.title ?? page?.title;
 }
 
+/**
+ * Normalizes a text field value before validation:
+ * removes leading whitespace and trailing whitespace or full stops.
+ */
+export function normalizeTextValue(value: string): string {
+  return value.replace(/^\s+/, "").replace(/[\s.]+$/, "");
+}
+
 export const findCategoryByPageSlug = (
   slug: string
 ): InformationContent | undefined =>

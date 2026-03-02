@@ -2,7 +2,7 @@
 title: "Get a copy of a marriage certificate"
 stage: "alpha"
 featured: false
-publish_date: 2025-12-15
+publish_date: 2026-01-22
 ---
 
 This service can be used to get a copy of a marriage certificate for any couple whose marriage was registered in Barbados.

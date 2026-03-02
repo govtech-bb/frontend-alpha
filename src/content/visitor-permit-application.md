@@ -2,7 +2,7 @@
 title: "Visitor permit application"
 description: "This article explains how to apply online for a Visitor's Permit to drive in Barbados, outlining requirements, fees, and the application process."
 source_url: https://www.gov.bb/Visit-Barbados/visitorpermitapplication
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Travel, ID and Citizenship"
 ---
 

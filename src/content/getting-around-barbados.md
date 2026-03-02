@@ -2,7 +2,7 @@
 title: "Getting around Barbados"
 description: "Information for visitors and temporary residents on obtaining a driver's permit and various transportation options in Barbados, including buses, minibuses, route taxis, and regular taxis."
 source_url: https://www.gov.bb/Visit-Barbados/getting-around-barbados
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Travel, ID and Citizenship"
 ---
 

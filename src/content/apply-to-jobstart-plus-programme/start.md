@@ -1,7 +1,7 @@
 ---
 title: "Register for Job Start Plus"
 stage: "alpha"
-publish_date: 2025-12-05
+publish_date: 2026-01-13
 ---
 
 You should complete your registration in one go. At the moment, it is not possible to save your answers and come back to them later.

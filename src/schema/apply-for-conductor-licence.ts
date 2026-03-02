@@ -1,4 +1,10 @@
-import { barbadosParishes } from "@/data/constants";
+import {
+  barbadosParishes,
+  NAME_REGEX,
+  NID_REGEX,
+  PHONE_REGEX,
+  POSTCODE_REGEX,
+} from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -33,8 +39,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -48,8 +53,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -66,8 +70,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -83,6 +86,49 @@ export const formSteps: FormStep[] = [
           date: {
             type: "past",
           },
+        },
+      },
+      {
+        name: "applicant.idNumber",
+        label: "National Identification (ID) Number",
+        type: "text",
+        mask: "nid",
+        width: "medium",
+        validation: {
+          required: "ID Number is required",
+          pattern: {
+            value: NID_REGEX,
+            message: "Enter a valid ID number (for example, 850101-0001)",
+          },
+        },
+        // Note: ID Number validation is skipped when ShowHide is open (handled in step validation)
+        skipValidationWhenShowHideOpen: "applicant.usePassportInstead",
+      },
+      {
+        name: "applicant.passportDetails",
+        label: "",
+        type: "showHide",
+        validation: { required: false },
+        showHide: {
+          summary: "Use passport number instead",
+          stateFieldName: "applicant.usePassportInstead",
+          description:
+            "If you don't have a National ID number, you can use your passport number instead.",
+          fields: [
+            {
+              name: "applicant.passportNumber",
+              label: "Passport Number",
+              type: "text",
+              placeholder: "",
+              validation: {
+                required: "Passport number is required",
+                minLength: {
+                  value: 6,
+                  message: "Passport number must be at least 6 characters",
+                },
+              },
+            },
+          ],
         },
       },
     ],
@@ -131,7 +177,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -151,8 +197,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
+            value: PHONE_REGEX,
             message:
               "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
@@ -387,6 +432,21 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
+    id: "document-uploads",
+    title: "Upload supporting documents",
+    fields: [
+      {
+        name: "documents.policeCertificate",
+        label: "Upload a Police Certificate of Character",
+        hint: "Attach a .pdf, .docx or .png file.",
+        type: "file",
+        validation: {
+          required: "Police Certificate of Character is required",
+        },
+      },
+    ],
+  },
+  {
     id: "check-your-answers",
     title: "Check your answers",
     fields: [],
@@ -423,15 +483,19 @@ export const formSteps: FormStep[] = [
     id: "confirmation",
     title: "Thank you for your application",
     description:
-      "Your information has been sent to the Barbados Transport Authority",
+      "Your application for a conductor's licence has been submitted",
     fields: [],
     bodyContent: `## What happens next
 
-We will review your application and any supporting information.
+We will review the information and documents you provided.
 
-If we need further details, we will contact you using the email address you provided.
+If we need more information, we will contact you using the email address or phone number in your application.
 
-You will receive an email confirming this submission.
+You may be invited to attend an in-person oral test as part of the application process. 
+
+We will contact you if you need to attend.
+
+You do not need to do anything else at this time.
 
 If you do not receive the confirmation email within a few minutes, check your junk or spam folder.`,
     enableFeedback: true,

@@ -75,7 +75,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
         </div>
         <Heading
           as="h1"
-          className="focus:outline-none"
+          className="hyphens-auto focus:outline-none"
           id="step-heading"
           tabIndex={-1}
         >

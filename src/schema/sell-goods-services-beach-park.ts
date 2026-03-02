@@ -1,4 +1,11 @@
-import { barbadosParishes, countries } from "@/data/constants";
+import {
+  barbadosParishes,
+  countries,
+  NAME_REGEX,
+  NID_REGEX,
+  PHONE_REGEX,
+  POSTCODE_REGEX,
+} from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -32,8 +39,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -46,8 +52,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -64,8 +69,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -97,11 +101,12 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         width: "medium",
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: NID_REGEX,
             message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
@@ -150,8 +155,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
+            value: PHONE_REGEX,
             message:
               "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
@@ -196,7 +200,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -371,8 +375,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -389,8 +392,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -419,8 +421,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
+            value: PHONE_REGEX,
             message:
               "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
@@ -466,7 +467,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -490,8 +491,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -508,8 +508,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -538,8 +537,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(?:1[- ]?[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{3}[- ]?\\d{4}|[2-9]\\d{2}[- ]?\\d{4})$",
+            value: PHONE_REGEX,
             message:
               "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
@@ -585,7 +583,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -609,8 +607,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -627,8 +624,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -711,8 +707,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -729,8 +724,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },

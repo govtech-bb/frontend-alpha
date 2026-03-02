@@ -2,7 +2,7 @@
 title: "Tax online"
 description: "Learn about TAMIS, an electronic platform provided by the Government of Barbados for managing and filing your income tax online, including viewing accounts, submitting returns, and making payments."
 source_url: https://www.gov.bb/Citizens/tax-online
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Work and Employment"
 ---
 
