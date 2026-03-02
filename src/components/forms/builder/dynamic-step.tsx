@@ -3,7 +3,7 @@ import { type FieldError, useFormContext } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import { markdownComponents } from "@/components/markdown-content";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, resolveStepTitle } from "@/lib/utils";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
@@ -17,6 +17,9 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
     formState: { errors },
     watch,
   } = useFormContext<FormData>();
+
+  const formValues = watch() as Record<string, unknown>;
+  const resolvedTitle = resolveStepTitle(step, formValues);
 
   // Get errors for the current step's fields (supports nested field names)
   const stepFieldNames = step.fields.map((f) => f.name);
@@ -79,7 +82,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
           id="step-heading"
           tabIndex={-1}
         >
-          {step.title}
+          {resolvedTitle}
         </Heading>
         {step.description && (
           <ReactMarkdown components={markdownComponents}>

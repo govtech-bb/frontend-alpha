@@ -403,12 +403,13 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "birth-details",
-    title: "Provide your birth details",
-    description: "Answer as accurately as possible",
-    conditionalOn: {
+    title: "Provide the person's birth details",
+    conditionalTitle: {
       field: "applyingForYourself",
       value: "yes",
+      title: "Provide your birth details",
     },
+    description: "Answer as accurately as possible",
     fields: [
       {
         name: "birthDetails.dateOfBirth",
@@ -425,7 +426,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBirth",
         label: "Place of birth",
-        hint: "Enter a house, institution, home address, or parish, if known",
+        // hint: "Enter a house, institution, home address, or parish, if known",
         type: "text",
         validation: {
           required: "Place of birth is required",
@@ -438,7 +439,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBaptism",
         label: "Place of baptism",
-        hint: "Enter a house, church, or parish, if known",
+        // hint: "Enter a house, church, or parish, if known",
         type: "text",
         validation: {
           required: "Place of baptism is required",
@@ -564,6 +565,7 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
+
   {
     id: "parents-other",
     title: "Tell us their parents' names",
