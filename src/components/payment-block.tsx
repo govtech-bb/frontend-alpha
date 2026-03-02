@@ -3,7 +3,6 @@
 import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { EZPayVerifyResponse } from "@/lib/ezpay/types";
 
 type PaymentData = {
   amount: number;
@@ -17,8 +16,12 @@ type PaymentData = {
 type Props = {
   paymentData: PaymentData;
   formId: string;
-  customerEmail?: string;
-  customerName?: string;
+};
+
+type PaymentVerifyResponse = {
+  status: "initiated" | "success" | "failed";
+  totalAmount: number;
+  referenceNumber: string;
 };
 
 function PaymentRow({ label, value }: { label: string; value: string }) {
@@ -36,48 +39,45 @@ export const PaymentBlock = ({ paymentData }: Props) => {
   const searchParams = useSearchParams();
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
-    status: "Success" | "Failed" | "Initiated" | null;
+    status: "success" | "failed" | "initiated" | null;
     transactionNumber?: string;
     amount?: string;
-    processor?: string;
-    details?: string;
   }>({ status: null });
 
   useEffect(() => {
     const verifyTransaction = async () => {
       const tx = searchParams?.get("tx");
-      const ref = searchParams?.get("ref");
+      const ref = searchParams?.get("rid");
+      const backendUrl = process.env.NEXT_PUBLIC_PROCESSING_API;
 
-      if (tx && !paymentStatus.status) {
+      if (tx && !paymentStatus.status && backendUrl) {
         setVerifying(true);
 
         try {
-          const response = await fetch("/api/ezpay/verify-payment", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              transactionNumber: tx,
-              reference: ref || undefined,
-            }),
-          });
+          const params = new URLSearchParams();
+          params.set("transactionNumber", tx);
+          if (ref) {
+            params.set("reference", ref);
+          }
 
+          const response = await fetch(
+            `${backendUrl}/payments/verify?${params.toString()}`
+          );
           const result = await response.json();
 
           if (result.success && result.data) {
-            const data: EZPayVerifyResponse = result.data;
+            const data: PaymentVerifyResponse = result.data;
             setPaymentStatus({
-              status: data._status,
-              transactionNumber: data._transaction_number,
-              amount: data._amount,
-              processor: data._processor,
-              details: data._details,
+              status: data.status as "success" | "failed" | "initiated",
+              transactionNumber: data.referenceNumber,
+              amount: String(data.totalAmount),
             });
 
             if (window.history.replaceState) {
               const newUrl =
                 window.location.pathname +
                 window.location.search
-                  .replace(/[?&](tx|ref)=[^&]*/g, "")
+                  .replace(/[?&](tx|rid)=[^&]*/g, "")
                   .replace(/^&/, "?")
                   .replace(/\?$/, "");
               window.history.replaceState({}, "", newUrl);
@@ -92,7 +92,7 @@ export const PaymentBlock = ({ paymentData }: Props) => {
     verifyTransaction();
   }, [searchParams, paymentStatus.status]);
 
-  if (paymentStatus.status === "Success") {
+  if (paymentStatus.status === "success") {
     return (
       <div className="flex flex-col gap-xm rounded bg-green-00 p-xm text-white-00">
         <div className="flex flex-col gap-xxs border-grey-00 border-b pb-xm">
@@ -123,7 +123,7 @@ export const PaymentBlock = ({ paymentData }: Props) => {
     );
   }
 
-  if (paymentStatus.status === "Failed") {
+  if (paymentStatus.status === "failed") {
     return (
       <div className="flex flex-col gap-xm rounded bg-red-00 p-xm text-white-00">
         <div className="flex flex-col gap-xxs border-grey-00 border-b pb-xm">
@@ -147,7 +147,7 @@ export const PaymentBlock = ({ paymentData }: Props) => {
     );
   }
 
-  if (paymentStatus.status === "Initiated") {
+  if (paymentStatus.status === "initiated") {
     return (
       <div className="flex flex-col gap-xm rounded bg-green-00 p-xm text-white-00">
         <div className="flex flex-col gap-xxs border-grey-00 border-b pb-xm">

@@ -419,7 +419,6 @@ export default function DynamicMultiStepForm({
     _hasHydrated,
     isSubmitted,
     referenceNumber,
-    customerName: storedCustomerName,
     paymentData,
     setCurrentStep,
     markStepComplete,
@@ -626,7 +625,7 @@ export default function DynamicMultiStepForm({
   useEffect(() => {
     if (!_hasHydrated) return;
 
-    const paymentStatus = searchParams?.get("payment_status");
+    const paymentStatus = searchParams?.get("paymentStatus");
     const tx = searchParams?.get("tx");
 
     if (paymentStatus) {
@@ -1219,15 +1218,9 @@ export default function DynamicMultiStepForm({
       return null;
     }
 
-    // Use stored customer name (persists even after form data is cleared)
-    // TODO: Add email field to form schema to capture customer email
-    const customerEmail = undefined; // Will use default in PaymentBlock
-
     return (
       <ConfirmationPage
         confirmationStep={confirmationStep}
-        customerEmail={customerEmail}
-        customerName={storedCustomerName || undefined}
         formId={formId}
         onReset={handleReset}
         paymentData={paymentData || undefined}

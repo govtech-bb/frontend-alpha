@@ -23,16 +23,12 @@ type ConfirmationPageProps = {
   confirmationStep: FormStep;
   referenceNumber?: string;
   onReset: () => void;
-  customerEmail?: string;
-  customerName?: string;
   formId?: string;
   paymentData?: PaymentData;
 };
 
 export function ConfirmationPage({
   confirmationStep,
-  customerEmail,
-  customerName,
   referenceNumber,
   onReset: _onReset,
   formId,
@@ -104,12 +100,7 @@ export function ConfirmationPage({
 
           {/* Payment content */}
           {paymentData && formSlug ? (
-            <PaymentBlock
-              customerEmail={customerEmail}
-              customerName={customerName}
-              formId={formSlug}
-              paymentData={paymentData}
-            />
+            <PaymentBlock formId={formSlug} paymentData={paymentData} />
           ) : null}
           {/* Body content rendered from markdown */}
           {confirmationStep.bodyContent && (
@@ -155,11 +146,9 @@ export function ConfirmationPage({
 
           {/* Feedback section */}
           {confirmationStep.enableFeedback && formId && (
-            <div>
-              <Heading as="h3" className="pb-4">
-                Help us improve this service
-              </Heading>
-              <Text as="p" className="mb-4">
+            <div className="flex flex-col gap-s">
+              <Heading as="h3">Help us improve this service</Heading>
+              <Text as="p">
                 We are always working to improve government services. If you
                 have a moment, you can tell us about your experience today.
               </Text>
@@ -169,7 +158,7 @@ export function ConfirmationPage({
               >
                 Give feedback on this service
               </LinkButton>
-              <Text as="p" className="mt-4 text-[16px] text-neutral-600">
+              <Text as="p">
                 This will take about 30 seconds. Your responses are anonymous.
               </Text>
             </div>
