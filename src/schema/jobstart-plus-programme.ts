@@ -120,6 +120,7 @@ export const formSteps: FormStep[] = [
         label: "National Identification (ID) Number",
         width: "medium",
         type: "text",
+        mask: "nid",
         placeholder: "",
         validation: {
           required: "ID Number is required",

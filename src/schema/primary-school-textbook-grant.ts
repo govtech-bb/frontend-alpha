@@ -49,6 +49,7 @@ export const formSteps: FormStep[] = [
         name: "idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         width: "medium",
         validation: {
           required: "ID number is required",
@@ -214,6 +215,7 @@ export const formSteps: FormStep[] = [
         name: "guardian.idNumber",
         label: "National Identification (ID) number",
         type: "text",
+        mask: "nid",
         width: "medium",
         validation: {
           required: "ID number is required",
@@ -375,6 +377,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         width: "medium",
         validation: {
           required: "ID Number is required",

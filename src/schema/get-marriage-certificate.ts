@@ -122,6 +122,7 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         placeholder: "for example, 850101-0001",
         validation: {
           required: "ID Number is required",
@@ -272,6 +273,7 @@ export const formSteps: FormStep[] = [
         name: "husband.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         validation: {
           required: "ID Number is required",
           pattern: {
@@ -370,6 +372,7 @@ export const formSteps: FormStep[] = [
         name: "wife.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         validation: {
           required: "ID Number is required",
           pattern: {
