@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import { useFormContext } from "react-hook-form";
 import { formatForDisplay } from "@/lib/dates";
 import type { FormData } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, resolveStepTitle } from "@/lib/utils";
 import type { DateObject, FormStep } from "@/types";
 
 type ReviewStepProps = {
@@ -146,7 +146,7 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
         );
 
       return {
-        title: step.title,
+        title: resolveStepTitle(step, formValues as Record<string, unknown>),
         stepIndex: index,
         items,
       };

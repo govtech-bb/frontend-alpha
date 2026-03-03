@@ -403,12 +403,13 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "birth-details",
-    title: "Provide your birth details",
-    description: "Answer as accurately as possible",
-    conditionalOn: {
+    title: "Provide the person's birth details",
+    conditionalTitle: {
       field: "applyingForYourself",
       value: "yes",
+      title: "Provide your birth details",
     },
+    description: "Answer as accurately as possible",
     fields: [
       {
         name: "birthDetails.dateOfBirth",
@@ -425,7 +426,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBirth",
         label: "Place of birth",
-        hint: "Enter a house, institution, home address, or parish, if known",
+        // hint: "Enter a house, institution, home address, or parish, if known",
         type: "text",
         validation: {
           required: "Place of birth is required",
@@ -438,7 +439,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBaptism",
         label: "Place of baptism",
-        hint: "Enter a house, church, or parish, if known",
+        // hint: "Enter a house, church, or parish, if known",
         type: "text",
         validation: {
           required: "Place of baptism is required",
@@ -451,11 +452,12 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "parents-self",
-    title: "Tell us your parents' names",
-    conditionalOn: {
+    id: "parents",
+    title: "Tell us their parents' names",
+    conditionalTitle: {
       field: "applyingForYourself",
       value: "yes",
+      title: "Tell us your parents' names",
     },
     fields: [
       {
@@ -564,120 +566,7 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
-  {
-    id: "parents-other",
-    title: "Tell us their parents' names",
-    conditionalOn: {
-      field: "applyingForYourself",
-      value: "no",
-    },
-    fields: [
-      {
-        name: "parentsOther.father.firstName",
-        label: "Father's first name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
-          },
-          pattern: {
-            value: NAME_REGEX,
-            message:
-              "First name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.father.middleName",
-        label: "Father's middle name",
-        hint: " Optional. Provide only if known",
-        type: "text",
-        validation: {
-          required: false,
-          minLength: {
-            value: 2,
-            message: "Middle name must be at least 2 characters",
-          },
-          pattern: {
-            value: NAME_REGEX,
-            message:
-              "Middle name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.father.lastName",
-        label: "Father's last name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-          pattern: {
-            value: NAME_REGEX,
-            message:
-              "Last name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.mother.firstName",
-        label: "Mother's first name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
-          },
-          pattern: {
-            value: NAME_REGEX,
-            message:
-              "First name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.mother.middleName",
-        label: "Mother's middle name",
-        hint: " Optional. Provide only if known",
-        type: "text",
-        validation: {
-          required: false,
-          minLength: {
-            value: 2,
-            message: "Middle name must be at least 2 characters",
-          },
-          pattern: {
-            value: NAME_REGEX,
-            message:
-              "Middle name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.mother.lastName",
-        label: "Mother's last name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-          pattern: {
-            value: NAME_REGEX,
-            message:
-              "Last name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-    ],
-  },
+
   {
     id: "order-details",
     title: "How many copies will you be ordering?",

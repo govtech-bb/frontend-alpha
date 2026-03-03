@@ -203,6 +203,8 @@ export type RepeatableStepConfig = {
 export type FormStep = {
   id: string;
   title: string;
+  /** Override the title based on a field value condition */
+  conditionalTitle?: ConditionalRule & { title: string };
   description?: string;
   fields: FormField[];
   conditionalOn?: ConditionalRule; // For conditional steps
