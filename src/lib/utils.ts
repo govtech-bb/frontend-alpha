@@ -54,17 +54,15 @@ export function normalizeTextValue(value: string): string {
 /**
  * Resolves the effective title for a step, applying conditionalTitle when its condition is met.
  * @param step - The form step
- * @param formValues - The current flat form values object
+ * @param conditionalFieldValue? - The current value of the codnitional field
  */
 export function resolveStepTitle(
   step: FormStep,
-  formValues: Record<string, unknown>
+  conditionalFieldValue?: unknown
 ): string {
   if (!step.conditionalTitle) return step.title;
 
-  const { field, value, title } = step.conditionalTitle;
-  const watchedValue = getNestedValue<unknown>(formValues, field);
-  return watchedValue === value ? title : step.title;
+  return conditionalFieldValue === step.conditionalTitle.value ? step.conditionalTitle.title : step.title;
 }
 
 export const findCategoryByPageSlug = (
