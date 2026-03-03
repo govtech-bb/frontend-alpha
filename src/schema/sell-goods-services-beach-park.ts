@@ -812,7 +812,7 @@ export const formSteps: FormStep[] = [
         type: "file",
         validation: {
           required: "Passport-sized photos are required",
-          exactItems: {
+          exactCount: {
             value: 2,
             message: "You must upload 2 passport-sized photos",
           },

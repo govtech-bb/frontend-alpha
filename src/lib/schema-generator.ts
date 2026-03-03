@@ -360,16 +360,16 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
   // Handle file uploads (stores File[] array, but we validate based on count)
   if (field.type === "file") {
     // File fields store File[] objects which can't be serialized to JSON.
-    // We validate them using item-count rules (required/minItems/maxItems/exactItems).
+    // We validate them using item-count rules (required/minItems/maxItems/exactCount).
     const hasCountValidation =
-      validation.required || (validation as NonDateFieldValidation).exactItems;
+      validation.required || (validation as NonDateFieldValidation).exactCount;
 
     // No validation rules: allow anything / undefined
     if (!hasCountValidation) {
       return z.any().optional();
     }
 
-    const exactItems = (validation as NonDateFieldValidation).exactItems;
+    const exactCount = (validation as NonDateFieldValidation).exactCount;
 
     const getFileCount = (val: unknown): number => {
       if (Array.isArray(val)) {
@@ -394,11 +394,11 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
         return;
       }
 
-      // Exact items (e.g. exactly 2 passport photos)
-      if (exactItems && count !== exactItems.value && count !== 0) {
+      // Exact count of items (e.g. exactly 2 passport photos)
+      if (exactCount && count !== exactCount.value && count !== 0) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: exactItems.message,
+          message: exactCount.message,
         });
         return;
       }

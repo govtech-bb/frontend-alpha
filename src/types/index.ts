@@ -33,7 +33,7 @@ type BaseValidationRule = {
   pattern?: { value: string; message: string };
   min?: { value: number; message: string };
   max?: { value: number; message: string };
-  exactItems?: { value: number; message: string };
+  exactCount?: { value: number; message: string };
 };
 
 export type DateFieldValidation = BaseValidationRule & {
