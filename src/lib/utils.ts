@@ -62,7 +62,9 @@ export function resolveStepTitle(
 ): string {
   if (!step.conditionalTitle) return step.title;
 
-  return conditionalFieldValue === step.conditionalTitle.value ? step.conditionalTitle.title : step.title;
+  return conditionalFieldValue === step.conditionalTitle.value
+    ? step.conditionalTitle.title
+    : step.title;
 }
 
 export const findCategoryByPageSlug = (

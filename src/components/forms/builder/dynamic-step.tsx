@@ -20,7 +20,9 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
 
   let conditionalFieldValue: unknown;
   if (step.conditionalTitle) {
-    conditionalFieldValue = watch(step.conditionalTitle.field as keyof FormData);
+    conditionalFieldValue = watch(
+      step.conditionalTitle.field as keyof FormData
+    );
   }
   const resolvedTitle = resolveStepTitle(step, conditionalFieldValue);
 
