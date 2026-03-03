@@ -1,4 +1,4 @@
-import { Button, Heading } from "@govtech-bb/react";
+import { Heading, LinkButton } from "@govtech-bb/react";
 
 export default function NotFound() {
   return (
@@ -26,14 +26,14 @@ export default function NotFound() {
 
         {/* Quick Link Buttons */}
         <div className="flex flex-col gap-xm md:flex-row">
-          {/* <Button
-            asChild
-            children={<a href="/">Browse service directory</a>}
+          {/* <LinkButton
+            href="/"
             variant="secondary"
+            children="Browse service directory"
           /> */}
-          <Button
-            asChild
-            children={<a href="/">Return to Homepage</a>}
+          <LinkButton
+            children="Return to homepage"
+            href="/"
             variant="primary"
           />
         </div>
