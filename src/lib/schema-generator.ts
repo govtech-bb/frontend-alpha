@@ -577,7 +577,11 @@ export function generateFormSchema(formSteps: FormStep[]) {
         data as Record<string, unknown>,
         field.name
       );
-      const isVisible = parentValue === field.conditionalOn.value;
+      const operator = field.conditionalOn.operator ?? "equals";
+      const isVisible =
+        operator === "notEquals"
+          ? parentValue !== field.conditionalOn.value
+          : parentValue === field.conditionalOn.value;
 
       if (
         isVisible &&
@@ -613,8 +617,12 @@ export function generateFormSchema(formSteps: FormStep[]) {
 
                 const parentValue = item[nestedField.conditionalOn.field];
                 const fieldValue = item[nestedField.name];
+                const nestedOperator =
+                  nestedField.conditionalOn.operator ?? "equals";
                 const isVisible =
-                  parentValue === nestedField.conditionalOn.value;
+                  nestedOperator === "notEquals"
+                    ? parentValue !== nestedField.conditionalOn.value
+                    : parentValue === nestedField.conditionalOn.value;
 
                 if (
                   isVisible &&

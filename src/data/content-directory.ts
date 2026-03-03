@@ -154,11 +154,6 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description: "Apply to volunteer at a sports camp",
       },
       {
-        title: "Apply for a position as a temporary teacher",
-        slug: "apply-for-a-position-as-a-temporary-teacher",
-        description: "Apply for a position as a temporary teacher",
-      },
-      {
         title: "Apply to the JobSTART Plus programme",
         slug: "apply-to-jobstart-plus-programme",
         description: "Apply to the JobSTART Plus Programme",
@@ -235,12 +230,28 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       },
     ],
   },
-  // {
-  //   title: "Education, youth and learning",
-  //   slug: "education-youth-learning",
-  //   description: "Apply for or manage education and youth opportunities",
-  //   pages: [],
-  // },
+  {
+    title: "Education, youth and learning",
+    slug: "education-youth-learning",
+    description: "Apply for or manage education and youth opportunities",
+    pages: [
+      {
+        title: "Apply to be a temporary teacher",
+        slug: "temporary-teacher-application",
+        source_url: "",
+        description: "Apply to be a temporary teacher at an institution.",
+        subPages: [
+          { slug: "start", type: "markdown", protected: true },
+          {
+            slug: "form",
+            title: "Temporary Teacher Application",
+            type: "component",
+            protected: true,
+          },
+        ],
+      },
+    ],
+  },
   {
     title: "Travel, ID and citizenship",
     slug: "travel-id-citizenship",

@@ -49,6 +49,9 @@ export const FORM_COMPONENTS = {
   "sell-goods-services-beach-park": lazy(
     () => import("@/components/forms/sell-goods-services-beach-park-form")
   ),
+  "temporary-teacher-application": lazy(
+    () => import("@/components/forms/temporary-teacher-application-form")
+  ),
   // Add other forms here
 } as const;
 
@@ -74,6 +77,7 @@ export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
   "request-a-fire-service-inspection": "request-a-fire-service-inspection",
   "apply-for-conductor-licence": "apply-for-conductor-licence",
   "sell-goods-services-beach-park": "sell-goods-services-beach-park",
+  "temporary-teacher-application": "temporary-teacher-application",
 };
 
 /**
