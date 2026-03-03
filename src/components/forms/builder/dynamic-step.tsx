@@ -18,8 +18,11 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
     watch,
   } = useFormContext<FormData>();
 
-  const formValues = watch() as Record<string, unknown>;
-  const resolvedTitle = resolveStepTitle(step, formValues);
+  let conditionalFieldValue: unknown;
+  if (step.conditionalTitle) {
+    conditionalFieldValue = watch(step.conditionalTitle.field as keyof FormData);
+  }
+  const resolvedTitle = resolveStepTitle(step, conditionalFieldValue);
 
   // Get errors for the current step's fields (supports nested field names)
   const stepFieldNames = step.fields.map((f) => f.name);
