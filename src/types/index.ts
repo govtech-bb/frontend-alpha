@@ -35,6 +35,7 @@ type BaseValidationRule = {
   pattern?: { value: string; message: string };
   min?: { value: number; message: string };
   max?: { value: number; message: string };
+  numberOfFiles?: { isEqual: number; message: string };
 };
 
 export type DateFieldValidation = BaseValidationRule & {
@@ -203,6 +204,8 @@ export type RepeatableStepConfig = {
 export type FormStep = {
   id: string;
   title: string;
+  /** Override the title based on a field value condition */
+  conditionalTitle?: ConditionalRule & { title: string };
   description?: string;
   fields: FormField[];
   conditionalOn?: ConditionalRule; // For conditional steps

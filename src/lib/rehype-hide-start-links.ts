@@ -55,11 +55,13 @@ function containsStartLink(
 }
 
 // Check if it anchor and if it has a data-start-link attribute
-function shouldHideStartLink(element: Element, hasResearchAccess: boolean): boolean {
+function shouldHideStartLink(
+  element: Element,
+  hasResearchAccess: boolean
+): boolean {
   if (element.tagName !== "a") return false;
   const href = element.properties?.href;
-  const isExternalForm =
-    element.properties?.dataExternalForm !== undefined;
+  const isExternalForm = element.properties?.dataExternalForm !== undefined;
   if (typeof href !== "string") return false;
   const isStartLink = href.endsWith("/start");
   // Has cookie: hide external form links
