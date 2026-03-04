@@ -40,7 +40,7 @@ export function ConfirmationPage({
   formId,
   paymentData,
 }: ConfirmationPageProps) {
-  const op = useOpenPanel();
+  const openPanel = useOpenPanel();
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
@@ -169,7 +169,7 @@ export function ConfirmationPage({
               <LinkButton
                 href={`/exit-survey?ref_id=${formId}&step=introduction`}
                 onClick={() =>
-                  op.track(
+                  openPanel.track(
                     TRACKED_EVENTS.FEEDBACK_START_EVENT,
                     getFormBaseContext(formId, categorySlug)
                   )

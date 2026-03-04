@@ -24,7 +24,7 @@ type Props = {
 };
 
 export const PaymentBlock = ({ paymentData, formId }: Props) => {
-  const op = useOpenPanel();
+  const openPanel = useOpenPanel();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const categorySlug = pathname.split("/").filter(Boolean)[0] ?? "";
@@ -43,7 +43,7 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
   const trackPaymentError = useCallback(() => {
     if (paymentErrorTrackedRef.current) return;
     paymentErrorTrackedRef.current = true;
-    op.track(
+    openPanel.track(
       TRACKED_EVENTS.PAYMENT_ERROR_EVENT,
       getFormBaseContext(formId, categorySlug)
     );
@@ -281,7 +281,7 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
           <LinkButton
             href={paymentData.paymentUrl}
             onClick={() =>
-              op.track(
+              openPanel.track(
                 TRACKED_EVENTS.PAYMENT_INITIATED_EVENT,
                 getFormBaseContext(formId, categorySlug)
               )

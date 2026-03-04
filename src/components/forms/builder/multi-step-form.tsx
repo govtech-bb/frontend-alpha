@@ -393,7 +393,7 @@ export default function DynamicMultiStepForm({
   serviceTitle,
   storageKey = "multi-step-form-storage",
 }: DynamicMultiStepFormProps) {
-  const op = useOpenPanel();
+  const openPanel = useOpenPanel();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -633,7 +633,7 @@ export default function DynamicMultiStepForm({
         case "Success":
           if (paymentStatusTrackedRef.current !== "Success") {
             paymentStatusTrackedRef.current = "Success";
-            op.track(TRACKED_EVENTS.PAYMENT_SUCCESS_EVENT, context);
+            openPanel.track(TRACKED_EVENTS.PAYMENT_SUCCESS_EVENT, context);
           }
           setPaymentMessage({
             type: "success",
@@ -655,7 +655,7 @@ export default function DynamicMultiStepForm({
         case "Failed":
           if (paymentStatusTrackedRef.current !== "Failed") {
             paymentStatusTrackedRef.current = "Failed";
-            op.track(TRACKED_EVENTS.PAYMENT_FAILED_EVENT, context);
+            openPanel.track(TRACKED_EVENTS.PAYMENT_FAILED_EVENT, context);
           }
           setPaymentMessage({
             type: "error",
@@ -668,7 +668,7 @@ export default function DynamicMultiStepForm({
         case "error": {
           if (paymentStatusTrackedRef.current !== "error") {
             paymentStatusTrackedRef.current = "error";
-            op.track(TRACKED_EVENTS.PAYMENT_ERROR_EVENT, context);
+            openPanel.track(TRACKED_EVENTS.PAYMENT_ERROR_EVENT, context);
           }
           const errorMessage = searchParams?.get("payment_error");
           setPaymentMessage({
@@ -803,7 +803,7 @@ export default function DynamicMultiStepForm({
   };
 
   const trackFormSubmitError = useCallback(() => {
-    op.track(
+    openPanel.track(
       TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
       getFormBaseContext(form, category)
     );
@@ -813,7 +813,7 @@ export default function DynamicMultiStepForm({
     (stepIndex: number) => {
       const stepId = expandedFormSteps[stepIndex]?.id ?? "";
 
-      op.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
+      openPanel.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
         ...getFormBaseContext(form, category),
         step: getStepForTracking(form, stepId),
       });
@@ -861,7 +861,7 @@ export default function DynamicMultiStepForm({
           apiPaymentData
         );
         if (storageKey !== FORM_NAMES.EXIT_SURVEY) {
-          op.track(
+          openPanel.track(
             TRACKED_EVENTS.FORM_SUBMIT_EVENT,
             getFormBaseContext(form, category)
           );
@@ -878,7 +878,10 @@ export default function DynamicMultiStepForm({
             ) as Record<string, string>),
           };
 
-          op.track(TRACKED_EVENTS.FEEDBACK_SUBMIT_EVENT, feedbackPayload);
+          openPanel.track(
+            TRACKED_EVENTS.FEEDBACK_SUBMIT_EVENT,
+            feedbackPayload
+          );
         }
       } else {
         setSubmissionError({
@@ -896,7 +899,7 @@ export default function DynamicMultiStepForm({
             )
             .join(",");
 
-          op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
+          openPanel.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
             ...getFormBaseContext(form, category),
             step: getStepForTracking(form, "submission"),
             errorCount: result.errors.length,
@@ -1183,7 +1186,7 @@ export default function DynamicMultiStepForm({
           addAnotherField.name as keyof FormData
         );
         if (addAnotherValue === "yes") {
-          op.track(TRACKED_EVENTS.FORM_ADD_ANOTHER_EVENT, {
+          openPanel.track(TRACKED_EVENTS.FORM_ADD_ANOTHER_EVENT, {
             ...getFormBaseContext(form, category),
             step: getStepForTracking(form, currentStepData.id),
           });
@@ -1234,7 +1237,7 @@ export default function DynamicMultiStepForm({
       if (validationErrors.length > 0) {
         const stepId = expandedFormSteps[currentStep]?.id ?? "";
 
-        op.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
+        openPanel.track(TRACKED_EVENTS.FORM_VALIDATION_ERROR_EVENT, {
           ...getFormBaseContext(form, category),
           step: getStepForTracking(form, stepId),
           errorCount: validationErrors.length,
@@ -1269,7 +1272,7 @@ export default function DynamicMultiStepForm({
   const handleEditFromReview = (stepIndex: number) => {
     const stepId = expandedFormSteps[stepIndex]?.id ?? "";
 
-    op.track(TRACKED_EVENTS.FORM_STEP_EDIT_EVENT, {
+    openPanel.track(TRACKED_EVENTS.FORM_STEP_EDIT_EVENT, {
       ...getFormBaseContext(form, category),
       step: getStepForTracking(form, stepId),
     });
@@ -1281,7 +1284,7 @@ export default function DynamicMultiStepForm({
   const prevStep = () => {
     const stepId = expandedFormSteps[currentStep]?.id ?? "";
 
-    op.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
+    openPanel.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
       ...getFormBaseContext(form, category),
       step: getStepForTracking(form, stepId),
     });

@@ -46,7 +46,7 @@ type DynamicFieldArrayProps = {
 };
 
 export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
-  const op = useOpenPanel();
+  const openPanel = useOpenPanel();
 
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
@@ -131,7 +131,7 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
   const handleRemove = (index: number) => {
     if (fields.length > minItems) {
       remove(index);
-      op.track(TRACKED_EVENTS.FORM_REMOVE_ITEM_EVENT, {
+      openPanel.track(TRACKED_EVENTS.FORM_REMOVE_ITEM_EVENT, {
         ...getFormBaseContext(formSlug, categorySlug),
         step: getStepForTracking(formSlug, stepId),
         field: field.name,

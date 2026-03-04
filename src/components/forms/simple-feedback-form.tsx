@@ -16,7 +16,7 @@ type FormErrors = {
 };
 
 export function SimpleFeedbackForm() {
-  const op = useOpenPanel();
+  const openPanel = useOpenPanel();
 
   const [formData, setFormData] = useState({
     visitReason: "",
@@ -59,7 +59,7 @@ export function SimpleFeedbackForm() {
   };
 
   const trackFormSubmitError = () => {
-    op.track(
+    openPanel.track(
       TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
       getFormBaseContext(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
     );
@@ -102,7 +102,7 @@ export function SimpleFeedbackForm() {
           whatWentWrong: "",
           referrer: formData.referrer,
         });
-        op.track(
+        openPanel.track(
           TRACKED_EVENTS.FEEDBACK_SUBMIT_EVENT,
           getFormBaseContext(FORM_NAMES.SIMPLE_FEEDBACK_FORM, "feedback")
         );
