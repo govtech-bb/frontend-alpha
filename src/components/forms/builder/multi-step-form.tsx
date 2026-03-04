@@ -690,7 +690,7 @@ export default function DynamicMultiStepForm({
       //   window.history.replaceState({}, '', window.location.pathname);
       // }, 100);
     }
-  }, [_hasHydrated, searchParams, paymentData, form, category, op]);
+  }, [_hasHydrated, searchParams, paymentData, form, category]);
 
   // Watch form changes and sync with Zustand (debounced)
   // Converts indexed objects to arrays before storing
