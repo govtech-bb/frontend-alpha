@@ -333,13 +333,19 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
       string,
       ...string[],
     ];
-    // schema = z.enum(values); //TODO: Fix validation message
-    schema = z.enum(values, {
-      error: () => ({
-        message: validation.required || "This field is required",
-      }),
-    });
-    return schema;
+
+    // Required radios must select one of the allowed values
+    if (validation.required) {
+      schema = z.enum(values, {
+        error: () => ({
+          message: validation.required || "This field is required",
+        }),
+      });
+      return schema;
+    }
+
+    // Optional radios: accept undefined, empty string, or a valid option
+    return z.union([z.enum(values), z.literal("")]).optional();
   }
 
   // Handle checkboxes (values are "yes" or "no")
