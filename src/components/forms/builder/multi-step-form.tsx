@@ -1014,7 +1014,9 @@ export default function DynamicMultiStepForm({
       currentFieldNames as (keyof FormData)[]
     );
 
-    // Manually validate conditional fields (required and pattern)
+    // Manually validate conditional fields (required and pattern),
+    // and add a safety net for non-conditional fields whose required
+    // validation should always show when empty.
     for (const field of visibleFields) {
       if (field.conditionalOn) {
         const fieldValue = methods.getValues(field.name as keyof FormData);
@@ -1046,6 +1048,21 @@ export default function DynamicMultiStepForm({
             });
             isValid = false;
           }
+        }
+      } else if (field.validation?.required) {
+        // Non-conditional fields: ensure required errors are present when empty.
+        const fieldValue = methods.getValues(field.name as keyof FormData);
+        const isEmpty =
+          field.type === "checkbox"
+            ? fieldValue !== "yes"
+            : isFieldEmpty(fieldValue);
+
+        if (isEmpty) {
+          methods.setError(field.name as keyof FormData, {
+            type: "required",
+            message: field.validation.required,
+          });
+          isValid = false;
         }
       }
 
