@@ -18,11 +18,11 @@ import { masks } from "@/lib/masks";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue, normalizeTextValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
-import type { FormField } from "@/types";
+import type { FieldArrayFormField, FileFormField, FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
 type FileUploadFieldProps = {
-  field: FormField & { type: "file" };
+  field: FileFormField;
   error?: FieldError;
   value: File[];
   onChange: (files: File[]) => void;
@@ -155,7 +155,7 @@ export function DynamicField({
           e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => {
           const normalized = normalizeTextValue(e.target.value);
-          setValue(name, normalized as FormData[keyof FormData], {
+          setValue(name, normalized, {
             shouldValidate: false,
             shouldTouch: true,
           });
@@ -172,7 +172,7 @@ export function DynamicField({
   );
 
   // Watch the current field value for conditional logic
-  const currentFieldValue = watch(field.name as keyof FormData);
+  const currentFieldValue = watch(field.name);
 
   // Clear conditional field values when they shouldn't be shown
   // biome-ignore lint/correctness/useExhaustiveDependencies: conditionalFields is derived from static schema and causes infinite loop if included
@@ -182,7 +182,7 @@ export function DynamicField({
 
       const shouldShow =
         currentFieldValue === conditionalField.conditionalOn.value;
-      const currentValue = getValues(conditionalField.name as keyof FormData);
+      const currentValue = getValues(conditionalField.name);
 
       // Only clear if field should be hidden AND has a value
       if (!shouldShow && currentValue) {
@@ -205,12 +205,9 @@ export function DynamicField({
 
           if (hasValue) {
             // Set appropriate empty value based on field type
-            const emptyValue =
-              conditionalField.type === "fieldArray"
-                ? ([] as FormData[keyof FormData])
-                : ("" as FormData[keyof FormData]);
+            const emptyValue = conditionalField.type === "fieldArray" ? [] : "";
 
-            setValue(conditionalField.name as keyof FormData, emptyValue, {
+            setValue(conditionalField.name, emptyValue, {
               shouldValidate: false,
               shouldDirty: false,
             });
@@ -230,7 +227,7 @@ export function DynamicField({
       conditionalField.name
     );
     const watchedValue = conditionalField.conditionalOn
-      ? watch(conditionalField.conditionalOn.field as keyof FormData)
+      ? watch(conditionalField.conditionalOn.field)
       : null;
     const shouldShow = watchedValue === conditionalField.conditionalOn?.value;
 
@@ -265,15 +262,13 @@ export function DynamicField({
   ): React.ReactNode {
     switch (f.type) {
       case "fieldArray":
-        return (
-          <DynamicFieldArray field={f as FormField & { type: "fieldArray" }} />
-        );
+        return <DynamicFieldArray field={f as FieldArrayFormField} />;
 
       case "date":
         return (
           <Controller
             control={control}
-            name={f.name as keyof FormData}
+            name={f.name}
             render={({ field: controllerField }) => {
               // Ensure we always have a DateInputValue object
               const dateValue: DateInputValue =
@@ -304,7 +299,7 @@ export function DynamicField({
               description={fieldError?.message ?? f.hint}
               error={fieldError?.message}
               label={f.hidden ? "" : f.label}
-              {...register(f.name as keyof FormData)}
+              {...register(f.name)}
             >
               {f.options?.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -321,7 +316,7 @@ export function DynamicField({
         return (
           <Controller
             control={control}
-            name={f.name as keyof FormData}
+            name={f.name}
             render={({ field: controllerField }) => (
               <RadioGroup
                 description={f.hint}
@@ -356,7 +351,7 @@ export function DynamicField({
         return (
           <Controller
             control={control}
-            name={f.name as keyof FormData}
+            name={f.name}
             render={({ field: controllerField }) => (
               <Checkbox
                 checked={controllerField.value === "yes"}
@@ -373,28 +368,22 @@ export function DynamicField({
       case "showHide": {
         if (!f.showHide) return null;
         const showHideConfig = f.showHide;
-        const stateValue = watch(
-          showHideConfig.stateFieldName as keyof FormData
-        );
+        const stateValue = watch(showHideConfig.stateFieldName);
         const isOpen = stateValue === "open";
         return (
           <ShowHide
             onToggle={(event) => {
               const newIsOpen = (event.target as HTMLDetailsElement).open;
               setValue(
-                showHideConfig.stateFieldName as keyof FormData,
-                (newIsOpen ? "open" : "closed") as FormData[keyof FormData],
+                showHideConfig.stateFieldName,
+                newIsOpen ? "open" : "closed",
                 { shouldValidate: false }
               );
 
               // Clear child field values when closing ShowHide
               if (!newIsOpen) {
                 for (const childField of showHideConfig.fields) {
-                  setValue(
-                    childField.name as keyof FormData,
-                    "" as FormData[keyof FormData],
-                    { shouldValidate: false }
-                  );
+                  setValue(childField.name, "", { shouldValidate: false });
                 }
               }
             }}
@@ -414,10 +403,7 @@ export function DynamicField({
                 );
                 return (
                   <div key={childField.name}>
-                    {renderFieldContent(
-                      childField as unknown as FormField,
-                      childError
-                    )}
+                    {renderFieldContent(childField, childError)}
                   </div>
                 );
               })}
@@ -430,18 +416,18 @@ export function DynamicField({
         return (
           <Controller
             control={control}
-            name={f.name as keyof FormData}
+            name={f.name}
             render={({ field: controllerField }) => (
               <FileUploadField
                 error={fieldError}
-                field={f as FormField & { type: "file" }}
+                field={f as FileFormField}
                 onChange={(files) => controllerField.onChange(files)}
                 onUploadComplete={(urls) => {
                   // Save uploaded file URLs to a related field in form state
                   // (e.g., "documentsUrls" for a "documents" file field).
                   // This persists the URLs with form progress in session storage.
-                  const urlFieldName = `${f.name}Urls` as keyof FormData;
-                  setValue(urlFieldName, urls as FormData[keyof FormData], {
+                  const urlFieldName = `${f.name}Urls`;
+                  setValue(urlFieldName, urls, {
                     shouldValidate: false,
                   });
                 }}
@@ -454,7 +440,7 @@ export function DynamicField({
       case "textarea":
         return (
           <TextArea
-            {...textRegister(f.name as keyof FormData)}
+            {...textRegister(f.name)}
             description={fieldError?.message ?? f.hint}
             error={fieldError?.message}
             id={f.name}
@@ -468,7 +454,7 @@ export function DynamicField({
         return (
           <Controller
             control={control}
-            name={f.name as keyof FormData}
+            name={f.name}
             render={({ field: controllerField }) => (
               <NumberInput
                 description={fieldError?.message ?? f.hint}
@@ -498,7 +484,7 @@ export function DynamicField({
             error={fieldError?.message}
             label={f.hidden ? "" : f.label}
             type={f.type}
-            {...textRegister(f.name as keyof FormData, activeMaskitoRef)}
+            {...textRegister(f.name, activeMaskitoRef)}
             placeholder={f.placeholder}
           />
         );
