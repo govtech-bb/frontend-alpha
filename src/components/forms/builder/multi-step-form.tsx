@@ -245,12 +245,19 @@ function createRepeatableStepInstance(
 
   // Add "add another" radio field if this step should have it
   if (shouldAddAnotherField) {
+    // Only make the "add another" question required if at least one of the
+    // base step's fields is required.
+    const hasRequiredBaseFields = baseStep.fields.some((field) => {
+      const required = field.validation?.required;
+      return typeof required === "string";
+    });
+
     const addAnotherField: FormField = {
       name: `_addAnother_${arrayFieldName}_${index}`,
       label: addAnotherLabel ?? "Do you need to add another?",
       type: "radio",
       validation: {
-        required: "Select an option",
+        required: hasRequiredBaseFields ? "Select an option" : false,
       },
       options: [
         { label: "Yes", value: "yes" },
