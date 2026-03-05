@@ -344,8 +344,8 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
       return schema;
     }
 
-    // Optional radios can be undefined or one of the allowed values
-    return z.union([z.string(), z.undefined()]);
+    // Optional radios: accept undefined, empty string, or a valid option
+    return z.union([z.enum(values), z.literal("")]).optional();
   }
 
   // Handle checkboxes (values are "yes" or "no")
