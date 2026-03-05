@@ -1021,24 +1021,34 @@ export default function DynamicMultiStepForm({
       currentFieldNames as (keyof FormData)[]
     );
 
-    // Manually validate conditional fields (required and pattern)
+    // Helper: set required error when field is empty; returns true if error was set
+    const setRequiredErrorIfEmpty = (
+      field: FormField,
+      value: unknown
+    ): boolean => {
+      const empty =
+        field.type === "checkbox" ? value !== "yes" : isFieldEmpty(value);
+
+      if (field.validation?.required && empty) {
+        methods.setError(field.name as keyof FormData, {
+          type: "required",
+          message: field.validation.required,
+        });
+        return true;
+      }
+
+      return false;
+    };
+
+    // Manually validate conditional fields (required and pattern),
+    // and add a safety net for non-conditional fields whose required
+    // validation should always show when empty.
     for (const field of visibleFields) {
       if (field.conditionalOn) {
         const fieldValue = methods.getValues(field.name as keyof FormData);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
-        // Check required validation
-        // For checkboxes, require value to be "yes"
-        const isEmpty =
-          field.type === "checkbox"
-            ? fieldValue !== "yes"
-            : isFieldEmpty(fieldValue);
-
-        if (field.validation.required && isEmpty) {
-          methods.setError(field.name as keyof FormData, {
-            type: "required",
-            message: field.validation.required,
-          });
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
           isValid = false;
           continue; // Skip pattern check if empty
         }
@@ -1053,6 +1063,11 @@ export default function DynamicMultiStepForm({
             });
             isValid = false;
           }
+        }
+      } else if (field.validation?.required) {
+        const fieldValue = methods.getValues(field.name as keyof FormData);
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
+          isValid = false;
         }
       }
 
