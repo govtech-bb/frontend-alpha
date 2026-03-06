@@ -25,8 +25,6 @@ You will need to share:
 
 We will review your application.
 
-You may be invited to attend an in-person oral test as part of the application process.
-
-We will contact you if you need to attend.
+You must contact the department to schedule your in-person oral test.
 
 <a data-start-link href="/work-employment/apply-for-conductor-licence/form">Start now</a>

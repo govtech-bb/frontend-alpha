@@ -488,16 +488,9 @@ export const formSteps: FormStep[] = [
     bodyContent: `## What happens next
 
 We will review the information and documents you provided.
+You must call the Ministry of Transport and Works at 246-536-0282 to book an appointment for your in-person oral test.
 
-If we need more information, we will contact you using the email address or phone number in your application.
-
-You may be invited to attend an in-person oral test as part of the application process. 
-
-We will contact you if you need to attend.
-
-You do not need to do anything else at this time.
-
-If you do not receive the confirmation email within a few minutes, check your junk or spam folder.`,
+If we need more information, we will contact you using the email address or phone number in your application.`,
     enableFeedback: true,
   },
 ];
