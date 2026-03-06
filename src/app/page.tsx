@@ -78,7 +78,9 @@ export default async function Home() {
             <Heading as="h2">Find government services</Heading>
 
             <div className="flex flex-col">
-              {INFORMATION_ARCHITECTURE.map((service) => (
+              {INFORMATION_ARCHITECTURE.filter(
+                (category) => category.slug !== "government"
+              ).map((service) => (
                 <div
                   className="border-grey-00 border-t-2 py-4 first:border-0 lg:py-8"
                   key={service.title}
@@ -93,6 +95,36 @@ export default async function Home() {
                   <Text as="p">{service.description}</Text>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-grey-00">
+        <div className="container">
+          <div className="space-y-4 py-8 lg:space-y-4">
+            <Heading as="h2">Government</Heading>
+
+            <div className="flex flex-col">
+              {INFORMATION_ARCHITECTURE.filter(
+                (category) => category.slug === "government"
+              ).map((category) =>
+                category.pages.map((page) => (
+                  <div
+                    className="border-grey-00 border-t-2 py-4 first:border-0 lg:py-8"
+                    key={page.title}
+                  >
+                    <Link
+                      as={NextLink}
+                      className="mb-2 text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                      href={`/government/${page.slug}`}
+                    >
+                      {page.title}
+                    </Link>
+                    <Text as="p">{page.description}</Text>
+                  </div>
+                ))
+              )}
             </div>
           </div>
           <HelpfulBox className="mb-4 lg:mb-16" />

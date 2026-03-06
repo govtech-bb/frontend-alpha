@@ -164,11 +164,61 @@ export default async function Page({ params }: ContentPageProps) {
     );
   }
 
+  // Four slugs: Directory nested pages (e.g., /government/directory/ministries/agriculture)
+  if (slug.length === 4) {
+    const [categorySlug, pageSlug, sectionSlug, itemSlug] = slug;
+
+    const category = INFORMATION_ARCHITECTURE.find(
+      (cat) => cat.slug === categorySlug
+    );
+    if (!category) {
+      notFound();
+    }
+
+    const page = category.pages.find((p) => p.slug === pageSlug);
+    if (!page) {
+      notFound();
+    }
+
+    // Check research access
+    const hasAccess = await hasResearchAccess();
+
+    // Handle nested directory pages (e.g., directory/ministries/agriculture)
+    const markdownContent = await getMarkdownContent([
+      pageSlug,
+      sectionSlug,
+      itemSlug,
+    ]);
+    if (!markdownContent) {
+      notFound();
+    }
+
+    return (
+      <MarkdownContent
+        hasResearchAccess={hasAccess}
+        markdown={markdownContent}
+      />
+    );
+  }
+
   return notFound();
 }
 
 export async function generateMetadata({ params }: ContentPageProps) {
   const { slug } = await params;
+
+  // For directory nested pages (4 slugs)
+  if (slug.length === 4) {
+    const [_categorySlug, pageSlug, sectionSlug, itemSlug] = slug;
+    const result = await getMarkdownContent([pageSlug, sectionSlug, itemSlug]);
+
+    if (result) {
+      return {
+        title: result.frontmatter.title,
+        description: result.frontmatter.description,
+      };
+    }
+  }
 
   // For sub-pages (3 slugs)
   if (slug.length === 3) {
