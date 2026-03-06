@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getNestedValue, setNestedValue } from "@/lib/utils";
 import {
   createDateSchema,
   dateValidation,
@@ -10,48 +11,6 @@ import type {
   NestedFormField,
   NonDateFieldValidation,
 } from "@/types";
-
-/**
- * Sets a nested value in an object using dot notation path
- * Creates intermediate objects as needed
- * @example setNestedValue({}, "guardian.firstName", schema) -> { guardian: { firstName: schema } }
- */
-function setNestedValue<T>(
-  obj: Record<string, unknown>,
-  path: string,
-  value: T
-): void {
-  const keys = path.split(".");
-  let current = obj;
-
-  for (let i = 0; i < keys.length - 1; i++) {
-    const key = keys[i];
-    if (!(key in current) || typeof current[key] !== "object") {
-      current[key] = {};
-    }
-    current = current[key] as Record<string, unknown>;
-  }
-
-  const lastKey = keys.at(-1);
-  if (lastKey) {
-    current[lastKey] = value;
-  }
-}
-
-/**
- * Gets a nested value from an object using dot notation path
- */
-function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
-  const keys = path.split(".");
-  let current: unknown = obj;
-
-  for (const key of keys) {
-    if (current === null || current === undefined) return;
-    current = (current as Record<string, unknown>)[key];
-  }
-
-  return current;
-}
 
 /**
  * Converts a nested plain object of schemas into a nested Zod object schema
@@ -333,13 +292,19 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
       string,
       ...string[],
     ];
-    // schema = z.enum(values); //TODO: Fix validation message
-    schema = z.enum(values, {
-      error: () => ({
-        message: validation.required || "This field is required",
-      }),
-    });
-    return schema;
+
+    // Required radios must select one of the allowed values
+    if (validation.required) {
+      schema = z.enum(values, {
+        error: () => ({
+          message: validation.required || "This field is required",
+        }),
+      });
+      return schema;
+    }
+
+    // Optional radios: accept undefined, empty string, or a valid option
+    return z.union([z.enum(values), z.literal("")]).optional();
   }
 
   // Handle checkboxes (values are "yes" or "no")

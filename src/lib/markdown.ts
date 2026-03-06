@@ -49,8 +49,15 @@ export async function getMarkdownContent(slugPath: string[]) {
   }
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-export async function getFeaturedServices() {
+type ContentFrontmatter = {
+  title?: string;
+  featured?: boolean;
+  stage?: string;
+};
+
+async function getServicesByFilter(
+  filter: (data: ContentFrontmatter) => boolean
+) {
   try {
     const contentDir = path.join(process.cwd(), "src", "content");
     const entries = await fs.readdir(contentDir, { withFileTypes: true });
@@ -82,10 +89,9 @@ export async function getFeaturedServices() {
 
       try {
         const fileContents = await fs.readFile(filePath, "utf8");
-        const { data } = matter(fileContents);
+        const { data } = matter(fileContents) as { data: ContentFrontmatter };
 
-        // Check if the file has featured: true in frontmatter
-        if (data.featured === true) {
+        if (filter(data)) {
           const category = findCategoryByPageSlug(slug);
           if (category) {
             slug = `${category.slug}/${slug}`;
@@ -106,59 +112,10 @@ export async function getFeaturedServices() {
   }
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
-export async function getAlphaServices() {
-  try {
-    const contentDir = path.join(process.cwd(), "src", "content");
-    const entries = await fs.readdir(contentDir, { withFileTypes: true });
+export function getFeaturedServices() {
+  return getServicesByFilter((data) => data.featured === true);
+}
 
-    const services: Array<{ title: string; slug: string; featured?: boolean }> =
-      [];
-
-    for (const entry of entries) {
-      let filePath: string;
-      let slug: string;
-
-      if (entry.isFile() && entry.name.endsWith(".md")) {
-        // Handle direct markdown files (e.g., loud-music-permit.md)
-        filePath = path.join(contentDir, entry.name);
-        slug = entry.name.replace(".md", "");
-      } else if (entry.isDirectory()) {
-        // Handle folders with index.md (e.g., register-a-birth/index.md)
-        const indexPath = path.join(contentDir, entry.name, "index.md");
-        try {
-          await fs.access(indexPath); // Check if index.md exists
-          filePath = indexPath;
-          slug = entry.name;
-        } catch {
-          continue; // Skip directories without index.md
-        }
-      } else {
-        continue; // Skip non-markdown files and other entries
-      }
-
-      try {
-        const fileContents = await fs.readFile(filePath, "utf8");
-        const { data } = matter(fileContents);
-
-        // Check if the file has featured: true in frontmatter
-        if (data.stage === "alpha") {
-          const category = findCategoryByPageSlug(slug);
-          if (category) {
-            slug = `${category.slug}/${slug}`;
-          }
-          services.push({
-            title: data.title || slug,
-            slug,
-            featured: data.featured,
-          });
-        }
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
-      } catch (_error) {}
-    }
-
-    return services;
-  } catch (_error) {
-    return [];
-  }
+export function getAlphaServices() {
+  return getServicesByFilter((data) => data.stage === "alpha");
 }

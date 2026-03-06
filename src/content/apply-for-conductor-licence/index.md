@@ -1,10 +1,10 @@
 ---
 title: "Apply for a conductor's licence"
 stage: "alpha"
-publish_date: 2026-02-06
+publish_date: 2026-03-06
 ---
 
-If you are 18 years old or older, you can use this service to apply for a licence to become a conductor on a bus.
+If you are 18 years old or older, you can use this service to apply for a licence to become a conductor on a Public Service Vehicle (PSV).
 
 ## How to apply
 
@@ -37,16 +37,12 @@ There are 2 ways to apply for a conductor's licence. You can:
 
 ### What you will need to share
 
-Along with your personal details, the application form asks you to share:
+Along with your personal details, the application form will ask for information about your licences, driving history, and any relevant convictions.
 
-- the licence number and issue date for conductor’s licences you hold, or have held
-- the licence number and issue date for driver’s licences you hold, or have held
-- the details of any endorsements you have (or have had) such as penalty points on your conductor’s or driver’s licence
-- the reason why you are (or have been) disqualified from getting a conductor’s or driver’s licence
-- whether you have ever been convicted in a criminal court
+You will also need to provide a copy of your [Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
 
 ### After you apply
 
-You will be contacted by an official from the Ministry of Transport and Works if your application is suitable for the next stage of the process.
+We will review your application.
 
-The Ministry of Transport and Works is responsible for this service
+You must contact the department (246-536-0282) to schedule your in-person oral test.

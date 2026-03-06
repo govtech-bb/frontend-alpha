@@ -8,39 +8,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, setNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
-
-/**
- * Sets a nested value in an object using dot notation path
- * Creates intermediate objects as needed
- */
-function setNestedValue(
-  obj: Record<string, unknown>,
-  path: string,
-  value: unknown
-): void {
-  const keys = path.split(".");
-  let current = obj;
-
-  for (let i = 0; i < keys.length - 1; i++) {
-    const key = keys[i];
-    if (!(key in current) || typeof current[key] !== "object") {
-      current[key] = {};
-    }
-    current = current[key] as Record<string, unknown>;
-  }
-
-  const lastKey = keys.at(-1);
-  if (lastKey) {
-    current[lastKey] = value;
-  }
-}
 
 /**
  * Checks if an object has only consecutive numeric keys starting from 0.
@@ -245,12 +219,19 @@ function createRepeatableStepInstance(
 
   // Add "add another" radio field if this step should have it
   if (shouldAddAnotherField) {
+    // Only make the "add another" question required if at least one of the
+    // base step's fields is required.
+    const hasRequiredBaseFields = baseStep.fields.some((field) => {
+      const required = field.validation?.required;
+      return typeof required === "string";
+    });
+
     const addAnotherField: FormField = {
       name: `_addAnother_${arrayFieldName}_${index}`,
       label: addAnotherLabel ?? "Do you need to add another?",
       type: "radio",
       validation: {
-        required: "Select an option",
+        required: hasRequiredBaseFields ? "Select an option" : false,
       },
       options: [
         { label: "Yes", value: "yes" },
@@ -1014,24 +995,34 @@ export default function DynamicMultiStepForm({
       currentFieldNames as (keyof FormData)[]
     );
 
-    // Manually validate conditional fields (required and pattern)
+    // Helper: set required error when field is empty; returns true if error was set
+    const setRequiredErrorIfEmpty = (
+      field: FormField,
+      value: unknown
+    ): boolean => {
+      const empty =
+        field.type === "checkbox" ? value !== "yes" : isFieldEmpty(value);
+
+      if (field.validation?.required && empty) {
+        methods.setError(field.name as keyof FormData, {
+          type: "required",
+          message: field.validation.required,
+        });
+        return true;
+      }
+
+      return false;
+    };
+
+    // Manually validate conditional fields (required and pattern),
+    // and add a safety net for non-conditional fields whose required
+    // validation should always show when empty.
     for (const field of visibleFields) {
       if (field.conditionalOn) {
         const fieldValue = methods.getValues(field.name as keyof FormData);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
-        // Check required validation
-        // For checkboxes, require value to be "yes"
-        const isEmpty =
-          field.type === "checkbox"
-            ? fieldValue !== "yes"
-            : isFieldEmpty(fieldValue);
-
-        if (field.validation.required && isEmpty) {
-          methods.setError(field.name as keyof FormData, {
-            type: "required",
-            message: field.validation.required,
-          });
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
           isValid = false;
           continue; // Skip pattern check if empty
         }
@@ -1046,6 +1037,11 @@ export default function DynamicMultiStepForm({
             });
             isValid = false;
           }
+        }
+      } else if (field.validation?.required) {
+        const fieldValue = methods.getValues(field.name as keyof FormData);
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
+          isValid = false;
         }
       }
 
