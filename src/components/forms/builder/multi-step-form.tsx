@@ -10,6 +10,7 @@ import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import {
   FORM_NAMES,
+  type FormSubmitErrorPayload,
   getFormBaseContext,
   getStepForTracking,
   TRACKED_EVENTS,
@@ -802,12 +803,34 @@ export default function DynamicMultiStepForm({
     return arrayifiedData as FormData;
   };
 
-  const trackFormSubmitError = useCallback(() => {
-    openPanel.track(
-      TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT,
-      getFormBaseContext(form, category)
-    );
-  }, [form, category]);
+  const VALIDATION_FAILED_MESSAGE = "Validation failed";
+
+  const trackFormSubmitError = useCallback(
+    (options?: {
+      errors?: { field: string; message: string }[];
+      message?: string;
+    }) => {
+      const errors = options?.errors ?? [];
+      const isValidationFailed =
+        options?.message?.trim() === VALIDATION_FAILED_MESSAGE;
+
+      const payload: FormSubmitErrorPayload = {
+        ...getFormBaseContext(form, category),
+        errors: [],
+      };
+
+      if (isValidationFailed) {
+        payload.message = VALIDATION_FAILED_MESSAGE;
+        payload.errors = errors.map(({ field, message }) => ({
+          field,
+          error_message: message,
+        }));
+      }
+
+      openPanel.track(TRACKED_EVENTS.FORM_SUBMIT_ERROR_EVENT, payload);
+    },
+    [form, category]
+  );
 
   const trackStepComplete = useCallback(
     (stepIndex: number) => {
@@ -907,16 +930,18 @@ export default function DynamicMultiStepForm({
             errorTypes,
           });
         }
-        trackFormSubmitError();
+        trackFormSubmitError({
+          errors: result.errors ?? [],
+          message: result.message,
+        });
       }
     } catch (error) {
-      setSubmissionError({
-        message:
-          error instanceof Error
-            ? error.message
-            : "An error occurred during submission",
-      });
-      trackFormSubmitError();
+      const message =
+        error instanceof Error
+          ? error.message
+          : "An error occurred during submission";
+      setSubmissionError({ message });
+      trackFormSubmitError({ errors: [], message });
     } finally {
       setIsSubmitting(false);
     }

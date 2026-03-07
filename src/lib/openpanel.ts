@@ -1,5 +1,15 @@
 import { getNestedValue, isEmpty } from "./utils";
 
+type FormError = {
+  field: string;
+  error_message: string;
+};
+
+export type FormSubmitErrorPayload = ReturnType<typeof getFormBaseContext> & {
+  message?: string;
+  errors: FormError[];
+};
+
 export const TRACKED_EVENTS = {
   FORM_START_EVENT: "form-start",
   FORM_STEP_BACK_EVENT: "form-step-back",
