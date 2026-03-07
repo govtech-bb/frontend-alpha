@@ -1,4 +1,11 @@
-import { barbadosParishes } from "@/data/constants";
+import {
+  barbadosParishes,
+  NAME_REGEX,
+  NID_REGEX,
+  PHONE_REGEX,
+  POSTCODE_REGEX,
+  YEAR_REGEX,
+} from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -32,8 +39,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -47,8 +53,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -65,8 +70,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -116,11 +120,12 @@ export const formSteps: FormStep[] = [
         label: "National Identification (ID) Number",
         width: "medium",
         type: "text",
+        mask: "nid",
         placeholder: "",
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: NID_REGEX,
             message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
@@ -258,14 +263,14 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "contactDetails.postalCode",
+        name: "contactDetails.postcode",
         label: "Postcode",
         width: "medium",
         hint: "For example, BB17004 (optional)",
         type: "text",
         validation: {
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -285,10 +290,9 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            value: PHONE_REGEX,
             message:
-              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -325,8 +329,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -343,8 +346,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -415,10 +417,9 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            value: PHONE_REGEX,
             message:
-              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -449,7 +450,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Start year is required",
           pattern: {
-            value: "^[0-9]{4}$",
+            value: YEAR_REGEX,
             message: "Start year must be a valid year",
           },
         },
@@ -462,7 +463,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "End year is required",
           pattern: {
-            value: "^[0-9]{4}$",
+            value: YEAR_REGEX,
             message: "End year must be a valid year",
           },
         },
@@ -494,7 +495,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Start year is required",
           pattern: {
-            value: "^[0-9]{4}$",
+            value: YEAR_REGEX,
             message: "Start year must be a valid year",
           },
         },
@@ -507,7 +508,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "End year is required",
           pattern: {
-            value: "^[0-9]{4}$",
+            value: YEAR_REGEX,
             message: "End year must be a valid year",
           },
         },
@@ -565,7 +566,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^[0-9]{4}$",
+            value: YEAR_REGEX,
             message: "Start year must be a valid year",
           },
         },
@@ -579,7 +580,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^[0-9]{4}$",
+            value: YEAR_REGEX,
             message: "End year must be a valid year",
           },
         },

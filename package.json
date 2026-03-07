@@ -21,6 +21,8 @@
     "@govtech-bb/design": "^1.0.0-alpha.14",
     "@govtech-bb/react": "^1.0.0-alpha.14",
     "@hookform/resolvers": "^5.2.1",
+    "@maskito/core": "^5.1.1",
+    "@maskito/react": "^5.1.1",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.0.3",

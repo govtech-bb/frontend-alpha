@@ -41,7 +41,7 @@ const generateAddress = () => ({
     "st-philip",
     "st-thomas",
   ]),
-  postalCode: `BB${faker.string.numeric(5)}`,
+  postcode: `BB${faker.string.numeric(5)}`,
 });
 
 const generateFutureDate = () => {

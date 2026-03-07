@@ -1,3 +1,5 @@
+import type { MaskType } from "@/lib/masks";
+
 export type FieldType =
   | "text"
   | "email"
@@ -33,6 +35,7 @@ type BaseValidationRule = {
   pattern?: { value: string; message: string };
   min?: { value: number; message: string };
   max?: { value: number; message: string };
+  numberOfFiles?: { isEqual: number; message: string };
 };
 
 export type DateFieldValidation = BaseValidationRule & {
@@ -132,6 +135,8 @@ type FieldArrayFormField = BaseFormField & {
 type TextFormField = BaseFormField & {
   type: "text" | "email" | "number" | "tel";
   validation: NonDateFieldValidation;
+  /** Input mask to apply (e.g., "nid" for National ID format xxxxxx-xxxx) */
+  mask?: MaskType;
 };
 
 type ShowHideFormField = BaseFormField & {
@@ -199,6 +204,8 @@ export type RepeatableStepConfig = {
 export type FormStep = {
   id: string;
   title: string;
+  /** Override the title based on a field value condition */
+  conditionalTitle?: ConditionalRule & { title: string };
   description?: string;
   fields: FormField[];
   conditionalOn?: ConditionalRule; // For conditional steps

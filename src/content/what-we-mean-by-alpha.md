@@ -1,6 +1,7 @@
 ---
 title: "What we mean by alpha"
 description: "We’re testing ideas and learning what works before building the full service."
+publish_date: 2025-11-12
 ---
 
 This is an Alpha website. This means it's an early version and we're still working on it.

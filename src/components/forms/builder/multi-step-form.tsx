@@ -136,6 +136,32 @@ function getOrdinalWord(n: number): string {
 }
 
 /**
+ * Normalized a phone number to be 11 digits regardless of valid input. (CONSISTENCY!)
+ */
+function normalizePhoneNumber(phoneValue: string): string {
+  if (!phoneValue || typeof phoneValue !== "string") {
+    return phoneValue;
+  }
+
+  const digitsOnly = phoneValue.replace(/\D/g, "");
+  const digitCount = digitsOnly.length;
+
+  if (digitCount === 7) {
+    return `1246${digitsOnly}`;
+  }
+
+  if (digitCount === 10) {
+    return `1${digitsOnly}`;
+  }
+
+  if (digitCount === 11) {
+    return digitsOnly;
+  }
+
+  return phoneValue;
+}
+
+/**
  * Updates a step title with ordinal numbering for subsequent instances.
  * Replaces "the X" with "the second X", "the third X", etc.
  * Only applies to instances after the first (index > 0).
@@ -238,12 +264,19 @@ function createRepeatableStepInstance(
 
   // Add "add another" radio field if this step should have it
   if (shouldAddAnotherField) {
+    // Only make the "add another" question required if at least one of the
+    // base step's fields is required.
+    const hasRequiredBaseFields = baseStep.fields.some((field) => {
+      const required = field.validation?.required;
+      return typeof required === "string";
+    });
+
     const addAnotherField: FormField = {
       name: `_addAnother_${arrayFieldName}_${index}`,
       label: addAnotherLabel ?? "Do you need to add another?",
       type: "radio",
       validation: {
-        required: "Select an option",
+        required: hasRequiredBaseFields ? "Select an option" : false,
       },
       options: [
         { label: "Yes", value: "yes" },
@@ -418,7 +451,6 @@ export default function DynamicMultiStepForm({
     _hasHydrated,
     isSubmitted,
     referenceNumber,
-    customerName: storedCustomerName,
     paymentData,
     setCurrentStep,
     markStepComplete,
@@ -625,7 +657,7 @@ export default function DynamicMultiStepForm({
   useEffect(() => {
     if (!_hasHydrated) return;
 
-    const paymentStatus = searchParams?.get("payment_status");
+    const paymentStatus = searchParams?.get("paymentStatus");
     const tx = searchParams?.get("tx");
 
     if (paymentStatus) {
@@ -803,6 +835,25 @@ export default function DynamicMultiStepForm({
     // Convert indexed objects (e.g., { "0": {...}, "1": {...} }) to arrays
     const arrayifiedData = convertIndexedObjectsToArrays(cleanedData);
 
+    // Normalize phone numbers (type: "tel") to 11-digit format
+    for (const step of expandedFormSteps) {
+      for (const field of step.fields) {
+        if (field.type === "tel") {
+          const currentValue = getNestedValue<string>(
+            arrayifiedData as Record<string, unknown>,
+            field.name
+          );
+          if (currentValue) {
+            const normalized = normalizePhoneNumber(currentValue);
+            setNestedValue(
+              arrayifiedData as Record<string, unknown>,
+              field.name,
+              normalized
+            );
+          }
+        }
+      }
+    }
     return arrayifiedData as FormData;
   };
 
@@ -1096,24 +1147,34 @@ export default function DynamicMultiStepForm({
       currentFieldNames as (keyof FormData)[]
     );
 
-    // Manually validate conditional fields (required and pattern)
+    // Helper: set required error when field is empty; returns true if error was set
+    const setRequiredErrorIfEmpty = (
+      field: FormField,
+      value: unknown
+    ): boolean => {
+      const empty =
+        field.type === "checkbox" ? value !== "yes" : isFieldEmpty(value);
+
+      if (field.validation?.required && empty) {
+        methods.setError(field.name as keyof FormData, {
+          type: "required",
+          message: field.validation.required,
+        });
+        return true;
+      }
+
+      return false;
+    };
+
+    // Manually validate conditional fields (required and pattern),
+    // and add a safety net for non-conditional fields whose required
+    // validation should always show when empty.
     for (const field of visibleFields) {
       if (field.conditionalOn) {
         const fieldValue = methods.getValues(field.name as keyof FormData);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
-        // Check required validation
-        // For checkboxes, require value to be "yes"
-        const isEmpty =
-          field.type === "checkbox"
-            ? fieldValue !== "yes"
-            : isFieldEmpty(fieldValue);
-
-        if (field.validation.required && isEmpty) {
-          methods.setError(field.name as keyof FormData, {
-            type: "required",
-            message: field.validation.required,
-          });
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
           isValid = false;
           continue; // Skip pattern check if empty
         }
@@ -1128,6 +1189,11 @@ export default function DynamicMultiStepForm({
             });
             isValid = false;
           }
+        }
+      } else if (field.validation?.required) {
+        const fieldValue = methods.getValues(field.name as keyof FormData);
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
+          isValid = false;
         }
       }
 
@@ -1352,15 +1418,9 @@ export default function DynamicMultiStepForm({
       return null;
     }
 
-    // Use stored customer name (persists even after form data is cleared)
-    // TODO: Add email field to form schema to capture customer email
-    const customerEmail = undefined; // Will use default in PaymentBlock
-
     return (
       <ConfirmationPage
         confirmationStep={confirmationStep}
-        customerEmail={customerEmail}
-        customerName={storedCustomerName || undefined}
         formId={formId}
         onReset={handleReset}
         paymentData={paymentData || undefined}

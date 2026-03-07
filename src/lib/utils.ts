@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import type { FormStep } from "@/types";
 import type { InformationContent } from "@/types/content";
 
 export function cn(...inputs: ClassValue[]) {
@@ -46,6 +47,30 @@ export function findSubPageTitleFromPath(
   const subPage = page?.subPages?.find((sp) => sp.slug === subPageSlug);
 
   return subPage?.title ?? page?.title;
+}
+
+/**
+ * Normalizes a text field value before validation:
+ * removes leading whitespace and trailing whitespace or full stops.
+ */
+export function normalizeTextValue(value: string): string {
+  return value.replace(/^\s+/, "").replace(/[\s.]+$/, "");
+}
+
+/**
+ * Resolves the effective title for a step, applying conditionalTitle when its condition is met.
+ * @param step - The form step
+ * @param conditionalFieldValue? - The current value of the codnitional field
+ */
+export function resolveStepTitle(
+  step: FormStep,
+  conditionalFieldValue?: unknown
+): string {
+  if (!step.conditionalTitle) return step.title;
+
+  return conditionalFieldValue === step.conditionalTitle.value
+    ? step.conditionalTitle.title
+    : step.title;
 }
 
 export const findCategoryByPageSlug = (

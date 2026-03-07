@@ -2,7 +2,7 @@
 title: "Business policies and law"
 description: "An overview of the Ministry of Labour's role in Barbados, focusing on promoting decent work, social benefits, and a skilled workforce for local and international markets."
 source_url: https://www.gov.bb/Business/policies-laws
-publish_date: 2025-10-15
+publish_date: 2025-10-24
 section: "Business and Trade"
 ---
 

@@ -1,4 +1,11 @@
-import { barbadosParishes } from "@/data/constants";
+import {
+  barbadosParishes,
+  NAME_REGEX,
+  NID_REGEX,
+  NIS_NUMBER_REGEX,
+  PHONE_REGEX,
+  POSTCODE_REGEX,
+} from "@/data/constants";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -32,8 +39,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -47,8 +53,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -65,8 +70,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2  characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -104,7 +108,7 @@ export const formSteps: FormStep[] = [
         options: barbadosParishes,
       },
       {
-        name: "applicant.postalCode",
+        name: "applicant.postcode",
         label: "Postcode",
         hint: "For example, BB17004 (optional)",
         type: "text",
@@ -112,7 +116,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value: "^BB\\d{5}$",
+            value: POSTCODE_REGEX,
             message: "Enter a valid postcode (for example, BB17004)",
           },
         },
@@ -121,11 +125,12 @@ export const formSteps: FormStep[] = [
         name: "applicant.idNumber",
         label: "National Identification (ID) Number",
         type: "text",
+        mask: "nid",
         width: "medium",
         validation: {
           required: "ID Number is required",
           pattern: {
-            value: "^\\d{6}-\\d{4}$",
+            value: NID_REGEX,
             message: "Enter a valid ID number (for example, 850101-0001)",
           },
         },
@@ -174,10 +179,9 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "Telephone number is required",
           pattern: {
-            value:
-              "^(1[-]246[-]\\d{3}[-]\\d{4}|1[\\s]246[\\s]\\d{3}[\\s]\\d{4}|1246\\d{7})$",
+            value: PHONE_REGEX,
             message:
-              "Please enter a valid phone number (for example, 12462345678, 1-246-234-5678, or 1 246 234 5678)",
+              "Please enter a valid phone number (for example, 2345678, 1-246-234-5678, or 1 246 234 5678)",
           },
         },
       },
@@ -295,7 +299,7 @@ export const formSteps: FormStep[] = [
       {
         name: "dateOfDeath",
         label: "Date of death",
-        placeholder: "For example, March 15, 2023",
+        placeholder: "For example, 15 3 2023",
         type: "date",
         validation: {
           required: "Date of death is required",
@@ -329,8 +333,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -344,8 +347,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: false,
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -362,8 +364,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -389,7 +390,7 @@ export const formSteps: FormStep[] = [
         validation: {
           required: "NIS number is required",
           pattern: {
-            value: "^\\d{6}$",
+            value: NIS_NUMBER_REGEX,
             message: "Enter a valid NIS number (6 digits)",
           },
         },
@@ -402,12 +403,13 @@ export const formSteps: FormStep[] = [
   },
   {
     id: "birth-details",
-    title: "Provide your birth details",
-    description: "Answer as accurately as possible",
-    conditionalOn: {
+    title: "Provide the person's birth details",
+    conditionalTitle: {
       field: "applyingForYourself",
       value: "yes",
+      title: "Provide your birth details",
     },
+    description: "Answer as accurately as possible",
     fields: [
       {
         name: "birthDetails.dateOfBirth",
@@ -424,7 +426,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBirth",
         label: "Place of birth",
-        hint: "Enter a house, institution, home address, or parish, if known",
+        // hint: "Enter a house, institution, home address, or parish, if known",
         type: "text",
         validation: {
           required: "Place of birth is required",
@@ -437,7 +439,7 @@ export const formSteps: FormStep[] = [
       {
         name: "birthDetails.placeOfBaptism",
         label: "Place of baptism",
-        hint: "Enter a house, church, or parish, if known",
+        // hint: "Enter a house, church, or parish, if known",
         type: "text",
         validation: {
           required: "Place of baptism is required",
@@ -450,11 +452,12 @@ export const formSteps: FormStep[] = [
     ],
   },
   {
-    id: "parents-self",
-    title: "Tell us your parents' names",
-    conditionalOn: {
+    id: "parents",
+    title: "Tell us their parents' names",
+    conditionalTitle: {
       field: "applyingForYourself",
       value: "yes",
+      title: "Tell us your parents' names",
     },
     fields: [
       {
@@ -468,8 +471,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -487,8 +489,7 @@ export const formSteps: FormStep[] = [
             message: "Middle name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -505,8 +506,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -523,8 +523,7 @@ export const formSteps: FormStep[] = [
             message: "First name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "First name must contain only letters, hyphens, or apostrophes",
           },
@@ -542,8 +541,7 @@ export const formSteps: FormStep[] = [
             message: "Middle name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Middle name must contain only letters, hyphens, or apostrophes",
           },
@@ -560,8 +558,7 @@ export const formSteps: FormStep[] = [
             message: "Last name must be at least 2 characters",
           },
           pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
+            value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
           },
@@ -569,126 +566,7 @@ export const formSteps: FormStep[] = [
       },
     ],
   },
-  {
-    id: "parents-other",
-    title: "Tell us their parents' names",
-    conditionalOn: {
-      field: "applyingForYourself",
-      value: "no",
-    },
-    fields: [
-      {
-        name: "parentsOther.father.firstName",
-        label: "Father's first name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
-          },
-          pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
-            message:
-              "First name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.father.middleName",
-        label: "Father's middle name",
-        hint: " Optional. Provide only if known",
-        type: "text",
-        validation: {
-          required: false,
-          minLength: {
-            value: 2,
-            message: "Middle name must be at least 2 characters",
-          },
-          pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
-            message:
-              "Middle name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.father.lastName",
-        label: "Father's last name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-          pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
-            message:
-              "Last name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.mother.firstName",
-        label: "Mother's first name",
-        type: "text",
-        validation: {
-          required: "First name is required",
-          minLength: {
-            value: 2,
-            message: "First name must be at least 2 characters",
-          },
-          pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
-            message:
-              "First name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.mother.middleName",
-        label: "Mother's middle name",
-        hint: " Optional. Provide only if known",
-        type: "text",
-        validation: {
-          required: false,
-          minLength: {
-            value: 2,
-            message: "Middle name must be at least 2 characters",
-          },
-          pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
-            message:
-              "Middle name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parentsOther.mother.lastName",
-        label: "Mother's last name",
-        type: "text",
-        validation: {
-          required: "Last name is required",
-          minLength: {
-            value: 2,
-            message: "Last name must be at least 2 characters",
-          },
-          pattern: {
-            value:
-              "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$",
-            message:
-              "Last name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-    ],
-  },
+
   {
     id: "order-details",
     title: "How many copies will you be ordering?",
@@ -700,7 +578,6 @@ export const formSteps: FormStep[] = [
         hidden: true,
         type: "number",
         width: "short",
-        // placeholder: "For example, 2",
         validation: {
           required: "Number of copies is required",
           min: {

@@ -33,7 +33,7 @@ const generateApplicantData = () => ({
     "st-philip",
     "st-thomas",
   ]),
-  postalCode: `BB${faker.string.numeric(5)}`,
+  postcode: `BB${faker.string.numeric(5)}`,
   idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
   tamisNumber: faker.string.numeric(8),
   email: "testing@govtech.bb",

@@ -25,16 +25,12 @@ type ConfirmationPageProps = {
   confirmationStep: FormStep;
   referenceNumber?: string;
   onReset: () => void;
-  customerEmail?: string;
-  customerName?: string;
   formId?: string;
   paymentData?: PaymentData;
 };
 
 export function ConfirmationPage({
   confirmationStep,
-  customerEmail,
-  customerName,
   referenceNumber,
   onReset: _onReset,
   formId,
@@ -91,13 +87,13 @@ export function ConfirmationPage({
 
       {/* Main content */}
 
-      <div className="container space-y-6 py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
+      <div className="container space-y-6 overflow-hidden py-4 lg:grid lg:grid-cols-3 lg:space-y-8 lg:py-8">
         <div className="col-span-2 space-y-6 lg:space-y-8">
           {/* Reference number banner - shown by default unless explicitly set to false */}
           {referenceNumber &&
             confirmationStep.showReferenceNumber !== false && (
-              <div className="w-fit rounded-sm bg-blue-10 px-6 py-4">
-                <Heading as="h2" className="whitespace-nowrap text-black">
+              <div className="rounded-sm bg-blue-10 px-6 py-4 lg:w-fit">
+                <Heading as="h2" className="text-black-00 lg:whitespace-nowrap">
                   {confirmationStep.referenceNumberLabel ??
                     "Your reference number is"}{" "}
                   {referenceNumber}
@@ -107,12 +103,7 @@ export function ConfirmationPage({
 
           {/* Payment content */}
           {paymentData && formSlug ? (
-            <PaymentBlock
-              customerEmail={customerEmail}
-              customerName={customerName}
-              formId={formSlug}
-              paymentData={paymentData}
-            />
+            <PaymentBlock formId={formSlug} paymentData={paymentData} />
           ) : null}
           {/* Body content rendered from markdown */}
           {confirmationStep.bodyContent && (
@@ -158,11 +149,9 @@ export function ConfirmationPage({
 
           {/* Feedback section */}
           {confirmationStep.enableFeedback && formId && (
-            <div>
-              <Heading as="h3" className="pb-4">
-                Help us improve this service
-              </Heading>
-              <Text as="p" className="mb-4">
+            <div className="flex flex-col gap-s">
+              <Heading as="h3">Help us improve this service</Heading>
+              <Text as="p">
                 We are always working to improve government services. If you
                 have a moment, you can tell us about your experience today.
               </Text>
@@ -178,7 +167,7 @@ export function ConfirmationPage({
               >
                 Give feedback on this service
               </LinkButton>
-              <Text as="p" className="mt-4 text-[16px] text-neutral-600">
+              <Text as="p">
                 This will take about 30 seconds. Your responses are anonymous.
               </Text>
             </div>

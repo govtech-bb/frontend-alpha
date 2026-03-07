@@ -2,7 +2,7 @@
 title: "Marriage licences"
 description: "This article outlines the requirements, procedures, and fees for obtaining a marriage licence in Barbados, including details for nationals and non-nationals, minors, and special arrangements."
 source_url: https://www.gov.bb/Citizens/marriage-licence
-publish_date: 2025-10-16
+publish_date: 2025-10-24
 section: "Family, Birth and Relationships"
 ---
 

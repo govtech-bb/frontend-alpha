@@ -2,7 +2,7 @@
 title: "Get a copy of a death certificate"
 stage: "alpha"
 featured: false
-publish_date: 2025-12-15
+publish_date: 2026-01-30
 ---
 
 This service can be used to get a copy of a death certificate for anyone whose death was registered in Barbados.
