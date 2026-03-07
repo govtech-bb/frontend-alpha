@@ -33,6 +33,8 @@ function getFormContext(
   return { form: formName, category: segments[0] ?? "" };
 }
 
+const paymentStatusTrackedThisLoad = new Set<string>();
+
 /**
  * Sets a nested value in an object using dot notation path
  * Creates intermediate objects as needed
@@ -439,7 +441,6 @@ export default function DynamicMultiStepForm({
     details?: string;
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
-  const paymentStatusTrackedRef = useRef<string | null>(null);
 
   // Track instance counts for repeatable steps (key: base step ID, value: count)
   const [repeatableCounts, setRepeatableCounts] = useState<
@@ -629,11 +630,13 @@ export default function DynamicMultiStepForm({
 
     if (paymentStatus) {
       const context = getFormBaseContext(form, category);
+      const trackKey = `${form}-${category}-${paymentStatus}`;
+      const alreadyTracked = paymentStatusTrackedThisLoad.has(trackKey);
 
       switch (paymentStatus) {
         case "Success":
-          if (paymentStatusTrackedRef.current !== "Success") {
-            paymentStatusTrackedRef.current = "Success";
+          if (!alreadyTracked) {
+            paymentStatusTrackedThisLoad.add(trackKey);
             openPanel.track(TRACKED_EVENTS.PAYMENT_SUCCESS_EVENT, context);
           }
           setPaymentMessage({
@@ -654,8 +657,8 @@ export default function DynamicMultiStepForm({
           });
           break;
         case "Failed":
-          if (paymentStatusTrackedRef.current !== "Failed") {
-            paymentStatusTrackedRef.current = "Failed";
+          if (!alreadyTracked) {
+            paymentStatusTrackedThisLoad.add(trackKey);
             openPanel.track(TRACKED_EVENTS.PAYMENT_FAILED_EVENT, context);
           }
           setPaymentMessage({
@@ -667,8 +670,8 @@ export default function DynamicMultiStepForm({
           });
           break;
         case "error": {
-          if (paymentStatusTrackedRef.current !== "error") {
-            paymentStatusTrackedRef.current = "error";
+          if (!alreadyTracked) {
+            paymentStatusTrackedThisLoad.add(trackKey);
             openPanel.track(TRACKED_EVENTS.PAYMENT_ERROR_EVENT, context);
           }
           const errorMessage = searchParams?.get("payment_error");
