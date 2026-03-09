@@ -1,34 +1,11 @@
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 
-import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
-import { getFeaturedServices } from "@/lib/markdown";
-import { hasResearchAccess } from "@/lib/research-access";
-import { fetchAllServiceAccess } from "@/lib/service-access-api";
 
-export default async function Home() {
-  const [allFeaturedServices, userHasAccess] = await Promise.all([
-    getFeaturedServices(),
-    hasResearchAccess(),
-  ]);
-
-  // Hide service-level protected services from public users.
-  // Only the service-level flag controls listing visibility — subpage-only
-  // flags leave the service listed but gate individual subpages.
-  let featuredServices = allFeaturedServices;
-  if (!userHasAccess) {
-    const allServiceAccess = await fetchAllServiceAccess();
-    featuredServices = allFeaturedServices.filter((service) => {
-      // getFeaturedServices() returns slugs as "categorySlug/serviceSlug"
-      // but the access config map is keyed by serviceSlug only
-      const serviceSlug = service.slug.split("/").at(-1) ?? service.slug;
-      return !allServiceAccess.get(serviceSlug)?.isProtected;
-    });
-  }
-
+export default function Home() {
   return (
     <>
       <section className="border-yellow-00 border-b-4 bg-yellow-100">
@@ -69,32 +46,14 @@ export default async function Home() {
               to change as we learn more.
             </Text>
 
-            <div className="flex flex-col items-start gap-2">
-              {featuredServices.map((service) => (
-                <div className="flex items-center gap-x-3" key={service.slug}>
-                  <ChevronLeftSVG className="inline-block shrink-0 rotate-180" />
-
-                  <Link
-                    as={NextLink}
-                    className="text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
-                    href={`/${service.slug}`}
-                    key={service.slug}
-                    variant={"secondary"}
-                  >
-                    {service.title}
-                  </Link>
-                </div>
-              ))}
-
-              <Link
-                as={NextLink}
-                className="mt-4 text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
-                href="/what-we-mean-by-alpha"
-                variant={"secondary"}
-              >
-                Learn more about alpha
-              </Link>
-            </div>
+            <LinkButton
+              as={NextLink}
+              className="bg-[#1a777d]!"
+              href="/search"
+              variant="primary"
+            >
+              View all services
+            </LinkButton>
           </div>
         </div>
       </section>
