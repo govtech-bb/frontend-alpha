@@ -22,6 +22,7 @@ type FormProgress = {
   customerName: string | null;
   paymentData: PaymentData | null;
   totalSteps: number;
+  formStartedAt: number | null;
 };
 
 type FormStore = {
@@ -35,9 +36,11 @@ type FormStore = {
   customerName: string | null;
   paymentData: PaymentData | null;
   totalSteps: number;
+  formStartedAt: number | null;
   _hasHydrated: boolean;
 
   // Actions
+  setFormStartedAtIfUnset: () => void;
   setCurrentStep: (step: number) => void;
   setTotalSteps: (total: number) => void;
   nextStep: () => void;
@@ -65,6 +68,7 @@ const initialState: FormProgress = {
   customerName: null,
   paymentData: null,
   totalSteps: 1,
+  formStartedAt: null,
 };
 
 // Store cache to ensure singleton pattern per storage key
@@ -96,6 +100,12 @@ export function createFormStore(
       (set, get) => ({
         ...initialState,
         _hasHydrated: false,
+
+        setFormStartedAtIfUnset: () => {
+          set((state) =>
+            state.formStartedAt == null ? { formStartedAt: Date.now() } : {}
+          );
+        },
 
         setCurrentStep: (step: number) => {
           set({ currentStep: step });
@@ -135,7 +145,11 @@ export function createFormStore(
         },
 
         resetForm: () => {
-          set({ ...initialState, _hasHydrated: true });
+          set({
+            ...initialState,
+            formStartedAt: null,
+            _hasHydrated: true,
+          });
         },
 
         getProgress: () => {
@@ -167,6 +181,7 @@ export function createFormStore(
             completedSteps: [],
             formData: {},
             lastSaved: null,
+            formStartedAt: null,
             // Keep submission state
             isSubmitted: state.isSubmitted,
             referenceNumber: state.referenceNumber,

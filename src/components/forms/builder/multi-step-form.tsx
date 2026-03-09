@@ -452,6 +452,8 @@ export default function DynamicMultiStepForm({
     isSubmitted,
     referenceNumber,
     paymentData,
+    formStartedAt,
+    setFormStartedAtIfUnset,
     setCurrentStep,
     markStepComplete,
     updateFormData,
@@ -473,7 +475,6 @@ export default function DynamicMultiStepForm({
     details?: string;
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
-  const formStartTimeRef = useRef<number | null>(null);
 
   // Track instance counts for repeatable steps (key: base step ID, value: count)
   const [repeatableCounts, setRepeatableCounts] = useState<
@@ -651,10 +652,9 @@ export default function DynamicMultiStepForm({
         }
       }
     }
-    if (!formStartTimeRef.current) {
-      formStartTimeRef.current = Date.now();
-    }
+
     setIsFormReady(true);
+    setFormStartedAtIfUnset();
   }, [_hasHydrated, formData, methods, isFormReady]); // Run only once on mount
 
   // Check for payment status on mount
@@ -942,9 +942,10 @@ export default function DynamicMultiStepForm({
           apiPaymentData
         );
         if (storageKey !== FORM_NAMES.EXIT_SURVEY) {
-          const durationSeconds = formStartTimeRef.current
-            ? Math.round((Date.now() - formStartTimeRef.current) / 1000)
-            : 0;
+          const durationSeconds =
+            formStartedAt != null
+              ? Math.round((Date.now() - formStartedAt) / 1000)
+              : 0;
           openPanel.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
             ...getFormBaseContext(form, category),
             duration_seconds: durationSeconds,
