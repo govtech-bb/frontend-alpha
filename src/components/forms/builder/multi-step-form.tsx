@@ -673,74 +673,66 @@ export default function DynamicMultiStepForm({
     if (!_hasHydrated) return;
 
     const paymentStatus = searchParams?.get("paymentStatus");
+    if (!paymentStatus) return;
+
     const tx = searchParams?.get("tx");
+    const trackKey = `${form}-${category}-${paymentStatus}-${tx}`;
 
-    if (paymentStatus) {
-      const context = getFormBaseContext(form, category);
-      const trackKey = `${form}-${category}-${paymentStatus}`;
-      const trackedStatuses = paymentStatusTrackedRef.current;
-      const alreadyTracked = trackedStatuses.has(trackKey);
+    const trackedStatuses = paymentStatusTrackedRef.current;
 
-      switch (paymentStatus) {
-        case "Success":
-          if (!alreadyTracked) {
-            trackedStatuses.add(trackKey);
-            openPanel.track(TRACKED_EVENTS.PAYMENT_SUCCESS_EVENT, context);
-          }
-          setPaymentMessage({
-            type: "success",
-            message: "Payment successful!",
-            details: paymentData
-              ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\nTransaction: ${tx || "N/A"}`
-              : `Your payment has been processed. Transaction: ${tx}`,
-          });
-          break;
-        case "Initiated":
-          setPaymentMessage({
-            type: "pending",
-            message: "Payment initiated",
-            details: paymentData
-              ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\n\nYour Direct Debit payment is being processed. It will settle in approximately 5 business days.`
-              : "Your Direct Debit payment is being processed. It will settle in approximately 5 business days.",
-          });
-          break;
-        case "Failed":
-          if (!alreadyTracked) {
-            trackedStatuses.add(trackKey);
-            openPanel.track(TRACKED_EVENTS.PAYMENT_FAILED_EVENT, context);
-          }
-          setPaymentMessage({
-            type: "error",
-            message: "Payment failed",
-            details: paymentData
-              ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\n\nYour payment could not be processed. Please try again or use a different payment method.`
-              : "Your payment could not be processed. Please try again or use a different payment method.",
-          });
-          break;
-        case "error": {
-          if (!alreadyTracked) {
-            trackedStatuses.add(trackKey);
-            openPanel.track(TRACKED_EVENTS.PAYMENT_ERROR_EVENT, context);
-          }
-          const errorMessage = searchParams?.get("payment_error");
-          setPaymentMessage({
-            type: "error",
-            message: "Payment verification error",
-            details:
-              errorMessage ||
-              "There was an error verifying your payment. Please contact support with your reference number.",
-          });
-          break;
-        }
-        default:
-          // Unknown payment status, don't show message
-          break;
+    if (trackedStatuses.has(trackKey)) return;
+    trackedStatuses.add(trackKey);
+
+    const context = getFormBaseContext(form, category);
+
+    switch (paymentStatus) {
+      case "Success":
+        openPanel.track(TRACKED_EVENTS.PAYMENT_SUCCESS_EVENT, context);
+
+        setPaymentMessage({
+          type: "success",
+          message: "Payment successful!",
+          details: paymentData
+            ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\nTransaction: ${tx || "N/A"}`
+            : `Your payment has been processed. Transaction: ${tx}`,
+        });
+        break;
+      case "Initiated":
+        setPaymentMessage({
+          type: "pending",
+          message: "Payment initiated",
+          details: paymentData
+            ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\n\nYour Direct Debit payment is being processed. It will settle in approximately 5 business days.`
+            : "Your Direct Debit payment is being processed. It will settle in approximately 5 business days.",
+        });
+        break;
+      case "Failed":
+        openPanel.track(TRACKED_EVENTS.PAYMENT_FAILED_EVENT, context);
+
+        setPaymentMessage({
+          type: "error",
+          message: "Payment failed",
+          details: paymentData
+            ? `Service: ${paymentData.description}\nAmount: $${paymentData.amount.toFixed(2)}\n\nYour payment could not be processed. Please try again or use a different payment method.`
+            : "Your payment could not be processed. Please try again or use a different payment method.",
+        });
+        break;
+      case "error": {
+        openPanel.track(TRACKED_EVENTS.PAYMENT_ERROR_EVENT, context);
+
+        const errorMessage = searchParams?.get("payment_error");
+        setPaymentMessage({
+          type: "error",
+          message: "Payment verification error",
+          details:
+            errorMessage ||
+            "There was an error verifying your payment. Please contact support with your reference number.",
+        });
+        break;
       }
-
-      // Optional: Clear query params after showing message
-      // setTimeout(() => {
-      //   window.history.replaceState({}, '', window.location.pathname);
-      // }, 100);
+      default:
+        // Unknown payment status, don't show message
+        break;
     }
   }, [_hasHydrated, searchParams, paymentData, form, category]);
 
