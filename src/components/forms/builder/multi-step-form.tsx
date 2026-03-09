@@ -38,7 +38,6 @@ function isReviewStepData(step: FormStep | undefined): boolean {
 }
 
 const paymentStatusTrackedThisLoad = new Set<string>();
-const formReviewTrackedThisLoad = new Set<string>();
 
 function getDurationSeconds(formStartedAt: number | null): number {
   return formStartedAt != null
@@ -465,6 +464,7 @@ export default function DynamicMultiStepForm({
     paymentData,
     formStartedAt,
     setFormStartedAtIfUnset,
+    clearFormStartedAt,
     setCurrentStep,
     markStepComplete,
     updateFormData,
@@ -486,6 +486,7 @@ export default function DynamicMultiStepForm({
     details?: string;
   } | null>(null);
   const isProgrammaticNavigation = useRef(false);
+  const formReviewTrackedRef = useRef(false);
 
   // Track instance counts for repeatable steps (key: base step ID, value: count)
   const [repeatableCounts, setRepeatableCounts] = useState<
@@ -976,6 +977,7 @@ export default function DynamicMultiStepForm({
             feedbackPayload
           );
         }
+        clearFormStartedAt();
       } else {
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
@@ -1322,18 +1324,14 @@ export default function DynamicMultiStepForm({
       const nextStepData = expandedFormSteps[nextVisibleStep];
       const isNextReviewStep = isReviewStepData(nextStepData);
 
-      if (isNextReviewStep) {
-        const trackKey = `${form}-${category}-review`;
+      if (isNextReviewStep && !formReviewTrackedRef.current) {
+        formReviewTrackedRef.current = true;
+        const durationSeconds = getDurationSeconds(formStartedAt);
 
-        if (!formReviewTrackedThisLoad.has(trackKey)) {
-          formReviewTrackedThisLoad.add(trackKey);
-          const durationSeconds = getDurationSeconds(formStartedAt);
-
-          openPanel.track(TRACKED_EVENTS.FORM_REVIEW_EVENT, {
-            ...getFormBaseContext(form, category),
-            duration_seconds: durationSeconds,
-          });
-        }
+        openPanel.track(TRACKED_EVENTS.FORM_REVIEW_EVENT, {
+          ...getFormBaseContext(form, category),
+          duration_seconds: durationSeconds,
+        });
       }
 
       setCurrentStep(nextVisibleStep);
@@ -1424,6 +1422,7 @@ export default function DynamicMultiStepForm({
   const handleReset = () => {
     resetForm();
     methods.reset();
+    formReviewTrackedRef.current = false;
   };
 
   const currentStepDataRender = expandedFormSteps[currentStep];

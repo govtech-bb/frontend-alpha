@@ -41,6 +41,7 @@ type FormStore = {
 
   // Actions
   setFormStartedAtIfUnset: () => void;
+  clearFormStartedAt: () => void;
   setCurrentStep: (step: number) => void;
   setTotalSteps: (total: number) => void;
   nextStep: () => void;
@@ -105,6 +106,10 @@ export function createFormStore(
           set((state) =>
             state.formStartedAt == null ? { formStartedAt: Date.now() } : {}
           );
+        },
+
+        clearFormStartedAt: () => {
+          set({ formStartedAt: null });
         },
 
         setCurrentStep: (step: number) => {
