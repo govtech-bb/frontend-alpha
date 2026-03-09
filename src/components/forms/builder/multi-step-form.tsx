@@ -33,7 +33,18 @@ function getFormContext(
   return { form: formName, category: segments[0] ?? "" };
 }
 
+function isReviewStepData(step: FormStep | undefined): boolean {
+  return step?.fields.length === 0 && step?.id === "check-your-answers";
+}
+
 const paymentStatusTrackedThisLoad = new Set<string>();
+const formReviewTrackedThisLoad = new Set<string>();
+
+function getDurationSeconds(formStartedAt: number | null): number {
+  return formStartedAt != null
+    ? Math.round((Date.now() - formStartedAt) / 1000)
+    : 0;
+}
 
 /**
  * Sets a nested value in an object using dot notation path
@@ -942,10 +953,7 @@ export default function DynamicMultiStepForm({
           apiPaymentData
         );
         if (storageKey !== FORM_NAMES.EXIT_SURVEY) {
-          const durationSeconds =
-            formStartedAt != null
-              ? Math.round((Date.now() - formStartedAt) / 1000)
-              : 0;
+          const durationSeconds = getDurationSeconds(formStartedAt);
           openPanel.track(TRACKED_EVENTS.FORM_SUBMIT_EVENT, {
             ...getFormBaseContext(form, category),
             duration_seconds: durationSeconds,
@@ -1311,6 +1319,23 @@ export default function DynamicMultiStepForm({
       // Move to next visible step (skipping conditional steps that don't match)
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
+      const nextStepData = expandedFormSteps[nextVisibleStep];
+      const isNextReviewStep = isReviewStepData(nextStepData);
+
+      if (isNextReviewStep) {
+        const trackKey = `${form}-${category}-review`;
+
+        if (!formReviewTrackedThisLoad.has(trackKey)) {
+          formReviewTrackedThisLoad.add(trackKey);
+          const durationSeconds = getDurationSeconds(formStartedAt);
+
+          openPanel.track(TRACKED_EVENTS.FORM_REVIEW_EVENT, {
+            ...getFormBaseContext(form, category),
+            duration_seconds: durationSeconds,
+          });
+        }
+      }
+
       setCurrentStep(nextVisibleStep);
       scrollToStepHeading();
     } else {
