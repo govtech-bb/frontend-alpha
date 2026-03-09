@@ -3,6 +3,7 @@ import NextLink from "next/link";
 
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
 
@@ -35,6 +36,13 @@ export default async function Home() {
       <section className="border-teal-40 border-b-4 bg-teal-10">
         <div className="container">
           <div className="space-y-4 py-8">
+            <div className="flex flex-col gap-2">
+              <Text as="p" className="font-bold">
+                Search for a service
+              </Text>
+              <SearchForm />
+            </div>
+
             <Heading as="h2">Alpha public services</Heading>
 
             <Text as="p">
