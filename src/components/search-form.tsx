@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function SearchForm({
@@ -9,11 +10,19 @@ export function SearchForm({
   defaultValue?: string;
   id?: string;
 }) {
+  const router = useRouter();
   const [query, setQuery] = useState(defaultValue);
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmed = query.trim();
+    if (!trimmed) return;
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+  }
 
   return (
     <search>
-      <form action="/search" className="flex w-full">
+      <form action="/search" className="flex w-full" onSubmit={handleSubmit}>
         <label className="sr-only" htmlFor={id}>
           Search for a service
         </label>
