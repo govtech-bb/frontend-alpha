@@ -15,6 +15,7 @@ export const TRACKED_EVENTS = {
   FORM_STEP_BACK_EVENT: "form-step-back",
   FORM_STEP_EDIT_EVENT: "form-step-edit",
   FORM_STEP_COMPLETE_EVENT: "form-step-complete",
+  CONFIRMATION_REFERENCE_ID_EVENT: "confirmation-reference-id",
   FORM_REVIEW_EVENT: "form-review",
   FORM_ADD_ANOTHER_EVENT: "form-add-another",
   FORM_REMOVE_ITEM_EVENT: "form-remove-item",

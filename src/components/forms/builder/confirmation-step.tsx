@@ -3,6 +3,7 @@ import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import { useOpenPanel } from "@openpanel/nextjs";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
@@ -11,6 +12,8 @@ import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 import type { FormStep } from "@/types";
+
+const trackedConfirmationReferenceEvents = new Set<string>();
 
 type PaymentData = {
   amount: number;
@@ -38,12 +41,41 @@ export function ConfirmationPage({
 }: ConfirmationPageProps) {
   const openPanel = useOpenPanel();
   const pathname = usePathname();
+
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
   const formSlug = pathSegments[1]; // Extract form slug from URL (e.g., "get-birth-certificate")
+
   const category = INFORMATION_ARCHITECTURE.find(
     (cat) => cat.slug === categorySlug
   );
+
+  useEffect(() => {
+    if (!(referenceNumber && formId && categorySlug)) return;
+
+    const trackingKey = `${formId}-${categorySlug}-${referenceNumber}`;
+
+    const hasTrackedInCurrentSession =
+      trackedConfirmationReferenceEvents.has(trackingKey);
+
+    if (
+      hasTrackedInCurrentSession ||
+      confirmationStep.showReferenceNumber === false
+    )
+      return;
+
+    trackedConfirmationReferenceEvents.add(trackingKey);
+
+    openPanel.track(
+      TRACKED_EVENTS.CONFIRMATION_REFERENCE_ID_EVENT,
+      getFormBaseContext(formId, categorySlug)
+    );
+  }, [
+    referenceNumber,
+    formId,
+    categorySlug,
+    confirmationStep.showReferenceNumber,
+  ]);
 
   return (
     <>
