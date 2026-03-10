@@ -9,6 +9,33 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Sets a nested value in an object using dot notation path
+ * Creates intermediate objects as needed
+ * @example setNestedValue({}, "guardian.firstName", schema) -> { guardian: { firstName: schema } }
+ */
+export function setNestedValue<T>(
+  obj: Record<string, unknown>,
+  path: string,
+  value: T
+): void {
+  const keys = path.split(".");
+  let current = obj;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!(key in current) || typeof current[key] !== "object") {
+      current[key] = {};
+    }
+    current = current[key] as Record<string, unknown>;
+  }
+
+  const lastKey = keys.at(-1);
+  if (lastKey) {
+    current[lastKey] = value;
+  }
+}
+
+/**
  * Get a nested value from an object using dot notation path
  * @example getNestedValue({ guardian: { firstName: "John" } }, "guardian.firstName") // "John"
  */
