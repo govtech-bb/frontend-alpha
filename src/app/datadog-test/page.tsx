@@ -1,17 +1,5 @@
 "use client";
 
-// Type for Datadog RUM SDK
-interface DatadogRUM {
-  addAction: (name: string, context?: Record<string, unknown>) => void;
-  [key: string]: unknown;
-}
-
-declare global {
-  interface Window {
-    DD_RUM?: DatadogRUM;
-  }
-}
-
 export default function DatadogTestPage() {
   const envVars = {
     clientToken: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,

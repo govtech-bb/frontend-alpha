@@ -71,7 +71,7 @@ export function DeclarationStep({ step, serviceTitle }: DeclarationStepProps) {
   );
 
   // Auto-set the date field value on mount
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Only run on mount, not when dateField changes
   useEffect(() => {
     if (dateField) {
       setValue(
