@@ -6,7 +6,7 @@ The enhanced CI/CD pipeline automatically runs quality checks on every push to t
 
 ## Pipeline Stages
 
-The pipeline runs the following checks in parallel where possible:
+The pipeline runs the following checks (6 stages total):
 
 ### 1. Lint
 - **Purpose**: Enforces code style and catches common programming errors
@@ -47,8 +47,21 @@ The pipeline runs the following checks in parallel where possible:
   - Import/export correctness
   - Production bundle generation
 
-### 5. Security Scan
-- **Purpose**: Identifies potential security vulnerabilities
+### 5. Secrets Scan
+- **Purpose**: Detects hardcoded secrets in the codebase
+- **Tool**: Gitleaks
+- **What it checks**:
+  - API keys and tokens
+  - Passwords and credentials
+  - Private keys (SSH, PGP, etc.)
+  - OAuth tokens
+  - Database connection strings
+  - AWS keys, GitHub tokens, etc.
+- **Note**: This WILL block the build if secrets are found
+- **Action required**: Remove secrets and use environment variables instead
+
+### 6. Security Scan (Code Vulnerabilities)
+- **Purpose**: Identifies potential security vulnerabilities in code
 - **Tool**: GitHub CodeQL
 - **What it checks**:
   - SQL injection vulnerabilities

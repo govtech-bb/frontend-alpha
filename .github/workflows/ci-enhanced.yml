@@ -163,6 +163,44 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           exit 1
 
+  secrets-scan:
+    name: Secrets Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for gitleaks
+      
+      - name: Run Gitleaks
+        id: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_SUMMARY: true
+        continue-on-error: true
+      
+      - name: Report secrets scan results
+        if: steps.gitleaks.outcome == 'failure'
+        run: |
+          echo "## 🚨 Secrets Detected in Code" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Hardcoded secrets were found in the codebase. This is a security risk!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Common secrets detected:**" >> $GITHUB_STEP_SUMMARY
+          echo "- API keys" >> $GITHUB_STEP_SUMMARY
+          echo "- Passwords" >> $GITHUB_STEP_SUMMARY
+          echo "- Private keys" >> $GITHUB_STEP_SUMMARY
+          echo "- OAuth tokens" >> $GITHUB_STEP_SUMMARY
+          echo "- Database credentials" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Action required:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Remove the secrets from your code" >> $GITHUB_STEP_SUMMARY
+          echo "2. Use environment variables or secret management instead" >> $GITHUB_STEP_SUMMARY
+          echo "3. Rotate any exposed credentials immediately" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Check the logs above for specific file locations**" >> $GITHUB_STEP_SUMMARY
+          exit 1
+
   security:
     name: Security Scan
     runs-on: ubuntu-latest
