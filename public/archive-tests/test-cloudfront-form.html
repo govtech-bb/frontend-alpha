@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudFront Pattern Form Test</title>
+    <style>
+    body {
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+        Cantarell, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .test-section {
+      background: white;
+      padding: 30px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 10px 5px 10px 0;
+    }
+    button:hover {
+      background-color: #0051cc;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .form-field {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #0070f3;
+    }
+    .required {
+      color: #d32f2f;
+    }
+    .hint {
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+    .status {
+      padding: 15px;
+      border-radius: 5px;
+      margin: 15px 0;
+    }
+    .status.success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+    .status.error {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+    .status.info {
+      background-color: #d1ecf1;
+      border: 1px solid #bee5eb;
+      color: #0c5460;
+    }
+    .url-display {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      word-break: break-all;
+      margin: 10px 0;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .form-container {
+      display: none;
+    }
+    .form-container.active {
+      display: block;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>CloudFront Pattern Form Test</h1>
+    <p class="subtitle">
+      This page demonstrates loading a pattern from CloudFront and rendering a
+      working form
+    </p>
+
+    <div class="test-section">
+      <h2>Step 1: Load Pattern from CloudFront</h2>
+      <div class="url-display">
+        https://dftgz21fri73m.cloudfront.net/patterns/personal-details-barbados.json
+      </div>
+      <button id="loadPatternBtn" onclick="loadPattern()">
+        Load Pattern from CloudFront
+      </button>
+      <div id="loadStatus"></div>
+      <pre id="patternData" style="max-height: 300px;"></pre>
+    </div>
+
+    <div class="test-section">
+      <h2>Step 2: Render Form from Pattern</h2>
+      <button id="renderFormBtn" onclick="renderForm()" disabled>
+        Render Form
+      </button>
+      <div id="renderStatus"></div>
+
+      <div id="formContainer" class="form-container"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>Step 3: Test Form Validation</h2>
+      <div id="validationStatus"></div>
+      <button id="validateBtn" onclick="validateForm()" disabled>
+        Validate Form Data
+      </button>
+      <pre id="validationResult"></pre>
+    </div>
+
+    <script>
+    "use strict";
+    const CLOUDFRONT_URL = "https://dftgz21fri73m.cloudfront.net/patterns";
+    let loadedPattern = null;
+    const formData = {};
+
+    async function loadPattern() {
+      const statusEl = document.getElementById("loadStatus");
+      const dataEl = document.getElementById("patternData");
+      const renderBtn = document.getElementById("renderFormBtn");
+
+      statusEl.innerHTML =
+        '<div class="status info">Loading pattern from CloudFront...</div>';
+      dataEl.textContent = "";
+
+      try {
+        const start = performance.now();
+        const response = await fetch(
+          `${CLOUDFRONT_URL}/personal-details-barbados.json`
+        );
+        const time = (performance.now() - start).toFixed(2);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        loadedPattern = await response.json();
+
+        const cacheStatus = response.headers.get("x-cache") || "Unknown";
+
+        statusEl.innerHTML = `
+                    <div class="status success">
+                        ✓ Pattern loaded successfully in ${time}ms
+                        <br>Cache Status: ${cacheStatus}
+                        <br>Fields: ${loadedPattern.fields.length}
+                    </div>
+                `;
+        dataEl.textContent = JSON.stringify(loadedPattern, null, 2);
+        renderBtn.disabled = false;
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+        dataEl.textContent = error.stack;
+      }
+    }
+
+    function renderForm() {
+      const statusEl = document.getElementById("renderStatus");
+      const containerEl = document.getElementById("formContainer");
+      const validateBtn = document.getElementById("validateBtn");
+
+      if (!loadedPattern) {
+        statusEl.innerHTML =
+          '<div class="status error">No pattern loaded</div>';
+        return;
+      }
+
+      try {
+        containerEl.innerHTML = "";
+        containerEl.classList.add("active");
+
+        const form = document.createElement("form");
+        form.id = "dynamicForm";
+        form.onsubmit = (e) => {
+          e.preventDefault();
+          validateForm();
+        };
+
+        loadedPattern.fields.forEach((field) => {
+          const fieldDiv = document.createElement("div");
+          fieldDiv.className = "form-field";
+
+          const label = document.createElement("label");
+          label.textContent = field.label;
+          if (field.validation?.required) {
+            const required = document.createElement("span");
+            required.className = "required";
+            required.textContent = " *";
+            label.appendChild(required);
+          }
+          fieldDiv.appendChild(label);
+
+          let input;
+          if (field.type === "select") {
+            input = document.createElement("select");
+            field.options?.forEach((opt) => {
+              const option = document.createElement("option");
+              option.value = opt.value;
+              option.textContent = opt.label;
+              input.appendChild(option);
+            });
+          } else if (field.type === "textarea") {
+            input = document.createElement("textarea");
+            input.rows = 4;
+          } else {
+            input = document.createElement("input");
+            input.type = field.type || "text";
+          }
+
+          input.name = field.name;
+          input.id = field.name;
+          if (field.placeholder) input.placeholder = field.placeholder;
+          if (field.validation?.required) input.required = true;
+
+          input.addEventListener("change", (e) => {
+            formData[field.name] = e.target.value;
+          });
+
+          fieldDiv.appendChild(input);
+
+          if (field.helpText) {
+            const hint = document.createElement("div");
+            hint.className = "hint";
+            hint.textContent = field.helpText;
+            fieldDiv.appendChild(hint);
+          }
+
+          form.appendChild(fieldDiv);
+        });
+
+        const submitBtn = document.createElement("button");
+        submitBtn.type = "submit";
+        submitBtn.textContent = "Validate Form";
+        form.appendChild(submitBtn);
+
+        containerEl.appendChild(form);
+
+        statusEl.innerHTML = `
+                    <div class="status success">
+                        ✓ Form rendered with ${loadedPattern.fields.length} fields
+                    </div>
+                `;
+        validateBtn.disabled = false;
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+      }
+    }
+
+    function validateForm() {
+      const statusEl = document.getElementById("validationStatus");
+      const resultEl = document.getElementById("validationResult");
+
+      if (!loadedPattern) {
+        statusEl.innerHTML =
+          '<div class="status error">No pattern loaded</div>';
+        return;
+      }
+
+      const form = document.getElementById("dynamicForm");
+      const formDataObj = new FormData(form);
+      const data = Object.fromEntries(formDataObj.entries());
+
+      const errors = [];
+      const validations = [];
+
+      loadedPattern.fields.forEach((field) => {
+        const value = data[field.name];
+        const validation = field.validation || {};
+
+        validations.push({
+          field: field.name,
+          value: value || "(empty)",
+          required: validation.required,
+          valid: true,
+          errors: [],
+        });
+
+        const fieldValidation = validations[validations.length - 1];
+
+        // Required validation
+        if (validation.required && !value) {
+          errors.push(`${field.label}: Required field is empty`);
+          fieldValidation.valid = false;
+          fieldValidation.errors.push("Required");
+        }
+
+        // Pattern validation (regex)
+        if (value && validation.pattern) {
+          const regex = new RegExp(validation.pattern);
+          if (!regex.test(value)) {
+            errors.push(`${field.label}: Invalid format`);
+            fieldValidation.valid = false;
+            fieldValidation.errors.push("Invalid format");
+          }
+        }
+
+        // Min/Max length validation
+        if (
+          value &&
+          validation.minLength &&
+          value.length < validation.minLength
+        ) {
+          errors.push(
+            `${field.label}: Too short (min ${validation.minLength} characters)`
+          );
+          fieldValidation.valid = false;
+          fieldValidation.errors.push("Too short");
+        }
+
+        if (
+          value &&
+          validation.maxLength &&
+          value.length > validation.maxLength
+        ) {
+          errors.push(
+            `${field.label}: Too long (max ${validation.maxLength} characters)`
+          );
+          fieldValidation.valid = false;
+          fieldValidation.errors.push("Too long");
+        }
+      });
+
+      if (errors.length === 0) {
+        statusEl.innerHTML = `
+                    <div class="status success">
+                        ✓ All ${loadedPattern.fields.length} fields validated successfully!
+                        <br>Form data is valid according to CloudFront pattern rules.
+                    </div>
+                `;
+      } else {
+        statusEl.innerHTML = `
+                    <div class="status error">
+                        ✗ Validation failed with ${errors.length} error(s):
+                        <ul style="margin: 10px 0 0 20px;">
+                            ${errors.map((e) => `<li>${e}</li>`).join("")}
+                        </ul>
+                    </div>
+                `;
+      }
+
+      resultEl.textContent = JSON.stringify(
+        {
+          valid: errors.length === 0,
+          errorCount: errors.length,
+          errors,
+          data,
+          validations,
+        },
+        null,
+        2
+      );
+    }
+
+    // Auto-load pattern on page load
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loadPatternBtn").click();
+      }, 500);
+    });
+    </script>
+  </body>
+</html>

@@ -421,7 +421,7 @@ export function calculateAge(dateString: string): number {
  * Formats a date from ISO 8601 (YYYY-MM-DD or YYYY-<month>-DD) to spelled-out format like "Jul 30, 2011"
  * Supports both numeric months (01-12) and text months (jan, July, etc.)
  *
- * @param iso8601 - Date string in YYYY-MM-DD or YYYY-<month>-DD format or undefined
+ * @param iso8601 - Date string in YYYY-MM-DD or YYYY-<month>-DD format, DateObject, or undefined
  * @returns Formatted date string like "Jul 30, 2011" or empty string if invalid
  *
  * @example
@@ -430,10 +430,17 @@ export function calculateAge(dateString: string): number {
  * formatForDisplay("") // ""
  */
 
-export function formatForDisplay(iso8601: DateObject): string {
+export function formatForDisplay(
+  iso8601: string | DateObject | undefined
+): string {
+  // Handle undefined or empty string
+  if (!iso8601) {
+    return "";
+  }
+
   // Parse components (handles both numeric and text formats)
-  // const { year, month, day } = parseDate(iso8601);
-  const { year, month, day } = iso8601;
+  const { year, month, day } =
+    typeof iso8601 === "string" ? parseDate(iso8601) : iso8601;
 
   const yearNum = Number(year);
   const monthNum = parseMonthToNumber(month);
@@ -444,8 +451,22 @@ export function formatForDisplay(iso8601: DateObject): string {
     return "";
   }
 
+  // Validate month and day ranges
+  if (monthNum < 1 || monthNum > 12 || dayNum < 1 || dayNum > 31) {
+    return "";
+  }
+
   // Create a Date object (month is 0-indexed in JavaScript)
   const date = new Date(yearNum, monthNum - 1, dayNum);
+
+  // Validate that the date components match (catches invalid dates like Feb 30)
+  if (
+    date.getFullYear() !== yearNum ||
+    date.getMonth() !== monthNum - 1 ||
+    date.getDate() !== dayNum
+  ) {
+    return "";
+  }
 
   // Format the date using toLocaleDateString
   return date.toLocaleDateString("en-US", {

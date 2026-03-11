@@ -1,0 +1,50 @@
+{
+  "$schema": "../../schemas/pattern-schema.json",
+  "id": "person-name-simple",
+  "version": "1.0.0",
+  "name": "Person Name (Simple)",
+  "description": "Simple person name fields without title - first, middle (optional), and last name",
+  "category": "input",
+  "metadata": {
+    "tags": ["name", "person", "identity"],
+    "examples": ["get-birth-certificate"],
+    "author": "Forms Team"
+  },
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "text",
+      "label": "First name",
+      "validation": {
+        "required": "First name is required",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "First name must contain only letters, hyphens, or apostrophes"
+    },
+    {
+      "name": "middleName",
+      "type": "text",
+      "label": "Middle name",
+      "validation": {
+        "required": false,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Optional. Provide only if known"
+    },
+    {
+      "name": "lastName",
+      "type": "text",
+      "label": "Last name",
+      "validation": {
+        "required": "Last name is required",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Last name must contain only letters, hyphens, or apostrophes"
+    }
+  ]
+}

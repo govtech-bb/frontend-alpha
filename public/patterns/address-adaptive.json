@@ -1,0 +1,330 @@
+{
+  "id": "address-adaptive",
+  "version": "1.0.0",
+  "name": "Address (Adaptive)",
+  "description": "Adapts address fields based on user's country - supports Barbados, USA, UK, and international formats",
+  "category": "input",
+  "adaptive": true,
+  "variants": [
+    {
+      "country": "BB",
+      "name": "Barbados Address",
+      "fields": [
+        {
+          "name": "addressLine1",
+          "type": "text",
+          "label": "Address Line 1",
+          "validation": {
+            "required": true,
+            "minLength": 5,
+            "maxLength": 100,
+            "message": "Address must be at least 5 characters"
+          }
+        },
+        {
+          "name": "addressLine2",
+          "type": "text",
+          "label": "Address Line 2",
+          "validation": {
+            "required": false,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "parish",
+          "type": "select",
+          "label": "Parish",
+          "validation": {
+            "required": true
+          },
+          "options": [
+            { "value": "", "label": "" },
+            { "value": "christ-church", "label": "Christ Church" },
+            { "value": "st-andrew", "label": "St. Andrew" },
+            { "value": "st-george", "label": "St. George" },
+            { "value": "st-james", "label": "St. James" },
+            { "value": "st-john", "label": "St. John" },
+            { "value": "st-joseph", "label": "St. Joseph" },
+            { "value": "st-lucy", "label": "St. Lucy" },
+            { "value": "st-michael", "label": "St. Michael" },
+            { "value": "st-peter", "label": "St. Peter" },
+            { "value": "st-philip", "label": "St. Philip" },
+            { "value": "st-thomas", "label": "St. Thomas" }
+          ]
+        },
+        {
+          "name": "postalCode",
+          "type": "text",
+          "label": "Postcode",
+          "helpText": "For example, BB17004",
+          "placeholder": "BB17004",
+          "validation": {
+            "required": false,
+            "pattern": "^BB\\d{5}$",
+            "message": "Enter a valid postcode (for example, BB17004)"
+          }
+        }
+      ]
+    },
+    {
+      "country": "US",
+      "name": "USA Address",
+      "fields": [
+        {
+          "name": "addressLine1",
+          "type": "text",
+          "label": "Street Address",
+          "validation": {
+            "required": true,
+            "minLength": 5,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "addressLine2",
+          "type": "text",
+          "label": "Apartment, suite, etc.",
+          "validation": {
+            "required": false,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "label": "City",
+          "validation": {
+            "required": true,
+            "minLength": 2,
+            "maxLength": 50
+          }
+        },
+        {
+          "name": "state",
+          "type": "select",
+          "label": "State",
+          "validation": {
+            "required": true
+          },
+          "options": [
+            { "value": "", "label": "" },
+            { "value": "AL", "label": "Alabama" },
+            { "value": "AK", "label": "Alaska" },
+            { "value": "AZ", "label": "Arizona" },
+            { "value": "AR", "label": "Arkansas" },
+            { "value": "CA", "label": "California" },
+            { "value": "CO", "label": "Colorado" },
+            { "value": "CT", "label": "Connecticut" },
+            { "value": "DE", "label": "Delaware" },
+            { "value": "FL", "label": "Florida" },
+            { "value": "GA", "label": "Georgia" },
+            { "value": "HI", "label": "Hawaii" },
+            { "value": "ID", "label": "Idaho" },
+            { "value": "IL", "label": "Illinois" },
+            { "value": "IN", "label": "Indiana" },
+            { "value": "IA", "label": "Iowa" },
+            { "value": "KS", "label": "Kansas" },
+            { "value": "KY", "label": "Kentucky" },
+            { "value": "LA", "label": "Louisiana" },
+            { "value": "ME", "label": "Maine" },
+            { "value": "MD", "label": "Maryland" },
+            { "value": "MA", "label": "Massachusetts" },
+            { "value": "MI", "label": "Michigan" },
+            { "value": "MN", "label": "Minnesota" },
+            { "value": "MS", "label": "Mississippi" },
+            { "value": "MO", "label": "Missouri" },
+            { "value": "MT", "label": "Montana" },
+            { "value": "NE", "label": "Nebraska" },
+            { "value": "NV", "label": "Nevada" },
+            { "value": "NH", "label": "New Hampshire" },
+            { "value": "NJ", "label": "New Jersey" },
+            { "value": "NM", "label": "New Mexico" },
+            { "value": "NY", "label": "New York" },
+            { "value": "NC", "label": "North Carolina" },
+            { "value": "ND", "label": "North Dakota" },
+            { "value": "OH", "label": "Ohio" },
+            { "value": "OK", "label": "Oklahoma" },
+            { "value": "OR", "label": "Oregon" },
+            { "value": "PA", "label": "Pennsylvania" },
+            { "value": "RI", "label": "Rhode Island" },
+            { "value": "SC", "label": "South Carolina" },
+            { "value": "SD", "label": "South Dakota" },
+            { "value": "TN", "label": "Tennessee" },
+            { "value": "TX", "label": "Texas" },
+            { "value": "UT", "label": "Utah" },
+            { "value": "VT", "label": "Vermont" },
+            { "value": "VA", "label": "Virginia" },
+            { "value": "WA", "label": "Washington" },
+            { "value": "WV", "label": "West Virginia" },
+            { "value": "WI", "label": "Wisconsin" },
+            { "value": "WY", "label": "Wyoming" }
+          ]
+        },
+        {
+          "name": "zipCode",
+          "type": "text",
+          "label": "ZIP Code",
+          "helpText": "For example, 90210 or 90210-1234",
+          "placeholder": "90210",
+          "validation": {
+            "required": true,
+            "pattern": "^\\d{5}(-\\d{4})?$",
+            "message": "Enter a valid ZIP code (for example, 90210 or 90210-1234)"
+          }
+        }
+      ]
+    },
+    {
+      "country": "GB",
+      "name": "UK Address",
+      "fields": [
+        {
+          "name": "addressLine1",
+          "type": "text",
+          "label": "Address Line 1",
+          "validation": {
+            "required": true,
+            "minLength": 5,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "addressLine2",
+          "type": "text",
+          "label": "Address Line 2",
+          "validation": {
+            "required": false,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "label": "Town or City",
+          "validation": {
+            "required": true,
+            "minLength": 2,
+            "maxLength": 50
+          }
+        },
+        {
+          "name": "county",
+          "type": "text",
+          "label": "County",
+          "validation": {
+            "required": false,
+            "maxLength": 50
+          }
+        },
+        {
+          "name": "postcode",
+          "type": "text",
+          "label": "Postcode",
+          "helpText": "For example, SW1A 1AA",
+          "placeholder": "SW1A 1AA",
+          "validation": {
+            "required": true,
+            "pattern": "^[A-Z]{1,2}\\d{1,2}[A-Z]?\\s?\\d[A-Z]{2}$",
+            "message": "Enter a valid postcode (for example, SW1A 1AA)"
+          }
+        }
+      ]
+    },
+    {
+      "country": "*",
+      "name": "International Address",
+      "fields": [
+        {
+          "name": "addressLine1",
+          "type": "text",
+          "label": "Address Line 1",
+          "validation": {
+            "required": true,
+            "minLength": 5,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "addressLine2",
+          "type": "text",
+          "label": "Address Line 2",
+          "validation": {
+            "required": false,
+            "maxLength": 100
+          }
+        },
+        {
+          "name": "city",
+          "type": "text",
+          "label": "City",
+          "validation": {
+            "required": true,
+            "minLength": 2,
+            "maxLength": 50
+          }
+        },
+        {
+          "name": "stateOrRegion",
+          "type": "text",
+          "label": "State/Province/Region",
+          "validation": {
+            "required": false,
+            "maxLength": 50
+          }
+        },
+        {
+          "name": "postalCode",
+          "type": "text",
+          "label": "Postal Code",
+          "validation": {
+            "required": false,
+            "minLength": 3,
+            "maxLength": 10
+          }
+        },
+        {
+          "name": "country",
+          "type": "select",
+          "label": "Country",
+          "validation": {
+            "required": true
+          },
+          "options": [
+            { "value": "", "label": "Select a country" },
+            { "value": "AF", "label": "Afghanistan" },
+            { "value": "AL", "label": "Albania" },
+            { "value": "DZ", "label": "Algeria" },
+            { "value": "AR", "label": "Argentina" },
+            { "value": "AU", "label": "Australia" },
+            { "value": "AT", "label": "Austria" },
+            { "value": "BB", "label": "Barbados" },
+            { "value": "BE", "label": "Belgium" },
+            { "value": "BR", "label": "Brazil" },
+            { "value": "CA", "label": "Canada" },
+            { "value": "CN", "label": "China" },
+            { "value": "FR", "label": "France" },
+            { "value": "DE", "label": "Germany" },
+            { "value": "IN", "label": "India" },
+            { "value": "IE", "label": "Ireland" },
+            { "value": "IT", "label": "Italy" },
+            { "value": "JP", "label": "Japan" },
+            { "value": "MX", "label": "Mexico" },
+            { "value": "NL", "label": "Netherlands" },
+            { "value": "NZ", "label": "New Zealand" },
+            { "value": "ES", "label": "Spain" },
+            { "value": "SE", "label": "Sweden" },
+            { "value": "CH", "label": "Switzerland" },
+            { "value": "GB", "label": "United Kingdom" },
+            { "value": "US", "label": "United States" }
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "tags": ["address", "adaptive", "international"],
+    "examples": ["get-birth-certificate", "conductor-licence"],
+    "author": "Kiro AI",
+    "lastModified": "2026-02-10"
+  }
+}

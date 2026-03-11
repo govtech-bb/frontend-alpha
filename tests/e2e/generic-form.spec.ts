@@ -368,9 +368,11 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
             try {
               await fillField(page, field, value);
             } catch (error) {
+              const errorMessage =
+                error instanceof Error ? error.message : String(error);
               console.error(
                 `❌ Failed to fill field ${field.name}:`,
-                error.message
+                errorMessage
               );
               // Take a screenshot for debugging
               await page.screenshot({

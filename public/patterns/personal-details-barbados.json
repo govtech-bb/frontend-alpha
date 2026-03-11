@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schemas/pattern-schema.json",
+  "id": "personal-details-barbados",
+  "version": "1.0.0",
+  "name": "Personal Details (Barbados)",
+  "description": "Standard personal information fields with title, names, and optional middle name. Includes Barbados-specific name validation patterns.",
+  "category": "input",
+  "metadata": {
+    "tags": ["personal", "identity", "barbados", "names"],
+    "examples": [
+      "get-birth-certificate",
+      "conductor-licence",
+      "death-certificate"
+    ],
+    "author": "Forms Team",
+    "region": "Barbados"
+  },
+  "fields": [
+    {
+      "name": "title",
+      "type": "select",
+      "label": "Title",
+      "width": "short",
+      "validation": {
+        "required": "Title is required"
+      },
+      "options": [
+        { "value": "", "label": "" },
+        { "value": "mr", "label": "Mr" },
+        { "value": "mrs", "label": "Mrs" },
+        { "value": "ms", "label": "Ms" }
+      ]
+    },
+    {
+      "name": "firstName",
+      "type": "text",
+      "label": "First name",
+      "validation": {
+        "required": "First name is required",
+        "minLength": 1,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "First name must contain only letters, hyphens, or apostrophes"
+    },
+    {
+      "name": "middleName",
+      "type": "text",
+      "label": "Middle name",
+      "validation": {
+        "required": false,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Optional. Provide only if known"
+    },
+    {
+      "name": "lastName",
+      "type": "text",
+      "label": "Last name",
+      "validation": {
+        "required": "Last name is required",
+        "minLength": 1,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Last name must contain only letters, hyphens, or apostrophes"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 export const runtime = "nodejs";
 
-export async function GET() {
+export function GET() {
   // This runs on the server, so it can see all env vars
   const envVars = {
     MAIL_FROM: process.env.MAIL_FROM || "NOT SET",

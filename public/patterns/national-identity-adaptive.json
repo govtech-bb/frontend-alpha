@@ -1,0 +1,107 @@
+{
+  "id": "national-identity-adaptive",
+  "version": "1.0.0",
+  "name": "National Identity Number (Adaptive)",
+  "description": "Adapts national identity field based on user's country - supports Barbados, USA, UK, and international formats",
+  "category": "input",
+  "adaptive": true,
+  "variants": [
+    {
+      "country": "BB",
+      "name": "Barbados National ID",
+      "fields": [
+        {
+          "name": "idNumber",
+          "type": "text",
+          "label": "National ID Number",
+          "helpText": "Your Barbados national identification number",
+          "placeholder": "850101-0001",
+          "validation": {
+            "required": true,
+            "pattern": "^\\d{6}-\\d{4}$",
+            "message": "Enter a valid ID number (for example, 850101-0001)"
+          }
+        }
+      ]
+    },
+    {
+      "country": "US",
+      "name": "USA Social Security Number",
+      "fields": [
+        {
+          "name": "ssn",
+          "type": "text",
+          "label": "Social Security Number (SSN)",
+          "helpText": "Your 9-digit Social Security Number",
+          "placeholder": "123-45-6789",
+          "validation": {
+            "required": true,
+            "pattern": "^\\d{3}-\\d{2}-\\d{4}$",
+            "message": "Enter a valid SSN (for example, 123-45-6789)"
+          }
+        }
+      ]
+    },
+    {
+      "country": "GB",
+      "name": "UK National Insurance Number",
+      "fields": [
+        {
+          "name": "niNumber",
+          "type": "text",
+          "label": "National Insurance Number",
+          "helpText": "Your UK National Insurance number",
+          "placeholder": "AB123456C",
+          "validation": {
+            "required": true,
+            "pattern": "^[A-Z]{2}\\d{6}[A-Z]$",
+            "message": "Enter a valid NI number (for example, AB123456C)"
+          }
+        }
+      ]
+    },
+    {
+      "country": "CA",
+      "name": "Canada Social Insurance Number",
+      "fields": [
+        {
+          "name": "sin",
+          "type": "text",
+          "label": "Social Insurance Number (SIN)",
+          "helpText": "Your 9-digit Social Insurance Number",
+          "placeholder": "123-456-789",
+          "validation": {
+            "required": true,
+            "pattern": "^\\d{3}-\\d{3}-\\d{3}$",
+            "message": "Enter a valid SIN (for example, 123-456-789)"
+          }
+        }
+      ]
+    },
+    {
+      "country": "*",
+      "name": "International ID or Passport",
+      "fields": [
+        {
+          "name": "internationalId",
+          "type": "text",
+          "label": "National ID or Passport Number",
+          "helpText": "Enter your national ID number or passport number",
+          "placeholder": "Enter your ID or passport number",
+          "validation": {
+            "required": true,
+            "minLength": 6,
+            "maxLength": 20,
+            "message": "Enter a valid ID or passport number (6-20 characters)"
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "tags": ["identity", "adaptive", "international"],
+    "examples": ["get-birth-certificate", "conductor-licence"],
+    "author": "Kiro AI",
+    "lastModified": "2026-02-10"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uv",
+      "args": ["tool", "run", "awslabs.aws-documentation-mcp-server@latest"],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "aws-well-architected-security": {
+      "command": "uv",
+      "args": [
+        "tool",
+        "run",
+        "awslabs.well-architected-security-mcp-server@latest"
+      ],
+      "disabled": false,
+      "autoApprove": ["CheckSecurityServices", "ExploreAwsResources"]
+    }
+  }
+}

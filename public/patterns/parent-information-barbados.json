@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schemas/pattern-schema.json",
+  "id": "parent-information-barbados",
+  "version": "1.0.0",
+  "name": "Parent Information (Barbados)",
+  "description": "Father and mother name fields with optional middle names",
+  "category": "input",
+  "metadata": {
+    "tags": ["parents", "family", "names", "barbados"],
+    "examples": ["get-birth-certificate", "register-birth"],
+    "author": "Forms Team",
+    "region": "Barbados"
+  },
+  "fields": [
+    {
+      "name": "father.firstName",
+      "type": "text",
+      "label": "Father's first name",
+      "validation": {
+        "required": "First name is required",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "First name must contain only letters, hyphens, or apostrophes"
+    },
+    {
+      "name": "father.middleName",
+      "type": "text",
+      "label": "Father's middle name",
+      "validation": {
+        "required": false,
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Optional. Provide only if known"
+    },
+    {
+      "name": "father.lastName",
+      "type": "text",
+      "label": "Father's last name",
+      "validation": {
+        "required": "Last name is required",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Last name must contain only letters, hyphens, or apostrophes"
+    },
+    {
+      "name": "mother.firstName",
+      "type": "text",
+      "label": "Mother's first name",
+      "validation": {
+        "required": "First name is required",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "First name must contain only letters, hyphens, or apostrophes"
+    },
+    {
+      "name": "mother.middleName",
+      "type": "text",
+      "label": "Mother's middle name",
+      "validation": {
+        "required": false,
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Optional. Provide only if known"
+    },
+    {
+      "name": "mother.lastName",
+      "type": "text",
+      "label": "Mother's last name",
+      "validation": {
+        "required": "Last name is required",
+        "minLength": 2,
+        "maxLength": 100,
+        "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+      },
+      "helpText": "Last name must contain only letters, hyphens, or apostrophes"
+    }
+  ]
+}

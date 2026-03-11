@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Loader Test</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #0051cc;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      max-height: 500px;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    .status {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .status.success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+    }
+    .status.error {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>Pattern Loader Test</h1>
+    <p>
+      This page tests fetching patterns and service contracts from the local
+      public directory.
+    </p>
+
+    <div class="test-section">
+      <h2>Test 1: Fetch Single Pattern</h2>
+      <button onclick="testFetchPattern()">
+        Fetch personal-details-barbados
+      </button>
+      <div id="pattern-status"></div>
+      <pre id="pattern-result"></pre>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 2: Fetch Service Contract</h2>
+      <button onclick="testFetchServiceContract()">
+        Fetch birth-certificate contract
+      </button>
+      <div id="contract-status"></div>
+      <pre id="contract-result"></pre>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 3: Fetch Multiple Patterns</h2>
+      <button onclick="testFetchMultiplePatterns()">Fetch all patterns</button>
+      <div id="multiple-status"></div>
+      <pre id="multiple-result"></pre>
+    </div>
+
+    <script>
+    "use strict";
+    const PATTERNS_BASE_URL = "/patterns";
+    const SERVICE_CONTRACTS_BASE_URL = "/service-contracts";
+
+    async function testFetchPattern() {
+      const statusEl = document.getElementById("pattern-status");
+      const resultEl = document.getElementById("pattern-result");
+
+      statusEl.innerHTML = '<div class="status">Loading...</div>';
+      resultEl.textContent = "";
+
+      try {
+        const response = await fetch(
+          `${PATTERNS_BASE_URL}/personal-details-barbados.json`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const pattern = await response.json();
+
+        statusEl.innerHTML =
+          '<div class="status success">✓ Pattern loaded successfully!</div>';
+        resultEl.textContent = JSON.stringify(pattern, null, 2);
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+        resultEl.textContent = error.stack;
+      }
+    }
+
+    async function testFetchServiceContract() {
+      const statusEl = document.getElementById("contract-status");
+      const resultEl = document.getElementById("contract-result");
+
+      statusEl.innerHTML = '<div class="status">Loading...</div>';
+      resultEl.textContent = "";
+
+      try {
+        const response = await fetch(
+          `${SERVICE_CONTRACTS_BASE_URL}/service-contract-birth-certificate.json`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const contract = await response.json();
+
+        statusEl.innerHTML =
+          '<div class="status success">✓ Service contract loaded successfully!</div>';
+        resultEl.textContent = JSON.stringify(contract, null, 2);
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+        resultEl.textContent = error.stack;
+      }
+    }
+
+    async function testFetchMultiplePatterns() {
+      const statusEl = document.getElementById("multiple-status");
+      const resultEl = document.getElementById("multiple-result");
+
+      statusEl.innerHTML = '<div class="status">Loading...</div>';
+      resultEl.textContent = "";
+
+      const patternIds = [
+        "personal-details-barbados",
+        "address-barbados",
+        "contact-details-barbados",
+        "parent-information-barbados",
+        "person-name-simple",
+        "national-identity-adaptive",
+        "address-adaptive",
+      ];
+
+      try {
+        const results = await Promise.allSettled(
+          patternIds.map((id) =>
+            fetch(`${PATTERNS_BASE_URL}/${id}.json`).then((r) => r.json())
+          )
+        );
+
+        const successful = results.filter(
+          (r) => r.status === "fulfilled"
+        ).length;
+        const failed = results.filter((r) => r.status === "rejected").length;
+
+        statusEl.innerHTML = `
+                    <div class="status ${failed === 0 ? "success" : "error"}">
+                        ✓ Loaded ${successful} patterns successfully
+                        ${failed > 0 ? `<br>✗ Failed to load ${failed} patterns` : ""}
+                    </div>
+                `;
+
+        const summary = results.map((result, index) => ({
+          pattern: patternIds[index],
+          status: result.status,
+          data:
+            result.status === "fulfilled"
+              ? result.value.name
+              : result.reason.message,
+        }));
+
+        resultEl.textContent = JSON.stringify(summary, null, 2);
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+        resultEl.textContent = error.stack;
+      }
+    }
+    </script>
+  </body>
+</html>

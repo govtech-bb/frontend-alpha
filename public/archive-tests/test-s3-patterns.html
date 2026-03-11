@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Pattern Loader Test</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    button {
+      background-color: #0070f3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background-color: #0051cc;
+    }
+    button.secondary {
+      background-color: #666;
+    }
+    button.secondary:hover {
+      background-color: #444;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      max-height: 400px;
+    }
+    .success {
+      color: green;
+      font-weight: bold;
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    .status {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .status.success {
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+    }
+    .status.error {
+      background-color: #f8d7da;
+      border: 1px solid #f5c6cb;
+    }
+    .url-display {
+      background-color: #e9ecef;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-family: monospace;
+      font-size: 12px;
+      word-break: break-all;
+    }
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .comparison-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .comparison-item h3 {
+      margin-top: 0;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>S3 + CloudFront Pattern Loader Test</h1>
+    <p>
+      This page tests fetching patterns from local, S3, and CloudFront sources.
+    </p>
+
+    <div class="test-section">
+      <h2>Configuration</h2>
+      <div class="url-display">
+        <strong>Local:</strong>/patterns
+        <br>
+        <strong
+          >S3 Direct:</strong
+        >https://modular-forms-patterns-test.s3.us-east-1.amazonaws.com
+        <br>
+        <strong>CloudFront:</strong>https://dftgz21fri73m.cloudfront.net
+      </div>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 1: Fetch Pattern from All Sources</h2>
+      <button onclick="testAllSources()">
+        Test personal-details-barbados from all sources
+      </button>
+      <div id="all-sources-status"></div>
+      <div id="all-sources-result" class="comparison"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 2: S3 Direct Access</h2>
+      <button onclick="testS3Direct()">Fetch from S3</button>
+      <div id="s3-status"></div>
+      <pre id="s3-result"></pre>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 3: CloudFront Access</h2>
+      <button onclick="testCloudFront()">Fetch from CloudFront</button>
+      <button class="secondary" onclick="checkCloudFrontStatus()">
+        Check CloudFront Status
+      </button>
+      <div id="cloudfront-status"></div>
+      <pre id="cloudfront-result"></pre>
+    </div>
+
+    <div class="test-section">
+      <h2>Test 4: Fetch All Patterns from S3</h2>
+      <button onclick="testAllPatternsS3()">
+        Fetch all 7 patterns from S3
+      </button>
+      <div id="all-patterns-status"></div>
+      <pre id="all-patterns-result"></pre>
+    </div>
+
+    <script>
+    "use strict";
+    const LOCAL_URL = "/patterns";
+    const S3_URL =
+      "https://modular-forms-patterns-test.s3.us-east-1.amazonaws.com/patterns";
+    const CLOUDFRONT_URL = "https://dftgz21fri73m.cloudfront.net/patterns";
+
+    async function testAllSources() {
+      const statusEl = document.getElementById("all-sources-status");
+      const resultEl = document.getElementById("all-sources-result");
+
+      statusEl.innerHTML = '<div class="status">Testing all sources...</div>';
+      resultEl.innerHTML = "";
+
+      const sources = [
+        { name: "Local", url: `${LOCAL_URL}/personal-details-barbados.json` },
+        { name: "S3 Direct", url: `${S3_URL}/personal-details-barbados.json` },
+        {
+          name: "CloudFront",
+          url: `${CLOUDFRONT_URL}/personal-details-barbados.json`,
+        },
+      ];
+
+      const results = await Promise.allSettled(
+        sources.map(async (source) => {
+          const start = performance.now();
+          const response = await fetch(source.url);
+          const data = await response.json();
+          const time = (performance.now() - start).toFixed(2);
+          return { ...source, data, time, status: response.status };
+        })
+      );
+
+      let html = "";
+      let successCount = 0;
+
+      results.forEach((result, index) => {
+        const source = sources[index];
+        if (result.status === "fulfilled") {
+          successCount++;
+          html += `
+                        <div class="comparison-item">
+                            <h3>✓ ${source.name}</h3>
+                            <p><strong>Status:</strong> ${result.value.status}</p>
+                            <p><strong>Time:</strong> ${result.value.time}ms</p>
+                            <p><strong>Fields:</strong> ${result.value.data.fields?.length || 0}</p>
+                            <pre>${JSON.stringify(result.value.data, null, 2).substring(0, 300)}...</pre>
+                        </div>
+                    `;
+        } else {
+          html += `
+                        <div class="comparison-item">
+                            <h3>✗ ${source.name}</h3>
+                            <p class="error">${result.reason.message}</p>
+                        </div>
+                    `;
+        }
+      });
+
+      statusEl.innerHTML = `
+                <div class="status ${successCount === 3 ? "success" : "error"}">
+                    ${successCount}/3 sources successful
+                </div>
+            `;
+      resultEl.innerHTML = html;
+    }
+
+    async function testS3Direct() {
+      const statusEl = document.getElementById("s3-status");
+      const resultEl = document.getElementById("s3-result");
+
+      statusEl.innerHTML = '<div class="status">Loading from S3...</div>';
+      resultEl.textContent = "";
+
+      try {
+        const start = performance.now();
+        const response = await fetch(
+          `${S3_URL}/personal-details-barbados.json`
+        );
+        const time = (performance.now() - start).toFixed(2);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const pattern = await response.json();
+
+        statusEl.innerHTML = `
+                    <div class="status success">
+                        ✓ Pattern loaded from S3 in ${time}ms
+                    </div>
+                `;
+        resultEl.textContent = JSON.stringify(pattern, null, 2);
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+        resultEl.textContent = error.stack;
+      }
+    }
+
+    async function testCloudFront() {
+      const statusEl = document.getElementById("cloudfront-status");
+      const resultEl = document.getElementById("cloudfront-result");
+
+      statusEl.innerHTML =
+        '<div class="status">Loading from CloudFront...</div>';
+      resultEl.textContent = "";
+
+      try {
+        const start = performance.now();
+        const response = await fetch(
+          `${CLOUDFRONT_URL}/personal-details-barbados.json`
+        );
+        const time = (performance.now() - start).toFixed(2);
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const pattern = await response.json();
+
+        statusEl.innerHTML = `
+                    <div class="status success">
+                        ✓ Pattern loaded from CloudFront in ${time}ms
+                        <br>Cache Status: ${response.headers.get("x-cache") || "Unknown"}
+                    </div>
+                `;
+        resultEl.textContent = JSON.stringify(pattern, null, 2);
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+        resultEl.textContent = error.stack;
+      }
+    }
+
+    async function checkCloudFrontStatus() {
+      const statusEl = document.getElementById("cloudfront-status");
+      statusEl.innerHTML =
+        '<div class="status">Checking CloudFront deployment status...</div>';
+
+      try {
+        const response = await fetch(
+          `${CLOUDFRONT_URL}/patterns/personal-details-barbados.json`
+        );
+
+        if (response.ok) {
+          statusEl.innerHTML = `
+                        <div class="status success">
+                            ✓ CloudFront is deployed and working!
+                            <br>Status: ${response.status}
+                            <br>Cache: ${response.headers.get("x-cache") || "Unknown"}
+                        </div>
+                    `;
+        } else {
+          statusEl.innerHTML = `
+                        <div class="status error">
+                            CloudFront returned ${response.status}: ${response.statusText}
+                            <br>Distribution may still be deploying (takes 15-20 minutes)
+                        </div>
+                    `;
+        }
+      } catch (error) {
+        statusEl.innerHTML = `
+                    <div class="status error">
+                        ✗ CloudFront not accessible yet
+                        <br>Distribution is likely still deploying (takes 15-20 minutes)
+                        <br>Error: ${error.message}
+                    </div>
+                `;
+      }
+    }
+
+    async function testAllPatternsS3() {
+      const statusEl = document.getElementById("all-patterns-status");
+      const resultEl = document.getElementById("all-patterns-result");
+
+      statusEl.innerHTML =
+        '<div class="status">Loading all patterns from S3...</div>';
+      resultEl.textContent = "";
+
+      const patternIds = [
+        "personal-details-barbados",
+        "address-barbados",
+        "contact-details-barbados",
+        "parent-information-barbados",
+        "person-name-simple",
+        "national-identity-adaptive",
+        "address-adaptive",
+      ];
+
+      try {
+        const start = performance.now();
+        const results = await Promise.allSettled(
+          patternIds.map((id) =>
+            fetch(`${S3_URL}/${id}.json`).then((r) => r.json())
+          )
+        );
+        const time = (performance.now() - start).toFixed(2);
+
+        const successful = results.filter(
+          (r) => r.status === "fulfilled"
+        ).length;
+        const failed = results.filter((r) => r.status === "rejected").length;
+
+        statusEl.innerHTML = `
+                    <div class="status ${failed === 0 ? "success" : "error"}">
+                        ✓ Loaded ${successful}/7 patterns from S3 in ${time}ms
+                        ${failed > 0 ? `<br>✗ Failed to load ${failed} patterns` : ""}
+                    </div>
+                `;
+
+        const summary = results.map((result, index) => ({
+          pattern: patternIds[index],
+          status: result.status,
+          name: result.status === "fulfilled" ? result.value.name : "Failed",
+          fields:
+            result.status === "fulfilled" ? result.value.fields?.length : 0,
+          error: result.status === "rejected" ? result.reason.message : null,
+        }));
+
+        resultEl.textContent = JSON.stringify(summary, null, 2);
+      } catch (error) {
+        statusEl.innerHTML = `<div class="status error">✗ Error: ${error.message}</div>`;
+        resultEl.textContent = error.stack;
+      }
+    }
+    </script>
+  </body>
+</html>

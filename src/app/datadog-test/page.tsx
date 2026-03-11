@@ -1,5 +1,17 @@
 "use client";
 
+// Type for Datadog RUM SDK
+interface DatadogRUM {
+  addAction: (name: string, context?: Record<string, unknown>) => void;
+  [key: string]: unknown;
+}
+
+declare global {
+  interface Window {
+    DD_RUM?: DatadogRUM;
+  }
+}
+
 export default function DatadogTestPage() {
   const envVars = {
     clientToken: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN,
@@ -10,8 +22,7 @@ export default function DatadogTestPage() {
   };
 
   const hasDatadog =
-    typeof window !== "undefined" &&
-    typeof (window as any).DD_RUM !== "undefined";
+    typeof window !== "undefined" && typeof window.DD_RUM !== "undefined";
 
   return (
     <div style={{ padding: "2rem", fontFamily: "monospace" }}>
@@ -48,7 +59,7 @@ export default function DatadogTestPage() {
               borderRadius: "4px",
             }}
           >
-            {JSON.stringify(Object.keys((window as any).DD_RUM), null, 2)}
+            {JSON.stringify(Object.keys(window.DD_RUM || {}), null, 2)}
           </pre>
         </>
       )}
@@ -63,14 +74,15 @@ export default function DatadogTestPage() {
 
       <button
         onClick={() => {
-          if (hasDatadog) {
-            (window as any).DD_RUM.addAction("test_button_click", {
+          if (hasDatadog && window.DD_RUM) {
+            window.DD_RUM.addAction("test_button_click", {
               timestamp: new Date().toISOString(),
               page: "datadog-test",
             });
-            alert("Test action sent to Datadog!");
+            // Using console.log instead of alert for better UX
+            console.log("Test action sent to Datadog!");
           } else {
-            alert("Datadog SDK is not loaded");
+            console.warn("Datadog SDK is not loaded");
           }
         }}
         style={{
@@ -82,6 +94,7 @@ export default function DatadogTestPage() {
           cursor: "pointer",
           fontSize: "1rem",
         }}
+        type="button"
       >
         Send Test Action
       </button>

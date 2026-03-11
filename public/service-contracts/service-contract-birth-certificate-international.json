@@ -1,0 +1,352 @@
+{
+  "id": "get-birth-certificate-international",
+  "version": "1.0.0",
+  "name": "Get Birth Certificate (International)",
+  "description": "Birth certificate application that supports international users with adaptive validation",
+  "pages": [
+    {
+      "id": "country-selection",
+      "title": "Which country are you from?",
+      "description": "This helps us show you the right form fields for your country",
+      "sections": [
+        {
+          "id": "country",
+          "fields": [
+            {
+              "name": "userCountry",
+              "type": "select",
+              "label": "Country",
+              "helpText": "Select the country where you currently reside or hold citizenship",
+              "validation": {
+                "required": true
+              },
+              "options": [
+                { "value": "", "label": "Select a country" },
+                { "value": "BB", "label": "Barbados" },
+                { "value": "US", "label": "United States" },
+                { "value": "GB", "label": "United Kingdom" },
+                { "value": "CA", "label": "Canada" },
+                { "value": "*", "label": "Other" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "applicant-details",
+      "title": "Tell us about yourself",
+      "description": "We need this information to process your application",
+      "sections": [
+        {
+          "id": "applicant-personal",
+          "title": "Personal Information",
+          "patternRef": "personal-details-barbados",
+          "namespace": "applicant"
+        },
+        {
+          "id": "applicant-identity",
+          "title": "Identity Verification",
+          "patternRef": "national-identity-adaptive",
+          "namespace": "applicant",
+          "adaptTo": "{{formData.userCountry}}",
+          "comment": "This pattern adapts based on the country selected in the previous page"
+        },
+        {
+          "id": "applicant-address",
+          "title": "Your Address",
+          "patternRef": "address-adaptive",
+          "namespace": "applicant",
+          "adaptTo": "{{formData.userCountry}}",
+          "comment": "Address fields change based on country (parish for BB, state for US, county for GB)"
+        },
+        {
+          "id": "applicant-contact",
+          "title": "Contact Information",
+          "patternRef": "contact-details-barbados",
+          "namespace": "applicant",
+          "comment": "Email is universal, phone validation could also be adaptive in future"
+        }
+      ]
+    },
+    {
+      "id": "applying-for-yourself",
+      "title": "Are you applying for your own birth certificate?",
+      "sections": [
+        {
+          "id": "self-application",
+          "fields": [
+            {
+              "name": "applyingForYourself",
+              "type": "radio",
+              "label": "Are you applying for your own birth certificate?",
+              "validation": {
+                "required": true
+              },
+              "options": [
+                { "value": "yes", "label": "Yes - the certificate is for me" },
+                {
+                  "value": "no",
+                  "label": "No - the certificate is for someone else"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "person-details",
+      "title": "Tell us about the person you are applying for",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "no"
+      },
+      "sections": [
+        {
+          "id": "person-personal",
+          "patternRef": "personal-details-barbados",
+          "namespace": "person"
+        },
+        {
+          "id": "person-identity",
+          "patternRef": "national-identity-adaptive",
+          "namespace": "person",
+          "adaptTo": "{{formData.userCountry}}",
+          "comment": "Person's identity also adapts to the same country format"
+        }
+      ]
+    },
+    {
+      "id": "birth-details",
+      "title": "Provide birth details",
+      "description": "Answer as accurately as possible",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "yes"
+      },
+      "sections": [
+        {
+          "id": "birth-info",
+          "fields": [
+            {
+              "name": "birthDetails.dateOfBirth",
+              "type": "date",
+              "label": "Date of birth",
+              "placeholder": "For example, 30 12 1986",
+              "validation": {
+                "required": true,
+                "dateRules": {
+                  "mustBePast": true
+                }
+              }
+            },
+            {
+              "name": "birthDetails.placeOfBirth",
+              "type": "text",
+              "label": "Place of birth",
+              "helpText": "Enter a house, institution, home address, or parish, if known",
+              "validation": {
+                "required": true,
+                "minLength": 2
+              }
+            },
+            {
+              "name": "birthDetails.placeOfBaptism",
+              "type": "text",
+              "label": "Place of baptism",
+              "helpText": "Enter a house, church, or parish, if known",
+              "validation": {
+                "required": true,
+                "minLength": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "parents-details",
+      "title": "Tell us your parents' names",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "yes"
+      },
+      "sections": [
+        {
+          "id": "father-details",
+          "title": "Father's Information",
+          "fields": [
+            {
+              "name": "parents.father.firstName",
+              "type": "text",
+              "label": "Father's first name",
+              "validation": {
+                "required": true,
+                "minLength": 2,
+                "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+              }
+            },
+            {
+              "name": "parents.father.middleName",
+              "type": "text",
+              "label": "Father's middle name",
+              "helpText": "Optional. Provide only if known",
+              "validation": {
+                "required": false,
+                "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+              }
+            },
+            {
+              "name": "parents.father.lastName",
+              "type": "text",
+              "label": "Father's last name",
+              "validation": {
+                "required": true,
+                "minLength": 2,
+                "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+              }
+            }
+          ]
+        },
+        {
+          "id": "mother-details",
+          "title": "Mother's Information",
+          "fields": [
+            {
+              "name": "parents.mother.firstName",
+              "type": "text",
+              "label": "Mother's first name",
+              "validation": {
+                "required": true,
+                "minLength": 2,
+                "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+              }
+            },
+            {
+              "name": "parents.mother.middleName",
+              "type": "text",
+              "label": "Mother's middle name",
+              "helpText": "Optional. Provide only if known",
+              "validation": {
+                "required": false,
+                "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+              }
+            },
+            {
+              "name": "parents.mother.lastName",
+              "type": "text",
+              "label": "Mother's last name",
+              "validation": {
+                "required": true,
+                "minLength": 2,
+                "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "order-details",
+      "title": "How many copies will you be ordering?",
+      "sections": [
+        {
+          "id": "order",
+          "fields": [
+            {
+              "name": "order.numberOfCopies",
+              "type": "number",
+              "label": "Number of copies",
+              "validation": {
+                "required": true,
+                "min": 1,
+                "max": 10
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-your-answers",
+      "title": "Check your answers",
+      "sections": []
+    },
+    {
+      "id": "declaration",
+      "title": "Declaration",
+      "sections": [
+        {
+          "id": "declaration-fields",
+          "fields": [
+            {
+              "name": "declaration.confirmed",
+              "type": "checkbox",
+              "label": "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+              "validation": {
+                "required": true
+              }
+            },
+            {
+              "name": "declaration.dateOfDeclaration",
+              "type": "date",
+              "label": "Date of declaration",
+              "validation": {
+                "required": true,
+                "dateRules": {
+                  "mustBePast": false,
+                  "mustBeFuture": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "processors": [
+    {
+      "type": "payment",
+      "config": {
+        "provider": "ezpay",
+        "department": "oag_registration",
+        "paymentCode": "{{db:get-birth-certificate:payment_code}}",
+        "amount": "{{formData.order.numberOfCopies * db:get-birth-certificate:payment_amount}}",
+        "description": "Birth Certificate Processing Fee (per copy)",
+        "required": true,
+        "timing": "after_validation",
+        "responseData": {
+          "include": ["order.numberOfCopies"]
+        }
+      }
+    },
+    {
+      "type": "email",
+      "config": {
+        "to": "{{db:get-birth-certificate:admin_email}}",
+        "subject": "New Birth Certificate Application - {{formData.applicant.firstName}} {{formData.applicant.lastName}}",
+        "template": "birth-certificate",
+        "recipientType": "admin"
+      }
+    },
+    {
+      "type": "email",
+      "config": {
+        "to": "{{formData.applicant.email}}",
+        "subject": "Birth Certificate - Submission Received",
+        "template": "birth-certificate-receipt",
+        "recipientType": "user"
+      }
+    }
+  ],
+  "metadata": {
+    "ministry": "Office of the Attorney General",
+    "service": "Registration Department",
+    "lastModified": "2026-02-10",
+    "notes": "This version supports international users with adaptive patterns for national ID and address fields"
+  }
+}

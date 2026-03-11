@@ -1,0 +1,74 @@
+{
+  "$schema": "../../schemas/pattern-schema.json",
+  "id": "address-barbados",
+  "version": "1.0.0",
+  "name": "Barbados Address",
+  "description": "Standard Barbados address with parish selection and optional postal code",
+  "category": "input",
+  "metadata": {
+    "tags": ["address", "location", "barbados", "parish"],
+    "examples": [
+      "get-birth-certificate",
+      "conductor-licence",
+      "post-office-redirection"
+    ],
+    "author": "Forms Team",
+    "region": "Barbados"
+  },
+  "fields": [
+    {
+      "name": "addressLine1",
+      "type": "text",
+      "label": "Address Line 1",
+      "validation": {
+        "required": "Address line 1 is required",
+        "minLength": 5,
+        "maxLength": 200
+      },
+      "helpText": "Address must be at least 5 characters"
+    },
+    {
+      "name": "addressLine2",
+      "type": "text",
+      "label": "Address Line 2",
+      "validation": {
+        "required": false,
+        "maxLength": 200
+      }
+    },
+    {
+      "name": "parish",
+      "type": "select",
+      "label": "Parish",
+      "width": "medium",
+      "validation": {
+        "required": "Parish is required"
+      },
+      "options": [
+        { "value": "", "label": "" },
+        { "value": "christ-church", "label": "Christ Church" },
+        { "value": "st-andrew", "label": "St. Andrew" },
+        { "value": "st-george", "label": "St. George" },
+        { "value": "st-james", "label": "St. James" },
+        { "value": "st-john", "label": "St. John" },
+        { "value": "st-joseph", "label": "St. Joseph" },
+        { "value": "st-lucy", "label": "St. Lucy" },
+        { "value": "st-michael", "label": "St. Michael" },
+        { "value": "st-peter", "label": "St. Peter" },
+        { "value": "st-philip", "label": "St. Philip" },
+        { "value": "st-thomas", "label": "St. Thomas" }
+      ]
+    },
+    {
+      "name": "postalCode",
+      "type": "text",
+      "label": "Postcode",
+      "width": "medium",
+      "validation": {
+        "required": false,
+        "pattern": "^BB\\d{5}$"
+      },
+      "helpText": "For example, BB17004 (optional)"
+    }
+  ]
+}

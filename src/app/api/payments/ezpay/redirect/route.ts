@@ -8,18 +8,18 @@ const generatePrefix = (slug: string): string =>
     .map((word) => word.charAt(0).toUpperCase())
     .join("");
 
-const extractPrefix = (reference: string): string | null => {
+const _extractPrefix = (reference: string): string | null => {
   const firstDash = reference.indexOf("-");
   if (firstDash === -1) return null;
   return reference.substring(0, firstDash);
 };
 
-const findFormSlugByPrefix = (prefix: string): string | null => {
+const _findFormSlugByPrefix = (prefix: string): string | null => {
   const formSlugs = Object.keys(FORM_COMPONENTS);
   return formSlugs.find((slug) => generatePrefix(slug) === prefix) || null;
 };
 
-const findFormUrl = (formSlug: string): string | null => {
+const _findFormUrl = (formSlug: string): string | null => {
   for (const category of INFORMATION_ARCHITECTURE) {
     const page = category.pages.find((p) => p.slug === formSlug);
     if (page) {
@@ -49,7 +49,7 @@ export function GET(request: NextRequest) {
   // const prefix = referenceNumber ? extractPrefix(referenceNumber) : null;
   // const formSlug = prefix ? findFormSlugByPrefix(prefix) : null;
   // const formUrl = formSlug ? findFormUrl(formSlug) : null;
-  const formUrl = null;
+  const formUrl: string | null = null;
 
   // Fallback to homepage if form not found
   if (!formUrl) {

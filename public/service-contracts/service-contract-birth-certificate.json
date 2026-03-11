@@ -1,0 +1,489 @@
+{
+  "$schema": "../schemas/service-contract-schema.json",
+  "id": "get-birth-certificate",
+  "version": "1.0.0",
+  "name": "Get Birth Certificate",
+  "description": "Apply for a copy of your birth certificate or someone else's birth certificate",
+  "metadata": {
+    "ministry": "Office of the Attorney General",
+    "service": "Registration Department",
+    "lastModified": "2026-02-10"
+  },
+  "pages": [
+    {
+      "id": "applicant-details",
+      "title": "Tell us about yourself",
+      "description": null,
+      "sections": [
+        {
+          "id": "applicant-personal",
+          "title": null,
+          "patternRef": "personal-details-barbados",
+          "namespace": "applicant",
+          "overrides": [
+            {
+              "fieldName": "firstName",
+              "validation": {
+                "minLength": 2,
+                "pattern": "^[A-Za-zÀ-ÖØ-öø-ÿ](?:[A-Za-zÀ-ÖØ-öø-ÿ'-]*[A-Za-zÀ-ÖØ-öø-ÿ])?$"
+              }
+            },
+            {
+              "fieldName": "middleName",
+              "helpText": "Optional. Provide only if known"
+            },
+            {
+              "fieldName": "lastName",
+              "validation": {
+                "minLength": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "applicant-address",
+          "title": null,
+          "patternRef": "address-barbados",
+          "namespace": "applicant"
+        },
+        {
+          "id": "applicant-identification",
+          "title": null,
+          "fields": [
+            {
+              "name": "applicant.idNumber",
+              "type": "text",
+              "label": "National Identification (ID) Number",
+              "width": "medium",
+              "validation": {
+                "required": "ID Number is required",
+                "pattern": "^\\d{6}-\\d{4}$"
+              },
+              "helpText": "For example, 850101-0001",
+              "skipValidationWhenShowHideOpen": "applicant.usePassportInstead"
+            },
+            {
+              "name": "applicant.passportDetails",
+              "type": "showHide",
+              "label": "",
+              "validation": {
+                "required": false
+              },
+              "showHide": {
+                "summary": "Use passport number instead",
+                "stateFieldName": "applicant.usePassportInstead",
+                "description": "If you don't have a National ID number, you can use your passport number instead.",
+                "fields": [
+                  {
+                    "name": "applicant.passportNumber",
+                    "type": "text",
+                    "label": "Passport Number",
+                    "validation": {
+                      "required": "Passport number is required",
+                      "minLength": 6
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "applicant-contact",
+          "title": null,
+          "patternRef": "contact-details-barbados",
+          "namespace": "applicant"
+        }
+      ]
+    },
+    {
+      "id": "applying-for-yourself",
+      "title": "Are you applying for your own birth certificate?",
+      "sections": [
+        {
+          "id": "self-application-question",
+          "fields": [
+            {
+              "name": "applyingForYourself",
+              "type": "radio",
+              "label": "Are you applying for your own birth certificate?",
+              "hidden": true,
+              "validation": {
+                "required": "Select an option"
+              },
+              "options": [
+                {
+                  "label": "Yes - the certificate is for me",
+                  "value": "yes"
+                },
+                {
+                  "label": "No - the certificate is for someone else",
+                  "value": "no"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "relationship-to-person",
+      "title": "What is your relationship to the person?",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "no"
+      },
+      "sections": [
+        {
+          "id": "relationship-details",
+          "fields": [
+            {
+              "name": "relationshipToPerson",
+              "type": "select",
+              "label": "What is your relationship to the person?",
+              "hidden": true,
+              "validation": {
+                "required": "Relationship is required"
+              },
+              "options": [
+                { "label": "", "value": "" },
+                { "label": "Parent", "value": "parent" },
+                { "label": "Spouse", "value": "spouse" },
+                { "label": "Child", "value": "child" },
+                { "label": "Sibling", "value": "sibling" },
+                { "label": "Grandparent", "value": "grandparent" },
+                { "label": "Legal guardian", "value": "legal-guardian" },
+                {
+                  "label": "Legal representative",
+                  "value": "legal-representative"
+                },
+                { "label": "Other (please describe)", "value": "other" }
+              ]
+            },
+            {
+              "name": "relationshipOtherDescription",
+              "type": "text",
+              "label": "Please describe your relationship",
+              "helpText": "For example, nephew, researcher, historian, or authorised representative.",
+              "validation": {
+                "required": "Please describe your relationship",
+                "minLength": 2
+              },
+              "conditional": {
+                "field": "relationshipToPerson",
+                "operator": "equals",
+                "value": "other"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reason-for-certificate",
+      "title": "Tell us why you're ordering a birth certificate",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "no"
+      },
+      "sections": [
+        {
+          "id": "reason-details",
+          "fields": [
+            {
+              "name": "reasonForOrderingCertificate",
+              "type": "textarea",
+              "label": "Reason",
+              "validation": {
+                "required": "Reason is required",
+                "minLength": 5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "person-deceased",
+      "title": "Is the person deceased?",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "no"
+      },
+      "sections": [
+        {
+          "id": "deceased-status",
+          "fields": [
+            {
+              "name": "personDeceased",
+              "type": "radio",
+              "label": "Is the person deceased?",
+              "hidden": true,
+              "validation": {
+                "required": "Select an option"
+              },
+              "options": [
+                { "label": "Yes", "value": "yes" },
+                { "label": "No", "value": "no" }
+              ]
+            },
+            {
+              "name": "dateOfDeath",
+              "type": "date",
+              "label": "Date of death",
+              "placeholder": "For example, March 15, 2023",
+              "validation": {
+                "required": "Date of death is required",
+                "dateRules": {
+                  "mustBePast": true
+                }
+              },
+              "conditional": {
+                "field": "personDeceased",
+                "operator": "equals",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "person-details",
+      "title": "Tell us about the person you are applying for",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "no"
+      },
+      "sections": [
+        {
+          "id": "person-name",
+          "patternRef": "person-name-simple",
+          "namespace": "person"
+        },
+        {
+          "id": "person-nis",
+          "fields": [
+            {
+              "name": "person.hasNisNumber",
+              "type": "radio",
+              "label": "Do they have a National Insurance (NIS) number?",
+              "validation": {
+                "required": "Select an option"
+              },
+              "options": [
+                { "label": "Yes", "value": "yes" },
+                { "label": "No", "value": "no" }
+              ]
+            },
+            {
+              "name": "person.nisNumber",
+              "type": "text",
+              "label": "National Insurance (NIS) Number",
+              "placeholder": "for example, 123456",
+              "validation": {
+                "required": "NIS number is required",
+                "pattern": "^\\d{6}$"
+              },
+              "helpText": "Enter a valid NIS number (6 digits)",
+              "conditional": {
+                "field": "person.hasNisNumber",
+                "operator": "equals",
+                "value": "yes"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "birth-details",
+      "title": "Provide your birth details",
+      "description": "Answer as accurately as possible",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "yes"
+      },
+      "sections": [
+        {
+          "id": "birth-information",
+          "fields": [
+            {
+              "name": "birthDetails.dateOfBirth",
+              "type": "date",
+              "label": "Date of birth",
+              "placeholder": "For example, 30 12 1986",
+              "validation": {
+                "required": "Date of birth is required",
+                "dateRules": {
+                  "mustBePast": true
+                }
+              }
+            },
+            {
+              "name": "birthDetails.placeOfBirth",
+              "type": "text",
+              "label": "Place of birth",
+              "helpText": "Enter a house, institution, home address, or parish, if known",
+              "validation": {
+                "required": "Place of birth is required",
+                "minLength": 2
+              }
+            },
+            {
+              "name": "birthDetails.placeOfBaptism",
+              "type": "text",
+              "label": "Place of baptism",
+              "helpText": "Enter a house, church, or parish, if known",
+              "validation": {
+                "required": "Place of baptism is required",
+                "minLength": 2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "parents-self",
+      "title": "Tell us your parents' names",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "yes"
+      },
+      "sections": [
+        {
+          "id": "parent-names",
+          "patternRef": "parent-information-barbados",
+          "namespace": "parents"
+        }
+      ]
+    },
+    {
+      "id": "parents-other",
+      "title": "Tell us their parents' names",
+      "conditional": {
+        "field": "applyingForYourself",
+        "operator": "equals",
+        "value": "no"
+      },
+      "sections": [
+        {
+          "id": "parent-names-other",
+          "patternRef": "parent-information-barbados",
+          "namespace": "parentsOther"
+        }
+      ]
+    },
+    {
+      "id": "order-details",
+      "title": "How many copies will you be ordering?",
+      "sections": [
+        {
+          "id": "order-quantity",
+          "fields": [
+            {
+              "name": "order.numberOfCopies",
+              "type": "number",
+              "label": "Number of copies",
+              "hidden": true,
+              "width": "short",
+              "validation": {
+                "required": "Number of copies is required",
+                "min": 1,
+                "max": 10
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "check-your-answers",
+      "title": "Check your answers",
+      "sections": []
+    },
+    {
+      "id": "declaration",
+      "title": "Declaration",
+      "sections": [
+        {
+          "id": "declaration-fields",
+          "fields": [
+            {
+              "name": "declaration.confirmed",
+              "type": "checkbox",
+              "label": "I confirm that my information is correct and I am happy for it to be verified. I understand that false details may lead to my application being rejected, and that the Government of Barbados will keep my information confidential.",
+              "validation": {
+                "required": "You must confirm the declaration to continue"
+              }
+            },
+            {
+              "name": "declaration.dateOfDeclaration",
+              "type": "date",
+              "label": "Date of declaration",
+              "hidden": true,
+              "validation": {
+                "required": "Date is required",
+                "dateRules": {
+                  "mustBePast": false,
+                  "mustBeFuture": false,
+                  "maxDate": "today"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "confirmation",
+      "title": "Your submission has been saved",
+      "description": "Complete your payment below to finalize your submission",
+      "sections": [],
+      "bodyContent": "## What happens next\n\nYou will receive a confirmation email with:\n\n- Your application reference number\n- the cost of the certificate(s)\n- the expected completion date",
+      "enableFeedback": true
+    }
+  ],
+  "processors": [
+    {
+      "type": "payment",
+      "config": {
+        "provider": "ezpay",
+        "department": "oag_registration",
+        "paymentCode": "{{db:get-birth-certificate:payment_code}}",
+        "amount": "{{formData.order.numberOfCopies * db:get-birth-certificate:payment_amount}}",
+        "description": "Birth Certificate Processing Fee (per copy)",
+        "required": true,
+        "timing": "after_validation",
+        "responseData": {
+          "include": ["order.numberOfCopies"]
+        }
+      }
+    },
+    {
+      "type": "email",
+      "config": {
+        "to": "{{db:get-birth-certificate:admin_email}}",
+        "subject": "New Birth Certificate Application - {{formData.applicant.firstName}} {{formData.applicant.lastName}}",
+        "template": "birth-certificate",
+        "recipientType": "admin"
+      }
+    },
+    {
+      "type": "email",
+      "config": {
+        "to": "{{formData.applicant.email}}",
+        "subject": "Birth Certificate - Submission Received",
+        "template": "birth-certificate-receipt",
+        "recipientType": "user"
+      }
+    }
+  ]
+}
