@@ -1,18 +1,15 @@
-import { NextResponse } from "next/server";
+export const runtime = "nodejs";
 
 export async function GET() {
   // This runs on the server, so it can see all env vars
   const envVars = {
-    clientToken: process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN || "NOT SET",
-    applicationId: process.env.NEXT_PUBLIC_DD_APPLICATION_ID || "NOT SET",
-    env: process.env.NEXT_PUBLIC_DD_ENV || "NOT SET",
-    service: process.env.NEXT_PUBLIC_DD_SERVICE || "NOT SET",
-    version: process.env.NEXT_PUBLIC_DD_VERSION || "NOT SET",
+    MAIL_FROM: process.env.MAIL_FROM || "NOT SET",
+    FEEDBACK_TO_EMAIL: process.env.FEEDBACK_TO_EMAIL || "NOT SET",
+    SES_REGION: process.env.SES_REGION || "NOT SET",
+    SES_CONFIGURATION_SET: process.env.SES_CONFIGURATION_SET || "NOT SET",
+    _COMPUTE_ROLE_ARN: process.env._COMPUTE_ROLE_ARN || "NOT SET",
+    NODE_ENV: process.env.NODE_ENV,
   };
 
-  return NextResponse.json({
-    message: "Environment variables check",
-    variables: envVars,
-    note: "These should all show actual values, not 'NOT SET'",
-  });
+  return Response.json(envVars);
 }

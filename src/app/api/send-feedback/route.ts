@@ -119,10 +119,19 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    console.error("Feedback submission error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Failed to send feedback";
+    const errorStack = error instanceof Error ? error.stack : undefined;
     return NextResponse.json(
       {
-        error:
-          error instanceof Error ? error.message : "Failed to send feedback",
+        error: errorMessage,
+        details: errorStack,
+        config: {
+          mailFrom,
+          feedbackToEmail,
+          region,
+          hasConfigSet: !!configurationSet
+        }
       },
       { status: 500 }
     );
