@@ -623,6 +623,34 @@ jobs:
                       print("</details>")
                       print("")
                   
+                  # Show unknown severity (collapsed)
+                  if unknown:
+                      print("<details><summary>⚪ View {0} Unknown severity issue(s)</summary>".format(len(unknown)))
+                      print("")
+                      for i, issue in enumerate(unknown[:10], 1):
+                          print(f"**{i}. {issue['rule_name']}**")
+                          print(f"- **File**: `{issue['file']}` (line {issue['line']})")
+                          if repo and sha and issue['file'] != 'Unknown':
+                              file_url = f"https://github.com/{repo}/blob/{sha}/{issue['file']}#L{issue['line']}"
+                              print(f"- **View code**: [{issue['file']}:{issue['line']}]({file_url})")
+                          print(f"- **Issue**: {issue['message'][:200]}{'...' if len(issue['message']) > 200 else ''}")
+                          
+                          if repo and issue['rule_id']:
+                              alerts_url = f"https://github.com/{repo}/security/code-scanning?query=is:open+rule:{issue['rule_id']}"
+                              print(f"- **View in Security tab**: [See alert details]({alerts_url})")
+                          
+                          if issue['fix']:
+                              fix_text = issue['fix'].split('.')[0] if '.' in issue['fix'] else issue['fix'][:200]
+                              print(f"- **Recommended fix**: {fix_text}")
+                          elif issue['help_uri']:
+                              print(f"- **Learn more**: [View documentation]({issue['help_uri']})")
+                          print("")
+                      
+                      if len(unknown) > 10:
+                          print(f"*...and {len(unknown) - 10} more unknown severity issue(s)*")
+                      print("</details>")
+                      print("")
+                  
                   print("---")
                   print("")
                   print("**View full details**: Go to the Security tab → Code scanning alerts")
