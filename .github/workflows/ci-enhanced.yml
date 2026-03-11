@@ -399,6 +399,7 @@ jobs:
           import json
           import os
           import glob
+          import sys
           
           # Find SARIF file
           sarif_files = glob.glob('sarif-results/**/*.sarif', recursive=True)
@@ -431,6 +432,8 @@ jobs:
                       # Get security severity from properties
                       properties = result.get('properties', {})
                       security_severity = properties.get('security-severity', '')
+                      kind = properties.get('kind', '')
+                      precision = properties.get('precision', '')
                       
                       # Map security severity to labels
                       if security_severity:
@@ -447,7 +450,27 @@ jobs:
                           except:
                               severity_label = 'Unknown'
                       else:
-                          severity_label = 'Unknown'
+                          # Fallback: use CodeQL's level if no security-severity
+                          # CodeQL levels: error, warning, note
+                          if level == 'error':
+                              severity_label = 'High'
+                          elif level == 'warning':
+                              # For warnings, check if it's a security issue
+                              if 'security' in kind.lower() or 'path-problem' in kind.lower():
+                                  # Security warnings with high precision are High severity
+                                  if precision in ['high', 'very-high']:
+                                      severity_label = 'High'
+                                  else:
+                                      severity_label = 'Medium'
+                              else:
+                                  severity_label = 'Medium'
+                          elif level == 'note':
+                              severity_label = 'Low'
+                          else:
+                              severity_label = 'Unknown'
+                      
+                      # Debug: print what we found for this issue
+                      print(f"<!-- DEBUG: Rule {rule_id}: level={level}, security-severity={security_severity}, kind={kind}, precision={precision}, final_severity={severity_label} -->", file=sys.stderr)
                       
                       # Get location
                       locations = result.get('locations', [])
