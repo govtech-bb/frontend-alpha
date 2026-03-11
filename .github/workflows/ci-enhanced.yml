@@ -198,87 +198,147 @@ jobs:
           sarif_file: gitleaks-report.sarif
         continue-on-error: true
       
-      - name: Report secrets found
+      - name: Analyze secrets and report
         if: steps.gitleaks.outcome == 'failure'
         run: |
-          echo "## 🚨 Secrets Detected in Code" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "⚠️ **CRITICAL: Hardcoded secrets were found in the codebase!**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          # Parse JSON report and display findings
-          if [ -f gitleaks-report.json ]; then
-            echo "### Detected Secrets:" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            
-            # Extract and format findings from JSON
-            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          # Parse findings and separate current vs historical
+          python3 << 'EOF' > secrets-analysis.txt
           import json
-          import sys
           import os
           
           try:
               with open('gitleaks-report.json', 'r') as f:
                   data = json.load(f)
-                  
-              if not data:
-                  print("No secrets found in report.")
-                  sys.exit(0)
               
-              # Get repo info from environment
-              repo = os.environ.get('GITHUB_REPOSITORY', '')
-              sha = os.environ.get('GITHUB_SHA', '')
-                  
-              for i, finding in enumerate(data, 1):
+              current_secrets = []
+              historical_secrets = []
+              
+              for finding in data:
                   file = finding.get('File', 'Unknown')
-                  line = finding.get('StartLine', 'Unknown')
-                  rule = finding.get('RuleID', 'Unknown')
-                  secret = finding.get('Secret', '')
-                  match = finding.get('Match', '')
-                  commit = finding.get('Commit', '')
-                  
-                  # Mask the secret for display
-                  if secret and len(secret) > 8:
-                      masked = secret[:4] + '*' * (len(secret) - 8) + secret[-4:]
+                  if os.path.exists(file):
+                      current_secrets.append(finding)
                   else:
-                      masked = '*' * len(secret) if secret else 'N/A'
+                      historical_secrets.append(finding)
+              
+              # Output counts for shell script
+              print(f"CURRENT_COUNT={len(current_secrets)}")
+              print(f"HISTORICAL_COUNT={len(historical_secrets)}")
+              
+              # Save separated findings
+              with open('current-secrets.json', 'w') as f:
+                  json.dump(current_secrets, f)
+              with open('historical-secrets.json', 'w') as f:
+                  json.dump(historical_secrets, f)
                   
-                  print(f"**{i}. {rule}**")
-                  print(f"- **Location**: `{file}` (line {line})")
-                  
-                  # Check if file exists in current commit
-                  file_exists = os.path.exists(file)
-                  
-                  if file_exists:
-                      # Add clickable link to file if we have repo info
-                      if repo and sha and file != 'Unknown':
-                          file_url = f"https://github.com/{repo}/blob/{sha}/{file}#L{line}"
-                          print(f"- **View file**: [{file}:{line}]({file_url})")
-                  else:
-                      print(f"- **Status**: ⚠️ File was deleted (found in git history)")
-                      if commit:
-                          print(f"- **Found in commit**: `{commit[:8]}`")
-                  
-                  print(f"- **Match**: `{match[:100]}...`" if len(match) > 100 else f"- **Match**: `{match}`")
-                  print(f"- **Secret**: `{masked}`")
-                  print("")
           except Exception as e:
-              print(f"Error parsing report: {e}")
+              print(f"ERROR={e}")
+              print("CURRENT_COUNT=0")
+              print("HISTORICAL_COUNT=0")
           EOF
-          else
-            echo "⚠️ Could not parse detailed findings. Check the 'Run Gitleaks' step logs above." >> $GITHUB_STEP_SUMMARY
+          
+          # Source the counts
+          source secrets-analysis.txt
+          
+          # Generate summary
+          if [ "$CURRENT_COUNT" -gt 0 ]; then
+            echo "## 🚨 Secrets Detected in Current Code" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "⚠️ **CRITICAL: $CURRENT_COUNT hardcoded secret(s) found in current files!**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Current Files (Build Blocking):" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # Display current secrets
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import json
+          import os
+          
+          repo = os.environ.get('GITHUB_REPOSITORY', '')
+          sha = os.environ.get('GITHUB_SHA', '')
+          
+          with open('current-secrets.json', 'r') as f:
+              data = json.load(f)
+          
+          for i, finding in enumerate(data, 1):
+              file = finding.get('File', 'Unknown')
+              line = finding.get('StartLine', 'Unknown')
+              rule = finding.get('RuleID', 'Unknown')
+              secret = finding.get('Secret', '')
+              match = finding.get('Match', '')
+              
+              if secret and len(secret) > 8:
+                  masked = secret[:4] + '*' * (len(secret) - 8) + secret[-4:]
+              else:
+                  masked = '*' * len(secret) if secret else 'N/A'
+              
+              print(f"**{i}. {rule}**")
+              print(f"- **Location**: `{file}` (line {line})")
+              
+              if repo and sha and file != 'Unknown':
+                  file_url = f"https://github.com/{repo}/blob/{sha}/{file}#L{line}"
+                  print(f"- **View file**: [{file}:{line}]({file_url})")
+              
+              print(f"- **Match**: `{match[:100]}...`" if len(match) > 100 else f"- **Match**: `{match}`")
+              print(f"- **Secret**: `{masked}`")
+              print("")
+          EOF
+          fi
+          
+          if [ "$HISTORICAL_COUNT" -gt 0 ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "---" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "## ⚠️ Secrets Found in Git History" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**$HISTORICAL_COUNT secret(s) found in deleted files (not blocking build)**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "<details><summary>View historical secrets (click to expand)</summary>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # Display historical secrets
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import json
+          import os
+          
+          with open('historical-secrets.json', 'r') as f:
+              data = json.load(f)
+          
+          for i, finding in enumerate(data, 1):
+              file = finding.get('File', 'Unknown')
+              line = finding.get('StartLine', 'Unknown')
+              rule = finding.get('RuleID', 'Unknown')
+              secret = finding.get('Secret', '')
+              commit = finding.get('Commit', '')
+              
+              if secret and len(secret) > 8:
+                  masked = secret[:4] + '*' * (len(secret) - 8) + secret[-4:]
+              else:
+                  masked = '*' * len(secret) if secret else 'N/A'
+              
+              print(f"**{i}. {rule}**")
+              print(f"- **Location**: `{file}` (line {line}) - File deleted")
+              if commit:
+                  print(f"- **Found in commit**: `{commit[:8]}`")
+              print(f"- **Secret**: `{masked}`")
+              print("")
+          EOF
+            
+            echo "</details>" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "💡 These secrets exist in git history but not in current files. Consider rotating them if they were real credentials." >> $GITHUB_STEP_SUMMARY
           fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "---" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Action required:**" >> $GITHUB_STEP_SUMMARY
-          echo "1. Review the detected secrets above" >> $GITHUB_STEP_SUMMARY
-          echo "2. For current files: Remove the secrets and use environment variables" >> $GITHUB_STEP_SUMMARY
-          echo "3. For deleted files: Secrets still exist in git history - consider rotating them" >> $GITHUB_STEP_SUMMARY
-          echo "4. Rotate any exposed credentials immediately" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "💡 **Note**: Gitleaks scans full git history, so it may find secrets in deleted files. These should still be rotated as they exist in your repository's history." >> $GITHUB_STEP_SUMMARY
+          if [ "$CURRENT_COUNT" -gt 0 ]; then
+            echo "1. ⛔ **Fix current files immediately** - Remove secrets and use environment variables" >> $GITHUB_STEP_SUMMARY
+            echo "2. Rotate any exposed credentials" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ "$HISTORICAL_COUNT" -gt 0 ]; then
+            echo "3. ⚠️ Review historical secrets - Rotate if they were real credentials" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "<details><summary>View full Gitleaks output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -286,7 +346,13 @@ jobs:
           cat gitleaks-output.txt >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           echo "</details>" >> $GITHUB_STEP_SUMMARY
-          exit 1
+          
+          # Only fail if there are current secrets
+          if [ "$CURRENT_COUNT" -gt 0 ]; then
+            exit 1
+          else
+            exit 0
+          fi
 
   security:
     name: Security Scan

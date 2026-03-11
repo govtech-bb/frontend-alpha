@@ -57,9 +57,11 @@ The pipeline runs the following checks (6 stages total):
   - OAuth tokens
   - Database connection strings
   - AWS keys, GitHub tokens, etc.
-- **Note**: This WILL block the build if secrets are found
+- **Blocking behavior**: 
+  - ⛔ **Blocks build** if secrets found in current files
+  - ⚠️ **Warning only** if secrets found in deleted files (git history)
 - **Error reporting**: Shows exact file locations, line numbers, and masked secret values
-- **Action required**: Remove secrets and use environment variables instead
+- **Action required**: Remove secrets from current files and use environment variables instead
 
 ### 6. Security Scan (Code Vulnerabilities)
 - **Purpose**: Identifies potential security vulnerabilities in code
