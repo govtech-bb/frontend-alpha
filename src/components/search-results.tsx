@@ -24,7 +24,7 @@ export function SearchResults({
   });
 
   return (
-    <>
+    <div aria-live="polite">
       <Heading as="h2" className="mb-6">
         {query ? "Search results" : "All services"}
       </Heading>
@@ -38,7 +38,8 @@ export function SearchResults({
         </Text>
       )}
 
-      <div className="mb-6 flex gap-2">
+      <fieldset className="mb-6 flex gap-2 border-none p-0">
+        <legend className="sr-only">Filter by service type</legend>
         <FilterChip
           active={filter === "all"}
           label="All"
@@ -54,7 +55,7 @@ export function SearchResults({
           label="Informational"
           onClick={() => setFilter("informational")}
         />
-      </div>
+      </fieldset>
 
       {filtered.length === 0 && (
         <Text as="p" className="text-mid-grey-00">
@@ -84,13 +85,13 @@ export function SearchResults({
               <span className="mt-2 block w-fit bg-pink-10 px-2 py-1 text-pink-00">
                 {result.hasOnlineForm
                   ? "This service can be done online"
-                  : "This service is for information purposes only."}
+                  : "This service is for information purposes only"}
               </span>
             </li>
           ))}
         </ul>
       )}
-    </>
+    </div>
   );
 }
 
@@ -105,6 +106,7 @@ function FilterChip({
 }) {
   return (
     <button
+      aria-pressed={active}
       className={`rounded-sm px-3 py-1.5 text-sm leading-normal transition-colors ${
         active
           ? "bg-teal-00 text-white-00"

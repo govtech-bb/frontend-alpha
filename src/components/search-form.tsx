@@ -21,7 +21,7 @@ export function SearchForm({
   }
 
   return (
-    <search>
+    <search aria-label="Search for a service">
       <form action="/search" className="flex w-full" onSubmit={handleSubmit}>
         <label className="sr-only" htmlFor={id}>
           Search for a service
