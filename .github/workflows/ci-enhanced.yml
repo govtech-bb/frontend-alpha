@@ -211,7 +211,7 @@ jobs:
         if: steps.gitleaks_current.outcome == 'failure'
         run: |
           # Parse current commit secrets
-          python3 << 'EOF'
+          python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
           import json
           import os
           
