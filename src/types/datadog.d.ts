@@ -1,7 +1,7 @@
 import type { RumGlobal } from "@datadog/browser-rum";
 
 declare global {
-  type Window = {
+  interface Window {
     DD_RUM?: RumGlobal;
-  };
+  }
 }

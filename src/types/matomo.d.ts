@@ -1,4 +1,8 @@
 // Matomo type definitions
-type Window = {
-  _paq?: Array<Array<string | number>>;
-};
+declare global {
+  interface Window {
+    _paq?: Array<Array<string | number>>;
+  }
+}
+
+export {};
