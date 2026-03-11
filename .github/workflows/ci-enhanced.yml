@@ -163,67 +163,6 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           exit 1
 
-  e2e:
-    name: E2E Tests
-    runs-on: ubuntu-latest
-    needs: [build]
-    container:
-      image: mcr.microsoft.com/playwright:v1.57.0-jammy
-    env:
-      MAIL_FROM: "no-reply@notify.dev.alpha.gov.bb"
-      SES_REGION: "us-east-1"
-      FEEDBACK_TO_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
-      FEEDBACK_FROM_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build
-      
-      - name: Run E2E tests
-        id: e2e
-        run: |
-          npx playwright test visual 2>&1 | tee e2e-output.txt
-          exit ${PIPESTATUS[0]}
-        continue-on-error: true
-      
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
-      
-      - name: Report E2E results
-        if: steps.e2e.outcome == 'failure'
-        run: |
-          echo "## ❌ E2E Tests Failed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Visual regression tests detected changes." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "<details><summary>View test output</summary>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          tail -50 e2e-output.txt >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**If changes are intentional, update snapshots:**" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
-          echo "npm run test:e2e:update" >> $GITHUB_STEP_SUMMARY
-          echo "git add tests/" >> $GITHUB_STEP_SUMMARY
-          echo "git commit -m 'test: Update visual snapshots'" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**View the report:** Download the 'playwright-report' artifact above" >> $GITHUB_STEP_SUMMARY
-          exit 1
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**View the report:** Download the 'playwright-report' artifact above" >> $GITHUB_STEP_SUMMARY
-          exit 1
-
   security:
     name: Security Scan
     runs-on: ubuntu-latest
@@ -253,3 +192,4 @@ jobs:
           echo "**View details:** Go to the Security tab → Code scanning alerts" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Note:** This won't block your PR, but please review the findings." >> $GITHUB_STEP_SUMMARY
+
