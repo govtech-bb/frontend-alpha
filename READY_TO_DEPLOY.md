@@ -26,8 +26,8 @@ All Datadog RUM integration is complete and tested. The build passes successfull
 ### ✅ Configuration Applied
 ```typescript
 {
-  applicationId: "c4c295a9-eb1b-4de3-892a-9fa23e6735ea",
-  clientToken: "pub4d95362c505b47482fc97b644193384e",
+  applicationId: "your-datadog-application-id-here",
+  clientToken: "your-datadog-client-token-here",
   site: "us5.datadoghq.com",
   service: "alpha-portal",
   env: "sandbox",
@@ -57,8 +57,8 @@ Go to AWS Console → Amplify → Your sandbox app → Environment variables
 
 Add these variables:
 ```
-NEXT_PUBLIC_DD_CLIENT_TOKEN = pub4d95362c505b47482fc97b644193384e
-NEXT_PUBLIC_DD_APPLICATION_ID = c4c295a9-eb1b-4de3-892a-9fa23e6735ea
+NEXT_PUBLIC_DD_CLIENT_TOKEN = your-datadog-client-token-here
+NEXT_PUBLIC_DD_APPLICATION_ID = your-datadog-application-id-here
 NEXT_PUBLIC_DD_ENV = sandbox
 NEXT_PUBLIC_DD_SERVICE = alpha-portal
 NEXT_PUBLIC_DD_VERSION = 1.0.0

@@ -22,11 +22,10 @@ export async function initDatadog() {
   }
 
   const clientToken =
-    process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN ||
-    "pub4d95362c505b47482fc97b644193384e";
+    process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN || "your-datadog-client-token-here";
   const applicationId =
     process.env.NEXT_PUBLIC_DD_APPLICATION_ID ||
-    "c4c295a9-eb1b-4de3-892a-9fa23e6735ea";
+    "your-datadog-application-id-here";
   const env = process.env.NEXT_PUBLIC_DD_ENV || "sandbox";
   const service = process.env.NEXT_PUBLIC_DD_SERVICE || "alpha-portal";
   const version = process.env.NEXT_PUBLIC_DD_VERSION || "1.0.0";

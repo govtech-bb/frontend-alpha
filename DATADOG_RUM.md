@@ -19,8 +19,8 @@ Datadog RUM tracks real user interactions, performance metrics, and errors in th
 Add these to your `.env.local` file (or configure in AWS Amplify):
 
 ```bash
-NEXT_PUBLIC_DD_CLIENT_TOKEN="pub4d95362c505b47482fc97b644193384e"
-NEXT_PUBLIC_DD_APPLICATION_ID="c4c295a9-eb1b-4de3-892a-9fa23e6735ea"
+NEXT_PUBLIC_DD_CLIENT_TOKEN="your-datadog-client-token-here"
+NEXT_PUBLIC_DD_APPLICATION_ID="your-datadog-application-id-here"
 NEXT_PUBLIC_DD_ENV="sandbox"  # or "dev", "staging", "prod"
 NEXT_PUBLIC_DD_SERVICE="alpha-portal"
 NEXT_PUBLIC_DD_VERSION="1.0.0"

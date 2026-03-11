@@ -17,20 +17,20 @@ The following files have been created/modified to integrate Datadog RUM:
 
 ## Next Steps
 
-### 1. ✅ Client Token Already Configured
+### 1. Get Your Datadog Credentials
 
-The Datadog Client Token has been configured:
-- **Client Token**: `pub4d95362c505b47482fc97b644193384e`
-- **Application ID**: `c4c295a9-eb1b-4de3-892a-9fa23e6735ea`
-- **Site**: `us5.datadoghq.com`
+You need to get your Datadog Client Token and Application ID:
+- Log into Datadog dashboard
+- Go to RUM Applications → Create Application (or use existing)
+- Copy your **Client Token** and **Application ID**
 
-### 2. Environment Variables Already Set
+### 2. Configure Environment Variables
 
-The `.env.local` file has been updated with:
+Create or update your `.env.local` file with your credentials:
 
 ```bash
-NEXT_PUBLIC_DD_CLIENT_TOKEN="pub4d95362c505b47482fc97b644193384e"
-NEXT_PUBLIC_DD_APPLICATION_ID="c4c295a9-eb1b-4de3-892a-9fa23e6735ea"
+NEXT_PUBLIC_DD_CLIENT_TOKEN="your-datadog-client-token-here"
+NEXT_PUBLIC_DD_APPLICATION_ID="your-datadog-application-id-here"
 NEXT_PUBLIC_DD_ENV="sandbox"
 NEXT_PUBLIC_DD_SERVICE="alpha-portal"
 NEXT_PUBLIC_DD_VERSION="1.0.0"
@@ -66,10 +66,10 @@ Before deploying to Amplify, add environment variables:
 1. Go to AWS Console → Amplify → Your sandbox app
 2. Navigate to "Environment variables"
 3. Click "Manage variables"
-4. Add these variables:
+4. Add these variables (replace with your actual Datadog credentials):
    ```
-   NEXT_PUBLIC_DD_CLIENT_TOKEN = pub4d95362c505b47482fc97b644193384e
-   NEXT_PUBLIC_DD_APPLICATION_ID = c4c295a9-eb1b-4de3-892a-9fa23e6735ea
+   NEXT_PUBLIC_DD_CLIENT_TOKEN = your-datadog-client-token-here
+   NEXT_PUBLIC_DD_APPLICATION_ID = your-datadog-application-id-here
    NEXT_PUBLIC_DD_ENV = sandbox
    NEXT_PUBLIC_DD_SERVICE = alpha-portal
    NEXT_PUBLIC_DD_VERSION = 1.0.0
