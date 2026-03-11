@@ -49,7 +49,7 @@ The pipeline runs the following checks (6 stages total):
 
 ### 5. Secrets Scan
 - **Purpose**: Detects hardcoded secrets in the codebase
-- **Tool**: Gitleaks
+- **Tool**: Gitleaks (CLI)
 - **What it checks**:
   - API keys and tokens
   - Passwords and credentials
@@ -58,6 +58,7 @@ The pipeline runs the following checks (6 stages total):
   - Database connection strings
   - AWS keys, GitHub tokens, etc.
 - **Note**: This WILL block the build if secrets are found
+- **Error reporting**: Shows exact file locations, line numbers, and masked secret values
 - **Action required**: Remove secrets and use environment variables instead
 
 ### 6. Security Scan (Code Vulnerabilities)

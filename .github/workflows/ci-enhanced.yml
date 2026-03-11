@@ -181,7 +181,14 @@ jobs:
       - name: Run Gitleaks
         id: gitleaks
         run: |
-          gitleaks detect --source . --verbose --report-format sarif --report-path gitleaks-report.sarif
+          gitleaks detect --source . --verbose --report-format json --report-path gitleaks-report.json 2>&1 | tee gitleaks-output.txt
+          exit ${PIPESTATUS[0]}
+        continue-on-error: true
+      
+      - name: Generate SARIF report
+        if: always()
+        run: |
+          gitleaks detect --source . --report-format sarif --report-path gitleaks-report.sarif || true
         continue-on-error: true
       
       - name: Upload Gitleaks SARIF report
@@ -198,22 +205,65 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "⚠️ **CRITICAL: Hardcoded secrets were found in the codebase!**" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "This is a security risk and the build has been blocked." >> $GITHUB_STEP_SUMMARY
+          
+          # Parse JSON report and display findings
+          if [ -f gitleaks-report.json ]; then
+            echo "### Detected Secrets:" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            # Extract and format findings from JSON
+            python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import json
+          import sys
+          
+          try:
+              with open('gitleaks-report.json', 'r') as f:
+                  data = json.load(f)
+                  
+              if not data:
+                  print("No secrets found in report.")
+                  sys.exit(0)
+                  
+              for i, finding in enumerate(data, 1):
+                  file = finding.get('File', 'Unknown')
+                  line = finding.get('StartLine', 'Unknown')
+                  rule = finding.get('RuleID', 'Unknown')
+                  secret = finding.get('Secret', '')
+                  match = finding.get('Match', '')
+                  
+                  # Mask the secret for display
+                  if secret and len(secret) > 8:
+                      masked = secret[:4] + '*' * (len(secret) - 8) + secret[-4:]
+                  else:
+                      masked = '*' * len(secret) if secret else 'N/A'
+                  
+                  print(f"**{i}. {rule}**")
+                  print(f"- **File**: `{file}:{line}`")
+                  print(f"- **Match**: `{match[:100]}...`" if len(match) > 100 else f"- **Match**: `{match}`")
+                  print(f"- **Secret**: `{masked}`")
+                  print("")
+          except Exception as e:
+              print(f"Error parsing report: {e}")
+          EOF
+          else
+            echo "⚠️ Could not parse detailed findings. Check the 'Run Gitleaks' step logs above." >> $GITHUB_STEP_SUMMARY
+          fi
+          
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Common secrets detected:**" >> $GITHUB_STEP_SUMMARY
-          echo "- API keys" >> $GITHUB_STEP_SUMMARY
-          echo "- Passwords" >> $GITHUB_STEP_SUMMARY
-          echo "- Private keys" >> $GITHUB_STEP_SUMMARY
-          echo "- OAuth tokens" >> $GITHUB_STEP_SUMMARY
-          echo "- Database credentials" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Action required:**" >> $GITHUB_STEP_SUMMARY
-          echo "1. Check the 'Run Gitleaks' step above for specific file locations" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review the detected secrets above" >> $GITHUB_STEP_SUMMARY
           echo "2. Remove the secrets from your code" >> $GITHUB_STEP_SUMMARY
           echo "3. Use environment variables or secret management instead" >> $GITHUB_STEP_SUMMARY
           echo "4. Rotate any exposed credentials immediately" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Need help?** See the gitleaks report in the step logs above." >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>View full Gitleaks output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat gitleaks-output.txt >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
           exit 1
 
   security:
