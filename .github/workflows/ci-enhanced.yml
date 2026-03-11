@@ -235,6 +235,7 @@ jobs:
                   rule = finding.get('RuleID', 'Unknown')
                   secret = finding.get('Secret', '')
                   match = finding.get('Match', '')
+                  commit = finding.get('Commit', '')
                   
                   # Mask the secret for display
                   if secret and len(secret) > 8:
@@ -245,10 +246,18 @@ jobs:
                   print(f"**{i}. {rule}**")
                   print(f"- **Location**: `{file}` (line {line})")
                   
-                  # Add clickable link to file if we have repo info
-                  if repo and sha and file != 'Unknown':
-                      file_url = f"https://github.com/{repo}/blob/{sha}/{file}#L{line}"
-                      print(f"- **View file**: [{file}:{line}]({file_url})")
+                  # Check if file exists in current commit
+                  file_exists = os.path.exists(file)
+                  
+                  if file_exists:
+                      # Add clickable link to file if we have repo info
+                      if repo and sha and file != 'Unknown':
+                          file_url = f"https://github.com/{repo}/blob/{sha}/{file}#L{line}"
+                          print(f"- **View file**: [{file}:{line}]({file_url})")
+                  else:
+                      print(f"- **Status**: ⚠️ File was deleted (found in git history)")
+                      if commit:
+                          print(f"- **Found in commit**: `{commit[:8]}`")
                   
                   print(f"- **Match**: `{match[:100]}...`" if len(match) > 100 else f"- **Match**: `{match}`")
                   print(f"- **Secret**: `{masked}`")
@@ -265,9 +274,11 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Action required:**" >> $GITHUB_STEP_SUMMARY
           echo "1. Review the detected secrets above" >> $GITHUB_STEP_SUMMARY
-          echo "2. Remove the secrets from your code" >> $GITHUB_STEP_SUMMARY
-          echo "3. Use environment variables or secret management instead" >> $GITHUB_STEP_SUMMARY
+          echo "2. For current files: Remove the secrets and use environment variables" >> $GITHUB_STEP_SUMMARY
+          echo "3. For deleted files: Secrets still exist in git history - consider rotating them" >> $GITHUB_STEP_SUMMARY
           echo "4. Rotate any exposed credentials immediately" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "💡 **Note**: Gitleaks scans full git history, so it may find secrets in deleted files. These should still be rotated as they exist in your repository's history." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "<details><summary>View full Gitleaks output</summary>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
