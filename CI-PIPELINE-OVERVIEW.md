@@ -36,6 +36,7 @@ The pipeline runs the following checks (6 stages total):
   - Component behavior
   - Utility function correctness
   - Business logic validation
+- **Blocking**: Yes - failing tests will block the build
 
 ### 4. Build
 - **Purpose**: Verifies the application can be built for production
@@ -85,7 +86,14 @@ The pipeline runs the following checks (6 stages total):
   - Cross-site scripting (XSS) risks
   - Insecure dependencies
   - Authentication/authorization issues
-- **Note**: This runs in parallel and won't block the pipeline, but findings should be reviewed
+- **Blocking behavior**:
+  - ⛔ **Blocks build** if Critical or High severity issues found
+  - ⚠️ **Warning only** for Medium and Low severity issues
+- **Severity levels**:
+  - 🔴 Critical (9.0-10.0) - Blocks build
+  - 🟠 High (7.0-8.9) - Blocks build
+  - 🟡 Medium (4.0-6.9) - Warning only
+  - 🟢 Low (0.0-3.9) - Warning only
 
 ## Enhanced Error Reporting
 

@@ -124,7 +124,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, secrets-scan]
+    needs: [lint, typecheck, test, secrets-scan, security]
     env:
       MAIL_FROM: "no-reply@notify.dev.alpha.gov.bb"
       SES_REGION: "us-east-1"
@@ -444,6 +444,27 @@ jobs:
                       level = result.get('level', 'warning')
                       message = result.get('message', {}).get('text', 'No description')
                       
+                      # Get security severity from properties
+                      properties = result.get('properties', {})
+                      security_severity = properties.get('security-severity', '')
+                      
+                      # Map security severity to labels
+                      if security_severity:
+                          try:
+                              severity_score = float(security_severity)
+                              if severity_score >= 9.0:
+                                  severity_label = 'Critical'
+                              elif severity_score >= 7.0:
+                                  severity_label = 'High'
+                              elif severity_score >= 4.0:
+                                  severity_label = 'Medium'
+                              else:
+                                  severity_label = 'Low'
+                          except:
+                              severity_label = 'Unknown'
+                      else:
+                          severity_label = 'Unknown'
+                      
                       # Get location
                       locations = result.get('locations', [])
                       if locations:
@@ -479,6 +500,8 @@ jobs:
                       all_results.append({
                           'rule_id': rule_id,
                           'level': level,
+                          'severity': severity_label,
+                          'severity_score': security_severity,
                           'message': message,
                           'file': file,
                           'line': line,
@@ -493,28 +516,39 @@ jobs:
                   print("No security issues detected by CodeQL.")
               else:
                   # Group by severity
-                  errors = [r for r in all_results if r['level'] == 'error']
-                  warnings = [r for r in all_results if r['level'] == 'warning']
-                  notes = [r for r in all_results if r['level'] == 'note']
+                  critical = [r for r in all_results if r['severity'] == 'Critical']
+                  high = [r for r in all_results if r['severity'] == 'High']
+                  medium = [r for r in all_results if r['severity'] == 'Medium']
+                  low = [r for r in all_results if r['severity'] == 'Low']
+                  unknown = [r for r in all_results if r['severity'] == 'Unknown']
                   
                   print("## ⚠️ Security Issues Found")
                   print("")
                   print(f"CodeQL detected **{len(all_results)} potential security issue(s)**:")
-                  print(f"- 🔴 {len(errors)} error(s)")
-                  print(f"- 🟡 {len(warnings)} warning(s)")
-                  print(f"- 🔵 {len(notes)} note(s)")
+                  if critical:
+                      print(f"- 🔴 {len(critical)} Critical")
+                  if high:
+                      print(f"- 🟠 {len(high)} High")
+                  if medium:
+                      print(f"- 🟡 {len(medium)} Medium")
+                  if low:
+                      print(f"- 🟢 {len(low)} Low")
+                  if unknown:
+                      print(f"- ⚪ {len(unknown)} Unknown severity")
                   print("")
                   
                   # Get repo info
                   repo = os.environ.get('GITHUB_REPOSITORY', '')
                   sha = os.environ.get('GITHUB_SHA', '')
                   
-                  # Show errors first
-                  if errors:
-                      print("### 🔴 Critical Issues")
+                  # Show critical and high severity issues prominently
+                  priority_issues = critical + high
+                  if priority_issues:
+                      print("### 🔴 Critical & High Severity Issues")
                       print("")
-                      for i, issue in enumerate(errors[:5], 1):  # Limit to 5
-                          print(f"**{i}. {issue['rule_name']}**")
+                      for i, issue in enumerate(priority_issues[:10], 1):  # Limit to 10
+                          severity_emoji = '🔴' if issue['severity'] == 'Critical' else '🟠'
+                          print(f"**{i}. {severity_emoji} {issue['severity']}: {issue['rule_name']}**")
                           print(f"- **File**: `{issue['file']}` (line {issue['line']})")
                           if repo and sha and issue['file'] != 'Unknown':
                               file_url = f"https://github.com/{repo}/blob/{sha}/{issue['file']}#L{issue['line']}"
@@ -527,30 +561,33 @@ jobs:
                               print(f"- **View in Security tab**: [See alert details]({alerts_url})")
                           
                           if issue['fix']:
-                              # Extract first sentence or first 200 chars as fix suggestion
                               fix_text = issue['fix'].split('.')[0] if '.' in issue['fix'] else issue['fix'][:200]
                               print(f"- **Recommended fix**: {fix_text}")
                           elif issue['help_uri']:
                               print(f"- **Learn more**: [View documentation]({issue['help_uri']})")
                           print("")
                       
-                      if len(errors) > 5:
-                          print(f"*...and {len(errors) - 5} more error(s)*")
+                      if len(priority_issues) > 10:
+                          print(f"*...and {len(priority_issues) - 10} more critical/high severity issue(s)*")
                           print("")
                   
-                  # Show warnings (collapsed)
-                  if warnings:
-                      print("<details><summary>🟡 View {0} warning(s)</summary>".format(len(warnings)))
-                      print("")
-                      for i, issue in enumerate(warnings[:10], 1):  # Limit to 10
-                          print(f"**{i}. {issue['rule_name']}**")
+                  # Show medium severity (collapsed if there are priority issues, expanded if not)
+                  if medium:
+                      if priority_issues:
+                          print("<details><summary>🟡 View {0} Medium severity issue(s)</summary>".format(len(medium)))
+                          print("")
+                      else:
+                          print("### 🟡 Medium Severity Issues")
+                          print("")
+                      
+                      for i, issue in enumerate(medium[:10], 1):
+                          print(f"**{i}. 🟡 Medium: {issue['rule_name']}**")
                           print(f"- **File**: `{issue['file']}` (line {issue['line']})")
                           if repo and sha and issue['file'] != 'Unknown':
                               file_url = f"https://github.com/{repo}/blob/{sha}/{issue['file']}#L{issue['line']}"
                               print(f"- **View code**: [{issue['file']}:{issue['line']}]({file_url})")
                           print(f"- **Issue**: {issue['message'][:200]}{'...' if len(issue['message']) > 200 else ''}")
                           
-                          # Add link to Security alerts
                           if repo and issue['rule_id']:
                               alerts_url = f"https://github.com/{repo}/security/code-scanning?query=is:open+rule:{issue['rule_id']}"
                               print(f"- **View in Security tab**: [See alert details]({alerts_url})")
@@ -562,8 +599,27 @@ jobs:
                               print(f"- **Learn more**: [View documentation]({issue['help_uri']})")
                           print("")
                       
-                      if len(warnings) > 10:
-                          print(f"*...and {len(warnings) - 10} more warning(s)*")
+                      if len(medium) > 10:
+                          print(f"*...and {len(medium) - 10} more medium severity issue(s)*")
+                      
+                      if priority_issues:
+                          print("</details>")
+                      print("")
+                  
+                  # Show low severity (collapsed)
+                  if low:
+                      print("<details><summary>🟢 View {0} Low severity issue(s)</summary>".format(len(low)))
+                      print("")
+                      for i, issue in enumerate(low[:10], 1):
+                          print(f"**{i}. 🟢 Low: {issue['rule_name']}**")
+                          print(f"- **File**: `{issue['file']}` (line {issue['line']})")
+                          if repo and issue['rule_id']:
+                              alerts_url = f"https://github.com/{repo}/security/code-scanning?query=is:open+rule:{issue['rule_id']}"
+                              print(f"- **View in Security tab**: [See alert details]({alerts_url})")
+                          print("")
+                      
+                      if len(low) > 10:
+                          print(f"*...and {len(low) - 10} more low severity issue(s)*")
                       print("</details>")
                       print("")
                   
@@ -571,7 +627,12 @@ jobs:
                   print("")
                   print("**View full details**: Go to the Security tab → Code scanning alerts")
                   print("")
-                  print("**Note**: This won't block your build, but please review and fix the findings.")
+                  
+                  # Determine if we should fail based on severity
+                  if critical or high:
+                      print("**⛔ Build blocked**: Critical or High severity issues must be fixed before merging.")
+                  else:
+                      print("**Note**: Medium and Low severity issues won't block your build, but please review and fix them.")
           
           except Exception as e:
               print("## ⚠️ Security Scan Complete")
@@ -579,5 +640,15 @@ jobs:
               print(f"Could not parse SARIF results: {e}")
               print("")
               print("**View details**: Go to the Security tab → Code scanning alerts")
+          
+          # Write result to file for shell script to read
+          import sys
+          with open('security-result.txt', 'w') as f:
+              if critical or high:
+                  f.write('BLOCK_BUILD=1')
+                  sys.exit(1)
+              else:
+                  f.write('BLOCK_BUILD=0')
+                  sys.exit(0)
           EOF
 
