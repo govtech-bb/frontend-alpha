@@ -78,7 +78,7 @@ The pipeline runs the following checks (6 stages total):
 
 **Example:**
 ```javascript
-// ❌ BAD: const token = 'pub4d95362c505b47482fc97b644193384e'
+// ❌ BAD: const token = 'pub_EXAMPLE_REAL_TOKEN_12345'
 // ✅ GOOD: const token = process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN
 // ✅ GOOD: const token = 'your-datadog-client-token-here'
 ```

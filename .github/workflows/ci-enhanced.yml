@@ -335,7 +335,7 @@ jobs:
           print("")
           print("**Example:**")
           print("```javascript")
-          print("// ❌ BAD: const token = 'pub4d95362c505b47482fc97b644193384e'")
+          print("// ❌ BAD: const token = 'pub_EXAMPLE_REAL_TOKEN_12345'")
           print("// ✅ GOOD: const token = process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN")
           print("// ✅ GOOD: const token = 'your-datadog-client-token-here'")
           print("```")
