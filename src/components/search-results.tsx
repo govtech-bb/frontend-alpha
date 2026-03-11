@@ -2,8 +2,11 @@
 
 import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
+import { useState } from "react";
 
 import type { SearchResult } from "@/lib/search";
+
+type Filter = "all" | "online" | "informational";
 
 export function SearchResults({
   results,
@@ -12,6 +15,14 @@ export function SearchResults({
   results: SearchResult[];
   query: string;
 }) {
+  const [filter, setFilter] = useState<Filter>("all");
+
+  const filtered = results.filter((result) => {
+    if (filter === "online") return result.hasOnlineForm;
+    if (filter === "informational") return !result.hasOnlineForm;
+    return true;
+  });
+
   return (
     <>
       <Heading as="h2" className="mb-6">
@@ -27,9 +38,33 @@ export function SearchResults({
         </Text>
       )}
 
-      {results.length > 0 && (
+      <div className="mb-6 flex gap-2">
+        <FilterChip
+          active={filter === "all"}
+          label="All"
+          onClick={() => setFilter("all")}
+        />
+        <FilterChip
+          active={filter === "online"}
+          label="Online services"
+          onClick={() => setFilter("online")}
+        />
+        <FilterChip
+          active={filter === "informational"}
+          label="Informational"
+          onClick={() => setFilter("informational")}
+        />
+      </div>
+
+      {filtered.length === 0 && (
+        <Text as="p" className="text-mid-grey-00">
+          No services match this filter.
+        </Text>
+      )}
+
+      {filtered.length > 0 && (
         <ul>
-          {results.map((result) => (
+          {filtered.map((result) => (
             <li
               className="border-grey-00 border-b-2 pt-8 pb-8 first:pt-0"
               key={result.slug}
@@ -56,5 +91,29 @@ export function SearchResults({
         </ul>
       )}
     </>
+  );
+}
+
+function FilterChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      className={`rounded-sm px-3 py-1.5 text-sm leading-normal transition-colors ${
+        active
+          ? "bg-teal-00 text-white-00"
+          : "bg-grey-00 text-black-00 hover:bg-grey-10"
+      }`}
+      onClick={onClick}
+      type="button"
+    >
+      {label}
+    </button>
   );
 }
