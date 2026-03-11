@@ -17,7 +17,7 @@ import {
   toAnalyticsErrorType,
 } from "@/lib/openpanel";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import { getNestedValue, setNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
@@ -41,32 +41,6 @@ function getDurationSeconds(formStartedAt: number | null): number {
   return formStartedAt != null
     ? Math.round((Date.now() - formStartedAt) / 1000)
     : 0;
-}
-
-/**
- * Sets a nested value in an object using dot notation path
- * Creates intermediate objects as needed
- */
-function setNestedValue(
-  obj: Record<string, unknown>,
-  path: string,
-  value: unknown
-): void {
-  const keys = path.split(".");
-  let current = obj;
-
-  for (let i = 0; i < keys.length - 1; i++) {
-    const key = keys[i];
-    if (!(key in current) || typeof current[key] !== "object") {
-      current[key] = {};
-    }
-    current = current[key] as Record<string, unknown>;
-  }
-
-  const lastKey = keys.at(-1);
-  if (lastKey) {
-    current[lastKey] = value;
-  }
 }
 
 /**
