@@ -371,16 +371,176 @@ jobs:
       - name: Perform CodeQL Analysis
         id: codeql
         uses: github/codeql-action/analyze@v3
+        with:
+          output: sarif-results
+          upload: false
         continue-on-error: true
       
-      - name: Report security results
-        if: steps.codeql.outcome == 'failure'
+      - name: Upload SARIF to GitHub
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: sarif-results
+        continue-on-error: true
+      
+      - name: Parse and report security results
+        if: always()
         run: |
-          echo "## ⚠️ Security Issues Found" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "CodeQL detected potential security vulnerabilities." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**View details:** Go to the Security tab → Code scanning alerts" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Note:** This won't block your PR, but please review the findings." >> $GITHUB_STEP_SUMMARY
+          # Find the SARIF file
+          SARIF_FILE=$(find sarif-results -name "*.sarif" -type f | head -n 1)
+          
+          if [ -z "$SARIF_FILE" ]; then
+            echo "## ✅ Security Scan Complete" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "No SARIF results file found. CodeQL analysis may still be processing." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+          
+          # Parse SARIF and generate summary
+          python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
+          import json
+          import os
+          import glob
+          
+          # Find SARIF file
+          sarif_files = glob.glob('sarif-results/**/*.sarif', recursive=True)
+          if not sarif_files:
+              print("## ✅ Security Scan Complete")
+              print("")
+              print("No security issues detected by CodeQL.")
+              exit(0)
+          
+          sarif_file = sarif_files[0]
+          
+          try:
+              with open(sarif_file, 'r') as f:
+                  sarif = json.load(f)
+              
+              # Extract results
+              all_results = []
+              for run in sarif.get('runs', []):
+                  results = run.get('results', [])
+                  rules = {r['id']: r for r in run.get('tool', {}).get('driver', {}).get('rules', [])}
+                  
+                  for result in results:
+                      rule_id = result.get('ruleId', 'Unknown')
+                      rule = rules.get(rule_id, {})
+                      
+                      level = result.get('level', 'warning')
+                      message = result.get('message', {}).get('text', 'No description')
+                      
+                      # Get location
+                      locations = result.get('locations', [])
+                      if locations:
+                          loc = locations[0].get('physicalLocation', {})
+                          file = loc.get('artifactLocation', {}).get('uri', 'Unknown')
+                          region = loc.get('region', {})
+                          line = region.get('startLine', 'Unknown')
+                      else:
+                          file = 'Unknown'
+                          line = 'Unknown'
+                      
+                      # Get fix recommendation from rule
+                      fix_recommendation = None
+                      if rule:
+                          # Try to get fix from rule help or description
+                          help_text = rule.get('help', {})
+                          if isinstance(help_text, dict):
+                              fix_recommendation = help_text.get('text', '')
+                          elif isinstance(help_text, str):
+                              fix_recommendation = help_text
+                          
+                          # If no help text, try full description
+                          if not fix_recommendation:
+                              full_desc = rule.get('fullDescription', {})
+                              if isinstance(full_desc, dict):
+                                  fix_recommendation = full_desc.get('text', '')
+                      
+                      all_results.append({
+                          'rule_id': rule_id,
+                          'level': level,
+                          'message': message,
+                          'file': file,
+                          'line': line,
+                          'rule_name': rule.get('shortDescription', {}).get('text', rule_id),
+                          'fix': fix_recommendation
+                      })
+              
+              if not all_results:
+                  print("## ✅ Security Scan Complete")
+                  print("")
+                  print("No security issues detected by CodeQL.")
+              else:
+                  # Group by severity
+                  errors = [r for r in all_results if r['level'] == 'error']
+                  warnings = [r for r in all_results if r['level'] == 'warning']
+                  notes = [r for r in all_results if r['level'] == 'note']
+                  
+                  print("## ⚠️ Security Issues Found")
+                  print("")
+                  print(f"CodeQL detected **{len(all_results)} potential security issue(s)**:")
+                  print(f"- 🔴 {len(errors)} error(s)")
+                  print(f"- 🟡 {len(warnings)} warning(s)")
+                  print(f"- 🔵 {len(notes)} note(s)")
+                  print("")
+                  
+                  # Get repo info
+                  repo = os.environ.get('GITHUB_REPOSITORY', '')
+                  sha = os.environ.get('GITHUB_SHA', '')
+                  
+                  # Show errors first
+                  if errors:
+                      print("### 🔴 Critical Issues")
+                      print("")
+                      for i, issue in enumerate(errors[:5], 1):  # Limit to 5
+                          print(f"**{i}. {issue['rule_name']}**")
+                          print(f"- **File**: `{issue['file']}` (line {issue['line']})")
+                          if repo and sha and issue['file'] != 'Unknown':
+                              file_url = f"https://github.com/{repo}/blob/{sha}/{issue['file']}#L{issue['line']}"
+                              print(f"- **View code**: [{issue['file']}:{issue['line']}]({file_url})")
+                          print(f"- **Issue**: {issue['message'][:200]}{'...' if len(issue['message']) > 200 else ''}")
+                          if issue['fix']:
+                              # Extract first sentence or first 200 chars as fix suggestion
+                              fix_text = issue['fix'].split('.')[0] if '.' in issue['fix'] else issue['fix'][:200]
+                              print(f"- **Recommended fix**: {fix_text}")
+                          print("")
+                      
+                      if len(errors) > 5:
+                          print(f"*...and {len(errors) - 5} more error(s)*")
+                          print("")
+                  
+                  # Show warnings (collapsed)
+                  if warnings:
+                      print("<details><summary>🟡 View {0} warning(s)</summary>".format(len(warnings)))
+                      print("")
+                      for i, issue in enumerate(warnings[:10], 1):  # Limit to 10
+                          print(f"**{i}. {issue['rule_name']}**")
+                          print(f"- **File**: `{issue['file']}` (line {issue['line']})")
+                          if repo and sha and issue['file'] != 'Unknown':
+                              file_url = f"https://github.com/{repo}/blob/{sha}/{issue['file']}#L{issue['line']}"
+                              print(f"- **View code**: [{issue['file']}:{issue['line']}]({file_url})")
+                          print(f"- **Issue**: {issue['message'][:200]}{'...' if len(issue['message']) > 200 else ''}")
+                          if issue['fix']:
+                              fix_text = issue['fix'].split('.')[0] if '.' in issue['fix'] else issue['fix'][:200]
+                              print(f"- **Recommended fix**: {fix_text}")
+                          print("")
+                      
+                      if len(warnings) > 10:
+                          print(f"*...and {len(warnings) - 10} more warning(s)*")
+                      print("</details>")
+                      print("")
+                  
+                  print("---")
+                  print("")
+                  print("**View full details**: Go to the Security tab → Code scanning alerts")
+                  print("")
+                  print("**Note**: This won't block your build, but please review and fix the findings.")
+          
+          except Exception as e:
+              print("## ⚠️ Security Scan Complete")
+              print("")
+              print(f"Could not parse SARIF results: {e}")
+              print("")
+              print("**View details**: Go to the Security tab → Code scanning alerts")
+          EOF
 
