@@ -166,6 +166,9 @@ jobs:
   secrets-scan:
     name: Secrets Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write  # Required to upload SARIF results
     steps:
       - uses: actions/checkout@v4
         with:
@@ -202,7 +205,7 @@ jobs:
       
       - name: Upload Gitleaks SARIF report
         if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: gitleaks-report.sarif
         continue-on-error: true
@@ -362,14 +365,14 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: javascript-typescript
           queries: security-extended  # Use security-extended query suite for better severity info
       
       - name: Perform CodeQL Analysis
         id: codeql
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           output: sarif-results
           upload: false
@@ -377,7 +380,7 @@ jobs:
       
       - name: Upload SARIF to GitHub
         if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: sarif-results
         continue-on-error: true
