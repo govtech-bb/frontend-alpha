@@ -101,12 +101,30 @@ async function checkLink(
   }
 
   // Skip certain protocols
-  if (
-    href.startsWith("mailto:") ||
-    href.startsWith("tel:") ||
-    href.startsWith("javascript:")
-  ) {
-    return result;
+  try {
+    const url = new URL(href, BASE_URL);
+    const protocol = url.protocol.toLowerCase();
+
+    // Skip non-HTTP protocols
+    if (
+      ["mailto:", "tel:", "javascript:", "data:", "vbscript:"].includes(
+        protocol
+      )
+    ) {
+      return result;
+    }
+  } catch {
+    // If URL parsing fails, fall back to string check with normalization
+    const normalizedHref = href.trim().toLowerCase();
+    if (
+      normalizedHref.startsWith("mailto:") ||
+      normalizedHref.startsWith("tel:") ||
+      normalizedHref.startsWith("javascript:") ||
+      normalizedHref.startsWith("data:") ||
+      normalizedHref.startsWith("vbscript:")
+    ) {
+      return result;
+    }
   }
 
   const isExternal = !isInternalUrl(href);

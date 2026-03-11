@@ -365,6 +365,7 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: javascript-typescript
+          queries: security-extended  # Use security-extended query suite for better severity info
       
       - name: Perform CodeQL Analysis
         id: codeql
