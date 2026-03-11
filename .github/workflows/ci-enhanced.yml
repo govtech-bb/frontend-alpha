@@ -357,6 +357,7 @@ jobs:
     permissions:
       contents: read
       security-events: write
+      pull-requests: read
     steps:
       - uses: actions/checkout@v4
       
@@ -415,6 +416,7 @@ jobs:
               
               # Extract results
               all_results = []
+              
               for run in sarif.get('runs', []):
                   results = run.get('results', [])
                   rules = {r['id']: r for r in run.get('tool', {}).get('driver', {}).get('rules', [])}
@@ -504,31 +506,64 @@ jobs:
                   low = [r for r in all_results if r['severity'] == 'Low']
                   unknown = [r for r in all_results if r['severity'] == 'Unknown']
                   
-                  print("## ⚠️ Security Issues Found")
-                  print("")
-                  print(f"CodeQL detected **{len(all_results)} potential security issue(s)**:")
-                  if critical:
-                      print(f"- 🔴 {len(critical)} Critical")
-                  if high:
-                      print(f"- 🟠 {len(high)} High")
-                  if medium:
-                      print(f"- 🟡 {len(medium)} Medium")
-                  if low:
-                      print(f"- 🟢 {len(low)} Low")
-                  if unknown:
-                      print(f"- ⚪ {len(unknown)} Unknown severity")
-                  print("")
-                  
                   # Get repo info
                   repo = os.environ.get('GITHUB_REPOSITORY', '')
                   sha = os.environ.get('GITHUB_SHA', '')
                   
-                  # Show critical and high severity issues prominently
+                  # Determine status
                   priority_issues = critical + high
+                  if priority_issues:
+                      print("## ⚠️ Security Issues Found - BUILD BLOCKED")
+                  else:
+                      print("## ⚠️ Security Issues Found")
+                  
+                  print("")
+                  print(f"CodeQL detected **{len(all_results)} potential security issue(s)**:")
+                  print("")
+                  
+                  # Summary counts
+                  if critical:
+                      print(f"- 🔴 **{len(critical)} Critical**")
+                  if high:
+                      print(f"- 🟠 **{len(high)} High**")
+                  if medium:
+                      print(f"- 🟡 **{len(medium)} Medium**")
+                  if low:
+                      print(f"- 🟢 **{len(low)} Low**")
+                  if unknown:
+                      print(f"- ⚪ **{len(unknown)} Unknown severity**")
+                  print("")
+                  
+                  # Show first priority issue as example
+                  if priority_issues:
+                      first_issue = priority_issues[0]
+                      severity_emoji = '🔴' if first_issue['severity'] == 'Critical' else '🟠'
+                      print(f"**{severity_emoji} {first_issue['severity']}: {first_issue['rule_name']}**")
+                      print(f"- **File**: `{first_issue['file']}` (line {first_issue['line']})")
+                      print(f"- **Issue**: {first_issue['message'][:150]}{'...' if len(first_issue['message']) > 150 else ''}")
+                      if repo and first_issue['rule_id']:
+                          alerts_url = f"https://github.com/{repo}/security/code-scanning"
+                          print(f"- **View in Security tab**: [See alert details]({alerts_url})")
+                      print("")
+                  elif medium:
+                      first_issue = medium[0]
+                      print(f"**🟡 {first_issue['severity']}: {first_issue['rule_name']}**")
+                      print(f"- **File**: `{first_issue['file']}` (line {first_issue['line']})")
+                      print(f"- **Issue**: {first_issue['message'][:150]}{'...' if len(first_issue['message']) > 150 else ''}")
+                      if repo and first_issue['rule_id']:
+                          alerts_url = f"https://github.com/{repo}/security/code-scanning"
+                          print(f"- **View in Security tab**: [See alert details]({alerts_url})")
+                      print("")
+                  
+                  # Collapsed details for all issues
+                  print("<details><summary>View all {0} issue(s)</summary>".format(len(all_results)))
+                  print("")
+                  
+                  # Show critical and high severity issues
                   if priority_issues:
                       print("### 🔴 Critical & High Severity Issues")
                       print("")
-                      for i, issue in enumerate(priority_issues[:10], 1):  # Limit to 10
+                      for i, issue in enumerate(priority_issues, 1):
                           severity_emoji = '🔴' if issue['severity'] == 'Critical' else '🟠'
                           print(f"**{i}. {severity_emoji} {issue['severity']}: {issue['rule_name']}**")
                           print(f"- **File**: `{issue['file']}` (line {issue['line']})")
@@ -537,7 +572,6 @@ jobs:
                               print(f"- **View code**: [{issue['file']}:{issue['line']}]({file_url})")
                           print(f"- **Issue**: {issue['message'][:200]}{'...' if len(issue['message']) > 200 else ''}")
                           
-                          # Add link to Security alerts filtered by this rule
                           if repo and issue['rule_id']:
                               alerts_url = f"https://github.com/{repo}/security/code-scanning?query=is:open+rule:{issue['rule_id']}"
                               print(f"- **View in Security tab**: [See alert details]({alerts_url})")
@@ -548,21 +582,12 @@ jobs:
                           elif issue['help_uri']:
                               print(f"- **Learn more**: [View documentation]({issue['help_uri']})")
                           print("")
-                      
-                      if len(priority_issues) > 10:
-                          print(f"*...and {len(priority_issues) - 10} more critical/high severity issue(s)*")
-                          print("")
                   
-                  # Show medium severity (collapsed if there are priority issues, expanded if not)
+                  # Show medium severity
                   if medium:
-                      if priority_issues:
-                          print("<details><summary>🟡 View {0} Medium severity issue(s)</summary>".format(len(medium)))
-                          print("")
-                      else:
-                          print("### 🟡 Medium Severity Issues")
-                          print("")
-                      
-                      for i, issue in enumerate(medium[:10], 1):
+                      print("### 🟡 Medium Severity Issues")
+                      print("")
+                      for i, issue in enumerate(medium, 1):
                           print(f"**{i}. 🟡 Medium: {issue['rule_name']}**")
                           print(f"- **File**: `{issue['file']}` (line {issue['line']})")
                           if repo and sha and issue['file'] != 'Unknown':
@@ -580,36 +605,24 @@ jobs:
                           elif issue['help_uri']:
                               print(f"- **Learn more**: [View documentation]({issue['help_uri']})")
                           print("")
-                      
-                      if len(medium) > 10:
-                          print(f"*...and {len(medium) - 10} more medium severity issue(s)*")
-                      
-                      if priority_issues:
-                          print("</details>")
-                      print("")
                   
-                  # Show low severity (collapsed)
+                  # Show low severity
                   if low:
-                      print("<details><summary>🟢 View {0} Low severity issue(s)</summary>".format(len(low)))
+                      print("### 🟢 Low Severity Issues")
                       print("")
-                      for i, issue in enumerate(low[:10], 1):
+                      for i, issue in enumerate(low, 1):
                           print(f"**{i}. 🟢 Low: {issue['rule_name']}**")
                           print(f"- **File**: `{issue['file']}` (line {issue['line']})")
                           if repo and issue['rule_id']:
                               alerts_url = f"https://github.com/{repo}/security/code-scanning?query=is:open+rule:{issue['rule_id']}"
                               print(f"- **View in Security tab**: [See alert details]({alerts_url})")
                           print("")
-                      
-                      if len(low) > 10:
-                          print(f"*...and {len(low) - 10} more low severity issue(s)*")
-                      print("</details>")
-                      print("")
                   
-                  # Show unknown severity (collapsed)
+                  # Show unknown severity
                   if unknown:
-                      print("<details><summary>⚪ View {0} Unknown severity issue(s)</summary>".format(len(unknown)))
+                      print("### ⚪ Unknown Severity Issues")
                       print("")
-                      for i, issue in enumerate(unknown[:10], 1):
+                      for i, issue in enumerate(unknown, 1):
                           print(f"**{i}. {issue['rule_name']}**")
                           print(f"- **File**: `{issue['file']}` (line {issue['line']})")
                           if repo and sha and issue['file'] != 'Unknown':
@@ -627,19 +640,14 @@ jobs:
                           elif issue['help_uri']:
                               print(f"- **Learn more**: [View documentation]({issue['help_uri']})")
                           print("")
-                      
-                      if len(unknown) > 10:
-                          print(f"*...and {len(unknown) - 10} more unknown severity issue(s)*")
-                      print("</details>")
-                      print("")
                   
-                  print("---")
+                  print("</details>")
                   print("")
                   print("**View full details**: Go to the Security tab → Code scanning alerts")
                   print("")
                   
                   # Determine if we should fail based on severity
-                  if critical or high:
+                  if priority_issues:
                       print("**⛔ Build blocked**: Critical or High severity issues must be fixed before merging.")
                   else:
                       print("**Note**: Medium and Low severity issues won't block your build, but please review and fix them.")
@@ -653,6 +661,11 @@ jobs:
           
           # Write result to file for shell script to read
           import sys
+          
+          # Only fail if there are critical/high issues
+          critical = [r for r in all_results if r['severity'] == 'Critical']
+          high = [r for r in all_results if r['severity'] == 'High']
+          
           with open('security-result.txt', 'w') as f:
               if critical or high:
                   f.write('BLOCK_BUILD=1')
