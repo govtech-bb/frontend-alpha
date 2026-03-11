@@ -33,7 +33,7 @@ export async function initDatadog() {
 
   console.log("[Datadog] Initializing RUM SDK", {
     applicationId,
-    clientToken: clientToken.substring(0, 10) + "...",
+    clientToken: `${clientToken.substring(0, 10)}...`,
     env,
     service,
     version,

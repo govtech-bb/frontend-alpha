@@ -1,4 +1,4 @@
 // Matomo type definitions
-interface Window {
+type Window = {
   _paq?: Array<Array<string | number>>;
-}
+};

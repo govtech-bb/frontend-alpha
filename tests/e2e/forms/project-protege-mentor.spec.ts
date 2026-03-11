@@ -4,7 +4,7 @@ import type { ApiResponse } from "@/types";
 
 const FORM_URL = "/work-employment/apply-to-be-a-project-protege-mentor/form";
 const FORM_KEY = "apply-to-be-a-project-protege-mentor";
-const API_SUBMIT_PATH = `/forms/${FORM_KEY}/submit`;
+const _API_SUBMIT_PATH = `/forms/${FORM_KEY}/submit`;
 
 /**
  * Test data generators
@@ -54,7 +54,7 @@ const generateRefereeData = () => ({
 /**
  * Format date as DD/MM/YYYY (matches DeclarationStep format)
  */
-function formatDate(date: Date): string {
+function _formatDate(date: Date): string {
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear();
@@ -64,7 +64,7 @@ function formatDate(date: Date): string {
 /**
  * Log the submitted form data from the request
  */
-function logSubmittedData(request: { postDataJSON: () => unknown }) {
+function _logSubmittedData(request: { postDataJSON: () => unknown }) {
   const submittedData = request.postDataJSON();
   console.log("\n📋 SUBMITTED FORM DATA:");
   console.log("─".repeat(50));
@@ -75,7 +75,7 @@ function logSubmittedData(request: { postDataJSON: () => unknown }) {
 /**
  * Verify the API response structure and success status
  */
-function verifyApiResponse(response: ApiResponse, formId: string) {
+function _verifyApiResponse(response: ApiResponse, formId: string) {
   expect(response.success).toBe(true);
   expect(response.message).toBeTruthy();
   expect(response.data).toBeTruthy();

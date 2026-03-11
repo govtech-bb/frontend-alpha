@@ -8,7 +8,7 @@ const PATTERNS_BASE_URL =
 const SERVICE_CONTRACTS_BASE_URL =
   process.env.NEXT_PUBLIC_SERVICE_CONTRACTS_CDN_URL || "/service-contracts";
 
-export interface PatternDefinition {
+export type PatternDefinition = {
   id: string;
   version: string;
   name: string;
@@ -22,9 +22,9 @@ export interface PatternDefinition {
     [key: string]: unknown;
   }>;
   metadata?: Record<string, unknown>;
-}
+};
 
-export interface ServiceContract {
+export type ServiceContract = {
   id: string;
   version: string;
   name: string;
@@ -41,7 +41,7 @@ export interface ServiceContract {
     [key: string]: unknown;
   }>;
   metadata?: Record<string, unknown>;
-}
+};
 
 /**
  * Fetches a pattern definition from the CDN or local public directory

@@ -21,7 +21,7 @@ export async function getMarkdownContent(slugPath: string[]) {
         try {
           fileContent = await fs.readFile(possiblePath, "utf8");
           break;
-          // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+          // biome-ignore lint/suspicious/noEmptyBlockStatements: Intentionally empty - trying multiple paths
         } catch (_error) {}
       }
 
@@ -49,7 +49,6 @@ export async function getMarkdownContent(slugPath: string[]) {
   }
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export async function getFeaturedServices() {
   try {
     const contentDir = path.join(process.cwd(), "src", "content");
@@ -96,7 +95,7 @@ export async function getFeaturedServices() {
             featured: data.featured,
           });
         }
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: Intentionally empty - trying multiple paths
       } catch (_error) {}
     }
 
@@ -106,7 +105,6 @@ export async function getFeaturedServices() {
   }
 }
 
-// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: <explanation>
 export async function getAlphaServices() {
   try {
     const contentDir = path.join(process.cwd(), "src", "content");
@@ -153,7 +151,7 @@ export async function getAlphaServices() {
             featured: data.featured,
           });
         }
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: <explanation>
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: Intentionally empty - trying multiple paths
       } catch (_error) {}
     }
 

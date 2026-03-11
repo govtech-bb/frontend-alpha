@@ -263,6 +263,10 @@ async function fillField(
         }
         break;
       }
+
+      default:
+        console.warn(`Unknown field type: ${type} for field ${name}`);
+        break;
     }
   } catch (error) {
     console.warn(`Failed to fill field ${name}:`, error);

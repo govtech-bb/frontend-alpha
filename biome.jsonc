@@ -1,6 +1,10 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": ["ultracite/core", "ultracite/react", "ultracite/next"],
+  "files": {
+    "includes": ["!!**/*.test.tsx", "!!**/*.test.ts"],
+    "ignoreUnknown": true
+  },
   "linter": {
     "rules": {
       "performance": {
@@ -22,12 +26,9 @@
       },
       "nursery": {
         "noLeakedRender": "off",
-        "noIncrementDecrement": "warn",
+        "noIncrementDecrement": "off",
         "noShadow": "off"
       }
     }
-  },
-  "files": {
-    "includes": ["!!**/*.test.tsx", "!!**/*.test.ts"]
   }
 }

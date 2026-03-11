@@ -27,14 +27,14 @@ export function initMatomo() {
   // Load Matomo script
   (() => {
     const u = "https://alphabb.matomo.cloud/";
-    window._paq.push(["setTrackerUrl", u + "matomo.php"]);
+    window._paq.push(["setTrackerUrl", `${u}matomo.php`]);
     window._paq.push(["setSiteId", "1"]);
     const d = document;
     const g = d.createElement("script");
     const s = d.getElementsByTagName("script")[0];
     g.async = true;
     g.src = "https://cdn.matomo.cloud/alphabb.matomo.cloud/matomo.js";
-    if (s && s.parentNode) {
+    if (s?.parentNode) {
       s.parentNode.insertBefore(g, s);
     }
   })();
