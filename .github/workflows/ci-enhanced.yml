@@ -197,19 +197,6 @@ jobs:
           gitleaks detect --source . --verbose --report-format json --report-path gitleaks-history.json 2>&1 | tee gitleaks-history-output.txt || true
         continue-on-error: true
       
-      - name: Generate SARIF report
-        if: always()
-        run: |
-          gitleaks detect --source . --report-format sarif --report-path gitleaks-report.sarif || true
-        continue-on-error: true
-      
-      - name: Upload Gitleaks SARIF report
-        if: always()
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: gitleaks-report.sarif
-        continue-on-error: true
-      
       - name: Analyze and report secrets
         if: steps.gitleaks_current.outcome == 'failure'
         run: |
@@ -376,13 +363,6 @@ jobs:
         with:
           output: sarif-results
           upload: false
-        continue-on-error: true
-      
-      - name: Upload SARIF to GitHub
-        if: always()
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: sarif-results
         continue-on-error: true
       
       - name: Parse and report security results
