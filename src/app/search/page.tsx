@@ -27,7 +27,7 @@ export default async function SearchPage({
             <Text as="p" className="font-bold">
               Search for a service
             </Text>
-            <SearchForm defaultValue={query} id="search-page-input" />
+            <SearchForm defaultValue={query} />
           </div>
         </div>
       </section>
