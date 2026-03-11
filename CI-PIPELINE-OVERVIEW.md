@@ -49,8 +49,11 @@ The pipeline runs the following checks (6 stages total):
   - Production bundle generation
 
 ### 5. Secrets Scan
-- **Purpose**: Detects hardcoded secrets in the codebase
+- **Purpose**: Detects hardcoded secrets to prevent introducing new secrets into the codebase
 - **Tool**: Gitleaks (CLI)
+- **Scanning strategy**: 
+  - **Primary scan**: Current commit only (fast, blocks build)
+  - **Secondary scan**: If secrets found, also scans git history for context (warning only)
 - **What it checks**:
   - API keys and tokens
   - Passwords and credentials
@@ -59,9 +62,11 @@ The pipeline runs the following checks (6 stages total):
   - Database connection strings
   - AWS keys, GitHub tokens, etc.
 - **Blocking behavior**: 
-  - ⛔ **Blocks build** if secrets found in current files
-  - ⚠️ **Warning only** if secrets found in deleted files (git history)
-- **Error reporting**: Shows exact file locations, line numbers, and masked secret values
+  - ⛔ **Blocks build** if secrets found in current commit
+  - ⚠️ **Warning only** if secrets found in git history or other branches
+- **Error reporting**: 
+  - Shows exact file locations, line numbers, and masked secret values
+  - Separates current commit secrets (must fix) from historical secrets (should review)
 - **Action required**: Replace hardcoded secrets with safe placeholder values
 
 **Safe placeholder patterns that won't trigger the scanner:**
@@ -78,9 +83,16 @@ The pipeline runs the following checks (6 stages total):
 // ✅ GOOD: const token = 'your-datadog-client-token-here'
 ```
 
+**Why this approach?**
+- Fast feedback: Scans current commit first (seconds)
+- Context awareness: Shows if similar secrets exist elsewhere (for awareness)
+- Strict enforcement: Only blocks build for new secrets being introduced
+- GitHub Advanced Security provides continuous monitoring of the entire repository
+
 ### 6. Security Scan (Code Vulnerabilities)
-- **Purpose**: Identifies potential security vulnerabilities in code
+- **Purpose**: Identifies potential security vulnerabilities in current code changes
 - **Tool**: GitHub CodeQL
+- **Scope**: Analyzes code patterns and data flow in current commit
 - **What it checks**:
   - SQL injection vulnerabilities
   - Cross-site scripting (XSS) risks
@@ -94,6 +106,8 @@ The pipeline runs the following checks (6 stages total):
   - 🟠 High (7.0-8.9) - Blocks build
   - 🟡 Medium (4.0-6.9) - Warning only
   - 🟢 Low (0.0-3.9) - Warning only
+
+**Note**: GitHub Advanced Security continuously monitors the entire repository. This CI check focuses on preventing new vulnerabilities from being introduced.
 
 ## Enhanced Error Reporting
 
