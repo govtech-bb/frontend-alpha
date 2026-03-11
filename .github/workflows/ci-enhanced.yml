@@ -21,13 +21,22 @@ jobs:
       
       - name: Run lint
         id: lint
-        run: npm run lint
+        run: |
+          npm run lint 2>&1 | tee lint-output.txt
+          exit ${PIPESTATUS[0]}
         continue-on-error: true
       
       - name: Report lint results
         if: steps.lint.outcome == 'failure'
         run: |
           echo "## ❌ Lint Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>View lint errors</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat lint-output.txt >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Fix it locally:**" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
@@ -48,13 +57,22 @@ jobs:
       
       - name: Run type check
         id: typecheck
-        run: npx tsc --noEmit
+        run: |
+          npx tsc --noEmit 2>&1 | tee typecheck-output.txt
+          exit ${PIPESTATUS[0]}
         continue-on-error: true
       
       - name: Report type check results
         if: steps.typecheck.outcome == 'failure'
         run: |
           echo "## ❌ Type Check Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>View type errors</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat typecheck-output.txt >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Fix it locally:**" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
@@ -80,13 +98,22 @@ jobs:
       
       - name: Run unit tests
         id: test
-        run: npm run test:unit:run
+        run: |
+          npm run test:unit:run 2>&1 | tee test-output.txt
+          exit ${PIPESTATUS[0]}
         continue-on-error: true
       
       - name: Report test results
         if: steps.test.outcome == 'failure'
         run: |
           echo "## ❌ Unit Tests Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>View test failures</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat test-output.txt >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Fix it locally:**" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
@@ -113,13 +140,22 @@ jobs:
       
       - name: Build application
         id: build
-        run: npm run build
+        run: |
+          npm run build 2>&1 | tee build-output.txt
+          exit ${PIPESTATUS[0]}
         continue-on-error: true
       
       - name: Report build results
         if: steps.build.outcome == 'failure'
         run: |
           echo "## ❌ Build Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>View build errors</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          tail -100 build-output.txt >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Fix it locally:**" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
@@ -149,7 +185,9 @@ jobs:
       
       - name: Run E2E tests
         id: e2e
-        run: npx playwright test visual
+        run: |
+          npx playwright test visual 2>&1 | tee e2e-output.txt
+          exit ${PIPESTATUS[0]}
         continue-on-error: true
       
       - uses: actions/upload-artifact@v4
@@ -166,12 +204,22 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Visual regression tests detected changes." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+          echo "<details><summary>View test output</summary>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          tail -50 e2e-output.txt >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "</details>" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "**If changes are intentional, update snapshots:**" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
           echo "npm run test:e2e:update" >> $GITHUB_STEP_SUMMARY
           echo "git add tests/" >> $GITHUB_STEP_SUMMARY
           echo "git commit -m 'test: Update visual snapshots'" >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**View the report:** Download the 'playwright-report' artifact above" >> $GITHUB_STEP_SUMMARY
+          exit 1
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**View the report:** Download the 'playwright-report' artifact above" >> $GITHUB_STEP_SUMMARY
           exit 1
