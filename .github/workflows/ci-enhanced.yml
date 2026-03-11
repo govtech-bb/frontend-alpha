@@ -215,6 +215,7 @@ jobs:
             python3 << 'EOF' >> $GITHUB_STEP_SUMMARY
           import json
           import sys
+          import os
           
           try:
               with open('gitleaks-report.json', 'r') as f:
@@ -223,6 +224,10 @@ jobs:
               if not data:
                   print("No secrets found in report.")
                   sys.exit(0)
+              
+              # Get repo info from environment
+              repo = os.environ.get('GITHUB_REPOSITORY', '')
+              sha = os.environ.get('GITHUB_SHA', '')
                   
               for i, finding in enumerate(data, 1):
                   file = finding.get('File', 'Unknown')
@@ -238,7 +243,13 @@ jobs:
                       masked = '*' * len(secret) if secret else 'N/A'
                   
                   print(f"**{i}. {rule}**")
-                  print(f"- **File**: `{file}:{line}`")
+                  print(f"- **Location**: `{file}` (line {line})")
+                  
+                  # Add clickable link to file if we have repo info
+                  if repo and sha and file != 'Unknown':
+                      file_url = f"https://github.com/{repo}/blob/{sha}/{file}#L{line}"
+                      print(f"- **View file**: [{file}:{line}]({file_url})")
+                  
                   print(f"- **Match**: `{match[:100]}...`" if len(match) > 100 else f"- **Match**: `{match}`")
                   print(f"- **Secret**: `{masked}`")
                   print("")
