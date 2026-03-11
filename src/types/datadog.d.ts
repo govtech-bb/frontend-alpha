@@ -5,3 +5,5 @@ declare global {
     DD_RUM?: RumGlobal;
   }
 }
+
+export {};

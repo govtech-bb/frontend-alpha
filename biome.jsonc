@@ -30,5 +30,20 @@
         "noShadow": "off"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.d.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useConsistentTypeDefinitions": "off"
+          },
+          "complexity": {
+            "noUselessEmptyExport": "off"
+          }
+        }
+      }
+    }
+  ]
 }
