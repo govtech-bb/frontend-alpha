@@ -171,20 +171,34 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for gitleaks
       
+      - name: Install Gitleaks
+        run: |
+          wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
+          tar -xzf gitleaks_8.18.2_linux_x64.tar.gz
+          chmod +x gitleaks
+          sudo mv gitleaks /usr/local/bin/
+      
       - name: Run Gitleaks
         id: gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_ENABLE_SUMMARY: true
+        run: |
+          gitleaks detect --source . --verbose --report-format sarif --report-path gitleaks-report.sarif
         continue-on-error: true
       
-      - name: Report secrets scan results
+      - name: Upload Gitleaks SARIF report
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: gitleaks-report.sarif
+        continue-on-error: true
+      
+      - name: Report secrets found
         if: steps.gitleaks.outcome == 'failure'
         run: |
           echo "## 🚨 Secrets Detected in Code" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Hardcoded secrets were found in the codebase. This is a security risk!" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ **CRITICAL: Hardcoded secrets were found in the codebase!**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This is a security risk and the build has been blocked." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Common secrets detected:**" >> $GITHUB_STEP_SUMMARY
           echo "- API keys" >> $GITHUB_STEP_SUMMARY
@@ -194,11 +208,12 @@ jobs:
           echo "- Database credentials" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Action required:**" >> $GITHUB_STEP_SUMMARY
-          echo "1. Remove the secrets from your code" >> $GITHUB_STEP_SUMMARY
-          echo "2. Use environment variables or secret management instead" >> $GITHUB_STEP_SUMMARY
-          echo "3. Rotate any exposed credentials immediately" >> $GITHUB_STEP_SUMMARY
+          echo "1. Check the 'Run Gitleaks' step above for specific file locations" >> $GITHUB_STEP_SUMMARY
+          echo "2. Remove the secrets from your code" >> $GITHUB_STEP_SUMMARY
+          echo "3. Use environment variables or secret management instead" >> $GITHUB_STEP_SUMMARY
+          echo "4. Rotate any exposed credentials immediately" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Check the logs above for specific file locations**" >> $GITHUB_STEP_SUMMARY
+          echo "**Need help?** See the gitleaks report in the step logs above." >> $GITHUB_STEP_SUMMARY
           exit 1
 
   security:
