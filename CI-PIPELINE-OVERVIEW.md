@@ -61,7 +61,21 @@ The pipeline runs the following checks (6 stages total):
   - ⛔ **Blocks build** if secrets found in current files
   - ⚠️ **Warning only** if secrets found in deleted files (git history)
 - **Error reporting**: Shows exact file locations, line numbers, and masked secret values
-- **Action required**: Remove secrets from current files and use environment variables instead
+- **Action required**: Replace hardcoded secrets with safe placeholder values
+
+**Safe placeholder patterns that won't trigger the scanner:**
+- Environment variables: `process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN`
+- Descriptive text: `'your-datadog-token-here'`, `'replace-with-your-api-key'`
+- Obvious fake values: `'xxxx-xxxx-xxxx-xxxx'`, `'0000000000000000'`
+- Example format: `'pub_EXAMPLE_TOKEN_12345'` (prefix with EXAMPLE)
+- Create `.env.example` with placeholder values
+
+**Example:**
+```javascript
+// ❌ BAD: const token = 'pub4d95362c505b47482fc97b644193384e'
+// ✅ GOOD: const token = process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN
+// ✅ GOOD: const token = 'your-datadog-client-token-here'
+```
 
 ### 6. Security Scan (Code Vulnerabilities)
 - **Purpose**: Identifies potential security vulnerabilities in code

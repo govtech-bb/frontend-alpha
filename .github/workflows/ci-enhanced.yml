@@ -333,8 +333,23 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Action required:**" >> $GITHUB_STEP_SUMMARY
           if [ "$CURRENT_COUNT" -gt 0 ]; then
-            echo "1. ⛔ **Fix current files immediately** - Remove secrets and use environment variables" >> $GITHUB_STEP_SUMMARY
-            echo "2. Rotate any exposed credentials" >> $GITHUB_STEP_SUMMARY
+            echo "1. ⛔ **Fix current files immediately** - Replace hardcoded secrets with safe placeholder values" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Safe placeholder patterns that won't trigger the scanner:**" >> $GITHUB_STEP_SUMMARY
+            echo "- Use environment variables: \`process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN\`" >> $GITHUB_STEP_SUMMARY
+            echo "- Use descriptive text: \`'your-datadog-token-here'\`, \`'replace-with-your-api-key'\`" >> $GITHUB_STEP_SUMMARY
+            echo "- Use obvious fake values: \`'xxxx-xxxx-xxxx-xxxx'\`, \`'0000000000000000'\`" >> $GITHUB_STEP_SUMMARY
+            echo "- Use example format: \`'pub_EXAMPLE_TOKEN_12345'\` (prefix with EXAMPLE)" >> $GITHUB_STEP_SUMMARY
+            echo "- Create \`.env.example\` with placeholder values and document in README" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Example:**" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`javascript" >> $GITHUB_STEP_SUMMARY
+            echo "// ❌ BAD: const token = 'pub4d95362c505b47482fc97b644193384e'" >> $GITHUB_STEP_SUMMARY
+            echo "// ✅ GOOD: const token = process.env.NEXT_PUBLIC_DD_CLIENT_TOKEN" >> $GITHUB_STEP_SUMMARY
+            echo "// ✅ GOOD: const token = 'your-datadog-client-token-here'" >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "2. Rotate any exposed credentials immediately" >> $GITHUB_STEP_SUMMARY
           fi
           if [ "$HISTORICAL_COUNT" -gt 0 ]; then
             echo "3. ⚠️ Review historical secrets - Rotate if they were real credentials" >> $GITHUB_STEP_SUMMARY
@@ -442,7 +457,12 @@ jobs:
                       
                       # Get fix recommendation from rule
                       fix_recommendation = None
+                      rule_help_uri = None
+                      
                       if rule:
+                          # Get help URI for more details
+                          rule_help_uri = rule.get('helpUri', '')
+                          
                           # Try to get fix from rule help or description
                           help_text = rule.get('help', {})
                           if isinstance(help_text, dict):
@@ -463,7 +483,8 @@ jobs:
                           'file': file,
                           'line': line,
                           'rule_name': rule.get('shortDescription', {}).get('text', rule_id),
-                          'fix': fix_recommendation
+                          'fix': fix_recommendation,
+                          'help_uri': rule_help_uri
                       })
               
               if not all_results:
