@@ -2,7 +2,7 @@
 
 import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
 import { useOpenPanel } from "@openpanel/nextjs";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 
@@ -40,8 +40,12 @@ function PaymentRow({ label, value }: { label: string; value: string }) {
 export const PaymentBlock = ({ paymentData, formId }: Props) => {
   const openPanel = useOpenPanel();
   const pathname = usePathname();
+  const router = useRouter();
   const searchParams = useSearchParams();
+
   const categorySlug = pathname.split("/").filter(Boolean)[0] ?? "";
+  const paymentURL = paymentData.paymentUrl;
+
   const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
@@ -236,20 +240,24 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
         />
       </div>
 
-      {paymentData.paymentUrl ? (
+      {paymentURL ? (
         verifying ? (
           <Button disabled type="button">
             Verifying...
           </Button>
         ) : (
           <LinkButton
-            href={paymentData.paymentUrl}
-            onClick={() =>
+            href={paymentURL}
+            onClick={(e) => {
+              e.preventDefault();
+
               openPanel.track(
                 TRACKED_EVENTS.PAYMENT_INITIATED_EVENT,
                 getFormBaseContext(formId, categorySlug)
-              )
-            }
+              );
+
+              router.push(paymentURL!);
+            }}
             variant="primary"
           >
             Continue to payment
