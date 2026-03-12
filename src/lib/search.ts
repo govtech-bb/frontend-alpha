@@ -20,17 +20,23 @@ const allServices: SearchResult[] = INFORMATION_ARCHITECTURE.flatMap(
     }))
 );
 
-export function searchServices(query: string): SearchResult[] {
+export function searchServices(
+  query: string,
+  alphaSlugs?: Set<string>
+): SearchResult[] {
   const trimmed = query.trim().toLowerCase();
+  const services = alphaSlugs
+    ? allServices.filter((s) => alphaSlugs.has(s.slug))
+    : allServices;
 
   if (!trimmed) {
-    return allServices;
+    return services;
   }
 
   const titleMatches: SearchResult[] = [];
   const descriptionMatches: SearchResult[] = [];
 
-  for (const service of allServices) {
+  for (const service of services) {
     if (service.title.toLowerCase().includes(trimmed)) {
       titleMatches.push(service);
     } else if (service.description.toLowerCase().includes(trimmed)) {
