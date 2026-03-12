@@ -15,8 +15,14 @@ export function SearchResults({
   return (
     <div aria-live="polite">
       <Heading as="h2" className="mb-m">
-        {query ? "Search results" : "All services"}
+        {query ? "Search results" : "Alpha Services"}
       </Heading>
+
+      {!query && (
+        <Text as="p" className="mb-s">
+          These services are in alpha
+        </Text>
+      )}
 
       {query && (
         <Text as="p" className="mb-s text-mid-grey-00">
@@ -24,6 +30,13 @@ export function SearchResults({
           for &ldquo;
           <strong>{query}</strong>&rdquo;{" "}
           {results.length === 1 ? "was" : "were"} found
+        </Text>
+      )}
+
+      {query && results.length === 0 && (
+        <Text as="p">
+          What you were looking for couldn&apos;t be found, try entering a
+          different phrase.
         </Text>
       )}
 
