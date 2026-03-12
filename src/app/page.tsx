@@ -33,27 +33,22 @@ export default function Home() {
         <div className="container">
           <div className="space-y-4 py-8">
             <div className="flex flex-col gap-2">
+              <Heading as="h2">Alpha services</Heading>
+
               <Text as="p" className="font-bold">
                 Search for a service
               </Text>
               <SearchForm />
             </div>
 
-            <Heading as="h2">Alpha public services</Heading>
-
             <Text as="p">
               These services are new. We're working on them and they are likely
               to change as we learn more.
             </Text>
 
-            <LinkButton
-              as={NextLink}
-              className="bg-[#1a777d]!"
-              href="/search"
-              variant="primary"
-            >
+            <Link as={NextLink} href="/search" variant={"secondary"}>
               View all services
-            </LinkButton>
+            </Link>
           </div>
         </div>
       </section>
