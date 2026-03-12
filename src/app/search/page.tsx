@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { SearchResults } from "@/components/search-results";
+import { getAlphaServices } from "@/lib/markdown";
 import { searchServices } from "@/lib/search";
 
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export default async function SearchPage({
 }) {
   const { q = "" } = await searchParams;
   const query = q.trim();
-  const results = searchServices(query);
+  const alphaServices = await getAlphaServices();
+  const alphaSlugs = new Set(alphaServices.map((s) => s.slug));
+  const results = searchServices(query, alphaSlugs);
 
   return (
     <>
