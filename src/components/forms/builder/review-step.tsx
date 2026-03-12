@@ -110,12 +110,10 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
             }
           }
 
-          if (field.type === "select" && field.options) {
-            const option = field.options.find((opt) => opt.value === value);
-            displayValue = option?.label || value;
-          }
-
-          if (field.type === "radio" && field.options) {
+          if (
+            (field.type === "select" || field.type === "radio") &&
+            field.options
+          ) {
             const option = field.options.find((opt) => opt.value === value);
             displayValue = option?.label || value;
           }

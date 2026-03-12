@@ -75,12 +75,12 @@ export function DeclarationStep({ step, serviceTitle }: DeclarationStepProps) {
   useEffect(() => {
     if (dateField) {
       setValue(
-        dateField.name as keyof FormData,
+        dateField.name,
         {
           day: today.getDate().toString(),
           month: (today.getMonth() + 1).toString(),
           year: today.getFullYear().toString(),
-        } as FormData[keyof FormData],
+        },
         { shouldValidate: false }
       );
     }
@@ -163,7 +163,7 @@ export function DeclarationStep({ step, serviceTitle }: DeclarationStepProps) {
           <div id={checkboxField.name}>
             <Controller
               control={control}
-              name={checkboxField.name as keyof FormData}
+              name={checkboxField.name}
               render={({ field: controllerField }) => (
                 <Checkbox
                   checked={controllerField.value === "yes"}
