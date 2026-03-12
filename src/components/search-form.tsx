@@ -10,8 +10,9 @@ export function SearchForm({ defaultValue = "" }: { defaultValue?: string }) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmed = query.trim();
-    if (!trimmed) return;
-    router.push(`/search?q=${encodeURIComponent(trimmed)}`);
+    router.push(
+      trimmed ? `/search?q=${encodeURIComponent(trimmed)}` : "/search"
+    );
   }
 
   return (
