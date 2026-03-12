@@ -54,7 +54,11 @@ export function SearchResults({
               >
                 {result.title}
               </Link>
-              {result.description && <Text as="p">{result.description}</Text>}
+              {result.description && (
+                <Text as="p" className="hidden lg:block">
+                  {result.description}
+                </Text>
+              )}
               <Text as="p" className="text-mid-grey-00">
                 {result.hasOnlineForm
                   ? "Digital service"
