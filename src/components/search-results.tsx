@@ -14,12 +14,12 @@ export function SearchResults({
 }) {
   return (
     <div aria-live="polite">
-      <Heading as="h2" className="mb-6">
+      <Heading as="h2" className="mb-m">
         {query ? "Search results" : "All services"}
       </Heading>
 
       {query && (
-        <Text as="p" className="mb-4 text-mid-grey-00">
+        <Text as="p" className="mb-s text-mid-grey-00">
           {results.length} search {results.length === 1 ? "result" : "results"}{" "}
           for &ldquo;
           <strong>{query}</strong>&rdquo;{" "}
@@ -28,10 +28,10 @@ export function SearchResults({
       )}
 
       {results.length > 0 && (
-        <ul className="flex flex-col gap-4.5">
+        <ul className="flex flex-col gap-s">
           {results.map((result) => (
             <li
-              className="flex flex-col gap-2 border-grey-00 border-b-2 py-4 first:pt-0"
+              className="flex flex-col gap-xs border-grey-00 border-b-2 py-s first:pt-0"
               key={result.slug}
             >
               <Link
