@@ -17,20 +17,20 @@ export default function NotFound() {
         <div className="space-y-s">
           <Heading as="h3">Suggestions:</Heading>
 
-          <ul className="space-y-s">
+          <ul className="list-disc space-y-s pl-7.5">
             <li>Check the web address for typos</li>
             <li>Return to the homepage</li>
-            {/* <li>Browse our services directory</li> */}
+            <li>Browse our services directory</li>
           </ul>
         </div>
 
         {/* Quick Link Buttons */}
         <div className="flex flex-col gap-xm md:flex-row">
-          {/* <LinkButton href="/" variant="secondary">
+          <LinkButton href="/search" variant="secondary">
             Browse service directory
-          </LinkButton> */}
+          </LinkButton>
           <LinkButton href="/" variant="primary">
-            Return to homepage
+            Return to the homepage
           </LinkButton>
         </div>
       </div>
