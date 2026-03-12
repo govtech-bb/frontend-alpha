@@ -14,7 +14,7 @@ export function SearchResults({
 }) {
   return (
     <div aria-live="polite">
-      <Heading as="h2" className="mb-m">
+      <Heading as="h2" className="mb-s">
         {query ? "Search results" : "Alpha Services"}
       </Heading>
 
@@ -44,7 +44,7 @@ export function SearchResults({
         <ul className="flex flex-col gap-s">
           {results.map((result) => (
             <li
-              className="flex flex-col gap-xs border-grey-00 border-b-2 py-s first:pt-0"
+              className="flex flex-col items-start gap-xs border-grey-00 border-b-2 py-s first:pt-0"
               key={result.slug}
             >
               <Link
