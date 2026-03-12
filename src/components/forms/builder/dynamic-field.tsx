@@ -259,9 +259,7 @@ export function DynamicField({
                 return (
                   <DateInput
                     description={
-                      conditionalError?.message ??
-                      conditionalField.hint ??
-                      conditionalField.placeholder
+                      conditionalField.hint ?? conditionalField.placeholder
                     }
                     error={conditionalError?.message}
                     id={conditionalField.name}
@@ -459,7 +457,7 @@ export function DynamicField({
 
             return (
               <DateInput
-                description={error?.message ?? field.hint ?? field.placeholder}
+                description={field.hint ?? field.placeholder}
                 error={error?.message}
                 id={field.name}
                 label={field.hidden ? "" : field.label}
