@@ -43,7 +43,7 @@ export default function RootLayout({
         <OpenPanelComponent
           clientId={OPENPANEL_SITE_ID}
           trackAttributes={true}
-          trackOutgoingLinks={true}
+          trackOutgoingLinks={false}
           trackScreenViews={true}
         />
         <Header />
