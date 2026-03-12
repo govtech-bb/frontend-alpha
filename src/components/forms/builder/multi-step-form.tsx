@@ -415,12 +415,19 @@ export default function DynamicMultiStepForm({
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+
   const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
 
   const { form, category } = useMemo(
     () => getFormContext(pathname, formId),
     [pathname, formId]
   );
+
+  let resolvedFormForTracking = form;
+
+  if (storageKey === FORM_NAMES.EXIT_SURVEY) {
+    resolvedFormForTracking = searchParams?.get("ref_id") ?? form ?? "";
+  }
 
   // Get store hook (uses singleton cache internally)
   const useFormStore = createFormStore(storageKey);
@@ -873,11 +880,11 @@ export default function DynamicMultiStepForm({
       const stepId = expandedFormSteps[stepIndex]?.id ?? "";
 
       openPanel.track(TRACKED_EVENTS.FORM_STEP_COMPLETE_EVENT, {
-        ...getFormBaseContext(form, category),
-        step: getStepForTracking(form, stepId),
+        ...getFormBaseContext(resolvedFormForTracking, category),
+        step: getStepForTracking(resolvedFormForTracking, stepId),
       });
     },
-    [form, category, expandedFormSteps]
+    [form, category, resolvedFormForTracking, expandedFormSteps]
   );
 
   const onSubmit = async (data: FormData) => {
@@ -1376,8 +1383,8 @@ export default function DynamicMultiStepForm({
     const stepId = expandedFormSteps[currentStep]?.id ?? "";
 
     openPanel.track(TRACKED_EVENTS.FORM_STEP_BACK_EVENT, {
-      ...getFormBaseContext(form, category),
-      step: getStepForTracking(form, stepId),
+      ...getFormBaseContext(resolvedFormForTracking, category),
+      step: getStepForTracking(resolvedFormForTracking, stepId),
     });
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);
