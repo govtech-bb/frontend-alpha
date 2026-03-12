@@ -28,10 +28,10 @@ export function SearchResults({
       )}
 
       {results.length > 0 && (
-        <ul>
+        <ul className="flex flex-col gap-4.5">
           {results.map((result) => (
             <li
-              className="border-grey-00 border-b-2 pt-8 pb-8 first:pt-0"
+              className="flex flex-col gap-2 border-grey-00 border-b-2 py-4 first:pt-0"
               key={result.slug}
             >
               <Link
@@ -41,16 +41,12 @@ export function SearchResults({
               >
                 {result.title}
               </Link>
-              {result.description && (
-                <Text as="p" className="mt-2">
-                  {result.description}
-                </Text>
-              )}
-              <span className="mt-2 block w-fit bg-pink-10 px-2 py-1 text-pink-00">
+              {result.description && <Text as="p">{result.description}</Text>}
+              <Text as="p" className="text-mid-grey-00">
                 {result.hasOnlineForm
-                  ? "This service can be done online"
-                  : "This service is for information purposes only"}
-              </span>
+                  ? "Digital service"
+                  : "Information service"}
+              </Text>
             </li>
           ))}
         </ul>
