@@ -50,6 +50,7 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
     status: "success" | "failed" | "initiated" | null;
+    referenceNumber?: string;
     transactionNumber?: string;
     amount?: string;
   }>({ status: null });
@@ -88,9 +89,15 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
 
           if (result.success && result.data) {
             const data: PaymentVerifyResponse = result.data;
+            // The API may returns pipe-separated values for the reference number
+            // Extract just the last segment as the display reference
+            const displayReference = data.referenceNumber?.includes("|")
+              ? data.referenceNumber.split("|").pop()
+              : data.referenceNumber;
             setPaymentStatus({
               status: data.status as "success" | "failed" | "initiated",
-              transactionNumber: data.referenceNumber,
+              referenceNumber: displayReference,
+              transactionNumber: tx,
               amount: String(data.totalAmount),
             });
 
@@ -137,10 +144,10 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
             label="Amount:"
             value={`$${paymentStatus.amount || paymentData.amount.toFixed(2)}`}
           />
-          {paymentStatus.transactionNumber && (
+          {paymentStatus.referenceNumber && (
             <PaymentRow
               label="Reference number:"
-              value={paymentStatus.transactionNumber}
+              value={paymentStatus.referenceNumber}
             />
           )}
           <PaymentRow
