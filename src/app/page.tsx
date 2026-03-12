@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <section className="border-yellow-00 border-b-4 bg-yellow-100">
         <div className="container">
-          <div className="space-y-4 py-8 lg:space-y-4">
+          <div className="space-y-4 py-8">
             <Heading as="h1">
               How you find and use government services is changing
             </Heading>
@@ -55,7 +55,7 @@ export default function Home() {
 
       <section>
         <div className="container">
-          <div className="space-y-4 py-8 lg:space-y-4">
+          <div className="space-y-4 py-8">
             <Heading as="h2">Find government services</Heading>
 
             <div className="flex flex-col">
