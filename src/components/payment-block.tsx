@@ -112,7 +112,7 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
           } else {
             trackPaymentError();
           }
-        } catch (err) {
+        } catch {
           trackPaymentError();
         } finally {
           setVerifying(false);
