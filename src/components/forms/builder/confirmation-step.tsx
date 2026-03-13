@@ -1,14 +1,19 @@
 "use client";
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import { useOpenPanel } from "@openpanel/nextjs";
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { markdownComponents } from "@/components/markdown-content";
 import { PaymentBlock } from "@/components/payment-block";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 import type { FormStep } from "@/types";
+
+const trackedConfirmationReferenceEvents = new Set<string>();
 
 type PaymentData = {
   amount: number;
@@ -34,13 +39,46 @@ export function ConfirmationPage({
   formId,
   paymentData,
 }: ConfirmationPageProps) {
+  const router = useRouter();
+  const openPanel = useOpenPanel();
   const pathname = usePathname();
+
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
   const formSlug = pathSegments[1]; // Extract form slug from URL (e.g., "get-birth-certificate")
+
   const category = INFORMATION_ARCHITECTURE.find(
     (cat) => cat.slug === categorySlug
   );
+
+  const feebackLink = `/exit-survey?ref_id=${formId}&step=introduction`;
+
+  useEffect(() => {
+    if (!(referenceNumber && formId && categorySlug)) return;
+
+    const trackingKey = `${formId}-${categorySlug}-${referenceNumber}`;
+
+    const hasTrackedInCurrentSession =
+      trackedConfirmationReferenceEvents.has(trackingKey);
+
+    if (
+      hasTrackedInCurrentSession ||
+      confirmationStep.showReferenceNumber === false
+    )
+      return;
+
+    trackedConfirmationReferenceEvents.add(trackingKey);
+
+    openPanel.track(
+      TRACKED_EVENTS.CONFIRMATION_REFERENCE_ID_EVENT,
+      getFormBaseContext(formId, categorySlug)
+    );
+  }, [
+    referenceNumber,
+    formId,
+    categorySlug,
+    confirmationStep.showReferenceNumber,
+  ]);
 
   return (
     <>
@@ -153,7 +191,17 @@ export function ConfirmationPage({
                 have a moment, you can tell us about your experience today.
               </Text>
               <LinkButton
-                href={`/exit-survey?ref_id=${formId}&step=introduction`}
+                href={feebackLink}
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  openPanel.track(
+                    TRACKED_EVENTS.FEEDBACK_START_EVENT,
+                    getFormBaseContext(formId, categorySlug)
+                  );
+
+                  router.push(feebackLink);
+                }}
                 variant="secondary"
               >
                 Give feedback on this service

@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
-import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
@@ -10,6 +10,7 @@ import remarkGfm from "remark-gfm";
 import rehypeHideStartLinks from "@/lib/rehype-hide-start-links";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 import { MigrationBanner } from "./migration-banner";
+import { TrackedStartLink } from "./tracked-start-link";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -75,9 +76,9 @@ export const markdownComponents: Components = {
 
     if (isStartLink !== undefined) {
       return (
-        <LinkButton href={href as string} {...props}>
+        <TrackedStartLink href={href as string} {...props}>
           {children}
-        </LinkButton>
+        </TrackedStartLink>
       );
     }
 

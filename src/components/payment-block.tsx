@@ -1,8 +1,10 @@
 "use client";
 
 import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useOpenPanel } from "@openpanel/nextjs";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { getFormBaseContext, TRACKED_EVENTS } from "@/lib/openpanel";
 
 type PaymentData = {
   amount: number;
@@ -35,8 +37,15 @@ function PaymentRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-export const PaymentBlock = ({ paymentData }: Props) => {
+export const PaymentBlock = ({ paymentData, formId }: Props) => {
+  const openPanel = useOpenPanel();
+  const pathname = usePathname();
+  const router = useRouter();
   const searchParams = useSearchParams();
+
+  const categorySlug = pathname.split("/").filter(Boolean)[0] ?? "";
+  const paymentURL = paymentData.paymentUrl;
+
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
     status: "success" | "failed" | "initiated" | null;
@@ -44,6 +53,17 @@ export const PaymentBlock = ({ paymentData }: Props) => {
     transactionNumber?: string;
     amount?: string;
   }>({ status: null });
+
+  const paymentErrorTrackedRef = useRef(false);
+
+  const trackPaymentError = useCallback(() => {
+    if (paymentErrorTrackedRef.current) return;
+    paymentErrorTrackedRef.current = true;
+    openPanel.track(
+      TRACKED_EVENTS.PAYMENT_ERROR_EVENT,
+      getFormBaseContext(formId, categorySlug)
+    );
+  }, [formId, categorySlug]);
 
   useEffect(() => {
     const verifyTransaction = async () => {
@@ -89,7 +109,11 @@ export const PaymentBlock = ({ paymentData }: Props) => {
                   .replace(/\?$/, "");
               window.history.replaceState({}, "", newUrl);
             }
+          } else {
+            trackPaymentError();
           }
+        } catch {
+          trackPaymentError();
         } finally {
           setVerifying(false);
         }
@@ -97,7 +121,7 @@ export const PaymentBlock = ({ paymentData }: Props) => {
     };
 
     verifyTransaction();
-  }, [searchParams, paymentStatus.status]);
+  }, [searchParams, paymentStatus.status, trackPaymentError]);
 
   if (paymentStatus.status === "success") {
     return (
@@ -218,13 +242,26 @@ export const PaymentBlock = ({ paymentData }: Props) => {
         />
       </div>
 
-      {paymentData.paymentUrl ? (
+      {paymentURL ? (
         verifying ? (
           <Button disabled type="button">
             Verifying...
           </Button>
         ) : (
-          <LinkButton href={paymentData.paymentUrl} variant="primary">
+          <LinkButton
+            href={paymentURL}
+            onClick={(e) => {
+              e.preventDefault();
+
+              openPanel.track(
+                TRACKED_EVENTS.PAYMENT_INITIATED_EVENT,
+                getFormBaseContext(formId, categorySlug)
+              );
+
+              router.push(paymentURL!);
+            }}
+            variant="primary"
+          >
             Continue to payment
           </LinkButton>
         )

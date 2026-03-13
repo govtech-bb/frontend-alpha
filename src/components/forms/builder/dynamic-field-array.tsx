@@ -6,8 +6,15 @@ import {
   Select,
   Text,
 } from "@govtech-bb/react";
+import { useOpenPanel } from "@openpanel/nextjs";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
+import {
+  getFormBaseContext,
+  getStepForTracking,
+  TRACKED_EVENTS,
+} from "@/lib/openpanel";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
 import type { FieldArrayConfig, FormField } from "@/types";
@@ -39,6 +46,16 @@ type DynamicFieldArrayProps = {
 };
 
 export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
+  const openPanel = useOpenPanel();
+
+  const pathname = usePathname();
+  const pathSegments = pathname.split("/").filter(Boolean);
+  const formSlug = pathSegments[1] ?? "";
+  const categorySlug = pathSegments[0] ?? "";
+
+  const searchParams = useSearchParams();
+  const stepId = searchParams?.get("step") ?? "";
+
   const {
     register,
     control,
@@ -114,6 +131,11 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
   const handleRemove = (index: number) => {
     if (fields.length > minItems) {
       remove(index);
+      openPanel.track(TRACKED_EVENTS.FORM_REMOVE_ITEM_EVENT, {
+        ...getFormBaseContext(formSlug, categorySlug),
+        step: getStepForTracking(formSlug, stepId),
+        field: field.name,
+      });
     }
   };
 
