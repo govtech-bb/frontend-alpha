@@ -46,7 +46,6 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
   const categorySlug = pathname.split("/").filter(Boolean)[0] ?? "";
   const paymentURL = paymentData.paymentUrl;
 
-  const [error, setError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<{
     status: "success" | "failed" | "initiated" | null;
@@ -112,13 +111,9 @@ export const PaymentBlock = ({ paymentData, formId }: Props) => {
             }
           } else {
             trackPaymentError();
-            setError(result.error || "Failed to verify payment");
           }
         } catch (err) {
           trackPaymentError();
-          const errorMessage =
-            err instanceof Error ? err.message : "Unknown error";
-          setError(`Verification error: ${errorMessage}`);
         } finally {
           setVerifying(false);
         }
