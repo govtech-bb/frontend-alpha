@@ -30,7 +30,9 @@ function PaymentRow({ label, value }: { label: string; value: string }) {
       <Text as="p" className="flex-1 font-bold">
         {label}
       </Text>
-      <Text as="p">{value}</Text>
+      <Text as="p" className="text-end">
+        {value}
+      </Text>
     </div>
   );
 }
