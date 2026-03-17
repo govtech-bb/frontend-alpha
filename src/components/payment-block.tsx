@@ -52,9 +52,6 @@ export const PaymentBlock = ({ paymentData }: Props) => {
       const ref = searchParams?.get("rid");
       const backendUrl = process.env.NEXT_PUBLIC_PROCESSING_API;
 
-      paymentStatus.status = "success";
-      tx = "1234567890";
-
       if (tx && !paymentStatus.status && backendUrl) {
         setVerifying(true);
 
