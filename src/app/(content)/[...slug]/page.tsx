@@ -7,11 +7,13 @@ import { MarkdownContent } from "@/components/markdown-content";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
+import { hasResearchAccess } from "@/lib/research-access";
 import {
+  fetchAllServiceAccess,
+  fetchServiceConfig,
   hasProtectedSubpages,
-  hasResearchAccess,
-  isProtectedSubpage,
-} from "@/lib/research-access";
+  isSubpageProtected,
+} from "@/lib/service-access-api";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
 type ContentPageProps = {
@@ -36,11 +38,16 @@ export default async function Page({ params }: ContentPageProps) {
       return <MarkdownContent markdown={markdownContent} />;
     }
 
-    // Filter out protected pages if user doesn't have research access
-    const hasAccess = await hasResearchAccess();
-    const visiblePages = hasAccess
-      ? category.pages
-      : category.pages.filter((page) => !page.protected);
+    const userHasAccess = await hasResearchAccess();
+    let visiblePages = category.pages;
+
+    if (!userHasAccess) {
+      // Only fetch from the API when needed — skip the call for users with access
+      const allServiceAccess = await fetchAllServiceAccess();
+      visiblePages = category.pages.filter(
+        (page) => !allServiceAccess.get(page.slug)?.isProtected
+      );
+    }
 
     return (
       <>
@@ -88,12 +95,16 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    // Check research access for protected pages or pages with protected subpages
-    const needsAccess = page.protected || hasProtectedSubpages(page);
+    const serviceConfig = await fetchServiceConfig(pageSlug);
+    const serviceIsProtected = serviceConfig?.isProtected ?? false;
+    const serviceHasProtectedSubpages = hasProtectedSubpages(serviceConfig);
+
+    // Check access when the service itself or any of its subpages are protected
+    const needsAccess = serviceIsProtected || serviceHasProtectedSubpages;
     const hasAccess = needsAccess ? await hasResearchAccess() : true;
 
-    // Block access to protected entry pages
-    if (page.protected && !hasAccess) {
+    // Block the service entry page when service-level protection is set
+    if (serviceIsProtected && !hasAccess) {
       notFound();
     }
 
@@ -126,20 +137,16 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    // Only check research access if this page has protected subpages
-    const pageHasProtectedSubpages = hasProtectedSubpages(page);
-    const hasAccess = pageHasProtectedSubpages
-      ? await hasResearchAccess()
-      : true;
+    const serviceConfig = await fetchServiceConfig(pageSlug);
+    const subpageIsProtected = isSubpageProtected(serviceConfig, subPageSlug);
+    const hasAccess = subpageIsProtected ? await hasResearchAccess() : true;
 
-    // Protected subpages require research access
-    if (isProtectedSubpage(page, subPageSlug) && !hasAccess) {
+    if (subpageIsProtected && !hasAccess) {
       notFound();
     }
 
     // Handle form pages (JSX components)
     if (subPageSlug === "form") {
-      // Dynamically import the form component based on the page slug
       return <DynamicFormLoader formSlug={pageSlug} />;
     }
 
@@ -179,11 +186,13 @@ export async function generateMetadata({ params }: ContentPageProps) {
     );
     const page = category?.pages.find((p) => p.slug === pageSlug);
 
-    // Protected subpages return generic 404 metadata if no access
-    if (page && isProtectedSubpage(page, subPageSlug)) {
-      const hasAccess = await hasResearchAccess();
-      if (!hasAccess) {
-        return { title: "Page not found" };
+    if (page) {
+      const serviceConfig = await fetchServiceConfig(pageSlug);
+      if (isSubpageProtected(serviceConfig, subPageSlug)) {
+        const hasAccess = await hasResearchAccess();
+        if (!hasAccess) {
+          return { title: "Page not found" };
+        }
       }
     }
 
