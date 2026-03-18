@@ -22,7 +22,7 @@ export function SearchForm({ defaultValue = "" }: { defaultValue?: string }) {
           Search for a service
         </label>
         <input
-          className="h-15.5 w-full min-w-0 flex-1 rounded-l-sm bg-white-00 px-4 text-[20px] leading-normal outline-none transition-all hover:shadow-form-hover focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-teal-100"
+          className="h-15.5 w-full min-w-0 flex-1 rounded-l-sm bg-white-00 px-4 text-[20px] leading-normal outline-none transition-all focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-teal-100"
           id="service-search"
           name="q"
           onChange={(e) => setQuery(e.target.value)}

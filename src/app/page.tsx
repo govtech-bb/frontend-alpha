@@ -32,21 +32,21 @@ export default function Home() {
       <section className="border-teal-40 border-b-4 bg-teal-10">
         <div className="container">
           <div className="space-y-4 py-8">
-            <div className="flex flex-col gap-2">
-              <Heading as="h2">Alpha services</Heading>
-
-              <Text as="p" className="font-bold">
-                Search for a service
-              </Text>
-              <SearchForm />
-            </div>
+            <Heading as="h2">Alpha services</Heading>
 
             <Text as="p">
               These services are new. We're working on them and they are likely
               to change as we learn more.
             </Text>
 
-            <Link as={NextLink} href="/search" variant={"secondary"}>
+            <div className="flex flex-col gap-2">
+              <Text as="p" className="font-bold">
+                Search for a service
+              </Text>
+              <SearchForm />
+            </div>
+
+            <Link as={NextLink} href="/search">
               View all services
             </Link>
           </div>
@@ -56,7 +56,7 @@ export default function Home() {
       <section>
         <div className="container">
           <div className="space-y-4 py-8">
-            <Heading as="h2">Find government services</Heading>
+            <Heading as="h2">Government services</Heading>
 
             <div className="flex flex-col">
               {INFORMATION_ARCHITECTURE.map((service) => (
