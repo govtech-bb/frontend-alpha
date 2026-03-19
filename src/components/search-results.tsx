@@ -24,14 +24,8 @@ export function SearchResults({
   return (
     <div aria-live="polite">
       <Heading as="h2" className="mb-s">
-        {query ? "Search results" : "Alpha Services"}
+        Search results
       </Heading>
-
-      {!query && (
-        <Text as="p" className="mb-s">
-          These services are in alpha
-        </Text>
-      )}
 
       {query && (
         <Text as="p" className="mb-s text-mid-grey-00">

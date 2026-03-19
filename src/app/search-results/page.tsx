@@ -8,7 +8,7 @@ import { getAlphaServices } from "@/lib/markdown";
 import { searchServices } from "@/lib/search";
 
 export const metadata: Metadata = {
-  title: "Search",
+  title: "Search Results",
 };
 
 export default async function SearchPage({

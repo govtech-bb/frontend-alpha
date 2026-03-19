@@ -11,13 +11,17 @@ export function SearchForm({ defaultValue = "" }: { defaultValue?: string }) {
     event.preventDefault();
     const trimmed = query.trim();
     router.push(
-      trimmed ? `/search?q=${encodeURIComponent(trimmed)}` : "/search"
+      trimmed ? `/search-results?q=${encodeURIComponent(trimmed)}` : "/services"
     );
   }
 
   return (
     <search aria-label="Search for a service">
-      <form action="/search" className="flex w-full" onSubmit={handleSubmit}>
+      <form
+        action="/search-results"
+        className="flex w-full"
+        onSubmit={handleSubmit}
+      >
         <label className="sr-only" htmlFor="service-search">
           Search for a service
         </label>

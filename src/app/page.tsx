@@ -46,7 +46,7 @@ export default function Home() {
               <SearchForm />
             </div>
 
-            <Link as={NextLink} href="/search">
+            <Link as={NextLink} href="/services">
               View all services
             </Link>
           </div>
