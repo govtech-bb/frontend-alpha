@@ -23,7 +23,7 @@ export default async function SearchPage({
   const results = searchServices(query, alphaSlugs);
 
   return (
-    <>
+    <main>
       <section className="border-teal-40 border-b-4 bg-teal-10 py-8">
         <div className="container">
           <div className="flex flex-col gap-2">
@@ -44,6 +44,6 @@ export default async function SearchPage({
       <div className="container">
         <HelpfulBox className="mb-4 lg:mb-16" />
       </div>
-    </>
+    </main>
   );
 }
