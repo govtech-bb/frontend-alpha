@@ -2,6 +2,7 @@
 
 import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
+import { useEffect } from "react";
 
 import type { SearchResult } from "@/lib/search";
 
@@ -12,6 +13,14 @@ export function SearchResults({
   results: SearchResult[];
   query: string;
 }) {
+  useEffect(() => {
+    if (!query) return;
+    window.umami?.track("search", {
+      query,
+      results: results.length,
+    });
+  }, [query, results.length]);
+
   return (
     <div aria-live="polite">
       <Heading as="h2" className="mb-s">
