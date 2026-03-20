@@ -22,8 +22,22 @@ type ServicesResponse = {
   data: ServiceSummary[];
 };
 
+const ALL_SERVICES: ServiceSummary[] = INFORMATION_ARCHITECTURE.flatMap(
+  (category) =>
+    category.pages.map((page) => ({
+      serviceSlug: page.slug,
+      title: page.title,
+      categorySlug: category.slug,
+      categoryTitle: category.title,
+      hasImplementation:
+        page.subPages?.some((sp) => sp.type === "component") ?? false,
+      subPageSlugs: page.subPages?.map((sp) => sp.slug) ?? [],
+    }))
+);
+
 const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "http://localhost:5173",
+  "Access-Control-Allow-Origin": process.env
+    .NEXT_PUBLIC_SERVICE_DASHBOARD_URL as string,
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
@@ -41,21 +55,8 @@ const CORS_HEADERS = {
  * user or config data.
  */
 export function GET(_request: NextRequest): NextResponse<ServicesResponse> {
-  const services: ServiceSummary[] = INFORMATION_ARCHITECTURE.flatMap(
-    (category) =>
-      category.pages.map((page) => ({
-        serviceSlug: page.slug,
-        title: page.title,
-        categorySlug: category.slug,
-        categoryTitle: category.title,
-        hasImplementation:
-          page.subPages?.some((sp) => sp.type === "component") ?? false,
-        subPageSlugs: page.subPages?.map((sp) => sp.slug) ?? [],
-      }))
-  );
-
   return NextResponse.json(
-    { success: true, data: services },
+    { success: true, data: ALL_SERVICES },
     { headers: CORS_HEADERS }
   );
 }
