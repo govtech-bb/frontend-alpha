@@ -256,10 +256,6 @@ export const formSteps: FormStep[] = [
   {
     id: "reason-for-certificate",
     title: "Tell us why you're ordering a birth certificate",
-    conditionalOn: {
-      field: "applyingForYourself",
-      value: "no",
-    },
     fields: [
       {
         name: "reasonForOrderingCertificate",
