@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { SearchResults } from "@/components/search-results";
+import { StageBanner } from "@/components/stage-banner";
 import { getAlphaServices } from "@/lib/markdown";
 import { searchServices } from "@/lib/search";
 
@@ -23,7 +24,13 @@ export default async function SearchPage({
   const results = searchServices(query, alphaSlugs);
 
   return (
-    <main>
+    <>
+      <div className="bg-blue-10">
+        <div className="container">
+          <StageBanner stage="alpha" />
+        </div>
+      </div>
+
       <section className="border-teal-40 border-b-4 bg-teal-10 py-8">
         <div className="container">
           <div className="flex flex-col gap-2">
@@ -44,6 +51,6 @@ export default async function SearchPage({
       <div className="container">
         <HelpfulBox className="mb-4 lg:mb-16" />
       </div>
-    </main>
+    </>
   );
 }

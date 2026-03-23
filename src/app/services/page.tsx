@@ -4,6 +4,7 @@ import NextLink from "next/link";
 
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
+import { StageBanner } from "@/components/stage-banner";
 import { getAlphaServices } from "@/lib/markdown";
 import { searchServices } from "@/lib/search";
 
@@ -18,6 +19,12 @@ export default async function ServicesPage() {
 
   return (
     <>
+      <div className="bg-blue-10">
+        <div className="container">
+          <StageBanner stage="alpha" />
+        </div>
+      </div>
+
       <section className="border-teal-40 border-b-4 bg-teal-10 py-8">
         <div className="container">
           <div className="flex flex-col gap-2">
