@@ -5,9 +5,28 @@ import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFeaturedServices } from "@/lib/markdown";
+import { hasResearchAccess } from "@/lib/research-access";
+import { fetchAllServiceAccess } from "@/lib/service-access-api";
 
 export default async function Home() {
-  const featuredServices = await getFeaturedServices();
+  const [allFeaturedServices, userHasAccess] = await Promise.all([
+    getFeaturedServices(),
+    hasResearchAccess(),
+  ]);
+
+  // Hide service-level protected services from public users.
+  // Only the service-level flag controls listing visibility — subpage-only
+  // flags leave the service listed but gate individual subpages.
+  let featuredServices = allFeaturedServices;
+  if (!userHasAccess) {
+    const allServiceAccess = await fetchAllServiceAccess();
+    featuredServices = allFeaturedServices.filter((service) => {
+      // getFeaturedServices() returns slugs as "categorySlug/serviceSlug"
+      // but the access config map is keyed by serviceSlug only
+      const serviceSlug = service.slug.split("/").at(-1) ?? service.slug;
+      return !allServiceAccess.get(serviceSlug)?.isProtected;
+    });
+  }
 
   return (
     <>
