@@ -27,8 +27,8 @@ export function SearchResults({
         Search results
       </Heading>
 
-      {query && (
-        <Text as="p" className="mb-s text-mid-grey-00">
+      {query && results.length > 0 && (
+        <Text as="p" className="mb-s">
           {results.length} search {results.length === 1 ? "result" : "results"}{" "}
           for &ldquo;
           <strong>{query}</strong>&rdquo;{" "}
@@ -37,10 +37,34 @@ export function SearchResults({
       )}
 
       {query && results.length === 0 && (
-        <Text as="p">
-          What you were looking for couldn&apos;t be found, try entering a
-          different phrase.
-        </Text>
+        <div className="space-y-s">
+          <Text as="p">
+            We could not find any results for &ldquo;
+            <strong>{query}</strong>&rdquo;
+          </Text>
+
+          <Text as="p">You can try:</Text>
+
+          <ul className="list-disc space-y-xs ps-m">
+            <li>
+              <Text as="span">checking your spelling</Text>
+            </li>
+            <li>
+              <Text as="span">using different words</Text>
+            </li>
+          </ul>
+
+          <Text as="p">
+            At the moment, search only finds services that have been recently
+            redesigned (alpha services).
+            <br />
+            You can{" "}
+            <Link as={NextLink} className="inline" href="/services">
+              find other government services or information
+            </Link>{" "}
+            here.
+          </Text>
+        </div>
       )}
 
       {results.length > 0 && (
