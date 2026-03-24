@@ -1,56 +1,34 @@
 "use client";
 
-import { BackButton as _BackButton } from "@govtech-bb/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { generateBreadcrumbs } from "@/lib/breadcrumbs";
+import { usePathname, useRouter } from "next/navigation";
+import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { cn } from "@/lib/utils";
-import { ChevronLeftSVG } from "../icons/chevron-left";
 
 type BackButtonProps = {
   className?: string;
-  mode?: "back" | "breadcrumbs";
 };
 
-export const BackButton = ({
-  className = "",
-  mode = "back",
-}: BackButtonProps) => {
+export const BackButton = ({ className }: BackButtonProps) => {
+  const router = useRouter();
   const pathname = usePathname();
-  const breadcrumbs = generateBreadcrumbs(pathname);
 
   // Don't show on home page
-  if (pathname === "/") {
-    return null;
-  }
+  if (pathname === "/") return null;
 
-  const pathSegments = pathname.split("/").filter(Boolean);
-  if (pathSegments.includes("form")) {
-    return null;
-  }
+  const handleBack = () => {
+    router.back();
+  };
 
   return (
-    <nav
-      aria-label={mode === "breadcrumbs" ? "Breadcrumbs" : "Backbutton"}
-      className={cn("flex items-center", className)}
-    >
-      {mode === "breadcrumbs" ? (
-        breadcrumbs.map((crumb, index) => (
-          <div className="flex items-center gap-2" key={crumb.href}>
-            {index > 0 && <ChevronLeftSVG className="mr-2" />}
-            <Link
-              className="text-[20px] text-teal-00 underline"
-              href={crumb.href}
-            >
-              {crumb.label}
-            </Link>
-          </div>
-        ))
-      ) : (
-        <_BackButton href={breadcrumbs.at(-1)?.href || "/"} type="button">
-          Back
-        </_BackButton>
-      )}
+    <nav aria-label="Back" className={cn("flex items-center", className)}>
+      <button
+        className="inline-flex cursor-pointer items-baseline gap-xs text-teal-00 underline underline-offset-2"
+        onClick={handleBack}
+        type="button"
+      >
+        <ChevronLeftSVG className="shrink-0 self-center" />
+        Back
+      </button>
     </nav>
   );
 };
