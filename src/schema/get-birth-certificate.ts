@@ -528,7 +528,7 @@ export const formSteps: FormStep[] = [
       {
         name: "parents.mother.maidenName",
         label: "Mother's maiden name",
-        hint: " Enter your mother’s family name at birth, not her married surname.",
+        hint: "Enter the last name the mother used at birth, if different from her current last name.",
         type: "text",
         validation: {
           required: false,
