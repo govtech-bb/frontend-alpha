@@ -8,7 +8,7 @@ export default function EntryPointLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="w-full overflow-hidden bg-white-00">
+    <div className="w-full overflow-hidden bg-white-00">
       <div className="bg-blue-10">
         <div className="container">
           <StageBanner stage="alpha" />
@@ -17,6 +17,6 @@ export default function EntryPointLayout({
       <Suspense fallback={<div className="container">{children}</div>}>
         <EntryPointWrapper>{children}</EntryPointWrapper>
       </Suspense>
-    </main>
+    </div>
   );
 }
