@@ -526,20 +526,20 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "parents.mother.middleName",
-        label: "Mother's middle name",
-        hint: " Optional. Provide only if known",
+        name: "parents.mother.maidenName",
+        label: "Mother's maiden name",
+        hint: " Enter your mother’s family name at birth, not her married surname.",
         type: "text",
         validation: {
           required: false,
           minLength: {
             value: 2,
-            message: "Middle name must be at least 2 characters",
+            message: "Maiden name must be at least 2 characters",
           },
           pattern: {
             value: NAME_REGEX,
             message:
-              "Middle name must contain only letters, hyphens, or apostrophes",
+              "Maiden name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
