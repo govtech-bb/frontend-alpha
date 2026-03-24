@@ -947,7 +947,7 @@ export default function DynamicMultiStepForm({
 
     // Collect field names, handling ShowHide state for conditional validation
     const currentFieldNames: string[] = [];
-    const fieldsToSkipValidation: string[] = [];
+    const fieldsToSkipValidation = new Set<string>();
 
     for (const field of visibleFields) {
       // Check if this field should skip validation when ShowHide is open
@@ -961,7 +961,7 @@ export default function DynamicMultiStepForm({
         );
         if (showHideState === "open") {
           // Skip validation for this field - add to skip list and clear any existing errors
-          fieldsToSkipValidation.push(field.name);
+          fieldsToSkipValidation.add(field.name);
           methods.clearErrors(field.name as keyof FormData);
         } else {
           currentFieldNames.push(field.name);
@@ -1018,6 +1018,11 @@ export default function DynamicMultiStepForm({
     // and add a safety net for non-conditional fields whose required
     // validation should always show when empty.
     for (const field of visibleFields) {
+      // Respect explicit skip rules (e.g., ID number when passport ShowHide is open)
+      if (fieldsToSkipValidation.has(field.name)) {
+        continue;
+      }
+
       if (field.conditionalOn) {
         const fieldValue = methods.getValues(field.name as keyof FormData);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
