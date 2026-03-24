@@ -1,11 +1,11 @@
 import type React from "react";
+import type { SVGProps } from "react";
 
-type ChevronLeftSVGProps = {
-  className?: string;
-};
+type ChevronLeftSVGProps = SVGProps<SVGSVGElement>;
 
 export const ChevronLeftSVG: React.FC<ChevronLeftSVGProps> = ({
   className = "",
+  ...props
 }) => (
   <svg
     className={className}
@@ -14,6 +14,7 @@ export const ChevronLeftSVG: React.FC<ChevronLeftSVGProps> = ({
     viewBox="0 0 11 8"
     width="11"
     xmlns="http://www.w3.org/2000/svg"
+    {...props}
   >
     <title>Chevron Left</title>
     <path
