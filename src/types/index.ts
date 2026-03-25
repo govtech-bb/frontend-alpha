@@ -36,6 +36,9 @@ type BaseValidationRule = {
   min?: { value: number; message: string };
   max?: { value: number; message: string };
   numberOfFiles?: { isEqual: number; message: string };
+  /** Sibling field name under the same parent path (e.g. startYear when this field is …endYear) */
+  gteField?: string;
+  gteMessage?: string;
 };
 
 export type DateFieldValidation = BaseValidationRule & {

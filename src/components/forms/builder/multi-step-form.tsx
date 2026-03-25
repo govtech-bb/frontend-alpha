@@ -4,11 +4,15 @@ import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { type FieldError, FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue, setNestedValue } from "@/lib/utils";
+import {
+  getNestedValue,
+  resolveGteSiblingFieldName,
+  setNestedValue,
+} from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep } from "@/types";
@@ -1100,6 +1104,65 @@ export default function DynamicMultiStepForm({
                 isValid = false;
               }
             }
+          }
+        }
+      }
+    }
+
+    for (const field of visibleFields) {
+      const v = field.validation as
+        | { gteField?: string; gteMessage?: string }
+        | undefined;
+      if (
+        typeof v !== "object" ||
+        v === null ||
+        typeof v.gteField !== "string" ||
+        typeof v.gteMessage !== "string"
+      ) {
+        continue;
+      }
+
+      const endFieldName = field.name;
+      const startFieldName = resolveGteSiblingFieldName(
+        endFieldName,
+        v.gteField
+      );
+      const startYearValue = methods.getValues(
+        startFieldName as keyof FormData
+      );
+      const endYearValue = methods.getValues(endFieldName as keyof FormData);
+
+      if (
+        typeof startYearValue !== "string" ||
+        typeof endYearValue !== "string"
+      ) {
+        continue;
+      }
+
+      if (!(startYearValue.trim() && endYearValue.trim())) {
+        continue;
+      }
+
+      const startYear = Number.parseInt(startYearValue, 10);
+      const endYear = Number.parseInt(endYearValue, 10);
+
+      if (!(Number.isNaN(startYear) || Number.isNaN(endYear))) {
+        if (endYear < startYear) {
+          methods.setError(endFieldName as keyof FormData, {
+            type: "custom",
+            message: v.gteMessage,
+          });
+          isValid = false;
+        } else {
+          const fieldError = getNestedValue<FieldError>(
+            methods.formState.errors as Record<string, unknown>,
+            endFieldName
+          );
+          if (
+            fieldError?.type === "custom" &&
+            fieldError.message === v.gteMessage
+          ) {
+            methods.clearErrors(endFieldName as keyof FormData);
           }
         }
       }
