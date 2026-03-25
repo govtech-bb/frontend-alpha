@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 type BreadcrumbsProps = {
   className?: string;
+  collapseOnMobile?: boolean;
 };
 
 const BreadcrumbSeparator = () => (
@@ -50,7 +51,10 @@ function getTitleForSegment(segments: string[], index: number): string {
   return formatSlug(segments[index]);
 }
 
-export const Breadcrumbs = ({ className }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({
+  className,
+  collapseOnMobile = true,
+}: BreadcrumbsProps) => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
 
@@ -58,6 +62,10 @@ export const Breadcrumbs = ({ className }: BreadcrumbsProps) => {
   if (segments.length === 0) return null;
 
   const crumbs = segments.slice(0, -1);
+
+  // On mobile collapse: hide all middle items, show only first (Home) and last
+  const shouldHideOnMobile = (index: number) =>
+    collapseOnMobile && crumbs.length > 1 && index !== crumbs.length - 1;
 
   return (
     <nav aria-label="Breadcrumb" className={cn("flex items-center", className)}>
@@ -79,7 +87,13 @@ export const Breadcrumbs = ({ className }: BreadcrumbsProps) => {
           const title = getTitleForSegment(segments, index);
 
           return (
-            <li className="flex items-center gap-2" key={href}>
+            <li
+              className={cn(
+                "flex items-center gap-2",
+                shouldHideOnMobile(index) && "hidden lg:flex"
+              )}
+              key={href}
+            >
               <BreadcrumbSeparator />
               <Link className={cn(linkStyles, "break-anywhere")} href={href}>
                 {title}
