@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import type { PageType } from "@/types/content";
 
 export const COOKIE_NAME = "research-access";
 
@@ -19,22 +18,4 @@ export async function hasResearchAccess() {
 export function isValidToken(token: string): boolean {
   const secretToken = process.env.RESEARCH_ACCESS_TOKEN;
   return !!secretToken && token === secretToken;
-}
-
-/**
- * Check if a sub-page is protected based on its configuration in the content directory
- */
-export function isProtectedSubpage(
-  page: PageType,
-  subPageSlug: string
-): boolean {
-  const subPage = page.subPages?.find((sp) => sp.slug === subPageSlug);
-  return subPage?.protected === true;
-}
-
-/**
- * Check if a page has any protected subpages
- */
-export function hasProtectedSubpages(page: PageType): boolean {
-  return page.subPages?.some((p) => p.protected === true) ?? false;
 }
