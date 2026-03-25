@@ -714,11 +714,17 @@ export function generateFormSchema(formSteps: FormStep[]) {
       validation: NonDateFieldValidation | DateFieldValidation
     ) => {
       const v = validation as NonDateFieldValidation;
-      if (!(v.gteField && v.gteMessage)) {
+      const op = v.operator;
+      if (
+        !op ||
+        op.condition !== "gte" ||
+        typeof op.field !== "string" ||
+        typeof op.message !== "string"
+      ) {
         return;
       }
 
-      const startName = resolveGteSiblingFieldName(endFieldName, v.gteField);
+      const startName = resolveGteSiblingFieldName(endFieldName, op.field);
       const startVal = getNestedValue(
         data as Record<string, unknown>,
         startName
@@ -740,7 +746,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
       if (!(Number.isNaN(start) || Number.isNaN(end)) && end < start) {
         ctx.addIssue({
           code: "custom",
-          message: v.gteMessage,
+          message: op.message,
           path: fieldNameToZodPath(endFieldName),
         });
       }

@@ -27,6 +27,12 @@ export type DateValidationRule =
   | { type: "between"; start: string; end: string; description?: string }
   | { type: "minYear"; year: number };
 
+export type FieldValidationOperator = {
+  condition: "gte";
+  field: string;
+  message: string;
+};
+
 // Base validation rules (all fields can use these)
 type BaseValidationRule = {
   required?: string | false; // string for error message, false to explicitly mark as optional
@@ -36,9 +42,8 @@ type BaseValidationRule = {
   min?: { value: number; message: string };
   max?: { value: number; message: string };
   numberOfFiles?: { isEqual: number; message: string };
-  /** Sibling field name under the same parent path (e.g. startYear when this field is …endYear) */
-  gteField?: string;
-  gteMessage?: string;
+  /** Cross-field rule vs a sibling under the same parent path (e.g. endYear >= startYear) */
+  operator?: FieldValidationOperator;
 };
 
 export type DateFieldValidation = BaseValidationRule & {
