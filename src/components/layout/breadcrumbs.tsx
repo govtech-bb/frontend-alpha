@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
+import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { cn } from "@/lib/utils";
 
 type BreadcrumbsProps = {
@@ -34,6 +35,21 @@ function formatSlug(slug: string): string {
   return raw.charAt(0).toUpperCase() + raw.slice(1);
 }
 
+function getTitleForSegment(segments: string[], index: number): string {
+  const category = INFORMATION_ARCHITECTURE.find(
+    (cat) => cat.slug === segments[0]
+  );
+  if (index === 0) return category?.title ?? formatSlug(segments[0]);
+
+  const page = category?.pages.find((p) => p.slug === segments[1]);
+  if (index === 1) return page?.title ?? formatSlug(segments[1]);
+
+  const subPage = page?.subPages?.find((sp) => sp.slug === segments[2]);
+  if (index === 2) return subPage?.title ?? formatSlug(segments[2]);
+
+  return formatSlug(segments[index]);
+}
+
 export const Breadcrumbs = ({ className }: BreadcrumbsProps) => {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
@@ -58,9 +74,9 @@ export const Breadcrumbs = ({ className }: BreadcrumbsProps) => {
             Home
           </Link>
         </li>
-        {crumbs.map((segment, index) => {
+        {crumbs.map((_segment, index) => {
           const href = `/${segments.slice(0, index + 1).join("/")}`;
-          const title = formatSlug(segment);
+          const title = getTitleForSegment(segments, index);
 
           return (
             <li className="flex items-center gap-2" key={href}>
