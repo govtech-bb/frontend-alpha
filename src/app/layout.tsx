@@ -38,7 +38,7 @@ export default function RootLayout({
         className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased`}
       >
         <Header />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
       <Analytics />

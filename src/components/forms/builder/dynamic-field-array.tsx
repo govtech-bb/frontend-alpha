@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue } from "@/lib/utils";
-import type { FieldArrayConfig, FormField } from "@/types";
+import type { FieldArrayFormField } from "@/types";
 
 // Convert index to ordinal word (0 -> "First", 1 -> "Second", etc.)
 function getOrdinalWord(index: number): string {
@@ -29,13 +29,8 @@ function getOrdinalWord(index: number): string {
   return ordinals[index] || `${index + 1}`;
 }
 
-type FieldArrayField = FormField & {
-  type: "fieldArray";
-  fieldArray: FieldArrayConfig;
-};
-
 type DynamicFieldArrayProps = {
-  field: FieldArrayField;
+  field: FieldArrayFormField;
 };
 
 export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
@@ -68,7 +63,7 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
     if (hasInitialized.current) return;
 
     // Check if fields are actually empty in the form state
-    const currentValues = getValues(field.name as keyof FormData);
+    const currentValues = getValues(field.name);
     const hasValues = Array.isArray(currentValues) && currentValues.length > 0;
 
     // Only append if we really have no fields and no values in form state
@@ -150,14 +145,12 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
 
               <div className="space-y-4">
                 {nestedFields.map((nestedField) => {
-                  const fieldName =
-                    `${field.name}.${index}.${nestedField.name}` as keyof FormData;
+                  const fieldName = `${field.name}.${index}.${nestedField.name}`;
                   const fieldError = itemErrors?.[nestedField.name];
 
                   // Check if field should be shown based on conditionalOn
                   if (nestedField.conditionalOn) {
-                    const conditionalFieldName =
-                      `${field.name}.${index}.${nestedField.conditionalOn.field}` as keyof FormData;
+                    const conditionalFieldName = `${field.name}.${index}.${nestedField.conditionalOn.field}`;
                     const conditionalValue = watch(conditionalFieldName);
 
                     if (conditionalValue !== nestedField.conditionalOn.value) {
@@ -280,7 +273,7 @@ export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
   return (
     <div className="space-y-4" id={field.name}>
       {fields.map((item, index) => {
-        const fieldName = `${field.name}.${index}.value` as keyof FormData;
+        const fieldName = `${field.name}.${index}.value`;
 
         // Use getNestedValue to handle dotted field names correctly
         const itemError = getNestedValue<{ message?: string }>(

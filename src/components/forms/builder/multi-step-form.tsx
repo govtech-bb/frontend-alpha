@@ -11,7 +11,7 @@ import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import { getNestedValue, setNestedValue } from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
-import type { FormField, FormStep } from "@/types";
+import type { FormField, FormStep, NestedFormField } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
@@ -196,11 +196,11 @@ function createRepeatableStepInstance(
     }
 
     // Update showHide config with indexed field names
-    if (field.showHide) {
-      indexed.showHide = {
+    if (field.type === "showHide") {
+      (indexed as typeof field).showHide = {
         ...field.showHide,
         stateFieldName: indexFieldName(field.showHide.stateFieldName),
-        fields: field.showHide.fields.map((nestedField) => ({
+        fields: field.showHide.fields.map((nestedField: NestedFormField) => ({
           ...nestedField,
           name: indexFieldName(nestedField.name),
           // Also update conditionalOn in nested fields if present
@@ -590,9 +590,9 @@ export default function DynamicMultiStepForm({
     if (formData && Object.keys(formData).length > 0) {
       // Reset form with saved data
       for (const key of Object.keys(formData)) {
-        const value = formData[key as keyof FormData];
+        const value = formData[key];
         if (value !== undefined && value !== null) {
-          methods.setValue(key as keyof FormData, value, {
+          methods.setValue(key, value, {
             shouldValidate: false,
             shouldDirty: false,
           });
@@ -938,16 +938,14 @@ export default function DynamicMultiStepForm({
         if (!field.conditionalOn) return true;
 
         // Check if conditional field should be visible
-        const watchedValue = methods.watch(
-          field.conditionalOn.field as keyof FormData
-        );
+        const watchedValue = methods.watch(field.conditionalOn.field);
         return watchedValue === field.conditionalOn.value;
       }
     );
 
     // Collect field names, handling ShowHide state for conditional validation
     const currentFieldNames: string[] = [];
-    const fieldsToSkipValidation: string[] = [];
+    const fieldsToSkipValidation = new Set<string>();
 
     for (const field of visibleFields) {
       // Check if this field should skip validation when ShowHide is open
@@ -961,8 +959,8 @@ export default function DynamicMultiStepForm({
         );
         if (showHideState === "open") {
           // Skip validation for this field - add to skip list and clear any existing errors
-          fieldsToSkipValidation.push(field.name);
-          methods.clearErrors(field.name as keyof FormData);
+          fieldsToSkipValidation.add(field.name);
+          methods.clearErrors(field.name);
         } else {
           currentFieldNames.push(field.name);
         }
@@ -984,16 +982,14 @@ export default function DynamicMultiStepForm({
         } else {
           // ShowHide is closed - clear child field errors
           for (const childField of field.showHide.fields) {
-            methods.clearErrors(childField.name as keyof FormData);
+            methods.clearErrors(childField.name);
           }
         }
       }
     }
 
     // Trigger standard validation
-    let isValid = await methods.trigger(
-      currentFieldNames as (keyof FormData)[]
-    );
+    let isValid = await methods.trigger(currentFieldNames);
 
     // Helper: set required error when field is empty; returns true if error was set
     const setRequiredErrorIfEmpty = (
@@ -1004,7 +1000,7 @@ export default function DynamicMultiStepForm({
         field.type === "checkbox" ? value !== "yes" : isFieldEmpty(value);
 
       if (field.validation?.required && empty) {
-        methods.setError(field.name as keyof FormData, {
+        methods.setError(field.name, {
           type: "required",
           message: field.validation.required,
         });
@@ -1018,8 +1014,13 @@ export default function DynamicMultiStepForm({
     // and add a safety net for non-conditional fields whose required
     // validation should always show when empty.
     for (const field of visibleFields) {
+      // Respect explicit skip rules (e.g., ID number when passport ShowHide is open)
+      if (fieldsToSkipValidation.has(field.name)) {
+        continue;
+      }
+
       if (field.conditionalOn) {
-        const fieldValue = methods.getValues(field.name as keyof FormData);
+        const fieldValue = methods.getValues(field.name);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
         if (setRequiredErrorIfEmpty(field, fieldValue)) {
@@ -1031,7 +1032,7 @@ export default function DynamicMultiStepForm({
         if (field.validation.pattern && stringValue) {
           const regex = new RegExp(field.validation.pattern.value);
           if (!regex.test(stringValue)) {
-            methods.setError(field.name as keyof FormData, {
+            methods.setError(field.name, {
               type: "pattern",
               message: field.validation.pattern.message,
             });
@@ -1039,7 +1040,7 @@ export default function DynamicMultiStepForm({
           }
         }
       } else if (field.validation?.required) {
-        const fieldValue = methods.getValues(field.name as keyof FormData);
+        const fieldValue = methods.getValues(field.name);
         if (setRequiredErrorIfEmpty(field, fieldValue)) {
           isValid = false;
         }
@@ -1047,15 +1048,11 @@ export default function DynamicMultiStepForm({
 
       // Manually validate showHide child fields when showHide is open
       if (field.type === "showHide" && field.showHide) {
-        const showHideState = methods.getValues(
-          field.showHide.stateFieldName as keyof FormData
-        );
+        const showHideState = methods.getValues(field.showHide.stateFieldName);
 
         if (showHideState === "open") {
           for (const childField of field.showHide.fields) {
-            const childValue = methods.getValues(
-              childField.name as keyof FormData
-            );
+            const childValue = methods.getValues(childField.name);
             const stringValue =
               typeof childValue === "string" ? childValue : "";
 
@@ -1068,7 +1065,7 @@ export default function DynamicMultiStepForm({
               (typeof childValue === "number" && Number.isNaN(childValue));
 
             if (childField.validation.required && isEmpty) {
-              methods.setError(childField.name as keyof FormData, {
+              methods.setError(childField.name, {
                 type: "required",
                 message: childField.validation.required,
               });
@@ -1082,7 +1079,7 @@ export default function DynamicMultiStepForm({
               stringValue &&
               stringValue.length < childField.validation.minLength.value
             ) {
-              methods.setError(childField.name as keyof FormData, {
+              methods.setError(childField.name, {
                 type: "minLength",
                 message: childField.validation.minLength.message,
               });
@@ -1093,7 +1090,7 @@ export default function DynamicMultiStepForm({
             if (childField.validation.pattern && stringValue) {
               const regex = new RegExp(childField.validation.pattern.value);
               if (!regex.test(stringValue)) {
-                methods.setError(childField.name as keyof FormData, {
+                methods.setError(childField.name, {
                   type: "pattern",
                   message: childField.validation.pattern.message,
                 });
@@ -1123,9 +1120,7 @@ export default function DynamicMultiStepForm({
       );
 
       if (addAnotherField) {
-        const addAnotherValue = methods.getValues(
-          addAnotherField.name as keyof FormData
-        );
+        const addAnotherValue = methods.getValues(addAnotherField.name);
         if (addAnotherValue === "yes") {
           // Extract base step ID from the field name: _addAnother_{baseStepId}_{index}
           const match = addAnotherField.name.match(/^_addAnother_(.+)_(\d+)$/);

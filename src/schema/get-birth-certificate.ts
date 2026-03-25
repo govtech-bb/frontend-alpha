@@ -256,10 +256,6 @@ export const formSteps: FormStep[] = [
   {
     id: "reason-for-certificate",
     title: "Tell us why you're ordering a birth certificate",
-    conditionalOn: {
-      field: "applyingForYourself",
-      value: "no",
-    },
     fields: [
       {
         name: "reasonForOrderingCertificate",
@@ -530,20 +526,20 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "parents.mother.middleName",
-        label: "Mother's middle name",
-        hint: " Optional. Provide only if known",
+        name: "parents.mother.maidenName",
+        label: "Mother's maiden name",
+        hint: "Enter the last name the mother used at birth, if different from her current last name.",
         type: "text",
         validation: {
           required: false,
           minLength: {
             value: 2,
-            message: "Middle name must be at least 2 characters",
+            message: "Maiden name must be at least 2 characters",
           },
           pattern: {
             value: NAME_REGEX,
             message:
-              "Middle name must contain only letters, hyphens, or apostrophes",
+              "Maiden name must contain only letters, hyphens, or apostrophes",
           },
         },
       },

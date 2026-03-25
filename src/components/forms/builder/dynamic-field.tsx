@@ -9,7 +9,6 @@ import {
   RadioGroup,
   Select,
   ShowHide,
-  Text,
   TextArea,
 } from "@govtech-bb/react";
 import { useMaskito } from "@maskito/react";
@@ -19,11 +18,11 @@ import { masks } from "@/lib/masks";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue, normalizeTextValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
-import type { FormField } from "@/types";
+import type { FieldArrayFormField, FileFormField, FormField } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
 type FileUploadFieldProps = {
-  field: FormField & { type: "file" };
+  field: FileFormField;
   error?: FieldError;
   value: File[];
   onChange: (files: File[]) => void;
@@ -156,7 +155,7 @@ export function DynamicField({
           e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
         ) => {
           const normalized = normalizeTextValue(e.target.value);
-          setValue(name, normalized as FormData[keyof FormData], {
+          setValue(name, normalized, {
             shouldValidate: false,
             shouldTouch: true,
           });
@@ -173,65 +172,62 @@ export function DynamicField({
   );
 
   // Watch the current field value for conditional logic
-  const currentFieldValue = watch(field.name as keyof FormData);
+  const currentFieldValue = watch(field.name);
 
   // Clear conditional field values when they shouldn't be shown
   // biome-ignore lint/correctness/useExhaustiveDependencies: conditionalFields is derived from static schema and causes infinite loop if included
   useEffect(() => {
     for (const conditionalField of conditionalFields) {
-      if (
-        conditionalField.conditionalOn &&
-        conditionalField.conditionalOn.field === field.name
-      ) {
-        const shouldShow =
-          currentFieldValue === conditionalField.conditionalOn.value;
-        const currentValue = getValues(conditionalField.name as keyof FormData);
+      if (!conditionalField.conditionalOn) continue;
 
-        // Only clear if field should be hidden AND has a value
-        if (!shouldShow && currentValue) {
-          // Check if another conditional field with the same name IS being shown
-          // This handles cases where multiple conditional fields share a name (e.g., bank branches)
-          const anotherFieldWithSameNameIsShown = conditionalFields.some(
-            (cf) =>
-              cf.name === conditionalField.name &&
-              cf.conditionalOn?.field === field.name &&
-              currentFieldValue === cf.conditionalOn?.value
-          );
+      const shouldShow =
+        currentFieldValue === conditionalField.conditionalOn.value;
+      const currentValue = getValues(conditionalField.name);
 
-          // Only clear if no other conditional field with this name is visible
-          if (!anotherFieldWithSameNameIsShown) {
-            // Check if value is non-empty
-            const hasValue =
-              conditionalField.type === "fieldArray"
-                ? Array.isArray(currentValue) && currentValue.length > 0
-                : currentValue !== "";
+      // Only clear if field should be hidden AND has a value
+      if (!shouldShow && currentValue) {
+        // Check if another conditional field with the same name IS being shown
+        // This handles cases where multiple conditional fields share a name (e.g., bank branches)
+        const anotherFieldWithSameNameIsShown = conditionalFields.some(
+          (cf) =>
+            cf.name === conditionalField.name &&
+            cf.conditionalOn?.field === field.name &&
+            currentFieldValue === cf.conditionalOn?.value
+        );
 
-            if (hasValue) {
-              // Set appropriate empty value based on field type
-              const emptyValue =
-                conditionalField.type === "fieldArray"
-                  ? ([] as FormData[keyof FormData])
-                  : ("" as FormData[keyof FormData]);
+        // Only clear if no other conditional field with this name is visible
+        if (!anotherFieldWithSameNameIsShown) {
+          // Check if value is non-empty
+          const hasValue =
+            conditionalField.type === "fieldArray"
+              ? Array.isArray(currentValue) && currentValue.length > 0
+              : currentValue !== "";
 
-              setValue(conditionalField.name as keyof FormData, emptyValue, {
-                shouldValidate: false,
-                shouldDirty: false,
-              });
-            }
+          if (hasValue) {
+            // Set appropriate empty value based on field type
+            const emptyValue = conditionalField.type === "fieldArray" ? [] : "";
+
+            setValue(conditionalField.name, emptyValue, {
+              shouldValidate: false,
+              shouldDirty: false,
+            });
           }
         }
       }
     }
   }, [currentFieldValue, field.name, setValue, getValues]);
 
-  // Helper to render a conditional field
-  const renderConditionalField = (conditionalField: FormField) => {
+  /**
+   * Renders a conditional field with show/hide animation wrapper.
+   * Only shown when the parent field's value matches the condition.
+   */
+  function renderConditionalField(conditionalField: FormField) {
     const conditionalError = getNestedValue<FieldError>(
       errors as Record<string, unknown>,
       conditionalField.name
     );
     const watchedValue = conditionalField.conditionalOn
-      ? watch(conditionalField.conditionalOn.field as keyof FormData)
+      ? watch(conditionalField.conditionalOn.field)
       : null;
     const shouldShow = watchedValue === conditionalField.conditionalOn?.value;
 
@@ -243,542 +239,262 @@ export function DynamicField({
         key={`${conditionalField.name}-${conditionalField.conditionalOn?.value}`}
       >
         <div className="border-grey-00 border-l-8 border-solid pb-4 pl-[52px]">
-          {conditionalField.type === "fieldArray" ? (
-            <DynamicFieldArray field={conditionalField} />
-          ) : conditionalField.type === "date" ? (
-            <Controller
-              control={control}
-              name={conditionalField.name as keyof FormData}
-              render={({ field: controllerField }) => {
-                const dateValue: DateInputValue =
-                  controllerField.value &&
-                  typeof controllerField.value === "object"
-                    ? (controllerField.value as DateInputValue)
-                    : { day: "", month: "", year: "" };
-
-                return (
-                  <DateInput
-                    description={
-                      conditionalError?.message ??
-                      conditionalField.hint ??
-                      conditionalField.placeholder
-                    }
-                    error={conditionalError?.message}
-                    id={conditionalField.name}
-                    label={
-                      conditionalField.hidden ? "" : conditionalField.label
-                    }
-                    name={conditionalField.name}
-                    onChange={controllerField.onChange}
-                    value={dateValue}
-                  />
-                );
-              }}
-            />
-          ) : conditionalField.type === "select" ? (
-            conditionalField.hint ? (
-              <div className="flex flex-col gap-1">
-                {!conditionalField.hidden && (
-                  <label
-                    className="font-bold text-lg"
-                    htmlFor={conditionalField.name}
-                  >
-                    {conditionalField.label}
-                  </label>
-                )}
-                <Text
-                  as="p"
-                  className={
-                    conditionalError?.message
-                      ? "text-red-700"
-                      : "text-mid-grey-00"
-                  }
-                  size="body"
-                >
-                  {conditionalError?.message ?? conditionalField.hint}
-                </Text>
-                <Select
-                  error={conditionalError?.message}
-                  id={conditionalField.name}
-                  {...register(conditionalField.name as keyof FormData)}
-                >
-                  {conditionalField.options?.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </Select>
-              </div>
-            ) : (
-              <Select
-                error={conditionalError?.message}
-                label={conditionalField.hidden ? "" : conditionalField.label}
-                {...register(conditionalField.name as keyof FormData)}
-              >
-                {conditionalField.options?.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </Select>
-            )
-          ) : conditionalField.type === "textarea" ? (
-            <div className="flex flex-col gap-1">
-              {!conditionalField.hidden && (
-                <label
-                  className="font-bold text-lg"
-                  htmlFor={conditionalField.name}
-                >
-                  {conditionalField.label}
-                </label>
-              )}
-              {(conditionalField.hint || conditionalError?.message) && (
-                <Text
-                  as="p"
-                  className={
-                    conditionalError?.message
-                      ? "text-red-700"
-                      : "text-mid-grey-00"
-                  }
-                  size="body"
-                >
-                  {conditionalError?.message ?? conditionalField.hint}
-                </Text>
-              )}
-              <TextArea
-                {...textRegister(conditionalField.name as keyof FormData)}
-                error={conditionalError?.message}
-                id={conditionalField.name}
-                placeholder={conditionalField.placeholder}
-                rows={conditionalField.rows || 4}
-              />
-            </div>
-          ) : conditionalField.type === "number" ? (
-            <Controller
-              control={control}
-              name={conditionalField.name as keyof FormData}
-              render={({ field: controllerField }) => (
-                <NumberInput
-                  description={
-                    conditionalError?.message ?? conditionalField.hint
-                  }
-                  error={conditionalError?.message}
-                  label={conditionalField.hidden ? "" : conditionalField.label}
-                  name={controllerField.name}
-                  onBlur={controllerField.onBlur}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    const value = e.target.value;
-                    controllerField.onChange(value === "" ? "" : Number(value));
-                  }}
-                  placeholder={conditionalField.placeholder}
-                  value={controllerField.value as number | ""}
-                />
-              )}
-            />
-          ) : conditionalField.type === "radio" && conditionalField.options ? (
-            <Controller
-              control={control}
-              name={conditionalField.name as keyof FormData}
-              render={({ field: controllerField }) => (
-                <RadioGroup
-                  description={conditionalField.hint}
-                  error={conditionalError?.message}
-                  label={conditionalField.hidden ? "" : conditionalField.label}
-                  onValueChange={controllerField.onChange}
-                  value={controllerField.value as string}
-                >
-                  {conditionalField.options?.map((option) => (
-                    <Radio
-                      id={`${conditionalField.name}-${option.value}`}
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                    />
-                  ))}
-                </RadioGroup>
-              )}
-            />
-          ) : conditionalField.hint ? (
-            <div className="flex flex-col gap-1">
-              {!conditionalField.hidden && (
-                <label
-                  className="font-bold text-lg"
-                  htmlFor={conditionalField.name}
-                >
-                  {conditionalField.label}
-                </label>
-              )}
-              <Text
-                as="p"
-                className={
-                  conditionalError?.message
-                    ? "text-red-700"
-                    : "text-mid-grey-00"
-                }
-                size="body"
-              >
-                {conditionalError?.message ?? conditionalField.hint}
-              </Text>
-              <Input
-                error={conditionalError?.message}
-                id={conditionalField.name}
-                placeholder={conditionalField.placeholder}
-                type={conditionalField.type}
-                {...textRegister(conditionalField.name as keyof FormData)}
-              />
-            </div>
-          ) : (
-            <Input
-              error={conditionalError?.message}
-              id={conditionalField.name}
-              label={conditionalField.hidden ? "" : conditionalField.label}
-              placeholder={conditionalField.placeholder}
-              type={conditionalField.type}
-              {...textRegister(conditionalField.name as keyof FormData)}
-            />
-          )}
+          {renderFieldContent(conditionalField, conditionalError)}
         </div>
       </div>
     );
-  };
+  }
 
-  return (
-    <div className={getWidthClass(field.width)} id={field.name}>
-      {field.type === "fieldArray" ? (
-        <DynamicFieldArray field={field} />
-      ) : field.type === "date" ? (
-        <Controller
-          control={control}
-          name={field.name as keyof FormData}
-          render={({ field: controllerField }) => {
-            // Ensure we always have a DateInputValue object
-            const dateValue: DateInputValue =
-              controllerField.value && typeof controllerField.value === "object"
-                ? (controllerField.value as DateInputValue)
-                : { day: "", month: "", year: "" };
+  /**
+   * Shared field rendering logic. Renders the appropriate form component
+   * based on the field type. Used by the main render, conditional fields,
+   * and showHide children to avoid duplicating the type-switch logic.
+   *
+   * @param f - The field configuration to render
+   * @param fieldError - The field's current validation error (if any)
+   * @param inlineConditionals - Conditional fields to render inline within
+   *   select (after options) or radio (next to each matching option)
+   */
+  function renderFieldContent(
+    f: FormField,
+    fieldError: FieldError | undefined,
+    inlineConditionals?: FormField[]
+  ): React.ReactNode {
+    switch (f.type) {
+      case "fieldArray":
+        return <DynamicFieldArray field={f as FieldArrayFormField} />;
 
-            return (
-              <DateInput
-                description={error?.message ?? field.hint ?? field.placeholder}
-                error={error?.message}
-                id={field.name}
-                label={field.hidden ? "" : field.label}
-                name={field.name}
-                onChange={controllerField.onChange}
-                value={dateValue}
-              />
-            );
-          }}
-        />
-      ) : field.type === "select" ? (
-        <>
-          {field.hint ? (
-            <div className="flex flex-col gap-1">
-              {!field.hidden && (
-                <label className="font-bold text-lg" htmlFor={field.name}>
-                  {field.label}
-                </label>
-              )}
-              <Text
-                as="p"
-                className={error?.message ? "text-red-700" : "text-mid-grey-00"}
-                size="body"
-              >
-                {error?.message ?? field.hint}
-              </Text>
-              <Select
-                error={error?.message}
-                id={field.name}
-                {...register(field.name as keyof FormData)}
-              >
-                {field.options?.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </Select>
-            </div>
-          ) : (
+      case "date":
+        return (
+          <Controller
+            control={control}
+            name={f.name}
+            render={({ field: controllerField }) => {
+              // Ensure we always have a DateInputValue object
+              const dateValue: DateInputValue =
+                controllerField.value &&
+                typeof controllerField.value === "object"
+                  ? (controllerField.value as DateInputValue)
+                  : { day: "", month: "", year: "" };
+
+              return (
+                <DateInput
+                  description={fieldError?.message ?? f.hint ?? f.placeholder}
+                  error={fieldError?.message}
+                  id={f.name}
+                  label={f.hidden ? "" : f.label}
+                  name={f.name}
+                  onChange={controllerField.onChange}
+                  value={dateValue}
+                />
+              );
+            }}
+          />
+        );
+
+      case "select":
+        return (
+          <>
             <Select
-              error={error?.message}
-              label={field.hidden ? "" : field.label}
-              {...register(field.name as keyof FormData)}
+              description={fieldError?.message ?? f.hint}
+              error={fieldError?.message}
+              label={f.hidden ? "" : f.label}
+              {...register(f.name)}
             >
-              {field.options?.map((option) => (
+              {f.options?.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
               ))}
             </Select>
-          )}
-          {/* Render conditional fields for select */}
-          {conditionalFields.map((cf) => renderConditionalField(cf))}
-        </>
-      ) : field.type === "radio" ? (
-        <Controller
-          control={control}
-          name={field.name as keyof FormData}
-          render={({ field: controllerField }) => (
-            <RadioGroup
-              description={field.hint}
-              error={error?.message}
-              label={field.hidden ? "" : field.label}
-              onValueChange={controllerField.onChange}
-              value={controllerField.value as string}
-            >
-              {field.options?.map((option) => (
-                <Fragment key={option.value}>
-                  <Radio
-                    id={option.value}
-                    label={option.label}
-                    value={option.value}
-                  />
-                  {/* Render conditional fields that match this option */}
-                  {conditionalFields
-                    .filter((cf) => cf.conditionalOn?.value === option.value)
-                    .map((cf) => renderConditionalField(cf))}
-                </Fragment>
-              ))}
-            </RadioGroup>
-          )}
-        />
-      ) : field.type === "checkbox" ? (
-        <Controller
-          control={control}
-          name={field.name as keyof FormData}
-          render={({ field: controllerField }) => (
-            <Checkbox
-              checked={controllerField.value === "yes"}
-              id={field.name}
-              label={field.hidden ? "" : field.label}
-              onCheckedChange={(checked) => {
-                controllerField.onChange(checked ? "yes" : "no");
-              }}
-            />
-          )}
-        />
-      ) : field.type === "showHide" && field.showHide ? (
-        (() => {
-          // Extract showHide config to help TypeScript narrow the type
-          const showHideConfig = field.showHide;
-          // Watch the state field to control open/closed state
-          const stateValue = watch(
-            showHideConfig.stateFieldName as keyof FormData
-          );
-          const isOpen = stateValue === "open";
-          return (
-            <ShowHide
-              onToggle={(event) => {
-                const newIsOpen = (event.target as HTMLDetailsElement).open;
-                setValue(
-                  showHideConfig.stateFieldName as keyof FormData,
-                  (newIsOpen ? "open" : "closed") as FormData[keyof FormData],
-                  { shouldValidate: false }
-                );
+            {/* Render conditional fields that depend on this select's value */}
+            {inlineConditionals?.map((cf) => renderConditionalField(cf))}
+          </>
+        );
 
-                // Clear passport number field when closing ShowHide
-                if (!newIsOpen) {
-                  for (const childField of showHideConfig.fields) {
-                    setValue(
-                      childField.name as keyof FormData,
-                      "" as FormData[keyof FormData],
-                      { shouldValidate: false }
-                    );
-                  }
-                }
-              }}
-              open={isOpen}
-              summary={showHideConfig.summary}
-            >
-              <div className="flex flex-col gap-6">
-                {showHideConfig.description && (
-                  <p className="text-[20px] text-mid-grey-00 leading-[1.7]">
-                    {showHideConfig.description}
-                  </p>
-                )}
-                {showHideConfig.fields.map((childField) => {
-                  const childError = getNestedValue<FieldError>(
-                    errors as Record<string, unknown>,
-                    childField.name
-                  );
-                  return (
-                    <div key={childField.name}>
-                      {childField.type === "textarea" ? (
-                        <div className="flex flex-col gap-1">
-                          {!childField.hidden && (
-                            <label
-                              className="font-bold text-lg"
-                              htmlFor={childField.name}
-                            >
-                              {childField.label}
-                            </label>
-                          )}
-                          {(childField.hint || childError?.message) && (
-                            <Text
-                              as="p"
-                              className={
-                                childError?.message
-                                  ? "text-red-700"
-                                  : "text-mid-grey-00"
-                              }
-                              size="body"
-                            >
-                              {childError?.message ?? childField.hint}
-                            </Text>
-                          )}
-                          <TextArea
-                            {...textRegister(childField.name as keyof FormData)}
-                            error={childError?.message}
-                            id={childField.name}
-                            placeholder={childField.placeholder}
-                            rows={childField.rows || 4}
-                          />
-                        </div>
-                      ) : childField.type === "number" ? (
-                        <Controller
-                          control={control}
-                          name={childField.name as keyof FormData}
-                          render={({ field: controllerField }) => (
-                            <NumberInput
-                              description={
-                                childError?.message ?? childField.hint
-                              }
-                              error={childError?.message}
-                              label={childField.hidden ? "" : childField.label}
-                              name={controllerField.name}
-                              onBlur={controllerField.onBlur}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                const value = e.target.value;
-                                controllerField.onChange(
-                                  value === "" ? "" : Number(value)
-                                );
-                              }}
-                              placeholder={childField.placeholder}
-                              value={controllerField.value as number | ""}
-                            />
-                          )}
-                        />
-                      ) : (
-                        <Input
-                          error={childError?.message}
-                          id={childField.name}
-                          label={childField.hidden ? "" : childField.label}
-                          placeholder={childField.placeholder}
-                          type={childField.type}
-                          {...textRegister(childField.name as keyof FormData)}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </ShowHide>
-          );
-        })()
-      ) : field.type === "file" ? (
-        <Controller
-          control={control}
-          name={field.name as keyof FormData}
-          render={({ field: controllerField }) => (
-            <FileUploadField
-              error={error}
-              field={field as FormField & { type: "file" }}
-              onChange={(files) => controllerField.onChange(files)}
-              onUploadComplete={(urls) => {
-                // Save uploaded file URLs to a related field in form state
-                // This persists the URLs with form progress in session storage
-                const urlFieldName = `${field.name}Urls` as keyof FormData;
-                setValue(urlFieldName, urls as FormData[keyof FormData], {
-                  shouldValidate: false,
-                });
-              }}
-              value={(controllerField.value as File[]) ?? []}
-            />
-          )}
-        />
-      ) : field.type === "textarea" ? (
-        <div className="flex flex-col gap-1">
-          {!field.hidden && (
-            <label className="font-bold text-lg" htmlFor={field.name}>
-              {field.label}
-            </label>
-          )}
-          {(field.hint || error?.message) && (
-            <Text
-              as="p"
-              className={error?.message ? "text-red-700" : "text-mid-grey-00"}
-              size="body"
-            >
-              {error?.message ?? field.hint}
-            </Text>
-          )}
-          <TextArea
-            {...textRegister(field.name as keyof FormData)}
-            error={error?.message}
-            id={field.name}
-            placeholder={field.placeholder}
-            rows={field.rows || 4}
-          />
-        </div>
-      ) : field.type === "number" ? (
-        <Controller
-          control={control}
-          name={field.name as keyof FormData}
-          render={({ field: controllerField }) => (
-            <NumberInput
-              description={error?.message ?? field.hint}
-              error={error?.message}
-              label={field.hidden ? "" : field.label}
-              name={controllerField.name}
-              onBlur={controllerField.onBlur}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const value = e.target.value;
-                controllerField.onChange(value === "" ? "" : Number(value));
-              }}
-              placeholder={field.placeholder}
-              value={controllerField.value as number | ""}
-            />
-          )}
-        />
-      ) : field.hint ? (
-        <div className="flex flex-col gap-1">
-          {!field.hidden && (
-            <label className="font-bold text-lg" htmlFor={field.name}>
-              {field.label}
-            </label>
-          )}
-          <Text
-            as="p"
-            className={error?.message ? "text-red-700" : "text-mid-grey-00"}
-            size="body"
-          >
-            {error?.message ?? field.hint}
-          </Text>
-          <Input
-            error={error?.message}
-            id={field.name}
-            type={field.type}
-            {...textRegister(
-              field.name as keyof FormData,
-              maskType ? maskitoRef : undefined
+      case "radio":
+        return (
+          <Controller
+            control={control}
+            name={f.name}
+            render={({ field: controllerField }) => (
+              <RadioGroup
+                description={f.hint}
+                error={fieldError?.message}
+                label={f.hidden ? "" : f.label}
+                onValueChange={controllerField.onChange}
+                value={controllerField.value as string}
+              >
+                {f.options?.map((option) => (
+                  <Fragment key={option.value}>
+                    <Radio
+                      id={
+                        inlineConditionals
+                          ? option.value
+                          : `${f.name}-${option.value}`
+                      }
+                      label={option.label}
+                      value={option.value}
+                    />
+                    {/* Render conditional fields that match this radio option */}
+                    {inlineConditionals
+                      ?.filter((cf) => cf.conditionalOn?.value === option.value)
+                      .map((cf) => renderConditionalField(cf))}
+                  </Fragment>
+                ))}
+              </RadioGroup>
             )}
-            placeholder={field.placeholder}
           />
-        </div>
-      ) : (
-        <Input
-          error={error?.message}
-          label={field.hidden ? "" : field.label}
-          type={field.type}
-          {...textRegister(
-            field.name as keyof FormData,
-            maskType ? maskitoRef : undefined
-          )}
-          placeholder={field.placeholder}
-        />
-      )}
+        );
+
+      case "checkbox":
+        return (
+          <Controller
+            control={control}
+            name={f.name}
+            render={({ field: controllerField }) => (
+              <Checkbox
+                checked={controllerField.value === "yes"}
+                id={f.name}
+                label={f.hidden ? "" : f.label}
+                onCheckedChange={(checked) => {
+                  controllerField.onChange(checked ? "yes" : "no");
+                }}
+              />
+            )}
+          />
+        );
+
+      case "showHide": {
+        if (!f.showHide) return null;
+        const showHideConfig = f.showHide;
+        const stateValue = watch(showHideConfig.stateFieldName);
+        const isOpen = stateValue === "open";
+        return (
+          <ShowHide
+            onToggle={(event) => {
+              const newIsOpen = (event.target as HTMLDetailsElement).open;
+              setValue(
+                showHideConfig.stateFieldName,
+                newIsOpen ? "open" : "closed",
+                { shouldValidate: false }
+              );
+
+              // Clear child field values when closing ShowHide
+              if (!newIsOpen) {
+                for (const childField of showHideConfig.fields) {
+                  setValue(childField.name, "", { shouldValidate: false });
+                }
+              }
+            }}
+            open={isOpen}
+            summary={showHideConfig.summary}
+          >
+            <div className="flex flex-col gap-6">
+              {showHideConfig.description && (
+                <p className="text-[20px] text-mid-grey-00 leading-[1.7]">
+                  {showHideConfig.description}
+                </p>
+              )}
+              {showHideConfig.fields.map((childField) => {
+                const childError = getNestedValue<FieldError>(
+                  errors as Record<string, unknown>,
+                  childField.name
+                );
+                return (
+                  <div key={childField.name}>
+                    {renderFieldContent(childField, childError)}
+                  </div>
+                );
+              })}
+            </div>
+          </ShowHide>
+        );
+      }
+
+      case "file":
+        return (
+          <Controller
+            control={control}
+            name={f.name}
+            render={({ field: controllerField }) => (
+              <FileUploadField
+                error={fieldError}
+                field={f as FileFormField}
+                onChange={(files) => controllerField.onChange(files)}
+                onUploadComplete={(urls) => {
+                  // Save uploaded file URLs to a related field in form state
+                  // (e.g., "documentsUrls" for a "documents" file field).
+                  // This persists the URLs with form progress in session storage.
+                  const urlFieldName = `${f.name}Urls`;
+                  setValue(urlFieldName, urls, {
+                    shouldValidate: false,
+                  });
+                }}
+                value={(controllerField.value as File[]) ?? []}
+              />
+            )}
+          />
+        );
+
+      case "textarea":
+        return (
+          <TextArea
+            {...textRegister(f.name)}
+            description={fieldError?.message ?? f.hint}
+            error={fieldError?.message}
+            id={f.name}
+            label={f.hidden ? "" : f.label}
+            placeholder={f.placeholder}
+            rows={f.rows || 4}
+          />
+        );
+
+      case "number":
+        return (
+          <Controller
+            control={control}
+            name={f.name}
+            render={({ field: controllerField }) => (
+              <NumberInput
+                description={fieldError?.message ?? f.hint}
+                error={fieldError?.message}
+                label={f.hidden ? "" : f.label}
+                name={controllerField.name}
+                onBlur={controllerField.onBlur}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  const value = e.target.value;
+                  controllerField.onChange(value === "" ? "" : Number(value));
+                }}
+                placeholder={f.placeholder}
+                value={controllerField.value as number | ""}
+              />
+            )}
+          />
+        );
+
+      default: {
+        // Text/email/tel input fields
+        const fieldMask = "mask" in f && f.mask ? f.mask : undefined;
+        const activeMaskitoRef = fieldMask ? maskitoRef : undefined;
+
+        return (
+          <Input
+            description={fieldError?.message ?? f.hint}
+            error={fieldError?.message}
+            label={f.hidden ? "" : f.label}
+            type={f.type}
+            {...textRegister(f.name, activeMaskitoRef)}
+            placeholder={f.placeholder}
+          />
+        );
+      }
+    }
+  }
+
+  return (
+    <div className={getWidthClass(field.width)} id={field.name}>
+      {renderFieldContent(field, error, conditionalFields)}
     </div>
   );
 }

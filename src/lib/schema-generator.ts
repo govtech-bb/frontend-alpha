@@ -5,10 +5,9 @@ import {
   dateValidation,
 } from "@/lib/validation/date-validation";
 import type {
-  DateFieldValidation,
+  BaseValidationRule,
   FormField,
   FormStep,
-  NestedFormField,
   NonDateFieldValidation,
 } from "@/types";
 
@@ -31,11 +30,10 @@ function objectToZodSchema(
   return z.object(shape);
 }
 
-function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
+function createFieldSchema(field: FormField): z.ZodTypeAny {
   let schema: z.ZodTypeAny = z.string();
 
-  const validation = field.validation as NonDateFieldValidation &
-    DateFieldValidation;
+  const validation = field.validation as BaseValidationRule;
 
   // Handle showHide fields - the state field needs to be optional string
   if (field.type === "showHide") {
