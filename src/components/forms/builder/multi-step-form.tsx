@@ -1110,23 +1110,18 @@ export default function DynamicMultiStepForm({
     }
 
     for (const field of visibleFields) {
-      const v = field.validation as
-        | { gteField?: string; gteMessage?: string }
-        | undefined;
+      const op = field.validation?.operator;
       if (
-        typeof v !== "object" ||
-        v === null ||
-        typeof v.gteField !== "string" ||
-        typeof v.gteMessage !== "string"
+        !op ||
+        op.condition !== "gte" ||
+        typeof op.field !== "string" ||
+        typeof op.message !== "string"
       ) {
         continue;
       }
 
       const endFieldName = field.name;
-      const startFieldName = resolveGteSiblingFieldName(
-        endFieldName,
-        v.gteField
-      );
+      const startFieldName = resolveGteSiblingFieldName(endFieldName, op.field);
       const startYearValue = methods.getValues(
         startFieldName as keyof FormData
       );
@@ -1150,7 +1145,7 @@ export default function DynamicMultiStepForm({
         if (endYear < startYear) {
           methods.setError(endFieldName as keyof FormData, {
             type: "custom",
-            message: v.gteMessage,
+            message: op.message,
           });
           isValid = false;
         } else {
@@ -1160,7 +1155,7 @@ export default function DynamicMultiStepForm({
           );
           if (
             fieldError?.type === "custom" &&
-            fieldError.message === v.gteMessage
+            fieldError.message === op.message
           ) {
             methods.clearErrors(endFieldName as keyof FormData);
           }
