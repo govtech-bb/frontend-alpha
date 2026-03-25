@@ -959,7 +959,7 @@ export default function DynamicMultiStepForm({
         );
         if (showHideState === "open") {
           // Skip validation for this field - add to skip list and clear any existing errors
-          fieldsToSkipValidation.push(field.name);
+          fieldsToSkipValidation.add(field.name);
           methods.clearErrors(field.name);
         } else {
           currentFieldNames.push(field.name);
