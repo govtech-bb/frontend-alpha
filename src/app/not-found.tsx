@@ -30,7 +30,7 @@ export default function NotFound() {
             Browse service directory
           </LinkButton>
           <LinkButton href="/" variant="primary">
-            Return to the homepage
+            Return to homepage
           </LinkButton>
         </div>
       </div>
