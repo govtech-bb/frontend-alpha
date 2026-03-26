@@ -11,6 +11,7 @@ import {
 } from "@/lib/validation/date-validation";
 import type {
   BaseValidationRule,
+  DateFieldValidation,
   FormField,
   FormStep,
   NonDateFieldValidation,
