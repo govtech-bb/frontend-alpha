@@ -31,6 +31,12 @@ export type DateValidationRule =
   | { type: "between"; start: string; end: string; description?: string }
   | { type: "minYear"; year: number };
 
+export type FieldValidationOperator = {
+  condition: "gte";
+  field: string;
+  message: string;
+};
+
 /** Base validation rules shared by all field types. */
 export type BaseValidationRule = {
   /** Error message when the field is required, or `false` to explicitly mark as optional */
@@ -47,6 +53,8 @@ export type BaseValidationRule = {
   max?: { value: number; message: string };
   /** Exact file count constraint for file upload fields */
   numberOfFiles?: { isEqual: number; message: string };
+  /** Cross-field rule vs a sibling under the same parent path (e.g. endYear >= startYear) */
+  operator?: FieldValidationOperator;
 };
 
 /** Validation rules for date fields, extending base rules with date-specific constraints. */
