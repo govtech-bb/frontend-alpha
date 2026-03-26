@@ -762,7 +762,6 @@ export const formSteps: FormStep[] = [
         name: "eligibility.willingToWorkAtNight",
         label: "Are you willing to work some night shifts?",
         type: "radio",
-        rows: 5,
         validation: {
           required: "This field is required",
         },

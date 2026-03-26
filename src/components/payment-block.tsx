@@ -27,10 +27,12 @@ type PaymentVerifyResponse = {
 function PaymentRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex gap-s">
-      <Text as="p" className="flex-1 font-bold">
+      <Text as="p" className="mr-2 flex-1 font-bold">
         {label}
       </Text>
-      <Text as="p">{value}</Text>
+      <Text as="p" className="min-w-0 hyphens-none break-words text-end">
+        {value}
+      </Text>
     </div>
   );
 }
