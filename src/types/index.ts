@@ -165,12 +165,24 @@ export type FieldArrayFormField = BaseFormField & {
   fieldArray: FieldArrayConfig;
 };
 
+/** Constraints and defaults for `type: "number"` fields. */
+export type NumberFieldConfig = {
+  /** Initial value to pre-populate the field with */
+  default?: number;
+  /** Minimum allowed value (sets the HTML min attribute) */
+  min?: number;
+  /** Maximum allowed value (sets the HTML max attribute) */
+  max?: number;
+};
+
 /** A single-line text input (text, email, number, or telephone). */
 export type TextFormField = BaseFormField & {
   type: "text" | "email" | "number" | "tel";
   validation: NonDateFieldValidation;
   /** Input mask to apply (e.g., "nid" for National ID format xxxxxx-xxxx) */
   mask?: MaskType;
+  /** Constraints and defaults for number inputs (only applicable when type is "number") */
+  numberConfig?: NumberFieldConfig;
 };
 
 /** A collapsible disclosure section containing nested fields. */
