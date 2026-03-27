@@ -479,7 +479,13 @@ export default function DynamicMultiStepForm({
       for (const field of step.fields) {
         // Set appropriate default values based on field type
         let defaultValue: unknown = "";
-        if (field.type === "date") {
+        if (
+          field.type === "number" &&
+          "numberConfig" in field &&
+          field.numberConfig?.default !== undefined
+        ) {
+          defaultValue = field.numberConfig.default;
+        } else if (field.type === "date") {
           defaultValue = { day: "", month: "", year: "" };
         } else if (field.type === "checkbox") {
           defaultValue = "no";
