@@ -9,9 +9,9 @@ import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess } from "@/lib/research-access";
 import {
-  fetchAllServiceAccess,
   fetchServiceConfig,
   hasProtectedSubpages,
+  isServiceProtected,
   isSubpageProtected,
 } from "@/lib/service-access-api";
 import { findSubPageTitleFromPath } from "@/lib/utils";
@@ -38,17 +38,6 @@ export default async function Page({ params }: ContentPageProps) {
       return <MarkdownContent markdown={markdownContent} />;
     }
 
-    const userHasAccess = await hasResearchAccess();
-    let visiblePages = category.pages;
-
-    if (!userHasAccess) {
-      // Only fetch from the API when needed — skip the call for users with access
-      const allServiceAccess = await fetchAllServiceAccess();
-      visiblePages = category.pages.filter(
-        (page) => !allServiceAccess.get(page.slug)?.isProtected
-      );
-    }
-
     return (
       <>
         <Heading as="h1">{category.title}</Heading>
@@ -60,7 +49,7 @@ export default async function Page({ params }: ContentPageProps) {
             </Text>
           ))}
         <div className="flex flex-col divide-y-2 divide-grey-00 last:border-grey-00 last:border-b-2">
-          {visiblePages.map((service) => (
+          {category.pages.map((service) => (
             <div
               className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
               key={service.title}
@@ -96,17 +85,13 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     const serviceConfig = await fetchServiceConfig(pageSlug);
-    const serviceIsProtected = serviceConfig?.isProtected ?? false;
-    const serviceHasProtectedSubpages = hasProtectedSubpages(serviceConfig);
 
-    // Check access when the service itself or any of its subpages are protected
-    const needsAccess = serviceIsProtected || serviceHasProtectedSubpages;
-    const hasAccess = needsAccess ? await hasResearchAccess() : true;
+    // Hide the start-link CTA when the service itself is flagged OR when
+    // any subpage (start/form) is flagged — but the entry page still renders.
+    const startLinkHidden =
+      isServiceProtected(serviceConfig) || hasProtectedSubpages(serviceConfig);
 
-    // Block the service entry page when service-level protection is set
-    if (serviceIsProtected && !hasAccess) {
-      notFound();
-    }
+    const hasAccess = startLinkHidden ? await hasResearchAccess() : true;
 
     const markdownContent = await getMarkdownContent([pageSlug]);
     if (!markdownContent) {
@@ -138,11 +123,17 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     const serviceConfig = await fetchServiceConfig(pageSlug);
-    const subpageIsProtected = isSubpageProtected(serviceConfig, subPageSlug);
-    const hasAccess = subpageIsProtected ? await hasResearchAccess() : true;
 
-    if (subpageIsProtected && !hasAccess) {
-      notFound();
+    // Block a subpage when it is individually flagged OR the whole service is flagged
+    const subpageFlagged =
+      isServiceProtected(serviceConfig) ||
+      isSubpageProtected(serviceConfig, subPageSlug);
+
+    if (subpageFlagged) {
+      const hasAccess = await hasResearchAccess();
+      if (!hasAccess) {
+        notFound();
+      }
     }
 
     // Handle form pages (JSX components)
@@ -163,10 +154,7 @@ export default async function Page({ params }: ContentPageProps) {
     return (
       <>
         {storageKey && <ClearFormStorage storageKey={storageKey} />}
-        <MarkdownContent
-          hasResearchAccess={hasAccess}
-          markdown={markdownContent}
-        />
+        <MarkdownContent markdown={markdownContent} />
       </>
     );
   }
@@ -188,7 +176,11 @@ export async function generateMetadata({ params }: ContentPageProps) {
 
     if (page) {
       const serviceConfig = await fetchServiceConfig(pageSlug);
-      if (isSubpageProtected(serviceConfig, subPageSlug)) {
+      const subpageFlagged =
+        isServiceProtected(serviceConfig) ||
+        isSubpageProtected(serviceConfig, subPageSlug);
+
+      if (subpageFlagged) {
         const hasAccess = await hasResearchAccess();
         if (!hasAccess) {
           return { title: "Page not found" };
