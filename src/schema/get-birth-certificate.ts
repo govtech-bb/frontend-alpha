@@ -438,7 +438,6 @@ export const formSteps: FormStep[] = [
         // hint: "Enter a house, church, or parish, if known",
         type: "text",
         validation: {
-          required: "Place of baptism is required",
           minLength: {
             value: 2,
             message: "Must be at least 2 characters",
