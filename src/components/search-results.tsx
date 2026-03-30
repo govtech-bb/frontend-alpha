@@ -14,7 +14,8 @@ export function SearchResults({
   query: string;
 }) {
   useEffect(() => {
-    if (!query) return;
+    // Skip tracking queries that may contain PII (numbers, emails)
+    if (!query || /\d|@/.test(query)) return;
     window.umami?.track("search", {
       query,
       results: results.length,
