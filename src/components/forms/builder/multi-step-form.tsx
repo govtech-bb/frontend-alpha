@@ -1286,190 +1286,210 @@ export default function DynamicMultiStepForm({
 
   if (!_hasHydrated) {
     // Show loading state while hydrating
-    return <FormSkeleton />;
+    return (
+      <div className="container py-8 lg:py-16">
+        <FormSkeleton />
+      </div>
+    );
   }
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {/* Payment Status Message */}
-        {paymentMessage && (
-          <div
-            className={`mb-6 border-l-4 p-4 ${
-              paymentMessage.type === "success"
-                ? "border-green-500 bg-green-50"
-                : paymentMessage.type === "pending"
-                  ? "border-amber-500 bg-amber-50"
-                  : "border-red-500 bg-red-50"
-            }`}
-          >
-            <div className="flex">
-              <div className="shrink-0">
-                <span
-                  className={
-                    paymentMessage.type === "success"
-                      ? "text-green-500"
-                      : paymentMessage.type === "pending"
-                        ? "text-amber-500"
-                        : "text-red-500"
-                  }
-                >
-                  {paymentMessage.type === "success"
-                    ? "✓"
-                    : paymentMessage.type === "pending"
-                      ? "⏳"
-                      : "⚠"}
-                </span>
-              </div>
-              <div className="ml-3">
-                <h3
-                  className={`font-medium text-sm ${
-                    paymentMessage.type === "success"
-                      ? "text-green-800"
-                      : paymentMessage.type === "pending"
-                        ? "text-amber-800"
-                        : "text-red-800"
-                  }`}
-                >
-                  {paymentMessage.message}
-                </h3>
-                {paymentMessage.details && (
-                  <div
-                    className={`mt-1 text-sm ${
+    <div className="container py-8 lg:py-16">
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          {/* Payment Status Message */}
+          {paymentMessage && (
+            <div
+              className={`mb-6 border-l-4 p-4 ${
+                paymentMessage.type === "success"
+                  ? "border-green-500 bg-green-50"
+                  : paymentMessage.type === "pending"
+                    ? "border-amber-500 bg-amber-50"
+                    : "border-red-500 bg-red-50"
+              }`}
+            >
+              <div className="flex">
+                <div className="shrink-0">
+                  <span
+                    className={
                       paymentMessage.type === "success"
-                        ? "text-green-700"
+                        ? "text-green-500"
                         : paymentMessage.type === "pending"
-                          ? "text-amber-700"
-                          : "text-red-700"
+                          ? "text-amber-500"
+                          : "text-red-500"
+                    }
+                  >
+                    {paymentMessage.type === "success"
+                      ? "✓"
+                      : paymentMessage.type === "pending"
+                        ? "⏳"
+                        : "⚠"}
+                  </span>
+                </div>
+                <div className="ml-3">
+                  <h3
+                    className={`font-medium text-sm ${
+                      paymentMessage.type === "success"
+                        ? "text-green-800"
+                        : paymentMessage.type === "pending"
+                          ? "text-amber-800"
+                          : "text-red-800"
                     }`}
                   >
-                    {paymentMessage.details?.split("\n").map((line, index) => (
-                      <div key={index}>{line}</div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Submission Error */}
-        {submissionError && (
-          <div className="mb-6 border-red-500 border-l-8 bg-red-50 p-6">
-            <div className="flex">
-              <div className="shrink-0">
-                <svg
-                  aria-hidden="true"
-                  className="h-6 w-6 text-red-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                  />
-                </svg>
-              </div>
-              <div className="ml-4 flex-1">
-                <h3 className="font-bold text-lg text-red-800">
-                  There was a problem submitting your form
-                </h3>
-                <p className="mt-2 text-red-700">{submissionError.message}</p>
-                {submissionError.errors &&
-                  submissionError.errors.length > 0 && (
-                    <ul className="mt-4 space-y-2">
-                      {submissionError.errors.map((error, index) => (
-                        <li className="text-red-700" key={index}>
-                          <span className="font-semibold">
-                            {error.field
-                              ?.split(".")
-                              .map(
-                                (part) =>
-                                  part.charAt(0).toUpperCase() +
-                                  part.slice(1).replace(/([A-Z])/g, " $1")
-                              )
-                              .join(" - ")}
-                            :
-                          </span>{" "}
-                          {error.message}
-                        </li>
-                      ))}
-                    </ul>
+                    {paymentMessage.message}
+                  </h3>
+                  {paymentMessage.details && (
+                    <div
+                      className={`mt-1 text-sm ${
+                        paymentMessage.type === "success"
+                          ? "text-green-700"
+                          : paymentMessage.type === "pending"
+                            ? "text-amber-700"
+                            : "text-red-700"
+                      }`}
+                    >
+                      {paymentMessage.details
+                        ?.split("\n")
+                        .map((line, index) => (
+                          <div key={index}>{line}</div>
+                        ))}
+                    </div>
                   )}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        {/* Current Step - Show Review, Declaration, or Regular Step */}
-        {isReviewStep ? (
-          <ReviewStep
-            formSteps={expandedFormSteps}
-            onEdit={handleEditFromReview}
-          />
-        ) : isDeclarationStep ? (
-          <DeclarationStep
-            serviceTitle={serviceTitle}
-            step={expandedFormSteps[currentStep]}
-          />
-        ) : (
-          <DynamicStep
-            serviceTitle={serviceTitle}
-            step={expandedFormSteps[currentStep]}
-          />
-        )}
+          )}
 
-        {/* Navigation Buttons - Don't show on confirmation/thank-you steps */}
-        {!isFinalStep && (
-          <div className="mt-8 flex gap-4">
-            {currentStep > 0 && (
-              <Button
-                disabled={isSubmitting}
-                onClick={prevStep}
-                type="button"
-                variant="secondary"
-              >
-                Previous
-              </Button>
-            )}
+          {/* Submission Error */}
+          {submissionError && (
+            <div className="mb-6 border-red-500 border-l-8 bg-red-50 p-6">
+              <div className="flex">
+                <div className="shrink-0">
+                  <svg
+                    aria-hidden="true"
+                    className="h-6 w-6 text-red-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                    />
+                  </svg>
+                </div>
+                <div className="ml-4 flex-1">
+                  <h3 className="font-bold text-lg text-red-800">
+                    There was a problem submitting your form
+                  </h3>
+                  <p className="mt-2 text-red-700">{submissionError.message}</p>
+                  {submissionError.errors &&
+                    submissionError.errors.length > 0 && (
+                      <ul className="mt-4 space-y-2">
+                        {submissionError.errors.map((error, index) => (
+                          <li className="text-red-700" key={index}>
+                            <span className="font-semibold">
+                              {error.field
+                                ?.split(".")
+                                .map(
+                                  (part) =>
+                                    part.charAt(0).toUpperCase() +
+                                    part.slice(1).replace(/([A-Z])/g, " $1")
+                                )
+                                .join(" - ")}
+                              :
+                            </span>{" "}
+                            {error.message}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                </div>
+              </div>
+            </div>
+          )}
+          {/* Current Step - Show Review, Declaration, or Regular Step */}
+          {isReviewStep ? (
+            <ReviewStep
+              formSteps={expandedFormSteps}
+              onEdit={handleEditFromReview}
+            />
+          ) : isDeclarationStep ? (
+            <DeclarationStep
+              serviceTitle={serviceTitle}
+              step={expandedFormSteps[currentStep]}
+            />
+          ) : (
+            <DynamicStep
+              serviceTitle={serviceTitle}
+              step={expandedFormSteps[currentStep]}
+            />
+          )}
 
-            {/* Show Continue button on review step, Submit on declaration step */}
-            {isReviewStep ? (
-              <Button disabled={isSubmitting} onClick={nextStep} type="button">
-                Continue
-              </Button>
-            ) : isDeclarationStep ? (
-              <Button disabled={isSubmitting} onClick={nextStep} type="button">
-                {isSubmitting ? (
-                  <>
-                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit"
-                )}
-              </Button>
-            ) : isLastStep ? (
-              <Button disabled={isSubmitting} type="submit">
-                {isSubmitting ? (
-                  <>
-                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit Application"
-                )}
-              </Button>
-            ) : (
-              <Button disabled={isSubmitting} onClick={nextStep} type="button">
-                Continue
-              </Button>
-            )}
-          </div>
-        )}
-      </form>
-    </FormProvider>
+          {/* Navigation Buttons - Don't show on confirmation/thank-you steps */}
+          {!isFinalStep && (
+            <div className="mt-8 flex gap-4">
+              {currentStep > 0 && (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={prevStep}
+                  type="button"
+                  variant="secondary"
+                >
+                  Previous
+                </Button>
+              )}
+
+              {/* Show Continue button on review step, Submit on declaration step */}
+              {isReviewStep ? (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={nextStep}
+                  type="button"
+                >
+                  Continue
+                </Button>
+              ) : isDeclarationStep ? (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={nextStep}
+                  type="button"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              ) : isLastStep ? (
+                <Button disabled={isSubmitting} type="submit">
+                  {isSubmitting ? (
+                    <>
+                      <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Application"
+                  )}
+                </Button>
+              ) : (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={nextStep}
+                  type="button"
+                >
+                  Continue
+                </Button>
+              )}
+            </div>
+          )}
+        </form>
+      </FormProvider>
+    </div>
   );
 }
