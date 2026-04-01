@@ -279,7 +279,7 @@ export function DynamicField({
 
               return (
                 <DateInput
-                  description={fieldError?.message ?? f.hint ?? f.placeholder}
+                  description={f.hint ?? f.placeholder}
                   error={fieldError?.message}
                   id={f.name}
                   label={f.hidden ? "" : f.label}
