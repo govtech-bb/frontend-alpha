@@ -7,7 +7,7 @@ export default function ApplyToJobstartPlusProgrammeForm() {
   return (
     <DynamicMultiStepForm
       formSteps={formSteps}
-      serviceTitle="Apply to JobStart Plus programme"
+      serviceTitle="Apply to Job Start Plus programme"
       storageKey="jobstart-plus-programme"
     />
   );
