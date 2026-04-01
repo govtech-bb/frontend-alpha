@@ -256,10 +256,6 @@ export const formSteps: FormStep[] = [
   {
     id: "reason-for-certificate",
     title: "Tell us why you're ordering a birth certificate",
-    conditionalOn: {
-      field: "applyingForYourself",
-      value: "no",
-    },
     fields: [
       {
         name: "reasonForOrderingCertificate",
@@ -442,7 +438,6 @@ export const formSteps: FormStep[] = [
         // hint: "Enter a house, church, or parish, if known",
         type: "text",
         validation: {
-          required: "Place of baptism is required",
           minLength: {
             value: 2,
             message: "Must be at least 2 characters",
@@ -530,20 +525,20 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "parents.mother.middleName",
-        label: "Mother's middle name",
-        hint: " Optional. Provide only if known",
+        name: "parents.mother.maidenName",
+        label: "Mother's maiden name",
+        hint: "Enter the last name the mother used at birth, if different from her current last name.",
         type: "text",
         validation: {
           required: false,
           minLength: {
             value: 2,
-            message: "Middle name must be at least 2 characters",
+            message: "Maiden name must be at least 2 characters",
           },
           pattern: {
             value: NAME_REGEX,
             message:
-              "Middle name must contain only letters, hyphens, or apostrophes",
+              "Maiden name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -578,11 +573,16 @@ export const formSteps: FormStep[] = [
         hidden: true,
         type: "number",
         width: "short",
+        numberConfig: {
+          default: 1,
+          min: 1,
+          max: 10,
+        },
         validation: {
           required: "Number of copies is required",
           min: {
             value: 1,
-            message: "You must order at least 1 copy and maximum 10 copies",
+            message: "You must order at least 1 copy",
           },
         },
       },

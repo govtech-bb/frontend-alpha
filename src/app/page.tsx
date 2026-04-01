@@ -1,19 +1,16 @@
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 
-import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
-import { getFeaturedServices } from "@/lib/markdown";
 
-export default async function Home() {
-  const featuredServices = await getFeaturedServices();
-
+export default function Home() {
   return (
     <>
       <section className="border-yellow-00 border-b-4 bg-yellow-100">
         <div className="container">
-          <div className="space-y-4 py-8 lg:space-y-4">
+          <div className="space-y-4 py-8">
             <Heading as="h1">
               How you find and use government services is changing
             </Heading>
@@ -35,47 +32,31 @@ export default async function Home() {
       <section className="border-teal-40 border-b-4 bg-teal-10">
         <div className="container">
           <div className="space-y-4 py-8">
-            <Heading as="h2">Alpha public services</Heading>
+            <Heading as="h2">Alpha services</Heading>
 
             <Text as="p">
               These services are new. We're working on them and they are likely
               to change as we learn more.
             </Text>
 
-            <div className="flex flex-col items-start gap-2">
-              {featuredServices.map((service) => (
-                <div className="flex items-center gap-x-3" key={service.slug}>
-                  <ChevronLeftSVG className="inline-block shrink-0 rotate-180" />
-
-                  <Link
-                    as={NextLink}
-                    className="text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
-                    href={`/${service.slug}`}
-                    key={service.slug}
-                    variant={"secondary"}
-                  >
-                    {service.title}
-                  </Link>
-                </div>
-              ))}
-
-              <Link
-                as={NextLink}
-                className="mt-4 text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
-                href="/what-we-mean-by-alpha"
-                variant={"secondary"}
-              >
-                Learn more about alpha
-              </Link>
+            <div className="flex flex-col gap-2">
+              <Text as="p" className="font-bold">
+                Search for a service
+              </Text>
+              <SearchForm />
             </div>
+
+            <Link as={NextLink} href="/services">
+              View all services
+            </Link>
           </div>
         </div>
       </section>
 
       <section>
         <div className="container">
-          <div className="space-y-4 py-8 lg:space-y-4">
-            <Heading as="h2">Find government services</Heading>
+          <div className="space-y-4 py-8">
+            <Heading as="h2">Government services</Heading>
 
             <div className="flex flex-col">
               {INFORMATION_ARCHITECTURE.map((service) => (

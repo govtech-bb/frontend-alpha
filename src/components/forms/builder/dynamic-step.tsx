@@ -20,9 +20,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
 
   let conditionalFieldValue: unknown;
   if (step.conditionalTitle) {
-    conditionalFieldValue = watch(
-      step.conditionalTitle.field as keyof FormData
-    );
+    conditionalFieldValue = watch(step.conditionalTitle.field);
   }
   const resolvedTitle = resolveStepTitle(step, conditionalFieldValue);
 
@@ -38,7 +36,7 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
 
       // Skip errors for fields that are conditionally hidden
       if (field?.conditionalOn) {
-        const watchedValue = watch(field.conditionalOn.field as keyof FormData);
+        const watchedValue = watch(field.conditionalOn.field);
         if (watchedValue !== field.conditionalOn.value) {
           return null; // Don't show error if field is hidden
         }

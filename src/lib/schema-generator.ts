@@ -1,57 +1,21 @@
 import { z } from "zod";
 import {
+  fieldNameToZodPath,
+  getNestedValue,
+  resolveGteSiblingFieldName,
+  setNestedValue,
+} from "@/lib/utils";
+import {
   createDateSchema,
   dateValidation,
 } from "@/lib/validation/date-validation";
 import type {
+  BaseValidationRule,
   DateFieldValidation,
   FormField,
   FormStep,
-  NestedFormField,
   NonDateFieldValidation,
 } from "@/types";
-
-/**
- * Sets a nested value in an object using dot notation path
- * Creates intermediate objects as needed
- * @example setNestedValue({}, "guardian.firstName", schema) -> { guardian: { firstName: schema } }
- */
-function setNestedValue<T>(
-  obj: Record<string, unknown>,
-  path: string,
-  value: T
-): void {
-  const keys = path.split(".");
-  let current = obj;
-
-  for (let i = 0; i < keys.length - 1; i++) {
-    const key = keys[i];
-    if (!(key in current) || typeof current[key] !== "object") {
-      current[key] = {};
-    }
-    current = current[key] as Record<string, unknown>;
-  }
-
-  const lastKey = keys.at(-1);
-  if (lastKey) {
-    current[lastKey] = value;
-  }
-}
-
-/**
- * Gets a nested value from an object using dot notation path
- */
-function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
-  const keys = path.split(".");
-  let current: unknown = obj;
-
-  for (const key of keys) {
-    if (current === null || current === undefined) return;
-    current = (current as Record<string, unknown>)[key];
-  }
-
-  return current;
-}
 
 /**
  * Converts a nested plain object of schemas into a nested Zod object schema
@@ -72,11 +36,10 @@ function objectToZodSchema(
   return z.object(shape);
 }
 
-function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
+function createFieldSchema(field: FormField): z.ZodTypeAny {
   let schema: z.ZodTypeAny = z.string();
 
-  const validation = field.validation as NonDateFieldValidation &
-    DateFieldValidation;
+  const validation = field.validation as BaseValidationRule;
 
   // Handle showHide fields - the state field needs to be optional string
   if (field.type === "showHide") {
@@ -333,13 +296,19 @@ function createFieldSchema(field: FormField | NestedFormField): z.ZodTypeAny {
       string,
       ...string[],
     ];
-    // schema = z.enum(values); //TODO: Fix validation message
-    schema = z.enum(values, {
-      error: () => ({
-        message: validation.required || "This field is required",
-      }),
-    });
-    return schema;
+
+    // Required radios must select one of the allowed values
+    if (validation.required) {
+      schema = z.enum(values, {
+        error: () => ({
+          message: validation.required || "This field is required",
+        }),
+      });
+      return schema;
+    }
+
+    // Optional radios: accept undefined, empty string, or a valid option
+    return z.union([z.enum(values), z.literal("")]).optional();
   }
 
   // Handle checkboxes (values are "yes" or "no")
@@ -735,6 +704,82 @@ export function generateFormSchema(formSteps: FormStep[]) {
               }
             }
           }
+        }
+      }
+    }
+
+    const applyGteFromSchema = (
+      endFieldName: string,
+      validation: NonDateFieldValidation | DateFieldValidation
+    ) => {
+      const v = validation as NonDateFieldValidation;
+      const op = v.operator;
+      if (
+        !op ||
+        op.condition !== "gte" ||
+        typeof op.field !== "string" ||
+        typeof op.message !== "string"
+      ) {
+        return;
+      }
+
+      const startName = resolveGteSiblingFieldName(endFieldName, op.field);
+      const startVal = getNestedValue(
+        data as Record<string, unknown>,
+        startName
+      );
+      const endVal = getNestedValue(
+        data as Record<string, unknown>,
+        endFieldName
+      );
+
+      if (typeof startVal !== "string" || typeof endVal !== "string") {
+        return;
+      }
+      if (!(startVal.trim() && endVal.trim())) {
+        return;
+      }
+
+      const start = Number.parseInt(startVal, 10);
+      const end = Number.parseInt(endVal, 10);
+      if (!(Number.isNaN(start) || Number.isNaN(end)) && end < start) {
+        ctx.addIssue({
+          code: "custom",
+          message: op.message,
+          path: fieldNameToZodPath(endFieldName),
+        });
+      }
+    };
+
+    for (const step of formSteps) {
+      for (const field of step.fields) {
+        if (field.type === "fieldArray" && field.fieldArray?.fields) {
+          const arrayValue = getNestedValue(
+            data as Record<string, unknown>,
+            field.name
+          );
+          if (Array.isArray(arrayValue)) {
+            for (let index = 0; index < arrayValue.length; index++) {
+              for (const nestedField of field.fieldArray.fields) {
+                applyGteFromSchema(
+                  `${field.name}.${index}.${nestedField.name}`,
+                  nestedField.validation
+                );
+              }
+            }
+          }
+        } else if (field.type === "showHide" && field.showHide) {
+          const showHideState = getNestedValue(
+            data as Record<string, unknown>,
+            field.showHide.stateFieldName
+          );
+          if (showHideState === "open") {
+            for (const childField of field.showHide.fields) {
+              applyGteFromSchema(childField.name, childField.validation);
+            }
+          }
+        } else {
+          applyGteFromSchema(field.name, field.validation);
         }
       }
     }

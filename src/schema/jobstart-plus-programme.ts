@@ -466,6 +466,11 @@ export const formSteps: FormStep[] = [
             value: YEAR_REGEX,
             message: "End year must be a valid year",
           },
+          operator: {
+            condition: "gte",
+            field: "startYear",
+            message: "End year must be the same as or after start year",
+          },
         },
       },
     ],
@@ -510,6 +515,11 @@ export const formSteps: FormStep[] = [
           pattern: {
             value: YEAR_REGEX,
             message: "End year must be a valid year",
+          },
+          operator: {
+            condition: "gte",
+            field: "startYear",
+            message: "End year must be the same as or after start year",
           },
         },
       },
@@ -582,6 +592,11 @@ export const formSteps: FormStep[] = [
           pattern: {
             value: YEAR_REGEX,
             message: "End year must be a valid year",
+          },
+          operator: {
+            condition: "gte",
+            field: "startYear",
+            message: "End year must be the same as or after start year",
           },
         },
       },
@@ -747,7 +762,6 @@ export const formSteps: FormStep[] = [
         name: "eligibility.willingToWorkAtNight",
         label: "Are you willing to work some night shifts?",
         type: "radio",
-        rows: 5,
         validation: {
           required: "This field is required",
         },

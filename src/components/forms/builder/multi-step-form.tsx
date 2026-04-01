@@ -4,43 +4,21 @@ import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { type FieldError, FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue } from "@/lib/utils";
+import {
+  getNestedValue,
+  resolveGteSiblingFieldName,
+  setNestedValue,
+} from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
-import type { FormField, FormStep } from "@/types";
+import type { FormField, FormStep, NestedFormField } from "@/types";
 import { ConfirmationPage } from "./confirmation-step";
 import { DeclarationStep } from "./declaration-step";
 import { DynamicStep } from "./dynamic-step";
-
-/**
- * Sets a nested value in an object using dot notation path
- * Creates intermediate objects as needed
- */
-function setNestedValue(
-  obj: Record<string, unknown>,
-  path: string,
-  value: unknown
-): void {
-  const keys = path.split(".");
-  let current = obj;
-
-  for (let i = 0; i < keys.length - 1; i++) {
-    const key = keys[i];
-    if (!(key in current) || typeof current[key] !== "object") {
-      current[key] = {};
-    }
-    current = current[key] as Record<string, unknown>;
-  }
-
-  const lastKey = keys.at(-1);
-  if (lastKey) {
-    current[lastKey] = value;
-  }
-}
 
 /**
  * Checks if an object has only consecutive numeric keys starting from 0.
@@ -222,11 +200,11 @@ function createRepeatableStepInstance(
     }
 
     // Update showHide config with indexed field names
-    if (field.showHide) {
-      indexed.showHide = {
+    if (field.type === "showHide") {
+      (indexed as typeof field).showHide = {
         ...field.showHide,
         stateFieldName: indexFieldName(field.showHide.stateFieldName),
-        fields: field.showHide.fields.map((nestedField) => ({
+        fields: field.showHide.fields.map((nestedField: NestedFormField) => ({
           ...nestedField,
           name: indexFieldName(nestedField.name),
           // Also update conditionalOn in nested fields if present
@@ -245,12 +223,19 @@ function createRepeatableStepInstance(
 
   // Add "add another" radio field if this step should have it
   if (shouldAddAnotherField) {
+    // Only make the "add another" question required if at least one of the
+    // base step's fields is required.
+    const hasRequiredBaseFields = baseStep.fields.some((field) => {
+      const required = field.validation?.required;
+      return typeof required === "string";
+    });
+
     const addAnotherField: FormField = {
       name: `_addAnother_${arrayFieldName}_${index}`,
       label: addAnotherLabel ?? "Do you need to add another?",
       type: "radio",
       validation: {
-        required: "Select an option",
+        required: hasRequiredBaseFields ? "Select an option" : false,
       },
       options: [
         { label: "Yes", value: "yes" },
@@ -494,7 +479,13 @@ export default function DynamicMultiStepForm({
       for (const field of step.fields) {
         // Set appropriate default values based on field type
         let defaultValue: unknown = "";
-        if (field.type === "date") {
+        if (
+          field.type === "number" &&
+          "numberConfig" in field &&
+          field.numberConfig?.default !== undefined
+        ) {
+          defaultValue = field.numberConfig.default;
+        } else if (field.type === "date") {
           defaultValue = { day: "", month: "", year: "" };
         } else if (field.type === "checkbox") {
           defaultValue = "no";
@@ -609,9 +600,9 @@ export default function DynamicMultiStepForm({
     if (formData && Object.keys(formData).length > 0) {
       // Reset form with saved data
       for (const key of Object.keys(formData)) {
-        const value = formData[key as keyof FormData];
+        const value = formData[key];
         if (value !== undefined && value !== null) {
-          methods.setValue(key as keyof FormData, value, {
+          methods.setValue(key, value, {
             shouldValidate: false,
             shouldDirty: false,
           });
@@ -957,16 +948,14 @@ export default function DynamicMultiStepForm({
         if (!field.conditionalOn) return true;
 
         // Check if conditional field should be visible
-        const watchedValue = methods.watch(
-          field.conditionalOn.field as keyof FormData
-        );
+        const watchedValue = methods.watch(field.conditionalOn.field);
         return watchedValue === field.conditionalOn.value;
       }
     );
 
     // Collect field names, handling ShowHide state for conditional validation
     const currentFieldNames: string[] = [];
-    const fieldsToSkipValidation: string[] = [];
+    const fieldsToSkipValidation = new Set<string>();
 
     for (const field of visibleFields) {
       // Check if this field should skip validation when ShowHide is open
@@ -980,8 +969,8 @@ export default function DynamicMultiStepForm({
         );
         if (showHideState === "open") {
           // Skip validation for this field - add to skip list and clear any existing errors
-          fieldsToSkipValidation.push(field.name);
-          methods.clearErrors(field.name as keyof FormData);
+          fieldsToSkipValidation.add(field.name);
+          methods.clearErrors(field.name);
         } else {
           currentFieldNames.push(field.name);
         }
@@ -1003,35 +992,48 @@ export default function DynamicMultiStepForm({
         } else {
           // ShowHide is closed - clear child field errors
           for (const childField of field.showHide.fields) {
-            methods.clearErrors(childField.name as keyof FormData);
+            methods.clearErrors(childField.name);
           }
         }
       }
     }
 
     // Trigger standard validation
-    let isValid = await methods.trigger(
-      currentFieldNames as (keyof FormData)[]
-    );
+    let isValid = await methods.trigger(currentFieldNames);
 
-    // Manually validate conditional fields (required and pattern)
+    // Helper: set required error when field is empty; returns true if error was set
+    const setRequiredErrorIfEmpty = (
+      field: FormField,
+      value: unknown
+    ): boolean => {
+      const empty =
+        field.type === "checkbox" ? value !== "yes" : isFieldEmpty(value);
+
+      if (field.validation?.required && empty) {
+        methods.setError(field.name, {
+          type: "required",
+          message: field.validation.required,
+        });
+        return true;
+      }
+
+      return false;
+    };
+
+    // Manually validate conditional fields (required and pattern),
+    // and add a safety net for non-conditional fields whose required
+    // validation should always show when empty.
     for (const field of visibleFields) {
+      // Respect explicit skip rules (e.g., ID number when passport ShowHide is open)
+      if (fieldsToSkipValidation.has(field.name)) {
+        continue;
+      }
+
       if (field.conditionalOn) {
-        const fieldValue = methods.getValues(field.name as keyof FormData);
+        const fieldValue = methods.getValues(field.name);
         const stringValue = typeof fieldValue === "string" ? fieldValue : "";
 
-        // Check required validation
-        // For checkboxes, require value to be "yes"
-        const isEmpty =
-          field.type === "checkbox"
-            ? fieldValue !== "yes"
-            : isFieldEmpty(fieldValue);
-
-        if (field.validation.required && isEmpty) {
-          methods.setError(field.name as keyof FormData, {
-            type: "required",
-            message: field.validation.required,
-          });
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
           isValid = false;
           continue; // Skip pattern check if empty
         }
@@ -1040,26 +1042,27 @@ export default function DynamicMultiStepForm({
         if (field.validation.pattern && stringValue) {
           const regex = new RegExp(field.validation.pattern.value);
           if (!regex.test(stringValue)) {
-            methods.setError(field.name as keyof FormData, {
+            methods.setError(field.name, {
               type: "pattern",
               message: field.validation.pattern.message,
             });
             isValid = false;
           }
         }
+      } else if (field.validation?.required) {
+        const fieldValue = methods.getValues(field.name);
+        if (setRequiredErrorIfEmpty(field, fieldValue)) {
+          isValid = false;
+        }
       }
 
       // Manually validate showHide child fields when showHide is open
       if (field.type === "showHide" && field.showHide) {
-        const showHideState = methods.getValues(
-          field.showHide.stateFieldName as keyof FormData
-        );
+        const showHideState = methods.getValues(field.showHide.stateFieldName);
 
         if (showHideState === "open") {
           for (const childField of field.showHide.fields) {
-            const childValue = methods.getValues(
-              childField.name as keyof FormData
-            );
+            const childValue = methods.getValues(childField.name);
             const stringValue =
               typeof childValue === "string" ? childValue : "";
 
@@ -1072,7 +1075,7 @@ export default function DynamicMultiStepForm({
               (typeof childValue === "number" && Number.isNaN(childValue));
 
             if (childField.validation.required && isEmpty) {
-              methods.setError(childField.name as keyof FormData, {
+              methods.setError(childField.name, {
                 type: "required",
                 message: childField.validation.required,
               });
@@ -1086,7 +1089,7 @@ export default function DynamicMultiStepForm({
               stringValue &&
               stringValue.length < childField.validation.minLength.value
             ) {
-              methods.setError(childField.name as keyof FormData, {
+              methods.setError(childField.name, {
                 type: "minLength",
                 message: childField.validation.minLength.message,
               });
@@ -1097,13 +1100,67 @@ export default function DynamicMultiStepForm({
             if (childField.validation.pattern && stringValue) {
               const regex = new RegExp(childField.validation.pattern.value);
               if (!regex.test(stringValue)) {
-                methods.setError(childField.name as keyof FormData, {
+                methods.setError(childField.name, {
                   type: "pattern",
                   message: childField.validation.pattern.message,
                 });
                 isValid = false;
               }
             }
+          }
+        }
+      }
+    }
+
+    for (const field of visibleFields) {
+      const op = field.validation?.operator;
+      if (
+        !op ||
+        op.condition !== "gte" ||
+        typeof op.field !== "string" ||
+        typeof op.message !== "string"
+      ) {
+        continue;
+      }
+
+      const endFieldName = field.name;
+      const startFieldName = resolveGteSiblingFieldName(endFieldName, op.field);
+      const startYearValue = methods.getValues(
+        startFieldName as keyof FormData
+      );
+      const endYearValue = methods.getValues(endFieldName as keyof FormData);
+
+      if (
+        typeof startYearValue !== "string" ||
+        typeof endYearValue !== "string"
+      ) {
+        continue;
+      }
+
+      if (!(startYearValue.trim() && endYearValue.trim())) {
+        continue;
+      }
+
+      const startYear = Number.parseInt(startYearValue, 10);
+      const endYear = Number.parseInt(endYearValue, 10);
+
+      if (!(Number.isNaN(startYear) || Number.isNaN(endYear))) {
+        if (endYear < startYear) {
+          methods.setError(endFieldName as keyof FormData, {
+            type: "custom",
+            message: op.message,
+          });
+          isValid = false;
+        } else {
+          const fieldError = getNestedValue<FieldError>(
+            methods.formState.errors as Record<string, unknown>,
+            endFieldName
+          );
+          if (
+            fieldError?.type === "custom" &&
+            fieldError.message === op.message
+          ) {
+            methods.clearErrors(endFieldName as keyof FormData);
           }
         }
       }
@@ -1127,9 +1184,7 @@ export default function DynamicMultiStepForm({
       );
 
       if (addAnotherField) {
-        const addAnotherValue = methods.getValues(
-          addAnotherField.name as keyof FormData
-        );
+        const addAnotherValue = methods.getValues(addAnotherField.name);
         if (addAnotherValue === "yes") {
           // Extract base step ID from the field name: _addAnother_{baseStepId}_{index}
           const match = addAnotherField.name.match(/^_addAnother_(.+)_(\d+)$/);
