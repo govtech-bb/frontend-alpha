@@ -117,7 +117,7 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
   console.log(`   - Status: ${response.data.status}`);
 }
 
-test.describe("JobSTART Plus Programme Application Form", () => {
+test.describe("Job Start Plus Programme Application Form", () => {
   test("complete form - no previous job, over 18", async ({ page }) => {
     const applicant = generateApplicantData();
     const dateOfBirth = generateDateOfBirth();
