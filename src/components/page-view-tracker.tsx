@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import type { TrackingEventName } from "@/lib/analytics";
-import { trackFormEvent } from "@/lib/analytics";
+import { trackEvent } from "@/lib/analytics";
 
 type PageViewTrackerProps = {
   event: Extract<TrackingEventName, "page-service-view" | "page-start-view">;
@@ -21,7 +21,7 @@ export function PageViewTracker({
   category,
 }: PageViewTrackerProps) {
   useEffect(() => {
-    trackFormEvent(event, { form, category });
+    trackEvent(event, { form, category });
   }, [event, form, category]);
 
   return null;

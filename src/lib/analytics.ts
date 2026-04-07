@@ -1,4 +1,4 @@
-type FormTrackingData = {
+type TrackingData = {
   "form-start": { form: string; category: string };
   "form-step-complete": { form: string; category: string; step: string };
   "form-step-back": { form: string; category: string; step: string };
@@ -24,23 +24,31 @@ type FormTrackingData = {
   };
   "page-service-view": { form: string; category: string };
   "page-start-view": { form: string; category: string };
+  search: { query: string; results: number };
 };
 
-export type TrackingEventName = keyof FormTrackingData;
+export type TrackingEventName = keyof TrackingData;
 
 /**
- * Sends a typed custom event to Umami, prefixed with the form slug
- * so events are immediately identifiable in the dashboard
- * (e.g. "get-birth-certificate:form-start").
+ * Sends a typed custom event to Umami. Events that carry a `form` slug are
+ * automatically prefixed (e.g. "get-birth-certificate:form-start") for easy
+ * identification in the dashboard. Pre-qualified names (those already
+ * containing ":") are passed through as-is, allowing dynamic per-step event
+ * names like "get-birth-certificate:form-step-one".
  *
  * No-ops gracefully when Umami is not loaded (missing env var, ad-blocker).
  */
-export function trackFormEvent<E extends TrackingEventName>(
+export function trackEvent<E extends TrackingEventName>(
   event: E,
-  data: FormTrackingData[E]
-): void {
-  const prefixedName = `${(data as { form: string }).form}:${event}`;
-  window.umami?.track(prefixedName, data);
+  data: TrackingData[E]
+): void;
+export function trackEvent(event: string, data: Record<string, unknown>): void;
+export function trackEvent(event: string, data: Record<string, unknown>): void {
+  if ("form" in data && typeof data.form === "string" && !event.includes(":")) {
+    window.umami?.track(`${data.form}:${event}`, data);
+  } else {
+    window.umami?.track(event, data);
+  }
 }
 
 const NUMBER_WORDS = [

@@ -6,7 +6,7 @@ import {
   getFormStartTime,
   persistFormStartTime,
   stepNumberToWord,
-  trackFormEvent,
+  trackEvent,
 } from "@/lib/analytics";
 
 type UseFormTrackingOptions = {
@@ -26,7 +26,7 @@ export function useFormTracking({ form, category }: UseFormTrackingOptions) {
   const reviewEnteredAt = useRef<number | null>(null);
 
   const trackStart = useCallback(() => {
-    trackFormEvent("form-start", { form, category });
+    trackEvent("form-start", { form, category });
     persistFormStartTime(form);
   }, [form, category]);
 
@@ -34,25 +34,21 @@ export function useFormTracking({ form, category }: UseFormTrackingOptions) {
     (step: string, stepNumber: number) => {
       const word = stepNumberToWord(stepNumber);
       // Dynamic event name: "get-birth-certificate:form-step-one"
-      window.umami?.track(`${form}:form-step-${word}`, {
-        form,
-        category,
-        step,
-      });
+      trackEvent(`${form}:form-step-${word}`, { form, category, step });
     },
     [form, category]
   );
 
   const trackStepBack = useCallback(
     (step: string) => {
-      trackFormEvent("form-step-back", { form, category, step });
+      trackEvent("form-step-back", { form, category, step });
     },
     [form, category]
   );
 
   const trackStepEdit = useCallback(
     (step: string) => {
-      trackFormEvent("form-step-edit", { form, category, step });
+      trackEvent("form-step-edit", { form, category, step });
     },
     [form, category]
   );
@@ -60,7 +56,7 @@ export function useFormTracking({ form, category }: UseFormTrackingOptions) {
   const trackSubmit = useCallback(() => {
     const startTime = getFormStartTime(form);
     const durationSeconds = startTime ? elapsedSeconds(startTime) : 0;
-    trackFormEvent("form-submit", {
+    trackEvent("form-submit", {
       form,
       category,
       duration_seconds: durationSeconds,
@@ -70,7 +66,7 @@ export function useFormTracking({ form, category }: UseFormTrackingOptions) {
 
   const trackSubmitError = useCallback(
     (errors: string) => {
-      trackFormEvent("form-submit-error", { form, category, errors });
+      trackEvent("form-submit-error", { form, category, errors });
     },
     [form, category]
   );
@@ -83,7 +79,7 @@ export function useFormTracking({ form, category }: UseFormTrackingOptions) {
     const durationSeconds = reviewEnteredAt.current
       ? elapsedSeconds(reviewEnteredAt.current)
       : 0;
-    trackFormEvent("form-review", {
+    trackEvent("form-review", {
       form,
       category,
       duration_seconds: durationSeconds,
@@ -98,7 +94,7 @@ export function useFormTracking({ form, category }: UseFormTrackingOptions) {
       fields: string;
       errorTypes: string;
     }) => {
-      trackFormEvent("form-validation-error", {
+      trackEvent("form-validation-error", {
         form,
         category,
         ...params,
