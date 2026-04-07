@@ -1,10 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { expect, test } from "@playwright/test";
-import type { ApiResponse } from "@/types";
 
 const FORM_URL = "/work-employment/apply-to-jobstart-plus-programme/form";
-const FORM_KEY = "apply-to-jobstart-plus-programme";
-const API_SUBMIT_PATH = `/forms/${FORM_KEY}/submit`;
 
 /**
  * Test data generators
@@ -16,7 +13,7 @@ const generateApplicantData = () => ({
   lastName: faker.person.lastName(),
   sex: faker.helpers.arrayElement(["male", "female"]),
   maritalStatus: faker.helpers.arrayElement(["single", "married", "divorced"]),
-  idNumber: faker.string.alphanumeric(10),
+  idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
   nisNumber: faker.string.numeric(8),
   parish: faker.helpers.arrayElement([
     "christ-church",
@@ -83,38 +80,6 @@ function formatDate(date: Date): string {
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
-}
-
-/**
- * Log the submitted form data from the request
- */
-function logSubmittedData(request: { postDataJSON: () => unknown }) {
-  const submittedData = request.postDataJSON();
-  console.log("\n📋 SUBMITTED FORM DATA:");
-  console.log("─".repeat(50));
-  console.log(JSON.stringify(submittedData, null, 2));
-  console.log("─".repeat(50));
-}
-
-/**
- * Verify the API response structure and success status
- */
-function verifyApiResponse(response: ApiResponse, formId: string) {
-  expect(response.success).toBe(true);
-  expect(response.message).toBeTruthy();
-  expect(response.data).toBeTruthy();
-
-  if (!response.data) {
-    throw new Error("Response data is undefined");
-  }
-
-  expect(response.data.submissionId).toBeTruthy();
-  expect(response.data.formId).toBe(formId);
-  expect(response.data.status).toBe("submitted");
-
-  console.log("✅ Form submitted successfully:");
-  console.log(`   - Submission ID: ${response.data.submissionId}`);
-  console.log(`   - Status: ${response.data.status}`);
 }
 
 test.describe("Job Start Plus Programme Application Form", () => {
@@ -223,8 +188,17 @@ test.describe("Job Start Plus Programme Application Form", () => {
     await page.getByRole("textbox", { name: /end year/i }).fill("2012");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Post-secondary education (optional)
-    await page.getByRole("radiogroup").getByText("No", { exact: true }).click();
+    // Step 7: Post-secondary education
+    await page
+      .getByRole("textbox", { name: /name of institution/i })
+      .fill("Barbados Community College");
+    await page.getByRole("textbox", { name: /start year/i }).fill("2012");
+    await page.getByRole("textbox", { name: /end year/i }).fill("2014");
+    await page
+      .getByRole("radiogroup")
+      .filter({ hasText: /add another/i })
+      .getByText("No", { exact: true })
+      .click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Have you had a paid job?
@@ -285,7 +259,7 @@ test.describe("Job Start Plus Programme Application Form", () => {
 
     // Verify confirmation page
     await expect(
-      page.getByRole("heading", { name: /application has been submitted/i })
+      page.getByRole("heading", { name: /thank you for registering/i })
     ).toBeVisible();
   });
 
@@ -398,7 +372,16 @@ test.describe("Job Start Plus Programme Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 7: Post-secondary education
-    await page.getByRole("radiogroup").getByText("No", { exact: true }).click();
+    await page
+      .getByRole("textbox", { name: /name of institution/i })
+      .fill("University of the West Indies");
+    await page.getByRole("textbox", { name: /start year/i }).fill("2012");
+    await page.getByRole("textbox", { name: /end year/i }).fill("2015");
+    await page
+      .getByRole("radiogroup")
+      .filter({ hasText: /add another/i })
+      .getByText("No", { exact: true })
+      .click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 8: Have you had a paid job?
@@ -467,7 +450,7 @@ test.describe("Job Start Plus Programme Application Form", () => {
 
     // Verify confirmation page
     await expect(
-      page.getByRole("heading", { name: /application has been submitted/i })
+      page.getByRole("heading", { name: /thank you for registering/i })
     ).toBeVisible();
   });
 

@@ -1,10 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { expect, test } from "@playwright/test";
-import type { ApiResponse } from "@/types";
 
 const FORM_URL = "/work-employment/apply-to-be-a-project-protege-mentor/form";
-const FORM_KEY = "apply-to-be-a-project-protege-mentor";
-const API_SUBMIT_PATH = `/forms/${FORM_KEY}/submit`;
 
 /**
  * Test data generators
@@ -51,48 +48,6 @@ const generateRefereeData = () => ({
   phone: `1246${faker.string.numeric(7)}`,
 });
 
-/**
- * Format date as DD/MM/YYYY (matches DeclarationStep format)
- */
-function formatDate(date: Date): string {
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-}
-
-/**
- * Log the submitted form data from the request
- */
-function logSubmittedData(request: { postDataJSON: () => unknown }) {
-  const submittedData = request.postDataJSON();
-  console.log("\n📋 SUBMITTED FORM DATA:");
-  console.log("─".repeat(50));
-  console.log(JSON.stringify(submittedData, null, 2));
-  console.log("─".repeat(50));
-}
-
-/**
- * Verify the API response structure and success status
- */
-function verifyApiResponse(response: ApiResponse, formId: string) {
-  expect(response.success).toBe(true);
-  expect(response.message).toBeTruthy();
-  expect(response.data).toBeTruthy();
-
-  if (!response.data) {
-    throw new Error("Response data is undefined");
-  }
-
-  expect(response.data.submissionId).toBeTruthy();
-  expect(response.data.formId).toBe(formId);
-  expect(response.data.status).toBe("submitted");
-
-  console.log("✅ Form submitted successfully:");
-  console.log(`   - Submission ID: ${response.data.submissionId}`);
-  console.log(`   - Status: ${response.data.status}`);
-}
-
 test.describe("Project Protégé Mentor Application Form", () => {
   test("complete form - without mentor experience", async ({ page }) => {
     const applicant = generateApplicantData();
@@ -110,7 +65,7 @@ test.describe("Project Protégé Mentor Application Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
-    const dobContainer = page.locator('[id="personal.dateOfBirth"]');
+    const dobContainer = page.locator('[id="applicant.dateOfBirth"]');
     await dobContainer
       .getByRole("textbox", { name: "Day" })
       .fill(dateOfBirth.day);
@@ -250,7 +205,7 @@ test.describe("Project Protégé Mentor Application Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
-    const dobContainer2 = page.locator('[id="personal.dateOfBirth"]');
+    const dobContainer2 = page.locator('[id="applicant.dateOfBirth"]');
     await dobContainer2
       .getByRole("textbox", { name: "Day" })
       .fill(dateOfBirth.day);

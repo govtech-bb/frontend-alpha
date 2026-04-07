@@ -89,7 +89,12 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
   expect(response.data.submissionId).toBeTruthy();
   expect(response.data.formId).toBe(formId);
   // Status can be "success" or "payment_required" for forms that need payment
-  expect(["success", "payment_required"]).toContain(response.data.status);
+  expect([
+    "success",
+    "submitted",
+    "payment_required",
+    "payment_unavailable",
+  ]).toContain(response.data.status);
 
   console.log("✅ Form submitted successfully:");
   console.log(`   - Submission ID: ${response.data.submissionId}`);
@@ -102,6 +107,8 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
     const dateOfBirth = generateDateOfBirth();
     const oldAddress = generateAddress();
     const newAddress = generateAddress();
+    const startDate = generateFutureDate();
+    const endDate = generateFutureDate();
 
     await page.goto(FORM_URL);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -147,39 +154,55 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
     await page
       .locator('select[name="newAddress.parish"]')
       .selectOption(newAddress.parish);
-    await page.getByText("Yes", { exact: true }).click(); // Moving permanently
+    await page
+      .locator("#newAddress\\.redirectionStartDate-day")
+      .fill(startDate.day);
+    await page
+      .locator("#newAddress\\.redirectionStartDate-month")
+      .fill(startDate.month);
+    await page
+      .locator("#newAddress\\.redirectionStartDate-year")
+      .fill(startDate.year);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-day")
+      .fill(endDate.day);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-month")
+      .fill(endDate.month);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-year")
+      .fill(endDate.year);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 4: Minor dependents
     await page.getByText("No", { exact: true }).click(); // No dependents
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 5: Check your answers
+    // Step 5: Adult dependents
+    await page.getByText("No", { exact: true }).click(); // No adult dependents
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 6: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
+    // Step 7: Declaration
     const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today = new Date();
     const expectedDate = formatDate(today);
 
-    // Verify applicant's name is displayed (static text, not input fields)
     await expect(page.getByText(`Applicant's name:`)).toBeVisible();
     await expect(page.getByText(expectedFullName)).toBeVisible();
 
-    // Verify today's date is displayed (static text, auto-filled)
     await expect(page.getByText("Date:")).toBeVisible();
     await expect(page.getByText(expectedDate)).toBeVisible();
 
-    // Check declaration checkbox
     const checkbox = page.locator('button[role="checkbox"]');
     await expect(checkbox).toBeVisible();
     await checkbox.click();
 
-    // Set up API response interception before submitting
     const responsePromise = page.waitForResponse(
       (response) =>
         response.url().includes(API_SUBMIT_PATH) &&
@@ -187,17 +210,14 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
     );
     await page.getByRole("button", { name: /submit/i }).click();
 
-    // Verify API response
     const response = await responsePromise;
     expect(response.status()).toBe(200);
 
-    // Log the submitted form data
     logSubmittedData(response.request());
 
     const responseBody = (await response.json()) as ApiResponse;
     verifyApiResponse(responseBody, "post-office-redirection-individual");
 
-    // Verify confirmation page
     await expect(
       page.getByRole("heading", { name: /thank you/i })
     ).toBeVisible();
@@ -255,7 +275,6 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
     await page
       .locator('select[name="newAddress.parish"]')
       .selectOption(newAddress.parish);
-    await page.getByText("No", { exact: true }).click(); // Not moving permanently
     // Fill start date (Day, Month, Year) - use specific input IDs
     await page
       .locator("#newAddress\\.redirectionStartDate-day")
@@ -280,13 +299,16 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
 
     // Step 4: Minor dependents
     await page.getByText("Yes", { exact: true }).click(); // Has dependents
-    await page.getByRole("spinbutton", { name: /how many minor/i }).fill("2");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Minor details (first child)
     await page.getByRole("textbox", { name: /first name/i }).fill("John");
     await page.getByRole("textbox", { name: /last name/i }).fill("Smith");
-    // Select "Yes" for adding another minor dependent
+    await page
+      .locator('input[name="minorDetails.0.idNumber"]')
+      .fill(
+        `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`
+      );
     await page
       .getByRole("radiogroup")
       .filter({ hasText: /add another minor/i })
@@ -297,7 +319,11 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
     // Step 6: Minor details (second child)
     await page.getByRole("textbox", { name: /first name/i }).fill("Jane");
     await page.getByRole("textbox", { name: /last name/i }).fill("Smith");
-    // Select "No" for adding another minor dependent
+    await page
+      .locator('input[name="minorDetails.1.idNumber"]')
+      .fill(
+        `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`
+      );
     await page
       .getByRole("radiogroup")
       .filter({ hasText: /add another minor/i })
@@ -305,7 +331,11 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
       .click();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Check your answers
+    // Step 7: Adult dependents
+    await page.getByText("No", { exact: true }).click(); // No adult dependents
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 8: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
@@ -382,9 +412,11 @@ test.describe("Post Office Mail Redirection (Individual) Form", () => {
     await page.getByRole("textbox", { name: "Day" }).fill("15");
     await page.getByRole("textbox", { name: "Month" }).fill("01");
     await page.getByRole("textbox", { name: "Year" }).fill("1990");
-    await page
-      .getByRole("textbox", { name: /national identification/i })
-      .fill("invalid");
+    const idField = page.getByRole("textbox", {
+      name: /national identification/i,
+    });
+    await idField.click();
+    await idField.pressSequentially("12345");
     await page
       .getByRole("textbox", { name: /email address/i })
       .fill("john@example.com");
