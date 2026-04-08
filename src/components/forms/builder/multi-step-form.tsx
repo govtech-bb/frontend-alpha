@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type FieldError, FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
+import { useFormTracking } from "@/hooks/use-form-tracking";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import {
   getNestedValue,
@@ -391,7 +392,14 @@ export default function DynamicMultiStepForm({
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
+  const pathSegments = pathname.split("/").filter(Boolean);
+  const categorySlug = pathSegments[0] ?? "";
+  const formId = pathSegments[1];
+
+  const tracking = useFormTracking({
+    form: storageKey,
+    category: categorySlug,
+  });
 
   // Get store hook (uses singleton cache internally)
   const useFormStore = createFormStore(storageKey);
@@ -611,6 +619,21 @@ export default function DynamicMultiStepForm({
     }
     setIsFormReady(true);
   }, [_hasHydrated, formData, methods, isFormReady]); // Run only once on mount
+
+  // Track form-start when a user begins a fresh form (no saved progress).
+  // Uses a ref guard so the event fires at most once per mount.
+  const hasTrackedStart = useRef(false);
+  useEffect(() => {
+    if (
+      isFormReady &&
+      currentStep === 0 &&
+      completedSteps.length === 0 &&
+      !hasTrackedStart.current
+    ) {
+      hasTrackedStart.current = true;
+      tracking.trackStart();
+    }
+  }, [isFormReady, currentStep, completedSteps.length, tracking.trackStart]);
 
   // Check for payment status on mount
   useEffect(() => {
@@ -833,13 +856,20 @@ export default function DynamicMultiStepForm({
               }
             : undefined;
 
-        // Mark as submitted in store with customer name and payment data
         markAsSubmitted(
           result.data?.submissionId || "N/A",
           customerName,
           apiPaymentData
         );
+        tracking.trackSubmit();
       } else {
+        const errorMessages = result.errors
+          ?.map((err) => `${err.field}: ${err.message}`)
+          .join("; ");
+        tracking.trackSubmitError(
+          errorMessages || result.message || "Unknown error"
+        );
+
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
           errors: result.errors?.map((err) => ({
@@ -849,12 +879,13 @@ export default function DynamicMultiStepForm({
         });
       }
     } catch (error) {
-      setSubmissionError({
-        message:
-          error instanceof Error
-            ? error.message
-            : "An error occurred during submission",
-      });
+      const message =
+        error instanceof Error
+          ? error.message
+          : "An error occurred during submission";
+      tracking.trackSubmitError(message);
+
+      setSubmissionError({ message });
     } finally {
       setIsSubmitting(false);
     }
@@ -918,7 +949,7 @@ export default function DynamicMultiStepForm({
       currentStepData?.id === "check-your-answers";
 
     if (isReviewStep) {
-      // Review step complete, just move to next step
+      tracking.trackReviewLeave();
       markStepComplete(currentStep);
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
@@ -1167,8 +1198,18 @@ export default function DynamicMultiStepForm({
     }
 
     if (isValid) {
-      // Mark current step as complete
       markStepComplete(currentStep);
+      // 1-based ordinal among field-bearing steps only (excludes review, declaration, confirmation)
+      const fieldStepNumber = expandedFormSteps
+        .slice(0, currentStep + 1)
+        .filter(
+          (s) =>
+            s.fields.length > 0 &&
+            s.id !== "declaration" &&
+            s.id !== "confirmation" &&
+            s.id !== "thank-you"
+        ).length;
+      tracking.trackStepComplete(currentStepData.id, fieldStepNumber);
 
       // If this is the declaration step, submit the form
       if (isDeclarationStep) {
@@ -1207,7 +1248,30 @@ export default function DynamicMultiStepForm({
       setCurrentStep(nextVisibleStep);
       scrollToStepHeading();
     } else {
-      // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
+      // Collect validation error details for tracking
+      const failedFields: string[] = [];
+      const failedTypes: string[] = [];
+      for (const fieldName of currentFieldNames) {
+        const fieldError = getNestedValue<FieldError>(
+          methods.formState.errors as Record<string, unknown>,
+          fieldName
+        );
+        if (fieldError) {
+          failedFields.push(fieldName);
+          if (fieldError.type && !failedTypes.includes(fieldError.type)) {
+            failedTypes.push(fieldError.type);
+          }
+        }
+      }
+      if (failedFields.length > 0) {
+        tracking.trackValidationError({
+          step: currentStepData.id,
+          errorCount: failedFields.length,
+          fields: failedFields.join(","),
+          errorTypes: failedTypes.join(","),
+        });
+      }
+
       const errorSummary = document.querySelector("#error-summary");
       if (errorSummary) {
         errorSummary.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1231,12 +1295,21 @@ export default function DynamicMultiStepForm({
   };
 
   const handleEditFromReview = (stepIndex: number) => {
+    const stepBeingEdited = expandedFormSteps[stepIndex];
+    if (stepBeingEdited) {
+      tracking.trackReviewLeave();
+      tracking.trackStepEdit(stepBeingEdited.id);
+    }
     isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
     scrollToStepHeading();
   };
 
   const prevStep = () => {
+    const leavingStep = expandedFormSteps[currentStep];
+    if (leavingStep) {
+      tracking.trackStepBack(leavingStep.id);
+    }
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);
     setCurrentStep(prevVisibleStep);
@@ -1262,6 +1335,13 @@ export default function DynamicMultiStepForm({
     (step) => step.id !== "confirmation" && step.id !== "thank-you"
   );
   const isLastStep = currentStep === lastNavigableStepIndex;
+
+  // Start the review duration timer when the review step is reached
+  useEffect(() => {
+    if (isReviewStep) {
+      tracking.trackReviewEnter();
+    }
+  }, [isReviewStep, tracking]);
 
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
