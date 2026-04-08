@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { cn } from "@/lib/utils";
 
@@ -63,25 +62,18 @@ export const Breadcrumbs = ({
 
   const crumbs = segments.slice(0, -1);
 
-  // On mobile collapse: hide all middle items, show only first (Home) and last
+  if (crumbs.length === 0) return null;
+
+  // On mobile collapse: hide all middle items, show only first and last
   const shouldHideOnMobile = (index: number) =>
-    collapseOnMobile && crumbs.length > 1 && index !== crumbs.length - 1;
+    collapseOnMobile &&
+    crumbs.length > 2 &&
+    index !== 0 &&
+    index !== crumbs.length - 1;
 
   return (
     <nav aria-label="Breadcrumb" className={cn("flex items-center", className)}>
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <li>
-          <Link
-            className={cn(linkStyles, "inline-flex items-baseline gap-xs")}
-            href="/"
-          >
-            <ChevronLeftSVG
-              aria-hidden="true"
-              className="shrink-0 self-center"
-            />
-            Home
-          </Link>
-        </li>
         {crumbs.map((_segment, index) => {
           const href = `/${segments.slice(0, index + 1).join("/")}`;
           const title = getTitleForSegment(segments, index);
@@ -94,7 +86,7 @@ export const Breadcrumbs = ({
               )}
               key={href}
             >
-              <BreadcrumbSeparator />
+              {index > 0 && <BreadcrumbSeparator />}
               <Link className={cn(linkStyles, "break-anywhere")} href={href}>
                 {title}
               </Link>
