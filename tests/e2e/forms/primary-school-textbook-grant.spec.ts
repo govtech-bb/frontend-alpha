@@ -127,8 +127,8 @@ test.describe("Primary School Textbook Grant Form", () => {
       .locator('input[name="beneficiaries.0.idNumber"]')
       .fill(child.idNumber);
     await page
-      .locator('select[name="beneficiaries.0.classNumber"]')
-      .selectOption(child.classNumber);
+      .locator('input[name="beneficiaries.0.classNumber"]')
+      .fill(child.classNumber);
     // Select Yes for "Are you the parent or guardian?"
     // Find the text "Yes" that follows the question text
     await page
@@ -263,8 +263,8 @@ test.describe("Primary School Textbook Grant Form", () => {
       .locator('input[name="beneficiaries.0.idNumber"]')
       .fill(child.idNumber);
     await page
-      .locator('select[name="beneficiaries.0.classNumber"]')
-      .selectOption(child.classNumber);
+      .locator('input[name="beneficiaries.0.classNumber"]')
+      .fill(child.classNumber);
     // Select No for "Are you the parent or guardian?"
     await page
       .locator("text=Are you the parent or guardian?")
@@ -417,25 +417,16 @@ test.describe("Primary School Textbook Grant Form", () => {
     await page.goto(FORM_URL);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 
-    // Fill other required fields
+    // Fill name and an invalid-format ID to trigger the pattern error
     await page.locator('input[name="beneficiaries.0.firstName"]').fill("John");
     await page.locator('input[name="beneficiaries.0.lastName"]').fill("Smith");
-    await page
-      .locator('input[name="beneficiaries.0.idNumber"]')
-      .fill("invalid");
-    await page
-      .locator('select[name="beneficiaries.0.classNumber"]')
-      .selectOption("1");
-    // Select Yes for "Are you the parent or guardian?" - use nth(0) for first radiogroup
-    await page
-      .locator('[role="radiogroup"]')
-      .nth(0)
-      .getByText("Yes", { exact: true })
-      .click();
+    const idField = page.locator('input[name="beneficiaries.0.idNumber"]');
+    await idField.click();
+    await idField.pressSequentially("12345");
 
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Should show pattern validation error
+    // Should show pattern validation error (among other required field errors)
     await expect(page.getByText(/valid id number/i).first()).toBeVisible({
       timeout: 3000,
     });

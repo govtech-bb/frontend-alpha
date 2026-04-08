@@ -104,12 +104,15 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
   expect(response.data.status).toBeTruthy();
   expect(response.data.processedAt).toBeTruthy();
 
-  // If payment is required, verify payment fields
+  // If payment is required, verify payment fields (when the service is available)
   if (response.data.paymentRequired) {
-    expect(response.data.paymentUrl).toBeTruthy();
-    expect(response.data.paymentToken).toBeTruthy();
-    expect(response.data.paymentId).toBeTruthy();
     expect(response.data.amount).toBeGreaterThan(0);
+
+    if (response.data.status !== "payment_unavailable") {
+      expect(response.data.paymentUrl).toBeTruthy();
+      expect(response.data.paymentToken).toBeTruthy();
+      expect(response.data.paymentId).toBeTruthy();
+    }
   }
 
   console.log("✅ API Response verified:");
@@ -184,7 +187,17 @@ test.describe("Get Birth Certificate Form", () => {
     await page.getByText("Yes - the certificate is for me").click();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 3: Birth Details
+    // Step 3: Reason for Certificate
+    await expect(
+      page.getByRole("heading", { name: /tell us why you're ordering/i })
+    ).toBeVisible({ timeout: 5000 });
+
+    await page
+      .locator('textarea[name="reasonForOrderingCertificate"]')
+      .fill("Requesting personal birth certificate copy");
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 4: Birth Details
     await expect(
       page.getByRole("heading", { name: /provide your birth details/i })
     ).toBeVisible({ timeout: 5000 });
@@ -201,7 +214,7 @@ test.describe("Get Birth Certificate Form", () => {
 
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 4: Parents' Names
+    // Step 5: Parents' Names
     await expect(
       page.getByRole("heading", { name: /tell us your parents' names/i })
     ).toBeVisible({ timeout: 5000 });
@@ -236,9 +249,10 @@ test.describe("Get Birth Certificate Form", () => {
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible({ timeout: 5000 });
 
-    // Verify data appears on review page
-    await expect(page.getByText(applicant.firstName)).toBeVisible();
-    await expect(page.getByText(applicant.lastName)).toBeVisible();
+    // Verify data appears on review page (use .first() since names may appear
+    // in both individual fields and combined full-name fields)
+    await expect(page.getByText(applicant.firstName).first()).toBeVisible();
+    await expect(page.getByText(applicant.lastName).first()).toBeVisible();
 
     await page.getByRole("button", { name: /continue/i }).click();
 
@@ -393,27 +407,47 @@ test.describe("Get Birth Certificate Form", () => {
     await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Parents' Names (for other person)
+    // Step 7: Birth Details (for other person)
+    await expect(
+      page.getByRole("heading", {
+        name: /provide the person's birth details/i,
+      })
+    ).toBeVisible({ timeout: 5000 });
+
+    const dob = generateDateOfBirth();
+    await page.locator("#birthDetails\\.dateOfBirth-day").fill(dob.day);
+    await page.locator("#birthDetails\\.dateOfBirth-month").fill(dob.month);
+    await page.locator("#birthDetails\\.dateOfBirth-year").fill(dob.year);
+    await page
+      .locator('input[name="birthDetails.placeOfBirth"]')
+      .fill(faker.location.city());
+    await page
+      .locator('input[name="birthDetails.placeOfBaptism"]')
+      .fill(faker.location.city());
+
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 8: Parents' Names (for other person)
     await expect(
       page.getByRole("heading", { name: /tell us their parents' names/i })
     ).toBeVisible({ timeout: 5000 });
 
     await page
-      .locator('input[name="parentsOther.father.firstName"]')
+      .locator('input[name="parents.father.firstName"]')
       .fill(parents.father.firstName);
     await page
-      .locator('input[name="parentsOther.father.lastName"]')
+      .locator('input[name="parents.father.lastName"]')
       .fill(parents.father.lastName);
     await page
-      .locator('input[name="parentsOther.mother.firstName"]')
+      .locator('input[name="parents.mother.firstName"]')
       .fill(parents.mother.firstName);
     await page
-      .locator('input[name="parentsOther.mother.lastName"]')
+      .locator('input[name="parents.mother.lastName"]')
       .fill(parents.mother.lastName);
 
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 8: Order Details
+    // Step 9: Order Details
     await expect(
       page.getByRole("heading", { name: /how many copies/i })
     ).toBeVisible({ timeout: 5000 });
@@ -423,14 +457,14 @@ test.describe("Get Birth Certificate Form", () => {
       .fill(numberOfCopies.toString());
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 9: Check Your Answers
+    // Step 10: Check Your Answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible({ timeout: 5000 });
 
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 10: Declaration
+    // Step 11: Declaration
     await expect(
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible({ timeout: 5000 });
@@ -513,8 +547,10 @@ test.describe("Get Birth Certificate Form", () => {
       .locator('input[name="applicant.telephoneNumber"]')
       .fill(applicant.telephoneNumber);
 
-    // Enter invalid ID number format
-    await page.locator('input[name="applicant.idNumber"]').fill("invalid-id");
+    // Enter incomplete ID number (mask only accepts digits, so use partial digits)
+    const idField = page.locator('input[name="applicant.idNumber"]');
+    await idField.click();
+    await idField.pressSequentially("12345");
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Should show ID format error (use .first() as error appears in summary and field)
@@ -601,7 +637,13 @@ test.describe("Get Birth Certificate Form", () => {
     await page.getByText("Yes - the certificate is for me").click();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 3: Birth Details
+    // Step 3: Reason for Certificate
+    await page
+      .locator('textarea[name="reasonForOrderingCertificate"]')
+      .fill("Requesting personal birth certificate copy");
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 4: Birth Details
     await page.locator("#birthDetails\\.dateOfBirth-month").fill(dob.month);
     await page.locator("#birthDetails\\.dateOfBirth-day").fill(dob.day);
     await page.locator("#birthDetails\\.dateOfBirth-year").fill(dob.year);
@@ -613,7 +655,7 @@ test.describe("Get Birth Certificate Form", () => {
       .fill(faker.location.city());
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 4: Parents' Names
+    // Step 5: Parents' Names
     await page
       .locator('input[name="parents.father.firstName"]')
       .fill(parents.father.firstName);
@@ -628,16 +670,16 @@ test.describe("Get Birth Certificate Form", () => {
       .fill(parents.mother.lastName);
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 5: Order Details
+    // Step 6: Order Details
     await page
       .locator('input[name="order.numberOfCopies"]')
       .fill(numberOfCopies.toString());
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Check Your Answers
+    // Step 7: Check Your Answers
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Declaration - verify checkbox is required
+    // Step 8: Declaration - verify checkbox is required
     await expect(
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible({ timeout: 5000 });
