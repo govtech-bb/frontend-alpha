@@ -11,7 +11,8 @@
     "test:unit": "vitest",
     "test:unit:run": "vitest run",
     "test:e2e": "npx playwright test",
-    "test:e2e:update:linux": "docker run --rm -v $(pwd):/workspace -w /workspace mcr.microsoft.com/playwright:v1.57.0-jammy sh -c 'npm ci && npm run build && npx playwright test visual --update-snapshots'",
+    "test:e2e:update:linux": "docker run --rm -v $(pwd):/workspace -w /workspace -e CI=true -e MAIL_FROM=no-reply@test.local -e SES_REGION=us-east-1 -e FEEDBACK_TO_EMAIL=no-reply@test.local -e FEEDBACK_FROM_EMAIL=no-reply@test.local mcr.microsoft.com/playwright:v1.57.0-jammy sh -c 'rm -rf node_modules && npm ci && npm run build && npx playwright test visual --update-snapshots'",
+    "test:e2e:verify:linux": "docker run --rm -v $(pwd):/workspace -w /workspace -e CI=true -e MAIL_FROM=no-reply@test.local -e SES_REGION=us-east-1 -e FEEDBACK_TO_EMAIL=no-reply@test.local -e FEEDBACK_FROM_EMAIL=no-reply@test.local mcr.microsoft.com/playwright:v1.57.0-jammy sh -c 'rm -rf node_modules && npm ci && npm run build && npx playwright test visual'",
     "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:report": "playwright show-report",
     "prepare": "husky"
