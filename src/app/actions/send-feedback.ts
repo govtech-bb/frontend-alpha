@@ -1,16 +1,41 @@
 "use server";
 
+import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { z } from "zod";
 
-const trelloApiKey = process.env.TRELLO_API_KEY;
-const trelloToken = process.env.TRELLO_TOKEN;
-const trelloListId = process.env.TRELLO_LIST_ID;
+// Get required environment variables with explicit error handling
+const region = process.env.SES_REGION ?? "us-east-1";
 
-const FeedbackSchema = z.object({
-  visitReason: z.string().trim().min(1, "Please enter a reason."),
-  whatWentWrong: z.string().trim().min(1, "Please enter a reason."),
-  referrer: z.string(),
+const mailFrom = process.env.MAIL_FROM as string;
+if (!mailFrom) {
+  throw new Error("MAIL_FROM environment variable is required");
+}
+
+const feedbackToEmail = process.env.FEEDBACK_TO_EMAIL as string;
+if (!feedbackToEmail) {
+  throw new Error("FEEDBACK_TO_EMAIL environment variable is required");
+}
+
+// Optional CloudWatch telemetry configuration
+const configurationSet = process.env.SES_CONFIGURATION_SET;
+const tagKey = process.env.SES_TAG_KEY ?? "ses:configuration-set";
+const tagValue = process.env.SES_TAG_VALUE ?? "prod";
+
+// Create AWS SES v2 client using Amplify's SSR compute role
+const sesClient = new SESv2Client({
+  region,
 });
+
+const FeedbackSchema = z
+  .object({
+    visitReason: z.string(),
+    whatWentWrong: z.string(),
+    referrer: z.string(),
+  })
+  .refine((data) => data.visitReason.trim() || data.whatWentWrong.trim(), {
+    message: "At least one feedback field is required",
+    path: ["visitReason"],
+  });
 
 export type FeedbackState = {
   error: string | null;
@@ -18,29 +43,35 @@ export type FeedbackState = {
   success?: boolean;
 };
 
-async function createTrelloCard({
-  name,
-  desc,
+async function sendEmail({
+  to,
+  subject,
+  html,
 }: {
-  name: string;
-  desc: string;
+  to: string;
+  subject: string;
+  html: string;
 }) {
-  if (!(trelloApiKey && trelloToken && trelloListId)) {
-    console.warn("Trello env vars not set");
-    return;
-  }
-  const url = new URL("https://api.trello.com/1/cards");
-  url.searchParams.set("idList", trelloListId);
-  url.searchParams.set("name", name);
-  url.searchParams.set("desc", desc);
-  url.searchParams.set("pos", "top");
-  url.searchParams.set("key", trelloApiKey);
-  url.searchParams.set("token", trelloToken);
-
-  const res = await fetch(url, { method: "POST" });
-  if (!res.ok) {
-    throw new Error(`Trello API error: ${res.status} ${await res.text()}`);
-  }
+  const cmd = new SendEmailCommand({
+    FromEmailAddress: mailFrom,
+    Destination: { ToAddresses: [to] },
+    ...(configurationSet && {
+      ConfigurationSetName: configurationSet,
+      EmailTags: [
+        {
+          Name: tagKey,
+          Value: tagValue,
+        },
+      ],
+    }),
+    Content: {
+      Simple: {
+        Subject: { Data: subject },
+        Body: { Html: { Data: html } },
+      },
+    },
+  });
+  await sesClient.send(cmd);
 }
 
 export async function sendFeedback(
@@ -62,30 +93,27 @@ export async function sendFeedback(
 
   const { visitReason, whatWentWrong, referrer } = parsed.data;
 
-  const cardName = "alpha.gov.bb Feedback";
+  const subject = "alpha.gov.bb Feedback";
+  const to = feedbackToEmail;
   const referrerUrl = referrer
     ? new URL(referrer, "https://alpha.gov.bb").toString()
     : null;
-  const referrerMarkdown = referrerUrl
-    ? `[${referrerUrl}](${referrerUrl})`
-    : null;
-
-  const cardDesc = [
-    referrerMarkdown && `**Page:** ${referrerMarkdown}`,
-    `**Why did you visit alpha.gov.bb?**\n\n${visitReason}`,
-    `**What went wrong?**\n\n${whatWentWrong}`,
-    "\n---\n_Sent from alpha.gov.bb Feedback Form_",
+  const html = [
+    referrerUrl &&
+      `<p><strong>Page:</strong> <a href="${referrerUrl}">${referrerUrl}</a></p>`,
+    `<p><strong>Why did you visit alpha.gov.bb?</strong></p><p>${visitReason.replace(/\n/g, "<br>")}</p>`,
+    `<p><strong>What went wrong?</strong></p><p>${whatWentWrong.replace(/\n/g, "<br>")}</p>`,
+    "<hr><p><em>Sent from alpha.gov.bb Feedback Form</em></p>",
   ]
     .filter(Boolean)
-    .join("\n\n");
+    .join("\n");
 
   try {
-    await createTrelloCard({ name: cardName, desc: cardDesc });
-  } catch (err) {
-    console.error("Trello card creation failed:", err);
+    await sendEmail({ to, subject, html });
+  } catch (error) {
+    console.error("Feedback email failed:", error);
     return {
-      error:
-        "Sorry, there was an error sending your feedback. Please try again.",
+      error: error instanceof Error ? error.message : "Failed to send feedback",
     };
   }
 
