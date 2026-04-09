@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { EntryPointWrapper } from "@/components/layout/entry-point-wrapper";
 import { StageBanner } from "@/components/stage-banner";
 
@@ -14,9 +13,7 @@ export default function EntryPointLayout({
           <StageBanner stage="alpha" />
         </div>
       </div>
-      <Suspense fallback={<div className="container">{children}</div>}>
-        <EntryPointWrapper>{children}</EntryPointWrapper>
-      </Suspense>
+      <EntryPointWrapper>{children}</EntryPointWrapper>
     </div>
   );
 }

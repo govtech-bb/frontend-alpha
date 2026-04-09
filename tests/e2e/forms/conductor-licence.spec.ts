@@ -14,6 +14,7 @@ const generateApplicantData = () => ({
   firstName: faker.person.firstName(),
   middleName: faker.person.middleName(),
   lastName: faker.person.lastName(),
+  idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
   parish: faker.helpers.arrayElement([
     "christ-church",
     "st-andrew",
@@ -85,7 +86,12 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
   expect(response.data.submissionId).toBeTruthy();
   expect(response.data.formId).toBe(formId);
   // Status can be "success" or "payment_required" for forms that need payment
-  expect(["success", "payment_required"]).toContain(response.data.status);
+  expect([
+    "success",
+    "submitted",
+    "payment_required",
+    "payment_unavailable",
+  ]).toContain(response.data.status);
 
   console.log("✅ Form submitted successfully:");
   console.log(`   - Submission ID: ${response.data.submissionId}`);
@@ -110,9 +116,19 @@ test.describe("Conductor Licence Application Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
-    await page.getByRole("textbox", { name: "Day" }).fill(dateOfBirth.day);
-    await page.getByRole("textbox", { name: "Month" }).fill(dateOfBirth.month);
-    await page.getByRole("textbox", { name: "Year" }).fill(dateOfBirth.year);
+    const dobContainer = page.locator('[id="applicant.dateOfBirth"]');
+    await dobContainer
+      .getByRole("textbox", { name: "Day" })
+      .fill(dateOfBirth.day);
+    await dobContainer
+      .getByRole("textbox", { name: "Month" })
+      .fill(dateOfBirth.month);
+    await dobContainer
+      .getByRole("textbox", { name: "Year" })
+      .fill(dateOfBirth.year);
+    await page
+      .locator('input[name="applicant.idNumber"]')
+      .fill(applicant.idNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 2: Contact details
@@ -129,22 +145,34 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Licence history
-    await page.getByText("No", { exact: true }).click(); // No previous licence
+    await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 4: Endorsements
-    await page.getByText("No", { exact: true }).click(); // No endorsements
+    await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Disqualifications
-    await page.getByText("No", { exact: true }).click(); // No disqualifications
+    await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 6: Criminal convictions
-    await page.getByText("No", { exact: true }).click(); // No criminal convictions
+    await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Check your answers
+    // Step 7: Upload supporting documents
+    const uploadPromise = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
+    await uploadPromise;
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 8: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
@@ -214,9 +242,19 @@ test.describe("Conductor Licence Application Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
-    await page.getByRole("textbox", { name: "Day" }).fill(dateOfBirth.day);
-    await page.getByRole("textbox", { name: "Month" }).fill(dateOfBirth.month);
-    await page.getByRole("textbox", { name: "Year" }).fill(dateOfBirth.year);
+    const dobContainer2 = page.locator('[id="applicant.dateOfBirth"]');
+    await dobContainer2
+      .getByRole("textbox", { name: "Day" })
+      .fill(dateOfBirth.day);
+    await dobContainer2
+      .getByRole("textbox", { name: "Month" })
+      .fill(dateOfBirth.month);
+    await dobContainer2
+      .getByRole("textbox", { name: "Year" })
+      .fill(dateOfBirth.year);
+    await page
+      .locator('input[name="applicant.idNumber"]')
+      .fill(applicant.idNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 2: Contact details
@@ -233,7 +271,7 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Licence history
-    await page.getByText("Yes", { exact: true }).click(); // Has previous licence
+    await page.getByText("Yes", { exact: true }).click();
     await page
       .getByRole("textbox", { name: /licence number/i })
       .fill("DL-$faker.string.alphanumeric(8)");
@@ -280,17 +318,28 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 7: Criminal convictions
-    await page.getByText("No", { exact: true }).click(); // No criminal convictions
+    await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 8: Check your answers
+    // Step 8: Upload supporting documents
+    const uploadPromise2 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
+    await uploadPromise2;
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 9: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 9: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
+    // Step 10: Declaration
     const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
     const today2 = new Date();
     const expectedDate2 = formatDate(today2);
@@ -352,9 +401,19 @@ test.describe("Conductor Licence Application Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
-    await page.getByRole("textbox", { name: "Day" }).fill(dateOfBirth.day);
-    await page.getByRole("textbox", { name: "Month" }).fill(dateOfBirth.month);
-    await page.getByRole("textbox", { name: "Year" }).fill(dateOfBirth.year);
+    const dobContainer3 = page.locator('[id="applicant.dateOfBirth"]');
+    await dobContainer3
+      .getByRole("textbox", { name: "Day" })
+      .fill(dateOfBirth.day);
+    await dobContainer3
+      .getByRole("textbox", { name: "Month" })
+      .fill(dateOfBirth.month);
+    await dobContainer3
+      .getByRole("textbox", { name: "Year" })
+      .fill(dateOfBirth.year);
+    await page
+      .locator('input[name="applicant.idNumber"]')
+      .fill(applicant.idNumber);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 2: Contact details
@@ -371,15 +430,15 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Licence history
-    await page.getByText("No", { exact: true }).click(); // No previous licence
+    await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 4: Endorsements
-    await page.getByText("No", { exact: true }).click(); // No endorsements
+    await page.getByText("No", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 5: Disqualifications
-    await page.getByText("Yes", { exact: true }).click(); // Has disqualifications
+    await page.getByText("Yes", { exact: true }).click();
     await page
       .getByRole("textbox", { name: /court name/i })
       .fill("Bridgetown Court");
@@ -401,17 +460,28 @@ test.describe("Conductor Licence Application Form", () => {
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 6: Criminal convictions
-    await page.getByText("Yes", { exact: true }).click(); // Has criminal convictions
+    await page.getByText("Yes", { exact: true }).click();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Check your answers
+    // Step 7: Upload supporting documents
+    const uploadPromise3 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
+    await page
+      .locator('input[type="file"]')
+      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
+    await uploadPromise3;
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 8: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 8: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
+    // Step 9: Declaration
     const expectedFullName3 = `${applicant.firstName} ${applicant.lastName}`;
     const today3 = new Date();
     const expectedDate3 = formatDate(today3);

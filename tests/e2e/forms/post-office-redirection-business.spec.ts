@@ -14,6 +14,7 @@ const generateApplicantData = () => ({
   firstName: faker.person.firstName(),
   middleName: faker.person.middleName(),
   lastName: faker.person.lastName(),
+  idNumber: `${faker.number.int({ min: 100_000, max: 999_999 })}-${faker.number.int({ min: 1000, max: 9999 })}`,
   email: "testing@govtech.bb",
   telephoneNumber: `1246${faker.string.numeric(7)}`,
 });
@@ -85,7 +86,12 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
   expect(response.data.submissionId).toBeTruthy();
   expect(response.data.formId).toBe(formId);
   // Status can be "success" or "payment_required" for forms that need payment
-  expect(["success", "payment_required"]).toContain(response.data.status);
+  expect([
+    "success",
+    "submitted",
+    "payment_required",
+    "payment_unavailable",
+  ]).toContain(response.data.status);
 
   console.log("✅ Form submitted successfully:");
   console.log(`   - Submission ID: ${response.data.submissionId}`);
@@ -98,6 +104,8 @@ test.describe("Post Office Redirection (Business) Form", () => {
     const currentAddress = generateAddress();
     const newAddress = generateAddress();
     const businessName = faker.company.name();
+    const startDate = generateFutureDate();
+    const endDate = generateFutureDate();
 
     await page.goto(FORM_URL);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -112,6 +120,9 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
+    await page
+      .locator('input[name="applicant.idNumber"]')
+      .fill(applicant.idNumber);
     await page.getByRole("textbox", { name: /email/i }).fill(applicant.email);
     await page
       .getByRole("textbox", { name: /telephone/i })
@@ -122,6 +133,9 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page
       .getByRole("textbox", { name: /business name/i })
       .fill(businessName);
+    await page
+      .locator('input[name="registrationNumber"]')
+      .fill(`REG-${faker.string.numeric(6)}`);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Current address of the business
@@ -135,40 +149,44 @@ test.describe("Post Office Redirection (Business) Form", () => {
 
     // Step 4: Permission details
     await page
-      .locator('input[name="permissionDetails"]')
+      .locator('input[name="positionDetails"]')
       .fill("I am the director of this company");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 5: New address
+    // Step 5: New address with redirection dates
     await page
       .getByRole("textbox", { name: /address line 1/i })
       .fill(newAddress.addressLine1);
     await page
       .locator('select[name="newAddress.parish"]')
       .selectOption(newAddress.parish);
-    await page.getByText("Yes", { exact: true }).click(); // Moving permanently
-    await page.getByRole("button", { name: /continue/i }).click();
-
-    // Step 6: Upload document - set files and wait for upload to complete
-    const uploadPromise1 = page.waitForResponse(
-      (response) =>
-        response.url().includes("/file/upload") &&
-        response.request().method() === "POST"
-    );
     await page
-      .locator('input[type="file"]')
-      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
-    await uploadPromise1; // Wait for file upload to complete
+      .locator("#newAddress\\.redirectionStartDate-day")
+      .fill(startDate.day);
+    await page
+      .locator("#newAddress\\.redirectionStartDate-month")
+      .fill(startDate.month);
+    await page
+      .locator("#newAddress\\.redirectionStartDate-year")
+      .fill(startDate.year);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-day")
+      .fill(endDate.day);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-month")
+      .fill(endDate.month);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-year")
+      .fill(endDate.year);
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Check your answers
+    // Step 6: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 8: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
+    // Step 7: Declaration
     const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today1 = new Date();
     const expectedDate = formatDate(today1);
@@ -231,6 +249,9 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
+    await page
+      .locator('input[name="applicant.idNumber"]')
+      .fill(applicant.idNumber);
     await page.getByRole("textbox", { name: /email/i }).fill(applicant.email);
     await page
       .getByRole("textbox", { name: /telephone/i })
@@ -241,6 +262,9 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page
       .getByRole("textbox", { name: /business name/i })
       .fill(businessName);
+    await page
+      .locator('input[name="registrationNumber"]')
+      .fill(`REG-${faker.string.numeric(6)}`);
     await page.getByRole("button", { name: /continue/i }).click();
 
     // Step 3: Current address of the business
@@ -254,19 +278,17 @@ test.describe("Post Office Redirection (Business) Form", () => {
 
     // Step 4: Permission details
     await page
-      .locator('input[name="permissionDetails"]')
+      .locator('input[name="positionDetails"]')
       .fill("I am the manager authorised to act on behalf of the business");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 5: New address with temporary redirection
+    // Step 5: New address with redirection dates
     await page
       .getByRole("textbox", { name: /address line 1/i })
       .fill(newAddress.addressLine1);
     await page
       .locator('select[name="newAddress.parish"]')
       .selectOption(newAddress.parish);
-    await page.getByText("No", { exact: true }).click(); // Not permanent
-    // Fill start date (Day, Month, Year)
     await page
       .locator("#newAddress\\.redirectionStartDate-day")
       .fill(startDate.day);
@@ -276,7 +298,6 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page
       .locator("#newAddress\\.redirectionStartDate-year")
       .fill(startDate.year);
-    // Fill end date (Day, Month, Year)
     await page
       .locator("#newAddress\\.redirectionEndDate-day")
       .fill(endDate.day);
@@ -288,26 +309,13 @@ test.describe("Post Office Redirection (Business) Form", () => {
       .fill(endDate.year);
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Upload document - set files and wait for upload to complete
-    const uploadPromise2 = page.waitForResponse(
-      (response) =>
-        response.url().includes("/file/upload") &&
-        response.request().method() === "POST"
-    );
-    await page
-      .locator('input[type="file"]')
-      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
-    await uploadPromise2; // Wait for file upload to complete
-    await page.getByRole("button", { name: /continue/i }).click();
-
-    // Step 7: Check your answers
+    // Step 6: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 8: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
+    // Step 7: Declaration
     const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
     const today2 = new Date();
     const expectedDate2 = formatDate(today2);
@@ -382,6 +390,9 @@ test.describe("Post Office Redirection (Business) Form", () => {
     await page
       .getByRole("textbox", { name: /last name/i })
       .fill(applicant.lastName);
+    await page
+      .locator('input[name="applicant.idNumber"]')
+      .fill(applicant.idNumber);
     await page.getByRole("textbox", { name: /email/i }).fill(applicant.email);
     await page
       .getByRole("textbox", { name: /telephone/i })

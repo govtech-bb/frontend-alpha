@@ -437,13 +437,7 @@ export const formSteps: FormStep[] = [
         label: "Place of baptism",
         // hint: "Enter a house, church, or parish, if known",
         type: "text",
-        validation: {
-          required: "Place of baptism is required",
-          minLength: {
-            value: 2,
-            message: "Must be at least 2 characters",
-          },
-        },
+        validation: {},
       },
     ],
   },
@@ -574,11 +568,16 @@ export const formSteps: FormStep[] = [
         hidden: true,
         type: "number",
         width: "short",
+        numberConfig: {
+          default: 1,
+          min: 1,
+          max: 10,
+        },
         validation: {
           required: "Number of copies is required",
           min: {
             value: 1,
-            message: "You must order at least 1 copy and maximum 10 copies",
+            message: "You must order at least 1 copy",
           },
         },
       },

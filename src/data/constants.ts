@@ -20,7 +20,7 @@ export const PHONE_REGEX =
   "^\\d{3}[- ]?\\d{4}$|^(?:\\d{1,2}[- ]?)?\\d{3}[- ]?\\d{3}[- ]?\\d{4}$";
 
 /** Barbados postcode — BB followed by 5 digits (e.g. BB12345). */
-export const POSTCODE_REGEX = "^BB\\d{5}$";
+export const POSTCODE_REGEX = "^[Bb]{2}\\d{5}$";
 
 /**
  * Barbados National ID number — 6 digits, hyphen, 4 digits (e.g. 123456-7890).
