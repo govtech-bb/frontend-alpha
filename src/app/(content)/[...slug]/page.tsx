@@ -137,8 +137,9 @@ export default async function Page({ params }: ContentPageProps) {
       isServiceProtected(serviceConfig) ||
       isSubpageProtected(serviceConfig, subPageSlug);
 
+    let hasAccess = true;
     if (subpageFlagged) {
-      const hasAccess = await hasResearchAccess();
+      hasAccess = await hasResearchAccess();
       if (!hasAccess) {
         notFound();
       }
