@@ -56,6 +56,27 @@ export function getNestedValue<T>(
   return result as T | undefined;
 }
 
+/** e.g. postSecondaryEducation.0.endYear + startYear → postSecondaryEducation.0.startYear */
+export function resolveGteSiblingFieldName(
+  endFieldName: string,
+  siblingFieldKey: string
+): string {
+  const lastDot = endFieldName.lastIndexOf(".");
+  if (lastDot === -1) {
+    return siblingFieldKey;
+  }
+  return `${endFieldName.slice(0, lastDot + 1)}${siblingFieldKey}`;
+}
+
+/** Dot path with numeric segments for Zod issue paths (e.g. arr.0.key → ["arr", 0, "key"]) */
+export function fieldNameToZodPath(name: string): (string | number)[] {
+  return name
+    .split(".")
+    .map((segment) =>
+      /^\d+$/.test(segment) ? Number.parseInt(segment, 10) : segment
+    );
+}
+
 export function findSubPageTitleFromPath(
   data: InformationContent[],
   path: string

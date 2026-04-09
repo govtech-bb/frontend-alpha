@@ -31,6 +31,12 @@ export type DateValidationRule =
   | { type: "between"; start: string; end: string; description?: string }
   | { type: "minYear"; year: number };
 
+export type FieldValidationOperator = {
+  condition: "gte";
+  field: string;
+  message: string;
+};
+
 /** Base validation rules shared by all field types. */
 export type BaseValidationRule = {
   /** Error message when the field is required, or `false` to explicitly mark as optional */
@@ -47,6 +53,8 @@ export type BaseValidationRule = {
   max?: { value: number; message: string };
   /** Exact file count constraint for file upload fields */
   numberOfFiles?: { isEqual: number; message: string };
+  /** Cross-field rule vs a sibling under the same parent path (e.g. endYear >= startYear) */
+  operator?: FieldValidationOperator;
 };
 
 /** Validation rules for date fields, extending base rules with date-specific constraints. */
@@ -157,12 +165,24 @@ export type FieldArrayFormField = BaseFormField & {
   fieldArray: FieldArrayConfig;
 };
 
+/** Constraints and defaults for `type: "number"` fields. */
+export type NumberFieldConfig = {
+  /** Initial value to pre-populate the field with */
+  default?: number;
+  /** Minimum allowed value (sets the HTML min attribute) */
+  min?: number;
+  /** Maximum allowed value (sets the HTML max attribute) */
+  max?: number;
+};
+
 /** A single-line text input (text, email, number, or telephone). */
 export type TextFormField = BaseFormField & {
   type: "text" | "email" | "number" | "tel";
   validation: NonDateFieldValidation;
   /** Input mask to apply (e.g., "nid" for National ID format xxxxxx-xxxx) */
   mask?: MaskType;
+  /** Constraints and defaults for number inputs (only applicable when type is "number") */
+  numberConfig?: NumberFieldConfig;
 };
 
 /** A collapsible disclosure section containing nested fields. */

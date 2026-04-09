@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { clearFormStartTime } from "@/lib/analytics";
 
 type ClearFormStorageProps = {
   storageKey: string;
@@ -15,9 +16,9 @@ export function ClearFormStorage({ storageKey }: ClearFormStorageProps) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       sessionStorage.removeItem(storageKey);
+      clearFormStartTime(storageKey);
     }
   }, [storageKey]);
 
-  // Renders nothing - this is a side-effect only component
   return null;
 }

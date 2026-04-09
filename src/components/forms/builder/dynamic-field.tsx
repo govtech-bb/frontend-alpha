@@ -279,7 +279,7 @@ export function DynamicField({
 
               return (
                 <DateInput
-                  description={fieldError?.message ?? f.hint ?? f.placeholder}
+                  description={f.hint ?? f.placeholder}
                   error={fieldError?.message}
                   id={f.name}
                   label={f.hidden ? "" : f.label}
@@ -460,6 +460,8 @@ export function DynamicField({
                 description={fieldError?.message ?? f.hint}
                 error={fieldError?.message}
                 label={f.hidden ? "" : f.label}
+                max={f.numberConfig?.max}
+                min={f.numberConfig?.min}
                 name={controllerField.name}
                 onBlur={controllerField.onBlur}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

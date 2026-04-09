@@ -4,11 +4,16 @@ import { Button } from "@govtech-bb/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { type FieldError, FormProvider, useForm } from "react-hook-form";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
+import { useFormTracking } from "@/hooks/use-form-tracking";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
-import { getNestedValue, setNestedValue } from "@/lib/utils";
+import {
+  getNestedValue,
+  resolveGteSiblingFieldName,
+  setNestedValue,
+} from "@/lib/utils";
 import { submitFormData } from "@/services/api";
 import { createFormStore } from "@/store/form-store";
 import type { FormField, FormStep, NestedFormField } from "@/types";
@@ -387,7 +392,14 @@ export default function DynamicMultiStepForm({
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const formId = pathname.split("/").filter(Boolean)[1]; // Extract form ID from URL
+  const pathSegments = pathname.split("/").filter(Boolean);
+  const categorySlug = pathSegments[0] ?? "";
+  const formId = pathSegments[1];
+
+  const tracking = useFormTracking({
+    form: storageKey,
+    category: categorySlug,
+  });
 
   // Get store hook (uses singleton cache internally)
   const useFormStore = createFormStore(storageKey);
@@ -475,7 +487,13 @@ export default function DynamicMultiStepForm({
       for (const field of step.fields) {
         // Set appropriate default values based on field type
         let defaultValue: unknown = "";
-        if (field.type === "date") {
+        if (
+          field.type === "number" &&
+          "numberConfig" in field &&
+          field.numberConfig?.default !== undefined
+        ) {
+          defaultValue = field.numberConfig.default;
+        } else if (field.type === "date") {
           defaultValue = { day: "", month: "", year: "" };
         } else if (field.type === "checkbox") {
           defaultValue = "no";
@@ -601,6 +619,21 @@ export default function DynamicMultiStepForm({
     }
     setIsFormReady(true);
   }, [_hasHydrated, formData, methods, isFormReady]); // Run only once on mount
+
+  // Track form-start when a user begins a fresh form (no saved progress).
+  // Uses a ref guard so the event fires at most once per mount.
+  const hasTrackedStart = useRef(false);
+  useEffect(() => {
+    if (
+      isFormReady &&
+      currentStep === 0 &&
+      completedSteps.length === 0 &&
+      !hasTrackedStart.current
+    ) {
+      hasTrackedStart.current = true;
+      tracking.trackStart();
+    }
+  }, [isFormReady, currentStep, completedSteps.length, tracking.trackStart]);
 
   // Check for payment status on mount
   useEffect(() => {
@@ -823,13 +856,20 @@ export default function DynamicMultiStepForm({
               }
             : undefined;
 
-        // Mark as submitted in store with customer name and payment data
         markAsSubmitted(
           result.data?.submissionId || "N/A",
           customerName,
           apiPaymentData
         );
+        tracking.trackSubmit();
       } else {
+        const errorMessages = result.errors
+          ?.map((err) => `${err.field}: ${err.message}`)
+          .join("; ");
+        tracking.trackSubmitError(
+          errorMessages || result.message || "Unknown error"
+        );
+
         setSubmissionError({
           message: result.message || "An unexpected error occurred",
           errors: result.errors?.map((err) => ({
@@ -839,12 +879,13 @@ export default function DynamicMultiStepForm({
         });
       }
     } catch (error) {
-      setSubmissionError({
-        message:
-          error instanceof Error
-            ? error.message
-            : "An error occurred during submission",
-      });
+      const message =
+        error instanceof Error
+          ? error.message
+          : "An error occurred during submission";
+      tracking.trackSubmitError(message);
+
+      setSubmissionError({ message });
     } finally {
       setIsSubmitting(false);
     }
@@ -908,7 +949,7 @@ export default function DynamicMultiStepForm({
       currentStepData?.id === "check-your-answers";
 
     if (isReviewStep) {
-      // Review step complete, just move to next step
+      tracking.trackReviewLeave();
       markStepComplete(currentStep);
       isProgrammaticNavigation.current = true;
       const nextVisibleStep = findNextVisibleStep(currentStep);
@@ -1102,9 +1143,73 @@ export default function DynamicMultiStepForm({
       }
     }
 
+    for (const field of visibleFields) {
+      const op = field.validation?.operator;
+      if (
+        !op ||
+        op.condition !== "gte" ||
+        typeof op.field !== "string" ||
+        typeof op.message !== "string"
+      ) {
+        continue;
+      }
+
+      const endFieldName = field.name;
+      const startFieldName = resolveGteSiblingFieldName(endFieldName, op.field);
+      const startYearValue = methods.getValues(
+        startFieldName as keyof FormData
+      );
+      const endYearValue = methods.getValues(endFieldName as keyof FormData);
+
+      if (
+        typeof startYearValue !== "string" ||
+        typeof endYearValue !== "string"
+      ) {
+        continue;
+      }
+
+      if (!(startYearValue.trim() && endYearValue.trim())) {
+        continue;
+      }
+
+      const startYear = Number.parseInt(startYearValue, 10);
+      const endYear = Number.parseInt(endYearValue, 10);
+
+      if (!(Number.isNaN(startYear) || Number.isNaN(endYear))) {
+        if (endYear < startYear) {
+          methods.setError(endFieldName as keyof FormData, {
+            type: "custom",
+            message: op.message,
+          });
+          isValid = false;
+        } else {
+          const fieldError = getNestedValue<FieldError>(
+            methods.formState.errors as Record<string, unknown>,
+            endFieldName
+          );
+          if (
+            fieldError?.type === "custom" &&
+            fieldError.message === op.message
+          ) {
+            methods.clearErrors(endFieldName as keyof FormData);
+          }
+        }
+      }
+    }
+
     if (isValid) {
-      // Mark current step as complete
       markStepComplete(currentStep);
+      // 1-based ordinal among field-bearing steps only (excludes review, declaration, confirmation)
+      const fieldStepNumber = expandedFormSteps
+        .slice(0, currentStep + 1)
+        .filter(
+          (s) =>
+            s.fields.length > 0 &&
+            s.id !== "declaration" &&
+            s.id !== "confirmation" &&
+            s.id !== "thank-you"
+        ).length;
+      tracking.trackStepComplete(currentStepData.id, fieldStepNumber);
 
       // If this is the declaration step, submit the form
       if (isDeclarationStep) {
@@ -1143,7 +1248,30 @@ export default function DynamicMultiStepForm({
       setCurrentStep(nextVisibleStep);
       scrollToStepHeading();
     } else {
-      // Scroll to ErrorSummary if it exists, otherwise scroll to first error field
+      // Collect validation error details for tracking
+      const failedFields: string[] = [];
+      const failedTypes: string[] = [];
+      for (const fieldName of currentFieldNames) {
+        const fieldError = getNestedValue<FieldError>(
+          methods.formState.errors as Record<string, unknown>,
+          fieldName
+        );
+        if (fieldError) {
+          failedFields.push(fieldName);
+          if (fieldError.type && !failedTypes.includes(fieldError.type)) {
+            failedTypes.push(fieldError.type);
+          }
+        }
+      }
+      if (failedFields.length > 0) {
+        tracking.trackValidationError({
+          step: currentStepData.id,
+          errorCount: failedFields.length,
+          fields: failedFields.join(","),
+          errorTypes: failedTypes.join(","),
+        });
+      }
+
       const errorSummary = document.querySelector("#error-summary");
       if (errorSummary) {
         errorSummary.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1167,12 +1295,21 @@ export default function DynamicMultiStepForm({
   };
 
   const handleEditFromReview = (stepIndex: number) => {
+    const stepBeingEdited = expandedFormSteps[stepIndex];
+    if (stepBeingEdited) {
+      tracking.trackReviewLeave();
+      tracking.trackStepEdit(stepBeingEdited.id);
+    }
     isProgrammaticNavigation.current = true;
     setCurrentStep(stepIndex);
     scrollToStepHeading();
   };
 
   const prevStep = () => {
+    const leavingStep = expandedFormSteps[currentStep];
+    if (leavingStep) {
+      tracking.trackStepBack(leavingStep.id);
+    }
     isProgrammaticNavigation.current = true;
     const prevVisibleStep = findPrevVisibleStep(currentStep);
     setCurrentStep(prevVisibleStep);
@@ -1199,6 +1336,13 @@ export default function DynamicMultiStepForm({
   );
   const isLastStep = currentStep === lastNavigableStepIndex;
 
+  // Start the review duration timer when the review step is reached
+  useEffect(() => {
+    if (isReviewStep) {
+      tracking.trackReviewEnter();
+    }
+  }, [isReviewStep, tracking]);
+
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
     const confirmationStep = expandedFormSteps.find(
@@ -1222,190 +1366,210 @@ export default function DynamicMultiStepForm({
 
   if (!_hasHydrated) {
     // Show loading state while hydrating
-    return <FormSkeleton />;
+    return (
+      <div className="container py-8 lg:py-16">
+        <FormSkeleton />
+      </div>
+    );
   }
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {/* Payment Status Message */}
-        {paymentMessage && (
-          <div
-            className={`mb-6 border-l-4 p-4 ${
-              paymentMessage.type === "success"
-                ? "border-green-500 bg-green-50"
-                : paymentMessage.type === "pending"
-                  ? "border-amber-500 bg-amber-50"
-                  : "border-red-500 bg-red-50"
-            }`}
-          >
-            <div className="flex">
-              <div className="shrink-0">
-                <span
-                  className={
-                    paymentMessage.type === "success"
-                      ? "text-green-500"
-                      : paymentMessage.type === "pending"
-                        ? "text-amber-500"
-                        : "text-red-500"
-                  }
-                >
-                  {paymentMessage.type === "success"
-                    ? "✓"
-                    : paymentMessage.type === "pending"
-                      ? "⏳"
-                      : "⚠"}
-                </span>
-              </div>
-              <div className="ml-3">
-                <h3
-                  className={`font-medium text-sm ${
-                    paymentMessage.type === "success"
-                      ? "text-green-800"
-                      : paymentMessage.type === "pending"
-                        ? "text-amber-800"
-                        : "text-red-800"
-                  }`}
-                >
-                  {paymentMessage.message}
-                </h3>
-                {paymentMessage.details && (
-                  <div
-                    className={`mt-1 text-sm ${
+    <div className="container py-8 lg:py-16">
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(onSubmit)}>
+          {/* Payment Status Message */}
+          {paymentMessage && (
+            <div
+              className={`mb-6 border-l-4 p-4 ${
+                paymentMessage.type === "success"
+                  ? "border-green-500 bg-green-50"
+                  : paymentMessage.type === "pending"
+                    ? "border-amber-500 bg-amber-50"
+                    : "border-red-500 bg-red-50"
+              }`}
+            >
+              <div className="flex">
+                <div className="shrink-0">
+                  <span
+                    className={
                       paymentMessage.type === "success"
-                        ? "text-green-700"
+                        ? "text-green-500"
                         : paymentMessage.type === "pending"
-                          ? "text-amber-700"
-                          : "text-red-700"
+                          ? "text-amber-500"
+                          : "text-red-500"
+                    }
+                  >
+                    {paymentMessage.type === "success"
+                      ? "✓"
+                      : paymentMessage.type === "pending"
+                        ? "⏳"
+                        : "⚠"}
+                  </span>
+                </div>
+                <div className="ml-3">
+                  <h3
+                    className={`font-medium text-sm ${
+                      paymentMessage.type === "success"
+                        ? "text-green-800"
+                        : paymentMessage.type === "pending"
+                          ? "text-amber-800"
+                          : "text-red-800"
                     }`}
                   >
-                    {paymentMessage.details?.split("\n").map((line, index) => (
-                      <div key={index}>{line}</div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Submission Error */}
-        {submissionError && (
-          <div className="mb-6 border-red-500 border-l-8 bg-red-50 p-6">
-            <div className="flex">
-              <div className="shrink-0">
-                <svg
-                  aria-hidden="true"
-                  className="h-6 w-6 text-red-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                  />
-                </svg>
-              </div>
-              <div className="ml-4 flex-1">
-                <h3 className="font-bold text-lg text-red-800">
-                  There was a problem submitting your form
-                </h3>
-                <p className="mt-2 text-red-700">{submissionError.message}</p>
-                {submissionError.errors &&
-                  submissionError.errors.length > 0 && (
-                    <ul className="mt-4 space-y-2">
-                      {submissionError.errors.map((error, index) => (
-                        <li className="text-red-700" key={index}>
-                          <span className="font-semibold">
-                            {error.field
-                              ?.split(".")
-                              .map(
-                                (part) =>
-                                  part.charAt(0).toUpperCase() +
-                                  part.slice(1).replace(/([A-Z])/g, " $1")
-                              )
-                              .join(" - ")}
-                            :
-                          </span>{" "}
-                          {error.message}
-                        </li>
-                      ))}
-                    </ul>
+                    {paymentMessage.message}
+                  </h3>
+                  {paymentMessage.details && (
+                    <div
+                      className={`mt-1 text-sm ${
+                        paymentMessage.type === "success"
+                          ? "text-green-700"
+                          : paymentMessage.type === "pending"
+                            ? "text-amber-700"
+                            : "text-red-700"
+                      }`}
+                    >
+                      {paymentMessage.details
+                        ?.split("\n")
+                        .map((line, index) => (
+                          <div key={index}>{line}</div>
+                        ))}
+                    </div>
                   )}
+                </div>
               </div>
             </div>
-          </div>
-        )}
-        {/* Current Step - Show Review, Declaration, or Regular Step */}
-        {isReviewStep ? (
-          <ReviewStep
-            formSteps={expandedFormSteps}
-            onEdit={handleEditFromReview}
-          />
-        ) : isDeclarationStep ? (
-          <DeclarationStep
-            serviceTitle={serviceTitle}
-            step={expandedFormSteps[currentStep]}
-          />
-        ) : (
-          <DynamicStep
-            serviceTitle={serviceTitle}
-            step={expandedFormSteps[currentStep]}
-          />
-        )}
+          )}
 
-        {/* Navigation Buttons - Don't show on confirmation/thank-you steps */}
-        {!isFinalStep && (
-          <div className="mt-8 flex gap-4">
-            {currentStep > 0 && (
-              <Button
-                disabled={isSubmitting}
-                onClick={prevStep}
-                type="button"
-                variant="secondary"
-              >
-                Previous
-              </Button>
-            )}
+          {/* Submission Error */}
+          {submissionError && (
+            <div className="mb-6 border-red-500 border-l-8 bg-red-50 p-6">
+              <div className="flex">
+                <div className="shrink-0">
+                  <svg
+                    aria-hidden="true"
+                    className="h-6 w-6 text-red-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                    />
+                  </svg>
+                </div>
+                <div className="ml-4 flex-1">
+                  <h3 className="font-bold text-lg text-red-800">
+                    There was a problem submitting your form
+                  </h3>
+                  <p className="mt-2 text-red-700">{submissionError.message}</p>
+                  {submissionError.errors &&
+                    submissionError.errors.length > 0 && (
+                      <ul className="mt-4 space-y-2">
+                        {submissionError.errors.map((error, index) => (
+                          <li className="text-red-700" key={index}>
+                            <span className="font-semibold">
+                              {error.field
+                                ?.split(".")
+                                .map(
+                                  (part) =>
+                                    part.charAt(0).toUpperCase() +
+                                    part.slice(1).replace(/([A-Z])/g, " $1")
+                                )
+                                .join(" - ")}
+                              :
+                            </span>{" "}
+                            {error.message}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                </div>
+              </div>
+            </div>
+          )}
+          {/* Current Step - Show Review, Declaration, or Regular Step */}
+          {isReviewStep ? (
+            <ReviewStep
+              formSteps={expandedFormSteps}
+              onEdit={handleEditFromReview}
+            />
+          ) : isDeclarationStep ? (
+            <DeclarationStep
+              serviceTitle={serviceTitle}
+              step={expandedFormSteps[currentStep]}
+            />
+          ) : (
+            <DynamicStep
+              serviceTitle={serviceTitle}
+              step={expandedFormSteps[currentStep]}
+            />
+          )}
 
-            {/* Show Continue button on review step, Submit on declaration step */}
-            {isReviewStep ? (
-              <Button disabled={isSubmitting} onClick={nextStep} type="button">
-                Continue
-              </Button>
-            ) : isDeclarationStep ? (
-              <Button disabled={isSubmitting} onClick={nextStep} type="button">
-                {isSubmitting ? (
-                  <>
-                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit"
-                )}
-              </Button>
-            ) : isLastStep ? (
-              <Button disabled={isSubmitting} type="submit">
-                {isSubmitting ? (
-                  <>
-                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
-                    Submitting...
-                  </>
-                ) : (
-                  "Submit Application"
-                )}
-              </Button>
-            ) : (
-              <Button disabled={isSubmitting} onClick={nextStep} type="button">
-                Continue
-              </Button>
-            )}
-          </div>
-        )}
-      </form>
-    </FormProvider>
+          {/* Navigation Buttons - Don't show on confirmation/thank-you steps */}
+          {!isFinalStep && (
+            <div className="mt-8 flex gap-4">
+              {currentStep > 0 && (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={prevStep}
+                  type="button"
+                  variant="secondary"
+                >
+                  Previous
+                </Button>
+              )}
+
+              {/* Show Continue button on review step, Submit on declaration step */}
+              {isReviewStep ? (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={nextStep}
+                  type="button"
+                >
+                  Continue
+                </Button>
+              ) : isDeclarationStep ? (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={nextStep}
+                  type="button"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              ) : isLastStep ? (
+                <Button disabled={isSubmitting} type="submit">
+                  {isSubmitting ? (
+                    <>
+                      <span className="inline-block h-4 w-4 animate-spin rounded-full border-white border-b-2" />
+                      Submitting...
+                    </>
+                  ) : (
+                    "Submit Application"
+                  )}
+                </Button>
+              ) : (
+                <Button
+                  disabled={isSubmitting}
+                  onClick={nextStep}
+                  type="button"
+                >
+                  Continue
+                </Button>
+              )}
+            </div>
+          )}
+        </form>
+      </FormProvider>
+    </div>
   );
 }

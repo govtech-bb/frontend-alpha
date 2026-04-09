@@ -4,6 +4,7 @@ import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { useEffect } from "react";
 
+import { trackEvent } from "@/lib/analytics";
 import type { SearchResult } from "@/lib/search";
 
 export function SearchResults({
@@ -14,11 +15,9 @@ export function SearchResults({
   query: string;
 }) {
   useEffect(() => {
-    if (!query) return;
-    window.umami?.track("search", {
-      query,
-      results: results.length,
-    });
+    // Skip tracking queries that may contain PII (numbers, emails)
+    if (!query || /\d|@/.test(query)) return;
+    trackEvent("search", { query, results: results.length });
   }, [query, results.length]);
 
   return (

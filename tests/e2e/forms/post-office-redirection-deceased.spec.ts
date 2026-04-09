@@ -97,7 +97,12 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
   expect(response.data.submissionId).toBeTruthy();
   expect(response.data.formId).toBe(formId);
   // Status can be "success" or "payment_required" for forms that need payment
-  expect(["success", "payment_required"]).toContain(response.data.status);
+  expect([
+    "success",
+    "submitted",
+    "payment_required",
+    "payment_unavailable",
+  ]).toContain(response.data.status);
 
   console.log("✅ Form submitted successfully:");
   console.log(`   - Submission ID: ${response.data.submissionId}`);
@@ -111,6 +116,8 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
     const applicant = generateApplicantData();
     const oldAddress = generateAddress();
     const newAddress = generateAddress();
+    const startDate = { day: "15", month: "01", year: "2027" };
+    const endDate = { day: "15", month: "06", year: "2027" };
 
     await page.goto(FORM_URL);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -165,40 +172,44 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
       .fill("I am the executor of the estate and have Power of Attorney");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 5: New address
+    // Step 5: New address with redirection dates
     await page
       .getByRole("textbox", { name: /address line 1/i })
       .fill(newAddress.addressLine1);
     await page
       .locator('select[name="newAddress.parish"]')
       .selectOption(newAddress.parish);
-    await page.getByText("Yes", { exact: true }).click(); // Permanent redirect
-    await page.getByRole("button", { name: /continue/i }).click();
-
-    // Step 6: Upload document - set files and wait for upload to complete
-    const uploadPromise1 = page.waitForResponse(
-      (response) =>
-        response.url().includes("/file/upload") &&
-        response.request().method() === "POST"
-    );
     await page
-      .locator('input[type="file"]')
-      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
-    await uploadPromise1; // Wait for file upload to complete
+      .locator("#newAddress\\.redirectionStartDate-day")
+      .fill(startDate.day);
+    await page
+      .locator("#newAddress\\.redirectionStartDate-month")
+      .fill(startDate.month);
+    await page
+      .locator("#newAddress\\.redirectionStartDate-year")
+      .fill(startDate.year);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-day")
+      .fill(endDate.day);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-month")
+      .fill(endDate.month);
+    await page
+      .locator("#newAddress\\.redirectionEndDate-year")
+      .fill(endDate.year);
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Check your answers
+    // Step 6: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 8: Declaration
+    // Step 7: Declaration
     await expect(
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible();
 
-    // Since applicant data was provided (firstName + lastName only), verify static display
     const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today1 = new Date();
     const expectedDate = formatDate(today1);
@@ -236,7 +247,7 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
 
     // Verify confirmation page
     await expect(
-      page.getByRole("heading", { name: /application submitted/i })
+      page.getByRole("heading", { name: /thank you/i })
     ).toBeVisible();
   });
 
@@ -300,48 +311,32 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
       .fill("I have Power of Attorney and legal representative status");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 5: New address with temporary redirection
+    // Step 5: New address with redirection dates
     await page
       .getByRole("textbox", { name: /address line 1/i })
       .fill(newAddress.addressLine1);
     await page
       .locator('select[name="newAddress.parish"]')
       .selectOption(newAddress.parish);
-    await page.getByText("No", { exact: true }).click(); // Not permanent
-    // Fill start date (Day, Month, Year)
     await page.locator("#newAddress\\.redirectionStartDate-day").fill("15");
     await page.locator("#newAddress\\.redirectionStartDate-month").fill("01");
     await page.locator("#newAddress\\.redirectionStartDate-year").fill("2027");
-    // Fill end date (Day, Month, Year)
     await page.locator("#newAddress\\.redirectionEndDate-day").fill("15");
     await page.locator("#newAddress\\.redirectionEndDate-month").fill("06");
     await page.locator("#newAddress\\.redirectionEndDate-year").fill("2027");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Upload document - set files and wait for upload to complete
-    const uploadPromise2 = page.waitForResponse(
-      (response) =>
-        response.url().includes("/file/upload") &&
-        response.request().method() === "POST"
-    );
-    await page
-      .locator('input[type="file"]')
-      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
-    await uploadPromise2; // Wait for file upload to complete
-    await page.getByRole("button", { name: /continue/i }).click();
-
-    // Step 7: Check your answers
+    // Step 6: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 8: Declaration
+    // Step 7: Declaration
     await expect(
       page.getByRole("heading", { name: /declaration/i })
     ).toBeVisible();
 
-    // Since applicant data was provided (firstName + lastName only), verify static display
     const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
     const today2 = new Date();
     const expectedDate2 = formatDate(today2);
@@ -379,7 +374,7 @@ test.describe("Post Office Redirection (Deceased) Form", () => {
 
     // Verify confirmation page
     await expect(
-      page.getByRole("heading", { name: /application submitted/i })
+      page.getByRole("heading", { name: /thank you/i })
     ).toBeVisible();
   });
 

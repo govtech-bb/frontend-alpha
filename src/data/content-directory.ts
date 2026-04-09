@@ -16,11 +16,11 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to register a birth in Barbados, including who can register, the required documents, and any associated fees.",
         subPages: [
           { slug: "start", type: "markdown" },
-          {
-            slug: "form",
-            title: "Register a Birth form",
-            type: "component",
-          },
+          // {
+          //   slug: "form",
+          //   title: "Register a Birth form",
+          //   type: "component",
+          // },
         ],
       },
       {
@@ -158,9 +158,9 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description: "Apply for a position as a temporary teacher",
       },
       {
-        title: "Apply to the JobSTART Plus programme",
+        title: "Apply to the Job Start Plus programme",
         slug: "apply-to-jobstart-plus-programme",
-        description: "Apply to the JobSTART Plus Programme",
+        description: "Apply to the Job Start Plus Programme",
         subPages: [
           { slug: "start", type: "markdown" },
           {

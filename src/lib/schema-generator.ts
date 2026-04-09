@@ -1,11 +1,17 @@
 import { z } from "zod";
-import { getNestedValue, setNestedValue } from "@/lib/utils";
+import {
+  fieldNameToZodPath,
+  getNestedValue,
+  resolveGteSiblingFieldName,
+  setNestedValue,
+} from "@/lib/utils";
 import {
   createDateSchema,
   dateValidation,
 } from "@/lib/validation/date-validation";
 import type {
   BaseValidationRule,
+  DateFieldValidation,
   FormField,
   FormStep,
   NonDateFieldValidation,
@@ -698,6 +704,82 @@ export function generateFormSchema(formSteps: FormStep[]) {
               }
             }
           }
+        }
+      }
+    }
+
+    const applyGteFromSchema = (
+      endFieldName: string,
+      validation: NonDateFieldValidation | DateFieldValidation
+    ) => {
+      const v = validation as NonDateFieldValidation;
+      const op = v.operator;
+      if (
+        !op ||
+        op.condition !== "gte" ||
+        typeof op.field !== "string" ||
+        typeof op.message !== "string"
+      ) {
+        return;
+      }
+
+      const startName = resolveGteSiblingFieldName(endFieldName, op.field);
+      const startVal = getNestedValue(
+        data as Record<string, unknown>,
+        startName
+      );
+      const endVal = getNestedValue(
+        data as Record<string, unknown>,
+        endFieldName
+      );
+
+      if (typeof startVal !== "string" || typeof endVal !== "string") {
+        return;
+      }
+      if (!(startVal.trim() && endVal.trim())) {
+        return;
+      }
+
+      const start = Number.parseInt(startVal, 10);
+      const end = Number.parseInt(endVal, 10);
+      if (!(Number.isNaN(start) || Number.isNaN(end)) && end < start) {
+        ctx.addIssue({
+          code: "custom",
+          message: op.message,
+          path: fieldNameToZodPath(endFieldName),
+        });
+      }
+    };
+
+    for (const step of formSteps) {
+      for (const field of step.fields) {
+        if (field.type === "fieldArray" && field.fieldArray?.fields) {
+          const arrayValue = getNestedValue(
+            data as Record<string, unknown>,
+            field.name
+          );
+          if (Array.isArray(arrayValue)) {
+            for (let index = 0; index < arrayValue.length; index++) {
+              for (const nestedField of field.fieldArray.fields) {
+                applyGteFromSchema(
+                  `${field.name}.${index}.${nestedField.name}`,
+                  nestedField.validation
+                );
+              }
+            }
+          }
+        } else if (field.type === "showHide" && field.showHide) {
+          const showHideState = getNestedValue(
+            data as Record<string, unknown>,
+            field.showHide.stateFieldName
+          );
+          if (showHideState === "open") {
+            for (const childField of field.showHide.fields) {
+              applyGteFromSchema(childField.name, childField.validation);
+            }
+          }
+        } else {
+          applyGteFromSchema(field.name, field.validation);
         }
       }
     }

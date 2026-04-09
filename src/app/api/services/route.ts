@@ -14,7 +14,6 @@ export type ServiceSummary = {
   categorySlug: string;
   categoryTitle: string;
   hasImplementation: boolean;
-  subPageSlugs: string[];
 };
 
 type ServicesResponse = {
@@ -31,7 +30,6 @@ const ALL_SERVICES: ServiceSummary[] = INFORMATION_ARCHITECTURE.flatMap(
       categoryTitle: category.title,
       hasImplementation:
         page.subPages?.some((sp) => sp.type === "component") ?? false,
-      subPageSlugs: page.subPages?.map((sp) => sp.slug) ?? [],
     }))
 );
 
@@ -48,7 +46,7 @@ const CORS_HEADERS = {
  * Returns a flattened list of all services from the content directory,
  * annotated with whether they have a live form implementation.
  *
- * Used by the service dashboard to build its full service list, which
+ * Used by the feature flagging tool to build its full service list, which
  * it then correlates with feature flag data from the form-processor-api.
  *
  * No authentication required — this is metadata about the IA, not

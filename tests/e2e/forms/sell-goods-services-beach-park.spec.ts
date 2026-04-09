@@ -1,10 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { expect, test } from "@playwright/test";
-import type { ApiResponse } from "@/types";
 
 const FORM_URL = "/business-trade/sell-goods-services-beach-park/form";
-const FORM_KEY = "sell-goods-services-beach-park";
-const API_SUBMIT_PATH = `/forms/${FORM_KEY}/submit`;
 
 /**
  * Test data generators
@@ -88,39 +85,6 @@ function formatDate(date: Date): string {
   return `${day}/${month}/${year}`;
 }
 
-/**
- * Log the submitted form data from the request
- */
-function logSubmittedData(request: { postDataJSON: () => unknown }) {
-  const submittedData = request.postDataJSON();
-  console.log("\n📋 SUBMITTED FORM DATA:");
-  console.log("─".repeat(50));
-  console.log(JSON.stringify(submittedData, null, 2));
-  console.log("─".repeat(50));
-}
-
-/**
- * Verify the API response structure and success status
- */
-function verifyApiResponse(response: ApiResponse, formId: string) {
-  expect(response.success).toBe(true);
-  expect(response.message).toBeTruthy();
-  expect(response.data).toBeTruthy();
-
-  if (!response.data) {
-    throw new Error("Response data is undefined");
-  }
-
-  expect(response.data.submissionId).toBeTruthy();
-  expect(response.data.formId).toBe(formId);
-  // Status can be "submitted" or "payment_required" for forms that need payment
-  expect(["submitted", "payment_required"]).toContain(response.data.status);
-
-  console.log("✅ Form submitted successfully:");
-  console.log(`   - Submission ID: ${response.data.submissionId}`);
-  console.log(`   - Status: ${response.data.status}`);
-}
-
 test.describe("Sell Goods/Services at Beach or Park Form", () => {
   test("complete form - selling goods", async ({ page }) => {
     const applicant = generateApplicantData();
@@ -171,19 +135,15 @@ test.describe("Sell Goods/Services at Beach or Park Form", () => {
 
     // Step 2: Would you like to sell goods or services?
     await page.getByText("Goods", { exact: true }).click();
-    await page
-      .locator('input[name="selling.manufacturingLocation"]')
-      .fill("Barbados");
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 3: Tell us about your goods or services
+    // Step 3: Tell us about the goods you would like to sell
+    await page.getByText("Local (Barbados)", { exact: true }).click();
     await page
-      .getByRole("textbox")
-      .nth(0)
+      .locator('input[name="goods.description"]')
       .fill("Fresh locally-sourced fruit and homemade fruit drinks");
     await page
-      .getByRole("textbox")
-      .nth(1)
+      .locator('input[name="goods.intendedLocation"]')
       .fill("In front of Copacabana Beach Club in Carlisle Bay");
     await page.getByRole("button", { name: /continue/i }).click();
 
@@ -235,35 +195,99 @@ test.describe("Sell Goods/Services at Beach or Park Form", () => {
       .selectOption(personalReferee.parish);
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Check your answers
+    // Step 6: First testimonial
+    await page
+      .locator('input[name="firstTestimonial.firstName"]')
+      .fill(faker.person.firstName());
+    await page
+      .locator('input[name="firstTestimonial.lastName"]')
+      .fill(faker.person.lastName());
+    await page
+      .locator('select[name="firstTestimonial.relationship"]')
+      .selectOption("community-leader");
+    await page
+      .locator('input[name="firstTestimonial.addressLine1"]')
+      .fill(faker.location.streetAddress());
+    await page
+      .locator('select[name="firstTestimonial.parish"]')
+      .selectOption("st-michael");
+    await page
+      .locator('textarea[name="firstTestimonial.testimonial"]')
+      .fill(
+        "This person is a hardworking and honest individual in our community."
+      );
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 7: Second testimonial
+    await page
+      .locator('input[name="secondTestimonial.firstName"]')
+      .fill(faker.person.firstName());
+    await page
+      .locator('input[name="secondTestimonial.lastName"]')
+      .fill(faker.person.lastName());
+    await page
+      .locator('select[name="secondTestimonial.relationship"]')
+      .selectOption("mentor");
+    await page
+      .locator('input[name="secondTestimonial.addressLine1"]')
+      .fill(faker.location.streetAddress());
+    await page
+      .locator('select[name="secondTestimonial.parish"]')
+      .selectOption("christ-church");
+    await page
+      .locator('textarea[name="secondTestimonial.testimonial"]')
+      .fill("I have known this person for years and they are very reliable.");
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 8: Upload supporting documents
+    const uploadPromiseGoods1 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
+    await page
+      .locator('input[type="file"]')
+      .first()
+      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
+    await uploadPromiseGoods1;
+    const uploadPromiseGoods2 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
+    await page
+      .locator('input[type="file"]')
+      .last()
+      .setInputFiles([
+        "public/NEW_Mentor_Application_-_2024_2025.pdf",
+        "public/NEW_Mentor_Application_-_2024_2025.pdf",
+      ]);
+    await uploadPromiseGoods2;
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 9: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
+    // Step 10: Declaration
     const expectedFullName = `${applicant.firstName} ${applicant.lastName}`;
     const today = new Date();
     const expectedDate = formatDate(today);
 
-    // Verify applicant's name is displayed (static text, not input fields)
     await expect(page.getByText(`Applicant's name:`)).toBeVisible();
     await expect(page.getByText(expectedFullName)).toBeVisible();
 
-    // Verify today's date is displayed (static text, auto-filled)
     await expect(page.getByText("Date:")).toBeVisible();
     await expect(page.getByText(expectedDate)).toBeVisible();
 
-    // Check declaration checkbox
     const checkbox = page.locator('button[role="checkbox"]');
     await expect(checkbox).toBeVisible();
     await checkbox.click();
 
-    // Submit the form
     await page.getByRole("button", { name: /submit/i }).click();
 
-    // Verify confirmation page
     await expect(
       page.getByRole("heading", { name: /thank you/i })
     ).toBeVisible();
@@ -318,17 +342,14 @@ test.describe("Sell Goods/Services at Beach or Park Form", () => {
 
     // Step 2: Would you like to sell goods or services?
     await page.getByText("Services", { exact: true }).click();
-    // No manufacturing location field for services
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 3: Tell us about your goods or services
+    // Step 3: Tell us about your services
     await page
-      .getByRole("textbox")
-      .nth(0)
+      .locator('input[name="services.description"]')
       .fill("20-minute jet ski rides and water sports equipment rental");
     await page
-      .getByRole("textbox")
-      .nth(1)
+      .locator('input[name="services.intendedLocation"]')
       .fill("Pebbles Beach near the water sports area");
     await page.getByRole("button", { name: /continue/i }).click();
 
@@ -380,35 +401,99 @@ test.describe("Sell Goods/Services at Beach or Park Form", () => {
       .selectOption(personalReferee.parish);
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 6: Check your answers
+    // Step 6: First testimonial
+    await page
+      .locator('input[name="firstTestimonial.firstName"]')
+      .fill(faker.person.firstName());
+    await page
+      .locator('input[name="firstTestimonial.lastName"]')
+      .fill(faker.person.lastName());
+    await page
+      .locator('select[name="firstTestimonial.relationship"]')
+      .selectOption("teacher");
+    await page
+      .locator('input[name="firstTestimonial.addressLine1"]')
+      .fill(faker.location.streetAddress());
+    await page
+      .locator('select[name="firstTestimonial.parish"]')
+      .selectOption("st-james");
+    await page
+      .locator('textarea[name="firstTestimonial.testimonial"]')
+      .fill("This person is a dedicated and responsible individual.");
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 7: Second testimonial
+    await page
+      .locator('input[name="secondTestimonial.firstName"]')
+      .fill(faker.person.firstName());
+    await page
+      .locator('input[name="secondTestimonial.lastName"]')
+      .fill(faker.person.lastName());
+    await page
+      .locator('select[name="secondTestimonial.relationship"]')
+      .selectOption("neighbour");
+    await page
+      .locator('input[name="secondTestimonial.addressLine1"]')
+      .fill(faker.location.streetAddress());
+    await page
+      .locator('select[name="secondTestimonial.parish"]')
+      .selectOption("st-peter");
+    await page
+      .locator('textarea[name="secondTestimonial.testimonial"]')
+      .fill(
+        "A trustworthy person who has been part of our community for years."
+      );
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 8: Upload supporting documents
+    const uploadPromiseSvc1 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
+    await page
+      .locator('input[type="file"]')
+      .first()
+      .setInputFiles("public/NEW_Mentor_Application_-_2024_2025.pdf");
+    await uploadPromiseSvc1;
+    const uploadPromiseSvc2 = page.waitForResponse(
+      (response) =>
+        response.url().includes("/file/upload") &&
+        response.request().method() === "POST"
+    );
+    await page
+      .locator('input[type="file"]')
+      .last()
+      .setInputFiles([
+        "public/NEW_Mentor_Application_-_2024_2025.pdf",
+        "public/NEW_Mentor_Application_-_2024_2025.pdf",
+      ]);
+    await uploadPromiseSvc2;
+    await page.getByRole("button", { name: /continue/i }).click();
+
+    // Step 9: Check your answers
     await expect(
       page.getByRole("heading", { name: /check your answers/i })
     ).toBeVisible();
     await page.getByRole("button", { name: /continue/i }).click();
 
-    // Step 7: Declaration
-    // Since applicant data was provided (firstName + lastName only), verify static display
+    // Step 10: Declaration
     const expectedFullName2 = `${applicant.firstName} ${applicant.lastName}`;
     const today2 = new Date();
     const expectedDate2 = formatDate(today2);
 
-    // Verify applicant's name is displayed (static text, not input fields)
     await expect(page.getByText(`Applicant's name:`)).toBeVisible();
     await expect(page.getByText(expectedFullName2)).toBeVisible();
 
-    // Verify today's date is displayed (static text, auto-filled)
     await expect(page.getByText("Date:")).toBeVisible();
     await expect(page.getByText(expectedDate2)).toBeVisible();
 
-    // Check declaration checkbox
     const checkbox2 = page.locator('button[role="checkbox"]');
     await expect(checkbox2).toBeVisible();
     await checkbox2.click();
 
-    // Submit the form
     await page.getByRole("button", { name: /submit/i }).click();
 
-    // Verify confirmation page
     await expect(
       page.getByRole("heading", { name: /thank you/i })
     ).toBeVisible();
@@ -445,7 +530,9 @@ test.describe("Sell Goods/Services at Beach or Park Form", () => {
     await page
       .locator('select[name="applicant.nationality"]')
       .selectOption("barbados");
-    await page.locator('input[name="applicant.idNumber"]').fill("invalid");
+    const idField = page.locator('input[name="applicant.idNumber"]');
+    await idField.click();
+    await idField.pressSequentially("12345");
     await page
       .locator('input[name="applicant.email"]')
       .fill("john@example.com");

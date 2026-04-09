@@ -2,120 +2,49 @@
 
 import type { ErrorItem } from "@govtech-bb/react";
 import { Button, ErrorSummary, Text, TextArea } from "@govtech-bb/react";
-import { useEffect, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import { type FeedbackState, sendFeedback } from "@/app/actions/send-feedback";
 
-type FormErrors = {
-  visitReason?: string;
-  whatWentWrong?: string;
-};
+const initialState: FeedbackState = { error: null };
 
 export function SimpleFeedbackForm() {
-  const [formData, setFormData] = useState({
-    visitReason: "",
-    whatWentWrong: "",
-    referrer: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
-  const [fieldErrors, setFieldErrors] = useState<FormErrors>({});
-  const [showValidation, setShowValidation] = useState(false);
+  const [state, formAction, isPending] = useActionState(
+    sendFeedback,
+    initialState
+  );
+  const [referrer, setReferrer] = useState("");
+  const [dismissedState, setDismissedState] = useState<FeedbackState | null>(
+    null
+  );
+  const formRef = useRef<HTMLFormElement>(null);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
+  // Read the referrer from sessionStorage
   useEffect(() => {
-    // Read the referrer from sessionStorage
-    const referrer = sessionStorage.getItem("feedbackReferrer") || "";
-    setFormData((prev) => ({ ...prev, referrer }));
+    setReferrer(sessionStorage.getItem("feedbackReferrer") || "");
   }, []);
 
-  // Focus error summary when validation errors appear
+  // Reset form fields when a successful submission comes back
   useEffect(() => {
-    if (showValidation && Object.keys(fieldErrors).length > 0) {
-      errorSummaryRef.current?.focus();
+    if (state.success) {
+      formRef.current?.reset();
     }
-  }, [showValidation, fieldErrors]);
+  }, [state.success]);
 
-  const validateForm = (): FormErrors => {
-    const errors: FormErrors = {};
-
-    if (!formData.visitReason.trim()) {
-      errors.visitReason = "Please enter a reason.";
-    }
-
-    if (!formData.whatWentWrong.trim()) {
-      errors.whatWentWrong = "Please enter a reason.";
-    }
-
-    return errors;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setShowValidation(true);
-
-    const errors = validateForm();
-    setFieldErrors(errors);
-
-    // If there are validation errors, don't submit
-    if (Object.keys(errors).length > 0) {
-      return;
-    }
-
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
-
-    try {
-      const response = await fetch("/api/send-feedback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          visitReason: formData.visitReason,
-          whatWentWrong: formData.whatWentWrong,
-          referrer: formData.referrer,
-        }),
-      });
-
-      if (response.ok) {
-        setSubmitStatus("success");
-        setShowValidation(false);
-        setFieldErrors({});
-        setFormData({
-          visitReason: "",
-          whatWentWrong: "",
-          referrer: formData.referrer,
-        });
-      } else {
-        setSubmitStatus("error");
-      }
-    } catch (_error) {
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const resetForm = () => {
-    setSubmitStatus("idle");
-    setShowValidation(false);
-    setFieldErrors({});
-    setFormData((prev) => ({ ...prev, visitReason: "", whatWentWrong: "" }));
-  };
-
-  // Convert field errors to ErrorItem format for ErrorSummary
+  const fieldErrors = state.fieldErrors ?? {};
   const errorItems: ErrorItem[] = Object.entries(fieldErrors).map(
-    ([field, message]) => ({
-      text: message,
-      target: field,
-    })
+    ([field, message]) => ({ text: message, target: field })
   );
+
+  useEffect(() => {
+    if (state.fieldErrors && Object.keys(state.fieldErrors).length > 0) {
+      errorSummaryRef.current?.focus();
+      errorSummaryRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [state.fieldErrors]);
 
   const handleErrorClick = (
     error: ErrorItem,
@@ -129,22 +58,26 @@ export function SimpleFeedbackForm() {
     }
   };
 
+  const showSuccess = state.success && dismissedState !== state;
+  const showServerError =
+    !!state.error && Object.keys(fieldErrors).length === 0;
+
   return (
     <div className="mb-6 space-y-6">
-      {submitStatus === "success" ? (
-        <div className="space-y-2 border-4 border-teal-40 bg-teal-10 p-6">
+      {showSuccess ? (
+        <div className="flex flex-wrap items-baseline gap-2 border-4 border-teal-40 bg-teal-10 p-6">
           <Text weight={"bold"}>Thank you for your feedback.</Text>
-          <button
-            className="cursor-pointer font-normal text-[20px] text-black leading-[150%] underline decoration-[#00267F] underline-offset-[1px]"
-            onClick={resetForm}
-            type="button"
+          <Button
+            className="text-black!"
+            onClick={() => setDismissedState(state)}
+            variant={"link"}
           >
             Tell us something else
-          </button>
+          </Button>
         </div>
       ) : (
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          {showValidation && errorItems.length > 0 && (
+        <form action={formAction} className="space-y-6" ref={formRef}>
+          {errorItems.length > 0 && (
             <ErrorSummary
               errors={errorItems}
               onErrorClick={handleErrorClick}
@@ -155,38 +88,33 @@ export function SimpleFeedbackForm() {
 
           <div>
             <TextArea
-              error={showValidation ? fieldErrors.visitReason : undefined}
+              error={fieldErrors.visitReason}
               id="visitReason"
               label="Why did you visit alpha.gov.bb?"
               name="visitReason"
-              onChange={handleChange}
               rows={3}
-              value={formData.visitReason}
             />
           </div>
 
           <div>
             <TextArea
-              error={showValidation ? fieldErrors.whatWentWrong : undefined}
+              error={fieldErrors.whatWentWrong}
               id="whatWentWrong"
               label={"What went wrong?"}
               name="whatWentWrong"
-              onChange={handleChange}
               rows={4}
-              value={formData.whatWentWrong}
             />
           </div>
 
-          <input name="referrer" type="hidden" value={formData.referrer} />
+          <input name="referrer" readOnly type="hidden" value={referrer} />
 
           <Button className="w-full" type="submit" variant="primary">
-            {" "}
-            {isSubmitting ? "Submitting..." : "Send Feedback"}{" "}
+            {isPending ? "Submitting..." : "Send Feedback"}
           </Button>
 
-          {submitStatus === "error" && (
+          {showServerError && (
             <div className="rounded-md border border-red-100 bg-red-10 px-4 py-3 text-red-00">
-              Sorry, there was an error sending your feedback. Please try again.
+              {state.error}
             </div>
           )}
         </form>
