@@ -1,8 +1,13 @@
 /**
- * The full protection config for a single service, mirroring the API response shape.
+ * The protection config for a single service, mirroring the API response shape.
  *
- * isProtected  — when true, the service is hidden from its category listing
- * subpages     — per-subpage entries; a subpage absent from this array is unprotected
+ * The form-processor-api stores protection at both the service level
+ * (isProtected) and per-subpage (subpages array).  Three helper functions
+ * provide the right granularity:
+ *
+ * - `isServiceProtected()`    — service-level flag only (hides from listings)
+ * - `hasProtectedSubpages()`  — any subpage flagged (hides start-link CTA)
+ * - `isSubpageProtected()`    — specific subpage flagged (404s that subpage)
  */
 export type ServiceAccessConfig = {
   serviceSlug: string;
@@ -80,8 +85,30 @@ export async function fetchServiceConfig(
 }
 
 /**
- * Returns whether a specific subpage is protected, given a resolved config.
- * A subpage absent from the config's subpages array is unprotected.
+ * Returns whether the service itself is protected (service-level flag only).
+ * Used by the category listing to decide whether to hide the service entirely.
+ * Subpage-level flags do NOT hide the service from the listing.
+ */
+export function isServiceProtected(
+  config: ServiceAccessConfig | null
+): boolean {
+  return config?.isProtected ?? false;
+}
+
+/**
+ * Returns whether any subpage (start, form) is protected.
+ * Used by the entry page to decide whether to hide the start-link CTA.
+ */
+export function hasProtectedSubpages(
+  config: ServiceAccessConfig | null
+): boolean {
+  if (!config) return false;
+  return config.subpages.some((sp) => sp.isProtected);
+}
+
+/**
+ * Returns whether a specific subpage is protected.
+ * Used by subpage routes to decide whether to 404.
  */
 export function isSubpageProtected(
   config: ServiceAccessConfig | null,
@@ -90,15 +117,4 @@ export function isSubpageProtected(
   return (
     config?.subpages.find((sp) => sp.slug === subpageSlug)?.isProtected ?? false
   );
-}
-
-/**
- * Returns whether a service has any protected subpages, given a resolved config.
- * Used by the service entry page to decide whether to pass hasResearchAccess
- * to MarkdownContent for conditional in-page rendering.
- */
-export function hasProtectedSubpages(
-  config: ServiceAccessConfig | null
-): boolean {
-  return config?.subpages.some((sp) => sp.isProtected) ?? false;
 }
