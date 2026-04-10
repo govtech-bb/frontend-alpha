@@ -2,6 +2,7 @@ import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { PopularServices } from "@/components/popular-services-server";
 import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 
@@ -45,7 +46,7 @@ export default function Home() {
               </Text>
               <SearchForm />
             </div>
-
+            <PopularServices />
             <Link as={NextLink} href="/services">
               View all services
             </Link>
