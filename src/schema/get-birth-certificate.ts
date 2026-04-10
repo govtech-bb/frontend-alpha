@@ -454,20 +454,38 @@ export const formSteps: FormStep[] = [
         name: "parents.father.firstName",
         label: "Father's first name",
         type: "text",
-        validation: {},
+        validation: {
+          pattern: {
+            value: NAME_REGEX,
+            message:
+              "First name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "parents.father.middleName",
         label: "Father's middle name",
         hint: " Optional. Provide only if known",
         type: "text",
-        validation: {},
+        validation: {
+          pattern: {
+            value: NAME_REGEX,
+            message:
+              "Middle name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "parents.father.lastName",
         label: "Father's last name",
         type: "text",
-        validation: {},
+        validation: {
+          pattern: {
+            value: NAME_REGEX,
+            message:
+              "Last name must contain only letters, hyphens, or apostrophes",
+          },
+        },
       },
       {
         name: "parents.mother.firstName",
