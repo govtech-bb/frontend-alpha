@@ -1,8 +1,8 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { BackButton } from "@/components/layout/back-button";
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { Breadcrumbs } from "./breadcrumbs";
 
 export function EntryPointWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -15,7 +15,7 @@ export function EntryPointWrapper({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="container py-4 lg:py-6">
-        <BackButton />
+        <Breadcrumbs />
       </div>
       <div className="container pt-4 pb-8 lg:py-8">
         {children}
