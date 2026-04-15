@@ -29,9 +29,22 @@ export async function GET(
 
   const endAt = Date.now();
   const startAt = endAt - days * 86_400_000;
+  const contentType =
+    (
+      searchParams.get("contentType") ?? searchParams.get("contenttype")
+    )?.toLowerCase() ?? undefined;
+
+  const keyword = searchParams.get("keyword")?.toLowerCase() ?? undefined;
 
   try {
-    const pages = await fetchPopularPages({ startAt, endAt, type, limit });
+    const pages = await fetchPopularPages({
+      startAt,
+      endAt,
+      contentType,
+      keyword,
+      type,
+      limit,
+    });
     return NextResponse.json({
       success: true,
       data: { startAt, endAt, type, pages },

@@ -20,6 +20,8 @@ export async function fetchPopularPages(options: {
   startAt: number;
   endAt: number;
   type?: string;
+  contentType?: string;
+  keyword?: string;
   limit?: number;
 }): Promise<PopularPageView[]> {
   const key = process.env.UMAMI_API_KEY;
@@ -35,8 +37,9 @@ export async function fetchPopularPages(options: {
   url.searchParams.set("startAt", String(options.startAt));
   url.searchParams.set("endAt", String(options.endAt));
   url.searchParams.set("type", "path");
-  url.searchParams.set("limit", "50");
-
+  url.searchParams.set("limit", "500");
+  const contentType = options.contentType?.toLowerCase();
+  const keyword = options.keyword?.toLowerCase();
   const res = await fetch(url.toString(), {
     headers: {
       Accept: "application/json",
@@ -65,7 +68,17 @@ export async function fetchPopularPages(options: {
   return rows
     .filter((row) => {
       const segments = row.name.split("/").filter(Boolean);
-      return segments.length >= 2;
+      if (segments[0] === "api") return false;
+      if (segments.length < 2) return false;
+
+      if (contentType) {
+        const lastSegment = segments[segments.length - 1].toLowerCase();
+        if (lastSegment !== contentType) return false;
+      }
+
+      if (keyword && !row.name.toLowerCase().includes(keyword)) return false;
+
+      return true;
     })
     .slice(0, limit)
     .map((row) => ({
