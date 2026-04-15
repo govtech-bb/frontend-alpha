@@ -505,20 +505,15 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "parents.mother.maidenName",
-        label: "Mother's maiden name",
-        hint: "Enter the last name the mother used at birth, if different from her current last name.",
+        name: "parents.mother.otherNames",
+        label: "",
         type: "text",
         validation: {
           required: false,
-          minLength: {
-            value: 2,
-            message: "Maiden name must be at least 2 characters",
-          },
           pattern: {
             value: NAME_REGEX,
             message:
-              "Maiden name must contain only letters, hyphens, or apostrophes",
+              "Other Names must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -536,6 +531,19 @@ export const formSteps: FormStep[] = [
             value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
+          },
+        },
+      },
+      {
+        name: "parents.mother.maidenName",
+        label: "",
+        type: "text",
+        validation: {
+          required: false,
+          pattern: {
+            value: NAME_REGEX,
+            message:
+              "Maiden name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
