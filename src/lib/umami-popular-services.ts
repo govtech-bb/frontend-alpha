@@ -1,3 +1,5 @@
+import { isUmamiEnabled } from "@/lib/umami-env";
+
 export type PopularPageView = {
   path: string;
   pageviews: number;
@@ -22,6 +24,10 @@ export async function fetchPopularPages(options: {
   type?: string;
   limit?: number;
 }): Promise<PopularPageView[]> {
+  if (!isUmamiEnabled()) {
+    return [];
+  }
+
   const key = process.env.UMAMI_API_KEY;
   const id = process.env.NEXT_PUBLIC_UMAMI_SITE_ID;
 

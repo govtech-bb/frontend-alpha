@@ -16,6 +16,7 @@
 /playwright-report/
 /performance-report/
 /perf-artifacts/
+/perf-archive/
 
 # next.js
 /.next/
