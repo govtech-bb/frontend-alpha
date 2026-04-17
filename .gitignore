@@ -14,6 +14,8 @@
 /coverage
 /test-results/
 /playwright-report/
+/performance-report/
+/perf-artifacts/
 
 # next.js
 /.next/
