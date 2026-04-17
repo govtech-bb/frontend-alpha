@@ -67,7 +67,12 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           }
 
           // Skip empty optional fields (but allow 0 for number fields)
-          if (value === undefined || value === null || value === "")
+          if (
+            value === undefined ||
+            value === null ||
+            value === "" ||
+            (Array.isArray(value) && value.length === 0)
+          )
             return null;
 
           // Format the value based on field type
@@ -116,6 +121,19 @@ export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
           ) {
             const option = field.options.find((opt) => opt.value === value);
             displayValue = option?.label || value;
+          }
+
+          if (
+            field.type === "checkbox" &&
+            field.options &&
+            field.options.length > 0 &&
+            Array.isArray(value)
+          ) {
+            displayValue = value
+              .map(
+                (v) => field.options?.find((opt) => opt.value === v)?.label ?? v
+              )
+              .join(", ");
           }
 
           if (field.type === "date" && value) {
