@@ -12,13 +12,24 @@ import {
   TextArea,
 } from "@govtech-bb/react";
 import { useMaskito } from "@maskito/react";
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { Controller, type FieldError, useFormContext } from "react-hook-form";
+import { differenceInYears } from "date-fns";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Controller,
+  type FieldError,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 import { masks } from "@/lib/masks";
 import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue, normalizeTextValue } from "@/lib/utils";
 import { uploadFile } from "@/services/api";
-import type { FieldArrayFormField, FileFormField, FormField } from "@/types";
+import type {
+  FieldArrayFormField,
+  FileFormField,
+  FormField,
+  TextFormField,
+} from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
 type FileUploadFieldProps = {
@@ -99,6 +110,83 @@ type DynamicFieldProps = {
   field: FormField;
   conditionalFields?: FormField[];
 };
+
+function ageYearsFromDateInputValue(dob: unknown): string {
+  if (!dob || typeof dob !== "object") {
+    return "";
+  }
+  const o = dob as { day?: string; month?: string; year?: string };
+  const d = Number.parseInt(String(o.day ?? ""), 10);
+  const m = Number.parseInt(String(o.month ?? ""), 10);
+  const y = Number.parseInt(String(o.year ?? ""), 10);
+  if (!(y && m && d)) {
+    return "";
+  }
+  const birth = new Date(y, m - 1, d);
+  if (Number.isNaN(birth.getTime())) {
+    return "";
+  }
+  const age = differenceInYears(new Date(), birth);
+  return String(age >= 0 ? age : "");
+}
+
+type AgeComputedTextField = TextFormField & {
+  computedFrom: { field: string; calculation: "ageYears" };
+};
+
+type ComputedAgeFromDateFieldProps = {
+  field: AgeComputedTextField;
+  fieldError: FieldError | undefined;
+};
+
+/**
+ * Read-only text field derived from a date field (National ID style DOB object).
+ * Keeps RHF state in sync for review/submit steps.
+ */
+function ComputedAgeFromDateField({
+  field,
+  fieldError,
+}: ComputedAgeFromDateFieldProps) {
+  const { control, setValue, getValues } = useFormContext<FormData>();
+  const sourceName = field.computedFrom.field;
+  const dob = useWatch({ control, name: sourceName as keyof FormData });
+  const age = useMemo(() => ageYearsFromDateInputValue(dob), [dob]);
+
+  useEffect(() => {
+    const current = getValues(field.name as keyof FormData);
+    if (String(current ?? "") === age) {
+      return;
+    }
+    setValue(field.name as keyof FormData, age, {
+      shouldValidate: false,
+      shouldDirty: false,
+    });
+  }, [age, field.name, setValue, getValues]);
+
+  return (
+    <Controller
+      control={control}
+      name={field.name}
+      render={({ field: controllerField }) => (
+        <Input
+          description={fieldError?.message ?? field.hint}
+          error={fieldError?.message}
+          id={field.name}
+          label={field.hidden ? "" : field.label}
+          name={controllerField.name}
+          onBlur={controllerField.onBlur}
+          onChange={() => {
+            controllerField.onChange(age);
+          }}
+          readOnly
+          ref={controllerField.ref}
+          type={field.type}
+          value={String(controllerField.value ?? age ?? "")}
+        />
+      )}
+    />
+  );
+}
 
 /**
  * Get the CSS class for field width
@@ -201,11 +289,22 @@ export function DynamicField({
           const hasValue =
             conditionalField.type === "fieldArray"
               ? Array.isArray(currentValue) && currentValue.length > 0
-              : currentValue !== "";
+              : conditionalField.type === "checkbox" &&
+                  conditionalField.options &&
+                  conditionalField.options.length > 0
+                ? Array.isArray(currentValue) && currentValue.length > 0
+                : currentValue !== "";
 
           if (hasValue) {
             // Set appropriate empty value based on field type
-            const emptyValue = conditionalField.type === "fieldArray" ? [] : "";
+            const emptyValue =
+              conditionalField.type === "fieldArray"
+                ? []
+                : conditionalField.type === "checkbox" &&
+                    conditionalField.options &&
+                    conditionalField.options.length > 0
+                  ? []
+                  : "";
 
             setValue(conditionalField.name, emptyValue, {
               shouldValidate: false,
@@ -347,7 +446,58 @@ export function DynamicField({
           />
         );
 
-      case "checkbox":
+      case "checkbox": {
+        const groupOptions = f.options;
+        if (groupOptions && groupOptions.length > 0) {
+          return (
+            <Controller
+              control={control}
+              name={f.name}
+              render={({ field: controllerField }) => {
+                const selected: string[] = Array.isArray(controllerField.value)
+                  ? controllerField.value
+                  : [];
+                return (
+                  <fieldset
+                    className={`min-w-0 border-0 p-0 ${getWidthClass(f.width)}`}
+                  >
+                    {f.hidden ? null : (
+                      <legend className="mb-2 font-bold text-[20px] text-mid-grey-00 leading-[1.7]">
+                        {f.label}
+                      </legend>
+                    )}
+                    {f.hint ? (
+                      <p className="mb-3 text-[20px] text-mid-grey-00 leading-[1.7]">
+                        {f.hint}
+                      </p>
+                    ) : null}
+                    <div className="flex flex-col gap-3">
+                      {groupOptions.map((option) => (
+                        <Checkbox
+                          checked={selected.includes(option.value)}
+                          id={`${f.name}-${option.value}`}
+                          key={option.value}
+                          label={option.label}
+                          onCheckedChange={(checked) => {
+                            const next = checked
+                              ? [...selected, option.value]
+                              : selected.filter((v) => v !== option.value);
+                            controllerField.onChange(next);
+                          }}
+                        />
+                      ))}
+                    </div>
+                    {fieldError?.message ? (
+                      <p className="mt-2 text-[20px] text-red-600" role="alert">
+                        {fieldError.message}
+                      </p>
+                    ) : null}
+                  </fieldset>
+                );
+              }}
+            />
+          );
+        }
         return (
           <Controller
             control={control}
@@ -364,6 +514,7 @@ export function DynamicField({
             )}
           />
         );
+      }
 
       case "showHide": {
         if (!f.showHide) return null;
@@ -476,7 +627,16 @@ export function DynamicField({
         );
 
       default: {
-        // Text/email/tel input fields
+        const textField = f as TextFormField;
+        if (textField.computedFrom?.calculation === "ageYears") {
+          return (
+            <ComputedAgeFromDateField
+              field={textField as AgeComputedTextField}
+              fieldError={fieldError}
+            />
+          );
+        }
+
         const fieldMask = "mask" in f && f.mask ? f.mask : undefined;
         const activeMaskitoRef = fieldMask ? maskitoRef : undefined;
 
@@ -485,6 +645,7 @@ export function DynamicField({
             description={fieldError?.message ?? f.hint}
             error={fieldError?.message}
             label={f.hidden ? "" : f.label}
+            readOnly={Boolean(textField.readOnly)}
             type={f.type}
             {...textRegister(f.name, activeMaskitoRef)}
             placeholder={f.placeholder}
