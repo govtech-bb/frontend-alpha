@@ -44,11 +44,14 @@ export async function loadRemoteFormDefinitionFromS3(
 
   const bucket = process.env.FORMS_S3_BUCKET;
   if (!bucket) {
-    if (process.env.NODE_ENV === "development") {
-      console.error(
-        "[remote-form] FORMS_S3_BUCKET is not set — remote form routes will 404"
-      );
-    }
+    console.error(
+<<<<<<< Updated upstream
+      "[remote-form] FORMS_S3_BUCKET is not set — remote form routes will 404"
+=======
+      "[remote-form] FORMS_S3_BUCKET is not set — remote form routes will 404",
+>>>>>>> Stashed changes
+    );
+
     return null;
   }
 
@@ -86,18 +89,17 @@ export async function loadRemoteFormDefinitionFromS3(
 
     return parsed;
   } catch (err) {
-    if (process.env.NODE_ENV === "development") {
-      const message = err instanceof Error ? err.message : String(err);
-      console.error("[remote-form] Failed to load form definition from S3", {
-        bucket,
-        key,
-        region:
-          process.env.FORMS_S3_REGION ??
-          process.env.AWS_REGION ??
-          "us-east-1(default)",
-        message,
-      });
-    }
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[remote-form] Failed to load form definition from S3", {
+      bucket,
+      key,
+      region:
+        process.env.FORMS_S3_REGION ??
+        process.env.AWS_REGION ??
+        "us-east-1(default)",
+      message,
+    });
+
     return null;
   }
 }
