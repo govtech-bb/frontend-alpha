@@ -1,9 +1,16 @@
 "use server";
 
-import { SESv2Client } from "@aws-sdk/client-sesv2";
+import {
+  SESv2Client,
+  SESv2ServiceException,
+  SendEmailCommand,
+} from "@aws-sdk/client-sesv2";
+import { render } from "@react-email/render";
+import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
 import { FormSubmissionConfirmationEmail } from "@/emails/form-submission-confirmation-email";
 import { FormSubmissionNotificationEmail } from "@/emails/form-submission-notification-email";
+import type { JsonValue } from "@/types";
 
 // ─── SES client config ────────────────────────────────────────────────────────
 
@@ -29,68 +36,35 @@ type SubmissionEmailPayload = z.infer<typeof submissionEmailPayloadSchema>;
 
 // ─── Structured logger ────────────────────────────────────────────────────────
 //
-// Every entry is emitted as a single JSON line via console.error so that
-// CloudWatch captures it regardless of log stream. Use the `level` field
-// when querying in CloudWatch Logs Insights.
+// Each entry is written to two sinks:
 //
-// HOW TO FIND THESE LOGS IN AWS CLOUDWATCH
-// ─────────────────────────────────────────
-// 1. Open the AWS Console → CloudWatch → Log groups.
+//  1. CloudWatch — via console.error as a single JSON line. Find logs at:
+//     AWS Console → CloudWatch → Log groups → /aws/amplify/<APP_ID>
+//     or /aws/lambda/<FUNCTION_NAME> for Lambda-deployed functions.
 //
-// 2. Find the log group for this app. On Amplify SSR it is typically:
-//      /aws/amplify/<APP_ID>
-//    If the Next.js server functions are deployed as individual Lambdas the
-//    group will follow the pattern:
-//      /aws/lambda/<FUNCTION_NAME>
-//    You can confirm the exact name under:
-//      AWS Console → Amplify → your app → Hosting → SSR logs
-//
-// 3. To search across all log streams open "Logs Insights" and run a query
-//    against that log group. All examples below use the structured fields
-//    emitted by the `log()` helper in this file.
-//
-// ── Useful CloudWatch Logs Insights queries ──────────────────────────────────
-//
-//  All errors from this service in the last hour:
-//    fields @timestamp, event, errorMessage, referenceNumber
-//    | filter service = "form-submission-emails" and level = "ERROR"
-//    | sort @timestamp desc
-//    | limit 50
-//
-//  Trace a single submission end-to-end by reference number:
-//    fields @timestamp, level, event, durationMs, emailsSent
-//    | filter service = "form-submission-emails"
-//        and referenceNumber = "REF-XXXXXX"
-//    | sort @timestamp asc
-//
-//  Find all SES failures and their error codes:
-//    fields @timestamp, referenceNumber, errorMessage, errorCode, hint
-//    | filter event = "sendFormSubmissionEmails.ses_error"
-//    | sort @timestamp desc
-//    | limit 100
-//
-//  Count submissions per form in the last 24 hours:
-//    filter event = "sendFormSubmissionEmails.complete"
-//    | stats count() as submissions by formName
-//    | sort submissions desc
-//
-//  Spot missing configuration (MAIL_FROM / SES env vars):
-//    fields @timestamp, event, hint
-//    | filter event = "sendFormSubmissionEmails.missing_mail_from"
-//        or event = "sendFormSubmissionEmails.config_check"
-//    | sort @timestamp desc
-//    | limit 50
+//  2. Sentry Logs — via Sentry.logger.* (requires `enableLogs: true` in
+//     sentry.server.config.ts, which is already set). View at:
+//     Sentry → your project → Logs.
+//     ERROR entries additionally call captureException / captureMessage so
+//     they appear in Issues for alerting and stack-trace correlation.
 //
 // ─────────────────────────────────────────────────────────────────────────────
 
 type LogLevel = "INFO" | "WARN" | "ERROR";
+
+const cloudwatchLog: Record<LogLevel, (message: string) => void> = {
+  INFO: console.info,
+  WARN: console.warn,
+  ERROR: console.error,
+};
 
 function log(
   level: LogLevel,
   event: string,
   fields?: Record<string, unknown>
 ): void {
-  console.error(
+  // CloudWatch sink — single-line JSON picked up by the Lambda/Amplify log stream
+  cloudwatchLog[level](
     JSON.stringify({
       timestamp: new Date().toISOString(),
       level,
@@ -99,6 +73,36 @@ function log(
       ...fields,
     })
   );
+
+  // Sentry sink — coerce nested/null values to strings; the Sentry logger
+  // attribute type only accepts string | number | boolean primitives.
+  const sentryAttrs: Record<string, string | number | boolean> = {
+    service: "form-submission-emails",
+  };
+  for (const [key, value] of Object.entries(fields ?? {})) {
+    if (
+      typeof value === "string" ||
+      typeof value === "number" ||
+      typeof value === "boolean"
+    ) {
+      sentryAttrs[key] = value;
+    } else if (value !== null && value !== undefined) {
+      sentryAttrs[key] = JSON.stringify(value);
+    }
+  }
+
+  switch (level) {
+    case "INFO":
+      Sentry.logger.info(event, sentryAttrs);
+      break;
+    case "WARN":
+      Sentry.logger.warn(event, sentryAttrs);
+      break;
+    default:
+      // "ERROR" — LogLevel is a closed union so this branch is only reached for errors
+      Sentry.logger.error(event, sentryAttrs);
+      break;
+  }
 }
 
 // Mask an email address for safe logging.
@@ -266,6 +270,21 @@ export async function sendFormSubmissionEmails(
       formErrors: flatErrors.formErrors,
       hint: "The payload passed to sendFormSubmissionEmails did not match the expected schema",
     });
+
+    // Capture as a Sentry issue — validation failures don't throw so Sentry
+    // won't see them automatically.
+    Sentry.captureMessage(
+      "sendFormSubmissionEmails: payload validation failed",
+      {
+        level: "error",
+        extra: {
+          referenceNumber: correlationRef,
+          fieldErrors: flatErrors.fieldErrors,
+          formErrors: flatErrors.formErrors,
+        },
+      }
+    );
+
     return {
       success: false as const,
       error: "Invalid email payload",
@@ -345,14 +364,20 @@ export async function sendFormSubmissionEmails(
 
   // ── 5. Resolve notification recipient ─────────────────────────────────────
 
-  const devNotificationOverride =
-    process.env.SES_DEV_NOTIFICATION_EMAIL?.trim() || "testing@govtech.bb";
-  const resolvedNotificationEmail =
-    process.env.AWS_PROFILE === "dev"
-      ? devNotificationOverride
-      : notificationEmail;
+  const isDevMode = process.env.AWS_PROFILE === "dev";
 
-  if (process.env.AWS_PROFILE === "dev") {
+  if (isDevMode && !process.env.SES_DEV_NOTIFICATION_EMAIL) {
+    throw new Error(
+      "SES_DEV_NOTIFICATION_EMAIL must be set when AWS_PROFILE=dev. " +
+        "Add it to your .env.local to redirect notification emails to a safe test address."
+    );
+  }
+
+  const resolvedNotificationEmail = isDevMode
+    ? (process.env.SES_DEV_NOTIFICATION_EMAIL as string)
+    : notificationEmail;
+
+  if (isDevMode) {
     log("WARN", "sendFormSubmissionEmails.dev_email_override", {
       referenceNumber,
       originalRecipient: maskEmail(notificationEmail),
@@ -421,10 +446,10 @@ export async function sendFormSubmissionEmails(
     await Promise.all(sendTasks);
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
+    // SESv2ServiceException carries the service error code in `.name`
     const code =
-      error instanceof Error && "Code" in error
-        ? (error as Record<string, unknown>).Code
-        : undefined;
+      error instanceof SESv2ServiceException ? error.name : undefined;
+    const durationMs = Date.now() - actionStart;
 
     log("ERROR", "sendFormSubmissionEmails.ses_error", {
       referenceNumber,
@@ -433,8 +458,23 @@ export async function sendFormSubmissionEmails(
       sesRegion,
       configurationSet: configurationSet ?? "(none)",
       hint: "Verify the SES sender identity, IAM permissions (ses:SendEmail), and that the region matches your verified domain",
-      durationMs: Date.now() - actionStart,
+      durationMs,
     });
+
+    // Capture with full context so the Sentry issue includes the SES
+    // request details alongside the stack trace.
+    Sentry.captureException(
+      error instanceof Error ? error : new Error(message),
+      {
+        extra: {
+          referenceNumber,
+          errorCode: code,
+          sesRegion,
+          configurationSet: configurationSet ?? "(none)",
+          durationMs,
+        },
+      }
+    );
 
     throw new Error(
       "Email delivery failed. Please check your SES configuration and credentials."
