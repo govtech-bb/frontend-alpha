@@ -45,7 +45,7 @@ export async function loadRemoteFormDefinitionFromS3(
   const bucket = process.env.FORMS_S3_BUCKET;
   if (!bucket) {
     console.error(
-      "[remote-form] FORMS_S3_BUCKET is not set — remote form routes will 404",
+      "[remote-form] FORMS_S3_BUCKET is not set — remote form routes will 404"
     );
 
     return null;

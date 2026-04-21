@@ -1,3 +1,4 @@
+import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const securityHeaders = [
@@ -30,4 +31,19 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  org: "govtech-barbados",
+  project: "javascript-nextjs",
+  // Suppress source-map upload logs outside of CI
+  silent: !process.env.CI,
+  // Upload wider source maps for richer stack traces (increases build time)
+  widenClientFileUpload: true,
+  // Tunnel browser requests through Next.js to avoid ad-blocker interference
+  tunnelRoute: "/monitoring",
+  // Instrument Vercel Cron jobs (does not apply to App Router route handlers)
+  automaticVercelMonitors: true,
+  // Strip Sentry debug statements from the production bundle
+  bundleSizeOptimizations: {
+    excludeDebugStatements: true,
+  },
+});
