@@ -945,7 +945,7 @@ export default function DynamicMultiStepForm({
         const generatedReferenceNumber = `REF-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
 
         try {
-          await sendFormSubmissionEmails({
+          const emailResult = await sendFormSubmissionEmails({
             applicantEmail: extractApplicantEmail(
               cleanedData as Record<string, unknown>
             ),
@@ -954,6 +954,9 @@ export default function DynamicMultiStepForm({
             notificationEmail,
             referenceNumber: generatedReferenceNumber,
           });
+          if (!emailResult.success) {
+            throw new Error(emailResult.error ?? "Email submission failed");
+          }
         } catch (emailError) {
           console.error("Form submission email delivery failed", emailError);
           setSubmissionError({
@@ -1000,7 +1003,7 @@ export default function DynamicMultiStepForm({
 
         // Email delivery should not block a successful submission.
         try {
-          await sendFormSubmissionEmails({
+          const emailResult = await sendFormSubmissionEmails({
             applicantEmail: extractApplicantEmail(
               cleanedData as Record<string, unknown>
             ),
@@ -1009,6 +1012,9 @@ export default function DynamicMultiStepForm({
             notificationEmail,
             referenceNumber,
           });
+          if (!emailResult.success) {
+            throw new Error(emailResult.error ?? "Email submission failed");
+          }
         } catch (emailError) {
           console.error("Form submission email delivery failed", emailError);
         }
