@@ -297,8 +297,8 @@ export async function sendFormSubmissionEmails(
     configurationSet: configurationSet ?? "(none)",
     hasTagKey: Boolean(tagKey),
     hasTagValue: Boolean(tagValue),
-    isDevMode: process.env.AWS_PROFILE === "dev",
-    hasDevNotificationOverride: Boolean(process.env.SES_DEV_NOTIFICATION_EMAIL),
+    sentryEnvironment: process.env.SENTRY_ENVIRONMENT ?? "(not set)",
+    emailOverrideActive: Boolean(process.env.SES_DEV_NOTIFICATION_EMAIL),
   });
 
   if (!mailFrom) {
@@ -358,27 +358,24 @@ export async function sendFormSubmissionEmails(
     notificationHtmlBytes: notificationHtml.length,
   });
 
-  // ── 5. Resolve notification recipient ─────────────────────────────────────
+  // ── 5. Resolve recipients ─────────────────────────────────────────────────
+  //
+  // When SES_DEV_NOTIFICATION_EMAIL is set, all emails are redirected to that
+  // address regardless of environment. Unset it in production so emails reach
+  // real recipients. This keeps the gate independent of Sentry config.
 
-  const isDevMode = process.env.AWS_PROFILE === "dev";
+  const safeTestEmail = process.env.SES_DEV_NOTIFICATION_EMAIL?.trim();
 
-  if (isDevMode && !process.env.SES_DEV_NOTIFICATION_EMAIL) {
-    throw new Error(
-      "SES_DEV_NOTIFICATION_EMAIL must be set when AWS_PROFILE=dev. " +
-        "Add it to your .env.local to redirect notification emails to a safe test address."
-    );
-  }
+  const resolvedApplicantEmail = safeTestEmail ?? applicantEmail;
+  const resolvedNotificationEmail = safeTestEmail ?? notificationEmail;
 
-  const resolvedNotificationEmail = isDevMode
-    ? (process.env.SES_DEV_NOTIFICATION_EMAIL as string)
-    : notificationEmail;
-
-  if (isDevMode) {
-    log("WARN", "sendFormSubmissionEmails.dev_email_override", {
+  if (safeTestEmail) {
+    log("WARN", "sendFormSubmissionEmails.email_override_active", {
       referenceNumber,
-      originalRecipient: maskEmail(notificationEmail),
-      overriddenTo: maskEmail(resolvedNotificationEmail),
-      hint: "Notification email is being redirected because AWS_PROFILE=dev",
+      originalApplicantRecipient: maskEmail(applicantEmail),
+      originalNotificationRecipient: maskEmail(notificationEmail),
+      overriddenTo: maskEmail(safeTestEmail),
+      hint: "SES_DEV_NOTIFICATION_EMAIL is set — all emails are redirected. Remove it in production to send to real recipients.",
     });
   }
 
@@ -386,15 +383,15 @@ export async function sendFormSubmissionEmails(
 
   const sendTasks: { label: string; promise: Promise<void> }[] = [];
 
-  if (applicantEmail) {
+  if (resolvedApplicantEmail) {
     log("INFO", "sendFormSubmissionEmails.queuing_confirmation", {
       referenceNumber,
-      recipient: maskEmail(applicantEmail),
+      recipient: maskEmail(resolvedApplicantEmail),
     });
     sendTasks.push({
-      label: `confirmation to ${applicantEmail}`,
+      label: `confirmation to ${resolvedApplicantEmail}`,
       promise: sendEmail({
-        to: applicantEmail,
+        to: resolvedApplicantEmail,
         subject: `${formName} application received (${referenceNumber})`,
         html: confirmationHtml,
         referenceNumber,
