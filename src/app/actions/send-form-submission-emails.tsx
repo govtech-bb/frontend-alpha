@@ -1,10 +1,6 @@
 "use server";
 
-import {
-  SESv2Client,
-  SESv2ServiceException,
-  SendEmailCommand,
-} from "@aws-sdk/client-sesv2";
+import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { render } from "@react-email/render";
 import * as Sentry from "@sentry/nextjs";
 import { z } from "zod";
@@ -388,21 +384,22 @@ export async function sendFormSubmissionEmails(
 
   // ── 6. Queue send tasks ───────────────────────────────────────────────────
 
-  const sendTasks: Promise<void>[] = [];
+  const sendTasks: { label: string; promise: Promise<void> }[] = [];
 
   if (applicantEmail) {
     log("INFO", "sendFormSubmissionEmails.queuing_confirmation", {
       referenceNumber,
       recipient: maskEmail(applicantEmail),
     });
-    sendTasks.push(
-      sendEmail({
+    sendTasks.push({
+      label: `confirmation to ${applicantEmail}`,
+      promise: sendEmail({
         to: applicantEmail,
         subject: `${formName} application received (${referenceNumber})`,
         html: confirmationHtml,
         referenceNumber,
-      })
-    );
+      }),
+    });
   } else {
     log("WARN", "sendFormSubmissionEmails.skipping_confirmation", {
       referenceNumber,
@@ -416,14 +413,15 @@ export async function sendFormSubmissionEmails(
       referenceNumber,
       recipient: maskEmail(resolvedNotificationEmail),
     });
-    sendTasks.push(
-      sendEmail({
+    sendTasks.push({
+      label: `staff notification to ${resolvedNotificationEmail}`,
+      promise: sendEmail({
         to: resolvedNotificationEmail,
         subject: `New submission: ${formName} (${referenceNumber})`,
         html: notificationHtml,
         referenceNumber,
-      })
-    );
+      }),
+    });
   } else {
     log("WARN", "sendFormSubmissionEmails.skipping_notification", {
       referenceNumber,
@@ -442,43 +440,48 @@ export async function sendFormSubmissionEmails(
 
   // ── 7. Dispatch ───────────────────────────────────────────────────────────
 
-  try {
-    await Promise.all(sendTasks);
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    // SESv2ServiceException carries the service error code in `.name`
-    const code =
-      error instanceof SESv2ServiceException ? error.name : undefined;
-    const durationMs = Date.now() - actionStart;
+  const results = await Promise.allSettled(
+    sendTasks.map((task) => task.promise)
+  );
+
+  const failures = results
+    .map((result, index) => ({ result, task: sendTasks[index] }))
+    .filter(({ result }) => result.status === "rejected");
+
+  if (failures.length > 0) {
+    const failedLabels = failures.map(({ task }) => task?.label).join(", ");
+    const errors = failures.map(
+      ({ result }) => (result as PromiseRejectedResult).reason
+    );
 
     log("ERROR", "sendFormSubmissionEmails.ses_error", {
       referenceNumber,
-      errorMessage: message,
-      errorCode: code,
+      failedLabels,
       sesRegion,
       configurationSet: configurationSet ?? "(none)",
       hint: "Verify the SES sender identity, IAM permissions (ses:SendEmail), and that the region matches your verified domain",
-      durationMs,
+      durationMs: Date.now() - actionStart,
     });
 
-    // Capture with full context so the Sentry issue includes the SES
-    // request details alongside the stack trace.
-    Sentry.captureException(
-      error instanceof Error ? error : new Error(message),
-      {
-        extra: {
-          referenceNumber,
-          errorCode: code,
-          sesRegion,
-          configurationSet: configurationSet ?? "(none)",
-          durationMs,
-        },
-      }
+    console.error(
+      `[send-form-submission-emails] Failed to send email(s) for "${formName}" (${referenceNumber}): ${failedLabels}`,
+      errors
     );
 
-    throw new Error(
-      "Email delivery failed. Please check your SES configuration and credentials."
-    );
+    for (const { result, task } of failures) {
+      Sentry.captureException((result as PromiseRejectedResult).reason, {
+        extra: {
+          formName,
+          referenceNumber,
+          emailType: task?.label,
+        },
+      });
+    }
+
+    return {
+      success: false as const,
+      error: `Failed to send email(s): ${failedLabels}. Please try again.`,
+    };
   }
 
   // ── 8. Done ───────────────────────────────────────────────────────────────
