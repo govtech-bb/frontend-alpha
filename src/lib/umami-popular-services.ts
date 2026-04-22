@@ -21,8 +21,9 @@ type UmamiMetricsExpandedRow = {
 export async function fetchPopularPages(options: {
   startAt: number;
   endAt: number;
-  type?: string;
-  limit?: number;
+  contentType?: string;
+  keyword?: string;
+  maxResults?: number;
 }): Promise<PopularPageView[]> {
   if (!isUmamiEnabled()) {
     return [];
@@ -40,9 +41,12 @@ export async function fetchPopularPages(options: {
   );
   url.searchParams.set("startAt", String(options.startAt));
   url.searchParams.set("endAt", String(options.endAt));
+  // "path" is the Umami grouping key — groups metrics by URL path
   url.searchParams.set("type", "path");
-  url.searchParams.set("limit", "50");
-
+  // Fetch a large batch from Umami so client-side filtering has enough rows to work with
+  url.searchParams.set("limit", "500");
+  const contentType = options.contentType?.toLowerCase();
+  const keyword = options.keyword?.toLowerCase();
   const res = await fetch(url.toString(), {
     headers: {
       Accept: "application/json",
@@ -66,14 +70,24 @@ export async function fetchPopularPages(options: {
       ? (body as { data: UmamiMetricsExpandedRow[] }).data
       : [];
 
-  const limit = options.limit ?? 6;
+  const maxResults = options.maxResults ?? 6;
 
   return rows
     .filter((row) => {
       const segments = row.name.split("/").filter(Boolean);
-      return segments.length >= 2;
+      if (segments[0] === "api") return false;
+      if (segments.length < 2) return false;
+
+      if (contentType) {
+        const lastSegment = segments.at(-1)!.toLowerCase();
+        if (lastSegment !== contentType) return false;
+      }
+
+      if (keyword && !row.name.toLowerCase().includes(keyword)) return false;
+
+      return true;
     })
-    .slice(0, limit)
+    .slice(0, maxResults)
     .map((row) => ({
       path: row.name,
       pageviews: row.pageviews,
