@@ -163,7 +163,7 @@ export async function submitFormData({
           ...convertedDataObject,
           email:
             (convertedDataObject.mother as Record<string, unknown> | undefined)
-              ?.emailAddress ?? "admin@govtech.bb",
+              ?.emailAddress ?? "Ihtisham.Tanveer@govtech.bb",
         }
       : convertedData;
 
