@@ -6,7 +6,7 @@ type PopularPagesResponse = {
   data?: {
     startAt: number;
     endAt: number;
-    type: string;
+    contentType?: string;
     pages: Awaited<ReturnType<typeof fetchPopularPages>>;
   };
   error?: string;
@@ -25,14 +25,11 @@ export async function GET(
     Math.max(Number(searchParams.get("limit") ?? 10), 1),
     100
   );
-  const type = searchParams.get("type") ?? "path";
+  const contentType =
+    searchParams.get("contentType")?.toLowerCase() ?? undefined;
 
   const endAt = Date.now();
   const startAt = endAt - days * 86_400_000;
-  const contentType =
-    (
-      searchParams.get("contentType") ?? searchParams.get("contenttype")
-    )?.toLowerCase() ?? undefined;
 
   const keyword = searchParams.get("keyword")?.toLowerCase() ?? undefined;
 
@@ -42,12 +39,11 @@ export async function GET(
       endAt,
       contentType,
       keyword,
-      type,
-      limit,
+      maxResults: limit,
     });
     return NextResponse.json({
       success: true,
-      data: { startAt, endAt, type, pages },
+      data: { startAt, endAt, contentType, pages },
     });
   } catch (e) {
     const message = e instanceof Error ? e.message : "Unknown error";

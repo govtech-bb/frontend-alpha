@@ -1,4 +1,9 @@
 import { expect, test } from "@playwright/test";
+import type { PopularPageView } from "@/lib/umami-popular-services";
+
+const CONTENT_TYPE_FILTER = "form";
+
+const KEYWORD_FILTER = "about";
 
 /**
  * Umami Popular Pages API — E2E Tests
@@ -8,8 +13,8 @@ import { expect, test } from "@playwright/test";
  * page.waitForResponse() is only useful when the browser navigates,
  * but for API-only tests, page.request is much cleaner.
  *
- * Route: GET /api/popular-pages
- * Query params: days, limit, type, contentType, contenttype, keyword
+ * Route: GET /api/analytics/pages
+ * Query params: days, limit, contentType, keyword
  */
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
@@ -17,21 +22,12 @@ const API_PATH = "/api/analytics/pages";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type PopularPageView = {
-  path: string;
-  pageviews: number;
-  visitors: number;
-  visits: number;
-  bounces: number;
-  totaltime: number;
-};
-
 type SuccessResponse = {
   success: true;
   data: {
     startAt: number;
     endAt: number;
-    type: string;
+    contentType?: string;
     pages: PopularPageView[];
   };
 };
@@ -88,7 +84,10 @@ function verifySuccessShape(
   expect(body.data).toBeTruthy();
   expect(typeof body.data.startAt).toBe("number");
   expect(typeof body.data.endAt).toBe("number");
-  expect(typeof body.data.type).toBe("string");
+  // contentType is only present when a filter was applied
+  if (body.data.contentType !== undefined) {
+    expect(typeof body.data.contentType).toBe("string");
+  }
   expect(Array.isArray(body.data.pages)).toBe(true);
 
   // startAt should always be before endAt
@@ -137,8 +136,8 @@ test.describe("GET /api/popular-pages", () => {
     expect(status).toBe(200);
     verifySuccessShape(body);
 
-    // Default type should be "path"
-    expect(body.data.type).toBe("path");
+    // No contentType filter applied by default
+    expect(body.data.contentType).toBeUndefined();
 
     // Default limit 10 — max 10 pages
     expect(body.data.pages.length).toBeLessThanOrEqual(10);
@@ -248,8 +247,7 @@ test.describe("GET /api/popular-pages", () => {
   test("contentType filter — returns only pages where last segment matches", async ({
     page,
   }) => {
-    // Use an actual contentType that exists in your Umami data
-    const contentType = "blog";
+    const contentType = CONTENT_TYPE_FILTER;
 
     const { status, body } = await fetchPopularPages(page, {
       contentType,
@@ -261,7 +259,7 @@ test.describe("GET /api/popular-pages", () => {
 
     for (const p of body.data.pages) {
       const segments = p.path.split("/").filter(Boolean);
-      const lastSegment = segments[segments.length - 1].toLowerCase();
+      const lastSegment = segments.at(-1)!.toLowerCase();
       expect(
         lastSegment,
         `Path "${p.path}" last segment should be "${contentType}"`
@@ -269,12 +267,15 @@ test.describe("GET /api/popular-pages", () => {
     }
   });
 
-  test("contentType is case-insensitive — uppercase and lowercase return same results", async ({
+  test("contentType filter is case-insensitive — uppercase and lowercase return same results", async ({
     page,
   }) => {
     const [lower, upper] = await Promise.all([
-      fetchPopularPages(page, { contentType: "blog", limit: 10 }),
-      fetchPopularPages(page, { contentType: "BLOG", limit: 10 }),
+      fetchPopularPages(page, { contentType: CONTENT_TYPE_FILTER, limit: 10 }),
+      fetchPopularPages(page, {
+        contentType: CONTENT_TYPE_FILTER.toUpperCase(),
+        limit: 10,
+      }),
     ]);
 
     expect(lower.status).toBe(200);
@@ -283,20 +284,7 @@ test.describe("GET /api/popular-pages", () => {
     verifySuccessShape(lower.body);
     verifySuccessShape(upper.body);
 
-    // Both should return the same count
     expect(lower.body.data.pages.length).toBe(upper.body.data.pages.length);
-  });
-
-  test("contenttype (all-lowercase key) also works", async ({ page }) => {
-    // Route handler handles both spellings:
-    // searchParams.get("contentType") ?? searchParams.get("contenttype")
-    const { status, body } = await fetchPopularPages(page, {
-      contenttype: "blog",
-      limit: 5,
-    });
-
-    expect(status).toBe(200);
-    verifySuccessShape(body);
   });
 
   // ── 7. keyword filter ─────────────────────────────────────────────────────
@@ -305,7 +293,7 @@ test.describe("GET /api/popular-pages", () => {
     page,
   }) => {
     // Use an actual keyword that exists in your Umami data
-    const keyword = "about";
+    const keyword = KEYWORD_FILTER;
 
     const { status, body } = await fetchPopularPages(page, {
       keyword,
@@ -366,7 +354,7 @@ test.describe("GET /api/popular-pages", () => {
 
   test("contentType + limit work correctly together", async ({ page }) => {
     const { status, body } = await fetchPopularPages(page, {
-      contentType: "blog",
+      contentType: CONTENT_TYPE_FILTER,
       limit: 2,
     });
 
@@ -377,8 +365,8 @@ test.describe("GET /api/popular-pages", () => {
 
     for (const p of body.data.pages) {
       const segments = p.path.split("/").filter(Boolean);
-      const lastSegment = segments[segments.length - 1].toLowerCase();
-      expect(lastSegment).toBe("blog");
+      const lastSegment = segments.at(-1)!.toLowerCase();
+      expect(lastSegment).toBe(CONTENT_TYPE_FILTER);
     }
   });
 
