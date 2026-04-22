@@ -10,9 +10,11 @@ import type { SearchResult } from "@/lib/search";
 export function SearchResults({
   results,
   query,
+  filter,
 }: {
   results: SearchResult[];
   query: string;
+  filter?: React.ReactNode;
 }) {
   useEffect(() => {
     // Skip tracking queries that may contain PII (numbers, emails)
@@ -34,6 +36,8 @@ export function SearchResults({
           {results.length === 1 ? "was" : "were"} found
         </Text>
       )}
+
+      {filter}
 
       {query && results.length === 0 && (
         <div className="space-y-s">
@@ -67,7 +71,7 @@ export function SearchResults({
       )}
 
       {results.length > 0 && (
-        <ul className="flex flex-col gap-s">
+        <ul className="flex flex-col">
           {results.map((result) => (
             <li
               className="flex flex-col items-start gap-xs border-grey-00 border-b-2 py-s first:pt-0"
