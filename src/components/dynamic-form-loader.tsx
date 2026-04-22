@@ -15,8 +15,21 @@ export function DynamicFormLoader({ formSlug }: DynamicFormLoaderProps) {
   }
 
   return (
-    <Suspense fallback={<div className="container">Loading form...</div>}>
-      <FormComponent />
-    </Suspense>
+    <>
+      <noscript>
+        <div className="container">
+          <p>
+            This form requires JavaScript to work. Please enable JavaScript in
+            your browser settings and reload the page to continue.
+          </p>
+        </div>
+        <style>{".js-only{display:none!important}"}</style>
+      </noscript>
+      <div className="js-only">
+        <Suspense fallback={<div className="container">Loading form...</div>}>
+          <FormComponent />
+        </Suspense>
+      </div>
+    </>
   );
 }
