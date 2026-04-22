@@ -99,10 +99,10 @@ export function ServiceFilter() {
     [router, pathname]
   );
 
-  const applyFilters = useCallback(
-    () => pushParams(buildParams(searchParams, pending)),
-    [searchParams, pending, pushParams]
-  );
+  const applyFilters = useCallback(() => {
+    pushParams(buildParams(searchParams, pending));
+    setOpen(false);
+  }, [searchParams, pending, pushParams]);
 
   const removeFilter = useCallback(
     (key: string, value: string) =>
