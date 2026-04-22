@@ -246,13 +246,13 @@ export function validateFields(dateString: string): DateFieldErrors | null {
   }
 
   // Validate year format (must be 4 digits)
-  if (year.length !== 4) {
-    errors.year = "Year must be 4 digits";
-  } else {
+  if (year.length === 4) {
     const yearNum = Number(year);
     if (yearNum < 1900) {
       errors.year = "Year must be 1900 or later";
     }
+  } else {
+    errors.year = "Year must be 4 digits";
   }
 
   // Validate month range (handles both numeric and text months)

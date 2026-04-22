@@ -418,12 +418,11 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
           while (nextStep?.conditionalOn) {
             const conditionField = nextStep.conditionalOn.field;
             const conditionValue = nextStep.conditionalOn.value;
-            if (allTestData[conditionField] !== conditionValue) {
-              nextStepIndex++;
-              nextStep = dataSteps[nextStepIndex];
-            } else {
+            if (allTestData[conditionField] === conditionValue) {
               break;
             }
+            nextStepIndex++;
+            nextStep = dataSteps[nextStepIndex];
           }
 
           await nextButton.click();
