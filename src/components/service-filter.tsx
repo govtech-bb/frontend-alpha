@@ -16,12 +16,25 @@ const CATEGORIES = INFORMATION_ARCHITECTURE.map(({ title }) => ({
   label: title,
 }));
 
-const FILTER_GROUPS = [
-  { key: "type", label: "Service type", options: SERVICE_TYPES },
-  { key: "category", label: "Category", options: CATEGORIES },
-] as const;
+const TYPE_GROUP = {
+  key: "type",
+  label: "Service type",
+  options: SERVICE_TYPES,
+} as const;
+const CATEGORY_GROUP = {
+  key: "category",
+  label: "Category",
+  options: CATEGORIES,
+} as const;
 
-const FILTER_KEYS = FILTER_GROUPS.map((g) => g.key);
+type FilterGroup = {
+  key: string;
+  label: string;
+  options: readonly { value: string; label: string }[];
+};
+
+const ALL_FILTER_GROUPS: readonly FilterGroup[] = [TYPE_GROUP, CATEGORY_GROUP];
+const SEARCH_FILTER_GROUPS: readonly FilterGroup[] = [TYPE_GROUP];
 
 const XIcon = () => (
   <svg
@@ -70,18 +83,29 @@ function buildParams(
   return params;
 }
 
-function getSelected(sp: URLSearchParams): Record<string, string[]> {
-  return Object.fromEntries(FILTER_KEYS.map((k) => [k, sp.getAll(k)]));
+function getSelected(
+  sp: URLSearchParams,
+  keys: readonly string[]
+): Record<string, string[]> {
+  return Object.fromEntries(keys.map((k) => [k, sp.getAll(k)]));
 }
 
-export function ServiceFilter() {
+export function ServiceFilter({
+  variant = "services",
+}: {
+  variant?: "services" | "search";
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
 
-  const selected = getSelected(searchParams);
-  const hasFilters = FILTER_KEYS.some((k) => selected[k].length > 0);
+  const filterGroups =
+    variant === "search" ? SEARCH_FILTER_GROUPS : ALL_FILTER_GROUPS;
+  const filterKeys = filterGroups.map((g) => g.key);
+
+  const selected = getSelected(searchParams, filterKeys);
+  const hasFilters = filterKeys.some((k) => selected[k].length > 0);
 
   const [pending, setPending] = useState<Record<string, string[]>>(selected);
 
@@ -119,10 +143,10 @@ export function ServiceFilter() {
       pushParams(
         buildParams(
           searchParams,
-          Object.fromEntries(FILTER_KEYS.map((k) => [k, []]))
+          Object.fromEntries(filterKeys.map((k) => [k, []]))
         )
       ),
-    [searchParams, pushParams]
+    [searchParams, pushParams, filterKeys]
   );
 
   const toggle = (key: string, value: string, checked: boolean) =>
@@ -149,7 +173,7 @@ export function ServiceFilter() {
       <div
         className={`flex flex-col border-grey-00 border-b bg-grey-00 px-xm ${open ? "" : "hidden"}`}
       >
-        {FILTER_GROUPS.map(({ key, label, options }) => (
+        {filterGroups.map(({ key, label, options }) => (
           <details className="group border-mid-grey-00 border-b" key={key}>
             <summary className="flex w-full cursor-pointer list-none items-center justify-between py-s font-bold text-[20px] after:inline-block after:size-2.75 after:-translate-y-[20%] after:rotate-135 after:border-current after:border-t-2 after:border-r-2 after:text-teal-00 after:content-[''] group-open:after:translate-y-[20%] group-open:after:-rotate-45 [&::-webkit-details-marker]:hidden">
               <span>{label}</span>
@@ -179,7 +203,7 @@ export function ServiceFilter() {
       {hasFilters && (
         <div className="flex flex-col items-start gap-xs pt-xs lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-wrap items-center gap-xs">
-            {FILTER_GROUPS.map(({ key, options }) =>
+            {filterGroups.map(({ key, options }) =>
               selected[key].map((val) => (
                 <FilterChip
                   key={`${key}-${val}`}

@@ -51,7 +51,7 @@ export default async function SearchPage({
       <section className="pt-4 pb-8">
         <div className="container">
           <SearchResults
-            filter={<ServiceFilter />}
+            filter={<ServiceFilter variant="search" />}
             query={query}
             results={results}
           />
