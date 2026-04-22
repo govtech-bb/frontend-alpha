@@ -156,10 +156,20 @@ export async function submitFormData({
 
   // Convert DateObject instances to ISO date strings
   const convertedData = convertDateObjects(arrayData as JsonValue);
+  const convertedDataObject = convertedData as Record<string, unknown>;
+  const payloadWithEmail =
+    formKey === "register-birth-form"
+      ? {
+          ...convertedDataObject,
+          email:
+            (convertedDataObject.mother as Record<string, unknown> | undefined)
+              ?.emailAddress ?? "admin@govtech.bb",
+        }
+      : convertedData;
 
   const response = await fetch(`${PROCESSING_API}/forms/${formKey}/submit`, {
     method: "POST",
-    body: JSON.stringify(convertedData),
+    body: JSON.stringify(payloadWithEmail),
     headers: myHeaders,
   });
 
