@@ -506,7 +506,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "parents.mother.otherNames",
-        label: "",
+        label: "Mother's other names",
         type: "text",
         validation: {
           required: false,
@@ -536,7 +536,7 @@ export const formSteps: FormStep[] = [
       },
       {
         name: "parents.mother.maidenName",
-        label: "",
+        label: "Mother's maiden name",
         type: "text",
         validation: {
           required: false,
