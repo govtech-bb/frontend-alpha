@@ -8,6 +8,7 @@ type RemoteDynamicFormProps = {
   formName: string;
   formSlug: string;
   notificationEmail: string | null;
+  ministryName?: string | null;
 };
 
 /**
@@ -18,12 +19,14 @@ export function RemoteDynamicForm({
   formName,
   formSlug,
   notificationEmail,
+  ministryName,
 }: RemoteDynamicFormProps) {
   return (
     <DynamicMultiStepForm
       analyticsCategory="remote-forms"
       confirmationFormId={formSlug}
       formSteps={formSteps}
+      ministryName={ministryName}
       notificationEmail={notificationEmail}
       serviceTitle={formName}
       storageKey={formSlug}

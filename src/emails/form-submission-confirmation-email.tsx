@@ -12,11 +12,13 @@ import {
 type FormSubmissionConfirmationEmailProps = {
   formName: string;
   referenceNumber: string;
+  ministryName?: string;
 };
 
 export function FormSubmissionConfirmationEmail({
   formName,
   referenceNumber,
+  ministryName,
 }: FormSubmissionConfirmationEmailProps) {
   const currentYear = new Date().getFullYear();
 
@@ -57,12 +59,14 @@ export function FormSubmissionConfirmationEmail({
               What happens next
             </Heading>
             <Text style={styles.p}>
-              Your request will be reviewed by the Barbados Licensing Authority.
-              We will contact you if we need more information.
+              Your request will be reviewed by{" "}
+              {ministryName ?? "the responsible ministry"}. We will contact you
+              if we need more information.
             </Text>
             <Text style={styles.p}>
-              If you have questions, contact the Barbados Licensing Authority
-              and include your reference number.
+              If you have questions, contact{" "}
+              {ministryName ?? "the responsible ministry"} and include your
+              reference number.
             </Text>
 
             <Text style={styles.disclaimer}>

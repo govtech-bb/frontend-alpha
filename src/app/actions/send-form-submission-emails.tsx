@@ -26,6 +26,7 @@ const submissionEmailPayloadSchema = z.object({
   formData: z.record(z.string(), z.unknown()),
   applicantEmail: z.string().email().nullable(),
   notificationEmail: z.string().email().nullable(),
+  ministryName: z.string().optional(),
 });
 
 type SubmissionEmailPayload = z.infer<typeof submissionEmailPayloadSchema>;
@@ -315,6 +316,7 @@ export async function sendFormSubmissionEmails(
     applicantEmail,
     formData,
     formName,
+    ministryName,
     notificationEmail,
     referenceNumber,
   } = parsed.data;
@@ -332,6 +334,7 @@ export async function sendFormSubmissionEmails(
   const confirmationHtml = await render(
     <FormSubmissionConfirmationEmail
       formName={formName}
+      ministryName={ministryName}
       referenceNumber={referenceNumber}
     />
   );
@@ -346,6 +349,7 @@ export async function sendFormSubmissionEmails(
     <FormSubmissionNotificationEmail
       applicantEmail={applicantEmail}
       formName={formName}
+      ministryName={ministryName}
       referenceNumber={referenceNumber}
       submissionRows={submissionRows}
       submittedAt={submittedAt}

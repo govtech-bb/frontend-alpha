@@ -455,6 +455,7 @@ type DynamicMultiStepFormProps = {
   serviceTitle: string;
   storageKey?: string;
   notificationEmail?: string | null;
+  ministryName?: string | null;
   submissionMode?: "api" | "serverActionOnly";
   /** Overrides pathname segment[0] for analytics when the form is not under IA routes. */
   analyticsCategory?: string;
@@ -467,6 +468,7 @@ export default function DynamicMultiStepForm({
   serviceTitle,
   storageKey = "multi-step-form-storage",
   notificationEmail = null,
+  ministryName = null,
   submissionMode = "api",
   analyticsCategory,
   confirmationFormId,
@@ -951,6 +953,7 @@ export default function DynamicMultiStepForm({
             ),
             formData: cleanedData as Record<string, unknown>,
             formName: serviceTitle,
+            ministryName: ministryName ?? undefined,
             notificationEmail,
             referenceNumber: generatedReferenceNumber,
           });
@@ -981,16 +984,16 @@ export default function DynamicMultiStepForm({
       if (result.success) {
         // Extract payment data from API response
         const apiPaymentData =
-          result.data?.amount !== undefined
-            ? {
+          result.data?.amount === undefined
+            ? undefined
+            : {
                 amount: result.data.amount,
                 description: result.data.description || "",
                 numberOfCopies: result.data.numberOfCopies,
                 paymentUrl: result.data.paymentUrl,
                 paymentToken: result.data.paymentToken,
                 paymentId: result.data.paymentId,
-              }
-            : undefined;
+              };
 
         markAsSubmitted(
           result.data?.submissionId || "N/A",
@@ -1009,6 +1012,7 @@ export default function DynamicMultiStepForm({
             ),
             formData: cleanedData as Record<string, unknown>,
             formName: serviceTitle,
+            ministryName: ministryName ?? undefined,
             notificationEmail,
             referenceNumber,
           });

@@ -35,6 +35,7 @@ export default async function RemoteFormPage({ params }: PageProps) {
       formName={def.formName}
       formSlug={def.formSlug}
       formSteps={def.formSteps}
+      ministryName={def.ministryName ?? null}
       notificationEmail={def.contact?.email ?? null}
     />
   );

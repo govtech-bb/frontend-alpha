@@ -16,6 +16,7 @@ type FormSubmissionNotificationEmailProps = {
   submittedAt: string;
   applicantEmail: string | null;
   submissionRows: Array<{ label: string; value: string }>;
+  ministryName?: string;
 };
 
 export function FormSubmissionNotificationEmail({
@@ -24,6 +25,7 @@ export function FormSubmissionNotificationEmail({
   submittedAt,
   applicantEmail,
   submissionRows,
+  ministryName,
 }: FormSubmissionNotificationEmailProps) {
   const currentYear = new Date().getFullYear();
 
@@ -39,6 +41,9 @@ export function FormSubmissionNotificationEmail({
 
           <Section style={styles.header}>
             <Text style={styles.headerText}>Government of Barbados</Text>
+            {ministryName ? (
+              <Text style={styles.headerSubText}>{ministryName}</Text>
+            ) : null}
           </Section>
 
           <Section style={styles.content}>
@@ -129,9 +134,14 @@ const styles = {
     padding: "16px 24px",
   },
   headerText: {
-    margin: "0",
+    margin: "0 0 2px",
     fontSize: "18px",
     fontWeight: "700",
+    color: "#000000",
+  },
+  headerSubText: {
+    margin: "0",
+    fontSize: "14px",
     color: "#000000",
   },
   content: {
