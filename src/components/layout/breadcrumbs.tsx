@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@govtech-bb/react";
+import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { cn } from "@/lib/utils";
@@ -9,26 +10,6 @@ type BreadcrumbsProps = {
   className?: string;
   collapseOnMobile?: boolean;
 };
-
-const BreadcrumbSeparator = () => (
-  <svg
-    aria-hidden="true"
-    fill="none"
-    height="6"
-    viewBox="0 0 6 6"
-    width="6"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <title>Separator</title>
-    <path
-      d="M0 0C0 0 1 1 3 1C5 1 6 0 6 0C6 0 5 1 5 3C5 5 6 6 6 6C6 6 5 5 3 5C1 5 0 6 0 6C0 6 1 5 1 3C1 1 0 0 0 0Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
-const linkStyles =
-  "text-teal-00 underline underline-offset-2 outline-none hover:no-underline focus-visible:bg-yellow-100 focus-visible:text-black-00 focus-visible:no-underline active:bg-yellow-100 active:text-black-00 active:no-underline";
 
 function formatSlug(slug: string): string {
   const raw = slug.replace(/-/g, " ");
@@ -57,37 +38,34 @@ export const Breadcrumbs = ({
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
 
-  // Don't show on home page
   if (segments.length === 0) return null;
 
   const crumbs = segments.slice(0, -1);
 
-  if (crumbs.length === 0) return null;
-
-  // On mobile collapse: hide all middle items, show only first and last
-  const shouldHideOnMobile = (index: number) =>
-    collapseOnMobile &&
-    crumbs.length > 2 &&
-    index !== 0 &&
-    index !== crumbs.length - 1;
-
   return (
     <nav aria-label="Breadcrumb" className={cn("flex items-center", className)}>
-      <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+      <ol
+        className={cn(
+          "flex flex-wrap items-center gap-y-1",
+          collapseOnMobile &&
+            "[&>li:not(:first-child):not(:last-child)]:hidden [&>li:not(:first-child):not(:last-child)]:md:flex"
+        )}
+      >
+        <li className="flex items-center">
+          <Link as={NextLink} href="/">
+            Home
+          </Link>
+        </li>
         {crumbs.map((_segment, index) => {
           const href = `/${segments.slice(0, index + 1).join("/")}`;
           const title = getTitleForSegment(segments, index);
 
           return (
             <li
-              className={cn(
-                "flex items-center gap-2",
-                shouldHideOnMobile(index) && "hidden lg:flex"
-              )}
+              className="flex items-center before:mx-[0.5em] before:inline-block before:h-[0.4375em] before:w-[0.4375em] before:shrink-0 before:rotate-45 before:border-mid-grey-00 before:border-t before:border-r before:content-['']"
               key={href}
             >
-              {index > 0 && <BreadcrumbSeparator />}
-              <Link className={cn(linkStyles, "break-anywhere")} href={href}>
+              <Link as={NextLink} className="break-anywhere" href={href}>
                 {title}
               </Link>
             </li>

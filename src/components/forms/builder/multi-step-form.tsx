@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type FieldError, FormProvider, useForm } from "react-hook-form";
+import { sendFormSubmissionEmails } from "@/app/actions/send-form-submission-emails";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { useFormTracking } from "@/hooks/use-form-tracking";
@@ -119,6 +120,77 @@ function normalizePhoneNumber(phoneValue: string): string {
   }
 
   return phoneValue;
+}
+
+function getStringAtPath(
+  data: Record<string, unknown>,
+  path: string
+): string | null {
+  const value = getNestedValue<unknown>(data, path);
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmedValue = value.trim();
+  return trimmedValue.length > 0 ? trimmedValue : null;
+}
+
+function extractApplicantEmail(data: Record<string, unknown>): string | null {
+  const candidatePaths = [
+    "applicant.email",
+    "owner.email",
+    "contact.email",
+    "email",
+    "applicant.contactEmail",
+    "owner.contactEmail",
+  ];
+
+  for (const path of candidatePaths) {
+    const email = getStringAtPath(data, path);
+    if (email) {
+      return email;
+    }
+  }
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const queue: unknown[] = [data];
+
+  while (queue.length > 0) {
+    const currentValue = queue.shift();
+    if (!currentValue) {
+      continue;
+    }
+
+    if (typeof currentValue === "string") {
+      const trimmedValue = currentValue.trim();
+      if (emailPattern.test(trimmedValue)) {
+        return trimmedValue;
+      }
+      continue;
+    }
+
+    if (Array.isArray(currentValue)) {
+      queue.push(...currentValue);
+      continue;
+    }
+
+    if (typeof currentValue === "object") {
+      for (const [key, value] of Object.entries(
+        currentValue as Record<string, unknown>
+      )) {
+        if (typeof value === "string" && key.toLowerCase().includes("email")) {
+          const trimmedValue = value.trim();
+          if (emailPattern.test(trimmedValue)) {
+            return trimmedValue;
+          }
+        } else {
+          queue.push(value);
+        }
+      }
+    }
+  }
+
+  return null;
 }
 
 /**
@@ -382,19 +454,36 @@ type DynamicMultiStepFormProps = {
   formSteps: FormStep[];
   serviceTitle: string;
   storageKey?: string;
+  notificationEmail?: string | null;
+  ministryName?: string | null;
+  submissionMode?: "api" | "serverActionOnly";
+  /** Overrides pathname segment[0] for analytics when the form is not under IA routes. */
+  analyticsCategory?: string;
+  /** Overrides pathname segment[1] for confirmation / exit-survey links (e.g. remote form slug). */
+  confirmationFormId?: string;
 };
 
 export default function DynamicMultiStepForm({
   formSteps,
   serviceTitle,
   storageKey = "multi-step-form-storage",
+  notificationEmail = null,
+  ministryName = null,
+  submissionMode = "api",
+  analyticsCategory,
+  confirmationFormId,
 }: DynamicMultiStepFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  /** Primitives — `searchParams` object identity changes often; deps on it cause router/setState loops. */
+  const urlStepParam = searchParams.get("step") ?? "";
+  const paymentStatusParam = searchParams.get("paymentStatus") ?? "";
+  const paymentTxParam = searchParams.get("tx") ?? "";
+  const paymentErrorParam = searchParams.get("payment_error") ?? "";
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
-  const categorySlug = pathSegments[0] ?? "";
-  const formId = pathSegments[1];
+  const categorySlug = analyticsCategory ?? pathSegments[0] ?? "";
+  const formId = confirmationFormId ?? pathSegments[1];
 
   const tracking = useFormTracking({
     form: storageKey,
@@ -495,6 +584,12 @@ export default function DynamicMultiStepForm({
           defaultValue = field.numberConfig.default;
         } else if (field.type === "date") {
           defaultValue = { day: "", month: "", year: "" };
+        } else if (
+          field.type === "checkbox" &&
+          field.options &&
+          field.options.length > 0
+        ) {
+          defaultValue = [];
         } else if (field.type === "checkbox") {
           defaultValue = "no";
         } else if (field.type === "fieldArray") {
@@ -544,8 +639,11 @@ export default function DynamicMultiStepForm({
 
     const stepName = expandedFormSteps[currentStep]?.id;
     if (stepName) {
-      // App Router approach
-      const params = new URLSearchParams(searchParams?.toString());
+      if (urlStepParam === stepName) {
+        return;
+      }
+      isProgrammaticNavigation.current = true;
+      const params = new URLSearchParams(searchParams.toString());
       params.set("step", stepName);
       router.push(`?${params.toString()}`, { scroll: false });
     }
@@ -570,7 +668,7 @@ export default function DynamicMultiStepForm({
       return;
     }
 
-    const urlStep = searchParams?.get("step"); // App Router
+    const urlStep = urlStepParam || undefined;
     // For Pages Router: const urlStep = router.query.step as string;
 
     if (urlStep) {
@@ -599,7 +697,7 @@ export default function DynamicMultiStepForm({
         setCurrentStep(stepIndex);
       }
     }
-  }, [_hasHydrated, searchParams, completedSteps, currentStep, setCurrentStep]);
+  }, [_hasHydrated, urlStepParam, completedSteps, currentStep, setCurrentStep]);
 
   // Load saved form data on mount
   useEffect(() => {
@@ -639,8 +737,8 @@ export default function DynamicMultiStepForm({
   useEffect(() => {
     if (!_hasHydrated) return;
 
-    const paymentStatus = searchParams?.get("paymentStatus");
-    const tx = searchParams?.get("tx");
+    const paymentStatus = paymentStatusParam || undefined;
+    const tx = paymentTxParam || undefined;
 
     if (paymentStatus) {
       switch (paymentStatus) {
@@ -672,7 +770,7 @@ export default function DynamicMultiStepForm({
           });
           break;
         case "error": {
-          const errorMessage = searchParams?.get("payment_error");
+          const errorMessage = paymentErrorParam || undefined;
           setPaymentMessage({
             type: "error",
             message: "Payment verification error",
@@ -692,7 +790,13 @@ export default function DynamicMultiStepForm({
       //   window.history.replaceState({}, '', window.location.pathname);
       // }, 100);
     }
-  }, [_hasHydrated, searchParams, paymentData]);
+  }, [
+    _hasHydrated,
+    paymentStatusParam,
+    paymentTxParam,
+    paymentErrorParam,
+    paymentData,
+  ]);
 
   // Watch form changes and sync with Zustand (debounced)
   // Converts indexed objects to arrays before storing
@@ -706,7 +810,7 @@ export default function DynamicMultiStepForm({
       updateFormData(arrayifiedData as Partial<FormData>);
     });
     return () => subscription.unsubscribe();
-  }, [isFormReady, methods.watch, updateFormData]);
+  }, [isFormReady, methods, updateFormData]);
 
   // Clear form data when submission is complete and showing confirmation
   useEffect(() => {
@@ -717,15 +821,18 @@ export default function DynamicMultiStepForm({
   }, [isSubmitted, referenceNumber, _hasHydrated, clearFormDataKeepSubmission]);
 
   // Update URL to show confirmation step when form is submitted
+  // biome-ignore lint/correctness/useExhaustiveDependencies: preserve unrelated query keys via `searchParams.toString()` without listing `searchParams` (new object reference each render → push loop).
   useEffect(() => {
     if (isSubmitted && referenceNumber && _hasHydrated) {
-      const params = new URLSearchParams(searchParams?.toString());
-      if (params.get("step") !== "confirmation") {
-        params.set("step", "confirmation");
-        router.push(`?${params.toString()}`, { scroll: false });
+      if (urlStepParam === "confirmation") {
+        return;
       }
+      isProgrammaticNavigation.current = true;
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("step", "confirmation");
+      router.push(`?${params.toString()}`, { scroll: false });
     }
-  }, [isSubmitted, referenceNumber, _hasHydrated, searchParams, router]);
+  }, [isSubmitted, referenceNumber, _hasHydrated, urlStepParam, router]);
 
   // Helper function to remove fields from conditional steps that aren't visible
   const cleanFormDataForSubmission = (data: FormData): FormData => {
@@ -836,6 +943,38 @@ export default function DynamicMultiStepForm({
       // Clean up data to remove fields from hidden conditional steps
       const cleanedData = cleanFormDataForSubmission(data);
 
+      if (submissionMode === "serverActionOnly") {
+        const generatedReferenceNumber = `REF-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+
+        try {
+          const emailResult = await sendFormSubmissionEmails({
+            applicantEmail: extractApplicantEmail(
+              cleanedData as Record<string, unknown>
+            ),
+            formData: cleanedData as Record<string, unknown>,
+            formName: serviceTitle,
+            ministryName: ministryName ?? undefined,
+            notificationEmail,
+            referenceNumber: generatedReferenceNumber,
+          });
+          if (!emailResult.success) {
+            throw new Error(emailResult.error ?? "Email submission failed");
+          }
+        } catch (emailError) {
+          console.error("Form submission email delivery failed", emailError);
+          setSubmissionError({
+            message:
+              "There was a problem sending your submission emails. Please try again.",
+          });
+          tracking.trackSubmitError("Remote form email submission failed");
+          return;
+        }
+
+        markAsSubmitted(generatedReferenceNumber, customerName);
+        tracking.trackSubmit();
+        return;
+      }
+
       // Submit to API
       const result = await submitFormData({
         data: cleanedData,
@@ -845,22 +984,45 @@ export default function DynamicMultiStepForm({
       if (result.success) {
         // Extract payment data from API response
         const apiPaymentData =
-          result.data?.amount !== undefined
-            ? {
+          result.data?.amount === undefined
+            ? undefined
+            : {
                 amount: result.data.amount,
                 description: result.data.description || "",
                 numberOfCopies: result.data.numberOfCopies,
                 paymentUrl: result.data.paymentUrl,
                 paymentToken: result.data.paymentToken,
                 paymentId: result.data.paymentId,
-              }
-            : undefined;
+              };
 
         markAsSubmitted(
           result.data?.submissionId || "N/A",
           customerName,
           apiPaymentData
         );
+
+        const referenceNumber =
+          result.data?.referenceNumber ?? result.data?.submissionId ?? "N/A";
+
+        // Email delivery should not block a successful submission.
+        try {
+          const emailResult = await sendFormSubmissionEmails({
+            applicantEmail: extractApplicantEmail(
+              cleanedData as Record<string, unknown>
+            ),
+            formData: cleanedData as Record<string, unknown>,
+            formName: serviceTitle,
+            ministryName: ministryName ?? undefined,
+            notificationEmail,
+            referenceNumber,
+          });
+          if (!emailResult.success) {
+            throw new Error(emailResult.error ?? "Email submission failed");
+          }
+        } catch (emailError) {
+          console.error("Form submission email delivery failed", emailError);
+        }
+
         tracking.trackSubmit();
       } else {
         const errorMessages = result.errors
@@ -1038,7 +1200,14 @@ export default function DynamicMultiStepForm({
       value: unknown
     ): boolean => {
       const empty =
-        field.type === "checkbox" ? value !== "yes" : isFieldEmpty(value);
+        field.type === "checkbox" &&
+        "options" in field &&
+        field.options &&
+        field.options.length > 0
+          ? !Array.isArray(value) || value.length === 0
+          : field.type === "checkbox"
+            ? value !== "yes"
+            : isFieldEmpty(value);
 
       if (field.validation?.required && empty) {
         methods.setError(field.name, {
@@ -1341,7 +1510,7 @@ export default function DynamicMultiStepForm({
     if (isReviewStep) {
       tracking.trackReviewEnter();
     }
-  }, [isReviewStep, tracking]);
+  }, [isReviewStep, tracking.trackReviewEnter]);
 
   if (isSubmitted && referenceNumber) {
     // Show confirmation page if submitted
