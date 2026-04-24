@@ -455,6 +455,11 @@ export const formSteps: FormStep[] = [
         label: "Father's first name",
         type: "text",
         validation: {
+          required: "First name is required",
+          minLength: {
+            value: 2,
+            message: "First name must be at least 2 characters",
+          },
           pattern: {
             value: NAME_REGEX,
             message:
@@ -468,6 +473,11 @@ export const formSteps: FormStep[] = [
         hint: " Optional. Provide only if known",
         type: "text",
         validation: {
+          required: false,
+          minLength: {
+            value: 2,
+            message: "Middle name must be at least 2 characters",
+          },
           pattern: {
             value: NAME_REGEX,
             message:
@@ -480,6 +490,11 @@ export const formSteps: FormStep[] = [
         label: "Father's last name",
         type: "text",
         validation: {
+          required: "Last name is required",
+          minLength: {
+            value: 2,
+            message: "Last name must be at least 2 characters",
+          },
           pattern: {
             value: NAME_REGEX,
             message:
@@ -505,15 +520,20 @@ export const formSteps: FormStep[] = [
         },
       },
       {
-        name: "parents.mother.otherNames",
-        label: "",
+        name: "parents.mother.maidenName",
+        label: "Mother's maiden name",
+        hint: "Enter the last name the mother used at birth, if different from her current last name.",
         type: "text",
         validation: {
           required: false,
+          minLength: {
+            value: 2,
+            message: "Maiden name must be at least 2 characters",
+          },
           pattern: {
             value: NAME_REGEX,
             message:
-              "Other Names must contain only letters, hyphens, or apostrophes",
+              "Maiden name must contain only letters, hyphens, or apostrophes",
           },
         },
       },
@@ -531,19 +551,6 @@ export const formSteps: FormStep[] = [
             value: NAME_REGEX,
             message:
               "Last name must contain only letters, hyphens, or apostrophes",
-          },
-        },
-      },
-      {
-        name: "parents.mother.maidenName",
-        label: "",
-        type: "text",
-        validation: {
-          required: false,
-          pattern: {
-            value: NAME_REGEX,
-            message:
-              "Maiden name must contain only letters, hyphens, or apostrophes",
           },
         },
       },

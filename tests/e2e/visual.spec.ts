@@ -71,9 +71,6 @@ async function waitForPageReady(
   await page.waitForLoadState("load");
   await page.waitForSelector("body", { state: "visible" });
 
-  // Wait for client components (e.g. Breadcrumbs) to hydrate
-  await page.waitForLoadState("networkidle");
-
   if (routeType === "subpage-form") {
     try {
       await page.waitForSelector("form", { state: "visible", timeout: 5000 });
@@ -178,6 +175,9 @@ for (const route of allRoutes) {
           animations: "disabled",
           caret: "hide",
           scale: "css",
+          // Thresholds for cross-platform tolerance
+          threshold: 0.2,
+          maxDiffPixelRatio: 0.03,
         });
       });
     }

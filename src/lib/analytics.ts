@@ -36,7 +36,7 @@ export type TrackingEventName = keyof TrackingData;
  * containing ":") are passed through as-is, allowing dynamic per-step event
  * names like "get-birth-certificate:form-step-one".
  *
- * No-ops gracefully when Umami is not loaded (missing env var, NODE_ENV not production, ad-blocker).
+ * No-ops gracefully when Umami is not loaded (missing env var, ad-blocker).
  */
 export function trackEvent<E extends TrackingEventName>(
   event: E,

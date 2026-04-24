@@ -14,9 +14,6 @@
 /coverage
 /test-results/
 /playwright-report/
-/performance-report/
-/perf-artifacts/
-/perf-archive/
 
 # next.js
 /.next/
@@ -44,6 +41,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# Sentry Config File
-.env.sentry-build-plugin

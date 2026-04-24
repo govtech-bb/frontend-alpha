@@ -1,5 +1,4 @@
 import { convertDateObjects } from "@/lib/dates";
-import { resolveFormSubmitApiKey } from "@/lib/form-submit-key";
 import type { FormData } from "@/lib/schema-generator";
 import type { ApiResponse, JsonValue } from "@/types";
 
@@ -158,9 +157,7 @@ export async function submitFormData({
   // Convert DateObject instances to ISO date strings
   const convertedData = convertDateObjects(arrayData as JsonValue);
 
-  const apiFormKey = resolveFormSubmitApiKey(formKey);
-
-  const response = await fetch(`${PROCESSING_API}/forms/${apiFormKey}/submit`, {
+  const response = await fetch(`${PROCESSING_API}/forms/${formKey}/submit`, {
     method: "POST",
     body: JSON.stringify(convertedData),
     headers: myHeaders,
