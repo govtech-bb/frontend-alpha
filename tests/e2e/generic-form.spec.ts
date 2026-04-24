@@ -10,7 +10,6 @@ import type { FormField, FormStep } from "@/types";
 type TestDataValue =
   | string
   | number
-  | string[]
   | { day: string; month: string; year: string };
 type TestData = Record<string, TestDataValue>;
 
@@ -27,8 +26,7 @@ type FormTestConfig = {
  * Generate random test data for a field based on its type and validation
  */
 function generateFieldData(field: FormField): TestDataValue {
-  const { type, validation } = field;
-  const options = "options" in field ? field.options : undefined;
+  const { type, validation, options } = field;
 
   switch (type) {
     case "select":
@@ -117,9 +115,6 @@ function generateFieldData(field: FormField): TestDataValue {
     }
 
     case "checkbox":
-      if (options && options.length > 0) {
-        return [options[0].value];
-      }
       return "true";
 
     default:
@@ -262,27 +257,12 @@ async function fillField(
         break;
 
       case "checkbox": {
-        if ("options" in field && field.options && field.options.length > 0) {
-          const selected = Array.isArray(value) ? value : [];
-          for (const v of selected) {
-            const option = field.options.find((opt) => opt.value === v);
-            if (option) {
-              await page
-                .getByRole("checkbox", { name: option.label })
-                .check({ force: true });
-            }
-          }
-        } else {
-          const checkbox = page.locator(`input[name="${name}"]`);
-          if (!(await checkbox.isChecked())) {
-            await checkbox.check();
-          }
+        const checkbox = page.locator(`input[name="${name}"]`);
+        if (!(await checkbox.isChecked())) {
+          await checkbox.check();
         }
         break;
       }
-
-      default:
-        break;
     }
   } catch (error) {
     console.warn(`Failed to fill field ${name}:`, error);
@@ -390,7 +370,7 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
             } catch (error) {
               console.error(
                 `❌ Failed to fill field ${field.name}:`,
-                error instanceof Error ? error.message : error
+                error.message
               );
               // Take a screenshot for debugging
               await page.screenshot({

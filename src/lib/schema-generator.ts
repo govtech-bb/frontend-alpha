@@ -311,29 +311,16 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
     return z.union([z.enum(values), z.literal("")]).optional();
   }
 
-  // Handle checkboxes: optional group (`string[]`) or single yes/no (`"yes" | "no"`)
+  // Handle checkboxes (values are "yes" or "no")
   if (field.type === "checkbox") {
-    if (field.options && field.options.length > 0) {
-      const values = field.options.map((opt) => opt.value) as [
-        string,
-        ...string[],
-      ];
-      const arrSchema = z.array(z.enum(values));
-      if (validation.required) {
-        return arrSchema.min(
-          1,
-          validation.required || "Select at least one option"
-        );
-      }
-      return arrSchema.optional();
-    }
-
     schema = z.string();
     if (validation.required) {
+      // When required, checkbox must be "yes"
       schema = z.string().refine((val) => val === "yes", {
         message: validation.required || "This field is required",
       });
     } else {
+      // Optional checkbox accepts "yes" or "no"
       schema = z.enum(["yes", "no"]).optional();
     }
     return schema;
@@ -539,17 +526,12 @@ export function generateFormSchema(formSteps: FormStep[]) {
   // Add conditional field validation via superRefine
   return baseSchema.superRefine((data, ctx) => {
     // Helper to check if a field value is empty
-    const isFieldEmpty = (
-      fieldValue: unknown,
-      fieldMeta: { type: string; options?: { value: string }[] }
-    ): boolean => {
-      if (fieldMeta.type === "checkbox") {
-        if (fieldMeta.options && fieldMeta.options.length > 0) {
-          return !Array.isArray(fieldValue) || fieldValue.length === 0;
-        }
+    const isFieldEmpty = (fieldValue: unknown, fieldType: string): boolean => {
+      if (fieldType === "checkbox") {
+        // For checkboxes, empty means not "yes"
         return fieldValue !== "yes";
       }
-      if (fieldMeta.type === "fieldArray") {
+      if (fieldType === "fieldArray") {
         // For field arrays, empty means not an array, length 0, or all items are effectively empty
         if (!Array.isArray(fieldValue) || fieldValue.length === 0) {
           return true;
@@ -568,7 +550,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
         }
         return false;
       }
-      if (fieldMeta.type === "number") {
+      if (fieldType === "number") {
         return (
           fieldValue === undefined ||
           fieldValue === null ||
@@ -603,7 +585,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
       if (
         isVisible &&
         field.validation.required &&
-        isFieldEmpty(fieldValue, field)
+        isFieldEmpty(fieldValue, field.type)
       ) {
         const pathParts = field.name.split(".");
         ctx.addIssue({
@@ -640,7 +622,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
                 if (
                   isVisible &&
                   nestedField.validation.required &&
-                  isFieldEmpty(fieldValue, nestedField)
+                  isFieldEmpty(fieldValue, nestedField.type)
                 ) {
                   ctx.addIssue({
                     code: z.ZodIssueCode.custom,
@@ -675,7 +657,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
               // Validate required
               if (
                 childField.validation.required &&
-                isFieldEmpty(childValue, childField)
+                isFieldEmpty(childValue, childField.type)
               ) {
                 const pathParts = childField.name.split(".");
                 ctx.addIssue({
@@ -688,7 +670,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
               // Validate minLength
               if (
                 childField.validation.minLength &&
-                !isFieldEmpty(childValue, childField) &&
+                !isFieldEmpty(childValue, childField.type) &&
                 typeof childValue === "string" &&
                 childValue.length < childField.validation.minLength.value
               ) {
@@ -707,7 +689,7 @@ export function generateFormSchema(formSteps: FormStep[]) {
               // Validate pattern
               if (
                 childField.validation.pattern &&
-                !isFieldEmpty(childValue, childField) &&
+                !isFieldEmpty(childValue, childField.type) &&
                 typeof childValue === "string"
               ) {
                 const regex = new RegExp(childField.validation.pattern.value);

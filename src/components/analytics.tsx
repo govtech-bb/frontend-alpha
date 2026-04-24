@@ -1,9 +1,8 @@
 import Script from "next/script";
-import { isUmamiEnabled } from "@/lib/umami-env";
 
 export const Analytics = () => {
   const websiteId = process.env.NEXT_PUBLIC_UMAMI_SITE_ID;
-  if (!(websiteId && isUmamiEnabled())) {
+  if (!websiteId) {
     return null;
   }
   return (

@@ -143,12 +143,10 @@ export type OptionFormField = BaseFormField & {
   options: SelectOption[];
 };
 
-/** A single yes/no checkbox, or a group when `options` is set. */
+/** A single checkbox field. */
 export type CheckboxFormField = BaseFormField & {
   type: "checkbox";
   validation: NonDateFieldValidation;
-  /** Multiple checkboxes; values are stored as `string[]` of selected option values. */
-  options?: SelectOption[];
 };
 
 /** A multi-line text input field. */
@@ -177,14 +175,6 @@ export type NumberFieldConfig = {
   max?: number;
 };
 
-/** Supported derived values for read-only fields (e.g. age from date of birth). */
-export type TextFieldComputedCalculation = "ageYears";
-
-export type TextFieldComputedFrom = {
-  field: string;
-  calculation: TextFieldComputedCalculation;
-};
-
 /** A single-line text input (text, email, number, or telephone). */
 export type TextFormField = BaseFormField & {
   type: "text" | "email" | "number" | "tel";
@@ -193,10 +183,6 @@ export type TextFormField = BaseFormField & {
   mask?: MaskType;
   /** Constraints and defaults for number inputs (only applicable when type is "number") */
   numberConfig?: NumberFieldConfig;
-  /** When true, the value is not edited directly (often used with `computedFrom`). */
-  readOnly?: boolean;
-  /** Auto-populate from another field (e.g. age from date of birth in the form builder). */
-  computedFrom?: TextFieldComputedFrom;
 };
 
 /** A collapsible disclosure section containing nested fields. */
