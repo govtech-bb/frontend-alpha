@@ -23,14 +23,48 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
   } = useFormContext<FormData>();
 
   // Get errors for the current step's fields (supports nested field names)
-  const stepFieldNames = step.fields.map((f) => f.name);
+  // Collect all field names (top-level + showHide children)
+  const collectFieldNames = (fields: FormStep["fields"]) => {
+    const names: string[] = [];
+
+    for (const field of fields) {
+      names.push(field.name);
+
+      if (field.type === "showHide" && field.showHide?.fields) {
+        for (const nestedField of field.showHide.fields) {
+          names.push(nestedField.name);
+        }
+      }
+    }
+
+    return Array.from(new Set(names));
+  };
+
+  const stepFieldNames = collectFieldNames(step.fields);
+
+  const getFieldForName = (fieldName: string) => {
+    const topLevelField = step.fields.find((field) => field.name === fieldName);
+    if (topLevelField) return topLevelField;
+
+    for (const field of step.fields) {
+      if (field.type === "showHide" && field.showHide?.fields) {
+        const nestedField = field.showHide.fields.find(
+          (nested) => nested.name === fieldName
+        );
+        if (nestedField) return nestedField;
+      }
+    }
+
+    return;
+  };
+
   const stepErrors = stepFieldNames
     .map((fieldName) => {
       const error = getNestedValue<FieldError>(
         errors as Record<string, unknown>,
         fieldName
       );
-      const field = step.fields.find((f) => f.name === fieldName);
+      const field = getFieldForName(fieldName);
 
       // Skip errors for fields that are conditionally hidden
       if (field?.conditionalOn) {

@@ -663,6 +663,7 @@ export function DynamicField({
                                 childError?.message ?? childField.hint
                               }
                               error={childError?.message}
+                              id={childField.name}
                               label={childField.hidden ? "" : childField.label}
                               name={controllerField.name}
                               onBlur={controllerField.onBlur}
