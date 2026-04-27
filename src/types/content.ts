@@ -1,4 +1,4 @@
-export type PageType = {
+export interface PageType {
   title: string;
   filename?: string;
   stage?: string;
@@ -10,11 +10,11 @@ export type PageType = {
     title?: string;
     type: "markdown" | "component";
   }[];
-};
+}
 
-export type InformationContent = {
+export interface InformationContent {
   title: string;
   description?: string;
   slug: string;
   pages: PageType[];
-};
+}

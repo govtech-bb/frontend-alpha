@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import { clearFormStartTime } from "@/lib/analytics";
 
-type ClearFormStorageProps = {
+interface ClearFormStorageProps {
   storageKey: string;
-};
+}
 
 /**
  * Client component that clears session storage for a specific form

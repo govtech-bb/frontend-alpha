@@ -14,7 +14,7 @@ const ROUTES = {
 
 type AxeRouteKey = keyof typeof ROUTES;
 
-type AxeSummary = {
+interface AxeSummary {
   url: string;
   violationCount: number;
   incompleteCount: number;
@@ -24,15 +24,15 @@ type AxeSummary = {
     description: string;
     nodes: number;
   }>;
-};
+}
 
-type PlaywrightMetricsPayload = {
+interface PlaywrightMetricsPayload {
   axe: Record<AxeRouteKey, AxeSummary>;
   timings: {
     formPageReadyMs: number;
     searchToResultsMs: number;
   };
-};
+}
 
 const store: {
   axe: Partial<Record<AxeRouteKey, AxeSummary>>;

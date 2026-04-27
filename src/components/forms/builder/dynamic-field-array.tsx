@@ -29,9 +29,9 @@ function getOrdinalWord(index: number): string {
   return ordinals[index] || `${index + 1}`;
 }
 
-type DynamicFieldArrayProps = {
+interface DynamicFieldArrayProps {
   field: FieldArrayFormField;
-};
+}
 
 export function DynamicFieldArray({ field }: DynamicFieldArrayProps) {
   const {

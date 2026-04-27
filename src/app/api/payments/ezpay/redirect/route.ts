@@ -1,11 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { getInformationArchitecture } from "@/lib/information-architecture";
 
-/**
- * Find the form page URL from INFORMATION_ARCHITECTURE by form slug.
- */
-const findFormUrl = (formSlug: string): string | null => {
-  for (const category of INFORMATION_ARCHITECTURE) {
+const findFormUrl = async (formSlug: string): Promise<string | null> => {
+  const ia = await getInformationArchitecture();
+  for (const category of ia) {
     const page = category.pages.find((p) => p.slug === formSlug);
     if (page) {
       return `/${category.slug}/${page.slug}/form`;
@@ -25,7 +23,7 @@ const findFormUrl = (formSlug: string): string | null => {
  * - tx: transaction number
  * - paymentStatus: "Success" | "Failed" | "Initiated"
  */
-export function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
 
   const formId = searchParams.get("formId");
@@ -35,7 +33,7 @@ export function GET(request: NextRequest) {
 
   const origin = process.env.NEXT_PUBLIC_APP_URL || request.nextUrl.origin;
 
-  const formUrl = formId ? findFormUrl(formId) : null;
+  const formUrl = formId ? await findFormUrl(formId) : null;
 
   // Fallback to homepage if form not found
   if (!formUrl) {

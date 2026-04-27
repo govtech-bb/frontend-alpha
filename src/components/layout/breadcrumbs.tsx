@@ -3,23 +3,26 @@
 import { Link } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { useInformationArchitecture } from "@/components/information-architecture-provider";
 import { cn } from "@/lib/utils";
+import type { InformationContent } from "@/types/content";
 
-type BreadcrumbsProps = {
+interface BreadcrumbsProps {
   className?: string;
   collapseOnMobile?: boolean;
-};
+}
 
 function formatSlug(slug: string): string {
   const raw = slug.replace(/-/g, " ");
   return raw.charAt(0).toUpperCase() + raw.slice(1);
 }
 
-function getTitleForSegment(segments: string[], index: number): string {
-  const category = INFORMATION_ARCHITECTURE.find(
-    (cat) => cat.slug === segments[0]
-  );
+function getTitleForSegment(
+  data: InformationContent[],
+  segments: string[],
+  index: number
+): string {
+  const category = data.find((cat) => cat.slug === segments[0]);
   if (index === 0) return category?.title ?? formatSlug(segments[0]);
 
   const page = category?.pages.find((p) => p.slug === segments[1]);
@@ -36,6 +39,7 @@ export const Breadcrumbs = ({
   collapseOnMobile = true,
 }: BreadcrumbsProps) => {
   const pathname = usePathname();
+  const informationArchitecture = useInformationArchitecture();
   const segments = pathname.split("/").filter(Boolean);
 
   if (segments.length === 0) return null;
@@ -58,7 +62,11 @@ export const Breadcrumbs = ({
         </li>
         {crumbs.map((_segment, index) => {
           const href = `/${segments.slice(0, index + 1).join("/")}`;
-          const title = getTitleForSegment(segments, index);
+          const title = getTitleForSegment(
+            informationArchitecture,
+            segments,
+            index
+          );
 
           return (
             <li

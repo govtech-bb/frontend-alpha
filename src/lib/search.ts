@@ -1,15 +1,15 @@
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import type { InformationContent } from "@/types/content";
 
-export type SearchResult = {
+export interface SearchResult {
   title: string;
   description: string;
   slug: string;
   category: string;
   hasOnlineForm: boolean;
-};
+}
 
-const allServices: SearchResult[] = INFORMATION_ARCHITECTURE.flatMap(
-  (category) =>
+function buildIndex(data: InformationContent[]): SearchResult[] {
+  return data.flatMap((category) =>
     category.pages.map((page) => ({
       title: page.title,
       description: page.description,
@@ -18,16 +18,17 @@ const allServices: SearchResult[] = INFORMATION_ARCHITECTURE.flatMap(
       hasOnlineForm:
         page.subPages?.some((sub) => sub.type === "component") ?? false,
     }))
-);
+  );
+}
 
 export function searchServices(
+  data: InformationContent[],
   query: string,
   alphaSlugs?: Set<string>
 ): SearchResult[] {
+  const all = buildIndex(data);
   const trimmed = query.trim().toLowerCase();
-  const services = alphaSlugs
-    ? allServices.filter((s) => alphaSlugs.has(s.slug))
-    : allServices;
+  const services = alphaSlugs ? all.filter((s) => alphaSlugs.has(s.slug)) : all;
 
   if (!trimmed) {
     return services;

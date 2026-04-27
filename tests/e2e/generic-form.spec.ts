@@ -17,11 +17,11 @@ type TestData = Record<string, TestDataValue>;
 /**
  * Configuration for the generic form test
  */
-type FormTestConfig = {
+interface FormTestConfig {
   schemaPath: string;
   formUrl: string;
   formName: string;
-};
+}
 
 /**
  * Generate random test data for a field based on its type and validation
@@ -348,7 +348,7 @@ function createFormTest(config: FormTestConfig, formSteps: FormStep[]) {
         try {
           // Try to find heading by exact title or partial match
           const heading = page.locator("h1, h2, h3").filter({
-            hasText: new RegExp(step.title.substring(0, 20), "i"),
+            hasText: new RegExp(step.title.slice(0, 20), "i"),
           });
           await heading.first().waitFor({ state: "visible", timeout: 5000 });
           console.log(`✓ Found heading for step: ${step.id}`);

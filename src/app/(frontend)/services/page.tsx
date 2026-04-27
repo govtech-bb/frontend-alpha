@@ -5,6 +5,7 @@ import NextLink from "next/link";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
+import { getInformationArchitecture } from "@/lib/information-architecture";
 import { getAlphaServices } from "@/lib/markdown";
 import { searchServices } from "@/lib/search";
 
@@ -13,9 +14,12 @@ export const metadata: Metadata = {
 };
 
 export default async function ServicesPage() {
-  const alphaServices = await getAlphaServices();
+  const [alphaServices, ia] = await Promise.all([
+    getAlphaServices(),
+    getInformationArchitecture(),
+  ]);
   const alphaSlugs = new Set(alphaServices.map((s) => s.slug));
-  const results = searchServices("", alphaSlugs);
+  const results = searchServices(ia, "", alphaSlugs);
 
   return (
     <>

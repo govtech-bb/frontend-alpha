@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import type { TrackingEventName } from "@/lib/analytics";
 import { trackEvent } from "@/lib/analytics";
 
-type PageViewTrackerProps = {
+interface PageViewTrackerProps {
   event: Extract<TrackingEventName, "page-service-view" | "page-start-view">;
   form: string;
   category: string;
-};
+}
 
 /**
  * Fires a single page-view tracking event on mount.

@@ -5,7 +5,7 @@
 @import "@govtech-bb/design";
 
 /* You need to add the path to the react components */
-@source "../../node_modules/@govtech-bb/react/dist/**/*.js";
+@source "../../../node_modules/@govtech-bb/react/dist/**/*.js";
 
 /* @custom-variant dark (&:is(.dark *)); */
 

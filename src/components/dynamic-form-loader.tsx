@@ -3,9 +3,9 @@
 import { Suspense } from "react";
 import { FORM_COMPONENTS, type FormSlug } from "@/lib/form-registry";
 
-type DynamicFormLoaderProps = {
+interface DynamicFormLoaderProps {
   formSlug: string;
-};
+}
 
 export function DynamicFormLoader({ formSlug }: DynamicFormLoaderProps) {
   const FormComponent = FORM_COMPONENTS[formSlug as FormSlug];

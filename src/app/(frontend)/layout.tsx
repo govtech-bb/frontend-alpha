@@ -3,8 +3,10 @@ import type { Metadata } from "next";
 import { figtree } from "@/lib/fonts";
 import "./globals.css";
 import { Analytics } from "@/components/analytics";
+import { InformationArchitectureProvider } from "@/components/information-architecture-provider";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { getInformationArchitecture } from "@/lib/information-architecture";
 
 export const metadata: Metadata = {
   title: {
@@ -27,19 +29,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const informationArchitecture = await getInformationArchitecture();
   return (
     <html className="bg-blue-100" lang="en">
       <body
         className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased`}
       >
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <InformationArchitectureProvider value={informationArchitecture}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </InformationArchitectureProvider>
       </body>
       <Analytics />
     </html>

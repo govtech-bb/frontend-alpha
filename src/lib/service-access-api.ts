@@ -9,17 +9,17 @@
  * - `hasProtectedSubpages()`  — any subpage flagged (hides start-link CTA)
  * - `isSubpageProtected()`    — specific subpage flagged (404s that subpage)
  */
-export type ServiceAccessConfig = {
+export interface ServiceAccessConfig {
   serviceSlug: string;
   isProtected: boolean;
   subpages: Array<{ slug: string; isProtected: boolean }>;
-};
+}
 
-type ApiResponse<T> = {
+interface ApiResponse<T> {
   success: boolean;
   data: T;
   message?: string;
-};
+}
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_PROCESSING_API;
 

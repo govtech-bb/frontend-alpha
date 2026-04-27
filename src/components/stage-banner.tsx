@@ -1,11 +1,11 @@
 import { Link, StatusBanner, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 
-type StageBannerProps = {
+interface StageBannerProps {
   stage?: string;
   url?: string;
   className?: string;
-};
+}
 
 export const StageBanner = ({
   stage,

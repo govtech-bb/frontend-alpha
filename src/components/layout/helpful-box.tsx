@@ -5,9 +5,9 @@ import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-type HelpfulBoxProps = {
+interface HelpfulBoxProps {
   className?: string;
-};
+}
 
 export const HelpfulBox = ({ className = "" }: HelpfulBoxProps) => {
   const pathname = usePathname();

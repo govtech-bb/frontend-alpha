@@ -8,10 +8,10 @@ import { getNestedValue } from "@/lib/utils";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
-type DeclarationStepProps = {
+interface DeclarationStepProps {
   step: FormStep;
   serviceTitle: string;
-};
+}
 
 /**
  * Formats a date as DD/MM/YYYY

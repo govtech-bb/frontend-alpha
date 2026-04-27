@@ -3,16 +3,16 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { FormData } from "@/lib/schema-generator";
 
-type PaymentData = {
+interface PaymentData {
   amount: number;
   description: string;
   numberOfCopies?: number;
   paymentUrl?: string;
   paymentToken?: string;
   paymentId?: string;
-};
+}
 
-type FormProgress = {
+interface FormProgress {
   currentStep: number;
   completedSteps: number[];
   formData: Partial<FormData>;
@@ -22,9 +22,9 @@ type FormProgress = {
   customerName: string | null;
   paymentData: PaymentData | null;
   totalSteps: number;
-};
+}
 
-type FormStore = {
+interface FormStore {
   // State
   currentStep: number;
   completedSteps: number[];
@@ -53,7 +53,7 @@ type FormStore = {
     paymentData?: PaymentData
   ) => void;
   clearFormDataKeepSubmission: () => void;
-};
+}
 
 const initialState: FormProgress = {
   currentStep: 0,

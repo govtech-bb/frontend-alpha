@@ -6,13 +6,13 @@
 import { isAfter } from "date-fns";
 import type { DateObject, JsonObject, JsonValue } from "@/types";
 
-export type DateFieldErrors = {
+export interface DateFieldErrors {
   day?: string;
   month?: string;
   year?: string;
-};
+}
 
-export function isDateObject(obj: JsonObject): obj is DateObject {
+export function isDateObject(obj: JsonObject): obj is DateObject & JsonObject {
   return (
     "day" in obj &&
     "month" in obj &&

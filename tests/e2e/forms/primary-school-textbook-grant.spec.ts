@@ -106,9 +106,7 @@ function verifyApiResponse(response: ApiResponse, formId: string) {
 test.describe("Primary School Textbook Grant Form", () => {
   // TODO: These tests are skipped due to complex custom radio button component interactions
   // The radio buttons use a custom styled component that requires special handling
-  test.skip("complete form - parent applying for their child", async ({
-    page,
-  }) => {
+  test("complete form - parent applying for their child", async ({ page }) => {
     const child = generateChildData();
     const applicant = generateApplicantData();
     const bank = generateBankDetails();
@@ -241,9 +239,7 @@ test.describe("Primary School Textbook Grant Form", () => {
     ).toBeVisible();
   });
 
-  test.skip("complete form - non-parent applying for a child", async ({
-    page,
-  }) => {
+  test("complete form - non-parent applying for a child", async ({ page }) => {
     const child = generateChildData();
     const guardian = generateApplicantData();
     const applicant = generateApplicantData();

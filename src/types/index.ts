@@ -31,14 +31,14 @@ export type DateValidationRule =
   | { type: "between"; start: string; end: string; description?: string }
   | { type: "minYear"; year: number };
 
-export type FieldValidationOperator = {
+export interface FieldValidationOperator {
   condition: "gte";
   field: string;
   message: string;
-};
+}
 
 /** Base validation rules shared by all field types. */
-export type BaseValidationRule = {
+export interface BaseValidationRule {
   /** Error message when the field is required, or `false` to explicitly mark as optional */
   required?: string | false;
   /** Minimum character length constraint */
@@ -55,7 +55,7 @@ export type BaseValidationRule = {
   numberOfFiles?: { isEqual: number; message: string };
   /** Cross-field rule vs a sibling under the same parent path (e.g. endYear >= startYear) */
   operator?: FieldValidationOperator;
-};
+}
 
 /** Validation rules for date fields, extending base rules with date-specific constraints. */
 export type DateFieldValidation = BaseValidationRule & {
@@ -66,21 +66,21 @@ export type DateFieldValidation = BaseValidationRule & {
 export type NonDateFieldValidation = BaseValidationRule;
 
 /** A selectable option for `select` and `radio` field types. */
-export type SelectOption = {
+export interface SelectOption {
   label: string;
   value: string;
-};
+}
 
 /** Defines when a field or step should be conditionally visible. */
-export type ConditionalRule = {
+export interface ConditionalRule {
   /** The field name to watch for changes */
   field: string;
   /** The value that triggers visibility */
   value: string;
-};
+}
 
 /** Configuration for repeatable field groups rendered as an array of items. */
-export type FieldArrayConfig = {
+export interface FieldArrayConfig {
   /** Label for each array item (e.g., "Name of the organisation") */
   itemLabel: string;
   /** Text for the "Add another" button */
@@ -93,10 +93,10 @@ export type FieldArrayConfig = {
   maxItems?: number;
   /** Fields to render for each array item (for complex field arrays) */
   fields?: NestedFormField[];
-};
+}
 
 /** Configuration for a collapsible disclosure (details/summary) section. */
-export type ShowHideConfig = {
+export interface ShowHideConfig {
   /** The clickable text to expand/collapse (e.g., "Use passport number instead") */
   summary: string;
   /** Optional description text shown inside the disclosure */
@@ -105,10 +105,10 @@ export type ShowHideConfig = {
   stateFieldName: string;
   /** Fields to render inside the disclosure when expanded */
   fields: NestedFormField[];
-};
+}
 
 /** Shared properties common to all form field types. */
-export type BaseFormField = {
+export interface BaseFormField {
   /** Unique field name used as the form data key (supports dot notation for nested values) */
   name: string;
   /** Display label shown above the field */
@@ -127,7 +127,7 @@ export type BaseFormField = {
   skipValidationWhenShowHideOpen?: string;
   /** Controls the rendered width of the field */
   width?: "short" | "medium" | "full";
-};
+}
 
 /** A date input field with date-specific validation. */
 export type DateFormField = BaseFormField & {
@@ -168,22 +168,22 @@ export type FieldArrayFormField = BaseFormField & {
 };
 
 /** Constraints and defaults for `type: "number"` fields. */
-export type NumberFieldConfig = {
+export interface NumberFieldConfig {
   /** Initial value to pre-populate the field with */
   default?: number;
   /** Minimum allowed value (sets the HTML min attribute) */
   min?: number;
   /** Maximum allowed value (sets the HTML max attribute) */
   max?: number;
-};
+}
 
 /** Supported derived values for read-only fields (e.g. age from date of birth). */
 export type TextFieldComputedCalculation = "ageYears";
 
-export type TextFieldComputedFrom = {
+export interface TextFieldComputedFrom {
   field: string;
   calculation: TextFieldComputedCalculation;
-};
+}
 
 /** A single-line text input (text, email, number, or telephone). */
 export type TextFormField = BaseFormField & {
@@ -243,7 +243,7 @@ export type NestedFormField = Exclude<
 export type ValidationRule = NonDateFieldValidation | DateFieldValidation;
 
 /** Contact information displayed on confirmation pages. */
-export type ContactDetails = {
+export interface ContactDetails {
   title: string;
   telephoneNumber: string;
   email: string;
@@ -253,13 +253,13 @@ export type ContactDetails = {
     city: string;
     country?: string;
   };
-};
+}
 
 /**
  * Configuration for repeatable steps that can be dynamically added/removed.
  * Field names are automatically prefixed with the array index (e.g., `arrayFieldName.0.fieldName`).
  */
-export type RepeatableStepConfig = {
+export interface RepeatableStepConfig {
   /** Base field name for array storage (e.g., "minorDetails") */
   arrayFieldName: string;
   /** Maximum number of repetitions allowed (defaults to 10) */
@@ -274,10 +274,10 @@ export type RepeatableStepConfig = {
   skipAddAnother?: boolean;
   /** Field names that are shared across all repeatable instances */
   sharedFields?: string[];
-};
+}
 
 /** A single step in a multi-step form wizard. */
-export type FormStep = {
+export interface FormStep {
   /** Unique step identifier */
   id: string;
   /** Step title displayed in the heading and progress indicator */
@@ -302,10 +302,10 @@ export type FormStep = {
   showReferenceNumber?: boolean;
   /** Configuration for repeatable steps — when set, this step can be repeated */
   repeatable?: RepeatableStepConfig;
-};
+}
 
 /** API response structure for form submissions. */
-export type ApiResponse = {
+export interface ApiResponse {
   success: boolean;
   data?: {
     submissionId: string;
@@ -323,16 +323,18 @@ export type ApiResponse = {
   };
   errors?: { field: string; message: string; code: string }[];
   message?: string;
-};
+}
 
 export type JsonPrimitive = string | number | boolean | null;
-export type JsonObject = { [key: string]: JsonValue };
+export interface JsonObject {
+  [key: string]: JsonValue;
+}
 export type JsonArray = JsonValue[];
 export type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
 /** Parsed date components from a date string. */
-export type DateObject = {
+export interface DateObject {
   day: string;
   month: string;
   year: string;
-};
+}

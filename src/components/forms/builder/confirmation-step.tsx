@@ -5,27 +5,27 @@ import { usePathname } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
+import { useInformationArchitecture } from "@/components/information-architecture-provider";
 import { markdownComponents } from "@/components/markdown-content";
 import { PaymentBlock } from "@/components/payment-block";
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import type { FormStep } from "@/types";
 
-type PaymentData = {
+interface PaymentData {
   amount: number;
   description: string;
   numberOfCopies?: number;
   paymentUrl?: string;
   paymentToken?: string;
   paymentId?: string;
-};
+}
 
-type ConfirmationPageProps = {
+interface ConfirmationPageProps {
   confirmationStep: FormStep;
   referenceNumber?: string;
   onReset: () => void;
   formId?: string;
   paymentData?: PaymentData;
-};
+}
 
 export function ConfirmationPage({
   confirmationStep,
@@ -38,7 +38,8 @@ export function ConfirmationPage({
   const pathSegments = pathname.split("/").filter(Boolean);
   const categorySlug = pathSegments[0];
   const formSlug = pathSegments[1]; // Extract form slug from URL (e.g., "get-birth-certificate")
-  const category = INFORMATION_ARCHITECTURE.find(
+  const informationArchitecture = useInformationArchitecture();
+  const category = informationArchitecture.find(
     (cat) => cat.slug === categorySlug
   );
 

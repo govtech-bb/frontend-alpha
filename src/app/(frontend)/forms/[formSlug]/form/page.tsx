@@ -1,30 +1,25 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ClearFormStorage } from "@/components/clear-form-storage";
-import { RemoteFormStartContent } from "@/components/forms/remote-form-start-content";
-import { PageViewTracker } from "@/components/page-view-tracker";
+import { RemoteDynamicForm } from "@/components/forms/remote-dynamic-form";
 import { getCachedRemoteFormDefinition } from "@/lib/forms/get-cached-remote-form-definition";
 import { isValidRemoteFormSlug } from "@/lib/forms/remote-form-slug";
 
-type PageProps = {
+interface PageProps {
   params: Promise<{ formSlug: string }>;
-};
+}
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { formSlug } = await params;
   if (!isValidRemoteFormSlug(formSlug)) {
-    return { title: "Before you start" };
+    return { title: "Form" };
   }
   const def = await getCachedRemoteFormDefinition(formSlug);
-  const title = def?.formName
-    ? `${def.formName} — Before you start`
-    : "Before you start";
-  return { title };
+  return { title: def?.formName ?? "Form" };
 }
 
-export default async function RemoteFormStartPage({ params }: PageProps) {
+export default async function RemoteFormPage({ params }: PageProps) {
   const { formSlug } = await params;
   if (!isValidRemoteFormSlug(formSlug)) {
     notFound();
@@ -36,15 +31,13 @@ export default async function RemoteFormStartPage({ params }: PageProps) {
   }
 
   return (
-    <>
-      <ClearFormStorage storageKey={def.formSlug} />
-      <PageViewTracker
-        category="remote-forms"
-        event="page-start-view"
-        form={def.formSlug}
-      />
-      <RemoteFormStartContent def={def} formSlug={formSlug} />
-    </>
+    <RemoteDynamicForm
+      formName={def.formName}
+      formSlug={def.formSlug}
+      formSteps={def.formSteps}
+      ministryName={def.ministryName ?? null}
+      notificationEmail={def.contact?.email ?? null}
+    />
   );
 }
 
