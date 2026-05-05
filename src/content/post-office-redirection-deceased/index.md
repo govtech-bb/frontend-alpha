@@ -1,6 +1,6 @@
 ---
 title: "Tell the Post Office someone has died"
-description: ""
+description: "Tell the Barbados Post Office that someone has died and arrange for their mail to be redirected to a different address."
 publish_date: 2026-01-30
 stage: alpha
 section: "Travel, ID and citizenship"

@@ -1,5 +1,6 @@
 ---
 title: "Apply for a position as a temporary teacher"
+description: "Apply for a temporary teaching position in the Government of Barbados school system."
 featured: false
 stage: "alpha"
 publish_date: 2026-01-15
