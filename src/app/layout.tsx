@@ -1,6 +1,7 @@
 import { textVariants } from "@govtech-bb/react";
 import type { Metadata } from "next";
 import { figtree } from "@/lib/fonts";
+import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/layout/footer";
@@ -16,6 +17,23 @@ export const metadata: Metadata = {
   robots: {
     index: process.env.ALLOW_INDEXING === "true",
     follow: process.env.ALLOW_INDEXING === "true",
+  },
+  openGraph: {
+    siteName: "Government of Barbados",
+    locale: "en_BB",
+    type: "website",
+    images: [
+      {
+        url: `${SITE_URL}/og-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Government of Barbados",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [`${SITE_URL}/og-image.png`],
   },
 };
 

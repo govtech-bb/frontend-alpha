@@ -1,16 +1,23 @@
 import { Heading, Link, Text } from "@govtech-bb/react";
 import type { Metadata } from "next";
 import NextLink from "next/link";
-
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
 import { getAlphaServices } from "@/lib/markdown";
 import { searchServices } from "@/lib/search";
+import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "Services",
-  alternates: { canonical: "https://alpha.gov.bb/services" },
+  alternates: { canonical: `${SITE_URL}/services` },
+  openGraph: {
+    title: "Services",
+    url: `${SITE_URL}/services`,
+  },
+  twitter: {
+    title: "Services",
+  },
 };
 
 export default async function ServicesPage() {
