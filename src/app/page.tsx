@@ -2,10 +2,17 @@ import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 
 import { HelpfulBox } from "@/components/layout/helpful-box";
+import { PopularServicesList } from "@/components/popular-services";
 import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { fetchPopularPages } from "@/lib/umami-popular-services";
 
-export default function Home() {
+export default async function Home() {
+  const pages = await fetchPopularPages({
+    startAt: Date.now() - 30 * 86_400_000,
+    endAt: Date.now(),
+    limit: 6,
+  });
   return (
     <>
       <section className="border-yellow-00 border-b-4 bg-yellow-100">
@@ -45,7 +52,7 @@ export default function Home() {
               </Text>
               <SearchForm />
             </div>
-
+            <PopularServicesList services={pages} />
             <Link as={NextLink} href="/services">
               View all services
             </Link>
