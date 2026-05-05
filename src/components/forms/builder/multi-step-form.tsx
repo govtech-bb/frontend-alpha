@@ -450,7 +450,7 @@ function expandFormSteps(
   return expanded;
 }
 
-type DynamicMultiStepFormProps = {
+interface DynamicMultiStepFormProps {
   formSteps: FormStep[];
   serviceTitle: string;
   storageKey?: string;
@@ -461,7 +461,7 @@ type DynamicMultiStepFormProps = {
   analyticsCategory?: string;
   /** Overrides pathname segment[1] for confirmation / exit-survey links (e.g. remote form slug). */
   confirmationFormId?: string;
-};
+}
 
 export default function DynamicMultiStepForm({
   formSteps,

@@ -4,25 +4,25 @@ import { Button, Heading, LinkButton, Text } from "@govtech-bb/react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type PaymentData = {
+interface PaymentData {
   amount: number;
   description: string;
   numberOfCopies?: number;
   paymentUrl?: string;
   paymentToken?: string;
   paymentId?: string;
-};
+}
 
-type Props = {
+interface Props {
   paymentData: PaymentData;
   formId: string;
-};
+}
 
-type PaymentVerifyResponse = {
+interface PaymentVerifyResponse {
   status: "initiated" | "success" | "failed";
   totalAmount: number;
   referenceNumber: string;
-};
+}
 
 function PaymentRow({ label, value }: { label: string; value: string }) {
   return (

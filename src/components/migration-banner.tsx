@@ -1,10 +1,10 @@
 import { Link, StatusBanner, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 
-type MigrationBannerProps = {
+interface MigrationBannerProps {
   pageURL?: string;
   url?: string;
-};
+}
 
 export const MigrationBanner = ({
   pageURL,

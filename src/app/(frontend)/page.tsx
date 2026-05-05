@@ -3,9 +3,10 @@ import NextLink from "next/link";
 
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { getInformationArchitecture } from "@/lib/information-architecture";
 
-export default function Home() {
+export default async function Home() {
+  const informationArchitecture = await getInformationArchitecture();
   return (
     <>
       <section className="border-yellow-00 border-b-4 bg-yellow-100">
@@ -59,7 +60,7 @@ export default function Home() {
             <Heading as="h2">Government services</Heading>
 
             <div className="flex flex-col">
-              {INFORMATION_ARCHITECTURE.map((service) => (
+              {informationArchitecture.map((service) => (
                 <div
                   className="border-grey-00 border-t-2 py-4 first:border-0 lg:py-8"
                   key={service.title}

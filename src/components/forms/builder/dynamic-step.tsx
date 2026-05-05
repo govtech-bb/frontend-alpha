@@ -7,10 +7,10 @@ import { getNestedValue, resolveStepTitle } from "@/lib/utils";
 import type { FormStep } from "@/types";
 import { DynamicField } from "./dynamic-field";
 
-type DynamicStepProps = {
+interface DynamicStepProps {
   step: FormStep;
   serviceTitle: string;
-};
+}
 
 export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
   const {

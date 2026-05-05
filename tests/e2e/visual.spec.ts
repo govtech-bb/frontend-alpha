@@ -11,10 +11,10 @@ const DEVICES = [
   { name: "mobile", width: 375, height: 667 },
 ] as const;
 
-type RouteInfo = {
+interface RouteInfo {
   path: string;
   type: "static" | "category" | "page" | "subpage-markdown" | "subpage-form";
-};
+}
 
 /**
  * Recursively discover all markdown files in the content directory

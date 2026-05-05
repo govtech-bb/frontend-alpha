@@ -37,11 +37,11 @@ const FeedbackSchema = z
     path: ["visitReason"],
   });
 
-export type FeedbackState = {
+export interface FeedbackState {
   error: string | null;
   fieldErrors?: Record<string, string>;
   success?: boolean;
-};
+}
 
 async function sendEmail({
   to,

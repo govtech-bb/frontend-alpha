@@ -22,7 +22,7 @@ const API_PATH = "/api/analytics/pages";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type SuccessResponse = {
+interface SuccessResponse {
   success: true;
   data: {
     startAt: number;
@@ -30,12 +30,12 @@ type SuccessResponse = {
     contentType?: string;
     pages: PopularPageView[];
   };
-};
+}
 
-type ErrorResponse = {
+interface ErrorResponse {
   success: false;
   error: string;
-};
+}
 
 type ApiResponse = SuccessResponse | ErrorResponse;
 

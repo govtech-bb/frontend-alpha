@@ -9,10 +9,10 @@ import {
   trackEvent,
 } from "@/lib/analytics";
 
-type UseFormTrackingOptions = {
+interface UseFormTrackingOptions {
   form: string;
   category: string;
-};
+}
 
 function elapsedSeconds(since: number): number {
   return Math.round((Date.now() - since) / 1000);

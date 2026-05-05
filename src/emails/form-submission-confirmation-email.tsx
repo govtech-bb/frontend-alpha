@@ -9,11 +9,11 @@ import {
   Text,
 } from "@react-email/components";
 
-type FormSubmissionConfirmationEmailProps = {
+interface FormSubmissionConfirmationEmailProps {
   formName: string;
   referenceNumber: string;
   ministryName?: string;
-};
+}
 
 export function FormSubmissionConfirmationEmail({
   formName,

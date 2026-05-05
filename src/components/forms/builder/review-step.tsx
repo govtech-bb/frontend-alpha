@@ -8,16 +8,16 @@ import type { FormData } from "@/lib/schema-generator";
 import { getNestedValue, resolveStepTitle } from "@/lib/utils";
 import type { DateObject, FormStep } from "@/types";
 
-type ReviewStepProps = {
+interface ReviewStepProps {
   formSteps: FormStep[];
   onEdit: (stepIndex: number) => void;
-};
+}
 
-type SectionData = {
+interface SectionData {
   title: string;
   stepIndex: number;
   items: { label: string; value: string }[];
-};
+}
 
 export function ReviewStep({ formSteps, onEdit }: ReviewStepProps) {
   const { getValues } = useFormContext<FormData>();

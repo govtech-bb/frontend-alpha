@@ -1,4 +1,4 @@
-type TrackingData = {
+interface TrackingData {
   "form-start": { form: string; category: string };
   "form-step-complete": { form: string; category: string; step: string };
   "form-step-back": { form: string; category: string; step: string };
@@ -25,7 +25,7 @@ type TrackingData = {
   "page-service-view": { form: string; category: string };
   "page-start-view": { form: string; category: string };
   search: { query: string; results: number };
-};
+}
 
 export type TrackingEventName = keyof TrackingData;
 

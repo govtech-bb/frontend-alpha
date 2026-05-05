@@ -1,17 +1,17 @@
 import { expect, type Page, test } from "@playwright/test";
 
-type LinkResult = {
+interface LinkResult {
   url: string;
   status: "valid" | "broken" | "invalid" | "warning";
   statusCode?: number;
   error?: string;
   foundOnPage: string;
-};
+}
 
-type PageToCheck = {
+interface PageToCheck {
   url: string;
   visited: boolean;
-};
+}
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const visitedUrls = new Set<string>();
@@ -127,7 +127,7 @@ async function checkLink(
 
     if (isCurrentPage) {
       // Check if the anchor target exists on current page (already loaded)
-      const anchorId = urlObj.hash.substring(1); // Remove the #
+      const anchorId = urlObj.hash.slice(1); // Remove the #
       const elementExists = await page.evaluate((id) => {
         // Check for id attribute
         const byId = document.getElementById(id);

@@ -1,10 +1,10 @@
 import { Heading, LinkButton, Text } from "@govtech-bb/react";
 import type { ParsedRemoteFormDefinition } from "@/lib/forms/remote-form-schema";
 
-type RemoteFormStartContentProps = {
+interface RemoteFormStartContentProps {
   def: ParsedRemoteFormDefinition;
   formSlug: string;
-};
+}
 
 /**
  * Server-rendered “start” page for S3-backed forms: copy is derived from the

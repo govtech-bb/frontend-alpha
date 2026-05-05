@@ -3,13 +3,13 @@
 import DynamicMultiStepForm from "@/components/forms/builder/multi-step-form";
 import type { FormStep } from "@/types";
 
-type RemoteDynamicFormProps = {
+interface RemoteDynamicFormProps {
   formSteps: FormStep[];
   formName: string;
   formSlug: string;
   notificationEmail: string | null;
   ministryName?: string | null;
-};
+}
 
 /**
  * Client entry for S3-backed definitions under `/forms/[formSlug]/form`.

@@ -4,9 +4,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { ChevronLeftSVG } from "@/components/icons/chevron-left";
 import { cn } from "@/lib/utils";
 
-type BackButtonProps = {
+interface BackButtonProps {
   className?: string;
-};
+}
 
 export const BackButton = ({ className }: BackButtonProps) => {
   const router = useRouter();

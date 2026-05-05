@@ -119,7 +119,7 @@ export const markdownComponents: Components = {
   ),
 };
 
-type MarkdownContentProps = {
+interface MarkdownContentProps {
   markdown: {
     frontmatter: {
       [key: string]: any;
@@ -127,7 +127,7 @@ type MarkdownContentProps = {
     content: string;
   };
   hasResearchAccess?: boolean;
-};
+}
 
 export const MarkdownContent = ({
   markdown,

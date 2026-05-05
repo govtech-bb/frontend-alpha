@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { getInformationArchitecture } from "@/lib/information-architecture";
 
 /**
  * A flattened, dashboard-friendly representation of a single service entry.
@@ -8,21 +8,22 @@ import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
  * which means a live form has been built for this service. Services without
  * this are considered backlog — they exist in the IA but have no form yet.
  */
-export type ServiceSummary = {
+export interface ServiceSummary {
   serviceSlug: string;
   title: string;
   categorySlug: string;
   categoryTitle: string;
   hasImplementation: boolean;
-};
+}
 
-type ServicesResponse = {
+interface ServicesResponse {
   success: boolean;
   data: ServiceSummary[];
-};
+}
 
-const ALL_SERVICES: ServiceSummary[] = INFORMATION_ARCHITECTURE.flatMap(
-  (category) =>
+async function buildAllServices(): Promise<ServiceSummary[]> {
+  const ia = await getInformationArchitecture();
+  return ia.flatMap((category) =>
     category.pages.map((page) => ({
       serviceSlug: page.slug,
       title: page.title,
@@ -31,7 +32,8 @@ const ALL_SERVICES: ServiceSummary[] = INFORMATION_ARCHITECTURE.flatMap(
       hasImplementation:
         page.subPages?.some((sp) => sp.type === "component") ?? false,
     }))
-);
+  );
+}
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": process.env
@@ -52,11 +54,11 @@ const CORS_HEADERS = {
  * No authentication required — this is metadata about the IA, not
  * user or config data.
  */
-export function GET(_request: NextRequest): NextResponse<ServicesResponse> {
-  return NextResponse.json(
-    { success: true, data: ALL_SERVICES },
-    { headers: CORS_HEADERS }
-  );
+export async function GET(
+  _request: NextRequest
+): Promise<NextResponse<ServicesResponse>> {
+  const data = await buildAllServices();
+  return NextResponse.json({ success: true, data }, { headers: CORS_HEADERS });
 }
 
 /** Handle CORS preflight */

@@ -10,14 +10,14 @@ import {
   Text,
 } from "@react-email/components";
 
-type FormSubmissionNotificationEmailProps = {
+interface FormSubmissionNotificationEmailProps {
   formName: string;
   referenceNumber: string;
   submittedAt: string;
   applicantEmail: string | null;
   submissionRows: Array<{ label: string; value: string }>;
   ministryName?: string;
-};
+}
 
 export function FormSubmissionNotificationEmail({
   formName,

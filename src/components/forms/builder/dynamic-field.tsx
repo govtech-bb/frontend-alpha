@@ -32,14 +32,14 @@ import type {
 } from "@/types";
 import { DynamicFieldArray } from "./dynamic-field-array";
 
-type FileUploadFieldProps = {
+interface FileUploadFieldProps {
   field: FileFormField;
   error?: FieldError;
   value: File[];
   onChange: (files: File[]) => void;
   /** Callback to save uploaded file URLs to form state */
   onUploadComplete: (urls: string[]) => void;
-};
+}
 
 /**
  * Wrapper component for FileUpload that handles API upload on file selection
@@ -106,10 +106,10 @@ function FileUploadField({
   );
 }
 
-type DynamicFieldProps = {
+interface DynamicFieldProps {
   field: FormField;
   conditionalFields?: FormField[];
-};
+}
 
 function ageYearsFromDateInputValue(dob: unknown): string {
   if (!dob || typeof dob !== "object") {
@@ -134,10 +134,10 @@ type AgeComputedTextField = TextFormField & {
   computedFrom: { field: string; calculation: "ageYears" };
 };
 
-type ComputedAgeFromDateFieldProps = {
+interface ComputedAgeFromDateFieldProps {
   field: AgeComputedTextField;
   fieldError: FieldError | undefined;
-};
+}
 
 /**
  * Read-only text field derived from a date field (National ID style DOB object).

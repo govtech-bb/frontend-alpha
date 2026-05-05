@@ -5,8 +5,8 @@ import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { MarkdownContent } from "@/components/markdown-content";
 import { PageViewTracker } from "@/components/page-view-tracker";
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getFormStorageKey } from "@/lib/form-registry";
+import { getInformationArchitecture } from "@/lib/information-architecture";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess } from "@/lib/research-access";
 import {
@@ -17,17 +17,18 @@ import {
 } from "@/lib/service-access-api";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
-type ContentPageProps = {
+interface ContentPageProps {
   params: Promise<{ slug: string[] }>;
-};
+}
 
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
+  const informationArchitecture = await getInformationArchitecture();
 
   // Single slug: Category page or standalone markdown
   if (slug.length === 1) {
     const [categorySlug] = slug;
-    const category = INFORMATION_ARCHITECTURE.find(
+    const category = informationArchitecture.find(
       (cat) => cat.slug === categorySlug
     );
 
@@ -73,7 +74,7 @@ export default async function Page({ params }: ContentPageProps) {
   if (slug.length === 2) {
     const [categorySlug, pageSlug] = slug;
 
-    const category = INFORMATION_ARCHITECTURE.find(
+    const category = informationArchitecture.find(
       (cat) => cat.slug === categorySlug
     );
     if (!category) {
@@ -118,7 +119,7 @@ export default async function Page({ params }: ContentPageProps) {
   if (slug.length === 3) {
     const [categorySlug, pageSlug, subPageSlug] = slug;
 
-    const category = INFORMATION_ARCHITECTURE.find(
+    const category = informationArchitecture.find(
       (cat) => cat.slug === categorySlug
     );
     if (!category) {
@@ -183,12 +184,13 @@ export default async function Page({ params }: ContentPageProps) {
 
 export async function generateMetadata({ params }: ContentPageProps) {
   const { slug } = await params;
+  const informationArchitecture = await getInformationArchitecture();
 
   // For sub-pages (3 slugs)
   if (slug.length === 3) {
     const [categorySlug, pageSlug, subPageSlug] = slug;
 
-    const category = INFORMATION_ARCHITECTURE.find(
+    const category = informationArchitecture.find(
       (cat) => cat.slug === categorySlug
     );
     const page = category?.pages.find((p) => p.slug === pageSlug);
@@ -209,7 +211,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
 
     if (subPageSlug === "form") {
       const subPageTitle = findSubPageTitleFromPath(
-        INFORMATION_ARCHITECTURE,
+        informationArchitecture,
         slug.join("/")
       );
       return {
@@ -242,7 +244,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
 
   // For categories (1 slug)
   if (slug.length === 1) {
-    const category = INFORMATION_ARCHITECTURE.find(
+    const category = informationArchitecture.find(
       (cat) => cat.slug === slug[0]
     );
     if (category) {

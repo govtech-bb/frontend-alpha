@@ -92,7 +92,7 @@ function removeNavigationFields(
   return result;
 }
 
-export type FileUploadResponse = {
+export interface FileUploadResponse {
   success: boolean;
   data?: {
     fileId: string;
@@ -101,7 +101,7 @@ export type FileUploadResponse = {
   };
   message?: string;
   error?: string;
-};
+}
 
 export async function uploadFile(file: File): Promise<FileUploadResponse> {
   const PROCESSING_API = process.env.NEXT_PUBLIC_PROCESSING_API;

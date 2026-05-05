@@ -1,8 +1,8 @@
 import type { Element, ElementContent, Root } from "hast";
 
-type Options = {
+interface Options {
   hasResearchAccess?: boolean;
-};
+}
 
 const WAYS_TO_APPLY_REGEX = /are (\d+) ways|are ([a-zA-Z]+) ways/i;
 const WORD_TO_NUMBER: Record<string, number> = {
@@ -127,56 +127,53 @@ function updateDescriptionText(
   hasResearchAccess: boolean,
   linksRemovedCount: number
 ): void {
-  children.forEach((node) => {
-    if (node.type === "element") {
-      const element = node as Element;
+  for (const node of children) {
+    if (node.type !== "element") continue;
+    const element = node as Element;
 
-      if (shouldReplaceDescriptionText(element, hasResearchAccess)) {
-        const textContent = element.children
-          .filter((child) => child.type === "text")
-          .map((child) => child.value)
-          .join("");
+    if (shouldReplaceDescriptionText(element, hasResearchAccess)) {
+      const textContent = element.children
+        .filter((child) => child.type === "text")
+        .map((child) => child.value)
+        .join("");
 
-        const newTextContent = textContent.replace(
-          WAYS_TO_APPLY_REGEX,
-          (match, numberPattern, wordPattern) => {
-            let ways = Number.parseInt(numberPattern, 10);
+      const newTextContent = textContent.replace(
+        WAYS_TO_APPLY_REGEX,
+        (match, numberPattern, wordPattern) => {
+          let ways = Number.parseInt(numberPattern, 10);
 
-            // If numberPattern is not a number, try to convert wordPattern (word) to a number. E.g., "two" to 2
-            if (isNaN(ways) && wordPattern in WORD_TO_NUMBER) {
-              ways = WORD_TO_NUMBER[wordPattern as keyof typeof WORD_TO_NUMBER];
-            }
-
-            // If we still couldn't parse a number, return the original match
-            if (isNaN(ways)) {
-              return match;
-            }
-
-            const newWays = Math.max(0, ways - linksRemovedCount);
-            if (newWays === 1) {
-              return `is ${newWays} way`;
-            }
-            return `are ${newWays} ways`;
+          if (Number.isNaN(ways) && wordPattern in WORD_TO_NUMBER) {
+            ways = WORD_TO_NUMBER[wordPattern as keyof typeof WORD_TO_NUMBER];
           }
-        );
 
-        element.children = [
-          {
-            type: "text",
-            value: newTextContent,
-          },
-        ];
-      }
+          if (Number.isNaN(ways)) {
+            return match;
+          }
 
-      if (element.children) {
-        updateDescriptionText(
-          element.children,
-          hasResearchAccess,
-          linksRemovedCount
-        );
-      }
+          const newWays = Math.max(0, ways - linksRemovedCount);
+          if (newWays === 1) {
+            return `is ${newWays} way`;
+          }
+          return `are ${newWays} ways`;
+        }
+      );
+
+      element.children = [
+        {
+          type: "text",
+          value: newTextContent,
+        },
+      ];
     }
-  });
+
+    if (element.children) {
+      updateDescriptionText(
+        element.children,
+        hasResearchAccess,
+        linksRemovedCount
+      );
+    }
+  }
 }
 
 export default rehypeHideStartLinks;

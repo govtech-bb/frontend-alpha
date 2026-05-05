@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { fetchPopularPages } from "@/lib/umami-popular-services";
 
-type PopularPagesResponse = {
+interface PopularPagesResponse {
   success: boolean;
   data?: {
     startAt: number;
@@ -10,7 +10,7 @@ type PopularPagesResponse = {
     pages: Awaited<ReturnType<typeof fetchPopularPages>>;
   };
   error?: string;
-};
+}
 
 export async function GET(
   request: NextRequest

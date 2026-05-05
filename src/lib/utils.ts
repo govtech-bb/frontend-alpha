@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import type { FormStep } from "@/types";
 import type { InformationContent } from "@/types/content";
 
@@ -116,8 +115,7 @@ export function resolveStepTitle(
 }
 
 export const findCategoryByPageSlug = (
+  data: InformationContent[],
   slug: string
 ): InformationContent | undefined =>
-  INFORMATION_ARCHITECTURE.find((category) =>
-    category.pages.some((page) => page.slug === slug)
-  );
+  data.find((category) => category.pages.some((page) => page.slug === slug));
