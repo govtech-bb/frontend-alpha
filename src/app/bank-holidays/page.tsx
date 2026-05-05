@@ -741,16 +741,6 @@ function NextHolidayHero({
       aria-label="Next bank holiday"
       className="relative mb-8 overflow-hidden rounded-lg bg-blue-100 px-8 pt-7 pb-8 text-white"
     >
-      {/* Decorative circles */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-16 -right-10 h-56 w-56 rounded-full bg-blue-40/55"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute right-16 -bottom-10 h-36 w-36 rounded-full bg-blue-40/55"
-      />
-
       <div className="relative">
         <span className="mb-6 inline-flex items-center gap-1.5 rounded bg-yellow-100 px-3.5 py-1.5 font-extrabold text-blue-100 text-xs uppercase tracking-widest">
           <svg
