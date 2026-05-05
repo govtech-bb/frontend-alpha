@@ -1,5 +1,6 @@
 ---
 title: "Apply to volunteer at a sports camp"
+description: "Apply to volunteer at a government-run sports camp in Barbados for children and young people."
 stage: "alpha"
 featured: false
 publish_date: 2025-11-13
