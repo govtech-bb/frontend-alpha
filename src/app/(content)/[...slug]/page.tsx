@@ -215,6 +215,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: subPageTitle,
         description: "",
+        alternates: { canonical: `https://alpha.gov.bb/${slug.join("/")}` },
       };
     }
     const result = await getMarkdownContent([pageSlug, subPageSlug]);
@@ -223,6 +224,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: result.frontmatter.title,
         description: result.frontmatter.description,
+        alternates: { canonical: `https://alpha.gov.bb/${slug.join("/")}` },
       };
     }
   }
@@ -236,6 +238,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: result.frontmatter.title,
         description: result.frontmatter.description,
+        alternates: { canonical: `https://alpha.gov.bb/${slug.join("/")}` },
       };
     }
   }
@@ -249,6 +252,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: category.title,
         description: category.description || "",
+        alternates: { canonical: `https://alpha.gov.bb/${slug.join("/")}` },
       };
     }
   }

@@ -10,6 +10,7 @@ import { searchServices } from "@/lib/search";
 
 export const metadata: Metadata = {
   title: "Services",
+  alternates: { canonical: "https://alpha.gov.bb/services" },
 };
 
 export default async function ServicesPage() {

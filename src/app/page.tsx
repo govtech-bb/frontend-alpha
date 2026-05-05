@@ -1,9 +1,14 @@
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import type { Metadata } from "next";
 import NextLink from "next/link";
 
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "https://alpha.gov.bb" },
+};
 
 export default function Home() {
   return (
