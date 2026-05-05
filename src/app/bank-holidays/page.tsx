@@ -37,6 +37,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
+import { StageBanner } from "@/components/stage-banner";
+
 // ---------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------
@@ -179,7 +181,7 @@ const fmtFullDate = (d: Date) =>
  * 2026 declaration) are NOT included here. Those should be added via the
  * CMS / data layer rather than this generator.
  */
-export function getBankHolidaysForYear(year: number): Holiday[] {
+function getBankHolidaysForYear(year: number): Holiday[] {
   const easter = easterSunday(year);
 
   const fixed: Holiday[] = [
@@ -272,7 +274,7 @@ export function getBankHolidaysForYear(year: number): Holiday[] {
  * Returns "days of interest" — observances Barbadians recognise but which
  * are NOT bank holidays. Banks, schools, and government offices remain open.
  */
-export function getDaysOfInterestForYear(year: number): DayOfInterest[] {
+function getDaysOfInterestForYear(year: number): DayOfInterest[] {
   return [
     { date: new Date(Date.UTC(year, 1, 14)), name: "Valentine's Day" },
     { date: new Date(Date.UTC(year, 2, 8)), name: "International Women's Day" },
@@ -386,49 +388,56 @@ export default function BankHolidaysPage() {
   );
 
   return (
-    <main className="mx-auto max-w-[880px] px-6 pt-6 pb-16">
-      <BackLink />
+    <>
+      <div className="bg-blue-10">
+        <div className="container">
+          <StageBanner stage="alpha" />
+        </div>
+      </div>
+      <main className="mx-auto max-w-[880px] px-6 pt-6 pb-16">
+        <BackLink />
 
-      <h1 className="font-extrabold text-4xl text-blue-100 leading-tight tracking-tight">
-        Bank holidays and days of interest
-      </h1>
-      <p className="mt-2 mb-8 text-mid-grey-00 text-sm">
-        Last updated on {LAST_UPDATED}
-      </p>
+        <h1 className="font-extrabold text-4xl text-blue-100 leading-tight tracking-tight">
+          Bank holidays and days of interest
+        </h1>
+        <p className="mt-2 mb-8 text-mid-grey-00 text-sm">
+          Last updated on {LAST_UPDATED}
+        </p>
 
-      <Tabs
-        activeTab={activeTab}
-        doiCount={daysOfInterest.length}
-        holidayCount={holidays.length}
-        onTabChange={setActiveTab}
-      >
-        {activeTab === "holidays" && (
-          <BankHolidaysPanel
-            currentRealYear={currentRealYear}
-            holidays={holidays}
-            isCurrentYear={isCurrentYear}
-            nextHoliday={nextHoliday}
-            onYearChange={setYear}
-            past={past}
-            substitutes={substitutes}
-            today={today}
-            upcoming={upcoming}
-            year={selectedYear}
-          />
-        )}
+        <Tabs
+          activeTab={activeTab}
+          doiCount={daysOfInterest.length}
+          holidayCount={holidays.length}
+          onTabChange={setActiveTab}
+        >
+          {activeTab === "holidays" && (
+            <BankHolidaysPanel
+              currentRealYear={currentRealYear}
+              holidays={holidays}
+              isCurrentYear={isCurrentYear}
+              nextHoliday={nextHoliday}
+              onYearChange={setYear}
+              past={past}
+              substitutes={substitutes}
+              today={today}
+              upcoming={upcoming}
+              year={selectedYear}
+            />
+          )}
 
-        {activeTab === "doi" && (
-          <DaysOfInterestPanel
-            currentRealYear={currentRealYear}
-            daysOfInterest={daysOfInterest}
-            onYearChange={setYear}
-            year={selectedYear}
-          />
-        )}
-      </Tabs>
+          {activeTab === "doi" && (
+            <DaysOfInterestPanel
+              currentRealYear={currentRealYear}
+              daysOfInterest={daysOfInterest}
+              onYearChange={setYear}
+              year={selectedYear}
+            />
+          )}
+        </Tabs>
 
-      <AboutSection />
-    </main>
+        <AboutSection />
+      </main>
+    </>
   );
 }
 
