@@ -1,6 +1,6 @@
 ---
 title: "Redirect my personal mail"
-description: ""
+description: "Tell the Barbados Post Office to redirect your personal mail to a new address. You must complete one redirection notice per household."
 publish_date: 2026-01-29
 stage: alpha
 section: "Travel, ID and citizenship"

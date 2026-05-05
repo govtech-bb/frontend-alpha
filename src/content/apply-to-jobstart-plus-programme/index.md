@@ -1,5 +1,6 @@
 ---
 title: "Register for Job Start Plus"
+description: "Register for the Job Start Plus training programme in Barbados — a government initiative offering career guidance, skills training, and workplace placements for young people."
 stage: "alpha"
 featured: false
 publish_date: 2026-02-06
