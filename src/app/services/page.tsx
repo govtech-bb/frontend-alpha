@@ -9,14 +9,20 @@ import { searchServices } from "@/lib/search";
 import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Services",
+  title: "Alpha Services",
+  description:
+    "Browse all digital government services available on alpha.gov.bb — apply for certificates, licences, permits, and access other official Barbados government services online.",
   alternates: { canonical: `${SITE_URL}/services` },
   openGraph: {
-    title: "Services",
+    title: "Alpha Services",
+    description:
+      "Browse all digital government services available on alpha.gov.bb — apply for certificates, licences, permits, and access other official Barbados government services online.",
     url: `${SITE_URL}/services`,
   },
   twitter: {
-    title: "Services",
+    title: "Alpha Services",
+    description:
+      "Browse all digital government services available on alpha.gov.bb — apply for certificates, licences, permits, and access other official Barbados government services online.",
   },
 };
 
@@ -47,7 +53,7 @@ export default async function ServicesPage() {
       <section className="pt-4 pb-8">
         <div className="container">
           <div>
-            <Heading as="h2" className="mb-s">
+            <Heading as="h1" className="mb-s">
               Alpha Services
             </Heading>
 

@@ -7,6 +7,9 @@ import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
+  title: { absolute: "Government Services | Government of Barbados" },
+  description:
+    "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
   alternates: { canonical: SITE_URL },
   openGraph: {
     title: "The Government of Barbados",
