@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site-url";
 import type { FormStep } from "@/types";
 
 export const formSteps: FormStep[] = [
@@ -130,7 +131,7 @@ Your responses are combined with other feedback and used to inform future update
 
 You do not need to do anything else.
 
-You can now close this page or [return to alpha.gov.bb](https://www.alpha.gov.bb) for more services and information.
+You can now close this page or [return to alpha.gov.bb](${SITE_URL}) for more services and information.
 `,
   },
 ];

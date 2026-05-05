@@ -2,6 +2,7 @@ import { Heading, Link, Text } from "@govtech-bb/react";
 import type { Metadata } from "next";
 import NextLink from "next/link";
 import { getAlphaServices } from "@/lib/markdown";
+import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "What we mean by alpha",
@@ -25,11 +26,7 @@ export default async function WhatWeMeanByAlphaPage() {
             You might notice things that feel unfinished, change often, and
             sometimes even break. That&apos;s part of the process. We&apos;re
             using{" "}
-            <Link
-              href="https://alpha.gov.bb"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <Link href={SITE_URL} rel="noopener noreferrer" target="_blank">
               alpha.gov.bb
             </Link>{" "}
             to test ideas and get feedback so we can learn what works and what
@@ -39,7 +36,7 @@ export default async function WhatWeMeanByAlphaPage() {
           <Text as="p">
             If you have thoughts or spot something that could be better,{" "}
             <Link
-              href="https://alpha.gov.bb/feedback"
+              href={`${SITE_URL}/feedback`}
               rel="noopener noreferrer"
               target="_blank"
             >

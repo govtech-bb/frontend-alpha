@@ -2,8 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import type { MetadataRoute } from "next";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { SITE_URL } from "@/lib/site-url";
 
-const BASE_URL = "https://alpha.gov.bb";
 const contentDir = path.join(process.cwd(), "src", "content");
 
 async function getLastModified(filePath: string): Promise<Date> {
@@ -33,13 +33,13 @@ async function findContentFile(slug: string): Promise<string | null> {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
-    { url: BASE_URL, changeFrequency: "weekly", priority: 1 },
-    { url: `${BASE_URL}/services`, changeFrequency: "weekly", priority: 0.9 },
+    { url: SITE_URL, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/services`, changeFrequency: "weekly", priority: 0.9 },
   ];
 
   for (const category of INFORMATION_ARCHITECTURE) {
     entries.push({
-      url: `${BASE_URL}/${category.slug}`,
+      url: `${SITE_URL}/${category.slug}`,
       changeFrequency: "weekly",
       priority: 0.8,
     });
@@ -51,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const lastModified = await getLastModified(contentFile);
 
       entries.push({
-        url: `${BASE_URL}/${category.slug}/${page.slug}`,
+        url: `${SITE_URL}/${category.slug}/${page.slug}`,
         lastModified,
         changeFrequency: "monthly",
         priority: 0.7,
@@ -67,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         );
 
         entries.push({
-          url: `${BASE_URL}/${category.slug}/${page.slug}/${subPage.slug}`,
+          url: `${SITE_URL}/${category.slug}/${page.slug}/${subPage.slug}`,
           lastModified: await getLastModified(subPageFile),
           changeFrequency: "monthly",
           priority: 0.5,
