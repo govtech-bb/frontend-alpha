@@ -36,7 +36,7 @@
 
 import { Heading, Text } from "@govtech-bb/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { Suspense, useCallback, useMemo, useState } from "react";
 
 import { StageBanner } from "@/components/stage-banner";
 
@@ -342,6 +342,14 @@ const LAST_UPDATED = "5 May 2026";
 // ---------------------------------------------------------------
 
 export default function BankHolidaysPage() {
+  return (
+    <Suspense fallback={null}>
+      <BankHolidaysContent />
+    </Suspense>
+  );
+}
+
+function BankHolidaysContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
