@@ -34,6 +34,7 @@
 
 "use client";
 
+import { Heading, Text } from "@govtech-bb/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 
@@ -394,15 +395,15 @@ export default function BankHolidaysPage() {
           <StageBanner stage="alpha" />
         </div>
       </div>
-      <main className="mx-auto max-w-[880px] px-6 pt-6 pb-16">
+      <main className="container max-w-220 pt-6 pb-16">
         <BackLink />
 
-        <h1 className="font-extrabold text-4xl text-blue-100 leading-tight tracking-tight">
+        <Heading as="h1" className="mb-xs">
           Bank holidays and days of interest
-        </h1>
-        <p className="mt-2 mb-8 text-mid-grey-00 text-sm">
+        </Heading>
+        <Text as="p" className="mb-l text-mid-grey-00">
           Last updated on {LAST_UPDATED}
-        </p>
+        </Text>
 
         <Tabs
           activeTab={activeTab}
