@@ -11,19 +11,11 @@ export const metadata: Metadata = {
     template: "%s | The Government Of Barbados",
     default: "The Government Of Barbados", // a default is required when creating a template
   },
-  description: "The best place to access official government services",
+  description:
+    "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
-    googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
-      "max-video-preview": -1,
-      "max-image-preview": "none",
-      "max-snippet": -1,
-    },
+    index: true,
+    follow: true,
   },
 };
 
