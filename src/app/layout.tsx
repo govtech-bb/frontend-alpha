@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   description:
     "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
   robots: {
-    index: true,
-    follow: true,
+    index: process.env.ALLOW_INDEXING === "true",
+    follow: process.env.ALLOW_INDEXING === "true",
   },
 };
 

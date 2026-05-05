@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /forms/
-Sitemap: https://alpha.gov.bb/sitemap.xml
