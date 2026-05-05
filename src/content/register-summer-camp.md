@@ -1,6 +1,5 @@
 ---
 title: "Register for a summer camp"
-description: "Register your child for a free government summer camp in Barbados, available for children aged 4 to 15. Camps cover sports, arts, culture, entrepreneurship, and special needs."
 stage: "alpha"
 featured: true
 publish_date: 2025-11-12

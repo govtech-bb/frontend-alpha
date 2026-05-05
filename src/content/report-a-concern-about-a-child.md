@@ -1,6 +1,5 @@
 ---
 title: "Report a concern about a child"
-description: "Find out how to report a concern about a child's welfare in Barbados, including who to contact and what information you will need."
 stage: "alpha"
 featured: false
 publish_date: 2025-11-12

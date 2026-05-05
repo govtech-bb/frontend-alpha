@@ -1,6 +1,5 @@
 ---
 title: "Get disaster relief assistance"
-description: "Apply for disaster relief assistance from the Government of Barbados if your home or livelihood has been affected by a natural disaster or emergency."
 stage: "alpha"
 featured: false
 publish_date: 2025-11-12

@@ -1,6 +1,5 @@
 ---
 title: "Get a copy of a birth certificate"
-description: "Apply online to get a certified copy of a birth certificate for anyone whose birth was registered in Barbados. Certificates are issued by the Registration Department."
 stage: "alpha"
 featured: false
 publish_date: 2026-01-22

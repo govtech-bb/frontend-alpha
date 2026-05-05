@@ -1,6 +1,5 @@
 ---
 title: "Get a document notarised"
-description: "Find out how to get a document notarised in Barbados, including where to go and what to bring."
 stage: "alpha"
 featured: true
 publish_date: 2025-11-12

@@ -1,6 +1,5 @@
 ---
 title: "Get a copy of a marriage certificate"
-description: "Apply online to get a certified copy of a marriage certificate for any couple whose marriage was registered in Barbados. Required for proving legal marital status and name changes on official documents."
 stage: "alpha"
 featured: false
 publish_date: 2026-01-22

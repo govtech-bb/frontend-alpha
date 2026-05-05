@@ -1,6 +1,5 @@
 ---
 title: "Apply to the Barbados YouthADVANCE Corps (BYAC)"
-description: "Apply to join the Barbados YouthADVANCE Corps (BYAC), a government programme supporting young people through skills development and community service."
 stage: "alpha"
 featured: false
 publish_date: 2025-11-12

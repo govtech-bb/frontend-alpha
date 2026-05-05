@@ -1,6 +1,5 @@
 ---
 title: "Apply for a licence to sell goods or services at a beach or park"
-description: "Apply for a licence to sell goods or services at a beach or park in Barbados. Licences are valid for 1 year and must be renewed annually."
 stage: "alpha"
 publish_date: 2026-02-06
 ---

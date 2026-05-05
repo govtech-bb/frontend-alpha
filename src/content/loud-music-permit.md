@@ -1,6 +1,5 @@
 ---
 title: "Get a permit to play loud music"
-description: "Apply for a permit to play loud music at an event in Barbados. A permit is required before holding events with amplified music."
 stage: "alpha"
 featured: true
 publish_date: 2025-10-24

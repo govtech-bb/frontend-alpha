@@ -1,6 +1,6 @@
 ---
 title: "Redirect my business mail"
-description: "Tell the Barbados Post Office to redirect your business mail to a new address when your business relocates."
+description: ""
 publish_date: 2026-01-30
 stage: alpha
 section: "Travel, ID and citizenship"

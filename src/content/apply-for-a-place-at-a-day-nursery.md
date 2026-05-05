@@ -1,6 +1,5 @@
 ---
 title: "Apply for a place at a day nursery"
-description: "Apply for a place at a government-run day nursery in Barbados for young children. Nurseries provide early childhood education and care."
 stage: "alpha"
 featured: false
 publish_date: 2025-11-12
