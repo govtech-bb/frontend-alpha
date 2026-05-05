@@ -15,6 +15,7 @@ import {
   isServiceProtected,
   isSubpageProtected,
 } from "@/lib/service-access-api";
+import { SITE_URL } from "@/lib/site-url";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
 type ContentPageProps = {
@@ -215,6 +216,12 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: subPageTitle,
         description: "",
+        alternates: { canonical: `${SITE_URL}/${slug.join("/")}` },
+        openGraph: {
+          title: subPageTitle,
+          url: `${SITE_URL}/${slug.join("/")}`,
+        },
+        twitter: { title: subPageTitle },
       };
     }
     const result = await getMarkdownContent([pageSlug, subPageSlug]);
@@ -223,6 +230,16 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: result.frontmatter.title,
         description: result.frontmatter.description,
+        alternates: { canonical: `${SITE_URL}/${slug.join("/")}` },
+        openGraph: {
+          title: result.frontmatter.title,
+          description: result.frontmatter.description,
+          url: `${SITE_URL}/${slug.join("/")}`,
+        },
+        twitter: {
+          title: result.frontmatter.title,
+          description: result.frontmatter.description,
+        },
       };
     }
   }
@@ -236,6 +253,16 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: result.frontmatter.title,
         description: result.frontmatter.description,
+        alternates: { canonical: `${SITE_URL}/${slug.join("/")}` },
+        openGraph: {
+          title: result.frontmatter.title,
+          description: result.frontmatter.description,
+          url: `${SITE_URL}/${slug.join("/")}`,
+        },
+        twitter: {
+          title: result.frontmatter.title,
+          description: result.frontmatter.description,
+        },
       };
     }
   }
@@ -249,6 +276,16 @@ export async function generateMetadata({ params }: ContentPageProps) {
       return {
         title: category.title,
         description: category.description || "",
+        alternates: { canonical: `${SITE_URL}/${slug.join("/")}` },
+        openGraph: {
+          title: category.title,
+          description: category.description || "",
+          url: `${SITE_URL}/${slug.join("/")}`,
+        },
+        twitter: {
+          title: category.title,
+          description: category.description || "",
+        },
       };
     }
   }

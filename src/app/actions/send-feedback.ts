@@ -2,6 +2,7 @@
 
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import { z } from "zod";
+import { SITE_URL } from "@/lib/site-url";
 
 // Get required environment variables with explicit error handling
 const region = process.env.SES_REGION ?? "us-east-1";
@@ -95,9 +96,7 @@ export async function sendFeedback(
 
   const subject = "alpha.gov.bb Feedback";
   const to = feedbackToEmail;
-  const referrerUrl = referrer
-    ? new URL(referrer, "https://alpha.gov.bb").toString()
-    : null;
+  const referrerUrl = referrer ? new URL(referrer, SITE_URL).toString() : null;
   const html = [
     referrerUrl &&
       `<p><strong>Page:</strong> <a href="${referrerUrl}">${referrerUrl}</a></p>`,
