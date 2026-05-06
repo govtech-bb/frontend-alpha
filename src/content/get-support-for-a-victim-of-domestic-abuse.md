@@ -1,5 +1,6 @@
 ---
 title: "Get support for a victim of domestic abuse"
+description: "Find support services available in Barbados for victims of domestic abuse, including who to contact and how to get help."
 featured: false
 stage: "alpha"
 publish_date: 2025-11-24

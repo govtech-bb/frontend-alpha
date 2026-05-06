@@ -1,5 +1,6 @@
 ---
 title: "Get a Primary School Textbook Grant"
+description: "Apply for the annual $100 BDD Primary School Textbook Grant for your child attending a public or private primary school in Barbados."
 stage: "alpha"
 publish_date: 2026-02-06
 ---

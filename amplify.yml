@@ -23,6 +23,8 @@ frontend:
         - env | grep -e EZPAY_BASE_URL >> .env.production || true
         - env | grep -e NEXT_PUBLIC_EZPAY_BASE_URL >> .env.production || true
         - env | grep -e RESEARCH_ACCESS_TOKEN >> .env.production || true
+        - env | grep -e ALLOW_INDEXING >> .env.production || true
+        - env | grep -e NEXT_PUBLIC_SITE_URL >> .env.production || true
         - env | grep -e NEXT_PUBLIC_PROCESSING_API >> .env.production || true
         - env | grep -e FORMS_S3_BUCKET >> .env.production || true
         - env | grep -e FORMS_S3_REGION >> .env.production || true

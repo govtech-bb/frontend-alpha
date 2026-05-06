@@ -1,5 +1,6 @@
 ---
 title: "Report elderly abuse"
+description: "Find out how to report suspected abuse, neglect, or exploitation of an elderly person in Barbados."
 stage: "alpha"
 featured: false
 publish_date: 2025-11-12

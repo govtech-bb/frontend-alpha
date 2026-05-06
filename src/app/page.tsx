@@ -1,9 +1,30 @@
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import type { Metadata } from "next";
 import NextLink from "next/link";
-
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import { SITE_URL } from "@/lib/site-url";
+
+export const metadata: Metadata = {
+  title: { absolute: "Government Services | Government of Barbados" },
+  description:
+    "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
+  alternates: { canonical: SITE_URL },
+  openGraph: {
+    title: "The Government of Barbados",
+    description:
+      "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
+    url: SITE_URL,
+    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+  },
+  twitter: {
+    title: "The Government of Barbados",
+    description:
+      "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
+    images: [`${SITE_URL}/og-image.png`],
+  },
+};
 
 export default function Home() {
   return (
