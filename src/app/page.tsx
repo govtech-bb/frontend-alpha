@@ -16,11 +16,13 @@ export const metadata: Metadata = {
     description:
       "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
     url: SITE_URL,
+    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
   },
   twitter: {
     title: "The Government of Barbados",
     description:
       "Access official Barbados government services online — apply for passports, birth certificates, driver's licences, and more at alpha.gov.bb.",
+    images: [`${SITE_URL}/og-image.png`],
   },
 };
 

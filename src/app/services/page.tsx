@@ -18,11 +18,13 @@ export const metadata: Metadata = {
     description:
       "Browse all digital government services available on alpha.gov.bb — apply for certificates, licences, permits, and access other official Barbados government services online.",
     url: `${SITE_URL}/services`,
+    images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
   },
   twitter: {
     title: "Alpha Services",
     description:
       "Browse all digital government services available on alpha.gov.bb — apply for certificates, licences, permits, and access other official Barbados government services online.",
+    images: [`${SITE_URL}/og-image.png`],
   },
 };
 
