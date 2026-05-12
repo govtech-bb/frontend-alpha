@@ -14,6 +14,7 @@ import {
 import { useMaskito } from "@maskito/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { masks, unmaskMoney } from "@/lib/masks";
 import {
   avgWeeklyFromSimple,
@@ -485,6 +486,7 @@ export default function CalculateSeverancePayForm() {
 
       {step === "result" && (
         <div className="flex flex-col gap-6">
+          <Breadcrumbs />
           <ServiceTitle />
           {reason === "other" && (
             <div className="rounded-sm border border-grey-00 p-4">
