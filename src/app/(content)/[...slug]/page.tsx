@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
+import { DynamicPageLoader } from "@/components/dynamic-page-loader";
 import { MarkdownContent } from "@/components/markdown-content";
 import { PageViewTracker } from "@/components/page-view-tracker";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
@@ -84,6 +85,11 @@ export default async function Page({ params }: ContentPageProps) {
     const page = category.pages.find((p) => p.slug === pageSlug);
     if (!page) {
       notFound();
+    }
+
+    // Handle component-type pages (e.g. bank-holiday-calendar)
+    if (page.type === "component") {
+      return <DynamicPageLoader pageSlug={pageSlug} />;
     }
 
     const serviceConfig = await fetchServiceConfig(pageSlug);

@@ -1,32 +1,11 @@
 /**
- * Bank holidays
+ * Bank holidays page component
  * --------------------------------------------------------------
- * Route:    /work-employment/bank-holiday-calendar
- * File:     src/app/work-employment/bank-holiday-calendar/page.tsx
+ * Rendered via src/app/(content)/[...slug]/page.tsx at the route
+ * /work-employment/bank-holiday-calendar.
  *
- * What this page does:
- *   - Lists Barbados statutory bank holidays (Public Holidays Act, Cap. 352)
- *     for any year, with substitution rules applied.
- *   - Surfaces the next upcoming bank holiday in a hero card.
- *   - Lets the user switch between years via prev/next arrows.
- *   - Surfaces a source reference and substitution rules in the About section.
- *
- * Implementation notes for reviewers:
- *   1. This is a client component because of the year-switcher state.
- *      The selected year is held in `?year=YYYY` so links/back-button work.
- *   2. Site chrome (official banner, header, alpha banner, footer) is
- *      assumed to live in `src/app/layout.tsx`. This file only renders
- *      the page body inside the existing layout.
- *   3. Holiday data is computed at build time from pure functions in this
- *      file. If you'd rather keep them as static fixtures under
- *      `src/content/`, the `getBankHolidaysForYear` function can be lifted
- *      into `src/lib/holidays.ts` unchanged.
- *   4. Tailwind class names below assume GovBB design tokens are wired
- *      into the Tailwind config (e.g. `bg-blue-90`, `text-yellow-50`).
- *      If those tokens aren't aliased yet, swap to the closest stock
- *      Tailwind colours or add the aliases to `tailwind.config.ts`.
- *   5. New entry points must also be registered in `content-directory.ts`
- *      per the repo README. Add this page under the appropriate category.
+ * The (content) layout already provides StageBanner and the outer
+ * container via EntryPointWrapper, so neither is repeated here.
  */
 
 "use client";
@@ -34,8 +13,6 @@
 import { Heading, Text } from "@govtech-bb/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useMemo } from "react";
-
-import { StageBanner } from "@/components/stage-banner";
 
 // ---------------------------------------------------------------
 // Types
@@ -167,9 +144,8 @@ const fmtSubstituteDate = (d: Date) =>
  *   - If Christmas Day falls on a Sunday → the following Tuesday is a
  *     public holiday in lieu.
  *
- * Note: Government-declared one-off public holidays (e.g. the 13 February
- * 2026 declaration) are NOT included here. Those should be added via the
- * CMS / data layer rather than this generator.
+ * Note: Government-declared one-off public holidays are NOT included here.
+ * Those should be added via the CMS / data layer rather than this generator.
  */
 function getBankHolidaysForYear(year: number): Holiday[] {
   const easter = easterSunday(year);
@@ -269,7 +245,7 @@ const MAX_YEAR = 2050;
 const LAST_UPDATED = "5 May 2026";
 
 // ---------------------------------------------------------------
-// Page
+// Page component
 // ---------------------------------------------------------------
 
 export default function BankHolidaysPage() {
@@ -341,72 +317,42 @@ function BankHolidaysContent() {
     [router, searchParams, currentRealYear]
   );
 
+  // The (content) layout provides StageBanner and the outer container.
+  // Only the page body is rendered here.
   return (
-    <>
-      <div className="bg-blue-10">
-        <div className="container">
-          <StageBanner stage="alpha" />
-        </div>
-      </div>
-      <main className="container max-w-220 pt-6 pb-16">
-        <BackLink />
+    <main className="max-w-220 pt-6 pb-16">
+      <Heading as="h1" className="mb-xs">
+        Bank holidays
+      </Heading>
+      <Text as="p" className="mb-l text-mid-grey-00">
+        Last updated on {LAST_UPDATED}
+      </Text>
 
-        <Heading as="h1" className="mb-xs">
-          Bank holidays
-        </Heading>
-        <Text as="p" className="mb-l text-mid-grey-00">
-          Last updated on {LAST_UPDATED}
-        </Text>
+      <BankHolidaysTab>
+        <BankHolidaysPanel
+          allHolidays={holidays}
+          currentRealYear={currentRealYear}
+          displayHolidays={displayHolidays}
+          isCurrentYear={isCurrentYear}
+          nextHoliday={nextHoliday}
+          onYearChange={setYear}
+          past={past}
+          substituteMap={substituteMap}
+          substitutes={substitutes}
+          today={today}
+          upcoming={upcoming}
+          year={selectedYear}
+        />
+      </BankHolidaysTab>
 
-        <BankHolidaysTab>
-          <BankHolidaysPanel
-            allHolidays={holidays}
-            currentRealYear={currentRealYear}
-            displayHolidays={displayHolidays}
-            isCurrentYear={isCurrentYear}
-            nextHoliday={nextHoliday}
-            onYearChange={setYear}
-            past={past}
-            substituteMap={substituteMap}
-            substitutes={substitutes}
-            today={today}
-            upcoming={upcoming}
-            year={selectedYear}
-          />
-        </BankHolidaysTab>
-
-        <AboutSection />
-      </main>
-    </>
+      <AboutSection />
+    </main>
   );
 }
 
 // ---------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------
-
-function BackLink() {
-  return (
-    <a
-      className="mb-6 inline-flex items-center gap-1 font-semibold text-base text-blue-100 hover:underline"
-      href="/"
-    >
-      <svg
-        aria-hidden="true"
-        className="h-3.5 w-3.5"
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2.5"
-        viewBox="0 0 24 24"
-      >
-        <polyline points="15 18 9 12 15 6" />
-      </svg>
-      Back
-    </a>
-  );
-}
 
 function BankHolidaysTab({ children }: { children: React.ReactNode }) {
   return (
