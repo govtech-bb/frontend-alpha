@@ -183,6 +183,20 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Find out how much severance payment you are owed",
+        slug: "calculate-severance-pay",
+        description:
+          "Estimate the severance payment you may be owed under the Severance Payments Act if you were made redundant, your workplace was damaged by a disaster, you were laid off, or your employer died.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Find out how much severance payment you are owed",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {
