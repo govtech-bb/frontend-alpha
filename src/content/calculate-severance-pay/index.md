@@ -28,4 +28,4 @@ You must make your claim within **12 months** of your last day at work. If you w
 
 ## Need help or advice?
 
-Contact the **Ministry of Labour, Social Security and Third Sector**. They can give you free advice and help you claim if your employer does not pay.
+Contact the **NISSS Severance Payment Department**. They can give you free advice and help you claim if your employer does not pay.

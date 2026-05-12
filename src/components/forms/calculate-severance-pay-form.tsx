@@ -39,7 +39,7 @@ const REASON_LABELS: Record<Reason, string> = {
 
 const INELIGIBLE_OTHER = {
   title: "We cannot give you an estimate",
-  body: "This tool covers redundancy, natural disasters, lay-off or short time, and death of employer. If your situation is different, contact the Ministry of Labour, Social Security and Third Sector to check what you may be owed.",
+  body: "This tool covers redundancy, natural disasters, lay-off or short time, and death of employer. If your situation is different, contact the NISSS Severance Payment Department to check what you may be owed.",
 };
 
 const emptyDate: DateInputValue = { day: "", month: "", year: "" };
@@ -510,8 +510,7 @@ export default function CalculateSeverancePayForm() {
                 for the same employer for at least{" "}
                 <strong>2 complete years (104 weeks)</strong> without a
                 significant break in service. If you are close to 2 years,
-                contact the Ministry of Labour, Social Security and Third
-                Sector.
+                contact the NISSS Severance Payment Department.
               </Text>
             </div>
           )}
@@ -567,8 +566,7 @@ export default function CalculateSeverancePayForm() {
                 </li>
                 <li>
                   Your employer must pay within <strong>2 months</strong>. If
-                  they do not, contact the Ministry of Labour, Social Security
-                  and Third Sector.
+                  they do not, contact the NISSS Severance Payment Department.
                 </li>
                 <li>
                   You must make your claim within <strong>12 months</strong> of
@@ -581,11 +579,8 @@ export default function CalculateSeverancePayForm() {
           <Heading as="h2">Need help or advice?</Heading>
           <Text as="p" size="body">
             Contact the{" "}
-            <strong>
-              Ministry of Labour, Social Security and Third Sector
-            </strong>
-            . They can give you free advice and help you claim if your employer
-            does not pay.
+            <strong>NISSS Severance Payment Department</strong>. They can give
+            you free advice and help you claim if your employer does not pay.
           </Text>
           <div>
             <Button onClick={restart} type="button" variant="secondary">
