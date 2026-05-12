@@ -147,7 +147,6 @@ export default function CalculateSeverancePayForm() {
   const endIso = endResult.ok ? endResult.iso : "";
   const endYear = endResult.ok ? endResult.date.getFullYear() : null;
   const years = startIso && endIso ? completeYears(startIso, endIso) : 0;
-  const counted = Math.min(years, 33);
   const avgWeekly = avgWeeklyFromSimple(simpleAvgNum, period, endYear);
   const entitledWeeks = tieredWeeks(years);
   const severance = entitledWeeks * avgWeekly;
@@ -506,8 +505,8 @@ export default function CalculateSeverancePayForm() {
                 Based on the information you gave us
               </Text>
               <Text as="p" className="mt-4" size="body">
-                To qualify for severance payment, you generally need to have worked
-                for the same employer for at least{" "}
+                To qualify for severance payment, you generally need to have
+                worked for the same employer for at least{" "}
                 <strong>2 complete years (104 weeks)</strong> without a
                 significant break in service. If you are close to 2 years,
                 contact the NISSS Severance Payment Department.
@@ -517,17 +516,13 @@ export default function CalculateSeverancePayForm() {
 
           {reason && reason !== "other" && years >= 2 && (
             <>
-              <div className="rounded-sm bg-green-00 p-4 text-white-00">
+              <div className="rounded-sm bg-green-00 p-m text-white-00">
                 <Heading as="h2" className="text-white-00">
                   Your severance payment estimate
                 </Heading>
-                <p className="mt-1 break-words font-bold text-3xl">
+                <p className="wrap-break-word mt-1 font-bold text-3xl">
                   {money(severance)}
                 </p>
-                <Text as="p" className="mt-1 text-white-00" size="body">
-                  Based on {counted} complete year{counted === 1 ? "" : "s"} of
-                  service and basic weekly pay of {money(avgWeekly)}.
-                </Text>
               </div>
 
               <Text as="p" size="body">
@@ -546,8 +541,8 @@ export default function CalculateSeverancePayForm() {
                 </Text>
                 <Text as="p" className="mt-2" size="body">
                   This is not legal advice. Contact the{" "}
-                  <strong>NISSS Severance Payment Department</strong> if you
-                  are unsure about your entitlement.
+                  <strong>NISSS Severance Payment Department</strong> if you are
+                  unsure about your entitlement.
                 </Text>
               </div>
 
@@ -558,29 +553,45 @@ export default function CalculateSeverancePayForm() {
                 </Text>
               )}
 
-              <Heading as="h2">What to do next</Heading>
+              <Heading as="h2">What happens after you file</Heading>
               <ol className="list-decimal space-y-2 pl-7">
+                <li>NIS writes to your employer on your behalf.</li>
+
                 <li>
-                  Write to your employer and ask them to pay your severance.
-                  Keep a copy of everything you send.
+                  Once your claim is approved, NIS sends you a letter by a{" "}
+                  <strong>registered post</strong>.
                 </li>
                 <li>
-                  Your employer must pay within <strong>2 months</strong>. If
-                  they do not, contact the NISSS Severance Payment Department.
+                  You pay a <strong>BDS$5.65</strong> postage fee for the
+                  registered letter.
                 </li>
                 <li>
-                  You must make your claim within <strong>12 months</strong> of
-                  your last day at work or you may lose your right to be paid.
+                  You have <strong>30 days</strong> to respond to the letter.
+                </li>
+                <li>
+                  Return the <strong>registered pink slip</strong> from the post
+                  office, together with a copy of the letter, before the 30 days
+                  are up.
                 </li>
               </ol>
             </>
           )}
 
+          <div className="border-red-00 border-l-4 bg-red-10 p-4">
+            <Text as="p" size="body">
+              <strong>Keep your pink slip safe</strong>
+            </Text>
+            <Text as="p" className="mt-2" size="body">
+              If the pink slip is lost, damaged, stolen, or misplaced, you will
+              have to restart the entire severance process from the beginning.
+            </Text>
+          </div>
+
           <Heading as="h2">Need help or advice?</Heading>
           <Text as="p" size="body">
-            Contact the{" "}
-            <strong>NISSS Severance Payment Department</strong>. They can give
-            you free advice and help you claim if your employer does not pay.
+            Contact the <strong>NISSS Severance Payment Department</strong>.
+            They can give you free advice and help you claim if your employer
+            does not pay.
           </Text>
           <div>
             <Button onClick={restart} type="button" variant="secondary">
