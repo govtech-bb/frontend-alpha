@@ -206,7 +206,7 @@ function getBankHolidaysForYear(year: number): Holiday[] {
   for (const h of fixed) {
     const dow = h.date.getUTCDay();
 
-    if (mondayInLieuNames.has(h.name) && dow === 0) {
+        if (mondayInLieuNames.has(h.name) && dow === 0) {
       substitutes.push({
         date: addDays(h.date, 1),
         name: `Public Holiday in lieu of ${h.name}`,
@@ -321,29 +321,35 @@ function BankHolidaysContent() {
   // Only the page body is rendered here.
   return (
     <main className="max-w-220 pt-6 pb-16">
-      <Heading as="h1" className="mb-xs">
-        Bank holidays
-      </Heading>
-      <Text as="p" className="mb-l text-mid-grey-00">
-        Last updated on {LAST_UPDATED}
-      </Text>
+      <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-0 lg:justify-between mb-6 lg:mb-10">
+        <div>
+          <Heading as="h1" className="mb-xs">
+            Bank holidays
+          </Heading>
+          <Text as="p" className="text-mid-grey-00">
+            Last updated on {LAST_UPDATED}
+          </Text>
+        </div>
+        <div className="mt-6 flex w-full lg:w-auto justify-end">
+          <YearSwitcher onYearChange={setYear} year={selectedYear} />
+        </div>
+        
+      </div>
 
-      <BankHolidaysTab>
-        <BankHolidaysPanel
-          allHolidays={holidays}
-          currentRealYear={currentRealYear}
-          displayHolidays={displayHolidays}
-          isCurrentYear={isCurrentYear}
-          nextHoliday={nextHoliday}
-          onYearChange={setYear}
-          past={past}
-          substituteMap={substituteMap}
-          substitutes={substitutes}
-          today={today}
-          upcoming={upcoming}
-          year={selectedYear}
-        />
-      </BankHolidaysTab>
+      <BankHolidaysPanel
+        allHolidays={holidays}
+        currentRealYear={currentRealYear}
+        displayHolidays={displayHolidays}
+        isCurrentYear={isCurrentYear}
+        nextHoliday={nextHoliday}
+        onYearChange={setYear}
+        past={past}
+        substituteMap={substituteMap}
+        substitutes={substitutes}
+        today={today}
+        upcoming={upcoming}
+        year={selectedYear}
+      />
 
       <AboutSection />
     </main>
@@ -353,40 +359,6 @@ function BankHolidaysContent() {
 // ---------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------
-
-function BankHolidaysTab({ children }: { children: React.ReactNode }) {
-  return (
-    <div>
-      <div
-        aria-label="Page sections"
-        className="relative z-10 flex gap-1 px-2"
-        role="tablist"
-      >
-        <div role="presentation">
-          <button
-            aria-controls="panel-holidays"
-            aria-selected={true}
-            className="relative -mb-px rounded-t-[10px] border border-grey-00 border-t-[3px] border-t-yellow-500 border-b-0 bg-white px-5 pt-3.5 pb-3 font-semibold text-base text-blue-100 leading-tight shadow-[0_1px_0_0_white] transition-colors"
-            id="tab-holidays"
-            role="tab"
-            tabIndex={0}
-            type="button"
-          >
-            Bank holidays
-          </button>
-        </div>
-      </div>
-      <div
-        aria-labelledby="tab-holidays"
-        className="relative z-0 rounded-b-lg rounded-tr-lg border border-grey-00 bg-white p-8"
-        id="panel-holidays"
-        role="tabpanel"
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
 
 interface YearSwitcherProps {
   year: number;
@@ -398,13 +370,10 @@ function YearSwitcher({ year, onYearChange }: YearSwitcherProps) {
   const canGoNext = year < MAX_YEAR;
 
   return (
-    <fieldset
-      aria-label="Choose a year"
-      className="mb-6 flex items-center justify-between gap-4 border-grey-00 border-b pb-6"
-    >
+    <fieldset aria-label="Choose a year" className="flex items-center gap-2">
       <button
         aria-label={`Previous year, ${year - 1}`}
-        className="inline-flex items-center gap-2 rounded border border-grey-00 bg-white px-3.5 py-2 font-semibold text-blue-100 text-sm transition-colors hover:border-blue-100 hover:bg-blue-10 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+        className="inline-flex items-center gap-2 rounded-lg border border-grey-00 bg-white px-3.5 py-2 font-semibold text-blue-100 text-sm transition-colors hover:border-blue-100 hover:bg-blue-10 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
         disabled={!canGoPrev}
         onClick={() => onYearChange(year - 1)}
         type="button"
@@ -431,16 +400,9 @@ function YearSwitcher({ year, onYearChange }: YearSwitcherProps) {
         </span>
       </button>
 
-      <span
-        aria-live="polite"
-        className="font-extrabold text-2xl text-blue-100 tracking-tight"
-      >
-        {year}
-      </span>
-
       <button
         aria-label={`Next year, ${year + 1}`}
-        className="inline-flex items-center gap-2 rounded border border-grey-00 bg-white px-3.5 py-2 font-semibold text-blue-100 text-sm transition-colors hover:border-blue-100 hover:bg-blue-10 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
+        className="inline-flex items-center gap-2 rounded-lg border border-grey-00 bg-white px-3.5 py-2 font-semibold text-blue-100 text-sm transition-colors hover:border-blue-100 hover:bg-blue-10 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white"
         disabled={!canGoNext}
         onClick={() => onYearChange(year + 1)}
         type="button"
@@ -520,13 +482,11 @@ function BankHolidaysPanel({
         />
       )}
 
-      <YearSwitcher onYearChange={onYearChange} year={year} />
-
       {isCurrentYear ? (
         <>
           <HolidaySection
             chip={`${upcoming.length} remaining`}
-            heading="Upcoming holidays"
+            heading={`Upcoming bank holidays ${year}`}
             highlightFirst
             holidays={upcoming}
             substituteMap={substituteMap}
@@ -534,7 +494,7 @@ function BankHolidaysPanel({
           {past.length > 0 && (
             <HolidaySection
               chip={`${past.length} so far`}
-              heading="Past holidays"
+              heading={`Past bank holidays ${year}`}
               holidays={past}
               muted
               substituteMap={substituteMap}
@@ -546,12 +506,14 @@ function BankHolidaysPanel({
           chip={`${displayHolidays.length} ${
             year < currentRealYear ? "observed" : "scheduled"
           }`}
-          heading="All bank holidays"
+          heading={`All bank holidays ${year}`}
           holidays={displayHolidays}
           substituteMap={substituteMap}
         />
       )}
-
+      <div className="mt-10 flex justify-end">
+        <YearSwitcher onYearChange={onYearChange} year={year} />
+      </div>
       <SubstitutionNotice substituteCount={substitutes.length} year={year} />
     </>
   );
@@ -574,20 +536,7 @@ function NextHolidayHero({
       className="relative mb-8 overflow-hidden rounded-lg bg-blue-100 px-8 pt-7 pb-8 text-white"
     >
       <div className="relative">
-        <span className="mb-6 inline-flex items-center gap-1.5 rounded bg-yellow-100 px-3.5 py-1.5 font-extrabold text-blue-100 text-xs uppercase tracking-widest">
-          <svg
-            aria-hidden="true"
-            className="h-3.5 w-3.5"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2.5"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="12" cy="12" r="9" />
-            <polyline points="12 7 12 12 15 14" />
-          </svg>
+        <span className="mb-6 inline-flex items-center rounded-lg bg-yellow-100 px-3.5 py-1.5 font-extrabold text-blue-100 text-xs uppercase tracking-widest">
           Next bank holiday
         </span>
         <h2 className="mb-2.5 font-extrabold text-4xl leading-tight tracking-tight">
@@ -645,7 +594,7 @@ function YearOverviewHero({
       aria-label="Year overview"
       className="mb-8 rounded-lg border border-grey-00 bg-[#f5f7fa] px-8 py-6"
     >
-      <span className="mb-3 inline-block rounded bg-grey-00 px-3 py-1 font-bold text-mid-grey-00 text-xs uppercase tracking-wider">
+      <span className="mb-3 inline-block rounded-lg bg-grey-00 px-3 py-1 font-bold text-mid-grey-00 text-xs uppercase tracking-wider">
         {pill}
       </span>
       <h2 className="font-extrabold text-2xl text-blue-100 leading-tight tracking-tight">
@@ -678,7 +627,7 @@ function HolidaySection({
         <h2 className="font-extrabold text-2xl text-blue-100 tracking-tight">
           {heading}
         </h2>
-        <span className="inline-flex items-center rounded-full bg-grey-00 px-3 py-1 font-medium text-mid-grey-00 text-xs">
+        <span className="inline-flex items-center rounded-lg bg-grey-00 px-3 py-1 font-medium text-mid-grey-00 text-xs">
           {chip}
         </span>
       </div>
@@ -733,7 +682,7 @@ function HolidayRow({
       <div
         aria-hidden="true"
         className={[
-          "rounded text-center font-extrabold leading-none",
+          "rounded-lg text-center font-extrabold leading-none",
           muted ? "bg-grey-00 text-mid-grey-00" : "bg-yellow-100 text-blue-100",
         ].join(" ")}
       >
@@ -759,7 +708,7 @@ function HolidayRow({
           </span>
         )}
         {substitute && (
-          <span className="mt-1.5 inline-flex items-center gap-1 rounded border border-yellow-100 bg-yellow-10 px-2 py-0.5 font-semibold text-blue-100 text-xs">
+          <span className="mt-1.5 inline-flex items-center gap-1 rounded-lg border border-yellow-100 bg-yellow-10 px-2 py-0.5 font-semibold text-blue-100 text-xs">
             Observed: {fmtSubstituteDate(substitute.date)}
           </span>
         )}
@@ -791,7 +740,7 @@ function SubstitutionNotice({
         } for ${year}.`;
 
   return (
-    <div className="mt-10 rounded-r border-blue-100 border-l-4 bg-blue-10 px-5 py-4 text-[15px] text-mid-grey-00">
+    <div className="mt-10 rounded-lg border-blue-100 border-l-4 bg-blue-10 px-5 py-4 text-[15px] text-mid-grey-00">
       <strong className="mb-1 block text-base text-blue-100">
         When a bank holiday falls on a weekend
       </strong>
