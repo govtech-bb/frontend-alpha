@@ -11,7 +11,7 @@ If you were sent home from your job, your employer may owe you severance payment
 You can use this tool if:
 
 - you worked for the same employer for at least **2 years**
-- you were between 16 and 64 years old on your last day at work
+- you were between 16 and 67 years old on your last day at work
 - you were sent home because your job was cut, your workplace was damaged by a disaster, you had no work for a long time, or your employer died
 
 ## How to get your estimate
@@ -20,7 +20,7 @@ You can use this tool if:
 
 You will answer a short set of questions about why you were sent home, when you worked for the employer, and your usual basic pay. We then estimate how much you may be owed.
 
-<a data-start-link href="/work-employment/calculate-severance-pay/start">Start now</a>
+<a data-start-link href="/money-financial-support/calculate-severance-pay/start">Start now</a>
 
 ## Do not wait too long
 

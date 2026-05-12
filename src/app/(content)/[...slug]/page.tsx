@@ -65,6 +65,20 @@ export default async function Page({ params }: ContentPageProps) {
               </Link>
             </div>
           ))}
+          {category.crossLinks?.map((link) => (
+            <div
+              className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
+              key={link.href}
+            >
+              <Link
+                as={NextLink}
+                className="cursor-pointer text-[20px] leading-normal lg:text-3xl"
+                href={link.href}
+              >
+                {link.title}
+              </Link>
+            </div>
+          ))}
         </div>
       </>
     );

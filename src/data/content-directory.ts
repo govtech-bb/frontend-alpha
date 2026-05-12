@@ -183,6 +183,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+    ],
+    crossLinks: [
+      {
+        title: "Find out how much severance payment you are owed",
+        href: "/money-financial-support/calculate-severance-pay",
+      },
+    ],
+  },
+  {
+    title: "Money and financial support",
+    slug: "money-financial-support",
+    description: "Get help with money, benefits, taxes or government payments",
+    pages: [
       {
         title: "Find out how much severance payment you are owed",
         slug: "calculate-severance-pay",
@@ -197,13 +210,6 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
-    ],
-  },
-  {
-    title: "Money and financial support",
-    slug: "money-financial-support",
-    description: "Get help with money, benefits, taxes or government payments",
-    pages: [
       {
         title: "Apply for financial assistance",
         slug: "apply-financial-assistance",

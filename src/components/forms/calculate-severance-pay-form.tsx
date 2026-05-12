@@ -26,7 +26,7 @@ type Step = "q-reason" | "q-years" | "q-pay" | "check" | "result";
 type Reason = "redundancy" | "disaster" | "layoff" | "death" | "other";
 type Period = "weekly" | "monthly";
 
-const SERVICE_PATH = "/work-employment/calculate-severance-pay";
+const SERVICE_PATH = "/money-financial-support/calculate-severance-pay";
 const START_PATH = `${SERVICE_PATH}/start`;
 const SERVICE_TITLE = "Find out how much severance payment you are owed";
 
