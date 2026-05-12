@@ -317,8 +317,6 @@ function BankHolidaysContent() {
     [router, searchParams, currentRealYear]
   );
 
-  // The (content) layout provides StageBanner and the outer container.
-  // Only the page body is rendered here.
   return (
     <main className="max-w-220 pt-6 pb-16">
       <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-0 lg:justify-between mb-6 lg:mb-10">
