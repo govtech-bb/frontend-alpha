@@ -20,4 +20,4 @@ Have these ready before you start:
 - your start date and your last day at work
 - your usual basic pay (weekly or monthly) — do not include overtime or bonuses
 
-<a data-start-link href="/money-financial-support/calculate-severance-pay/form">Start</a>
+<a data-start-link href="/money-financial-support/calculate-severance-pay/form">Start your estimate now</a>

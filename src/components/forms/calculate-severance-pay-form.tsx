@@ -22,8 +22,26 @@ import {
   tieredWeeks,
 } from "@/lib/severance/weeks";
 
-type Step = "q-reason" | "q-years" | "q-pay" | "check" | "result";
-type Reason = "redundancy" | "disaster" | "layoff" | "death" | "other";
+type Step =
+  | "q-employment"
+  | "q-reason"
+  | "q-years"
+  | "q-pay"
+  | "check"
+  | "result";
+type Employment = "yes" | "no";
+
+const EMPLOYMENT_LABELS: Record<Employment, string> = {
+  yes: "Yes",
+  no: "No",
+};
+type Reason =
+  | "redundancy"
+  | "disaster"
+  | "layoff"
+  | "death"
+  | "closure"
+  | "other";
 type Period = "weekly" | "monthly";
 
 const SERVICE_PATH = "/money-financial-support/calculate-severance-pay";
@@ -33,14 +51,15 @@ const SERVICE_TITLE = "Find out how much severance payment you are owed";
 const REASON_LABELS: Record<Reason, string> = {
   redundancy: "My job was cut or made redundant",
   disaster: "A fire, flood, hurricane, or other disaster damaged the workplace",
-  layoff: "I was laid off or put on short time for a long period",
+  layoff: "I was laid off (period of 6 months)",
   death: "Death of employer",
+  closure: "Business closure or reconstruction",
   other: "None of these",
 };
 
 const INELIGIBLE_OTHER = {
   title: "We cannot give you an estimate",
-  body: "This tool covers redundancy, natural disasters, lay-off or short time, and death of employer. If your situation is different, contact the NISSS Severance Payment Department to check what you may be owed.",
+  body: "This tool covers redundancy, natural disasters, lay-off or short time, and death of employer. If your situation is different, contact the NIS Severance Payment Department to check what you may be owed.",
 };
 
 const emptyDate: DateInputValue = { day: "", month: "", year: "" };
@@ -51,13 +70,13 @@ const PERIOD_LABELS: Record<
 > = {
   weekly: {
     adverb: "weekly",
-    choice: "Each week",
+    choice: "Weekly",
     avg: "Average weekly pay",
     payLabel: "Average weekly pay in the last two years (BDS$)",
   },
   monthly: {
     adverb: "monthly",
-    choice: "Each month",
+    choice: "Monthly",
     avg: "Average monthly pay",
     payLabel: "Average monthly pay in the last two years (BDS$)",
   },
@@ -120,7 +139,8 @@ function formatDate(iso: string): string {
 
 export default function CalculateSeverancePayForm() {
   const router = useRouter();
-  const [step, setStep] = useState<Step>("q-reason");
+  const [step, setStep] = useState<Step>("q-employment");
+  const [employment, setEmployment] = useState<Employment | "">("");
   const [reason, setReason] = useState<Reason | "">("");
   const [start, setStart] = useState<DateInputValue>(emptyDate);
   const [end, setEnd] = useState<DateInputValue>(emptyDate);
@@ -132,6 +152,7 @@ export default function CalculateSeverancePayForm() {
   const simpleAvgNum = Number.isFinite(parsedAvg) ? parsedAvg : 0;
   const periodLabels = PERIOD_LABELS[period];
 
+  const [employmentError, setEmploymentError] = useState("");
   const [reasonError, setReasonError] = useState("");
   const [startError, setStartError] = useState("");
   const [endError, setEndError] = useState("");
@@ -151,6 +172,19 @@ export default function CalculateSeverancePayForm() {
   const avgWeekly = avgWeeklyFromSimple(simpleAvgNum, period, endYear);
   const entitledWeeks = tieredWeeks(years);
   const severance = entitledWeeks * avgWeekly;
+
+  function submitEmployment() {
+    setEmploymentError("");
+    if (!employment) {
+      setEmploymentError("Select yes or no");
+      return;
+    }
+    if (employment === "yes") {
+      go("result");
+      return;
+    }
+    go("q-reason");
+  }
 
   function submitReason() {
     setReasonError("");
@@ -208,7 +242,9 @@ export default function CalculateSeverancePayForm() {
   }
 
   function restart() {
-    setStep("q-reason");
+    setStep("q-employment");
+    setEmployment("");
+    setEmploymentError("");
     setReason("");
     setStart(emptyDate);
     setEnd(emptyDate);
@@ -223,6 +259,53 @@ export default function CalculateSeverancePayForm() {
 
   return (
     <div className="container py-8 lg:py-16">
+      {step === "q-employment" && (
+        <form
+          className="flex flex-col gap-6"
+          noValidate
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitEmployment();
+          }}
+        >
+          {employmentError && (
+            <ErrorSummary
+              errors={[{ text: employmentError, target: "employment-yes" }]}
+              title="There is a problem"
+            />
+          )}
+          <ServiceTitle />
+          <Heading as="h1">Are you self-employed?</Heading>
+          <RadioGroup
+            error={employmentError || undefined}
+            label="Choose one"
+            onValueChange={(v) => setEmployment(v as Employment)}
+            value={employment || undefined}
+          >
+            {(Object.entries(EMPLOYMENT_LABELS) as [Employment, string][]).map(
+              ([value, label]) => (
+                <Radio
+                  id={`employment-${value}`}
+                  key={value}
+                  label={label}
+                  value={value}
+                />
+              )
+            )}
+          </RadioGroup>
+          <div className="flex gap-3">
+            <Button
+              onClick={() => router.push(START_PATH)}
+              type="button"
+              variant="secondary"
+            >
+              Previous
+            </Button>
+            <Button type="submit">Continue</Button>
+          </div>
+        </form>
+      )}
+
       {step === "q-reason" && (
         <form
           className="flex flex-col gap-6"
@@ -259,7 +342,7 @@ export default function CalculateSeverancePayForm() {
           </RadioGroup>
           <div className="flex gap-3">
             <Button
-              onClick={() => router.push(START_PATH)}
+              onClick={() => go("q-employment")}
               type="button"
               variant="secondary"
             >
@@ -357,7 +440,7 @@ export default function CalculateSeverancePayForm() {
           <Heading as="h1">Your insurable earnings</Heading>
           <Text as="p" size="body">
             Enter your usual basic pay. We'll use it as the average over the
-            last 104 weeks.
+            last 104 weeks (2 years).
           </Text>
 
           <RadioGroup
@@ -366,8 +449,8 @@ export default function CalculateSeverancePayForm() {
             onValueChange={(v) => setPeriod(v as Period)}
             value={period}
           >
-            <Radio id="period-weekly" label="Each week" value="weekly" />
-            <Radio id="period-monthly" label="Each month" value="monthly" />
+            <Radio id="period-weekly" label="Weekly" value="weekly" />
+            <Radio id="period-monthly" label="Monthly" value="monthly" />
           </RadioGroup>
 
           <div className="max-w-[16rem]">
@@ -488,7 +571,23 @@ export default function CalculateSeverancePayForm() {
         <div className="flex flex-col gap-6">
           <Breadcrumbs />
           <ServiceTitle />
-          {reason === "other" && (
+          {employment === "yes" && (
+            <div className="rounded-sm border border-grey-00 p-4">
+              <Heading as="h2">
+                You do not qualify for severance payment
+              </Heading>
+              <Text as="p" className="mt-1 text-mid-grey-00" size="caption">
+                Based on the information you gave us
+              </Text>
+              <Text as="p" className="mt-4" size="body">
+                Severance payment is only available to employees who were sent
+                home from a job. If your situation is different, contact the NIS
+                Severance Payment Department to check what support you may be
+                owed.
+              </Text>
+            </div>
+          )}
+          {employment !== "yes" && reason === "other" && (
             <div className="rounded-sm border border-grey-00 p-4">
               <Heading as="h2">{INELIGIBLE_OTHER.title}</Heading>
               <Text as="p" className="mt-1 text-mid-grey-00" size="caption">
@@ -500,7 +599,7 @@ export default function CalculateSeverancePayForm() {
             </div>
           )}
 
-          {reason !== "other" && years < 2 && (
+          {employment !== "yes" && reason !== "other" && years < 2 && (
             <div className="rounded-sm border border-grey-00 p-4">
               <Heading as="h2">You may not qualify yet</Heading>
               <Text as="p" className="mt-1 text-mid-grey-00" size="caption">
@@ -511,75 +610,79 @@ export default function CalculateSeverancePayForm() {
                 worked for the same employer for at least{" "}
                 <strong>2 complete years (104 weeks)</strong> without a
                 significant break in service. If you are close to 2 years,
-                contact the NISSS Severance Payment Department.
+                contact the NIS Severance Payment Department.
               </Text>
             </div>
           )}
 
-          {reason && reason !== "other" && years >= 2 && (
-            <>
-              <div className="rounded-sm bg-green-00 p-m text-white-00">
-                <Heading as="h2" className="text-white-00">
-                  Your severance payment estimate
-                </Heading>
-                <p className="wrap-break-word mt-1 font-bold text-3xl">
-                  {money(severance)}
-                </p>
-              </div>
+          {employment !== "yes" &&
+            reason &&
+            reason !== "other" &&
+            years >= 2 && (
+              <>
+                <div className="rounded-sm bg-green-00 p-m text-white-00">
+                  <Heading as="h2" className="text-white-00">
+                    Your severance payment estimate
+                  </Heading>
+                  <p className="wrap-break-word mt-1 font-bold text-3xl">
+                    {money(severance)}
+                  </p>
+                </div>
 
-              <Text as="p" size="body">
-                The same calculation applies whether you were made redundant,
-                your workplace was damaged by a disaster, you were laid off or
-                put on short time for a long period, or your employer died.
-              </Text>
+                <div className="border-red-00 border-l-4 bg-red-10 p-4">
+                  <Text as="p" size="body">
+                    <strong>
+                      This is the estimated amount you may be entitled to.
+                    </strong>{" "}
+                    It is calculated under the Severance Payments Act (Cap.
+                    355A). Your contract of employment may entitle you to more.
+                  </Text>
+                  <Text as="p" className="mt-2" size="body">
+                    This is not legal advice. Contact the{" "}
+                    <strong>NIS Severance Payment Department</strong> if you are
+                    unsure about your entitlement.
+                  </Text>
+                </div>
 
-              <div className="border-yellow-00 border-l-4 bg-yellow-10 p-4">
                 <Text as="p" size="body">
-                  <strong>
-                    This is the estimated amount you may be entitled to.
-                  </strong>{" "}
-                  It is calculated under the Severance Payments Act (Cap. 355A).
-                  Your contract of employment may entitle you to more.
+                  The same calculation applies whether you were made redundant,
+                  your workplace was damaged by a disaster, you were laid off or
+                  put on short time for a long period, your employer died, or
+                  the business closed or was reconstructed.
                 </Text>
-                <Text as="p" className="mt-2" size="body">
-                  This is not legal advice. Contact the{" "}
-                  <strong>NISSS Severance Payment Department</strong> if you are
-                  unsure about your entitlement.
-                </Text>
-              </div>
 
-              {years > 33 && (
-                <Text as="p" className="text-mid-grey-00" size="caption">
-                  Under the Severance Payments Act, only the most recent 33
-                  years of service are counted.
-                </Text>
-              )}
+                {years > 33 && (
+                  <Text as="p" className="text-mid-grey-00" size="caption">
+                    Under the Severance Payments Act, only the most recent 33
+                    years of service are counted.
+                  </Text>
+                )}
 
-              <Heading as="h2">What happens after you file</Heading>
-              <ol className="list-decimal space-y-2 pl-7">
-                <li>NIS writes to your employer on your behalf.</li>
+                <Heading as="h2">What happens after you file</Heading>
+                <ol className="list-decimal space-y-2 pl-7">
+                  <li>NIS writes to your employer on your behalf.</li>
 
-                <li>
-                  Once your claim is approved, NIS sends you a letter by a{" "}
-                  <strong>registered post</strong>.
-                </li>
-                <li>
-                  You pay a <strong>BDS$5.65</strong> postage fee for the
-                  registered letter.
-                </li>
-                <li>
-                  You have <strong>30 days</strong> to respond to the letter.
-                </li>
-                <li>
-                  Return the <strong>registered pink slip</strong> from the post
-                  office, together with a copy of the letter, before the 30 days
-                  are up.
-                </li>
-              </ol>
-            </>
-          )}
+                  <li>
+                    Once your claim is approved, NIS sends you a letter by a{" "}
+                    <strong>registered post</strong>.
+                  </li>
+                  <li>
+                    You pay a <strong>BDS$4.65</strong> postage fee for the
+                    registered letter.
+                  </li>
+                  <li>
+                    You have <strong>30 days</strong> to respond to the letter.
+                  </li>
+                  <li>
+                    Return the <strong>registered pink slip</strong> from the
+                    post office, together with a copy of the letter, before the
+                    30 days are up.
+                  </li>
+                </ol>
+              </>
+            )}
 
-          <div className="border-red-00 border-l-4 bg-red-10 p-4">
+          <div className="border-yellow-00 border-l-4 bg-yellow-10 p-4">
             <Text as="p" size="body">
               <strong>Keep your pink slip safe</strong>
             </Text>
@@ -591,9 +694,9 @@ export default function CalculateSeverancePayForm() {
 
           <Heading as="h2">Need help or advice?</Heading>
           <Text as="p" size="body">
-            Contact the <strong>NISSS Severance Payment Department</strong>.
-            They can give you free advice and help you claim if your employer
-            does not pay.
+            Contact the <strong>NIS Severance Payment Department</strong>. They
+            can give you free advice and help you claim if your employer does
+            not pay.
           </Text>
           <div>
             <Button onClick={restart} type="button" variant="secondary">
