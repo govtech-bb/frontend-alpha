@@ -4,26 +4,13 @@ import type { ReactNode } from "react";
 
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { StageBanner } from "@/components/stage-banner";
-
-export interface FeaturedItem {
-  title: string;
-  href: string;
-  description: string;
-  image: string;
-  imageAlt?: string;
-}
-
-export interface MinistryService {
-  title: string;
-  href: string;
-  description: ReactNode;
-}
-
-export type ContactItem =
-  | { label: string; type: "phone"; value: string }
-  | { label: string; type: "email"; value: string }
-  | { label: string; type: "website"; value: string; display?: string }
-  | { label: string; type?: "text"; value: ReactNode };
+import type {
+  AssociatedDepartmentGroup,
+  ContactItem,
+  FeaturedItem,
+  Minister,
+  MinistryService,
+} from "@/data/mda-types";
 
 function renderContactValue(item: ContactItem): ReactNode {
   if (item.type === "phone") {
@@ -71,12 +58,6 @@ function renderContactValue(item: ContactItem): ReactNode {
   return <span className="text-black-00">{item.value}</span>;
 }
 
-export interface Minister {
-  name: string;
-  role: string;
-  photo?: string;
-}
-
 export interface MinistryPageProps {
   title: string;
   intro: ReactNode;
@@ -89,11 +70,6 @@ export interface MinistryPageProps {
   contact?: ContactItem[];
   associatedDepartments?: AssociatedDepartmentGroup[];
   originalSource?: string;
-}
-
-export interface AssociatedDepartmentGroup {
-  category?: string;
-  items: string[];
 }
 
 export function MinistryPage({

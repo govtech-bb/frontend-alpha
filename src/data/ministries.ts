@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 
 import type {
+  AssociatedDepartmentGroup,
   ContactItem,
   FeaturedItem,
   Minister,
   MinistryService,
-} from "@/components/ministry/ministry-page";
+} from "@/data/mda-types";
 
 export type MinistryCategory = "ministerial" | "non-ministerial" | "agency";
 
@@ -24,11 +25,6 @@ export interface Ministry {
   contact?: ContactItem[];
   associatedDepartments?: AssociatedDepartmentGroup[];
   originalSource?: string;
-}
-
-export interface AssociatedDepartmentGroup {
-  category?: string;
-  items: string[];
 }
 
 // Source: https://www.gov.bb/ministries (verified)

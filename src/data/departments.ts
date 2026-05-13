@@ -1,7 +1,4 @@
-import type {
-  ContactItem,
-  Minister,
-} from "@/components/ministry/ministry-page";
+import type { ContactItem, Minister } from "@/data/mda-types";
 
 export interface Department {
   slug: string;
