@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 
-import { ContactTable } from "@/components/department/contact-table";
+import { markdownComponents } from "@/components/markdown-content";
 import { MinistryPage } from "@/components/ministry/ministry-page";
 import { DEPARTMENTS, getDepartmentBySlug } from "@/data/departments";
+import { getDepartmentBody } from "@/lib/department-body";
+import rehypeSectionise from "@/lib/rehype-sectionise";
 
 type Params = { slug: string };
 
@@ -31,12 +36,17 @@ export default async function DepartmentDetailPage({
   const department = getDepartmentBySlug(slug);
   if (!department) notFound();
 
-  const body = department.contactTable ? (
-    <ContactTable
-      address={department.contactTable.address}
-      rows={department.contactTable.rows}
-      title={department.name}
-    />
+  const md = await getDepartmentBody(slug);
+  const body = md ? (
+    <div className="space-y-6 lg:space-y-8">
+      <ReactMarkdown
+        components={markdownComponents}
+        rehypePlugins={[rehypeRaw, rehypeSectionise]}
+        remarkPlugins={[remarkGfm]}
+      >
+        {md.content}
+      </ReactMarkdown>
+    </div>
   ) : undefined;
 
   return (
@@ -44,6 +54,7 @@ export default async function DepartmentDetailPage({
       body={body}
       contact={department.contact}
       intro={department.intro}
+      originalSource={department.originalSource}
       title={department.name}
     />
   );

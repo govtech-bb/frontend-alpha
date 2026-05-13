@@ -1,0 +1,3 @@
+To provide a lunch which is of high nutritional value at a low cost to school children and at the same time ensure that this objective is achieved in an environment that is congenial to good work ethics and meets the highest health standards.
+
+Manager
