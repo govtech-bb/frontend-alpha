@@ -124,11 +124,11 @@ export const MINISTRIES: Ministry[] = [
     },
     contact: [
       { label: "Email", type: "email", value: "ps@oag.gov.bb" },
-      { label: "Telephone", type: "phone", value: "535-0467" },
-      { label: "Fax", type: "phone", value: "535-0559" },
-      { label: "Fax", type: "phone", value: "535-0560" },
-      { label: "Fax", type: "phone", value: "535-0561" },
-      { label: "Fax", type: "phone", value: "535-0562" },
+      { label: "Telephone", type: "phone", value: "(246) 535-0467" },
+      { label: "Fax", type: "phone", value: "(246) 535-0559" },
+      { label: "Fax", type: "phone", value: "(246) 535-0560" },
+      { label: "Fax", type: "phone", value: "(246) 535-0561" },
+      { label: "Fax", type: "phone", value: "(246) 535-0562" },
       { label: "Website", type: "website", value: "http://www.oag.gov.bb/" },
       {
         label: "Address",
@@ -359,8 +359,8 @@ export const MINISTRIES: Ministry[] = [
         type: "email",
         value: "cleanandgreenbarbados@gmail.com",
       },
-      { label: "Telephone", type: "phone", value: "1(246)535-4350" },
-      { label: "Fax", type: "phone", value: "1(246)535-4377" },
+      { label: "Telephone", type: "phone", value: "(246) 535-4350" },
+      { label: "Fax", type: "phone", value: "(246) 535-4377" },
       {
         label: "Website",
         type: "website",
@@ -435,9 +435,9 @@ export const MINISTRIES: Ministry[] = [
       },
     ],
     contact: [
-      { label: "Telephone", type: "phone", value: "535-5300" },
-      { label: "Fax", type: "phone", value: "535-5344" },
-      { label: "Fax", type: "phone", value: "535-1368" },
+      { label: "Telephone", type: "phone", value: "(246) 535-5300" },
+      { label: "Fax", type: "phone", value: "(246) 535-5344" },
+      { label: "Fax", type: "phone", value: "(246) 535-1368" },
       {
         label: "Website",
         type: "website",
@@ -517,7 +517,7 @@ export const MINISTRIES: Ministry[] = [
     ],
     contact: [
       { label: "Email", type: "email", value: "ps-secretary@health.gov.bb" },
-      { label: "Telephone", type: "phone", value: "536-3800" },
+      { label: "Telephone", type: "phone", value: "(246) 536-3800" },
       { label: "Website", type: "website", value: "http://www.health.gov.bb/" },
       {
         label: "Address",
@@ -632,8 +632,8 @@ export const MINISTRIES: Ministry[] = [
     contact: [
       { label: "Email", type: "email", value: "homeaffairs@mha.gov.bb" },
       { label: "Email", type: "email", value: "haffairs@mha.gov.bb" },
-      { label: "Telephone", type: "phone", value: "535-7260" },
-      { label: "Fax", type: "phone", value: "535-7286" },
+      { label: "Telephone", type: "phone", value: "(246) 535-7260" },
+      { label: "Fax", type: "phone", value: "(246) 535-7286" },
       {
         label: "Address",
         value:
@@ -798,8 +798,8 @@ export const MINISTRIES: Ministry[] = [
     ],
     contact: [
       { label: "Email", type: "email", value: "ps@labour.gov.bb" },
-      { label: "Telephone", type: "phone", value: "535-1400" },
-      { label: "Fax", type: "phone", value: "425-0266" },
+      { label: "Telephone", type: "phone", value: "(246) 535-1400" },
+      { label: "Fax", type: "phone", value: "(246) 425-0266" },
       { label: "Website", type: "website", value: "https://labour.gov.bb/" },
       {
         label: "Address",
@@ -865,9 +865,12 @@ export const MINISTRIES: Ministry[] = [
     contact: [
       { label: "Email", type: "email", value: "socialcare@barbados.gov.bb" },
       { label: "Email", type: "email", value: "ps.people@barbados.gov.bb" },
-      { label: "Telephone", type: "phone", value: "535-1600/1/2/3" },
-      { label: "Fax", type: "phone", value: "535-1694" },
-      { label: "Fax", type: "phone", value: "535-1693" },
+      { label: "Telephone", type: "phone", value: "(246) 535-1600" },
+      { label: "Telephone", type: "phone", value: "(246) 535-1601" },
+      { label: "Telephone", type: "phone", value: "(246) 535-1602" },
+      { label: "Telephone", type: "phone", value: "(246) 535-1603" },
+      { label: "Fax", type: "phone", value: "(246) 535-1694" },
+      { label: "Fax", type: "phone", value: "(246) 535-1693" },
       {
         label: "Website",
         type: "website",
@@ -961,9 +964,9 @@ export const MINISTRIES: Ministry[] = [
       },
     ],
     contact: [
-      { label: "Telephone", type: "phone", value: "535-7500" },
-      { label: "Fax", type: "phone", value: "436-4828" },
-      { label: "Fax", type: "phone", value: "535-3342" },
+      { label: "Telephone", type: "phone", value: "(246) 535-7500" },
+      { label: "Fax", type: "phone", value: "(246) 436-4828" },
+      { label: "Fax", type: "phone", value: "(246) 535-3342" },
       {
         label: "Address",
         value: [
@@ -1108,7 +1111,7 @@ export const MINISTRIES: Ministry[] = [
     ],
     contact: [
       { label: "Email", type: "email", value: "ps.mysce@barbados.gov.bb" },
-      { label: "Telephone", type: "phone", value: "1(246)535-3835" },
+      { label: "Telephone", type: "phone", value: "(246) 535-3835" },
       { label: "Address", value: "Sky Mall, Haggatt Hall, St. Michael" },
     ],
     originalSource: "https://www.gov.bb/Ministries/culture-sports-youth",

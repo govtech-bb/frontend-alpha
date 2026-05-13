@@ -5,8 +5,8 @@ import NextLink from "next/link";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
-import type { Department } from "@/data/departments";
 import { DEPARTMENTS } from "@/data/departments";
+import { filterByQuery } from "@/lib/search-filter";
 
 export const metadata: Metadata = {
   title: "Government Departments",
@@ -16,17 +16,6 @@ const ALL_DEPARTMENTS = [...DEPARTMENTS].sort((a, b) =>
   a.name.localeCompare(b.name)
 );
 
-function filterDepartments(query: string): Department[] {
-  const trimmed = query.trim().toLowerCase();
-  if (!trimmed) return ALL_DEPARTMENTS;
-
-  return ALL_DEPARTMENTS.filter(
-    (d) =>
-      d.name.toLowerCase().includes(trimmed) ||
-      (d.shortDescription?.toLowerCase().includes(trimmed) ?? false)
-  );
-}
-
 export default async function DepartmentsPage({
   searchParams,
 }: {
@@ -34,7 +23,7 @@ export default async function DepartmentsPage({
 }) {
   const { q = "" } = await searchParams;
   const query = q.trim();
-  const departments = filterDepartments(query);
+  const departments = filterByQuery(ALL_DEPARTMENTS, query);
 
   return (
     <>

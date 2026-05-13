@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import { markdownComponents } from "@/components/markdown-content";
 import { MinistryPage } from "@/components/ministry/ministry-page";
 import { DEPARTMENTS, getDepartmentBySlug } from "@/data/departments";
-import { getDepartmentBody } from "@/lib/department-body";
+import { getContentBody } from "@/lib/content-body";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 
 interface Params {
@@ -38,7 +38,7 @@ export default async function DepartmentDetailPage({
   const department = getDepartmentBySlug(slug);
   if (!department) notFound();
 
-  const md = await getDepartmentBody(slug);
+  const md = await getContentBody("departments", slug);
   const body = md ? (
     <div className="space-y-6 lg:space-y-8">
       <ReactMarkdown

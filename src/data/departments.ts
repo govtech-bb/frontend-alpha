@@ -376,7 +376,8 @@ export const DEPARTMENTS: Department[] = [
     intro:
       "To be the leader in criminal justice research and the development of up-to-date relevant crime statistics while delivering professional and quality service to members of the public. The unit executes systematic collection, analysis, and research on crime and criminal justice matters to inform policy decisions regarding crime prevention and reduction.",
     contact: [
-      { label: "Telephone", type: "phone", value: "(246) 536-0800-0808" },
+      { label: "Telephone", type: "phone", value: "(246) 536-0800" },
+      { label: "Telephone", type: "phone", value: "(246) 536-0808" },
       {
         label: "Website",
         type: "website",
@@ -456,7 +457,8 @@ export const DEPARTMENTS: Department[] = [
       "The department administers the Miscellaneous Controls Act, the Control Standards Act, and the Weights and Measures Act, ensuring fair trade and consumer protection across Barbados.",
     contact: [
       { label: "Email", type: "email", value: "MCT.commerce@barbados.gov.bb" },
-      { label: "Telephone", type: "phone", value: "(246) 535-7001/7019" },
+      { label: "Telephone", type: "phone", value: "(246) 535-7001" },
+      { label: "Telephone", type: "phone", value: "(246) 535-7019" },
       { label: "Fax", type: "phone", value: "(246) 535-7021" },
       {
         label: "Website",
@@ -629,7 +631,7 @@ export const DEPARTMENTS: Department[] = [
     },
     contact: [
       { label: "Email", type: "email", value: "errol.maynard@barbados.gov.bb" },
-      { label: "Emergency", type: "phone", value: "311" },
+      { label: "Emergency", value: "311" },
       { label: "Telephone", type: "phone", value: "(246) 535-7824" },
       { label: "Fax", type: "phone", value: "(246) 435-0794" },
       {
@@ -1187,7 +1189,9 @@ export const DEPARTMENTS: Department[] = [
     shortDescription:
       "Provides independent audit oversight of government financial operations in Barbados.",
     contact: [
-      { label: "Telephone", type: "phone", value: "(246) 535-4254/5/6" },
+      { label: "Telephone", type: "phone", value: "(246) 535-4254" },
+      { label: "Telephone", type: "phone", value: "(246) 535-4255" },
+      { label: "Telephone", type: "phone", value: "(246) 535-4256" },
       { label: "Website", type: "website", value: "https://bao.gov.bb" },
       {
         label: "Address",
@@ -1364,7 +1368,8 @@ export const DEPARTMENTS: Department[] = [
       "Dedicated to developing sports in Barbados and responsible for sports development programmes at the national level.",
     contact: [
       { label: "Email", type: "email", value: "nsc.bdos@barbados.gov.bb" },
-      { label: "Telephone", type: "phone", value: "(246) 535-9601/9602" },
+      { label: "Telephone", type: "phone", value: "(246) 535-9601" },
+      { label: "Telephone", type: "phone", value: "(246) 535-9602" },
       { label: "Fax", type: "phone", value: "(246) 535-9659" },
       { label: "Website", type: "website", value: "http://www.nsc.gov.bb" },
       {

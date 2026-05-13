@@ -2,18 +2,23 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 
-const departmentContentDir = path.join(
-  process.cwd(),
-  "src",
-  "content",
-  "departments"
-);
+type ContentBody = {
+  frontmatter: Record<string, unknown>;
+  content: string;
+};
 
-export async function getDepartmentBody(
+export async function getContentBody(
+  subdir: string,
   slug: string
-): Promise<{ frontmatter: Record<string, unknown>; content: string } | null> {
+): Promise<ContentBody | null> {
   try {
-    const filePath = path.join(departmentContentDir, `${slug}.md`);
+    const filePath = path.join(
+      process.cwd(),
+      "src",
+      "content",
+      subdir,
+      `${slug}.md`
+    );
     const file = await fs.readFile(filePath, "utf8");
     const { data, content } = matter(file);
     return { frontmatter: data, content };

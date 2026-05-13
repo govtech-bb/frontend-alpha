@@ -5,8 +5,8 @@ import NextLink from "next/link";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
-import type { Ministry } from "@/data/ministries";
 import { getMinistriesByCategory } from "@/data/ministries";
+import { filterByQuery } from "@/lib/search-filter";
 
 export const metadata: Metadata = {
   title: "Departments and ministries",
@@ -37,16 +37,11 @@ const ALL_GROUPS = [
 ].filter((group) => group.items.length > 0);
 
 function filterMinistries(query: string) {
-  const trimmed = query.trim().toLowerCase();
-  if (!trimmed) return ALL_GROUPS;
+  if (!query.trim()) return ALL_GROUPS;
 
   return ALL_GROUPS.map((group) => ({
     ...group,
-    items: group.items.filter(
-      (item: Ministry) =>
-        item.name.toLowerCase().includes(trimmed) ||
-        (item.shortDescription?.toLowerCase().includes(trimmed) ?? false)
-    ),
+    items: filterByQuery(group.items, query),
   })).filter((group) => group.items.length > 0);
 }
 
