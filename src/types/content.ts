@@ -20,9 +20,16 @@ export interface PageType {
   }[];
 }
 
-export interface InformationContent {
+export type CrossLink = {
+  title: string;
+  href: string;
+};
+
+export type InformationContent = {
+
   title: string;
   description?: string;
   slug: string;
   pages: PageType[];
-}
+  crossLinks?: CrossLink[];
+};
