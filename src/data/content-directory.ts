@@ -654,8 +654,13 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description:
           "Answer a few questions about your Crop Over event and get a tailored checklist of permits, lead times, and the agencies to contact.",
-        type: "component",
-        href: "/crop-over-permits",
+        subPages: [
+          {
+            slug: "form",
+            title: "Find the permits you need for a Crop Over event",
+            type: "component",
+          },
+        ],
       },
       // {
       //   title:
