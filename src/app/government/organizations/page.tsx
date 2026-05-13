@@ -13,16 +13,20 @@ export const metadata: Metadata = {
   title: "Departments, agencies and public bodies",
 };
 
-type Org = {
+interface Org {
   slug: string;
   name: string;
   shortDescription?: string;
   href: string;
-};
+}
 
 const byName = (a: Org, b: Org) => a.name.localeCompare(b.name);
 
-const ministerial: Org[] = getMinistriesByCategory("ministerial")
+const ministries: Org[] = [
+  ...getMinistriesByCategory("ministerial"),
+  ...getMinistriesByCategory("non-ministerial"),
+  ...getMinistriesByCategory("agency"),
+]
   .map((m) => ({
     slug: m.slug,
     name: m.name,
@@ -31,51 +35,27 @@ const ministerial: Org[] = getMinistriesByCategory("ministerial")
   }))
   .sort(byName);
 
-const nonMinisterial: Org[] = getMinistriesByCategory("non-ministerial")
-  .map((m) => ({
-    slug: m.slug,
-    name: m.name,
-    shortDescription: m.shortDescription,
-    href: `/ministries/${m.slug}`,
-  }))
-  .sort(byName);
-
-const agenciesAndBodies: Org[] = [
-  ...getMinistriesByCategory("agency").map((m) => ({
-    slug: m.slug,
-    name: m.name,
-    shortDescription: m.shortDescription,
-    href: `/ministries/${m.slug}`,
-  })),
-  ...DEPARTMENTS.map((d) => ({
-    slug: d.slug,
-    name: d.name,
-    shortDescription: d.shortDescription,
-    href: `/departments/${d.slug}`,
-  })),
-].sort(byName);
+const departments: Org[] = DEPARTMENTS.map((d) => ({
+  slug: d.slug,
+  name: d.name,
+  shortDescription: d.shortDescription,
+  href: `/departments/${d.slug}`,
+})).sort(byName);
 
 const ALL_GROUPS = [
   {
-    id: "ministerial-departments",
-    title: "Ministerial departments",
+    id: "ministries",
+    title: "Ministries",
     description:
-      "Ministerial departments are led by a government minister and deal with policy.",
-    items: ministerial,
+      "Ministries led by a government minister and dealing with policy.",
+    items: ministries,
   },
   {
-    id: "non-ministerial-departments",
-    title: "Non-ministerial departments",
-    description:
-      "Non-ministerial departments are headed by senior public servants, not ministers.",
-    items: nonMinisterial,
-  },
-  {
-    id: "agencies-and-public-bodies",
-    title: "Agencies and other public bodies",
+    id: "departments",
+    title: "Departments",
     description:
       "Statutory bodies, agencies, departments and public corporations that work with government.",
-    items: agenciesAndBodies,
+    items: departments,
   },
 ].filter((group) => group.items.length > 0);
 
@@ -168,39 +148,35 @@ export default async function OrganizationsPage({
                 {groups.map((group) => (
                   <section
                     aria-labelledby={`${group.id}-heading`}
+                    className="grid scroll-mt-l grid-cols-1 gap-l md:grid-cols-3"
+                    id={group.id}
                     key={group.id}
                   >
-                    <Heading
-                      as="h2"
-                      className="mb-xs border-teal-40 border-b-4 pb-xs"
-                      id={`${group.id}-heading`}
-                    >
-                      {group.title}{" "}
-                      <span className="font-normal text-mid-grey-00">
-                        ({group.items.length})
-                      </span>
-                    </Heading>
-                    <Text as="p" className="mb-s text-mid-grey-00">
-                      {group.description}
-                    </Text>
-                    <ul className="flex flex-col">
+                    <div className="md:col-span-1">
+                      <Heading
+                        as="h2"
+                        className="text-[20px] leading-tight"
+                        id={`${group.id}-heading`}
+                      >
+                        {group.title}
+                      </Heading>
+                      <p className="mt-xs font-bold text-[96px] leading-none">
+                        {group.items.length}
+                      </p>
+                    </div>
+                    <ul className="flex flex-col md:col-span-2">
                       {group.items.map((item) => (
                         <li
-                          className="flex flex-col gap-xxs border-grey-00 border-b py-s first:pt-xs"
+                          className="border-grey-00 border-b py-s first:pt-0"
                           key={item.href}
                         >
                           <Link
                             as={NextLink}
-                            className="text-[20px] leading-normal"
+                            className="text-[19px] leading-normal"
                             href={item.href}
                           >
                             {item.name}
                           </Link>
-                          {item.shortDescription && (
-                            <Text as="p" className="text-mid-grey-00">
-                              {item.shortDescription}
-                            </Text>
-                          )}
                         </li>
                       ))}
                     </ul>
