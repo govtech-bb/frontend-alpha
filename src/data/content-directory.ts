@@ -263,6 +263,27 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     ],
   },
   {
+    title: "Pensions and Gratuities",
+    slug: "pensions-and-gratuities",
+    description:
+      "Estimate your public sector pension and find out about retirement ages and pensionable service",
+    pages: [
+      {
+        title: "Calculate your pension",
+        slug: "calculate-your-pension",
+        description:
+          "Estimate your public sector pension and gratuity (lump sum) based on your pensionable service and last annual salary.",
+        subPages: [
+          {
+            slug: "form",
+            title: "Pension calculator",
+            type: "component",
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: "Youth and Community Programmes",
     slug: "youth-and-community",
     description:

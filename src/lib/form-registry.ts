@@ -52,6 +52,9 @@ export const FORM_COMPONENTS = {
   "calculate-severance-pay": lazy(
     () => import("@/components/forms/calculate-severance-pay-form")
   ),
+  "calculate-your-pension": lazy(
+    () => import("@/components/forms/calculate-your-pension-form")
+  ),
   "crop-over-permits": lazy(
     () => import("@/components/forms/crop-over-permits-form")
   ),
@@ -81,6 +84,7 @@ export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
   "apply-for-conductor-licence": "apply-for-conductor-licence",
   "sell-goods-services-beach-park": "sell-goods-services-beach-park",
   "calculate-severance-pay": "calculate-severance-pay",
+  "calculate-your-pension": "calculate-your-pension",
   "crop-over-permits": "crop-over-permits",
 };
 
