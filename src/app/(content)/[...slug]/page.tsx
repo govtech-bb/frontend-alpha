@@ -7,6 +7,7 @@ import { YouthOpportunityForm } from "@/app/youth/opportunities/[id]/form/_compo
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { MarkdownContent } from "@/components/markdown-content";
 import { OpportunityDetail } from "@/components/opportunity-detail";
 import { PageViewTracker } from "@/components/page-view-tracker";
@@ -26,9 +27,9 @@ import { findSubPageTitleFromPath } from "@/lib/utils";
 
 const opportunities = opportunitiesData as Opportunity[];
 
-type ContentPageProps = {
+interface ContentPageProps {
   params: Promise<{ slug: string[] }>;
-};
+}
 
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
@@ -255,27 +256,30 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    const opportunity = opportunities.find(
-      (opp) => opp.id === opportunitySlug
-    );
+    const opportunity = opportunities.find((opp) => opp.id === opportunitySlug);
     if (!opportunity) {
       notFound();
     }
 
     return (
-      <Suspense
-        fallback={
-          <div className="container py-8 lg:py-16">
-            <FormSkeleton />
-          </div>
-        }
-      >
-        <YouthOpportunityForm
-          notificationEmail={opportunity.contact?.email ?? null}
-          opportunityId={opportunity.id}
-          opportunityTitle={opportunity.title}
-        />
-      </Suspense>
+      <>
+        <div className="container py-4 lg:py-6">
+          <Breadcrumbs />
+        </div>
+        <Suspense
+          fallback={
+            <div className="container py-8 lg:py-16">
+              <FormSkeleton />
+            </div>
+          }
+        >
+          <YouthOpportunityForm
+            notificationEmail={opportunity.contact?.email ?? null}
+            opportunityId={opportunity.id}
+            opportunityTitle={opportunity.title}
+          />
+        </Suspense>
+      </>
     );
   }
 
@@ -288,9 +292,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
   // Opportunity application form (4 slugs)
   if (slug.length === 4 && slug[3] === "form") {
     const [, , opportunitySlug] = slug;
-    const opportunity = opportunities.find(
-      (opp) => opp.id === opportunitySlug
-    );
+    const opportunity = opportunities.find((opp) => opp.id === opportunitySlug);
     if (opportunity) {
       const title = `Apply for ${opportunity.title}`;
       const description = `Apply for ${opportunity.title}. ${opportunity.description}`;
@@ -372,7 +374,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
         openGraph: {
           title: subPageTitle,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: { title: subPageTitle, images: [`${SITE_URL}/og-image.png`] },
       };
@@ -388,7 +397,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -448,7 +464,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -473,7 +496,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: category.title,
           description: category.description || "",
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: category.title,

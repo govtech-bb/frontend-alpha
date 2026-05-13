@@ -14,6 +14,11 @@ export type OpportunityCategory =
 export interface Opportunity {
   id: string;
   title: string;
+  /**
+   * Short, plain-language sentence shown directly under the title on the
+   * detail page. Acts as a lede / introductory summary.
+   */
+  summary?: string;
   category: OpportunityCategory;
   description: string;
   tags: string[];

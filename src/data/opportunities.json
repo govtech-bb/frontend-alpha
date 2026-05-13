@@ -2,10 +2,18 @@
   {
     "id": "cip",
     "title": "Community Impact Programme (CIP)",
+    "summary": "Short, hands-on training courses in trades, creative work and wellness, run two sessions a week at community centres across Barbados.",
     "category": "program",
     "subcategory": "skills-trades-vocational-training",
     "description": "Practical demand-driven skill training in 25+ courses across trades, creative services, and wellness. Two sessions/week, 2-3 hours, morning/midday/afternoon/evening slots at community and resource centres island-wide.",
-    "tags": ["training", "skills", "trades", "wellness", "creative", "community"],
+    "tags": [
+      "training",
+      "skills",
+      "trades",
+      "wellness",
+      "creative",
+      "community"
+    ],
     "eligibility": {
       "ageMin": 16,
       "interests": ["trades", "wellness", "creative", "community", "training"]
@@ -17,6 +25,7 @@
   {
     "id": "cap",
     "title": "Community Arts Programme (CAP)",
+    "summary": "Structured creative training to help you build a career in art, design and animation.",
     "category": "program",
     "subcategory": "skills-trades-vocational-training",
     "description": "Structured instruction in airbrushing, animation, automotive painting, basic bodywork, computer graphics, drawing & illustration, painting & colour theory, sign making, technical drawing. Build a career in the creative sector.",
@@ -33,6 +42,7 @@
   {
     "id": "ceep",
     "title": "Community Engagement and Educational Programme (CEEP)",
+    "summary": "Free workshops on taxes, social security and managing your money, delivered with partners like the BRA, NISSS, Sagicor and BPWCCUL.",
     "category": "program",
     "subcategory": "children-families-community",
     "description": "Education and assistance with tax, NIS/social security, and financial services. Partners: Barbados Revenue Authority, NISSS, Sagicor, BPWCCUL.",
@@ -49,6 +59,7 @@
   {
     "id": "mission-barbados",
     "title": "Mission Barbados",
+    "summary": "A national initiative inviting individuals and organisations to take part in six 2030 missions, from sustainability to digital transformation.",
     "category": "initiative",
     "subcategory": "children-families-community",
     "description": "National initiative around six 2030 missions: sustainability, social cohesion, food/water security, public health & safety, worker empowerment, digital transformation. Open to individuals and organisations.",
@@ -64,6 +75,7 @@
   {
     "id": "byac",
     "title": "Barbados YouthADVANCE Corps (BYAC)",
+    "summary": "A two-year programme for young people aged 16 to 20, combining residential vocational training with job attachments and community service.",
     "category": "program",
     "subcategory": "youth-development-leadership",
     "description": "Two-year developmental training. Year 1: 10 weeks residential technical/vocational training. Year 2: job attachments, apprenticeships, internships, community service. Adventure, Discipline, Values, Acumen, New Skills, Charity, Empowerment.",
@@ -80,6 +92,7 @@
   {
     "id": "yes",
     "title": "Youth Entrepreneurship Scheme (YES)",
+    "summary": "One-to-one support and access to funding to help young people turn a business idea into a working enterprise.",
     "category": "program",
     "subcategory": "entrepreneurship-business",
     "description": "From idea to enterprise. Direct technical assistance from Youth Enterprise Officers and consultants, plus access to financial assistance via partnerships.",
@@ -94,6 +107,7 @@
   {
     "id": "ydp",
     "title": "Youth Development Programme",
+    "summary": "An umbrella of workshops, projects and learning initiatives for young people aged 9 to 29 in communities across the island.",
     "category": "program",
     "subcategory": "youth-development-leadership",
     "description": "Programming channel of the Division of Youth Affairs to engage and empower youth across communities. Hosts initiatives like Bridge to the Future, Youth Achieving Results, Web Design for Entrepreneurs, Cyber Security Training, and Bright Sparks Educational Project.",
@@ -111,6 +125,7 @@
   {
     "id": "pathways",
     "title": "Pathways Employability Programme",
+    "summary": "A job-attachment and mentorship programme for unemployed young people aged 16 to 24, with support from social workers and counsellors.",
     "category": "program",
     "subcategory": "youth-development-leadership",
     "description": "Job attachment and mentorship programme. Life and job skills, work ethic, employment opportunities. Includes psycho-social support from social workers and counsellors. Targets unemployed youth not in full-time education.",
@@ -127,6 +142,7 @@
   {
     "id": "btu",
     "title": "Block Transformation Unit (BTU)",
+    "summary": "Free vocational training in over 20 trades — from motor vehicle engineering and cookery to construction and healthcare — through Project Dawn.",
     "category": "program",
     "subcategory": "skills-trades-vocational-training",
     "description": "Community development unit under the Division of Youth and Culture. Focused on transforming neighbourhood blocks through youth-led engagement.",
@@ -151,6 +167,7 @@
   {
     "id": "national-summer-camp",
     "title": "National Summer Camp Programme",
+    "summary": "Summer camps for children aged 5 to 16, hosted in 46 locations across Barbados.",
     "category": "program",
     "subcategory": "children-families-community",
     "description": "Summer camps across 46 locations island-wide. Hosted by the Ministry of Youth, Sports and Community Empowerment.",
@@ -168,6 +185,7 @@
   {
     "id": "yar",
     "title": "Youth Achieving Results (YAR)",
+    "summary": "An arts-focused initiative for young people aged 17 to 30, run under the Youth Development Programme.",
     "category": "program",
     "subcategory": "arts-culture",
     "description": "Arts-focused initiative under the Youth Development Programme.",
@@ -184,6 +202,7 @@
   {
     "id": "cyber-security-training",
     "title": "Cyber Security Training Workshop",
+    "summary": "A workshop teaching young people the fundamentals of staying safe online and the basics of cyber security.",
     "category": "workshop",
     "subcategory": "skills-trades-vocational-training",
     "description": "Cyber security training under the Youth Development Programme.",
@@ -200,6 +219,7 @@
   {
     "id": "web-design-entrepreneurs",
     "title": "Web Page Design and Maintenance for Entrepreneurs",
+    "summary": "A practical workshop where young entrepreneurs learn to design and maintain their own business websites.",
     "category": "workshop",
     "subcategory": "skills-trades-vocational-training",
     "description": "Workshop teaching young entrepreneurs to design and maintain their own websites.",
@@ -216,6 +236,7 @@
   {
     "id": "bright-sparks-2",
     "title": "Bright Sparks Educational Project 2.0",
+    "summary": "An educational project for young people aged 9 to 29, run under the Youth Development Programme.",
     "category": "program",
     "subcategory": "youth-development-leadership",
     "description": "Educational project under the Youth Development Programme.",
@@ -232,6 +253,7 @@
   {
     "id": "bridge-to-future-2025",
     "title": "Bridge to the Future Workshop 2025",
+    "summary": "A career and life-skills workshop helping young people aged 9 to 29 plan what comes next.",
     "category": "workshop",
     "subcategory": "youth-development-leadership",
     "description": "Career and skills workshop under the Youth Development Programme.",
@@ -248,6 +270,7 @@
   {
     "id": "barbados-blooming-libraries",
     "title": "Barbados is Blooming (Little Libraries)",
+    "summary": "Donate new or lightly used children's books at participating Massy Stores and Farm and Garden to stock free little libraries across the island.",
     "category": "initiative",
     "subcategory": "children-families-community",
     "description": "Free little libraries placed across the island to revive reading post-COVID. Donate new or lightly used children's books at Massy Stores (Sunset Crest, Holetown, Warrens) and Farm and Garden in Salters, St. George. Partners: Prince Godwill D. Fomusoh Foundation, Massy Foundation, CDD.",
@@ -262,6 +285,7 @@
   {
     "id": "community-canvas",
     "title": "Community Canvas",
+    "summary": "A 10-episode YouTube series showcasing the activities, classes and people at community Resource Centres across Barbados.",
     "category": "program",
     "subcategory": "arts-culture",
     "description": "Video/TV series on YouTube featuring activities and programs at Resource Centres island-wide. 10 episodes covering balloon artistry, senior fitness, vocational training, and more.",
@@ -276,6 +300,7 @@
   {
     "id": "cmc",
     "title": "Centre Management Committees (CMC)",
+    "summary": "Volunteer with a Centre Management Committee to help review programme proposals and run your local community centre.",
     "category": "volunteer",
     "subcategory": "children-families-community",
     "description": "Volunteer to review requests for use of community centres, review programme proposals, and facilitate extended centre access. Must show desire for positive socio-economic change, deep understanding of the community, and credible knowledge of relevant skill sets.",
@@ -291,6 +316,7 @@
   {
     "id": "spreading-joy-2025",
     "title": "Spreading Joy at Christmas 2025",
+    "summary": "Festive motorcades visiting communities between 15 and 19 December 2025, with gifts for children in designated parishes — no application needed.",
     "category": "initiative",
     "subcategory": "children-families-community",
     "description": "Festive motorcades visit communities with staff, cultural characters, and gift distribution to vulnerable children. No formal application — residents in designated parishes encounter motorcades on scheduled dates between 11:00 AM and 6:00 PM.",
@@ -307,6 +333,7 @@
   {
     "id": "centre-access",
     "title": "Community Centre Access",
+    "summary": "Book a community centre near you to host an event, class or community activity.",
     "category": "service",
     "subcategory": "children-families-community",
     "description": "Access community centres for events and activities.",

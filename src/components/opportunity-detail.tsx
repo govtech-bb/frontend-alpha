@@ -2,29 +2,11 @@ import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import type { Opportunity } from "@/app/youth/opportunities/_components/opportunities-list";
 
-const CATEGORY_LABEL: Record<Opportunity["category"], string> = {
-  program: "Programme",
-  initiative: "Initiative",
-  workshop: "Workshop",
-  volunteer: "Volunteering",
-  service: "Service",
-};
-
 function formatAgeRange(ageMin?: number, ageMax?: number): string | null {
   if (ageMin != null && ageMax != null) return `Ages ${ageMin}–${ageMax}`;
   if (ageMin != null) return `${ageMin}+ years`;
   if (ageMax != null) return `Up to ${ageMax} years`;
   return null;
-}
-
-function formatDeadline(deadline: string): string {
-  const parsed = new Date(`${deadline}T00:00:00`);
-  if (Number.isNaN(parsed.getTime())) return deadline;
-  return parsed.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
 }
 
 export function OpportunityDetail({
@@ -44,40 +26,18 @@ export function OpportunityDetail({
     interests.length > 0 ? `Interest in ${interests.join(", ")}` : null,
   ].filter(Boolean) as string[];
 
-  const metaParts = [
-    CATEGORY_LABEL[opportunity.category],
-    opportunity.deadline
-      ? `Deadline: ${formatDeadline(opportunity.deadline)}`
-      : null,
-    opportunity.source,
-  ].filter(Boolean) as string[];
-
   const externalLink = opportunity.applyUrl ?? opportunity.url;
 
   return (
     <article className="max-w-2xl space-y-m">
       <header className="space-y-xs">
         <Heading as="h1">{opportunity.title}</Heading>
-        <Text as="p" className="text-mid-grey-00">
-          {metaParts.join(" · ")}
-        </Text>
+        {opportunity.summary && <Text as="p">{opportunity.summary}</Text>}
       </header>
 
       <section className="space-y-xs">
         <Heading as="h2">Overview</Heading>
         <Text as="p">{opportunity.description}</Text>
-        {opportunity.tags.length > 0 && (
-          <ul className="flex flex-wrap gap-2 pt-1">
-            {opportunity.tags.map((tag) => (
-              <li
-                className="rounded bg-yellow-40 px-3 py-1 text-base text-black-00"
-                key={tag}
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
-        )}
       </section>
 
       {eligibilityItems.length > 0 && (
@@ -124,7 +84,7 @@ export function OpportunityDetail({
       </section>
 
       {externalLink && (
-        <section className="space-y-xs">
+        <section className="space-y-xs pb-m">
           <Heading as="h2">More information</Heading>
           <Text as="p">
             <Link
@@ -133,7 +93,7 @@ export function OpportunityDetail({
               rel="noopener"
               target="_blank"
             >
-              View the official page
+              {`Go to the official site for ${opportunity.title}`}
             </Link>
           </Text>
         </section>
