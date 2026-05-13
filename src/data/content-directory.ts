@@ -183,6 +183,21 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Check bank holiday dates",
+        slug: "bank-holiday-calendar",
+        source_url: "",
+        description:
+          "Check statutory bank holiday dates for Barbados for any year, set out under the Public Holidays Act, Cap. 352, including substitution days where a holiday falls on a weekend.",
+        type: "component",
+        href: "/bank-holiday-calendar",
+      },
+    ],
+    crossLinks: [
+      {
+        title: "Find out how much severance payment you are owed",
+        href: "/money-financial-support/calculate-severance-pay",
+      },
     ],
   },
   {
@@ -190,6 +205,20 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     slug: "money-financial-support",
     description: "Get help with money, benefits, taxes or government payments",
     pages: [
+      {
+        title: "Find out how much severance payment you are owed",
+        slug: "calculate-severance-pay",
+        description:
+          "Estimate the severance payment you may be owed under the Severance Payments Act if you were made redundant, your workplace was damaged by a disaster, you were laid off, or your employer died.",
+        subPages: [
+          { slug: "start", type: "markdown" },
+          {
+            slug: "form",
+            title: "Find out how much severance payment you are owed",
+            type: "component",
+          },
+        ],
+      },
       {
         title: "Apply for financial assistance",
         slug: "apply-financial-assistance",
