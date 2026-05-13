@@ -16,7 +16,7 @@ export const masks = {
         const [whole, decimals] = cleaned.split(".");
         const withCommas = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         const formatted =
-          decimals !== undefined ? `${withCommas}.${decimals}` : withCommas;
+          decimals === undefined ? withCommas : `${withCommas}.${decimals}`;
         const diff = formatted.length - value.length;
         const [from, to] = selection;
         return {

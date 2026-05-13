@@ -33,7 +33,7 @@ export function completeYears(startIso: string, endIso: string): number {
 export function avgWeeklyFromSimple(
   amount: number,
   period: "weekly" | "monthly",
-  endYear: number | null,
+  endYear: number | null
 ): number {
   if (!Number.isFinite(amount) || amount <= 0) return 0;
   const weekly = period === "monthly" ? (amount * 12) / 52 : amount;
@@ -49,4 +49,3 @@ export function tieredWeeks(yearsOfService: number): number {
   }
   return weeks;
 }
-

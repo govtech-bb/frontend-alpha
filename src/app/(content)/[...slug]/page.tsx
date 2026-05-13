@@ -234,7 +234,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
         openGraph: {
           title: subPageTitle,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: { title: subPageTitle, images: [`${SITE_URL}/og-image.png`] },
       };
@@ -250,7 +257,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -275,7 +289,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -300,7 +321,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: category.title,
           description: category.description || "",
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: category.title,
