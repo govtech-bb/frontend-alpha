@@ -54,6 +54,7 @@ export const FORM_COMPONENTS = {
   ),
   "calculate-your-pension": lazy(
     () => import("@/components/forms/calculate-your-pension-form")
+  ),
   "crop-over-permits": lazy(
     () => import("@/components/forms/crop-over-permits-form")
   ),
