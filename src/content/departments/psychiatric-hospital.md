@@ -1,21 +1,13 @@
-We aim to provide for the Barbadian public a mix of high-quality mental health services, with special enthuses on community/based education, prevention and treatment of mental illness, in order to reduce the need for institutionalized care.
+We aim to provide for the Barbadian public a mix of high-quality mental health services, with special emphasis on community-based education, prevention and treatment of mental illness, in order to reduce the need for institutionalized care.
 
-Hospital Director Ag.
+## Directory
 
-Section/Office
-
-Tel Number
-
-PBX
-
-Senior Consultant Psychiatrist
-
-Hospital Director
-
-Assistant Hospital Director
-
-Assessment Unit
-
-Nursing Office
-
-Outpatients’
+| Section / Office               | Telephone      |
+| ------------------------------ | -------------- |
+| PBX                            | (246) 536-3001 |
+| Senior Consultant Psychiatrist | (246) 536-3006 |
+| Hospital Director              | (246) 536-3004 |
+| Assistant Hospital Director    | (246) 536-3005 |
+| Assessment Unit                | (246) 536-3091 |
+| Nursing Office                 | (246) 536-3026 |
+| Outpatients                    | (246) 536-3048 |

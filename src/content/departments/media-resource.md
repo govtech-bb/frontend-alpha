@@ -1,5 +1,7 @@
 To contribute to the attainment of the highest standards in education, through training in and the provision of educational media resources, consistent with the goals and policies of the Ministry of Education.
 
-Chief Media Resource  Officer
+## Directory
 
-VISIT WEBSITE - http://mrd.gov.bb/
+| Role                                  | Telephone      |
+| ------------------------------------- | -------------- |
+| Chief Media Resource Officer (Direct) | (246) 430-2846 |

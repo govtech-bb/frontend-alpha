@@ -1,7 +1,1 @@
-Departments
-
--   View All Departments
-
 Performs a variety of coastal management functions inter alia: coral reef monitoring, updating the inventory of coastal resources, consultations with the Town and Country Development Planning Office (TCDPO) regarding all coastal development, beach erosion and accretion monitoring and control, updating the inventory of coastal structures, regulation of marine research, public education of ICZM, coastal conservation project designs and management, and the review of any coastal projects.
-
-Director

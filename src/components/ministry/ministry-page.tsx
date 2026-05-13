@@ -60,7 +60,6 @@ function renderContactValue(item: ContactItem): ReactNode {
     return (
       <span className="text-black-00">
         {item.value.map((line, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static lines
           <span key={i}>
             {line}
             {i < (item.value as ReactNode[]).length - 1 && <br />}
@@ -87,6 +86,7 @@ export interface MinistryPageProps {
   services?: MinistryService[];
   onlineServices?: MinistryService[];
   minister?: Minister;
+  leadershipLabel?: string;
   contact?: ContactItem[];
   associatedDepartments?: AssociatedDepartmentGroup[];
   originalSource?: string;
@@ -105,6 +105,7 @@ export function MinistryPage({
   services,
   onlineServices,
   minister,
+  leadershipLabel = "Our Minister",
   contact,
   associatedDepartments,
   originalSource,
@@ -222,11 +223,11 @@ export function MinistryPage({
           >
             {minister && (
               <div className="flex flex-col gap-s rounded-md bg-[#f5f7fa] p-xm">
-                <p className="font-bold text-[20px] text-black-00 leading-[1.5]">
-                  Our Minister
+                <p className="font-bold text-[20px] text-black-00 leading-normal">
+                  {leadershipLabel}
                 </p>
                 <div className="flex w-full items-center gap-s">
-                  <div className="flex min-w-0 flex-1 flex-col gap-xxs leading-[1.5]">
+                  <div className="flex min-w-0 flex-1 flex-col gap-xxs leading-normal">
                     {minister.slug ? (
                       <Link
                         as={NextLink}
@@ -250,12 +251,11 @@ export function MinistryPage({
 
             {contact && contact.length > 0 && (
               <div className="flex flex-col gap-s rounded-md bg-[#f5f7fa] p-xm">
-                <p className="font-bold text-[20px] text-black-00 leading-[1.5]">
+                <p className="font-bold text-[20px] text-black-00 leading-normal">
                   Contact
                 </p>
                 <dl className="flex flex-col gap-s">
                   {contact.map((item, idx) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: stable order, labels may repeat
                     <div className="flex flex-col gap-xxs" key={idx}>
                       <dt className="text-[14px] text-mid-grey-00">
                         {item.label}
@@ -271,14 +271,13 @@ export function MinistryPage({
 
             {associatedDepartments && associatedDepartments.length > 0 && (
               <div className="flex flex-col gap-s rounded-md bg-[#f5f7fa] p-xm">
-                <p className="font-bold text-[20px] text-black-00 leading-[1.5]">
+                <p className="font-bold text-[20px] text-black-00 leading-normal">
                   Associated Departments
                 </p>
                 <div className="flex flex-col gap-s">
                   {associatedDepartments.map((group, idx) => (
                     <div
                       className="flex flex-col gap-xxs"
-                      // biome-ignore lint/suspicious/noArrayIndexKey: stable order
                       key={group.category ?? idx}
                     >
                       {group.category && (

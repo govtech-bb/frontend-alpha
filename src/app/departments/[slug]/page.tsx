@@ -10,7 +10,9 @@ import { DEPARTMENTS, getDepartmentBySlug } from "@/data/departments";
 import { getDepartmentBody } from "@/lib/department-body";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 
-type Params = { slug: string };
+interface Params {
+  slug: string;
+}
 
 export function generateStaticParams(): Params[] {
   return DEPARTMENTS.map((d) => ({ slug: d.slug }));
@@ -54,6 +56,8 @@ export default async function DepartmentDetailPage({
       body={body}
       contact={department.contact}
       intro={department.intro}
+      leadershipLabel="Director"
+      minister={department.head}
       originalSource={department.originalSource}
       title={department.name}
     />

@@ -1,5 +1,7 @@
-Departments
+## Directory
 
--   View All Departments
-
-Chief Electrical Officer Ag.
+| Role | Telephone      |
+| ---- | -------------- |
+| PBX  | (246) 535-7100 |
+| PBX  | (246) 535-7101 |
+| PBX  | (246) 535-7102 |

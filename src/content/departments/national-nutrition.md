@@ -1,5 +1,10 @@
 To promote and maintain a standard of good nutrition in Barbados through education and research.
 
-Ladymeade No. 1 Centre Ladymeade Gardens St. Michael Barbados, W.I.
+## Directory
 
-Director
+| Role                        | Telephone      |
+| --------------------------- | -------------- |
+| PBX                         | (246) 536-3852 |
+| Nutrition Officer           | (246) 536-3921 |
+| Assistant Nutrition Officer | (246) 536-3390 |
+| Technical Assistant         | (246) 536-3392 |

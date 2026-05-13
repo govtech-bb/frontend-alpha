@@ -1,21 +1,19 @@
-Departments
+## Mission Statement
 
--   View All Departments -   Extraordinary Gazettes
+To provide printing and r
+elated services for Ministries, Departments and other specified statutory agencies in an efficient and cost effective manner.
 
-MISSION STATEMENT
+## Vision Statement
 
-To provide printing and related services for Ministries, Departments and other specified statutory agencies in an efficient and cost effective manner.
+The Government Printing Department shall be recognized for its leadership role in providing excellent customer-focused service and being the Government Department of choice for present and future public workers.
 
-VISION  STATEMENT
+## Directory
 
-The Government Printing Department shall be recognized for its leadership role in providing excellent Customer focused service and being the Government Department of choice for present and future public workers.
-
-Government Printer Ag.
-
-PERSON
-
-Telephone Number
-
-PBX
-
-FAX
+| Person                       | Telephone             |
+| ---------------------------- | --------------------- |
+| Shernell Belgrave / Operator | (246) 535-6301        |
+| Joan Griffith                | (246) 535-6304        |
+| Anselm Rogers                | (246) 535-6305        |
+| Andrea Forde                 | (246) 535-6306        |
+| PBX                          | (246) 535-6301 / 6302 |
+| Fax                          | (246) 535-6328        |

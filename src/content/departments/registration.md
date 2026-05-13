@@ -3,5 +3,3 @@ To ensure that the administration of justice functions speedily, efficiently and
 To ensure that the island's most vital occurrences are recorded.
 
 To provide essential services to the entire population as required by the Laws of Barbados
-
-Registrar Ag.
