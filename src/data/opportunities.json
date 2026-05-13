@@ -1,0 +1,301 @@
+[
+  {
+    "id": "cip",
+    "title": "Community Impact Programme (CIP)",
+    "category": "program",
+    "description": "Practical demand-driven skill training in 25+ courses across trades, creative services, and wellness. Two sessions/week, 2-3 hours, morning/midday/afternoon/evening slots at community and resource centres island-wide.",
+    "tags": ["training", "skills", "trades", "wellness", "creative", "community"],
+    "eligibility": {
+      "ageMin": 16,
+      "interests": ["trades", "wellness", "creative", "community", "training"]
+    },
+    "deadline": null,
+    "url": "https://comdev.gov.bb/programmes/cip/",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "cap",
+    "title": "Community Arts Programme (CAP)",
+    "category": "program",
+    "description": "Structured instruction in airbrushing, animation, automotive painting, basic bodywork, computer graphics, drawing & illustration, painting & colour theory, sign making, technical drawing. Build a career in the creative sector.",
+    "tags": ["arts", "design", "animation", "creative"],
+    "eligibility": {
+      "ageMin": 14,
+      "interests": ["arts", "design", "animation", "creative"]
+    },
+    "deadline": null,
+    "url": "https://comdev.gov.bb/programmes/cap/",
+    "applyUrl": "https://comdev.gov.bb/registration-cap/",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "ceep",
+    "title": "Community Engagement and Educational Programme (CEEP)",
+    "category": "program",
+    "description": "Education and assistance with tax, NIS/social security, and financial services. Partners: Barbados Revenue Authority, NISSS, Sagicor, BPWCCUL.",
+    "tags": ["finance", "tax", "education", "adults"],
+    "eligibility": {
+      "ageMin": 18,
+      "interests": ["finance", "tax", "education"]
+    },
+    "deadline": "2025-08-24",
+    "url": "https://comdev.gov.bb/programmes/ceep/",
+    "applyUrl": "https://comdev.gov.bb/registration-ceep/",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "mission-barbados",
+    "title": "Mission Barbados",
+    "category": "initiative",
+    "description": "National initiative around six 2030 missions: sustainability, social cohesion, food/water security, public health & safety, worker empowerment, digital transformation. Open to individuals and organisations.",
+    "tags": ["sustainability", "community", "health", "digital", "national"],
+    "eligibility": {
+      "interests": ["sustainability", "community", "health", "digital"]
+    },
+    "deadline": null,
+    "url": "https://comdev.gov.bb/programmes/mission-barbados/",
+    "applyUrl": "https://control.missionbarbados.gov.bb/group-registrations/register",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "byac",
+    "title": "Barbados YouthADVANCE Corps (BYAC)",
+    "category": "program",
+    "description": "Two-year developmental training. Year 1: 10 weeks residential technical/vocational training. Year 2: job attachments, apprenticeships, internships, community service. Adventure, Discipline, Values, Acumen, New Skills, Charity, Empowerment.",
+    "tags": ["leadership", "training", "vocational", "youth"],
+    "eligibility": {
+      "ageMin": 16,
+      "ageMax": 20,
+      "interests": ["leadership", "training", "vocational", "employment"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/barbados-youthadvance-corps-2/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "yes",
+    "title": "Youth Entrepreneurship Scheme (YES)",
+    "category": "program",
+    "description": "From idea to enterprise. Direct technical assistance from Youth Enterprise Officers and consultants, plus access to financial assistance via partnerships.",
+    "tags": ["business", "entrepreneurship", "youth"],
+    "eligibility": {
+      "interests": ["business", "entrepreneurship"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/yes-2/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "ydp",
+    "title": "Youth Development Programme",
+    "category": "program",
+    "description": "Programming channel of the Division of Youth Affairs to engage and empower youth across communities. Hosts initiatives like Bridge to the Future, Youth Achieving Results, Web Design for Entrepreneurs, Cyber Security Training, and Bright Sparks Educational Project.",
+    "tags": ["youth", "community", "education", "skills"],
+    "eligibility": {
+      "ageMin": 9,
+      "ageMax": 29,
+      "interests": ["community", "education", "skills"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+    "applyUrl": "https://linktr.ee/myscebb",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "pathways",
+    "title": "Pathways Employability Programme",
+    "category": "program",
+    "description": "Job attachment and mentorship programme. Life and job skills, work ethic, employment opportunities. Includes psycho-social support from social workers and counsellors. Targets unemployed youth not in full-time education.",
+    "tags": ["employment", "mentorship", "youth"],
+    "eligibility": {
+      "ageMin": 16,
+      "ageMax": 24,
+      "interests": ["employment", "mentorship", "career"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/pathways/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "btu",
+    "title": "Block Transformation Unit (BTU)",
+    "category": "program",
+    "description": "Community development unit under the Division of Youth and Culture. Focused on transforming neighbourhood blocks through youth-led engagement.",
+    "tags": ["community", "youth", "development"],
+    "eligibility": {
+      "interests": ["community", "development"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/about/about-the-block-transformation-unit/",
+    "source": "youthaffairs.gov.bb",
+    "subProgrammes": [
+      {
+        "name": "Project Dawn",
+        "description": "Free vocational training in 20+ courses: Motor Vehicle Engineering, Professional Housekeeping, Basic Trade Cookery, Bar Operations, hospitality, beauty, construction, healthcare."
+      }
+    ],
+    "contact": {
+      "email": "blocktransformation.MYSCE@barbados.gov.bb",
+      "phone": "(246) 535-3835 / (246) 832-7602 / (246) 832-9024 / (246) 832-9022"
+    }
+  },
+  {
+    "id": "national-summer-camp",
+    "title": "National Summer Camp Programme",
+    "category": "program",
+    "description": "Summer camps across 46 locations island-wide. Hosted by the Ministry of Youth, Sports and Community Empowerment.",
+    "tags": ["summer-camp", "children", "recreation"],
+    "eligibility": {
+      "ageMin": 5,
+      "ageMax": 16,
+      "interests": ["recreation", "summer-camp", "sports"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/national-summer-camp-2/",
+    "applyUrl": "https://linktr.ee/myscebb",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "yar",
+    "title": "Youth Achieving Results (YAR)",
+    "category": "program",
+    "description": "Arts-focused initiative under the Youth Development Programme.",
+    "tags": ["arts", "youth"],
+    "eligibility": {
+      "ageMin": 17,
+      "ageMax": 30,
+      "interests": ["arts", "creative"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "cyber-security-training",
+    "title": "Cyber Security Training Workshop",
+    "category": "workshop",
+    "description": "Cyber security training under the Youth Development Programme.",
+    "tags": ["tech", "cybersecurity", "training"],
+    "eligibility": {
+      "ageMin": 9,
+      "ageMax": 29,
+      "interests": ["tech", "cybersecurity"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "web-design-entrepreneurs",
+    "title": "Web Page Design and Maintenance for Entrepreneurs",
+    "category": "workshop",
+    "description": "Workshop teaching young entrepreneurs to design and maintain their own websites.",
+    "tags": ["tech", "design", "business"],
+    "eligibility": {
+      "ageMin": 9,
+      "ageMax": 29,
+      "interests": ["tech", "design", "business", "entrepreneurship"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "bright-sparks-2",
+    "title": "Bright Sparks Educational Project 2.0",
+    "category": "program",
+    "description": "Educational project under the Youth Development Programme.",
+    "tags": ["education", "youth"],
+    "eligibility": {
+      "ageMin": 9,
+      "ageMax": 29,
+      "interests": ["education"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "bridge-to-future-2025",
+    "title": "Bridge to the Future Workshop 2025",
+    "category": "workshop",
+    "description": "Career and skills workshop under the Youth Development Programme.",
+    "tags": ["career", "skills", "youth"],
+    "eligibility": {
+      "ageMin": 9,
+      "ageMax": 29,
+      "interests": ["career", "skills"]
+    },
+    "deadline": null,
+    "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+    "source": "youthaffairs.gov.bb"
+  },
+  {
+    "id": "barbados-blooming-libraries",
+    "title": "Barbados is Blooming (Little Libraries)",
+    "category": "initiative",
+    "description": "Free little libraries placed across the island to revive reading post-COVID. Donate new or lightly used children's books at Massy Stores (Sunset Crest, Holetown, Warrens) and Farm and Garden in Salters, St. George. Partners: Prince Godwill D. Fomusoh Foundation, Massy Foundation, CDD.",
+    "tags": ["community", "reading", "education"],
+    "eligibility": {
+      "interests": ["community", "education", "reading"]
+    },
+    "deadline": null,
+    "url": "https://comdev.gov.bb/programmes/libraries/",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "community-canvas",
+    "title": "Community Canvas",
+    "category": "program",
+    "description": "Video/TV series on YouTube featuring activities and programs at Resource Centres island-wide. 10 episodes covering balloon artistry, senior fitness, vocational training, and more.",
+    "tags": ["arts", "community"],
+    "eligibility": {
+      "interests": ["arts", "community"]
+    },
+    "deadline": null,
+    "url": "https://comdev.gov.bb/canvas/",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "cmc",
+    "title": "Centre Management Committees (CMC)",
+    "category": "volunteer",
+    "description": "Volunteer to review requests for use of community centres, review programme proposals, and facilitate extended centre access. Must show desire for positive socio-economic change, deep understanding of the community, and credible knowledge of relevant skill sets.",
+    "tags": ["volunteer", "community", "leadership"],
+    "eligibility": {
+      "interests": ["volunteer", "community", "leadership"]
+    },
+    "deadline": null,
+    "url": "https://comdev.gov.bb/programmes/cmc/",
+    "applyUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeWEt-xl67n-xNcPJs0PI2GzS06jWpzHIGzbp4_3UfwBC4ksA/viewform",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "spreading-joy-2025",
+    "title": "Spreading Joy at Christmas 2025",
+    "category": "initiative",
+    "description": "Festive motorcades visit communities with staff, cultural characters, and gift distribution to vulnerable children. No formal application — residents in designated parishes encounter motorcades on scheduled dates between 11:00 AM and 6:00 PM.",
+    "tags": ["children", "community", "christmas"],
+    "eligibility": {
+      "ageMax": 16,
+      "interests": ["community"]
+    },
+    "deadline": "2025-12-19",
+    "startDate": "2025-12-15",
+    "url": "https://comdev.gov.bb/programmes/spreading-joy/",
+    "source": "comdev.gov.bb"
+  },
+  {
+    "id": "centre-access",
+    "title": "Community Centre Access",
+    "category": "service",
+    "description": "Access community centres for events and activities.",
+    "tags": ["community", "facilities"],
+    "eligibility": {
+      "interests": ["community"]
+    },
+    "deadline": null,
+    "url": "https://comdev.gov.bb/programmes/centre-access/",
+    "source": "comdev.gov.bb"
+  }
+]

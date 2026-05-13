@@ -233,12 +233,20 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       },
     ],
   },
-  // {
-  //   title: "Education, youth and learning",
-  //   slug: "education-youth-learning",
-  //   description: "Apply for or manage education and youth opportunities",
-  //   pages: [],
-  // },
+  {
+    title: "Youth",
+    slug: "youth",
+    description:
+      "Programmes, training, workshops and volunteering opportunities for young people in Barbados",
+    pages: [
+      {
+        title: "All opportunities",
+        slug: "opportunities",
+        description:
+          "Browse every government youth programme, workshop, initiative and volunteer opportunity. Filter by name, tag or category.",
+      },
+    ],
+  },
   {
     title: "Travel, ID and citizenship",
     slug: "travel-id-citizenship",
