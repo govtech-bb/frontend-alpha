@@ -30,18 +30,14 @@ export function SearchForm({
   }
 
   return (
-    <search aria-label="Search for a service">
-      <form
-        action="/search-results"
-        className="flex w-full"
-        onSubmit={handleSubmit}
-      >
-        <label className="sr-only" htmlFor="service-search">
-          Search for a service
+    <search aria-label="Search">
+      <form action={searchPath} className="flex w-full" onSubmit={handleSubmit}>
+        <label className="sr-only" htmlFor="site-search">
+          Search
         </label>
         <input
           className="h-15.5 w-full min-w-0 flex-1 rounded-l-sm bg-white-00 px-4 text-[20px] leading-normal outline-none transition-all focus-visible:z-10 focus-visible:ring-4 focus-visible:ring-teal-100"
-          id="service-search"
+          id="site-search"
           name="q"
           onChange={(e) => setQuery(e.target.value)}
           type="search"

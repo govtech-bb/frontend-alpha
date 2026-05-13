@@ -1,4 +1,5 @@
 import { Heading, Link, Text } from "@govtech-bb/react";
+import { ExternalLink, Globe, Mail, MapPin, Phone } from "lucide-react";
 import NextLink from "next/link";
 import type { ReactNode } from "react";
 
@@ -25,25 +26,78 @@ export type ContactItem =
   | { label: string; type: "website"; value: string; display?: string }
   | { label: string; type?: "text"; value: ReactNode };
 
+const CONTACT_ICONS: Record<string, ReactNode> = {
+  phone: (
+    <Phone
+      aria-hidden="true"
+      className="mt-0.5 shrink-0 text-teal-00"
+      size={15}
+    />
+  ),
+  email: (
+    <Mail
+      aria-hidden="true"
+      className="mt-0.5 shrink-0 text-teal-00"
+      size={15}
+    />
+  ),
+  website: (
+    <Globe
+      aria-hidden="true"
+      className="mt-0.5 shrink-0 text-teal-00"
+      size={15}
+    />
+  ),
+  text: (
+    <MapPin
+      aria-hidden="true"
+      className="mt-0.5 shrink-0 text-teal-00"
+      size={15}
+    />
+  ),
+};
+
+function getContactIcon(item: ContactItem): ReactNode {
+  if (item.type === "phone") return CONTACT_ICONS.phone;
+  if (item.type === "email") return CONTACT_ICONS.email;
+  if (item.type === "website") return CONTACT_ICONS.website;
+  if (item.label.toLowerCase().includes("address")) return CONTACT_ICONS.text;
+  return null;
+}
+
 function renderContactValue(item: ContactItem): ReactNode {
   if (item.type === "phone") {
     const tel = item.value.replace(/[^\d+]/g, "");
-    return <Link href={`tel:${tel}`}>{item.value}</Link>;
+    return (
+      <Link className="font-medium" href={`tel:${tel}`}>
+        {item.value}
+      </Link>
+    );
   }
   if (item.type === "email") {
-    return <Link href={`mailto:${item.value}`}>{item.value}</Link>;
+    return (
+      <Link className="break-all font-medium" href={`mailto:${item.value}`}>
+        {item.value}
+      </Link>
+    );
   }
   if (item.type === "website") {
     const href = item.value.startsWith("http")
       ? item.value
       : `https://${item.value}`;
     return (
-      <Link href={href} rel="noopener noreferrer" target="_blank">
+      <Link
+        className="inline-flex items-center gap-1 break-all font-medium"
+        href={href}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         {item.display ?? item.value}
+        <ExternalLink aria-hidden="true" className="shrink-0" size={12} />
       </Link>
     );
   }
-  return item.value;
+  return <span className="text-black-00">{item.value}</span>;
 }
 
 export type Minister = {
@@ -56,7 +110,7 @@ export type Minister = {
 export type MinistryPageProps = {
   title: string;
   intro: ReactNode;
-  heroImage: string;
+  heroImage?: string;
   heroImageAlt?: string;
   body?: ReactNode;
   featured?: FeaturedItem[];
@@ -100,16 +154,18 @@ export function MinistryPage({
               {intro}
             </Text>
           </div>
-          <div className="aspect-[4/3] w-full overflow-hidden lg:max-h-72">
-            {/** biome-ignore lint/performance/noImgElement: external/placeholder image */}
-            <img
-              alt={heroImageAlt}
-              className="h-full w-full object-cover"
-              height={600}
-              src={heroImage}
-              width={800}
-            />
-          </div>
+          {heroImage && (
+            <div className="aspect-[4/3] w-full overflow-hidden lg:max-h-72">
+              {/** biome-ignore lint/performance/noImgElement: external/placeholder image */}
+              <img
+                alt={heroImageAlt}
+                className="h-full w-full object-cover"
+                height={600}
+                src={heroImage}
+                width={800}
+              />
+            </div>
+          )}
         </div>
       </section>
 
@@ -243,17 +299,32 @@ export function MinistryPage({
             )}
 
             {contact && contact.length > 0 && (
-              <div className="flex flex-col gap-s rounded-md bg-blue-10 p-m">
-                <Heading as="h2" className="text-h3">
-                  Contact
-                </Heading>
-                <dl className="flex flex-col gap-xs">
-                  {contact.map((item) => (
-                    <div key={item.label}>
-                      <dt className="text-mid-grey-00 text-sm">{item.label}</dt>
-                      <dd className="m-0">{renderContactValue(item)}</dd>
-                    </div>
-                  ))}
+              <div className="overflow-hidden rounded-lg border border-grey-00">
+                <div className="border-teal-00 border-l-4 bg-blue-10 px-m py-s">
+                  <Heading as="h2" className="text-h3">
+                    Contact
+                  </Heading>
+                </div>
+                <dl className="divide-y divide-grey-00">
+                  {contact.map((item) => {
+                    const icon = getContactIcon(item);
+                    return (
+                      <div
+                        className="flex items-start gap-xs px-m py-s"
+                        key={item.label}
+                      >
+                        {icon && <span className="pt-[2px]">{icon}</span>}
+                        <div className={icon ? "" : "pl-[23px]"}>
+                          <dt className="font-medium text-mid-grey-00 text-xs uppercase tracking-wide">
+                            {item.label}
+                          </dt>
+                          <dd className="m-0 mt-0.5 text-sm">
+                            {renderContactValue(item)}
+                          </dd>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </dl>
               </div>
             )}

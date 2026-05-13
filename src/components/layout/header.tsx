@@ -34,6 +34,14 @@ export const Header = () => (
                   Ministries
                 </Link>
               </li>
+              <li>
+                <Link
+                  className="font-medium hover:underline"
+                  href="/departments"
+                >
+                  Departments
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

@@ -15,7 +15,7 @@ export type Ministry = {
   category: MinistryCategory;
   shortDescription?: string;
   intro: ReactNode;
-  heroImage: string;
+  heroImage?: string;
   heroImageAlt?: string;
   featured?: FeaturedItem[];
   services?: MinistryService[];
@@ -64,7 +64,6 @@ export const MINISTRIES: Ministry[] = [
     name: "Cabinet Office",
     category: "ministerial",
     intro: PLACEHOLDER_INTRO,
-    heroImage: PLACEHOLDER_HERO,
   },
   {
     slug: "ministry-of-agriculture-and-food-and-nutritional-security",
