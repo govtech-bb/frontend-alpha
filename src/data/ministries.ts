@@ -44,7 +44,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Mia Amor Mottley, S.C., M.P.",
       role: "Prime Minister, Minister of Economic Affairs and Development, and Minister of National Security",
-      slug: "mia-amor-mottley",
     },
     contact: [
       { label: "Email", type: "email", value: "pspmo@barbados.gov.bb" },
@@ -122,7 +121,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Wilfred A. Abrahams, S.C., M.P.",
       role: "Attorney-General and Senior Minister coordinating Governance Policy",
-      slug: "wilfred-abrahams",
     },
     contact: [
       { label: "Email", type: "email", value: "ps@oag.gov.bb" },
@@ -190,7 +188,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Shantal M. Munro-Knight, Ph.D.",
       role: "Minister of Agriculture, Food and Nutritional Security",
-      slug: "shantal-munro-knight",
     },
     contact: [
       { label: "Email", type: "email", value: "minister@agriculture.gov.bb" },
@@ -291,7 +288,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Kerrie D. Symmonds, M.P.",
       role: "Minister of Energy, Business Development and Commerce, and Senior Minister coordinating Productive Sector",
-      slug: "kerrie-symmonds",
     },
     contact: [
       { label: "Email", type: "email", value: "info@energy.gov.bb" },
@@ -355,7 +351,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Santia J. O. Bradshaw, M.P.",
       role: "Deputy Prime Minister, Minister of Environment, National Beautification and Fisheries, and Leader of Government Business in the House of Assembly",
-      slug: "santia-bradshaw",
     },
     contact: [
       { label: "Email", type: "email", value: "ps.menb@barbados.gov.bb" },
@@ -411,7 +406,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Ryan R. Straughn, M.P.",
       role: "Minister of Finance",
-      slug: "ryan-straughn",
     },
     onlineServices: [
       {
@@ -481,7 +475,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "Senator The Hon. Christopher P. Sinckler",
       role: "Senior Minister of Foreign Affairs and Foreign Trade",
-      slug: "christopher-sinckler",
     },
     onlineServices: [
       {
@@ -514,7 +507,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Davidson I. Ishmael, M.P.",
       role: "Minister of State, Ministry of Health and Wellness",
-      slug: "davidson-ishmael",
     },
     onlineServices: [
       {
@@ -559,7 +551,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Gregory P. B. Nicholls, M.P.",
       role: "Minister of Home Affairs and Information",
-      slug: "gregory-nicholls",
     },
     onlineServices: [
       {
@@ -686,7 +677,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Christopher D. L. Gibbs, M.P.",
       role: "Minister of Housing, Lands and Maintenance",
-      slug: "christopher-gibbs",
     },
     contact: [
       { label: "Email", type: "email", value: "pshousing@barbados.gov.bb" },
@@ -724,7 +714,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "Senator The Hon. Jonathan W. D. Reid",
       role: "Minister of Innovation, Industry, Science and Technology",
-      slug: "jonathan-reid",
     },
     onlineServices: [
       {
@@ -789,7 +778,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Colin E. Jordan, M.P.",
       role: "Minister of Labour, Social Security and The Third Sector",
-      slug: "colin-jordan",
     },
     onlineServices: [
       {
@@ -841,7 +829,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Adrian R. Forde, M.P.",
       role: "Minister of People Empowerment and Elder Affairs",
-      slug: "adrian-forde",
     },
     onlineServices: [
       {
@@ -955,7 +942,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. G. P. Ian Gooding-Edghill, J.P., M.P.",
       role: "Minister of Tourism and International Transport",
-      slug: "ian-gooding-edghill",
     },
     onlineServices: [
       {
@@ -1019,7 +1005,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Cheryl S. V. Husbands, M.P.",
       role: "Minister of Technological and Vocational Training",
-      slug: "cheryl-husbands",
     },
     originalSource: "https://www.gov.bb/Ministries/training-tertiary-education",
     associatedDepartments: [
@@ -1047,7 +1032,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Kirk D. M. Humphrey, M.P.",
       role: "Minister of Transport and Works, and Senior Minister coordinating Infrastructure",
-      slug: "kirk-humphrey",
     },
     onlineServices: [
       {
@@ -1099,7 +1083,6 @@ export const MINISTRIES: Ministry[] = [
     minister: {
       name: "The Hon. Charles McD. Griffith, M.P.",
       role: "Minister of Sports and Community Empowerment",
-      slug: "charles-griffith",
     },
     onlineServices: [
       {

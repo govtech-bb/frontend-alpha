@@ -75,7 +75,6 @@ export interface Minister {
   name: string;
   role: string;
   photo?: string;
-  slug?: string;
 }
 
 export interface MinistryPageProps {
@@ -228,19 +227,9 @@ export function MinistryPage({
                 </p>
                 <div className="flex w-full items-center gap-s">
                   <div className="flex min-w-0 flex-1 flex-col gap-xxs leading-normal">
-                    {minister.slug ? (
-                      <Link
-                        as={NextLink}
-                        className="font-bold text-[20px] text-teal-00"
-                        href={`/people/${minister.slug}`}
-                      >
-                        {minister.name}
-                      </Link>
-                    ) : (
-                      <span className="font-bold text-[20px] text-teal-00">
-                        {minister.name}
-                      </span>
-                    )}
+                    <span className="font-bold text-[20px] text-teal-00">
+                      {minister.name}
+                    </span>
                     <span className="text-[16px] text-mid-grey-00">
                       {minister.role}
                     </span>
