@@ -65,6 +65,20 @@ export default async function Page({ params }: ContentPageProps) {
               </Link>
             </div>
           ))}
+          {category.crossLinks?.map((link) => (
+            <div
+              className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
+              key={link.href}
+            >
+              <Link
+                as={NextLink}
+                className="cursor-pointer text-[20px] leading-normal lg:text-3xl"
+                href={link.href}
+              >
+                {link.title}
+              </Link>
+            </div>
+          ))}
         </div>
       </>
     );
@@ -220,7 +234,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
         openGraph: {
           title: subPageTitle,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: { title: subPageTitle, images: [`${SITE_URL}/og-image.png`] },
       };
@@ -236,7 +257,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -261,7 +289,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -286,7 +321,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: category.title,
           description: category.description || "",
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: category.title,
