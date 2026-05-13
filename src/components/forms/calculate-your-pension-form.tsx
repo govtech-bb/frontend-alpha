@@ -181,7 +181,7 @@ export default function CalculateYourPensionForm() {
               calculate();
             }}
           >
-            <div className="[&_input]:max-w-[14rem]">
+            <div className="md:w-1/2">
               <Input
                 description="Enter the total number of complete months. No-pay leave does not count."
                 error={monthsError || undefined}
@@ -194,7 +194,7 @@ export default function CalculateYourPensionForm() {
               />
             </div>
 
-            <div className="[&_input]:max-w-[18rem]">
+            <div className="md:w-1/2">
               <Input
                 description="Enter your gross annual salary in Barbados dollars."
                 error={salaryError || undefined}
