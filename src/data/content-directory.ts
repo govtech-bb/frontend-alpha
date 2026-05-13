@@ -184,7 +184,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         ],
       },
       {
-        title: "Bank holidays",
+        title: "Check bank holiday dates",
         slug: "bank-holiday-calendar",
         source_url: "",
         description:
