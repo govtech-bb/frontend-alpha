@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { FormSkeleton } from "@/components/forms/form-skeleton";
 import opportunitiesData from "@/data/opportunities.json";
 import { SITE_URL } from "@/lib/site-url";
 import type { Opportunity } from "../../_components/opportunities-list";
@@ -56,10 +58,18 @@ export default async function YouthOpportunityFormPage({
   }
 
   return (
-    <YouthOpportunityForm
-      notificationEmail={opportunity.contact?.email ?? null}
-      opportunityId={opportunity.id}
-      opportunityTitle={opportunity.title}
-    />
+    <Suspense
+      fallback={
+        <div className="container py-8 lg:py-16">
+          <FormSkeleton />
+        </div>
+      }
+    >
+      <YouthOpportunityForm
+        notificationEmail={opportunity.contact?.email ?? null}
+        opportunityId={opportunity.id}
+        opportunityTitle={opportunity.title}
+      />
+    </Suspense>
   );
 }
