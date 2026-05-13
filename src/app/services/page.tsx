@@ -80,7 +80,7 @@ export default async function ServicesPage() {
                     <Link
                       as={NextLink}
                       className="text-[20px] leading-normal"
-                      href={`/${result.slug}`}
+                      href={result.href}
                     >
                       {result.title}
                     </Link>

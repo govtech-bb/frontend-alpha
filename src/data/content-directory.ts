@@ -183,6 +183,15 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Check bank holiday dates",
+        slug: "bank-holiday-calendar",
+        source_url: "",
+        description:
+          "Check statutory bank holiday dates for Barbados for any year, set out under the Public Holidays Act, Cap. 352, including substitution days where a holiday falls on a weekend.",
+        type: "component",
+        href: "/bank-holiday-calendar",
+      },
     ],
     crossLinks: [
       {

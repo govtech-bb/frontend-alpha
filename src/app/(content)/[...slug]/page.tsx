@@ -18,9 +18,9 @@ import {
 import { SITE_URL } from "@/lib/site-url";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
-type ContentPageProps = {
+interface ContentPageProps {
   params: Promise<{ slug: string[] }>;
-};
+}
 
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
@@ -59,7 +59,7 @@ export default async function Page({ params }: ContentPageProps) {
               <Link
                 as={NextLink}
                 className="cursor-pointer text-[20px] leading-normal lg:text-3xl"
-                href={`/${categorySlug}/${service.slug}`}
+                href={service.href ?? `/${categorySlug}/${service.slug}`}
               >
                 {service.title}
               </Link>
