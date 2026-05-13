@@ -18,7 +18,7 @@ You can use this tool if:
 
 ### Use the online calculator
 
-You will answer a short set of questions about why you were sent home, when you worked for the employer, and your usual basic pay. We then estimate how much you may be owed.
+You will answer a short set of questions about why you were sent home, when you worked for the employer, and your usual gross pay. We then estimate how much you may be owed.
 
 <a data-start-link href="/money-financial-support/calculate-severance-pay/start">Start your estimate now</a>
 

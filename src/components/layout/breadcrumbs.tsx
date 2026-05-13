@@ -6,10 +6,10 @@ import { usePathname } from "next/navigation";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { cn } from "@/lib/utils";
 
-type BreadcrumbsProps = {
+interface BreadcrumbsProps {
   className?: string;
   collapseOnMobile?: boolean;
-};
+}
 
 function formatSlug(slug: string): string {
   const raw = slug.replace(/-/g, " ");
@@ -25,8 +25,12 @@ function getTitleForSegment(segments: string[], index: number): string {
   const page = category?.pages.find((p) => p.slug === segments[1]);
   if (index === 1) return page?.title ?? formatSlug(segments[1]);
 
-  const subPage = page?.subPages?.find((sp) => sp.slug === segments[2]);
-  if (index === 2) return subPage?.title ?? formatSlug(segments[2]);
+  if (index === 2) {
+    const nestedPage = page?.pages?.find((p) => p.slug === segments[2]);
+    if (nestedPage) return nestedPage.title;
+    const subPage = page?.subPages?.find((sp) => sp.slug === segments[2]);
+    return subPage?.title ?? formatSlug(segments[2]);
+  }
 
   return formatSlug(segments[index]);
 }
