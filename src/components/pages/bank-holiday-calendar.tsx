@@ -132,17 +132,19 @@ const fmtSubstituteDate = (d: Date) =>
 // ---------------------------------------------------------------
 
 /**
- * Returns the 12 statutory bank holidays for a given year, plus any
- * substitution days required by the Public Holidays Act, Cap. 352.
+ * Returns the 12 statutory public holidays for a given year as defined in the
+ * First Schedule of the Public Holidays Act, Cap. 352 (Barbados), plus any
+ * substitution days triggered by the rules at the foot of that Schedule.
  *
- * Substitution rules:
- *   - If New Year's Day, Errol Barrow Day, National Heroes' Day, May Day,
- *     Independence Day, or Boxing Day falls on a Sunday → the following
- *     Monday is a public holiday in lieu.
- *   - If Emancipation Day (1 August) falls on a Sunday or Monday → the
- *     following Tuesday is a public holiday in lieu.
- *   - If Christmas Day falls on a Sunday → the following Tuesday is a
- *     public holiday in lieu.
+ * Substitution rules — verbatim from First Schedule, Cap. 352:
+ *   (a) "in any year the 1st January, the 21st January, the 28th April,
+ *       the 1st May, the 30th November or the 26th December falls on a
+ *       Sunday, the next following Monday shall be a public holiday"
+ *   (b) "in any year the 1st August falls on a Sunday or a Monday, the
+ *       next following Tuesday shall be a public holiday"
+ *   (c) "in any year the 25th December falls on a Sunday, the next
+ *       following Tuesday shall be a public holiday"
+ *
  *
  * Note: Government-declared one-off public holidays are NOT included here.
  * Those should be added via the CMS / data layer rather than this generator.
@@ -161,12 +163,12 @@ function getBankHolidaysForYear(year: number): Holiday[] {
     { date: addDays(easter, 1), name: "Easter Monday" },
     {
       date: new Date(Date.UTC(year, 3, 28)),
-      name: "National Heroes' Day",
+      name: "National Heroes Day",
       note: "Honouring Barbados's ten official National Heroes",
     },
     {
       date: new Date(Date.UTC(year, 4, 1)),
-      name: "May Day",
+      name: "Labour Day",
       note: "International Workers' Day",
     },
     {
@@ -196,8 +198,8 @@ function getBankHolidaysForYear(year: number): Holiday[] {
   const mondayInLieuNames = new Set([
     "New Year's Day",
     "Errol Barrow Day",
-    "National Heroes' Day",
-    "May Day",
+    "National Heroes Day",
+    "Labour Day",
     "Independence Day",
     "Boxing Day",
   ]);
@@ -206,7 +208,7 @@ function getBankHolidaysForYear(year: number): Holiday[] {
   for (const h of fixed) {
     const dow = h.date.getUTCDay();
 
-        if (mondayInLieuNames.has(h.name) && dow === 0) {
+    if (mondayInLieuNames.has(h.name) && dow === 0) {
       substitutes.push({
         date: addDays(h.date, 1),
         name: `Public Holiday in lieu of ${h.name}`,
@@ -319,7 +321,7 @@ function BankHolidaysContent() {
 
   return (
     <main className="max-w-220 pt-6 pb-16">
-      <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-0 lg:justify-between mb-6 lg:mb-10">
+      <div className="mb-6 flex flex-col items-center gap-6 lg:mb-10 lg:flex-row lg:justify-between lg:gap-0">
         <div>
           <Heading as="h1" className="mb-xs">
             Bank holidays
@@ -328,10 +330,9 @@ function BankHolidaysContent() {
             Last updated on {LAST_UPDATED}
           </Text>
         </div>
-        <div className="mt-6 flex w-full lg:w-auto justify-end">
+        <div className="mt-6 flex w-full justify-end lg:w-auto">
           <YearSwitcher onYearChange={setYear} year={selectedYear} />
         </div>
-        
       </div>
 
       <BankHolidaysPanel
@@ -749,9 +750,9 @@ function SubstitutionNotice({
           Read the full rules
         </summary>
         <p className="mt-2.5 text-sm">
-          If New Year&apos;s Day, Errol Barrow Day, National Heroes&apos; Day,
-          May Day, Independence Day or Boxing Day falls on a Sunday, the
-          following Monday is observed as a public holiday in lieu.
+          If New Year&apos;s Day, Errol Barrow Day, National Heroes Day, Labour
+          Day, Independence Day or Boxing Day falls on a Sunday, the following
+          Monday is observed as a public holiday in lieu.
         </p>
         <p className="mt-2 text-sm">
           If Emancipation Day (1 August) falls on a Sunday or Monday, the
