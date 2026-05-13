@@ -110,13 +110,73 @@ export const markdownComponents: Components = {
   tr: ({ node, ...props }) => <tr {...props} />,
   th: ({ node, ...props }) => (
     <th
-      className="px-xs py-s text-left font-bold text-caption text-mid-grey-00"
+      className="w-1/2 px-xs py-s text-left align-top font-bold text-caption text-mid-grey-00"
       {...props}
     />
   ),
-  td: ({ node, ...props }) => (
-    <td className="px-xs py-s text-black text-caption" {...props} />
-  ),
+  td: ({ node, children, ...props }: any) => {
+    const text =
+      typeof children === "string"
+        ? children
+        : Array.isArray(children) &&
+            children.length === 1 &&
+            typeof children[0] === "string"
+          ? children[0]
+          : null;
+    // Single phone: (246) 535-5300
+    // Slash extension: (246) 535-5649 / 5650  → renders two tel links
+    const slashMatch = text?.match(
+      /^\((\d{3})\)\s*(\d{3})-(\d{4})\s*\/\s*(\d{4})$/
+    );
+    if (slashMatch) {
+      const [, area, prefix, line, line2] = slashMatch;
+      return (
+        <td
+          className="w-1/2 px-xs py-s align-top text-black text-caption"
+          {...props}
+        >
+          <a
+            className="text-teal-00 underline"
+            href={`tel:+1${area}${prefix}${line}`}
+          >
+            {`(${area}) ${prefix}-${line}`}
+          </a>
+          {" / "}
+          <a
+            className="text-teal-00 underline"
+            href={`tel:+1${area}${prefix}${line2}`}
+          >
+            {line2}
+          </a>
+        </td>
+      );
+    }
+    const phoneMatch = text?.match(/^\((\d{3})\)\s*(\d{3})-(\d{4})$/);
+    if (phoneMatch) {
+      const [, area, prefix, line] = phoneMatch;
+      return (
+        <td
+          className="w-1/2 px-xs py-s align-top text-black text-caption"
+          {...props}
+        >
+          <a
+            className="text-teal-00 underline"
+            href={`tel:+1${area}${prefix}${line}`}
+          >
+            {text}
+          </a>
+        </td>
+      );
+    }
+    return (
+      <td
+        className="w-1/2 px-xs py-s align-top text-black text-caption"
+        {...props}
+      >
+        {children}
+      </td>
+    );
+  },
 };
 
 type MarkdownContentProps = {

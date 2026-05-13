@@ -8,6 +8,7 @@ import { markdownComponents } from "@/components/markdown-content";
 import { MinistryPage } from "@/components/ministry/ministry-page";
 import { getMinistryBySlug, MINISTRIES } from "@/data/ministries";
 import { getMinistryBody } from "@/lib/ministry-body";
+import rehypeSectionise from "@/lib/rehype-sectionise";
 
 type Params = { slug: string };
 
@@ -37,25 +38,27 @@ export default async function MinistryDetailPage({
 
   const md = await getMinistryBody(slug);
   const body = md ? (
-    <ReactMarkdown
-      components={markdownComponents}
-      rehypePlugins={[rehypeRaw]}
-      remarkPlugins={[remarkGfm]}
-    >
-      {md.content}
-    </ReactMarkdown>
+    <div className="space-y-6 lg:space-y-8">
+      <ReactMarkdown
+        components={markdownComponents}
+        rehypePlugins={[rehypeRaw, rehypeSectionise]}
+        remarkPlugins={[remarkGfm]}
+      >
+        {md.content}
+      </ReactMarkdown>
+    </div>
   ) : undefined;
 
   return (
     <MinistryPage
+      associatedDepartments={ministry.associatedDepartments}
       body={body}
       contact={ministry.contact}
       featured={ministry.featured}
-      heroImage={ministry.heroImage}
-      heroImageAlt={ministry.heroImageAlt}
       intro={ministry.intro}
       minister={ministry.minister}
       onlineServices={ministry.onlineServices}
+      originalSource={ministry.originalSource}
       services={ministry.services}
       title={ministry.name}
     />
