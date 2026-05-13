@@ -29,3 +29,10 @@ You must make your claim within **12 months** of your last day at work. If you w
 ## Need help or advice?
 
 Contact the **NIS Severance Payment Department**. They can give you free advice and help you claim if your employer does not pay.
+
+NIS Severance Payment Department  
+Frank Walcott Building  
+Culloden Road  
+St. Michael
+
+Phone: [+1 246-431-7400](tel:+12464317400), extensions 1502 to 1509

@@ -514,7 +514,7 @@ export default function CalculateSeverancePayForm() {
 
             <div className="max-w-[16rem]">
               <Input
-                description="Your usual basic pay. Don't include overtime or bonuses."
+                description="Your usual gross pay. Don't include overtime or bonuses."
                 error={payError || undefined}
                 id="simple-avg"
                 inputMode="decimal"
@@ -1010,6 +1010,19 @@ export default function CalculateSeverancePayForm() {
               Contact the <strong>NIS Severance Payment Department</strong>.
               They can give you free advice and help you claim if your employer
               does not pay.
+            </Text>
+            <Text as="p" size="body">
+              NIS Severance Payment Department
+              <br />
+              Frank Walcott Building
+              <br />
+              Culloden Road
+              <br />
+              St. Michael
+            </Text>
+            <Text as="p" size="body">
+              Phone: <a href="tel:+12464317400">+1 246-431-7400</a>, extensions
+              1502 to 1509
             </Text>
             <div>
               <Button onClick={restart} type="button" variant="secondary">
