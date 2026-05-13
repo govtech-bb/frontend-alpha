@@ -669,6 +669,20 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Find the permits you need for a Crop Over event",
+        slug: "crop-over-permits",
+        source_url: "",
+        description:
+          "Answer a few questions about your Crop Over event and get a tailored checklist of permits, lead times, and the agencies to contact.",
+        subPages: [
+          {
+            slug: "form",
+            title: "Find the permits you need for a Crop Over event",
+            type: "component",
+          },
+        ],
+      },
       // {
       //   title:
       //     "Apply for a licence to sell goods or services at a beach or park",

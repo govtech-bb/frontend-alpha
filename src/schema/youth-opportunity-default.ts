@@ -163,7 +163,7 @@ export function buildYouthOpportunityFormSteps(
 - If we need anything else from you, we will reach out by email or phone.
 
 Thank you for your interest.`,
-      enableFeedback: true,
+      enableFeedback: false,
     },
   ];
 }
