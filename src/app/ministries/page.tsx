@@ -5,13 +5,14 @@ import NextLink from "next/link";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
+import type { Ministry } from "@/data/ministries";
 import { getMinistriesByCategory } from "@/data/ministries";
 
 export const metadata: Metadata = {
   title: "Departments and ministries",
 };
 
-const groups = [
+const ALL_GROUPS = [
   {
     id: "ministerial-departments",
     title: "Ministerial departments",
@@ -35,7 +36,30 @@ const groups = [
   },
 ].filter((group) => group.items.length > 0);
 
-export default function MinistriesPage() {
+function filterMinistries(query: string) {
+  const trimmed = query.trim().toLowerCase();
+  if (!trimmed) return ALL_GROUPS;
+
+  return ALL_GROUPS.map((group) => ({
+    ...group,
+    items: group.items.filter(
+      (item: Ministry) =>
+        item.name.toLowerCase().includes(trimmed) ||
+        (item.shortDescription?.toLowerCase().includes(trimmed) ?? false)
+    ),
+  })).filter((group) => group.items.length > 0);
+}
+
+export default async function MinistriesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q = "" } = await searchParams;
+  const query = q.trim();
+  const groups = filterMinistries(query);
+  const totalResults = groups.reduce((sum, g) => sum + g.items.length, 0);
+
   return (
     <>
       <div className="bg-blue-10">
@@ -50,7 +74,11 @@ export default function MinistriesPage() {
             <Text as="p" className="font-bold">
               Search for a department/ministry
             </Text>
-            <SearchForm />
+            <SearchForm
+              defaultValue={query}
+              emptyFallbackPath="/ministries"
+              searchPath="/ministries"
+            />
           </div>
         </div>
       </section>
@@ -60,64 +88,87 @@ export default function MinistriesPage() {
           <div className="flex flex-col gap-l">
             <div className="flex flex-col gap-xs">
               <Heading as="h1">Departments and ministries</Heading>
-              <Text as="p" className="text-mid-grey-00">
-                Government of Barbados ministries, departments, agencies and
-                public bodies.
+              {query ? (
+                <Text as="p" className="text-mid-grey-00">
+                  {totalResults === 0
+                    ? `No results for "${query}"`
+                    : `${totalResults} result${totalResults === 1 ? "" : "s"} for "${query}"`}
+                </Text>
+              ) : (
+                <Text as="p" className="text-mid-grey-00">
+                  Government of Barbados ministries, departments, agencies and
+                  public bodies.
+                </Text>
+              )}
+            </div>
+
+            {!query && (
+              <nav aria-label="Organisation categories">
+                <ul className="flex flex-col gap-xs">
+                  {groups.map((group) => (
+                    <li key={group.id}>
+                      <Link as="a" href={`#${group.id}`}>
+                        {group.title} ({group.items.length})
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+
+            {totalResults === 0 ? (
+              <Text as="p">
+                Try a different search term, or{" "}
+                <Link as={NextLink} href="/ministries">
+                  view all departments and ministries
+                </Link>
+                .
               </Text>
-            </div>
-
-            <nav aria-label="Organisation categories">
-              <ul className="flex flex-col gap-xs">
+            ) : (
+              <div className="flex flex-col gap-xl">
                 {groups.map((group) => (
-                  <li key={group.id}>
-                    <Link as="a" href={`#${group.id}`}>
-                      {group.title} ({group.items.length})
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <div className="flex flex-col gap-xl">
-              {groups.map((group) => (
-                <section aria-labelledby={`${group.id}-heading`} key={group.id}>
-                  <Heading
-                    as="h2"
-                    className="mb-xs border-teal-40 border-b-4 pb-xs"
-                    id={`${group.id}-heading`}
+                  <section
+                    aria-labelledby={`${group.id}-heading`}
+                    key={group.id}
                   >
-                    {group.title}{" "}
-                    <span className="font-normal text-mid-grey-00">
-                      ({group.items.length})
-                    </span>
-                  </Heading>
-                  <Text as="p" className="mb-s text-mid-grey-00">
-                    {group.description}
-                  </Text>
-                  <ul className="flex flex-col">
-                    {group.items.map((item) => (
-                      <li
-                        className="flex flex-col gap-xxs border-grey-00 border-b py-s first:pt-xs"
-                        key={item.slug}
-                      >
-                        <Link
-                          as={NextLink}
-                          className="text-[20px] leading-normal"
-                          href={`/ministries/${item.slug}`}
+                    <Heading
+                      as="h2"
+                      className="mb-xs border-teal-40 border-b-4 pb-xs"
+                      id={`${group.id}-heading`}
+                    >
+                      {group.title}{" "}
+                      <span className="font-normal text-mid-grey-00">
+                        ({group.items.length})
+                      </span>
+                    </Heading>
+                    <Text as="p" className="mb-s text-mid-grey-00">
+                      {group.description}
+                    </Text>
+                    <ul className="flex flex-col">
+                      {group.items.map((item) => (
+                        <li
+                          className="flex flex-col gap-xxs border-grey-00 border-b py-s first:pt-xs"
+                          key={item.slug}
                         >
-                          {item.name}
-                        </Link>
-                        {item.shortDescription && (
-                          <Text as="p" className="text-mid-grey-00">
-                            {item.shortDescription}
-                          </Text>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
-            </div>
+                          <Link
+                            as={NextLink}
+                            className="text-[20px] leading-normal"
+                            href={`/ministries/${item.slug}`}
+                          >
+                            {item.name}
+                          </Link>
+                          {item.shortDescription && (
+                            <Text as="p" className="text-mid-grey-00">
+                              {item.shortDescription}
+                            </Text>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>

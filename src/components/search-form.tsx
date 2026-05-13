@@ -3,15 +3,29 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function SearchForm({ defaultValue = "" }: { defaultValue?: string }) {
+export function SearchForm({
+  defaultValue = "",
+  searchPath = "/search-results",
+  emptyFallbackPath,
+}: {
+  defaultValue?: string;
+  searchPath?: string;
+  emptyFallbackPath?: string;
+}) {
   const router = useRouter();
   const [query, setQuery] = useState(defaultValue);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmed = query.trim();
+    if (!trimmed && emptyFallbackPath) {
+      router.push(emptyFallbackPath);
+      return;
+    }
     router.push(
-      trimmed ? `/search-results?q=${encodeURIComponent(trimmed)}` : "/services"
+      trimmed
+        ? `${searchPath}?q=${encodeURIComponent(trimmed)}`
+        : (emptyFallbackPath ?? "/services")
     );
   }
 
