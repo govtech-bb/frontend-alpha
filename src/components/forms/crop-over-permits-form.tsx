@@ -8,14 +8,13 @@ import {
   Heading,
   Link,
   LinkButton,
-  Radio,
-  RadioGroup,
   ShowHide,
   Text,
 } from "@govtech-bb/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { HelpfulBox } from "@/components/layout/helpful-box";
 import {
   EVENT_TYPE_LABELS,
   type FeatureFlag,
@@ -61,29 +60,72 @@ const URGENCY_CLASSES: Record<Permit["urgency"], string> = {
   normal: "text-mid-grey-00",
 };
 
-const EVENT_OPTIONS: { value: EventType; label: string }[] = [
-  { value: "fete", label: "A fete or party" },
-  { value: "concert", label: "A concert or show" },
-  { value: "vending", label: "Food or craft vending" },
-  { value: "mas", label: "A mas band" },
-  { value: "cruise", label: "A boat cruise" },
-  { value: "market", label: "A market or fair" },
+interface CardOption<T extends string> {
+  value: T;
+  title: string;
+  hint: string;
+}
+
+const EVENT_OPTIONS: CardOption<EventType>[] = [
+  {
+    value: "fete",
+    title: "A fete or party",
+    hint: "All-inclusive, cooler fete, breakfast party, beach party",
+  },
+  {
+    value: "concert",
+    title: "A concert or show",
+    hint: "Live music, soca show, calypso competition, stage performance",
+  },
+  {
+    value: "vending",
+    title: "Food or craft vending",
+    hint: "Selling food, drinks, or crafts at a Crop Over event",
+  },
+  {
+    value: "mas",
+    title: "A mas band",
+    hint: "Organising a Kadooment band or costume section",
+  },
+  {
+    value: "cruise",
+    title: "A boat cruise",
+    hint: "Party cruise, sunset sail, event on water",
+  },
+  {
+    value: "market",
+    title: "A market or fair",
+    hint: "Multi-vendor market, craft fair, cultural exhibition",
+  },
 ];
 
-const VENUE_OPTIONS: { value: VenueFlag; label: string }[] = [
+const VENUE_OPTIONS: CardOption<VenueFlag>[] = [
   {
     value: "private",
-    label: "A private venue (restaurant, club, event space)",
+    title: "A private venue",
+    hint: "Restaurant, club, event space, private property",
   },
-  { value: "beach", label: "A beach or park (NCC-managed)" },
-  { value: "road", label: "A public road or open area" },
-  { value: "water", label: "On the water (harbour, Careenage, open sea)" },
+  {
+    value: "beach",
+    title: "A beach or park",
+    hint: "National Conservation Commission (NCC)-managed beach, public park, Spring Garden Highway",
+  },
+  {
+    value: "road",
+    title: "A public road or open area",
+    hint: "Street party, roadside, car park, open public space",
+  },
+  {
+    value: "water",
+    title: "On the water",
+    hint: "Harbour, Careenage, open sea",
+  },
 ];
 
-const SIZE_OPTIONS: { value: SizeBucket; label: string }[] = [
-  { value: "small", label: "Under 200 people" },
-  { value: "medium", label: "200 to 1,000 people" },
-  { value: "large", label: "Over 1,000 people" },
+const SIZE_OPTIONS: CardOption<SizeBucket>[] = [
+  { value: "small", title: "Under 200", hint: "Small, intimate event" },
+  { value: "medium", title: "200 to 1,000", hint: "Mid-size fete or show" },
+  { value: "large", title: "Over 1,000", hint: "Large event or major fete" },
 ];
 
 const FEATURE_OPTIONS: { id: FeatureFlag; label: string }[] = [
@@ -106,6 +148,50 @@ function ServiceTitle() {
         {SERVICE_TITLE}
       </Text>
     </div>
+  );
+}
+
+interface OptionCardProps<T extends string> {
+  name: string;
+  option: CardOption<T>;
+  selected: boolean;
+  invalid: boolean;
+  onChange: (value: T) => void;
+}
+
+function OptionCard<T extends string>({
+  name,
+  option,
+  selected,
+  invalid,
+  onChange,
+}: OptionCardProps<T>) {
+  return (
+    <label
+      className={`flex min-h-14 cursor-pointer items-start gap-s rounded-sm border-2 p-s transition-colors hover:border-teal-00 hover:bg-teal-10 ${
+        selected
+          ? "border-teal-00 bg-teal-10"
+          : invalid
+            ? "border-red-00"
+            : "border-grey-00"
+      }`}
+    >
+      <input
+        checked={selected}
+        className="mt-1 h-5 w-5 shrink-0 accent-teal-00"
+        id={`${name}-${option.value}`}
+        name={name}
+        onChange={() => onChange(option.value)}
+        type="radio"
+        value={option.value}
+      />
+      <span>
+        <span className="block font-bold text-base">{option.title}</span>
+        <span className="mt-1 block text-base text-mid-grey-00">
+          {option.hint}
+        </span>
+      </span>
+    </label>
   );
 }
 
@@ -236,21 +322,19 @@ export default function CropOverPermitsForm() {
             )}
             <ServiceTitle />
             <Heading as="h1">What are you putting on?</Heading>
-            <RadioGroup
-              error={eventError || undefined}
-              label="Choose one"
-              onValueChange={(v) => setEventType(v as EventType)}
-              value={eventType || undefined}
-            >
-              {EVENT_OPTIONS.map(({ value, label }) => (
-                <Radio
-                  id={`event-${value}`}
-                  key={value}
-                  label={label}
-                  value={value}
+            <fieldset className="flex flex-col gap-xs">
+              <legend className="sr-only">Choose one</legend>
+              {EVENT_OPTIONS.map((option) => (
+                <OptionCard
+                  invalid={Boolean(eventError)}
+                  key={option.value}
+                  name="event"
+                  onChange={setEventType}
+                  option={option}
+                  selected={eventType === option.value}
                 />
               ))}
-            </RadioGroup>
+            </fieldset>
             <div className="flex gap-3">
               <Button
                 onClick={() => router.push(SERVICE_PATH)}
@@ -281,21 +365,19 @@ export default function CropOverPermitsForm() {
             )}
             <ServiceTitle />
             <Heading as="h1">Where are you holding it?</Heading>
-            <RadioGroup
-              error={venueError || undefined}
-              label="Choose one"
-              onValueChange={(v) => setVenue(v as VenueFlag)}
-              value={venue || undefined}
-            >
-              {VENUE_OPTIONS.map(({ value, label }) => (
-                <Radio
-                  id={`venue-${value}`}
-                  key={value}
-                  label={label}
-                  value={value}
+            <fieldset className="flex flex-col gap-xs">
+              <legend className="sr-only">Choose one</legend>
+              {VENUE_OPTIONS.map((option) => (
+                <OptionCard
+                  invalid={Boolean(venueError)}
+                  key={option.value}
+                  name="venue"
+                  onChange={setVenue}
+                  option={option}
+                  selected={venue === option.value}
                 />
               ))}
-            </RadioGroup>
+            </fieldset>
             <div className="flex gap-3">
               <Button
                 onClick={() => go("q-event")}
@@ -326,21 +408,19 @@ export default function CropOverPermitsForm() {
             )}
             <ServiceTitle />
             <Heading as="h1">How many people are you expecting?</Heading>
-            <RadioGroup
-              error={sizeError || undefined}
-              label="Choose one"
-              onValueChange={(v) => setSize(v as SizeBucket)}
-              value={size || undefined}
-            >
-              {SIZE_OPTIONS.map(({ value, label }) => (
-                <Radio
-                  id={`size-${value}`}
-                  key={value}
-                  label={label}
-                  value={value}
+            <fieldset className="flex flex-col gap-xs">
+              <legend className="sr-only">Choose one</legend>
+              {SIZE_OPTIONS.map((option) => (
+                <OptionCard
+                  invalid={Boolean(sizeError)}
+                  key={option.value}
+                  name="size"
+                  onChange={setSize}
+                  option={option}
+                  selected={size === option.value}
                 />
               ))}
-            </RadioGroup>
+            </fieldset>
             <div className="flex gap-3">
               <Button
                 onClick={() =>
@@ -444,16 +524,40 @@ export default function CropOverPermitsForm() {
               </Text>
             </div>
 
-            <div>
+            <div className="flex flex-wrap gap-3 print:hidden">
+              <Button onClick={savePdf} type="button">
+                Save checklist as PDF
+              </Button>
               <Button onClick={restart} type="button" variant="secondary">
                 Start again
               </Button>
+            </div>
+
+            <div className="print:hidden">
+              <HelpfulBox />
             </div>
           </div>
         )}
       </div>
     </>
   );
+}
+
+function savePdf() {
+  if (typeof window === "undefined") return;
+  const detailsList = Array.from(document.querySelectorAll("details"));
+  const previouslyOpen = detailsList.map((d) => d.open);
+  for (const d of detailsList) {
+    d.open = true;
+  }
+  const restore = () => {
+    detailsList.forEach((d, i) => {
+      d.open = previouslyOpen[i];
+    });
+    window.removeEventListener("afterprint", restore);
+  };
+  window.addEventListener("afterprint", restore);
+  window.print();
 }
 
 function PermitCard({
