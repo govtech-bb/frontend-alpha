@@ -1,4 +1,4 @@
-export type PageType = {
+export interface PageType {
   title: string;
   filename?: string;
   stage?: string;
@@ -10,11 +10,17 @@ export type PageType = {
     title?: string;
     type: "markdown" | "component";
   }[];
-};
+  /**
+   * Nested child pages, used to express a subcategory whose children are
+   * individual services / opportunities. Rendered as a second-level index
+   * when the user lands on the parent URL.
+   */
+  pages?: PageType[];
+}
 
-export type InformationContent = {
+export interface InformationContent {
   title: string;
   description?: string;
   slug: string;
   pages: PageType[];
-};
+}

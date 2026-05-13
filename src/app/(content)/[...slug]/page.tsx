@@ -1,11 +1,17 @@
 import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import type { Opportunity } from "@/app/youth/opportunities/_components/opportunities-list";
+import { YouthOpportunityForm } from "@/app/youth/opportunities/[id]/form/_components/youth-opportunity-form";
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
+import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { MarkdownContent } from "@/components/markdown-content";
+import { OpportunityDetail } from "@/components/opportunity-detail";
 import { PageViewTracker } from "@/components/page-view-tracker";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
+import opportunitiesData from "@/data/opportunities.json";
 import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess } from "@/lib/research-access";
@@ -17,6 +23,8 @@ import {
 } from "@/lib/service-access-api";
 import { SITE_URL } from "@/lib/site-url";
 import { findSubPageTitleFromPath } from "@/lib/utils";
+
+const opportunities = opportunitiesData as Opportunity[];
 
 type ContentPageProps = {
   params: Promise<{ slug: string[] }>;
@@ -70,7 +78,7 @@ export default async function Page({ params }: ContentPageProps) {
     );
   }
 
-  // Two slugs: Main service page
+  // Two slugs: Main service page OR subcategory index
   if (slug.length === 2) {
     const [categorySlug, pageSlug] = slug;
 
@@ -84,6 +92,32 @@ export default async function Page({ params }: ContentPageProps) {
     const page = category.pages.find((p) => p.slug === pageSlug);
     if (!page) {
       notFound();
+    }
+
+    // Subcategory index: render the nested pages as clickable tiles
+    if (page.pages && page.pages.length > 0) {
+      return (
+        <>
+          <Heading as="h1">{page.title}</Heading>
+          {page.description && <Text as="p">{page.description}</Text>}
+          <div className="flex flex-col divide-y-2 divide-grey-00 last:border-grey-00 last:border-b-2">
+            {page.pages.map((child) => (
+              <div
+                className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
+                key={child.slug}
+              >
+                <Link
+                  as={NextLink}
+                  className="cursor-pointer text-[20px] leading-normal lg:text-3xl"
+                  href={`/${categorySlug}/${pageSlug}/${child.slug}`}
+                >
+                  {child.title}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </>
+      );
     }
 
     const serviceConfig = await fetchServiceConfig(pageSlug);
@@ -115,7 +149,7 @@ export default async function Page({ params }: ContentPageProps) {
     );
   }
 
-  // Three slugs: Sub-pages (start, form, etc.)
+  // Three slugs: Sub-pages (start, form, etc.) OR opportunity detail under a subcategory
   if (slug.length === 3) {
     const [categorySlug, pageSlug, subPageSlug] = slug;
 
@@ -129,6 +163,24 @@ export default async function Page({ params }: ContentPageProps) {
     const page = category.pages.find((p) => p.slug === pageSlug);
     if (!page) {
       notFound();
+    }
+
+    // Opportunity detail under a subcategory: third slug is the opportunity id
+    if (page.pages && page.pages.length > 0) {
+      const childPage = page.pages.find((p) => p.slug === subPageSlug);
+      if (!childPage) {
+        notFound();
+      }
+      const opportunity = opportunities.find((opp) => opp.id === subPageSlug);
+      if (!opportunity) {
+        notFound();
+      }
+      return (
+        <OpportunityDetail
+          applyHref={`/${categorySlug}/${pageSlug}/${subPageSlug}/form`}
+          opportunity={opportunity}
+        />
+      );
     }
 
     const serviceConfig = await fetchServiceConfig(pageSlug);
@@ -179,11 +231,79 @@ export default async function Page({ params }: ContentPageProps) {
     );
   }
 
+  // Four slugs: Opportunity application form under a subcategory
+  if (slug.length === 4) {
+    const [categorySlug, pageSlug, opportunitySlug, leafSlug] = slug;
+    if (leafSlug !== "form") {
+      notFound();
+    }
+
+    const category = INFORMATION_ARCHITECTURE.find(
+      (cat) => cat.slug === categorySlug
+    );
+    if (!category) {
+      notFound();
+    }
+
+    const page = category.pages.find((p) => p.slug === pageSlug);
+    if (!page?.pages || page.pages.length === 0) {
+      notFound();
+    }
+
+    const childPage = page.pages.find((p) => p.slug === opportunitySlug);
+    if (!childPage) {
+      notFound();
+    }
+
+    const opportunity = opportunities.find(
+      (opp) => opp.id === opportunitySlug
+    );
+    if (!opportunity) {
+      notFound();
+    }
+
+    return (
+      <Suspense
+        fallback={
+          <div className="container py-8 lg:py-16">
+            <FormSkeleton />
+          </div>
+        }
+      >
+        <YouthOpportunityForm
+          notificationEmail={opportunity.contact?.email ?? null}
+          opportunityId={opportunity.id}
+          opportunityTitle={opportunity.title}
+        />
+      </Suspense>
+    );
+  }
+
   return notFound();
 }
 
 export async function generateMetadata({ params }: ContentPageProps) {
   const { slug } = await params;
+
+  // Opportunity application form (4 slugs)
+  if (slug.length === 4 && slug[3] === "form") {
+    const [, , opportunitySlug] = slug;
+    const opportunity = opportunities.find(
+      (opp) => opp.id === opportunitySlug
+    );
+    if (opportunity) {
+      const title = `Apply for ${opportunity.title}`;
+      const description = `Apply for ${opportunity.title}. ${opportunity.description}`;
+      const canonical = `${SITE_URL}/${slug.join("/")}`;
+      return {
+        title,
+        description,
+        alternates: { canonical },
+        openGraph: { title, description, url: canonical },
+      };
+    }
+    return { title: "Apply" };
+  }
 
   // For sub-pages (3 slugs)
   if (slug.length === 3) {
@@ -193,6 +313,38 @@ export async function generateMetadata({ params }: ContentPageProps) {
       (cat) => cat.slug === categorySlug
     );
     const page = category?.pages.find((p) => p.slug === pageSlug);
+
+    // Opportunity detail under a subcategory
+    if (page?.pages && page.pages.length > 0) {
+      const opportunity = opportunities.find((opp) => opp.id === subPageSlug);
+      if (opportunity) {
+        const canonical = `${SITE_URL}/${slug.join("/")}`;
+        return {
+          title: opportunity.title,
+          description: opportunity.description,
+          alternates: { canonical },
+          openGraph: {
+            title: opportunity.title,
+            description: opportunity.description,
+            url: canonical,
+            images: [
+              {
+                url: `${SITE_URL}/og-image.png`,
+                width: 1200,
+                height: 630,
+                alt: "Government of Barbados",
+              },
+            ],
+          },
+          twitter: {
+            title: opportunity.title,
+            description: opportunity.description,
+            images: [`${SITE_URL}/og-image.png`],
+          },
+        };
+      }
+      return { title: "Page not found" };
+    }
 
     if (page) {
       const serviceConfig = await fetchServiceConfig(pageSlug);
@@ -249,6 +401,41 @@ export async function generateMetadata({ params }: ContentPageProps) {
 
   // For main pages (2 slugs)
   if (slug.length === 2) {
+    const [categorySlug, pageSlug] = slug;
+    const category = INFORMATION_ARCHITECTURE.find(
+      (cat) => cat.slug === categorySlug
+    );
+    const page = category?.pages.find((p) => p.slug === pageSlug);
+
+    // Subcategory index — no markdown, use the page's own metadata
+    if (page?.pages && page.pages.length > 0) {
+      const canonical = `${SITE_URL}/${slug.join("/")}`;
+      const description = page.description || "";
+      return {
+        title: page.title,
+        description,
+        alternates: { canonical },
+        openGraph: {
+          title: page.title,
+          description,
+          url: canonical,
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
+        },
+        twitter: {
+          title: page.title,
+          description,
+          images: [`${SITE_URL}/og-image.png`],
+        },
+      };
+    }
+
     const contentSlug = [slug[1]];
     const result = await getMarkdownContent(contentSlug);
 
