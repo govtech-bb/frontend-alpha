@@ -1,14 +1,6 @@
-import type { ContactItem, Minister } from "@/data/mda-types";
+import type { MdaEntry } from "@/data/mda-types";
 
-export interface Department {
-  slug: string;
-  name: string;
-  shortDescription?: string;
-  intro?: string;
-  head?: Minister;
-  contact?: ContactItem[];
-  originalSource?: string;
-}
+export type Department = MdaEntry;
 
 // Source: https://www.gov.bb/Departments (verified)
 export const DEPARTMENTS: Department[] = [

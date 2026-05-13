@@ -30,3 +30,13 @@ export interface AssociatedDepartmentGroup {
   category?: string;
   items: string[];
 }
+
+export interface MdaEntry {
+  slug: string;
+  name: string;
+  shortDescription?: string;
+  intro?: string;
+  head?: Minister;
+  contact?: ContactItem[];
+  originalSource?: string;
+}
