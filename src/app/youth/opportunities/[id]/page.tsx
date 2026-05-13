@@ -113,8 +113,8 @@ export default async function OpportunityDetailPage({
     opportunity.source,
   ].filter(Boolean) as string[];
 
-  const applyHref = opportunity.applyUrl ?? opportunity.url;
-  const applyLabel = opportunity.applyUrl ? "Apply now" : "Visit official page";
+  const applyHref = `/youth/opportunities/${opportunity.id}/form`;
+  const externalLink = opportunity.applyUrl ?? opportunity.url;
 
   return (
     <>
@@ -187,39 +187,24 @@ export default async function OpportunityDetailPage({
 
           <section className="space-y-xs">
             <Heading as="h2">How to apply</Heading>
-            {applyHref ? (
-              <>
-                <Text as="p">
-                  {opportunity.applyUrl
-                    ? "Complete the application on the official site to register your interest."
-                    : "Find full details and how to apply on the official site."}
-                </Text>
-                <div className="pt-2">
-                  <LinkButton
-                    as={NextLink}
-                    href={applyHref}
-                    rel="noopener"
-                    target="_blank"
-                    variant="primary"
-                  >
-                    {applyLabel}
-                  </LinkButton>
-                </div>
-              </>
-            ) : (
-              <Text as="p">
-                Contact the organisers directly for details on how to take part.
-              </Text>
-            )}
+            <Text as="p">
+              Complete the short application form to register your interest.
+              Your progress is saved automatically.
+            </Text>
+            <div className="pt-2">
+              <LinkButton as={NextLink} href={applyHref} variant="primary">
+                Apply now
+              </LinkButton>
+            </div>
           </section>
 
-          {opportunity.url && opportunity.url !== applyHref && (
+          {externalLink && (
             <section className="space-y-xs">
               <Heading as="h2">More information</Heading>
               <Text as="p">
                 <Link
                   as={NextLink}
-                  href={opportunity.url}
+                  href={externalLink}
                   rel="noopener"
                   target="_blank"
                 >
@@ -252,7 +237,6 @@ export default async function OpportunityDetailPage({
               </ul>
             </section>
           )}
-
         </article>
 
         <HelpfulBox className="mt-8 lg:mt-12" />

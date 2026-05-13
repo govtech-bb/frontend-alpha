@@ -1,0 +1,65 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import opportunitiesData from "@/data/opportunities.json";
+import { SITE_URL } from "@/lib/site-url";
+import type { Opportunity } from "../../_components/opportunities-list";
+import { YouthOpportunityForm } from "./_components/youth-opportunity-form";
+
+const opportunities = opportunitiesData as Opportunity[];
+
+function findOpportunity(id: string): Opportunity | undefined {
+  return opportunities.find((opp) => opp.id === id);
+}
+
+export function generateStaticParams() {
+  return opportunities.map((opp) => ({ id: opp.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const opportunity = findOpportunity(id);
+
+  if (!opportunity) {
+    return { title: "Apply" };
+  }
+
+  const title = `Apply for ${opportunity.title}`;
+  const canonical = `${SITE_URL}/youth/opportunities/${opportunity.id}/form`;
+  const description = `Apply for ${opportunity.title}. ${opportunity.description}`;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+    },
+  };
+}
+
+export default async function YouthOpportunityFormPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const opportunity = findOpportunity(id);
+
+  if (!opportunity) {
+    notFound();
+  }
+
+  return (
+    <YouthOpportunityForm
+      notificationEmail={opportunity.contact?.email ?? null}
+      opportunityId={opportunity.id}
+      opportunityTitle={opportunity.title}
+    />
+  );
+}
