@@ -18,6 +18,12 @@ export interface PageType {
     title?: string;
     type: "markdown" | "component";
   }[];
+  /**
+   * Nested child pages, used to express a subcategory whose children are
+   * individual services / opportunities. Rendered as a second-level index
+   * when the user lands on the parent URL.
+   */
+  pages?: PageType[];
 }
 
 export type CrossLink = {
@@ -26,7 +32,6 @@ export type CrossLink = {
 };
 
 export type InformationContent = {
-
   title: string;
   description?: string;
   slug: string;

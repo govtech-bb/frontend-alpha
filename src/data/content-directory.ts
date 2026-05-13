@@ -262,12 +262,205 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       },
     ],
   },
-  // {
-  //   title: "Education, youth and learning",
-  //   slug: "education-youth-learning",
-  //   description: "Apply for or manage education and youth opportunities",
-  //   pages: [],
-  // },
+  {
+    title: "Youth and Community Programmes",
+    slug: "youth-and-community",
+    description:
+      "Programmes, training, workshops and volunteering opportunities for young people in Barbados",
+    pages: [
+      {
+        title: "Youth development and leadership",
+        slug: "youth-development-leadership",
+        description:
+          "Long-term training, mentorship and leadership pathways for young people.",
+        pages: [
+          {
+            title: "Apply to the Barbados Youth Advance Corps",
+            slug: "byac",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/barbados-youthadvance-corps-2/",
+            description:
+              "Two-year developmental training. Year 1: 10 weeks residential technical/vocational training. Year 2: job attachments, apprenticeships, internships, community service.",
+          },
+          {
+            title: "Join the Youth Development Programme",
+            slug: "ydp",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+            description:
+              "Programming channel of the Division of Youth Affairs to engage and empower youth across communities through initiatives like Bridge to the Future, YAR, Web Design for Entrepreneurs, Cyber Security Training, and Bright Sparks.",
+          },
+          {
+            title: "Apply for the Pathways Employability Programme",
+            slug: "pathways",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/pathways/",
+            description:
+              "Job attachment and mentorship programme for unemployed youth not in full-time education. Life and job skills, work ethic, and psycho-social support from social workers and counsellors.",
+          },
+          {
+            title: "Join Bright Sparks Educational Project 2.0",
+            slug: "bright-sparks-2",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+            description:
+              "Educational project under the Youth Development Programme.",
+          },
+          {
+            title: "Register for the Bridge to the Future Workshop",
+            slug: "bridge-to-future-2025",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+            description:
+              "Career and skills workshop under the Youth Development Programme.",
+          },
+        ],
+      },
+      {
+        title: "Skills, trades and vocational training",
+        slug: "skills-trades-vocational-training",
+        description:
+          "Practical courses and workshops in trades, technology and creative skills.",
+        pages: [
+          {
+            title: "Register for the Community Impact Programme (CIP)",
+            slug: "cip",
+            source_url: "https://comdev.gov.bb/programmes/cip/",
+            description:
+              "Practical demand-driven skill training in 25+ courses across trades, creative services, and wellness. Two sessions/week at community and resource centres island-wide.",
+          },
+          {
+            title: "Apply for the Block Transformation Unit (Project Dawn)",
+            slug: "btu",
+            source_url:
+              "https://youthaffairs.gov.bb/about/about-the-block-transformation-unit/",
+            description:
+              "Free vocational training in 20+ courses including Motor Vehicle Engineering, Professional Housekeeping, Basic Trade Cookery, Bar Operations, hospitality, beauty, construction and healthcare.",
+          },
+          {
+            title: "Join the Cyber Security Training Workshop",
+            slug: "cyber-security-training",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+            description:
+              "Cyber security training under the Youth Development Programme.",
+          },
+          {
+            title: "Join Web Page Design and Maintenance for Entrepreneurs",
+            slug: "web-design-entrepreneurs",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+            description:
+              "Workshop teaching young entrepreneurs to design and maintain their own websites.",
+          },
+          {
+            title: "Apply for the Community Arts Programme (CAP)",
+            slug: "cap",
+            source_url: "https://comdev.gov.bb/programmes/cap/",
+            description:
+              "Structured instruction in airbrushing, animation, automotive painting, basic bodywork, computer graphics, drawing & illustration, painting & colour theory, sign making and technical drawing.",
+          },
+        ],
+      },
+      {
+        title: "Entrepreneurship and business",
+        slug: "entrepreneurship-business",
+        description:
+          "Support for young people starting and growing their own ventures.",
+        pages: [
+          {
+            title:
+              "Make first contact with the Youth Entrepreneurship Scheme (YES)",
+            slug: "yes",
+            source_url: "https://youthaffairs.gov.bb/programme-channels/yes-2/",
+            description:
+              "From idea to enterprise. Direct technical assistance from Youth Enterprise Officers and consultants, plus access to financial assistance via partnerships.",
+          },
+        ],
+      },
+      {
+        title: "Arts and culture",
+        slug: "arts-culture",
+        description:
+          "Creative programmes, performances and content celebrating Barbadian culture.",
+        pages: [
+          {
+            title: "Register for Youth Achieving Results (YAR)",
+            slug: "yar",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
+            description:
+              "Arts-focused initiative under the Youth Development Programme.",
+          },
+          {
+            title: "Watch Community Canvas episodes",
+            slug: "community-canvas",
+            source_url: "https://comdev.gov.bb/canvas/",
+            description:
+              "Video/TV series on YouTube featuring activities and programs at Resource Centres island-wide. 10 episodes covering balloon artistry, senior fitness, vocational training and more.",
+          },
+        ],
+      },
+      {
+        title: "Children, families and the wider community",
+        slug: "children-families-community",
+        description:
+          "Programmes, volunteering opportunities and services for children, families and neighbourhoods.",
+        pages: [
+          {
+            title: "Register a child for the National Summer Camp Programme",
+            slug: "national-summer-camp",
+            source_url:
+              "https://youthaffairs.gov.bb/programme-channels/national-summer-camp-2/",
+            description:
+              "Summer camps across 46 locations island-wide. Hosted by the Ministry of Youth, Sports and Community Empowerment.",
+          },
+          {
+            title:
+              "Register for the Community Engagement and Educational Programme (CEEP)",
+            slug: "ceep",
+            source_url: "https://comdev.gov.bb/programmes/ceep/",
+            description:
+              "Education and assistance with tax, NIS/social security, and financial services. Partners: Barbados Revenue Authority, NISSS, Sagicor, BPWCCUL.",
+          },
+          {
+            title: "Join Mission Barbados",
+            slug: "mission-barbados",
+            source_url: "https://comdev.gov.bb/programmes/mission-barbados/",
+            description:
+              "National initiative around six 2030 missions: sustainability, social cohesion, food/water security, public health & safety, worker empowerment and digital transformation. Open to individuals and organisations.",
+          },
+          {
+            title: "Donate books to Barbados is Blooming (Little Libraries)",
+            slug: "barbados-blooming-libraries",
+            source_url: "https://comdev.gov.bb/programmes/libraries/",
+            description:
+              "Free little libraries placed across the island. Donate new or lightly used children's books at Massy Stores (Sunset Crest, Holetown, Warrens) and Farm and Garden in Salters, St. George.",
+          },
+          {
+            title: "Volunteer for a Centre Management Committee (CMC)",
+            slug: "cmc",
+            source_url: "https://comdev.gov.bb/programmes/cmc/",
+            description:
+              "Volunteer to review requests for use of community centres, review programme proposals and facilitate extended centre access.",
+          },
+          {
+            title: "Find a Spreading Joy at Christmas motorcade near you",
+            slug: "spreading-joy-2025",
+            source_url: "https://comdev.gov.bb/programmes/spreading-joy/",
+            description:
+              "Festive motorcades visit communities with staff, cultural characters and gift distribution to vulnerable children in designated parishes.",
+          },
+          {
+            title: "Book a community centre for an event",
+            slug: "centre-access",
+            source_url: "https://comdev.gov.bb/programmes/centre-access/",
+            description: "Access community centres for events and activities.",
+          },
+        ],
+      },
+    ],
+  },
   {
     title: "Travel, ID and citizenship",
     slug: "travel-id-citizenship",
