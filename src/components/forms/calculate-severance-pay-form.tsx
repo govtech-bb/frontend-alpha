@@ -498,7 +498,7 @@ export default function CalculateSeverancePayForm() {
             <ServiceTitle />
             <Heading as="h1">Your insurable earnings</Heading>
             <Text as="p" size="body">
-              Enter your usual basic pay. We'll use it as the average over the
+              Enter your usual gross pay. We'll use it as the average over the
               last 104 weeks (2 years).
             </Text>
 
@@ -514,7 +514,7 @@ export default function CalculateSeverancePayForm() {
 
             <div className="max-w-[16rem]">
               <Input
-                description="Your usual gross pay. Don't include overtime or bonuses."
+                description="Your usual gross pay. Include overtime or bonuses."
                 error={payError || undefined}
                 id="simple-avg"
                 inputMode="decimal"
@@ -697,15 +697,15 @@ export default function CalculateSeverancePayForm() {
                         </Text>
                         <ul className="list-disc space-y-2 pl-7">
                           <li>
-                            <strong>2.5 weeks</strong> of basic pay for each
+                            <strong>2.5 weeks</strong> of gross pay for each
                             year up to 10 years
                           </li>
                           <li>
-                            <strong>3 weeks</strong> of basic pay for each year
+                            <strong>3 weeks</strong> of gross pay for each year
                             between 11 and 20 years
                           </li>
                           <li>
-                            <strong>3.5 weeks</strong> of basic pay for each
+                            <strong>3.5 weeks</strong> of gross pay for each
                             year between 21 and 33 years
                           </li>
                         </ul>
