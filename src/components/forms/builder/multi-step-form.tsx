@@ -450,7 +450,7 @@ function expandFormSteps(
   return expanded;
 }
 
-type DynamicMultiStepFormProps = {
+interface DynamicMultiStepFormProps {
   formSteps: FormStep[];
   serviceTitle: string;
   storageKey?: string;
@@ -461,7 +461,13 @@ type DynamicMultiStepFormProps = {
   analyticsCategory?: string;
   /** Overrides pathname segment[1] for confirmation / exit-survey links (e.g. remote form slug). */
   confirmationFormId?: string;
-};
+  /**
+   * When true and submissionMode is "serverActionOnly", email send failures are
+   * logged but do not block the submission from completing. Matches the
+   * best-effort email behaviour already used by the "api" submission mode.
+   */
+  continueOnEmailFailure?: boolean;
+}
 
 export default function DynamicMultiStepForm({
   formSteps,
@@ -472,6 +478,7 @@ export default function DynamicMultiStepForm({
   submissionMode = "api",
   analyticsCategory,
   confirmationFormId,
+  continueOnEmailFailure = false,
 }: DynamicMultiStepFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -962,12 +969,14 @@ export default function DynamicMultiStepForm({
           }
         } catch (emailError) {
           console.error("Form submission email delivery failed", emailError);
-          setSubmissionError({
-            message:
-              "There was a problem sending your submission emails. Please try again.",
-          });
-          tracking.trackSubmitError("Remote form email submission failed");
-          return;
+          if (!continueOnEmailFailure) {
+            setSubmissionError({
+              message:
+                "There was a problem sending your submission emails. Please try again.",
+            });
+            tracking.trackSubmitError("Remote form email submission failed");
+            return;
+          }
         }
 
         markAsSubmitted(generatedReferenceNumber, customerName);

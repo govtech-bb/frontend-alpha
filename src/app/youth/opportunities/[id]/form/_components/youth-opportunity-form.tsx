@@ -20,6 +20,7 @@ export function YouthOpportunityForm({
     <DynamicMultiStepForm
       analyticsCategory="youth-opportunities"
       confirmationFormId={opportunityId}
+      continueOnEmailFailure
       formSteps={formSteps}
       ministryName="Ministry of Youth, Sports and Community Empowerment"
       notificationEmail={notificationEmail}
