@@ -29,17 +29,9 @@ export const Header = () => (
               <li>
                 <Link
                   className="font-medium hover:underline"
-                  href="/ministries"
+                  href="/government/organizations"
                 >
-                  Ministries
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="font-medium hover:underline"
-                  href="/departments"
-                >
-                  Departments
+                  Organisations
                 </Link>
               </li>
             </ul>

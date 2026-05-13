@@ -5,12 +5,55 @@ import NextLink from "next/link";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
+import { DEPARTMENTS } from "@/data/departments";
 import { getMinistriesByCategory } from "@/data/ministries";
 import { filterByQuery } from "@/lib/search-filter";
 
 export const metadata: Metadata = {
-  title: "Departments and ministries",
+  title: "Departments, agencies and public bodies",
 };
+
+type Org = {
+  slug: string;
+  name: string;
+  shortDescription?: string;
+  href: string;
+};
+
+const byName = (a: Org, b: Org) => a.name.localeCompare(b.name);
+
+const ministerial: Org[] = getMinistriesByCategory("ministerial")
+  .map((m) => ({
+    slug: m.slug,
+    name: m.name,
+    shortDescription: m.shortDescription,
+    href: `/ministries/${m.slug}`,
+  }))
+  .sort(byName);
+
+const nonMinisterial: Org[] = getMinistriesByCategory("non-ministerial")
+  .map((m) => ({
+    slug: m.slug,
+    name: m.name,
+    shortDescription: m.shortDescription,
+    href: `/ministries/${m.slug}`,
+  }))
+  .sort(byName);
+
+const agenciesAndBodies: Org[] = [
+  ...getMinistriesByCategory("agency").map((m) => ({
+    slug: m.slug,
+    name: m.name,
+    shortDescription: m.shortDescription,
+    href: `/ministries/${m.slug}`,
+  })),
+  ...DEPARTMENTS.map((d) => ({
+    slug: d.slug,
+    name: d.name,
+    shortDescription: d.shortDescription,
+    href: `/departments/${d.slug}`,
+  })),
+].sort(byName);
 
 const ALL_GROUPS = [
   {
@@ -18,25 +61,25 @@ const ALL_GROUPS = [
     title: "Ministerial departments",
     description:
       "Ministerial departments are led by a government minister and deal with policy.",
-    items: getMinistriesByCategory("ministerial"),
+    items: ministerial,
   },
   {
     id: "non-ministerial-departments",
     title: "Non-ministerial departments",
     description:
       "Non-ministerial departments are headed by senior public servants, not ministers.",
-    items: getMinistriesByCategory("non-ministerial"),
+    items: nonMinisterial,
   },
   {
     id: "agencies-and-public-bodies",
     title: "Agencies and other public bodies",
     description:
-      "Statutory bodies, agencies and public corporations that work with government.",
-    items: getMinistriesByCategory("agency"),
+      "Statutory bodies, agencies, departments and public corporations that work with government.",
+    items: agenciesAndBodies,
   },
 ].filter((group) => group.items.length > 0);
 
-function filterMinistries(query: string) {
+function filterGroups(query: string) {
   if (!query.trim()) return ALL_GROUPS;
 
   return ALL_GROUPS.map((group) => ({
@@ -45,15 +88,16 @@ function filterMinistries(query: string) {
   })).filter((group) => group.items.length > 0);
 }
 
-export default async function MinistriesPage({
+export default async function OrganizationsPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
   const { q = "" } = await searchParams;
   const query = q.trim();
-  const groups = filterMinistries(query);
+  const groups = filterGroups(query);
   const totalResults = groups.reduce((sum, g) => sum + g.items.length, 0);
+  const basePath = "/government/organizations";
 
   return (
     <>
@@ -67,12 +111,12 @@ export default async function MinistriesPage({
         <div className="container">
           <div className="flex flex-col gap-2">
             <Text as="p" className="font-bold">
-              Search for a department/ministry
+              Search for a department, agency or public body
             </Text>
             <SearchForm
               defaultValue={query}
-              emptyFallbackPath="/ministries"
-              searchPath="/ministries"
+              emptyFallbackPath={basePath}
+              searchPath={basePath}
             />
           </div>
         </div>
@@ -82,7 +126,7 @@ export default async function MinistriesPage({
         <div className="container">
           <div className="flex flex-col gap-l">
             <div className="flex flex-col gap-xs">
-              <Heading as="h1">Departments and ministries</Heading>
+              <Heading as="h1">Departments, agencies and public bodies</Heading>
               {query ? (
                 <Text as="p" className="text-mid-grey-00">
                   {totalResults === 0
@@ -114,8 +158,8 @@ export default async function MinistriesPage({
             {totalResults === 0 ? (
               <Text as="p">
                 Try a different search term, or{" "}
-                <Link as={NextLink} href="/ministries">
-                  view all departments and ministries
+                <Link as={NextLink} href={basePath}>
+                  view all departments, agencies and public bodies
                 </Link>
                 .
               </Text>
@@ -143,12 +187,12 @@ export default async function MinistriesPage({
                       {group.items.map((item) => (
                         <li
                           className="flex flex-col gap-xxs border-grey-00 border-b py-s first:pt-xs"
-                          key={item.slug}
+                          key={item.href}
                         >
                           <Link
                             as={NextLink}
                             className="text-[20px] leading-normal"
-                            href={`/ministries/${item.slug}`}
+                            href={item.href}
                           >
                             {item.name}
                           </Link>
