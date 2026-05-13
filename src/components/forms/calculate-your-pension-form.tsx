@@ -181,7 +181,7 @@ export default function CalculateYourPensionForm() {
               calculate();
             }}
           >
-            <div className="max-w-[14rem]">
+            <div className="[&_input]:max-w-[14rem]">
               <Input
                 description="Enter the total number of complete months. No-pay leave does not count."
                 error={monthsError || undefined}
@@ -194,7 +194,7 @@ export default function CalculateYourPensionForm() {
               />
             </div>
 
-            <div className="max-w-[18rem]">
+            <div className="[&_input]:max-w-[18rem]">
               <Input
                 description="Enter your gross annual salary in Barbados dollars."
                 error={salaryError || undefined}
@@ -314,7 +314,7 @@ export default function CalculateYourPensionForm() {
                 A gratuity is paid as a lump sum. The annual pension is divided
                 by 12 and paid monthly.
               </Text>
-              <p className="mt-2 border-blue-40 border-l-4 bg-blue-10 px-4 py-2 font-mono text-sm">
+              <p className="mt-2 rounded-sm bg-blue-10 px-4 py-3">
                 Formula: (months of service ÷ 600) × last annual salary
               </p>
             </div>
@@ -326,14 +326,14 @@ export default function CalculateYourPensionForm() {
                 remaining 25% is multiplied by 12.5 to give your gratuity lump
                 sum.
               </Text>
-              <p className="mt-2 border-blue-40 border-l-4 bg-blue-10 px-4 py-2 font-mono text-sm">
+              <p className="mt-2 rounded-sm bg-blue-10 px-4 py-3">
                 Formula: full pension × 75%
               </p>
             </div>
 
             <div className="mt-4">
               <Heading as="h3">Gratuity</Heading>
-              <p className="mt-2 border-blue-40 border-l-4 bg-blue-10 px-4 py-2 font-mono text-sm">
+              <p className="mt-2 rounded-sm bg-blue-10 px-4 py-3">
                 Formula: (full pension ÷ 4) × 12.5
               </p>
             </div>
