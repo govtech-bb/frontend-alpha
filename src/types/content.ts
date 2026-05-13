@@ -1,4 +1,4 @@
-export type PageType = {
+export interface PageType {
   title: string;
   filename?: string;
   stage?: string;
@@ -6,16 +6,23 @@ export type PageType = {
   source_url?: string;
   description: string; // date when content was published, updated or migrated
   type?: "markdown" | "component";
+  /**
+   * Optional absolute path override. When set, this is used as the link
+   * destination in the category index and search results instead of the
+   * default `/{category.slug}/{page.slug}`. Use this for pages that live
+   * outside the catch-all (e.g. dedicated app router routes).
+   */
+  href?: string;
   subPages?: {
     slug: string;
     title?: string;
     type: "markdown" | "component";
   }[];
-};
+}
 
-export type InformationContent = {
+export interface InformationContent {
   title: string;
   description?: string;
   slug: string;
   pages: PageType[];
-};
+}

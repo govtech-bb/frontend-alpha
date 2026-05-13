@@ -3,7 +3,6 @@ import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
-import { DynamicPageLoader } from "@/components/dynamic-page-loader";
 import { MarkdownContent } from "@/components/markdown-content";
 import { PageViewTracker } from "@/components/page-view-tracker";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
@@ -19,9 +18,9 @@ import {
 import { SITE_URL } from "@/lib/site-url";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 
-type ContentPageProps = {
+interface ContentPageProps {
   params: Promise<{ slug: string[] }>;
-};
+}
 
 export default async function Page({ params }: ContentPageProps) {
   const { slug } = await params;
@@ -60,7 +59,7 @@ export default async function Page({ params }: ContentPageProps) {
               <Link
                 as={NextLink}
                 className="cursor-pointer text-[20px] leading-normal lg:text-3xl"
-                href={`/${categorySlug}/${service.slug}`}
+                href={service.href ?? `/${categorySlug}/${service.slug}`}
               >
                 {service.title}
               </Link>
@@ -85,11 +84,6 @@ export default async function Page({ params }: ContentPageProps) {
     const page = category.pages.find((p) => p.slug === pageSlug);
     if (!page) {
       notFound();
-    }
-
-    // Handle component-type pages (e.g. bank-holiday-calendar)
-    if (page.type === "component") {
-      return <DynamicPageLoader pageSlug={pageSlug} />;
     }
 
     const serviceConfig = await fetchServiceConfig(pageSlug);
@@ -226,7 +220,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
         openGraph: {
           title: subPageTitle,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: { title: subPageTitle, images: [`${SITE_URL}/og-image.png`] },
       };
@@ -242,7 +243,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -267,7 +275,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: result.frontmatter.title,
           description: result.frontmatter.description,
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: result.frontmatter.title,
@@ -292,7 +307,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           title: category.title,
           description: category.description || "",
           url: `${SITE_URL}/${slug.join("/")}`,
-          images: [{ url: `${SITE_URL}/og-image.png`, width: 1200, height: 630, alt: "Government of Barbados" }],
+          images: [
+            {
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+              alt: "Government of Barbados",
+            },
+          ],
         },
         twitter: {
           title: category.title,
