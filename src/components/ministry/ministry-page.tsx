@@ -60,7 +60,6 @@ function renderContactValue(item: ContactItem): ReactNode {
 
 export interface MinistryPageProps {
   title: string;
-  intro: ReactNode;
   body?: ReactNode;
   featured?: FeaturedItem[];
   services?: MinistryService[];
@@ -74,7 +73,6 @@ export interface MinistryPageProps {
 
 export function MinistryPage({
   title,
-  intro,
   body,
   featured,
   services,
@@ -99,14 +97,9 @@ export function MinistryPage({
 
       <section className="bg-teal-00 py-l text-white-00">
         <div className="container grid grid-cols-1 items-center gap-m lg:grid-cols-[2fr_1fr] lg:gap-xl">
-          <div className="flex flex-col gap-s">
-            <Heading as="h1" className="text-white-00">
-              {title}
-            </Heading>
-            <Text as="p" className="text-white-00">
-              {intro}
-            </Text>
-          </div>
+          <Heading as="h1" className="text-white-00">
+            {title}
+          </Heading>
         </div>
       </section>
 

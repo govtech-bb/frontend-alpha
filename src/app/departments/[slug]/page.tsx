@@ -55,7 +55,6 @@ export default async function DepartmentDetailPage({
     <MinistryPage
       body={body}
       contact={department.contact}
-      intro={department.intro}
       leadershipLabel="Director"
       minister={department.head}
       originalSource={department.originalSource}

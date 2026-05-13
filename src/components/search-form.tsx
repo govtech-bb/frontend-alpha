@@ -18,20 +18,20 @@ export function SearchForm({
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmed = query.trim();
-    if (!trimmed && emptyFallbackPath) {
-      router.push(emptyFallbackPath);
+    if (!trimmed) {
+      router.push(emptyFallbackPath ?? "/services");
       return;
     }
-    router.push(
-      trimmed
-        ? `${searchPath}?q=${encodeURIComponent(trimmed)}`
-        : (emptyFallbackPath ?? "/services")
-    );
+    router.push(`${searchPath}?q=${encodeURIComponent(trimmed)}`);
   }
 
   return (
-    <search aria-label="Search">
-      <form action={searchPath} className="flex w-full" onSubmit={handleSubmit}>
+    <search aria-label="Search" className="block w-full min-w-0">
+      <form
+        action={searchPath}
+        className="flex w-full min-w-0"
+        onSubmit={handleSubmit}
+      >
         <label className="sr-only" htmlFor="site-search">
           Search
         </label>
