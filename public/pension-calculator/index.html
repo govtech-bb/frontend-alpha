@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculate your pension - gov.bb</title>
+  <link rel="icon" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .govbb-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-body);
+      margin-top: var(--spacing-xs);
+    }
+
+    .govbb-table th,
+    .govbb-table td {
+      text-align: left;
+      padding: var(--spacing-xs) var(--spacing-s);
+      border: 1px solid var(--color-grey-00);
+    }
+
+    .govbb-table thead th {
+      background-color: var(--color-blue-10);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .govbb-table tbody tr:nth-child(even) {
+      background-color: var(--color-grey-00);
+    }
+  </style>
+</head>
+<body>
+  <div class="govbb-page">
+
+    <!-- Official Banner -->
+    <div class="govbb-official-banner">
+      <div class="govbb-container">
+        <div class="govbb-official-banner__inner">
+          <span class="govbb-official-banner__crest">
+            <img src="assets/images/govbb-creast.svg" alt="" class="govbb-official-banner__icon">
+          </span>
+          <div class="govbb-official-banner__text">
+            <span>An official website of the Government of Barbados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="govbb-header">
+      <div class="govbb-container">
+        <div class="govbb-header__inner">
+          <a href="/">
+            <img src="assets/images/govbb-logo.svg" alt="gov.bb home" class="govbb-header__logo">
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+      <div class="govbb-container">
+
+        <!-- Breadcrumbs -->
+        <nav class="govbb-breadcrumbs" aria-label="Breadcrumb" style="padding-block: var(--spacing-s);">
+          <ol class="govbb-breadcrumbs__list">
+            <li class="govbb-breadcrumbs__item">
+              <a href="/" class="govbb-breadcrumbs__link">Home</a>
+            </li>
+            <li class="govbb-breadcrumbs__item">
+              <a href="#" class="govbb-breadcrumbs__link">Pensions and gratuities</a>
+            </li>
+            <li class="govbb-breadcrumbs__item">
+              <span aria-current="page">Calculate your pension</span>
+            </li>
+          </ol>
+        </nav>
+
+        <!-- Page content -->
+        <div style="max-width: 40rem; padding-block: var(--spacing-m) var(--spacing-xl);">
+
+          <h1 class="govbb-text-h1">Calculate your pension</h1>
+
+          <p class="govbb-text-body" style="margin-top: var(--spacing-s);">
+            Use this tool to estimate your public sector pension. You can choose between a full pension or a reduced pension.
+          </p>
+
+          <p class="govbb-text-body" style="margin-top: var(--spacing-s);">The tool will show you:</p>
+          <ul class="govbb-list govbb-list--bullet" style="margin-top: var(--spacing-xs);">
+            <li>an estimated monthly pension amount</li>
+            <li>an estimated gratuity (lump sum)</li>
+          </ul>
+
+          <p class="govbb-text-body" style="margin-top: var(--spacing-s);">
+            This is an estimate only. Your actual pension depends on records held by the Personnel Administration Division (PAD) and your last employer.
+          </p>
+
+          <!-- What you'll need -->
+          <h2 class="govbb-text-h2" style="margin-top: var(--spacing-m);">What you'll need</h2>
+          <ul class="govbb-list govbb-list--bullet" style="margin-top: var(--spacing-s);">
+            <li>your total months of pensionable service</li>
+            <li>your last annual salary in Barbados dollars (BDS$)</li>
+          </ul>
+          <p class="govbb-text-body" style="margin-top: var(--spacing-s);">
+            Contact the PAD or your last employer to confirm both figures.
+          </p>
+
+          <!-- Before you start -->
+          <h2 class="govbb-text-h2" style="margin-top: var(--spacing-m);">Before you start</h2>
+
+          <ul class="govbb-list govbb-list--bullet" style="margin-top: var(--spacing-s);">
+            <li>No-pay leave does not count towards your pensionable service.</li>
+            <li>Temporary continuous workers with 10 years or fewer of service who leave during that period will not receive a pension.</li>
+          </ul>
+
+          <h3 class="govbb-text-h3" style="margin-top: var(--spacing-m);">Voluntary retirement age</h3>
+          <table class="govbb-table">
+            <thead>
+              <tr>
+                <th scope="col">Appointment date</th>
+                <th scope="col">Voluntary retirement age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Before 15 July 1985</td>
+                <td>55</td>
+              </tr>
+              <tr>
+                <td>On or after 15 July 1985</td>
+                <td>60</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3 class="govbb-text-h3" style="margin-top: var(--spacing-m);">Compulsory retirement age</h3>
+          <table class="govbb-table">
+            <thead>
+              <tr>
+                <th scope="col">Effective from</th>
+                <th scope="col">Age</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 January 2010</td>
+                <td>66</td>
+              </tr>
+              <tr>
+                <td>1 January 2014</td>
+                <td>66&frac12;</td>
+              </tr>
+              <tr>
+                <td>1 January 2018</td>
+                <td>67</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="govbb-text-body" style="margin-top: var(--spacing-m);">
+            If you qualify for both a National Insurance pension and a government pension, you will receive only the higher of the two — not both.
+          </p>
+
+          <a href="calculate.html" class="govbb-btn" style="margin-top: var(--spacing-m); display: inline-flex;">
+            Start now
+          </a>
+
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="govbb-footer">
+      <div class="govbb-container">
+        <div class="govbb-footer__inner">
+          <nav class="govbb-footer__nav" aria-label="Footer navigation">
+            <a href="#" class="govbb-footer__link">Help</a>
+            <a href="#" class="govbb-footer__link">Accessibility statement</a>
+            <a href="#" class="govbb-footer__link">Privacy notice</a>
+            <a href="#" class="govbb-footer__link">Contact us</a>
+          </nav>
+          <hr class="govbb-footer__divider">
+          <div class="govbb-footer__end">
+            <img src="assets/images/govbb-creast.svg" alt="Barbados coat of arms" class="govbb-footer__coat">
+            <p class="govbb-footer__copy">&copy; 2025 Government of Barbados. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
