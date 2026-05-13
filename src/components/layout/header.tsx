@@ -14,6 +14,28 @@ export const Header = () => (
               className="h-6.75 w-69 lg:h-8.75 lg:w-88.75"
             />
           </Link>
+          <nav aria-label="Primary" className="ml-auto">
+            <ul className="flex items-center gap-xs sm:gap-s">
+              <li>
+                <Link className="font-medium hover:underline" href="/">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link className="font-medium hover:underline" href="/services">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="font-medium hover:underline"
+                  href="/government/organizations"
+                >
+                  Organisations
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </header>

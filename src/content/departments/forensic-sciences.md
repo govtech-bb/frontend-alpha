@@ -1,0 +1,1 @@
+Toward the improvement of the quality of life of the Barbadian population by assisting to provide an enhance judicial system through the greater use of Forensic Science in both civil and criminal proceedings and to encourage other Caribbean countries to achieve the same.

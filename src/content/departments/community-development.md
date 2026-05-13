@@ -1,0 +1,1 @@
+To provide the highest quality professional social work in community development services, achieving strong, cohesive communities and in so doing transform the physical, social and economic landscape of Barbados into one that is sustainable, fully developed and socially just.
