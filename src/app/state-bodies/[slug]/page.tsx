@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 
 import { markdownComponents } from "@/components/markdown-content";
 import { MinistryPage } from "@/components/ministry/ministry-page";
-import { getMinistryBySlug, MINISTRIES } from "@/data/ministries";
+import { getStateBodyBySlug, STATE_BODIES } from "@/data/state-bodies";
 import { getContentBody } from "@/lib/content-body";
 import rehypeSectionise from "@/lib/rehype-sectionise";
 
@@ -15,7 +15,7 @@ interface Params {
 }
 
 export function generateStaticParams(): Params[] {
-  return MINISTRIES.map((m) => ({ slug: m.slug }));
+  return STATE_BODIES.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({
@@ -24,21 +24,21 @@ export async function generateMetadata({
   params: Promise<Params>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const ministry = getMinistryBySlug(slug);
-  if (!ministry) return {};
-  return { title: ministry.name };
+  const stateBody = getStateBodyBySlug(slug);
+  if (!stateBody) return {};
+  return { title: stateBody.name };
 }
 
-export default async function MinistryDetailPage({
+export default async function StateBodyDetailPage({
   params,
 }: {
   params: Promise<Params>;
 }) {
   const { slug } = await params;
-  const ministry = getMinistryBySlug(slug);
-  if (!ministry) notFound();
+  const stateBody = getStateBodyBySlug(slug);
+  if (!stateBody) notFound();
 
-  const md = await getContentBody("ministries", slug);
+  const md = await getContentBody("state-bodies", slug);
   const body = md ? (
     <div className="space-y-6 lg:space-y-8">
       <ReactMarkdown
@@ -53,15 +53,12 @@ export default async function MinistryDetailPage({
 
   return (
     <MinistryPage
-      associatedDepartments={ministry.associatedDepartments}
       body={body}
-      contact={ministry.contact}
-      featured={ministry.featured}
-      minister={ministry.minister}
-      onlineServices={ministry.onlineServices}
-      originalSource={ministry.originalSource}
-      services={ministry.services}
-      title={ministry.name}
+      contact={stateBody.contact}
+      leadershipLabel="Director"
+      minister={stateBody.head}
+      originalSource={stateBody.originalSource}
+      title={stateBody.name}
     />
   );
 }

@@ -6,7 +6,8 @@ import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
 import { DEPARTMENTS } from "@/data/departments";
-import { getMinistriesByCategory } from "@/data/ministries";
+import { MINISTRIES } from "@/data/ministries";
+import { STATE_BODIES } from "@/data/state-bodies";
 import { filterByQuery } from "@/lib/search-filter";
 
 export const metadata: Metadata = {
@@ -22,24 +23,25 @@ interface Org {
 
 const byName = (a: Org, b: Org) => a.name.localeCompare(b.name);
 
-const ministries: Org[] = [
-  ...getMinistriesByCategory("ministerial"),
-  ...getMinistriesByCategory("non-ministerial"),
-  ...getMinistriesByCategory("agency"),
-]
-  .map((m) => ({
-    slug: m.slug,
-    name: m.name,
-    shortDescription: m.shortDescription,
-    href: `/ministries/${m.slug}`,
-  }))
-  .sort(byName);
+const ministries: Org[] = MINISTRIES.map((m) => ({
+  slug: m.slug,
+  name: m.name,
+  shortDescription: m.shortDescription,
+  href: `/ministries/${m.slug}`,
+})).sort(byName);
 
 const departments: Org[] = DEPARTMENTS.map((d) => ({
   slug: d.slug,
   name: d.name,
   shortDescription: d.shortDescription,
   href: `/departments/${d.slug}`,
+})).sort(byName);
+
+const stateBodies: Org[] = STATE_BODIES.map((s) => ({
+  slug: s.slug,
+  name: s.name,
+  shortDescription: s.shortDescription,
+  href: `/state-bodies/${s.slug}`,
 })).sort(byName);
 
 const ALL_GROUPS = [
@@ -57,6 +59,13 @@ const ALL_GROUPS = [
       "Statutory bodies, agencies, departments and public corporations that work with government.",
     items: departments,
   },
+  {
+    id: "state-bodies",
+    title: "State bodies",
+    description:
+      "State-owned enterprises, public corporations and statutory bodies.",
+    items: stateBodies,
+  },
 ].filter((group) => group.items.length > 0);
 
 function filterGroups(query: string) {
@@ -68,7 +77,7 @@ function filterGroups(query: string) {
   })).filter((group) => group.items.length > 0);
 }
 
-export default async function OrganizationsPage({
+export default async function OrganisationsPage({
   searchParams,
 }: {
   searchParams: Promise<{ q?: string }>;
@@ -77,7 +86,7 @@ export default async function OrganizationsPage({
   const query = q.trim();
   const groups = filterGroups(query);
   const totalResults = groups.reduce((sum, g) => sum + g.items.length, 0);
-  const basePath = "/government/organizations";
+  const basePath = "/government/organisations";
 
   return (
     <>
@@ -152,7 +161,7 @@ export default async function OrganizationsPage({
                     id={group.id}
                     key={group.id}
                   >
-                    <div className="md:col-span-1">
+                    <div className="min-w-0 md:col-span-1">
                       <Heading
                         as="h2"
                         className="text-[20px] leading-tight"
@@ -164,7 +173,7 @@ export default async function OrganizationsPage({
                         {group.items.length}
                       </p>
                     </div>
-                    <ul className="flex flex-col md:col-span-2">
+                    <ul className="flex min-w-0 flex-col md:col-span-2">
                       {group.items.map((item) => (
                         <li
                           className="border-grey-00 border-b py-s first:pt-0"
@@ -172,7 +181,7 @@ export default async function OrganizationsPage({
                         >
                           <Link
                             as={NextLink}
-                            className="text-[19px] leading-normal"
+                            className="wrap-break-word text-[19px] leading-normal"
                             href={item.href}
                           >
                             {item.name}
