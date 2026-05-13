@@ -274,18 +274,6 @@ export default function CropOverPermitsForm() {
     go("q-features");
   }
 
-  function restart() {
-    setStep("q-event");
-    setEventType("");
-    setVenue("");
-    setSize("");
-    setFeatures(EMPTY_FEATURES);
-    setEventError("");
-    setVenueError("");
-    setSizeError("");
-    if (typeof window !== "undefined") window.scrollTo({ top: 0 });
-  }
-
   const activePermits =
     step === "result" && venue ? getActivePermits(venue, features) : [];
   const renumbered = renumberSteps(activePermits);
@@ -528,9 +516,6 @@ export default function CropOverPermitsForm() {
               <Button onClick={savePdf} type="button">
                 Save checklist as PDF
               </Button>
-              <Button onClick={restart} type="button" variant="secondary">
-                Start again
-              </Button>
             </div>
 
             <div className="print:hidden">
@@ -560,19 +545,10 @@ function savePdf() {
   window.print();
 }
 
-function PermitCard({
-  permit,
-  displayStep,
-}: {
-  permit: Permit;
-  displayStep: number;
-}) {
+function PermitCard({ permit }: { permit: Permit; displayStep: number }) {
   return (
     <li className="rounded-sm border border-grey-00 p-s">
       <div className="flex items-start gap-s">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-yellow-100 font-bold text-black-00 text-sm">
-          {displayStep}
-        </span>
         <div className="flex-1">
           <Heading as="h3">
             {permit.link ? (
