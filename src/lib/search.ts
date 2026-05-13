@@ -1,12 +1,13 @@
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 
-export type SearchResult = {
+export interface SearchResult {
   title: string;
   description: string;
   slug: string;
+  href: string;
   category: string;
   hasOnlineForm: boolean;
-};
+}
 
 const allServices: SearchResult[] = INFORMATION_ARCHITECTURE.flatMap(
   (category) =>
@@ -14,6 +15,7 @@ const allServices: SearchResult[] = INFORMATION_ARCHITECTURE.flatMap(
       title: page.title,
       description: page.description,
       slug: `${category.slug}/${page.slug}`,
+      href: page.href ?? `/${category.slug}/${page.slug}`,
       category: category.title,
       hasOnlineForm:
         page.subPages?.some((sub) => sub.type === "component") ?? false,
