@@ -1,0 +1,1 @@
+The Barbados National Standards Institution (BNSI) is a joint undertaking between the Government of Barbados and the private sector, incorporated by private law and recognized by Government. It was established on June in 1973 under the Companies Act, as a non-profit benevolent organization.

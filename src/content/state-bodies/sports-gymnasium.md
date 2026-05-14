@@ -1,0 +1,1 @@
+The Sir Garfield Sobers Sports Complex (the Complex), which is situated in Wildey, St. Michael, was opened as a sporting facility in November 1992. The Construction of the Complex was part of a strategic initiative by the Government of Barbados to promote sports tourism.

@@ -1,0 +1,1 @@
+The National Housing Corporation is committed to finding acceptable Housing solutions for Barbadians at affordable prices. This will be achieved through the maximization of available land: producing more efficiently sized lots and constructing additional high rise apartments, quadruple and duplex units instead of a predominance of single units.

@@ -23,26 +23,20 @@ interface Org {
 
 const byName = (a: Org, b: Org) => a.name.localeCompare(b.name);
 
-const ministries: Org[] = MINISTRIES.map((m) => ({
-  slug: m.slug,
-  name: m.name,
-  shortDescription: m.shortDescription,
-  href: `/ministries/${m.slug}`,
-})).sort(byName);
+const toOrg = (item: {
+  slug: string;
+  name: string;
+  shortDescription?: string;
+}): Org => ({
+  slug: item.slug,
+  name: item.name,
+  shortDescription: item.shortDescription,
+  href: `/government/organisations/${item.slug}`,
+});
 
-const departments: Org[] = DEPARTMENTS.map((d) => ({
-  slug: d.slug,
-  name: d.name,
-  shortDescription: d.shortDescription,
-  href: `/departments/${d.slug}`,
-})).sort(byName);
-
-const stateBodies: Org[] = STATE_BODIES.map((s) => ({
-  slug: s.slug,
-  name: s.name,
-  shortDescription: s.shortDescription,
-  href: `/state-bodies/${s.slug}`,
-})).sort(byName);
+const ministries: Org[] = MINISTRIES.map(toOrg).sort(byName);
+const departments: Org[] = DEPARTMENTS.map(toOrg).sort(byName);
+const stateBodies: Org[] = STATE_BODIES.map(toOrg).sort(byName);
 
 const ALL_GROUPS = [
   {

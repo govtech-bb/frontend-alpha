@@ -1,0 +1,1 @@
+The Barbados Museum and Historical Society (BMHS) is a non-profit, non-governmental organization with a membership of over 1,000 individuals and companies. A fourteen-member Council and the Director are responsible for its policies and operation. Nine council members are elected annually from the membership of the BMHS; the remaining five are appointed by Government.

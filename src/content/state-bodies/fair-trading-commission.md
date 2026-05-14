@@ -1,0 +1,1 @@
+The journey leading to the creation of this consumer protection, fair competition and utility regulatory body goes back to the middle of the last century. The FTC evolved from its predecessor the Public Utilities Board which was responsible for regulating public utilities such as electricity and telephone services, from 1955 until 2001.

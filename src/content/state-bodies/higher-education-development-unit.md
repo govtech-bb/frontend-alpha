@@ -1,0 +1,1 @@
+The Higher Education Development Unit (HEDU) was established in 2008 to facilitate institutional strengthening initiatives across the Barbados Community College (BCC), Samuel Jackman Prescod Polytechnic (SJPP) and Erdiston Teachers.

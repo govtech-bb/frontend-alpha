@@ -1,0 +1,1 @@
+The NCF's two major roles are: developmental and commercial. In its developmental role, the Foundation uses culture as a tool for national development, fostering and supporting the various art forms and new cultural products. In its commercial role, the Foundation is responsible for the promotion, production and hosting of cultural festivals and associated events.

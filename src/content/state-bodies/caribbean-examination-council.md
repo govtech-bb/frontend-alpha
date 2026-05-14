@@ -1,0 +1,1 @@
+Our mission is to provide the region with syllabuses of the highest quality; valid and reliable examinations and certificates of international repute for students of all ages, abilities and interests. We also aim to provide services to educational institutions in the development of syllabuses, examinations and examinations administration in the most cost-effective way.
