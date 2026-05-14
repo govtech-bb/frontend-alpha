@@ -34,7 +34,7 @@ export const StageBanner = ({
   const href = isMigrated ? originalSource : (url ?? DEFAULT_URL[stage]);
   const isExternal = isMigrated;
   return (
-    <StatusBanner className={className} variant={stage}>
+    <StatusBanner className={`px-0 ${className ?? ""}`} variant={stage}>
       <Text as="p">
         {prefix}
         {href ? (
