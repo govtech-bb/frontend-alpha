@@ -29,7 +29,7 @@ If there is a discrepancy in the documents, an affidavit may also be required.
 
 Most people finish this in about 10 minutes.
 
-<a data-start-link href="/pensions-and-gratuities/request-a-presidential-visit-for-a-centenarian/form">Start now</a>
+<a data-start-link href="/family-birth-relationships/request-a-presidential-visit-for-a-centenarian/form">Start now</a>
 
 ### Apply by post
 
