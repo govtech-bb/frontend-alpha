@@ -1,0 +1,1 @@
+Export Barbados is a solutions-oriented organization working to amplify bold, innovative, dynamic and creative enterprises. An agency of the Barbados Government, our mandate is to contribute to the diversification and growth of the economy through new investment, increased exports and employment creation by fostering the development of competitive business enterprises.
