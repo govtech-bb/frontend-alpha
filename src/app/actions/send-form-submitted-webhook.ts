@@ -8,6 +8,7 @@ const webhookPayloadSchema = z.object({
   programmeCode: z.string().min(1),
   applicantName: z.string(),
   applicantEmail: z.string().email().nullable(),
+  applicantPhone: z.string().nullable(),
   formData: z.record(z.string(), z.unknown()),
 });
 
@@ -104,6 +105,7 @@ export async function sendFormSubmittedWebhook(payload: WebhookPayload) {
   const {
     applicantEmail,
     applicantName,
+    applicantPhone,
     formData,
     programmeCode,
     referenceNumber,
@@ -131,8 +133,10 @@ export async function sendFormSubmittedWebhook(payload: WebhookPayload) {
         applicant: {
           name: applicantName,
           email: applicantEmail,
+          phone: applicantPhone,
         },
         form_data: formData,
+        submitted_at: new Date().toISOString(),
       }),
     });
 
