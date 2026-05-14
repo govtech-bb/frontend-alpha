@@ -97,6 +97,19 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         source_url: "",
         description: "",
       },
+      {
+        title: "Request a Presidential Visit for a Centenarian",
+        slug: "request-a-presidential-visit-for-a-centenarian",
+        description:
+          "Ask the President to visit a Barbadian who is turning 100 years old. Submit at least 3 months before the birthday.",
+        subPages: [
+          {
+            slug: "form",
+            title: "Request a Presidential Visit for a Centenarian",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {
@@ -290,19 +303,6 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           {
             slug: "form",
             title: "Pension calculator",
-            type: "component",
-          },
-        ],
-      },
-      {
-        title: "Request a Presidential Visit for a Centenarian",
-        slug: "request-a-presidential-visit-for-a-centenarian",
-        description:
-          "Ask the President to visit a Barbadian who is turning 100 years old. Submit at least 3 months before the birthday.",
-        subPages: [
-          {
-            slug: "form",
-            title: "Request a Presidential Visit for a Centenarian",
             type: "component",
           },
         ],

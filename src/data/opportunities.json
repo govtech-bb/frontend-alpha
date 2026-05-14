@@ -20,7 +20,10 @@
     },
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/cip/",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "cap",
@@ -37,7 +40,10 @@
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/cap/",
     "applyUrl": "https://comdev.gov.bb/registration-cap/",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "ceep",
@@ -54,7 +60,10 @@
     "deadline": "2025-08-24",
     "url": "https://comdev.gov.bb/programmes/ceep/",
     "applyUrl": "https://comdev.gov.bb/registration-ceep/",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "mission-barbados",
@@ -70,7 +79,10 @@
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/mission-barbados/",
     "applyUrl": "https://control.missionbarbados.gov.bb/group-registrations/register",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "byac",
@@ -87,7 +99,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/barbados-youthadvance-corps-2/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "yes",
@@ -102,7 +117,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/yes-2/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "ydp",
@@ -120,7 +138,10 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
     "applyUrl": "https://linktr.ee/myscebb",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "pathways",
@@ -137,7 +158,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/pathways/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "btu",
@@ -160,7 +184,7 @@
       }
     ],
     "contact": {
-      "email": "blocktransformation.MYSCE@barbados.gov.bb",
+      "email": "testing@govtech.bb",
       "phone": "(246) 535-3835 / (246) 832-7602 / (246) 832-9024 / (246) 832-9022"
     }
   },
@@ -180,7 +204,10 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/national-summer-camp-2/",
     "applyUrl": "https://linktr.ee/myscebb",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "yar",
@@ -197,7 +224,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "cyber-security-training",
@@ -214,7 +244,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "web-design-entrepreneurs",
@@ -231,7 +264,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "bright-sparks-2",
@@ -248,7 +284,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "bridge-to-future-2025",
@@ -265,7 +304,10 @@
     },
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
-    "source": "youthaffairs.gov.bb"
+    "source": "youthaffairs.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "barbados-blooming-libraries",
@@ -280,7 +322,10 @@
     },
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/libraries/",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "community-canvas",
@@ -295,7 +340,10 @@
     },
     "deadline": null,
     "url": "https://comdev.gov.bb/canvas/",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "cmc",
@@ -311,7 +359,10 @@
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/cmc/",
     "applyUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeWEt-xl67n-xNcPJs0PI2GzS06jWpzHIGzbp4_3UfwBC4ksA/viewform",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "spreading-joy-2025",
@@ -328,7 +379,10 @@
     "deadline": "2025-12-19",
     "startDate": "2025-12-15",
     "url": "https://comdev.gov.bb/programmes/spreading-joy/",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   },
   {
     "id": "centre-access",
@@ -343,6 +397,9 @@
     },
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/centre-access/",
-    "source": "comdev.gov.bb"
+    "source": "comdev.gov.bb",
+    "contact": {
+      "email": "testing@govtech.bb"
+    }
   }
 ]
