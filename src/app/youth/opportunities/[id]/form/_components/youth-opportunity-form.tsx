@@ -1,6 +1,7 @@
 "use client";
 
 import DynamicMultiStepForm from "@/components/forms/builder/multi-step-form";
+import { getYouthOpportunityServiceCode } from "@/data/youth-opportunity-service-codes";
 import { buildYouthOpportunityFormSteps } from "@/schema/youth-opportunity-default";
 
 interface Props {
@@ -15,6 +16,7 @@ export function YouthOpportunityForm({
   notificationEmail,
 }: Props) {
   const formSteps = buildYouthOpportunityFormSteps(opportunityTitle);
+  const programmeCode = getYouthOpportunityServiceCode(opportunityId);
 
   return (
     <DynamicMultiStepForm
@@ -27,6 +29,7 @@ export function YouthOpportunityForm({
       serviceTitle={`Apply for ${opportunityTitle}`}
       storageKey={`youth-opportunity-${opportunityId}`}
       submissionMode="serverActionOnly"
+      webhookProgrammeCode={programmeCode}
     />
   );
 }

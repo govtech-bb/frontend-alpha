@@ -5,7 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type FieldError, FormProvider, useForm } from "react-hook-form";
+import { generateApplicationCodeForService } from "@/app/actions/generate-application-code";
 import { sendFormSubmissionEmails } from "@/app/actions/send-form-submission-emails";
+import { sendFormSubmittedWebhook } from "@/app/actions/send-form-submitted-webhook";
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { useFormTracking } from "@/hooks/use-form-tracking";
@@ -467,6 +469,12 @@ interface DynamicMultiStepFormProps {
    * best-effort email behaviour already used by the "api" submission mode.
    */
   continueOnEmailFailure?: boolean;
+  /**
+   * When set and `submissionMode` is `"serverActionOnly"`, the case-management
+   * webhook is dispatched with this programme code after a successful
+   * submission. Webhook failures are logged but never block the submission.
+   */
+  webhookProgrammeCode?: string | null;
 }
 
 export default function DynamicMultiStepForm({
@@ -479,6 +487,7 @@ export default function DynamicMultiStepForm({
   analyticsCategory,
   confirmationFormId,
   continueOnEmailFailure = false,
+  webhookProgrammeCode = null,
 }: DynamicMultiStepFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -942,16 +951,39 @@ export default function DynamicMultiStepForm({
     setSubmissionError(null);
 
     try {
-      // Extract customer name before cleaning data
-      const applicantFirstName = (data["applicant.firstName"] as string) || "";
-      const applicantLastName = (data["applicant.lastName"] as string) || "";
-      const customerName = `${applicantFirstName} ${applicantLastName}`.trim();
-
       // Clean up data to remove fields from hidden conditional steps
       const cleanedData = cleanFormDataForSubmission(data);
 
+      // Extract customer name. react-hook-form stores dot-notation field names
+      // as nested objects, so we resolve `applicant.firstName` via path lookup
+      // rather than treating it as a flat key.
+      const applicantFirstName =
+        getNestedValue<string>(
+          cleanedData as Record<string, unknown>,
+          "applicant.firstName"
+        ) ?? "";
+      const applicantLastName =
+        getNestedValue<string>(
+          cleanedData as Record<string, unknown>,
+          "applicant.lastName"
+        ) ?? "";
+      const customerName = `${applicantFirstName} ${applicantLastName}`.trim();
+
       if (submissionMode === "serverActionOnly") {
-        const generatedReferenceNumber = `REF-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+        let generatedReferenceNumber = `REF-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
+
+        if (webhookProgrammeCode) {
+          const codeResult =
+            await generateApplicationCodeForService(webhookProgrammeCode);
+          if (codeResult.success) {
+            generatedReferenceNumber = codeResult.code;
+          } else {
+            console.error(
+              "Application code generation failed; falling back to REF format",
+              codeResult.error
+            );
+          }
+        }
 
         try {
           const emailResult = await sendFormSubmissionEmails({
@@ -976,6 +1008,25 @@ export default function DynamicMultiStepForm({
             });
             tracking.trackSubmitError("Remote form email submission failed");
             return;
+          }
+        }
+
+        if (webhookProgrammeCode) {
+          try {
+            await sendFormSubmittedWebhook({
+              applicantEmail: extractApplicantEmail(
+                cleanedData as Record<string, unknown>
+              ),
+              applicantName: customerName,
+              formData: cleanedData as Record<string, unknown>,
+              programmeCode: webhookProgrammeCode,
+              referenceNumber: generatedReferenceNumber,
+            });
+          } catch (webhookError) {
+            console.error(
+              "Form submission webhook dispatch failed",
+              webhookError
+            );
           }
         }
 
