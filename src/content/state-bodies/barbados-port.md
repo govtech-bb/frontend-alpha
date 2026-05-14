@@ -1,0 +1,1 @@
+The Bridgetown Port is the major port of entry for approximately 90% of the goods used in the manufacturing and retail sectors in Barbados. A major part of its responsibility has been dedicated to supporting businesses in the import/export trade, a job that it carries out without any government subsidies, unlike the majority of Ports around the Caribbean.

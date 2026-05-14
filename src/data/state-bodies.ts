@@ -161,6 +161,298 @@ export const STATE_BODIES: StateBody[] = [
     originalSource: "https://www.gov.bb/State-Bodies/museum-historical-society",
   },
   {
+    slug: "national-oil-company",
+    name: "Barbados National Oil Company",
+    contact: [
+      {
+        label: "Address",
+        value: ["Woodbourne", "St. Philip"],
+      },
+      { label: "PBX", type: "phone", value: "(246) 418-5200" },
+      { label: "CEO", type: "phone", value: "(246) 418-5201" },
+      { label: "Fax", type: "phone", value: "(246) 420-1818" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/national-oil-company",
+  },
+  {
+    slug: "national-standards",
+    name: "Barbados National Standards Institution",
+    contact: [
+      {
+        label: "Address",
+        value: ["Flodden Culloden Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 426-3870" },
+      { label: "Telephone", type: "phone", value: "(246) 436-1495" },
+      { label: "Email", type: "email", value: "office@bnsi.com.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value:
+          "https://commerce.gov.bb/barbados-national-standards-institution-bnsi/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/national-standards",
+  },
+  {
+    slug: "national-terminal-co",
+    name: "Barbados National Terminal Co. Ltd.",
+    contact: [
+      {
+        label: "Address",
+        value: ["Fair Valley", "Christ Church", "Barbados, W.I."],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 228-4811" },
+      { label: "Telephone", type: "phone", value: "(246) 428-1056" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/national-terminal-co",
+  },
+  {
+    slug: "barbados-port",
+    name: "Barbados Port Inc.",
+    contact: [
+      {
+        label: "Address",
+        value: ["Cheapside", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 434-6100" },
+      { label: "Telephone", type: "phone", value: "(246) 429-5348" },
+      {
+        label: "Email",
+        type: "email",
+        value: "administrator@barbadosport.com",
+      },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://www.barbadosport.com/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/barbados-port",
+  },
+  {
+    slug: "revenue-authority",
+    name: "Barbados Revenue Authority",
+    head: { name: "Jason King", role: "Revenue Commissioner" },
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "4th Floor Weymouth Corporate Centre",
+          "Roebuck Street",
+          "St. Michael",
+          "Barbados",
+        ],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 535-8663" },
+      {
+        label: "Email",
+        type: "email",
+        value: "louisa.lewis-ward@bra.gov.bb",
+      },
+      { label: "Website", type: "website", value: "https://bra.gov.bb/" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/revenue-authority",
+  },
+  {
+    slug: "tourism-investment",
+    name: "Barbados Tourism Investment Incorporated",
+    contact: [
+      {
+        label: "Address",
+        value: ["Ground Floor, Old Town Hall Building", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 426-7085" },
+      { label: "Telephone", type: "phone", value: "(246) 426-7086" },
+      {
+        label: "Email",
+        type: "email",
+        value: "btii@tourisminvest.com.bb",
+      },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://www.barbadostourisminvestment.com/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/tourism-investment",
+  },
+  {
+    slug: "btmi",
+    name: "Barbados Tourism Marketing Inc.",
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "One Barbados Place",
+          "Warrens",
+          "St. Michael",
+          "Barbados",
+          "BB12001",
+        ],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 535-3700" },
+      { label: "Fax", type: "phone", value: "(246) 535-3799" },
+      { label: "Email", type: "email", value: "btmiinfo@visitbarbados.org" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://corporate.visitbarbados.org/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/btmi",
+  },
+  {
+    slug: "vocational-training-board",
+    name: "Barbados Vocational Training Board",
+    contact: [
+      {
+        label: "Address",
+        value: ["Lawrence Green House", "Culloden Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 621-2882" },
+      { label: "Telephone", type: "phone", value: "(246) 621-2908" },
+      { label: "Email", type: "email", value: "info@bvtb.gov.bb" },
+      { label: "Website", type: "website", value: "https://www.bvtb.gov.bb/" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/vocational-training-board",
+  },
+  {
+    slug: "barbados-youth-advance-corps",
+    name: "Barbados Youth Advance Corps.",
+    head: { name: "Mr. Hally Haynes", role: "Director" },
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "Division of Youth, Sports and Community Empowerment",
+          "#33 Warren's Industrial Park",
+          "St. Michael",
+        ],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 535-0180" },
+      { label: "Telephone", type: "phone", value: "(246) 535-3835" },
+      { label: "Fax", type: "phone", value: "(246) 425-1296" },
+      {
+        label: "Email",
+        type: "email",
+        value: "youth.service@barbados.gov.bb",
+      },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/barbados-youth-advance-corps",
+  },
+  {
+    slug: "barbados-youth-business-trust",
+    name: "Barbados Youth Business Trust",
+    contact: [
+      {
+        label: "Address",
+        value: ["1st Floor, Equity House", "Pinfold Street", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 228-2772" },
+      { label: "Fax", type: "phone", value: "(246) 228-2773" },
+      { label: "Email", type: "email", value: "info@youthbusiness.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://www.youthbusiness.bb",
+        display: "www.youthbusiness.bb",
+      },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/barbados-youth-business-trust",
+  },
+  {
+    slug: "social-policy-research-planning",
+    name: "Bureau of Social Policy, Research and Planning",
+    contact: [
+      {
+        label: "Address",
+        value: ["4th Floor Warrens Office Complex", "Warrens", "St. Michael"],
+      },
+      { label: "PBX", type: "phone", value: "(246) 535-1600" },
+      { label: "Fax", type: "phone", value: "(246) 535-1694" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/social-policy-research-planning",
+  },
+  {
+    slug: "caribbean-broadcasting-corporation",
+    name: "Caribbean Broadcasting Corporation",
+    contact: [
+      {
+        label: "Address",
+        value: ["The Pine", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 467-5400" },
+      { label: "Fax", type: "phone", value: "(246) 429-4795" },
+      { label: "Email", type: "email", value: "rlondon@cbc.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://www.cbc.bb",
+        display: "www.cbc.bb",
+      },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/caribbean-broadcasting-corporation",
+  },
+  {
+    slug: "caves-of-barbados",
+    name: "Caves of Barbados Limited (CBL)",
+    contact: [
+      {
+        label: "Address",
+        value: ["Allen View", "St. Thomas", "Barbados, W.I."],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 417-3700" },
+      { label: "Telephone", type: "phone", value: "(246) 417-3709" },
+      {
+        label: "Email",
+        type: "email",
+        value: "reservations@harrisonscave.com",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/caves-of-barbados",
+  },
+  {
+    slug: "central-bank",
+    name: "Central Bank of Barbados",
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "Tom Adams Financial Centre",
+          "Spry Street",
+          "Bridgetown",
+          "St. Michael",
+        ],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 436-6870" },
+      { label: "Email", type: "email", value: "info@centralbank.org.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://www.centralbank.org.bb/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/central-bank",
+  },
+  {
+    slug: "consular-affairs",
+    name: "Consular Affairs",
+    contact: [
+      {
+        label: "Address",
+        value: ["No. 1 Culloden Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 431-2200" },
+      { label: "Fax", type: "phone", value: "(246) 429-6652" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/consular-affairs",
+  },
+  {
     slug: "water-authority",
     name: "Barbados Water Authority",
     shortDescription:
