@@ -8,6 +8,7 @@ interface IndexDoc {
   title: string;
   description: string;
   body: string;
+  keywords: string;
   href: string;
   category: string;
   kind: "service" | "ministry" | "department" | "state-body";
@@ -127,7 +128,7 @@ export function useSearch() {
         }
         const ms = new MiniSearch<IndexDoc>({
           idField: "id",
-          fields: ["title", "description", "body"],
+          fields: ["title", "keywords", "description", "body"],
           storeFields: [
             "title",
             "description",
@@ -141,7 +142,7 @@ export function useSearch() {
             return STOPWORDS.has(lower) ? null : lower;
           },
           searchOptions: {
-            boost: { title: 4, description: 1.5 },
+            boost: { keywords: 5, title: 4, description: 1.5, body: 0.3 },
             fuzzy: (term) => (term.length > 3 ? 0.3 : 0),
             prefix: (term) => term.length >= 1,
             combineWith: "AND",

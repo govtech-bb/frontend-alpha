@@ -18,6 +18,8 @@ export interface PageType {
     title?: string;
     type: "markdown" | "component";
   }[];
+  /** Search-only tags. Useful for abbreviations and common alternate names. */
+  keywords?: string[];
   /**
    * Nested child pages, used to express a subcategory whose children are
    * individual services / opportunities. Rendered as a second-level index
@@ -26,15 +28,15 @@ export interface PageType {
   pages?: PageType[];
 }
 
-export type CrossLink = {
+export interface CrossLink {
   title: string;
   href: string;
-};
+}
 
-export type InformationContent = {
+export interface InformationContent {
   title: string;
   description?: string;
   slug: string;
   pages: PageType[];
   crossLinks?: CrossLink[];
-};
+}

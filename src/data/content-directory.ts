@@ -11,6 +11,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Register a birth",
         slug: "register-a-birth",
+        keywords: ["birth registration", "baby reg", "newborn"],
         source_url: "",
         description:
           "Information on how to register a birth in Barbados, including who can register, the required documents, and any associated fees.",
@@ -26,6 +27,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Get a copy of a birth certificate",
         slug: "get-birth-certificate",
+        keywords: ["birth cert", "birth certificate", "BC"],
         source_url: "",
         description:
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
@@ -160,6 +162,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Apply to the Job Start Plus programme",
         slug: "apply-to-jobstart-plus-programme",
+        keywords: ["jobstart", "job start", "JSP"],
         description: "Apply to the Job Start Plus Programme",
         subPages: [
           { slug: "start", type: "markdown" },
@@ -186,6 +189,14 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Check bank holiday dates",
         slug: "bank-holiday-calendar",
+        keywords: [
+          "bank holiday",
+          "public holiday",
+          "calendar",
+          "bank holidays",
+          "public holidays",
+          "holidays",
+        ],
         source_url: "",
         description:
           "Check statutory bank holiday dates for Barbados for any year, set out under the Public Holidays Act, Cap. 352, including substitution days where a holiday falls on a weekend.",
@@ -208,6 +219,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Find out how much severance payment you are owed",
         slug: "calculate-severance-pay",
+        keywords: ["severance", "severance pay", "redundancy", "layoff"],
         description:
           "Estimate the severance payment you may be owed under the Severance Payments Act if you were made redundant, your workplace was damaged by a disaster, you were laid off, or your employer died.",
         subPages: [
@@ -222,6 +234,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Apply for financial assistance",
         slug: "apply-financial-assistance",
+        keywords: ["welfare", "benefits", "SSA", "poverty", "support"],
         description: "Apply for financial assistance",
       },
       {
@@ -519,6 +532,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Apply for a driver’s licence",
         slug: "apply-for-a-drivers-licence",
+        keywords: [
+          "driver license",
+          "drivers license",
+          "driving licence",
+          "driving license",
+        ],
         source_url: "https://www.gov.bb/Citizens/driver-licence",
         description:
           "Information on how to obtain a driver's license in Barbados, including learner's permits, regulations tests, driving tests, and international licenses.",
