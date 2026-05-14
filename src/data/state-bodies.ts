@@ -453,6 +453,553 @@ export const STATE_BODIES: StateBody[] = [
     originalSource: "https://www.gov.bb/State-Bodies/consular-affairs",
   },
   {
+    slug: "corporate-affairs",
+    name: "Corporate Affairs and Intellectual Property Office",
+    head: { name: "Ms. Tamiesha Rochester", role: "Registrar (Acting)" },
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "Ground Floor",
+          "Baobab Towers",
+          "Warrens",
+          "St. Michael",
+          "Barbados, W.I.",
+        ],
+      },
+      { label: "PBX", type: "phone", value: "1-2546-535-2401" },
+      { label: "Fax", type: "phone", value: "(246) 424-2366" },
+      { label: "Email", type: "email", value: "general@caipo.gov.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://www.caipo.gov.bb/site/index.php",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/corporate-affairs",
+  },
+  {
+    slug: "directorate-human-resource",
+    name: "Directorate, Human Resource Policy and Staffing",
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "E Humphrey Walcott Building",
+          "Cnr. Culloden Road & Collymore Rock",
+          "St Michael, Barbados",
+        ],
+      },
+      { label: "Main Office", type: "phone", value: "(246) 535-4400" },
+      {
+        label: "Director, HR Policy and Staffing",
+        type: "phone",
+        value: "(246) 535-4426",
+      },
+      { label: "Fax", type: "phone", value: "(246) 228-0093" },
+      { label: "Email", type: "email", value: "hrps@mps.gov.bb" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/directorate-human-resource",
+  },
+  {
+    slug: "directorate-learning-development",
+    name: "Directorate, Learning and Development",
+    contact: [
+      {
+        label: "Address",
+        value: ["Level 5, Warrens Towers II", "Warrens, St Michael, Barbados"],
+      },
+      { label: "Main Office", type: "phone", value: "(246) 535-6700" },
+      {
+        label: "Director, Learning and Development",
+        type: "phone",
+        value: "(246) 535-6726",
+      },
+      { label: "Fax", type: "phone", value: "(246) 535-6728" },
+      { label: "Email", type: "email", value: "LD@mps.gov.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://training.gov.bb/",
+      },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/directorate-learning-development",
+  },
+  {
+    slug: "directorate-people-resourcing-and-compliance",
+    name: "Directorate, People Resourcing and Compliance",
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "E Humphrey Walcott Building",
+          "Corner Culloden Road & Collymore Rock",
+          "St. Michael",
+        ],
+      },
+      { label: "Main Office", type: "phone", value: "(246) 535-4500" },
+      {
+        label: "Director, People Resourcing and Compliance",
+        type: "phone",
+        value: "(246) 535-4564",
+      },
+      { label: "Fax", type: "phone", value: "(246) 429-5169" },
+      { label: "Email", type: "email", value: "prc@mps.gov.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://www.secai-ceti-summerschool.de/",
+      },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/directorate-people-resourcing-and-compliance",
+  },
+  {
+    slug: "erdiston-teacher-training",
+    name: "Erdiston Teachers' Training College",
+    contact: [
+      {
+        label: "Address",
+        value: ["Government Hill", "St. Michael"],
+      },
+      { label: "PBX", type: "phone", value: "(246) 535-3247" },
+      { label: "Library", type: "phone", value: "(246) 535-3239" },
+      { label: "Principal", type: "phone", value: "(246) 535-3223" },
+      { label: "Telephone", type: "phone", value: "(246) 427-2776" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/erdiston-teacher-training",
+  },
+  {
+    slug: "fair-trading-commission",
+    name: "Fair Trading Commission",
+    contact: [
+      {
+        label: "Address",
+        value: ["Good Hope", "Green Hill", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 424-0260" },
+      { label: "Telephone", type: "phone", value: "(246) 424-0300" },
+      { label: "Email", type: "email", value: "info@ftc.gov.bb" },
+      { label: "Website", type: "website", value: "https://www.ftc.gov.bb/" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/fair-trading-commission",
+  },
+  {
+    slug: "financial-services-commission",
+    name: "Financial Services Commission",
+    contact: [
+      {
+        label: "Address",
+        value: [
+          "Bay Corporate Building",
+          "Bay Street",
+          "St. Michael",
+          "BB14038",
+        ],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 421-2142" },
+      { label: "Telephone", type: "phone", value: "(246) 421-2146" },
+      { label: "Email", type: "email", value: "info@fsc.gov.bb" },
+      { label: "Website", type: "website", value: "https://www.fsc.gov.bb/" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/financial-services-commission",
+  },
+  {
+    slug: "foreign-trade",
+    name: "Foreign Trade",
+    contact: [
+      {
+        label: "Address",
+        value: ["Culloden Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 431-2200" },
+      { label: "Telephone", type: "phone", value: "(246) 429-6652" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://www.foreign.gov.bb/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/foreign-trade",
+  },
+  {
+    slug: "glebe-polyclinic",
+    name: "Glebe Polyclinic",
+    contact: [
+      { label: "PBX", type: "phone", value: "(246) 536-3940" },
+      { label: "Records Department", type: "phone", value: "(246) 536-3945" },
+      {
+        label: "Senior Health Sister",
+        type: "phone",
+        value: "(246) 536-3950",
+      },
+      { label: "Senior Clerk", type: "phone", value: "(246) 536-3961" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/glebe-polyclinic",
+  },
+  {
+    slug: "grantley-adams-international",
+    name: "Grantley Adams International Airport",
+    contact: [
+      {
+        label: "Address",
+        value: ["Seawell", "Christ Church"],
+      },
+      { label: "GAIA PBX", type: "phone", value: "(246) 536-1300" },
+      { label: "GAIA Inc. Reception", type: "phone", value: "(246) 536-1302" },
+      { label: "Airport Duty Manager", type: "phone", value: "(246) 536-1336" },
+      { label: "Telephone", type: "phone", value: "(246) 536-1356" },
+      { label: "Email", type: "email", value: "office@gaiainc.bb" },
+      { label: "Website", type: "website", value: "http://www.gaia.bb/" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/grantley-adams-international",
+  },
+  {
+    slug: "health-promotion-unit",
+    name: "Health Promotion Unit",
+    contact: [
+      {
+        label: "Address",
+        value: ["Frank Walcott Building", "Culloden Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 426-5080" },
+      { label: "Telephone", type: "phone", value: "(246) 467-9300" },
+      { label: "Telephone", type: "phone", value: "(246) 426-5570" },
+      { label: "Email", type: "email", value: "Ps-secretary@health.gov.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "https://www.health.gov.bb/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/health-promotion-unit",
+  },
+  {
+    slug: "higher-education-development-unit",
+    name: "Higher Education Development Unit",
+    contact: [
+      {
+        label: "Address",
+        value: ['"Anselm House"', "Government Hill", "St. Michael"],
+      },
+      { label: "PBX", type: "phone", value: "(246) 535-4050" },
+      { label: "Director", type: "phone", value: "(246) 535-4051" },
+      { label: "Project Officer", type: "phone", value: "(246) 535-4053" },
+      {
+        label: "Information Technology",
+        type: "phone",
+        value: "(246) 535-4056",
+      },
+      { label: "Email", type: "email", value: "info@hedu.edu.bb" },
+      { label: "Website", type: "website", value: "http://www.hedu.edu.bb/" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/higher-education-development-unit",
+  },
+  {
+    slug: "hiv-aids-programme",
+    name: "HIV/AIDS Programme Office",
+    contact: [
+      {
+        label: "Address",
+        value: ["Jemmotts Lane", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 426-5080" },
+      { label: "Telephone", type: "phone", value: "(246) 436-3415" },
+      {
+        label: "Email",
+        type: "email",
+        value: "anton.best@barbados.gov.bb",
+      },
+      { label: "Website", type: "website", value: "http://www.nhacbb.org/" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/hiv-aids-programme",
+  },
+  {
+    slug: "invest-barbados",
+    name: "Invest Barbados",
+    contact: [
+      {
+        label: "Address",
+        value: ["Trident Financial Centre", "Hastings", "Christ Church"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 626-2000" },
+      { label: "Telephone", type: "phone", value: "(246) 626-2099" },
+      { label: "Email", type: "email", value: "info@investbarbados.org" },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://www.investbarbados.org/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/invest-barbados",
+  },
+  {
+    slug: "judiciary-judges",
+    name: "Judiciary - Judges",
+    contact: [
+      {
+        label: "Address",
+        value: ["White Park Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 434-9970" },
+      { label: "Telephone", type: "phone", value: "(246) 427-8917" },
+      { label: "Email", type: "email", value: "registrar@lawcourts.gov.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://www.barbadoslawcourts.gov.bb/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/judiciary-judges",
+  },
+  {
+    slug: "kensington-oval",
+    name: "Kensington Oval Management Inc.",
+    contact: [
+      {
+        label: "Address",
+        value: ["Kensington Oval", "Fontabelle", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 274-1200" },
+      { label: "Telephone", type: "phone", value: "(246) 227-2503" },
+      { label: "Email", type: "email", value: "info@kensingtonoval.com.bb" },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://kensingtonoval.org/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/kensington-oval",
+  },
+  {
+    slug: "meteorology",
+    name: "Meteorology",
+    contact: [
+      {
+        label: "Address",
+        value: ["Husbands", "St. James"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 425-1362 / 1363" },
+      { label: "Fax", type: "phone", value: "(246) 424-4733" },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://www.cimh.edu.bb/?p=home",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/meteorology",
+  },
+  {
+    slug: "national-conservation-commission",
+    name: "National Conservation Commission",
+    contact: [
+      {
+        label: "Address",
+        value: ["Codrington House", "St. Michael"],
+      },
+      { label: "PBX", type: "phone", value: "(246) 536-0600 / 0617" },
+      { label: "Fax", type: "phone", value: "(246) 536-0681" },
+      {
+        label: "Security Desk (Ranger/Warden)",
+        type: "phone",
+        value: "(246) 536-0665",
+      },
+      {
+        label: "Folkestone Park & Marine Reserve",
+        type: "phone",
+        value: "(246) 536-0648",
+      },
+      {
+        label: "Folkestone Fax",
+        type: "phone",
+        value: "(246) 536-0649",
+      },
+      {
+        label: "Codrington Nursery & Garden Centre",
+        type: "phone",
+        value: "(246) 536-0641",
+      },
+      { label: "Email", type: "email", value: "ncc@caribsurf.com" },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://nccbarbados.gov.bb/",
+      },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/national-conservation-commission",
+  },
+  {
+    slug: "council-substance-abuse",
+    name: "National Council on Substance Abuse (NCSA)",
+    contact: [
+      {
+        label: "Address",
+        value: [
+          '"The Armaira Building"',
+          "Corner 1st Avenue",
+          "Belleville & Pine Road",
+          "St. Michael",
+          "Barbados",
+        ],
+      },
+      { label: "PBX", type: "phone", value: "(246) 535-6272" },
+      { label: "Fax", type: "phone", value: "(246) 535-6279" },
+      {
+        label: "Email",
+        type: "email",
+        value: "ncsa.info@barbados.gov.bb",
+      },
+      { label: "Website", type: "website", value: "http://www.ncsa.gov.bb/" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/council-substance-abuse",
+  },
+  {
+    slug: "national-cultural-foundation",
+    name: "National Cultural Foundation",
+    contact: [
+      {
+        label: "Address",
+        value: ["West Terrace", "St. James"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 424-0909" },
+      { label: "Telephone", type: "phone", value: "(246) 424-0916" },
+      { label: "Website", type: "website", value: "http://www.ncf.bb/" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/national-cultural-foundation",
+  },
+  {
+    slug: "national-housing-corporation",
+    name: "National Housing Corporation",
+    contact: [
+      {
+        label: "Address",
+        value: ["Country Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 467-6200" },
+      { label: "Telephone", type: "phone", value: "(246) 437-8297" },
+      { label: "Email", type: "email", value: "nhc@nhc.gov.bb" },
+      { label: "Website", type: "website", value: "http://www.nhc.gov.bb/" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/national-housing-corporation",
+  },
+  {
+    slug: "national-petroleum",
+    name: "National Petroleum Corporation",
+    contact: [
+      {
+        label: "Address",
+        value: ["Wildey", "St. Michael BB11000"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 430-4000" },
+      { label: "Fax", type: "phone", value: "(246) 426-4326" },
+      {
+        label: "Billing Queries / Customer Service",
+        type: "phone",
+        value: "(246) 430-4051",
+      },
+      {
+        label: "Emergency After Hours",
+        type: "phone",
+        value: "(246) 430-4099 / (246) 430-4036",
+      },
+      {
+        label: "Corporate Email",
+        type: "email",
+        value: "bimgas@caribsurf.com",
+      },
+      {
+        label: "Customer Queries",
+        type: "email",
+        value: "customerserv@npc.com.bb",
+      },
+      { label: "Website", type: "website", value: "http://www.npc.bb/" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/national-petroleum",
+  },
+  {
+    slug: "natural-resources-division",
+    name: "Natural Resources Unit",
+    contact: [
+      {
+        label: "Address",
+        value: ["Trinity Business Centre Inc.", "Country Road", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 535-2507" },
+      { label: "Fax", type: "phone", value: "(246) 429-7489" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/natural-resources-division",
+  },
+  {
+    slug: "public-counsel",
+    name: "Office of Public Counsel",
+    contact: [
+      {
+        label: "Address",
+        value: ["Warrens Office Complex", "Warrens", "St. Michael"],
+      },
+      { label: "General Office", type: "phone", value: "(246) 535-2758" },
+      { label: "General Office", type: "phone", value: "(246) 535-2762" },
+      { label: "Public Counsel", type: "phone", value: "(246) 535-2756" },
+      { label: "Fax", type: "phone", value: "(246) 421-6439" },
+      {
+        label: "Email",
+        type: "email",
+        value: "commerce.ps@barbados.gov.bb",
+      },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://www.commerce.gov.bb/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/public-counsel",
+  },
+  {
+    slug: "supervisor-insolvency",
+    name: "Office of Supervisor of Insolvency",
+    contact: [
+      {
+        label: "Address",
+        value: ["Warrens Office Complex", "Warrens", "St. Michael"],
+      },
+      { label: "General Office", type: "phone", value: "(246) 535-2752/3" },
+      {
+        label: "Supervisor of Insolvency",
+        type: "phone",
+        value: "(246) 535-2751",
+      },
+      { label: "Fax", type: "phone", value: "(246) 535-2767" },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/supervisor-insolvency",
+  },
+  {
+    slug: "poverty-alleviation",
+    name: "Poverty Alleviation Bureau",
+    contact: [
+      {
+        label: "Address",
+        value: ["4th Floor Warrens Office Complex", "St. Michael"],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 310-1803" },
+      { label: "Telephone", type: "phone", value: "(246) 310-1807" },
+      {
+        label: "Website",
+        type: "website",
+        value: "http://www.socialcare.gov.bb/",
+      },
+    ],
+    originalSource: "https://www.gov.bb/State-Bodies/poverty-alleviation",
+  },
+  {
     slug: "water-authority",
     name: "Barbados Water Authority",
     shortDescription:
