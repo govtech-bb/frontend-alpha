@@ -1,0 +1,1 @@
+The University of the West Indies, Cave Hill Campus' academic programmes offer diversity at both the undergraduate and graduate level. There are 7 faculties with supporting academic departments; various research units & centres; and two graduate institutions and more than 500 programmes. The UWI, Cave Hill is accredited.

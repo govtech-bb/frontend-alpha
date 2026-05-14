@@ -9,8 +9,8 @@ type StageBannerProps = { className?: string } & (
 );
 
 const COPY: Record<Stage, { prefix: string; linkText: string }> = {
-  alpha: { prefix: "This page is in ", linkText: "alpha" },
-  beta: { prefix: "This page is in ", linkText: "beta" },
+  alpha: { prefix: "This page is in ", linkText: "Alpha" },
+  beta: { prefix: "This page is in ", linkText: "Beta" },
   migrated: {
     prefix: "This content has been migrated from ",
     linkText: "gov.bb",

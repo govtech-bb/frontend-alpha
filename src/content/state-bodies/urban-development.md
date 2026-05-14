@@ -1,0 +1,1 @@
+To becoming the leading social development agency in the public service by providing comprehensive high quality, efficient, effective and professional services designed to improve the living standards and the quality of life of vulnerable, poor and disadvantaged individuals groups and communities in Urban Barbados.
