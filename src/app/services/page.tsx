@@ -37,8 +37,7 @@ export const metadata: Metadata = {
 
 export default async function ServicesPage() {
   const alphaServices = await getAlphaServices();
-  const alphaSlugs = new Set(alphaServices.map((s) => s.slug));
-  const results = searchServices("", alphaSlugs);
+  const results = searchServices("", new Set(alphaServices.map((s) => s.slug)));
 
   return (
     <>

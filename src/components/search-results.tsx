@@ -7,6 +7,11 @@ import { useEffect } from "react";
 import { trackEvent } from "@/lib/analytics";
 import type { SearchResult } from "@/lib/search";
 
+function labelFor(result: SearchResult): string {
+  if (result.kind !== "service") return result.category;
+  return result.hasOnlineForm ? "Digital service" : "Information service";
+}
+
 export function SearchResults({
   results,
   query,
@@ -54,14 +59,11 @@ export function SearchResults({
           </ul>
 
           <Text as="p">
-            At the moment, search only finds services that have been recently
-            redesigned (alpha services).
-            <br />
-            You can{" "}
+            You can also{" "}
             <Link as={NextLink} className="inline" href="/services">
-              find other government services or information
-            </Link>{" "}
-            here.
+              browse all government services
+            </Link>
+            .
           </Text>
         </div>
       )}
@@ -86,9 +88,7 @@ export function SearchResults({
                 </Text>
               )}
               <Text as="p" className="text-mid-grey-00">
-                {result.hasOnlineForm
-                  ? "Digital service"
-                  : "Information service"}
+                {labelFor(result)}
               </Text>
             </li>
           ))}
