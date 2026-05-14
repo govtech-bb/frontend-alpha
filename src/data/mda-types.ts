@@ -39,4 +39,6 @@ export interface MdaEntry {
   head?: Minister;
   contact?: ContactItem[];
   originalSource?: string;
+  /** Search-only tags. Useful for abbreviations and common alternate names. */
+  keywords?: string[];
 }

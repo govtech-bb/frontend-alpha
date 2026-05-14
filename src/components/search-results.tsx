@@ -2,23 +2,47 @@
 
 import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
+import { type SearchHit, useSearch } from "@/hooks/use-search";
 import { trackEvent } from "@/lib/analytics";
-import type { SearchResult } from "@/lib/search";
 
-export function SearchResults({
-  results,
-  query,
-}: {
-  results: SearchResult[];
-  query: string;
-}) {
+function labelFor(hit: SearchHit): string {
+  if (hit.kind !== "service") {
+    return hit.category;
+  }
+  return hit.hasOnlineForm ? "Digital service" : "Information service";
+}
+
+export function SearchResults({ query }: { query: string }) {
+  const { search, ready, error } = useSearch();
+  const [hits, setHits] = useState<SearchHit[] | null>(null);
+
   useEffect(() => {
-    // Skip tracking queries that may contain PII (numbers, emails)
-    if (!query || /\d|@/.test(query)) return;
-    trackEvent("search", { query, results: results.length });
-  }, [query, results.length]);
+    if (!query) {
+      setHits([]);
+      return;
+    }
+    if (!ready) {
+      setHits(null);
+      return;
+    }
+    setHits(search(query));
+  }, [query, ready, search]);
+
+  useEffect(() => {
+    if (!query || hits === null) {
+      return;
+    }
+    if (/\d|@/.test(query)) {
+      return;
+    }
+    trackEvent("search", { query, results: hits.length });
+  }, [query, hits]);
+
+  const isLoading = query && hits === null && !error;
+  const hasResults = hits !== null && hits.length > 0;
+  const hasNoResults = query && hits !== null && hits.length === 0;
 
   return (
     <div aria-live="polite">
@@ -26,16 +50,27 @@ export function SearchResults({
         Search results
       </Heading>
 
-      {query && results.length > 0 && (
+      {isLoading && (
         <Text as="p" className="mb-s">
-          {results.length} search {results.length === 1 ? "result" : "results"}{" "}
-          for &ldquo;
-          <strong>{query}</strong>&rdquo;{" "}
-          {results.length === 1 ? "was" : "were"} found
+          Searching…
         </Text>
       )}
 
-      {query && results.length === 0 && (
+      {error && (
+        <Text as="p" className="mb-s">
+          Search is temporarily unavailable. Please try again later.
+        </Text>
+      )}
+
+      {query && hasResults && hits && (
+        <Text as="p" className="mb-s">
+          {hits.length} search {hits.length === 1 ? "result" : "results"} for
+          &ldquo;<strong>{query}</strong>&rdquo;{" "}
+          {hits.length === 1 ? "was" : "were"} found
+        </Text>
+      )}
+
+      {hasNoResults && (
         <div className="space-y-s">
           <Text as="p">
             We could not find any results for &ldquo;
@@ -54,41 +89,36 @@ export function SearchResults({
           </ul>
 
           <Text as="p">
-            At the moment, search only finds services that have been recently
-            redesigned (alpha services).
-            <br />
-            You can{" "}
+            You can also{" "}
             <Link as={NextLink} className="inline" href="/services">
-              find other government services or information
-            </Link>{" "}
-            here.
+              browse all government services
+            </Link>
+            .
           </Text>
         </div>
       )}
 
-      {results.length > 0 && (
+      {hasResults && hits && (
         <ul className="flex flex-col gap-s">
-          {results.map((result) => (
+          {hits.map((hit) => (
             <li
               className="flex flex-col items-start gap-xs border-grey-00 border-b-2 py-s first:pt-0"
-              key={result.slug}
+              key={hit.id}
             >
               <Link
                 as={NextLink}
                 className="text-[20px] leading-normal"
-                href={result.href}
+                href={hit.href}
               >
-                {result.title}
+                {hit.title}
               </Link>
-              {result.description && (
+              {hit.description && (
                 <Text as="p" className="hidden lg:block">
-                  {result.description}
+                  {hit.description}
                 </Text>
               )}
               <Text as="p" className="text-mid-grey-00">
-                {result.hasOnlineForm
-                  ? "Digital service"
-                  : "Information service"}
+                {labelFor(hit)}
               </Text>
             </li>
           ))}

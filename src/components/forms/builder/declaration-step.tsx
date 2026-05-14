@@ -154,7 +154,9 @@ export function DeclarationStep({ step, serviceTitle }: DeclarationStepProps) {
             {nameInputFields.map((field) => (
               <DynamicField field={field} key={field.name} />
             ))}
-            {dateField && <DynamicField field={dateField} />}
+            {dateField && !dateField.hidden && (
+              <DynamicField field={dateField} />
+            )}
           </>
         )}
 
