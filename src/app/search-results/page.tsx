@@ -5,7 +5,6 @@ import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { SearchResults } from "@/components/search-results";
 import { StageBanner } from "@/components/stage-banner";
-import { searchServices } from "@/lib/search";
 
 export const metadata: Metadata = {
   title: "Search Results",
@@ -18,7 +17,6 @@ export default async function SearchPage({
 }) {
   const { q = "" } = await searchParams;
   const query = q.trim();
-  const results = searchServices(query);
 
   return (
     <>
@@ -41,7 +39,7 @@ export default async function SearchPage({
 
       <section className="pt-4 pb-8">
         <div className="container">
-          <SearchResults query={query} results={results} />
+          <SearchResults query={query} />
         </div>
       </section>
 
