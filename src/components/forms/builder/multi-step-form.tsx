@@ -11,6 +11,7 @@ import { sendFormSubmittedWebhook } from "@/app/actions/send-form-submitted-webh
 import { ReviewStep } from "@/components/forms/builder/review-step";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import { useFormTracking } from "@/hooks/use-form-tracking";
+import { combineDate } from "@/lib/dates";
 import { type FormData, generateFormSchema } from "@/lib/schema-generator";
 import {
   getNestedValue,
@@ -193,6 +194,90 @@ function extractApplicantEmail(data: Record<string, unknown>): string | null {
   }
 
   return null;
+}
+
+function extractApplicantPhone(data: Record<string, unknown>): string | null {
+  const candidatePaths = [
+    "applicant.phone",
+    "owner.phone",
+    "contact.phone",
+    "phone",
+    "applicant.contactPhone",
+    "owner.contactPhone",
+  ];
+
+  for (const path of candidatePaths) {
+    const phone = getStringAtPath(data, path);
+    if (phone) {
+      return phone;
+    }
+  }
+
+  return null;
+}
+
+function isDateObject(
+  value: unknown
+): value is { day: string; month: string; year: string } {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+  const keys = Object.keys(value);
+  if (keys.length !== 3) return false;
+  const candidate = value as Record<string, unknown>;
+  return (
+    typeof candidate.day === "string" &&
+    typeof candidate.month === "string" &&
+    typeof candidate.year === "string"
+  );
+}
+
+function normalizeDates(value: unknown): unknown {
+  if (isDateObject(value)) {
+    return combineDate(value.year, value.month, value.day);
+  }
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeDates(item));
+  }
+  if (value && typeof value === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
+      result[key] = normalizeDates(val);
+    }
+    return result;
+  }
+  return value;
+}
+
+function buildWebhookFormData(
+  data: Record<string, unknown>
+): Record<string, unknown> {
+  const HOISTED_KEYS = new Set(["firstName", "lastName", "email", "phone"]);
+  const {
+    applicant: applicantRaw,
+    declaration: _omitDeclaration,
+    ...rest
+  } = data;
+
+  const normalizedRest = normalizeDates(rest) as Record<string, unknown>;
+
+  if (!applicantRaw || typeof applicantRaw !== "object") {
+    return normalizedRest;
+  }
+
+  const trimmedApplicant: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(
+    applicantRaw as Record<string, unknown>
+  )) {
+    if (!HOISTED_KEYS.has(key)) {
+      trimmedApplicant[key] = normalizeDates(value);
+    }
+  }
+
+  if (Object.keys(trimmedApplicant).length > 0) {
+    return { ...normalizedRest, applicant: trimmedApplicant };
+  }
+  return normalizedRest;
 }
 
 /**
@@ -1018,7 +1103,12 @@ export default function DynamicMultiStepForm({
                 cleanedData as Record<string, unknown>
               ),
               applicantName: customerName,
-              formData: cleanedData as Record<string, unknown>,
+              applicantPhone: extractApplicantPhone(
+                cleanedData as Record<string, unknown>
+              ),
+              formData: buildWebhookFormData(
+                cleanedData as Record<string, unknown>
+              ),
               programmeCode: webhookProgrammeCode,
               referenceNumber: generatedReferenceNumber,
             });
