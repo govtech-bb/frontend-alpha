@@ -267,6 +267,14 @@ function createFieldSchema(field: FormField): z.ZodTypeAny {
         case "minYear":
           dateSchema = dateValidation.minYear(dateSchema, rule.year, label);
           break;
+        case "ageRange":
+          dateSchema = dateValidation.ageRange(
+            dateSchema,
+            rule.minAge,
+            rule.maxAge,
+            rule.message
+          );
+          break;
         default: {
           const _exhaustiveCheck: never = rule as never;
           throw new Error(`Unknown date validation type: ${_exhaustiveCheck}`);

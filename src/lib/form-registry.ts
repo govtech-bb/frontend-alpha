@@ -58,6 +58,12 @@ export const FORM_COMPONENTS = {
   "crop-over-permits": lazy(
     () => import("@/components/forms/crop-over-permits-form")
   ),
+  "request-a-presidential-visit-for-a-centenarian": lazy(
+    () =>
+      import(
+        "@/components/forms/request-a-presidential-visit-for-a-centenarian-form"
+      )
+  ),
   // Add other forms here
 } as const;
 
@@ -86,6 +92,8 @@ export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
   "calculate-severance-pay": "calculate-severance-pay",
   "calculate-your-pension": "calculate-your-pension",
   "crop-over-permits": "crop-over-permits",
+  "request-a-presidential-visit-for-a-centenarian":
+    "request-a-presidential-visit-for-a-centenarian",
 };
 
 /**

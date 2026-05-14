@@ -254,6 +254,32 @@ export const dateValidation = {
         path: ["year"],
       }
     ),
+
+  ageRange: (
+    schema: ReturnType<typeof createDateSchema>,
+    minAge: number,
+    maxAge: number,
+    message: string
+  ) =>
+    schema.refine(
+      (value) => {
+        const dob = parseAndStrip(value);
+        if (!dob) {
+          return false;
+        }
+        const today = stripTime(new Date());
+        const hasHadBirthdayThisYear =
+          today.getMonth() > dob.getMonth() ||
+          (today.getMonth() === dob.getMonth() &&
+            today.getDate() >= dob.getDate());
+        const age =
+          today.getFullYear() -
+          dob.getFullYear() -
+          (hasHadBirthdayThisYear ? 0 : 1);
+        return age >= minAge && age <= maxAge;
+      },
+      { message }
+    ),
 };
 
 // ? should I move this as a utility in design system, to formate and deformat date?

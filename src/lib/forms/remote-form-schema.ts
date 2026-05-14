@@ -80,7 +80,7 @@ const baseFieldShape = {
   hidden: z.boolean().optional(),
   conditionalOn: conditionalRuleSchema.optional(),
   skipValidationWhenShowHideOpen: z.string().optional(),
-  width: z.enum(["short", "medium", "full"]).optional(),
+  width: z.enum(["short", "medium", "two-thirds", "full"]).optional(),
 };
 
 const textLikeFormFieldSchema = z

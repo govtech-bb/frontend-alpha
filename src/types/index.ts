@@ -29,7 +29,8 @@ export type DateValidationRule =
   | { type: "onOrAfter"; date: string; description?: string }
   | { type: "onOrBefore"; date: string; description?: string }
   | { type: "between"; start: string; end: string; description?: string }
-  | { type: "minYear"; year: number };
+  | { type: "minYear"; year: number }
+  | { type: "ageRange"; minAge: number; maxAge: number; message: string };
 
 export type FieldValidationOperator = {
   condition: "gte";
@@ -126,7 +127,7 @@ export type BaseFormField = {
   /** Field name of a ShowHide state field — when that state is "open", validation is skipped for this field */
   skipValidationWhenShowHideOpen?: string;
   /** Controls the rendered width of the field */
-  width?: "short" | "medium" | "full";
+  width?: "short" | "medium" | "two-thirds" | "full";
 };
 
 /** A date input field with date-specific validation. */
@@ -141,6 +142,12 @@ export type OptionFormField = BaseFormField & {
   validation: NonDateFieldValidation;
   /** The list of selectable options */
   options: SelectOption[];
+  /**
+   * Optional. Groups conditional follow-up fields under a single labelled
+   * container, keyed by the triggering option value. Without this, each
+   * conditional field renders in its own bordered block.
+   */
+  conditionalGroups?: Record<string, { label: string }>;
 };
 
 /** A single yes/no checkbox, or a group when `options` is set. */
@@ -276,6 +283,16 @@ export type RepeatableStepConfig = {
   sharedFields?: string[];
 };
 
+/** Informational callout shown inline between fields in a step. */
+export type InlineNotice = {
+  /** Field name this notice should appear after */
+  afterField: string;
+  /** Bold heading text */
+  title: string;
+  /** Body text shown below the heading */
+  body: string;
+};
+
 /** A single step in a multi-step form wizard. */
 export type FormStep = {
   /** Unique step identifier */
@@ -288,6 +305,8 @@ export type FormStep = {
   description?: string;
   /** Fields to render in this step */
   fields: FormField[];
+  /** Optional informational callouts rendered inline after specific fields */
+  inlineNotices?: InlineNotice[];
   /** Condition that must be met for this step to be visible */
   conditionalOn?: ConditionalRule;
   /** Markdown content for confirmation page body (replaces fields) */
