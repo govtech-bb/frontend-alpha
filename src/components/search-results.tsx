@@ -112,19 +112,10 @@ export function SearchResults({ query }: { query: string }) {
               >
                 {hit.title}
               </Link>
-              {hit.excerpt ? (
+              {hit.description && (
                 <Text as="p" className="hidden lg:block">
-                  <span
-                    // biome-ignore lint/security/noDangerouslySetInnerHtml: excerpt is built from indexed body and only contains <mark> tags around escaped content
-                    dangerouslySetInnerHTML={{ __html: hit.excerpt }}
-                  />
+                  {hit.description}
                 </Text>
-              ) : (
-                hit.description && (
-                  <Text as="p" className="hidden lg:block">
-                    {hit.description}
-                  </Text>
-                )
               )}
               <Text as="p" className="text-mid-grey-00">
                 {labelFor(hit)}

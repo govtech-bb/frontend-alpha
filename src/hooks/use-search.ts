@@ -23,12 +23,9 @@ export interface SearchHit {
   category: string;
   kind: IndexDoc["kind"];
   hasOnlineForm: boolean;
-  excerpt: string;
 }
 
 const INDEX_URL = "/search-index.json";
-const EXCERPT_LEN = 180;
-const EXCERPT_PRE = 60;
 
 const STOPWORDS = new Set([
   "a",
@@ -57,56 +54,6 @@ const STOPWORDS = new Set([
   "do",
   "can",
 ]);
-
-const HTML_ENTITIES: Record<string, string> = {
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  '"': "&quot;",
-  "'": "&#39;",
-};
-
-function escapeHtml(s: string): string {
-  return s.replace(/[&<>"']/g, (c) => HTML_ENTITIES[c] ?? c);
-}
-
-function escapeRegExp(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function buildExcerpt(body: string, terms: string[]): string {
-  if (!body) {
-    return "";
-  }
-  const lower = body.toLowerCase();
-  let earliest = -1;
-  for (const term of terms) {
-    const i = lower.indexOf(term.toLowerCase());
-    if (i !== -1 && (earliest === -1 || i < earliest)) {
-      earliest = i;
-    }
-  }
-  let snippet: string;
-  if (earliest === -1) {
-    snippet = body.slice(0, EXCERPT_LEN);
-  } else {
-    const start = Math.max(0, earliest - EXCERPT_PRE);
-    const end = Math.min(body.length, start + EXCERPT_LEN);
-    snippet =
-      (start > 0 ? "…" : "") +
-      body.slice(start, end) +
-      (end < body.length ? "…" : "");
-  }
-  let escaped = escapeHtml(snippet);
-  for (const term of terms) {
-    if (!term) {
-      continue;
-    }
-    const re = new RegExp(`(${escapeRegExp(term)})`, "gi");
-    escaped = escaped.replace(re, "<mark>$1</mark>");
-  }
-  return escaped;
-}
 
 export function useSearch() {
   const [ready, setReady] = useState(false);
@@ -175,7 +122,6 @@ export function useSearch() {
     const results = ms.search(trimmed);
     return results.map((r): SearchHit => {
       const doc = docsRef.current.get(String(r.id));
-      const terms = Object.keys(r.match);
       return {
         id: String(r.id),
         title: (r.title as string) ?? doc?.title ?? "",
@@ -184,7 +130,6 @@ export function useSearch() {
         category: (r.category as string) ?? doc?.category ?? "",
         kind: (r.kind as IndexDoc["kind"]) ?? doc?.kind ?? "service",
         hasOnlineForm: Boolean(r.hasOnlineForm ?? doc?.hasOnlineForm),
-        excerpt: buildExcerpt(doc?.body ?? "", terms),
       };
     });
   }, []);
