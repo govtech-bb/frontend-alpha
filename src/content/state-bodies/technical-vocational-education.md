@@ -1,0 +1,1 @@
+The TVET Council is a statutory organisation set up to make Barbados more competitive through the development of its workforce. It is mandated to plan, coordinate and establish standards and qualifications for the discipline of TVET.

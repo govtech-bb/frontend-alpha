@@ -1,0 +1,1 @@
+The Productivity Council (formerly the National Productivity Board) was established by an Act of Parliament on August 31, 1993 to further the objectives of the Protocol for the Implementation of a Prices and Incomes Policy which was signed by Government, employers and workers representatives.

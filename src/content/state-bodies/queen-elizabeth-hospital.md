@@ -1,0 +1,1 @@
+The Queen Elizabeth Hospital (QEH) is the country's primary acute care medical facility. The QEH is also an accredited teaching hospital affiliated with the University of the West Indies, Cave Hill campus.
