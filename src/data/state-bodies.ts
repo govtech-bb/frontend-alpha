@@ -1430,6 +1430,21 @@ export const STATE_BODIES: StateBody[] = [
       "https://www.gov.bb/State-Bodies/youth-entrepreneurship-scheme",
   },
   {
+    slug: "caribbean-examination-council",
+    name: "Caribbean Examination Council",
+    contact: [
+      {
+        label: "Address",
+        value: ["Block A", "The Garrison", "St. Michael", "Barbados, W.I."],
+      },
+      { label: "Telephone", type: "phone", value: "(246) 227-7100" },
+      { label: "Telephone", type: "phone", value: "(246) 227-1800" },
+      { label: "Website", type: "website", value: "https://www.cxc.org/" },
+    ],
+    originalSource:
+      "https://www.gov.bb/State-Bodies/caribbean-examination-council",
+  },
+  {
     slug: "water-authority",
     name: "Barbados Water Authority",
     shortDescription:
