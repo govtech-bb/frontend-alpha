@@ -4,9 +4,10 @@ import NextLink from "next/link";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { StageBanner } from "@/components/stage-banner";
+import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getAlphaServices } from "@/lib/markdown";
-import { searchServices } from "@/lib/search";
 import { SITE_URL } from "@/lib/site-url";
+import type { PageType } from "@/types/content";
 
 export const metadata: Metadata = {
   title: "Alpha Services",
@@ -35,10 +36,35 @@ export const metadata: Metadata = {
   },
 };
 
+interface AlphaListItem {
+  title: string;
+  href: string;
+  slug: string;
+  hasOnlineForm: boolean;
+}
+
+function pageHasOnlineForm(page: PageType): boolean {
+  return page.subPages?.some((s) => s.type === "component") ?? false;
+}
+
 export default async function ServicesPage() {
   const alphaServices = await getAlphaServices();
   const alphaSlugs = new Set(alphaServices.map((s) => s.slug));
-  const results = searchServices("", alphaSlugs);
+
+  const items: AlphaListItem[] = [];
+  for (const category of INFORMATION_ARCHITECTURE) {
+    for (const page of category.pages) {
+      const fullSlug = `${category.slug}/${page.slug}`;
+      if (alphaSlugs.has(fullSlug)) {
+        items.push({
+          title: page.title,
+          href: page.href ?? `/${fullSlug}`,
+          slug: fullSlug,
+          hasOnlineForm: pageHasOnlineForm(page),
+        });
+      }
+    }
+  }
 
   return (
     <>
@@ -70,22 +96,22 @@ export default async function ServicesPage() {
               These services are in alpha
             </Text>
 
-            {results.length > 0 && (
+            {items.length > 0 && (
               <ul className="flex flex-col gap-s">
-                {results.map((result) => (
+                {items.map((item) => (
                   <li
                     className="flex flex-col items-start gap-xs border-grey-00 border-b-2 py-s first:pt-0"
-                    key={result.slug}
+                    key={item.slug}
                   >
                     <Link
                       as={NextLink}
                       className="text-[20px] leading-normal"
-                      href={result.href}
+                      href={item.href}
                     >
-                      {result.title}
+                      {item.title}
                     </Link>
                     <Text as="p" className="text-mid-grey-00">
-                      {result.hasOnlineForm
+                      {item.hasOnlineForm
                         ? "Digital service"
                         : "Information service"}
                     </Text>

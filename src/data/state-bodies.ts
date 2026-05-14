@@ -6,6 +6,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "accreditation-council",
     name: "Barbados Accreditation Council",
+    keywords: ["BAC", "Accreditation"],
     contact: [
       {
         label: "Address",
@@ -27,6 +28,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "cane-industry",
     name: "Barbados Cane Industry Corporation",
+    keywords: ["BCIC", "Cane", "Sugar"],
     contact: [
       {
         label: "Address",
@@ -40,6 +42,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "coalition-services",
     name: "Barbados Coalition of Service Industries",
+    keywords: ["BCSI", "Coalition of Service Industries"],
     contact: [
       {
         label: "Address",
@@ -60,6 +63,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "community-college",
     name: "Barbados Community College",
+    keywords: ["BCC", "Community College"],
     contact: [
       {
         label: "Address",
@@ -74,6 +78,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "conference-services",
     name: "Barbados Conference Services Limited (BCSL)",
+    keywords: ["BCSL", "Conference Services"],
     contact: [
       {
         label: "Address",
@@ -93,6 +98,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "defence-force",
     name: "Barbados Defence Force",
+    keywords: ["BDF", "Defence Force", "Military", "Coast Guard"],
     contact: [
       {
         label: "Address",
@@ -105,6 +111,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "investment-development-corp",
     name: "Barbados Investment & Development Corporation (Export Barbados)",
+    keywords: ["BIDC", "Export Barbados", "Investment Development"],
     contact: [
       {
         label: "Address",
@@ -130,6 +137,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "medicinal-cannabis",
     name: "Barbados Medicinal Cannabis Licencing Authority (BMCLA)",
+    keywords: ["BMCLA", "Medicinal Cannabis", "Marijuana"],
     contact: [
       {
         label: "Address",
@@ -145,6 +153,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "museum-historical-society",
     name: "Barbados Museum & Historical Society Council",
+    keywords: ["BMHS", "Museum", "Historical Society"],
     contact: [
       {
         label: "Address",
@@ -163,6 +172,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-oil-company",
     name: "Barbados National Oil Company",
+    keywords: ["BNOCL", "BNOC", "National Oil", "Petroleum"],
     contact: [
       {
         label: "Address",
@@ -177,6 +187,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-standards",
     name: "Barbados National Standards Institution",
+    keywords: ["BNSI", "National Standards", "Standards"],
     contact: [
       {
         label: "Address",
@@ -197,6 +208,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-terminal-co",
     name: "Barbados National Terminal Co. Ltd.",
+    keywords: ["BNTCL", "National Terminal"],
     contact: [
       {
         label: "Address",
@@ -210,6 +222,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "barbados-port",
     name: "Barbados Port Inc.",
+    keywords: ["BPI", "Port", "Bridgetown Port", "Seaport"],
     contact: [
       {
         label: "Address",
@@ -233,6 +246,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "revenue-authority",
     name: "Barbados Revenue Authority",
+    keywords: ["BRA", "tax", "TAMIS", "income tax", "land tax", "VAT"],
     head: { name: "Jason King", role: "Revenue Commissioner" },
     contact: [
       {
@@ -257,6 +271,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "tourism-investment",
     name: "Barbados Tourism Investment Incorporated",
+    keywords: ["BTII", "Tourism Investment"],
     contact: [
       {
         label: "Address",
@@ -280,6 +295,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "btmi",
     name: "Barbados Tourism Marketing Inc.",
+    keywords: ["BTMI", "Tourism Marketing", "Visit Barbados"],
     contact: [
       {
         label: "Address",
@@ -305,6 +321,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "vocational-training-board",
     name: "Barbados Vocational Training Board",
+    keywords: ["BVTB", "TVET", "Vocational Training"],
     contact: [
       {
         label: "Address",
@@ -320,6 +337,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "barbados-youth-advance-corps",
     name: "Barbados Youth Advance Corps.",
+    keywords: ["BYAC", "Youth Advance Corps"],
     head: { name: "Mr. Hally Haynes", role: "Director" },
     contact: [
       {
@@ -345,6 +363,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "barbados-youth-business-trust",
     name: "Barbados Youth Business Trust",
+    keywords: ["BYBT", "Youth Business Trust"],
     contact: [
       {
         label: "Address",
@@ -366,6 +385,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "social-policy-research-planning",
     name: "Bureau of Social Policy, Research and Planning",
+    keywords: ["BSPRP", "Social Policy"],
     contact: [
       {
         label: "Address",
@@ -380,6 +400,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "caribbean-broadcasting-corporation",
     name: "Caribbean Broadcasting Corporation",
+    keywords: ["CBC", "Broadcasting", "TV", "Radio"],
     contact: [
       {
         label: "Address",
@@ -401,6 +422,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "caves-of-barbados",
     name: "Caves of Barbados Limited (CBL)",
+    keywords: ["CBL", "Caves", "Harrison's Cave"],
     contact: [
       {
         label: "Address",
@@ -419,6 +441,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "central-bank",
     name: "Central Bank of Barbados",
+    keywords: ["CBB", "Central Bank"],
     contact: [
       {
         label: "Address",
@@ -442,6 +465,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "consular-affairs",
     name: "Consular Affairs",
+    keywords: ["Consular Affairs"],
     contact: [
       {
         label: "Address",
@@ -455,6 +479,16 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "corporate-affairs",
     name: "Corporate Affairs and Intellectual Property Office",
+    keywords: [
+      "CAIPO",
+      "Corporate Affairs",
+      "IP",
+      "Intellectual Property",
+      "Trademark",
+      "company registration",
+      "business registration",
+      "patent",
+    ],
     head: { name: "Ms. Tamiesha Rochester", role: "Registrar (Acting)" },
     contact: [
       {
@@ -481,6 +515,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "directorate-human-resource",
     name: "Directorate, Human Resource Policy and Staffing",
+    keywords: ["DHRPS", "HR Policy", "Human Resource", "Staffing"],
     contact: [
       {
         label: "Address",
@@ -505,6 +540,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "directorate-learning-development",
     name: "Directorate, Learning and Development",
+    keywords: ["DLD", "Learning and Development"],
     contact: [
       {
         label: "Address",
@@ -530,6 +566,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "directorate-people-resourcing-and-compliance",
     name: "Directorate, People Resourcing and Compliance",
+    keywords: ["DPRC", "People Resourcing", "Compliance"],
     contact: [
       {
         label: "Address",
@@ -559,6 +596,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "erdiston-teacher-training",
     name: "Erdiston Teachers' Training College",
+    keywords: ["Erdiston", "ETTC", "Teacher Training"],
     contact: [
       {
         label: "Address",
@@ -574,6 +612,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "fair-trading-commission",
     name: "Fair Trading Commission",
+    keywords: ["FTC", "Fair Trading"],
     contact: [
       {
         label: "Address",
@@ -589,6 +628,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "financial-services-commission",
     name: "Financial Services Commission",
+    keywords: ["FSC", "Financial Services"],
     contact: [
       {
         label: "Address",
@@ -610,6 +650,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "foreign-trade",
     name: "Foreign Trade",
+    keywords: ["Foreign Trade"],
     contact: [
       {
         label: "Address",
@@ -628,6 +669,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "glebe-polyclinic",
     name: "Glebe Polyclinic",
+    keywords: ["Glebe", "Polyclinic"],
     contact: [
       { label: "PBX", type: "phone", value: "(246) 536-3940" },
       { label: "Records Department", type: "phone", value: "(246) 536-3945" },
@@ -643,6 +685,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "grantley-adams-international",
     name: "Grantley Adams International Airport",
+    keywords: ["GAIA", "BGI", "Airport", "Grantley Adams"],
     contact: [
       {
         label: "Address",
@@ -661,6 +704,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "health-promotion-unit",
     name: "Health Promotion Unit",
+    keywords: ["HPU", "Health Promotion"],
     contact: [
       {
         label: "Address",
@@ -681,6 +725,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "higher-education-development-unit",
     name: "Higher Education Development Unit",
+    keywords: ["HEDU", "Higher Education"],
     contact: [
       {
         label: "Address",
@@ -703,6 +748,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "hiv-aids-programme",
     name: "HIV/AIDS Programme Office",
+    keywords: ["HIV", "AIDS", "NHAP"],
     contact: [
       {
         label: "Address",
@@ -722,6 +768,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "invest-barbados",
     name: "Invest Barbados",
+    keywords: ["Invest BB", "Investment Promotion"],
     contact: [
       {
         label: "Address",
@@ -741,6 +788,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "judiciary-judges",
     name: "Judiciary - Judges",
+    keywords: ["Judiciary", "Judges", "Courts"],
     contact: [
       {
         label: "Address",
@@ -760,6 +808,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "kensington-oval",
     name: "Kensington Oval Management Inc.",
+    keywords: ["Kensington Oval", "Cricket Stadium"],
     contact: [
       {
         label: "Address",
@@ -779,6 +828,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "meteorology",
     name: "Meteorology",
+    keywords: ["Met", "Meteorology", "Weather"],
     contact: [
       {
         label: "Address",
@@ -797,6 +847,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-conservation-commission",
     name: "National Conservation Commission",
+    keywords: ["NCC", "Conservation", "Parks", "Beaches"],
     contact: [
       {
         label: "Address",
@@ -837,6 +888,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "council-substance-abuse",
     name: "National Council on Substance Abuse (NCSA)",
+    keywords: ["NCSA", "Substance Abuse", "Drugs"],
     contact: [
       {
         label: "Address",
@@ -862,6 +914,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-cultural-foundation",
     name: "National Cultural Foundation",
+    keywords: ["NCF", "Cultural Foundation", "Crop Over"],
     contact: [
       {
         label: "Address",
@@ -877,6 +930,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-housing-corporation",
     name: "National Housing Corporation",
+    keywords: ["NHC", "Housing", "Public Housing"],
     contact: [
       {
         label: "Address",
@@ -893,6 +947,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-petroleum",
     name: "National Petroleum Corporation",
+    keywords: ["NPC", "Petroleum", "Gas"],
     contact: [
       {
         label: "Address",
@@ -927,6 +982,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "natural-resources-division",
     name: "Natural Resources Unit",
+    keywords: ["NRU", "Natural Resources"],
     contact: [
       {
         label: "Address",
@@ -941,6 +997,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "public-counsel",
     name: "Office of Public Counsel",
+    keywords: ["OPC", "Public Counsel"],
     contact: [
       {
         label: "Address",
@@ -966,6 +1023,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "supervisor-insolvency",
     name: "Office of Supervisor of Insolvency",
+    keywords: ["OSI", "Insolvency", "Bankruptcy"],
     contact: [
       {
         label: "Address",
@@ -984,6 +1042,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "poverty-alleviation",
     name: "Poverty Alleviation Bureau",
+    keywords: ["PAB", "Poverty Alleviation"],
     contact: [
       {
         label: "Address",
@@ -1002,6 +1061,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "public-investment-unit",
     name: "Public Investment Unit",
+    keywords: ["PIU", "Public Investment"],
     contact: [
       {
         label: "Address",
@@ -1021,6 +1081,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "queen-elizabeth-hospital",
     name: "Queen Elizabeth Hospital",
+    keywords: ["QEH", "Hospital", "Queen Elizabeth"],
     contact: [
       {
         label: "Address",
@@ -1040,6 +1101,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "rural-development",
     name: "Rural Development Commission",
+    keywords: ["RDC", "Rural Development"],
     contact: [
       {
         label: "Address",
@@ -1054,6 +1116,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "sanitation-services",
     name: "Sanitation Services Authority",
+    keywords: ["SSA", "Sanitation", "Garbage", "Waste"],
     contact: [
       {
         label: "Address",
@@ -1070,6 +1133,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "sports-gymnasium",
     name: "Sir Garfield Sobers Sports Complex Gymnasium Ltd.",
+    keywords: ["Garfield Sobers", "Gym", "Sports Complex"],
     contact: [
       {
         label: "Address",
@@ -1088,6 +1152,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "small-business-dev-unit",
     name: "Small Business Development Unit",
+    keywords: ["SBDU", "Small Business", "SME"],
     contact: [
       {
         label: "Address",
@@ -1101,6 +1166,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "soil-conservation",
     name: "Soil Conservation",
+    keywords: ["SCU", "Soil Conservation"],
     contact: [
       {
         label: "Address",
@@ -1117,6 +1183,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "southern-meats",
     name: "Southern Meats Inc.",
+    keywords: ["Southern Meats", "Abattoir"],
     contact: [
       {
         label: "Address",
@@ -1134,6 +1201,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "supreme-court",
     name: "Supreme Court",
+    keywords: ["Supreme Court", "Courts"],
     contact: [
       {
         label: "Address",
@@ -1154,6 +1222,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "technical-vocational-education",
     name: "Technical & Vocational Education and Training Council",
+    keywords: ["TVET Council", "TVET", "Technical Vocational"],
     contact: [
       {
         label: "Address",
@@ -1179,6 +1248,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "agricultural-credit-trust",
     name: "The Barbados Agricultural Credit Trust Limited",
+    keywords: ["BACT", "Agricultural Credit Trust"],
     contact: [
       {
         label: "Address",
@@ -1194,6 +1264,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "agricultural-development-marketing",
     name: "The Barbados Agricultural Development and Marketing Corporation (BADMC)",
+    keywords: ["BADMC", "Agricultural Development", "Marketing"],
     contact: [
       {
         label: "Address",
@@ -1209,6 +1280,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "agricultural-management",
     name: "The Barbados Agricultural Management Company",
+    keywords: ["BAMC", "Agricultural Management"],
     contact: [
       {
         label: "Address",
@@ -1222,6 +1294,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "child-care-board",
     name: "The Child Care Board",
+    keywords: ["CCB", "Child Care", "Children"],
     contact: [
       {
         label: "Address",
@@ -1244,6 +1317,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "national-assistance",
     name: "The National Assistance Board",
+    keywords: ["NAB", "National Assistance", "Seniors", "Elderly"],
     contact: [
       {
         label: "Address",
@@ -1258,6 +1332,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "productivity-council",
     name: "The Productivity Council",
+    keywords: ["BNPC", "Productivity Council"],
     contact: [
       {
         label: "Address",
@@ -1278,6 +1353,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "town-country-planning",
     name: "Town and Country Planning Department",
+    keywords: ["TCPD", "Town and Country", "Planning", "Planning Permission"],
     contact: [
       {
         label: "Address",
@@ -1302,6 +1378,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "transport-board",
     name: "Transport Board",
+    keywords: ["TB", "BTB", "Transport Board", "Bus"],
     contact: [
       {
         label: "Address",
@@ -1325,6 +1402,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "uwi",
     name: "University of the West Indies",
+    keywords: ["UWI", "Cave Hill", "University"],
     contact: [
       {
         label: "Address",
@@ -1343,6 +1421,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "urban-development",
     name: "Urban Development Commission",
+    keywords: ["UDC", "Urban Development"],
     contact: [
       {
         label: "Address",
@@ -1359,6 +1438,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "veterinary-services",
     name: "Veterinary Services",
+    keywords: ["Vet", "Veterinary"],
     contact: [
       {
         label: "Address",
@@ -1381,6 +1461,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "youth-entrepreneurship-scheme",
     name: "Youth Entrepreneurship Scheme",
+    keywords: ["YES", "Youth Entrepreneurship"],
     head: { name: "Mr. Ryan Mosely", role: "Manager" },
     contact: [
       {
@@ -1432,6 +1513,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "caribbean-examination-council",
     name: "Caribbean Examination Council",
+    keywords: ["CXC", "exam", "examination", "CSEC", "CAPE"],
     contact: [
       {
         label: "Address",
@@ -1447,6 +1529,7 @@ export const STATE_BODIES: StateBody[] = [
   {
     slug: "water-authority",
     name: "Barbados Water Authority",
+    keywords: ["BWA", "water", "utility"],
     shortDescription:
       "The Barbados Water Authority (BWA) is a Statutory Body established by an act of Legislature on 8th October, 1980 to replace the Waterworks Department of Government.",
     intro:

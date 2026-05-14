@@ -25,6 +25,8 @@ export interface Ministry {
   contact?: ContactItem[];
   associatedDepartments?: AssociatedDepartmentGroup[];
   originalSource?: string;
+  /** Search-only tags. Useful for abbreviations and common alternate names. */
+  keywords?: string[];
 }
 
 // Source: https://www.gov.bb/ministries (verified)
@@ -32,6 +34,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "prime-ministers-office",
     name: "Prime Minister's Office",
+    keywords: ["PMO", "Prime Minister", "PM"],
     category: "ministerial",
     shortDescription:
       "Strategic policy direction, leadership of the public service, and oversight of national security and economic planning.",
@@ -113,6 +116,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "office-of-the-attorney-general",
     name: "Office of the Attorney General",
+    keywords: ["OAG", "AG", "Attorney General", "AG Chambers"],
     category: "ministerial",
     minister: {
       name: "The Hon. Wilfred A. Abrahams, S.C., M.P.",
@@ -152,6 +156,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "cabinet-office",
     name: "Cabinet Office",
+    keywords: ["Cabinet", "CO"],
     category: "ministerial",
     contact: [
       { label: "Email", type: "email", value: "cabinetoffice@barbados.gov.bb" },
@@ -176,6 +181,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-agriculture-and-food-and-nutritional-security",
     name: "Ministry of Agriculture and Food and Nutritional Security",
+    keywords: ["MAFNS", "MoA", "Agriculture", "Food Security"],
     category: "ministerial",
     shortDescription:
       "National food security and a modern, competitive agricultural sector.",
@@ -226,6 +232,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-educational-transformation",
     name: "Ministry of Educational Transformation",
+    keywords: ["MET", "MOE", "MoE", "Ministry of Education", "Education"],
     category: "ministerial",
     shortDescription:
       "Transforms primary and secondary education to foster lifelong learning.",
@@ -280,6 +287,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-energy-and-business-development",
     name: "Ministry of Energy and Business Development",
+    keywords: ["MEBD", "Energy", "Business Development"],
     category: "ministerial",
     minister: {
       name: "The Hon. Kerrie D. Symmonds, M.P.",
@@ -339,6 +347,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-environment-and-national-beautification",
     name: "Ministry of Environment and National Beautification",
+    keywords: ["MENB", "Environment", "Beautification"],
     category: "ministerial",
     shortDescription:
       "Environmental protection, sustainable practices, and national aesthetics.",
@@ -394,6 +403,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-finance-economic-affairs-and-investment",
     name: "Ministry of Finance, Economic Affairs and Investment",
+    keywords: ["MFEAI", "MOF", "MoF", "Ministry of Finance", "Finance"],
     category: "ministerial",
     shortDescription:
       "Manages the country's financial resources and leads economic growth through prudent fiscal policy.",
@@ -463,6 +473,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-foreign-affairs-and-foreign-trade",
     name: "Ministry of Foreign Affairs and Foreign Trade",
+    keywords: ["MFAFT", "MFA", "Foreign Affairs", "Foreign Trade"],
     category: "ministerial",
     shortDescription:
       "Advances Barbados' interests globally through diplomacy, trade advocacy, and protection of citizens abroad.",
@@ -495,6 +506,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-health-and-wellness",
     name: "Ministry of Health and Wellness",
+    keywords: ["MHW", "MOH", "MoH", "Ministry of Health", "Health", "Wellness"],
     category: "ministerial",
     shortDescription:
       "Provides quality, equitable, and accessible health care services to all Barbadians.",
@@ -539,6 +551,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-home-affairs-and-information",
     name: "Ministry of Home Affairs and Information",
+    keywords: ["MHAI", "Home Affairs"],
     category: "ministerial",
     shortDescription:
       "Law and order, immigration, and the flow of government information.",
@@ -665,6 +678,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-housing-lands-and-maintenance",
     name: "Ministry of Housing, Lands and Maintenance",
+    keywords: ["MHLM", "Housing", "Lands"],
     category: "ministerial",
     shortDescription:
       "Affordable housing solutions, state lands management, and infrastructure maintenance.",
@@ -702,6 +716,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-industry-innovation-science-and-technology",
     name: "Ministry of Industry, Innovation, Science and Technology",
+    keywords: ["MIIST", "Industry", "Innovation", "Science", "Technology"],
     category: "ministerial",
     shortDescription:
       "Digital transformation of the public service and a culture of innovation.",
@@ -766,6 +781,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-labour-social-security-and-third-sector",
     name: "Ministry of Labour, Social Security and Third Sector",
+    keywords: ["MLSSTS", "MoL", "Labour", "Social Security", "Third Sector"],
     category: "ministerial",
     shortDescription:
       "Industrial harmony, worker rights, and the national social security net.",
@@ -817,6 +833,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-people-empowerment-and-elder-affairs",
     name: "Ministry of People Empowerment and Elder Affairs",
+    keywords: ["MPEEA", "People Empowerment", "Elder Affairs", "Seniors"],
     category: "ministerial",
     shortDescription:
       "Safety net for the vulnerable and inclusion of the elderly and persons with disabilities.",
@@ -900,6 +917,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-the-public-service-and-talent-development",
     name: "Ministry of the Public Service and Talent Development",
+    keywords: ["MPSTD", "Public Service", "Talent Development"],
     category: "ministerial",
     shortDescription:
       "Strategic management of the human resource function across the public service.",
@@ -933,6 +951,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-tourism-and-international-transport",
     name: "Ministry of Tourism and International Transport",
+    keywords: ["MTIT", "MoT", "Tourism", "International Transport"],
     category: "ministerial",
     shortDescription:
       "Sustainable tourism development and oversight of civil aviation and ports.",
@@ -1000,6 +1019,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-training-and-tertiary-education",
     name: "Ministry of Training and Tertiary Education",
+    keywords: ["MTTE", "Training", "Tertiary Education"],
     category: "ministerial",
     minister: {
       name: "The Hon. Cheryl S. V. Husbands, M.P.",
@@ -1023,6 +1043,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-transport-works-and-water-resources",
     name: "Ministry of Transport, Works and Water Resources",
+    keywords: ["MTWWR", "Transport", "Works", "Water Resources"],
     category: "ministerial",
     shortDescription:
       "Safe and efficient road network, public transport, and water resources.",
@@ -1078,6 +1099,7 @@ export const MINISTRIES: Ministry[] = [
   {
     slug: "ministry-of-youth-sports-and-community-empowerment",
     name: "Ministry of Youth, Sports and Community Empowerment",
+    keywords: ["MYSCE", "Youth", "Sports", "Community Empowerment"],
     category: "ministerial",
     minister: {
       name: "The Hon. Charles McD. Griffith, M.P.",

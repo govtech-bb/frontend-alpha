@@ -7,6 +7,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "air-navigation",
     name: "Air Navigation Services Department",
+    keywords: ["ANSD", "Air Navigation", "ATC"],
     shortDescription:
       "Provides air navigation services at Grantley Adams International Airport, including air traffic control, terminal control, and aeronautical information services.",
     intro:
@@ -28,6 +29,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "analytical-services",
     name: "Analytical Services",
+    keywords: ["Analytical Services", "Lab"],
     shortDescription:
       "Provides timely and reliable analytical services through a commitment to quality.",
     intro:
@@ -56,6 +58,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "building-standards",
     name: "Barbados Building Standards Authority",
+    keywords: ["BBSA", "Building Standards"],
     shortDescription:
       "Enforces the Barbados National Building Code and the Building Act to facilitate cost-effective construction.",
     intro:
@@ -65,6 +68,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "drug-service",
     name: "Barbados Drug Service",
+    keywords: ["BDS", "Drug Service", "Pharmacy"],
     shortDescription:
       "Provides quality pharmaceuticals to Barbados residents at affordable prices, serving beneficiaries courteously and efficiently.",
     intro:
@@ -97,6 +101,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "gov-information-service",
     name: "Barbados Government Information Service",
+    keywords: ["BGIS", "Government Information"],
     shortDescription:
       "The official communications arm of the Barbados Government, responsible for disseminating public information to news media and the general public.",
     intro:
@@ -119,6 +124,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "prison",
     name: "Barbados Prison Service",
+    keywords: ["BPS", "Prison", "Dodds"],
     shortDescription:
       "Serves the public by keeping those committed by the courts safely in custody, treating them humanely and helping them lead law-abiding lives during and after release.",
     intro:
@@ -147,6 +153,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "gender-affairs",
     name: "Bureau of Gender Affairs",
+    keywords: ["BGA", "Gender Affairs"],
     shortDescription:
       "Ensures the integration of gender in all national development plans and policies to achieve gender equity and equality.",
     intro:
@@ -170,6 +177,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "central-purchasing",
     name: "Central Purchasing Department",
+    keywords: ["CPD", "Central Purchasing", "Procurement"],
     shortDescription:
       "Provides quality goods from competent, reliable sources at the most economical prices, ensuring availability to ministries and departments when required.",
     intro:
@@ -188,6 +196,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "childrens-development",
     name: "Children's Development Centre",
+    keywords: ["CDC", "Children's Development"],
     shortDescription:
       "Protects the rights and enhances the quality of life for persons in Barbados who are physically and mentally challenged.",
     intro:
@@ -219,6 +228,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "cooperatives",
     name: "Co-operatives Department",
+    keywords: ["Co-ops", "Cooperatives", "Credit Union"],
     shortDescription:
       "Encourages economic development and improved quality of life through the facilitation of commerce, entrepreneurship, and consumer protection.",
     intro:
@@ -251,6 +261,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "coastal-zone",
     name: "Coastal Zone Management Unit",
+    keywords: ["CZMU", "Coastal Zone", "Beach"],
     shortDescription:
       "Performs coastal management functions including coral reef monitoring, beach erosion control, regulation of marine research, and public education on integrated coastal zone management.",
     intro:
@@ -274,6 +285,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "community-development",
     name: "Community Development Department",
+    keywords: ["CDD", "Community Development"],
     shortDescription:
       "Provides professional social work and community development services to build strong, cohesive communities and transform the social, physical, and economic landscape of Barbados.",
     intro:
@@ -306,6 +318,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "consular-diaspora",
     name: "Consular and Diaspora Division",
+    keywords: ["Consular", "Diaspora"],
     shortDescription:
       "Manages consular functions including assistance for Barbadians abroad, visa agreements, government travel, and diaspora engagement.",
     intro:
@@ -322,6 +335,13 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "corporate-affairs-intellectual-property",
     name: "Corporate Affairs and Intellectual Property Office",
+    keywords: [
+      "CAIPO",
+      "Corporate Affairs",
+      "IP",
+      "Intellectual Property",
+      "Trademark",
+    ],
     shortDescription:
       "Provides and maintains a reliable system of public records and an efficient registry service to support commercial activities and trade development in Barbados.",
     intro:
@@ -360,6 +380,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "criminal-justice",
     name: "Criminal Justice Research and Planning Unit",
+    keywords: ["CJRPU", "Criminal Justice"],
     shortDescription:
       "Leads criminal justice research and crime statistics development, delivering professional and quality service through systematic collection and analysis to inform crime prevention policy.",
     intro:
@@ -378,6 +399,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "customs",
     name: "Customs and Excise Department",
+    keywords: ["Customs", "CED", "Excise", "Duty", "Border"],
     shortDescription:
       "Oversees the collection of duties and excise taxes at Barbados's borders, facilitating trade while enforcing customs and immigration controls.",
     intro:
@@ -412,6 +434,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "archives",
     name: "Department of Archives",
+    keywords: ["Archives", "National Archives"],
     shortDescription:
       "Identifies, collects, processes, and preserves public and private records of enduring legal, cultural, and historical significance for Barbados.",
     intro:
@@ -440,6 +463,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "commerce",
     name: "Department of Commerce and Consumer Affairs",
+    keywords: ["DCCA", "Commerce", "Consumer Affairs"],
     shortDescription:
       "Facilitates the development of commerce, enforces trading standards, and protects consumers to ensure goods and services are safe and legal.",
     intro:
@@ -469,6 +493,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "constituency",
     name: "Department of Constituency Empowerment",
+    keywords: ["DCE", "Constituency Empowerment"],
     shortDescription:
       "Works to improve and sustain the quality of life of Barbadians by building capacity at the constituency level and providing mechanisms for meaningful change.",
     intro:
@@ -500,6 +525,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "emergency-management",
     name: "Department of Emergency Management",
+    keywords: ["DEM", "Emergency Management", "Disaster"],
     shortDescription:
       "Develops and maintains a comprehensive National Disaster Management Programme to educate citizens and create disaster preparedness mechanisms across all societal levels.",
     intro:
@@ -530,6 +556,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "youth-affairs",
     name: "Division of Youth Affairs",
+    keywords: ["DYA", "Youth Affairs"],
     shortDescription:
       "Supports the development and empowerment of young people in Barbados through programmes and initiatives.",
     intro:
@@ -552,6 +579,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "electoral",
     name: "Electoral & Boundaries Commission",
+    keywords: ["EBC", "Electoral", "Boundaries", "Voting", "Election"],
     shortDescription:
       "Maintains accurate registers for the national and electoral registration systems and ensures the conduct of free, fair, and transparent elections in Barbados.",
     intro:
@@ -584,6 +612,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "environmental-protection",
     name: "Environmental Protection Department",
+    keywords: ["EPD", "Environmental Protection"],
     shortDescription:
       "Protects and improves Barbados's quality of life and its natural and built environment through sustainable practices, education, partnerships, and legislation enforcement.",
     intro:
@@ -610,6 +639,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "fire-service",
     name: "Fire Service Department",
+    keywords: ["BFS", "Fire Service", "Fire Department"],
     shortDescription:
       "Efficiently protects the lives, property, and environment of those who live, work, visit, or invest in Barbados through fire safety, emergency response, and hazard reduction services.",
     intro:
@@ -643,6 +673,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "fisheries",
     name: "Fisheries Division",
+    keywords: ["Fisheries"],
     shortDescription:
       "Ensures the optimum utilisation of fisheries resources in Barbadian waters for the benefit of the people of Barbados through management and development.",
     intro:
@@ -668,6 +699,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "forensic-sciences",
     name: "Forensic Sciences Centre",
+    keywords: ["FSC", "Forensic Sciences", "Forensics"],
     shortDescription:
       "Assists in enhancing the judicial system through greater use of forensic science in both civil and criminal proceedings.",
     intro:
@@ -695,6 +727,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "electrical-engineering",
     name: "Government Electrical Engineering Department",
+    keywords: ["GEED", "Electrical Engineering"],
     shortDescription:
       "Provides electrical engineering services to the Government of Barbados.",
     head: {
@@ -725,6 +758,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "industrial-school",
     name: "Government Industrial School",
+    keywords: ["GIS", "Industrial School"],
     shortDescription:
       "A secure residential facility for court-ordered child placements, focused on providing a safe, caring environment that supports rehabilitation and family reintegration.",
     intro:
@@ -755,6 +789,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "printing-dept",
     name: "Government Printing Department",
+    keywords: ["GPD", "Printing", "Gazette"],
     shortDescription:
       "Provides printing and related services to Ministries, Departments, and specified statutory agencies in an efficient and cost-effective manner.",
     intro:
@@ -786,6 +821,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "immigration",
     name: "Immigration Department",
+    keywords: ["Immigration", "Passport", "Visa", "BID"],
     shortDescription:
       "Enforces Barbados's immigration and citizenship laws while providing reliable, professional, and humanitarian service to both national and non-national clientele.",
     intro:
@@ -809,6 +845,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "international-business-financial-services",
     name: "International Business & Financial Services Unit",
+    keywords: ["IBFSU", "International Business", "Financial Services"],
     shortDescription:
       "Supports international business and financial services for Barbados under the Ministry of Industry, Innovation, Science and Technology.",
     contact: [
@@ -837,6 +874,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "labour",
     name: "Labour Department",
+    keywords: ["Labour", "Labor", "Employment"],
     shortDescription:
       "Promotes and maintains a stable and harmonious industrial relations climate and provides employment services to the community.",
     intro:
@@ -865,6 +903,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "land-registry",
     name: "Land Registration Department",
+    keywords: ["Land Registry", "Land Registration", "Deeds"],
     shortDescription:
       "Manages land title registration and related administrative functions for Barbados.",
     head: {
@@ -889,6 +928,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "land-surveys",
     name: "Lands and Surveys Department",
+    keywords: ["Lands and Surveys", "L&S", "Survey"],
     shortDescription:
       "Provides up-to-date mapping, geographical information systems, and surveying services to clients across Barbados.",
     intro:
@@ -921,6 +961,13 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "licensing-authority",
     name: "Licensing Authority",
+    keywords: [
+      "Licensing",
+      "Driver's Licence",
+      "Vehicle Registration",
+      "PSV",
+      "BLA",
+    ],
     shortDescription:
       "Oversees driver licensing, vehicle inspections, and transport-related regulatory functions in Barbados.",
     intro:
@@ -943,6 +990,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "media-resource",
     name: "Media Resource Department",
+    keywords: ["MRD", "Media Resource"],
     shortDescription:
       "Contributes to the highest standards in education through training and provision of educational media resources.",
     intro:
@@ -972,6 +1020,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "meteorological-department",
     name: "Meteorological Office",
+    keywords: ["Met Office", "Meteorology", "Weather", "BMS"],
     shortDescription:
       "Observes and understands the weather and climate of Barbados and the region, providing meteorological, hydrological, and marine services.",
     intro:
@@ -1003,6 +1052,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "disabilities-unit",
     name: "National Disabilities Unit",
+    keywords: ["NDU", "Disabilities"],
     shortDescription:
       "Facilitates, advocates, and promotes the advancement and empowerment of persons with disabilities to ensure equal opportunities for integration in all aspects of community living.",
     intro:
@@ -1034,6 +1084,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "hiv-aids-commission",
     name: "National HIV/AIDS Commission",
+    keywords: ["NHAC", "HIV", "AIDS"],
     shortDescription:
       "Advises the government on plans and policies and builds strategic partnerships to effectively manage, control, and reduce the spread of HIV in Barbados.",
     intro:
@@ -1057,6 +1108,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "national-insurance",
     name: "National Insurance Department",
+    keywords: ["NIS", "NISS", "pension", "social security", "benefits"],
     shortDescription:
       "Provides timely social security services through efficient collection and management of funds by customer-oriented staff.",
     intro:
@@ -1084,6 +1136,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "library-service",
     name: "National Library Service",
+    keywords: ["NLS", "Library"],
     shortDescription:
       "Serves as a ready source of dynamic information products and services to satisfy the educational, recreational, and informational needs of the community.",
     intro:
@@ -1110,6 +1163,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "national-nutrition",
     name: "National Nutrition Centre",
+    keywords: ["NNC", "Nutrition"],
     shortDescription:
       "Promotes and maintains a standard of good nutrition in Barbados through education and research.",
     intro:
@@ -1137,6 +1191,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "natural-heritage",
     name: "Natural Heritage Department",
+    keywords: ["NHD", "Natural Heritage"],
     shortDescription:
       "Promotes the conservation of unique biomes through effective management of a network of terrestrial and marine protected areas while supporting sustainable development.",
     intro:
@@ -1158,6 +1213,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "public-sector-reform",
     name: "Office of Public Sector Reform",
+    keywords: ["OPSR", "Public Sector Reform"],
     shortDescription:
       "Facilitates transformational change across the public service by assisting Ministries, Departments, and Agencies in improving their performance.",
     intro:
@@ -1175,6 +1231,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "auditor-general",
     name: "Office of the Auditor General",
+    keywords: ["Auditor General", "Audit"],
     shortDescription:
       "Provides independent audit oversight of government financial operations in Barbados.",
     contact: [
@@ -1192,6 +1249,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "ombudsman",
     name: "Office of the Ombudsman",
+    keywords: ["Ombudsman", "Complaints"],
     shortDescription:
       "Investigates complaints about government conduct deemed unreasonable or unjust, protecting citizens' rights against bureaucratic wrongdoing.",
     intro:
@@ -1219,6 +1277,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "post-office",
     name: "Post Office",
+    keywords: ["BPO", "Post Office", "Mail", "Postal"],
     shortDescription:
       "Processes and delivers communications, goods, and financial services locally and internationally in a secure, reliable, and economical manner.",
     intro:
@@ -1240,6 +1299,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "probation",
     name: "Probation Department",
+    keywords: ["Probation"],
     shortDescription:
       "Provides social advice to the justice system and assists in the rehabilitation of offenders and community education to reduce delinquency and crime.",
     intro:
@@ -1271,6 +1331,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "psychiatric-hospital",
     name: "Psychiatric Hospital",
+    keywords: ["Psychiatric Hospital", "Mental Health", "Black Rock"],
     shortDescription:
       "Provides high-quality mental health services with emphasis on community-based education, prevention, and treatment to reduce the need for institutionalised care.",
     intro:
@@ -1296,6 +1357,13 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "registration",
     name: "Registration Department",
+    keywords: [
+      "Registration",
+      "Birth Certificate",
+      "Death Certificate",
+      "Marriage Certificate",
+      "Civil Registration",
+    ],
     shortDescription:
       "Ensures the administration of justice functions speedily and efficiently while recording vital occurrences such as births, deaths, and marriages.",
     intro:
@@ -1323,6 +1391,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "statistical-services",
     name: "Statistical Services Department",
+    keywords: ["SSD", "Statistics", "BSS", "Census"],
     shortDescription:
       "Provides reliable and timely economic and social statistics to support decision-makers and other users across government and the public.",
     intro:
@@ -1351,6 +1420,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "sports-council",
     name: "The National Sports Council",
+    keywords: ["NSC", "Sports Council"],
     shortDescription:
       "Dedicated to developing sports in Barbados and responsible for sports development programmes at the national level.",
     intro:
@@ -1378,6 +1448,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "police-department",
     name: "The Police Department",
+    keywords: ["RBPF", "Police", "Royal Barbados Police Force", "Constabulary"],
     shortDescription:
       "Responsible for local law enforcement, established under the Police Act of 1961 and structured across Operations, Administrative, and Criminal Investigations divisions.",
     intro:
@@ -1399,6 +1470,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "public-markets",
     name: "The Public Markets",
+    keywords: ["Public Markets", "Markets"],
     shortDescription:
       "Maintains attractive marketing infrastructure to promote vending and entrepreneurship while ensuring vendors operate under proper sanitary conditions.",
     intro:
@@ -1426,6 +1498,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "samuel-jackson-prescod-polytechnic",
     name: "The Samuel Jackman Prescod Institute of Technology",
+    keywords: ["SJPI", "SJPP", "Polytechnic", "Samuel Jackman Prescod"],
     shortDescription:
       "Leads in preparing a highly trained workforce by providing competency-based technical and vocational training to respond to employment needs and lifelong learning.",
     intro:
@@ -1447,6 +1520,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "school-meals",
     name: "The School Meals Department",
+    keywords: ["School Meals", "BSMD"],
     shortDescription:
       "Provides nutritious lunches at low cost to school children across Barbados, maintaining high health standards through a network of service locations.",
     intro:
@@ -1474,6 +1548,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "treasury",
     name: "Treasury Department",
+    keywords: ["Treasury"],
     shortDescription:
       "Ensures efficient and effective management and reporting of the Government of Barbados's financial operations.",
     intro:
@@ -1498,6 +1573,7 @@ export const DEPARTMENTS: Department[] = [
   {
     slug: "welfare",
     name: "Welfare Department",
+    keywords: ["Welfare", "BWD", "Social Assistance"],
     shortDescription:
       "Provides professional social work services focused on resolving individual and family problems, poverty alleviation, and support for disabled and disadvantaged populations.",
     intro:
