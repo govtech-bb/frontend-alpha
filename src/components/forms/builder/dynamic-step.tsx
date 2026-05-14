@@ -1,4 +1,5 @@
 import { ErrorSummary, Heading, Text } from "@govtech-bb/react";
+import { Fragment } from "react";
 import { type FieldError, useFormContext } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import { markdownComponents } from "@/components/markdown-content";
@@ -109,12 +110,25 @@ export function DynamicStep({ step, serviceTitle }: DynamicStepProps) {
             const conditionalFields = step.fields.filter(
               (f) => f.conditionalOn?.field === field.name
             );
+            const notices = step.inlineNotices?.filter(
+              (n) => n.afterField === field.name
+            );
             return (
-              <DynamicField
-                conditionalFields={conditionalFields}
-                field={field}
-                key={field.name}
-              />
+              <Fragment key={field.name}>
+                <DynamicField
+                  conditionalFields={conditionalFields}
+                  field={field}
+                />
+                {notices?.map((notice) => (
+                  <div
+                    className="space-y-1 rounded-sm bg-blue-10 p-s text-[1.25rem] leading-normal"
+                    key={`${notice.afterField}-${notice.title}`}
+                  >
+                    <p className="font-bold">{notice.title}</p>
+                    <p className="text-mid-grey-00">{notice.body}</p>
+                  </div>
+                ))}
+              </Fragment>
             );
           })}
       </div>

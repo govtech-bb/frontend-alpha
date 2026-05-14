@@ -191,12 +191,16 @@ function ComputedAgeFromDateField({
 /**
  * Get the CSS class for field width
  */
-function getWidthClass(width?: "short" | "medium" | "full"): string {
+function getWidthClass(
+  width?: "short" | "medium" | "two-thirds" | "full"
+): string {
   switch (width) {
     case "short":
       return "w-full md:w-1/3";
     case "medium":
       return "w-full md:w-1/2";
+    case "two-thirds":
+      return "w-full md:w-2/3";
     case "full":
       return "w-full";
     default:
@@ -424,23 +428,54 @@ export function DynamicField({
                 onValueChange={controllerField.onChange}
                 value={controllerField.value as string}
               >
-                {f.options?.map((option) => (
-                  <Fragment key={option.value}>
-                    <Radio
-                      id={
-                        inlineConditionals
-                          ? option.value
-                          : `${f.name}-${option.value}`
-                      }
-                      label={option.label}
-                      value={option.value}
-                    />
-                    {/* Render conditional fields that match this radio option */}
-                    {inlineConditionals
-                      ?.filter((cf) => cf.conditionalOn?.value === option.value)
-                      .map((cf) => renderConditionalField(cf))}
-                  </Fragment>
-                ))}
+                {f.options?.map((option) => {
+                  const matchingConditionals =
+                    inlineConditionals?.filter(
+                      (cf) => cf.conditionalOn?.value === option.value
+                    ) ?? [];
+                  const groupLabel = f.conditionalGroups?.[option.value]?.label;
+                  const showGroup =
+                    groupLabel &&
+                    matchingConditionals.length > 0 &&
+                    controllerField.value === option.value;
+                  return (
+                    <Fragment key={option.value}>
+                      <Radio
+                        id={
+                          inlineConditionals
+                            ? option.value
+                            : `${f.name}-${option.value}`
+                        }
+                        label={option.label}
+                        value={option.value}
+                      />
+                      {showGroup ? (
+                        <div className="motion-safe:fade-in motion-safe:slide-in-from-top-2 mt-6 pl-5 motion-safe:animate-in motion-safe:duration-200">
+                          <div className="space-y-6 border-blue-40 border-l-4 py-2 pl-s lg:w-[50vw]">
+                            <p className="font-bold text-[20px] text-mid-grey-00 leading-[1.7]">
+                              {groupLabel}
+                            </p>
+                            {matchingConditionals.map((cf) => {
+                              const condError = getNestedValue<FieldError>(
+                                errors as Record<string, unknown>,
+                                cf.name
+                              );
+                              return (
+                                <div key={cf.name}>
+                                  {renderFieldContent(cf, condError)}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ) : (
+                        matchingConditionals.map((cf) =>
+                          renderConditionalField(cf)
+                        )
+                      )}
+                    </Fragment>
+                  );
+                })}
               </RadioGroup>
             )}
           />
