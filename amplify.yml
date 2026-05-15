@@ -24,9 +24,6 @@ frontend:
         # and submissions are never registered with MoY.
         - env | grep -e WEBHOOK_URL >> .env.production || true
         - env | grep -e WEBHOOK_SECRET >> .env.production || true
-        # Test-only notification recipients used by forms during verification.
-        - env | grep -e TEST_NOTIFICATION_EMAIL >> .env.production || true
-        - env | grep -e TEST_NOTIFICATION_EMAIL_COPY >> .env.production || true
         - env | grep -e EZPAY_API_KEY >> .env.production || true
         - env | grep -e EZPAY_BASE_URL >> .env.production || true
         - env | grep -e NEXT_PUBLIC_EZPAY_BASE_URL >> .env.production || true
