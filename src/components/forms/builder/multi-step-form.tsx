@@ -1106,6 +1106,7 @@ export default function DynamicMultiStepForm({
               : undefined,
             referenceNumber: generatedReferenceNumber,
           });
+          console.log("[debug] sendFormSubmissionEmails result", emailResult);
           if (!emailResult.success) {
             throw new Error(emailResult.error ?? "Email submission failed");
           }
@@ -1123,7 +1124,7 @@ export default function DynamicMultiStepForm({
 
         if (webhookProgrammeCode) {
           try {
-            await sendFormSubmittedWebhook({
+            const webhookResult = await sendFormSubmittedWebhook({
               applicantEmail: extractApplicantEmail(
                 cleanedData as Record<string, unknown>
               ),
@@ -1137,6 +1138,10 @@ export default function DynamicMultiStepForm({
               programmeCode: webhookProgrammeCode,
               referenceNumber: generatedReferenceNumber,
             });
+            console.log(
+              "[debug] sendFormSubmittedWebhook result",
+              webhookResult
+            );
           } catch (webhookError) {
             console.error(
               "Form submission webhook dispatch failed",
