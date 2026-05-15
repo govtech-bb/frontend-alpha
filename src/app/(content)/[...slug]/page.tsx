@@ -218,8 +218,8 @@ export default async function Page({ params }: ContentPageProps) {
       return (
         <DynamicFormLoader
           formSlug={pageSlug}
-          notificationCc={process.env.TEST_NOTIFICATION_EMAIL_COPY ?? null}
-          notificationEmail={process.env.TEST_NOTIFICATION_EMAIL ?? null}
+          notificationCc="testing@govtech.bb"
+          notificationEmail="shannon.clarke@govtech.bb"
         />
       );
     }
@@ -294,12 +294,8 @@ export default async function Page({ params }: ContentPageProps) {
           }
         >
           <YouthOpportunityForm
-            notificationCc={process.env.TEST_NOTIFICATION_EMAIL_COPY ?? null}
-            notificationEmail={
-              process.env.TEST_NOTIFICATION_EMAIL ??
-              opportunity.contact?.email ??
-              null
-            }
+            notificationCc="testing@govtech.bb"
+            notificationEmail="shannon.clarke@govtech.bb"
             opportunityId={opportunity.id}
             opportunityTitle={opportunity.title}
           />
