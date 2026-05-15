@@ -1,68 +1,54 @@
 #!/bin/sh
-# Exit on any error
+# Pre-commit hook — format files staged for this commit via Ultracite,
+# then re-stage them so any auto-fixes land in the commit.
+#
+# Design notes
+# ────────────
+# - Only operates on files staged for this commit, by passing them explicitly
+#   to `ultracite fix`. The previous hook ran `npx ultracite fix` with no
+#   arguments, which formats the whole project — that pulled unrelated files
+#   into the worktree and caused stash conflicts during restore.
+#
+# - The working tree is never reset to match the index, and `git stash` is
+#   never used. The previous hook used `git stash push --keep-index` and a
+#   later `git stash pop`; because `ultracite fix` modified files outside the
+#   staged set, the pop hit conflicts and dropped literal `<<<<<<<` markers
+#   into source files.
+#
+# - Partially-staged files (file has both staged and unstaged hunks) are
+#   refused with a clear message rather than handled silently. Auto-formatting
+#   a partially-staged file would sweep the unstaged hunks into the commit.
+#
+# - The commit is blocked if Ultracite returns non-zero (unfixable lint
+#   errors), thanks to `set -e` propagating through the pipeline.
+
 set -e
 
-# Check if there are any staged files
-if [ -z "$(git diff --cached --name-only)" ]; then
-  echo "No staged files to format"
-  exit 0
-fi
-
-# Store the hash of staged changes to detect modifications
-STAGED_HASH=$(git diff --cached | sha256sum | cut -d' ' -f1)
-
-# Save list of staged files (handling all file states)
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
-PARTIALLY_STAGED=$(git diff --name-only)
+[ -z "$STAGED_FILES" ] && exit 0
 
-# Stash unstaged changes to preserve working directory
-# --keep-index keeps staged changes in working tree
-git stash push --quiet --keep-index --message "pre-commit-stash" || true
-STASHED=$?
+# Limit to file types Biome / Ultracite handles. Other staged files are
+# committed untouched.
+FORMATTABLE=$(printf '%s\n' "$STAGED_FILES" |
+  grep -E '\.(js|jsx|ts|tsx|mjs|cjs|json|jsonc)$' || true)
+[ -z "$FORMATTABLE" ] && exit 0
 
-# Run formatter on the staged files
-npx ultracite fix
-FORMAT_EXIT_CODE=$?
-
-# Restore working directory state
-if [ $STASHED -eq 0 ]; then
-  # Re-stage the formatted files
-  if [ -n "$STAGED_FILES" ]; then
-    echo "$STAGED_FILES" | while IFS= read -r file; do
-      if [ -f "$file" ]; then
-        git add "$file"
-      fi
-    done
-  fi
-  
-  # Restore unstaged changes
-  git stash pop --quiet || true
-  
-  # Restore partial staging if files were partially staged
-  if [ -n "$PARTIALLY_STAGED" ]; then
-    for file in $PARTIALLY_STAGED; do
-      if [ -f "$file" ] && echo "$STAGED_FILES" | grep -q "^$file$"; then
-        # File was partially staged - need to unstage the unstaged parts
-        git restore --staged "$file" 2>/dev/null || true
-        git add -p "$file" < /dev/null 2>/dev/null || git add "$file"
-      fi
-    done
-  fi
-else
-  # No stash was created, just re-add the formatted files
-  if [ -n "$STAGED_FILES" ]; then
-    echo "$STAGED_FILES" | while IFS= read -r file; do
-      if [ -f "$file" ]; then
-        git add "$file"
-      fi
-    done
+# Refuse to format files that are partially staged. Anything in both
+# `git diff --cached --name-only` and `git diff --name-only` has mixed state.
+UNSTAGED=$(git diff --name-only)
+if [ -n "$UNSTAGED" ]; then
+  PARTIAL=$(printf '%s\n%s\n' "$FORMATTABLE" "$UNSTAGED" | sort | uniq -d)
+  if [ -n "$PARTIAL" ]; then
+    printf '✋ Pre-commit: refusing to auto-format partially-staged files:\n'
+    printf '%s\n' "$PARTIAL" | sed 's/^/   /'
+    printf '\nStage all your changes (git add <file>) or stash unstaged work, then retry.\n'
+    exit 1
   fi
 fi
 
-# Check if staged files actually changed
-NEW_STAGED_HASH=$(git diff --cached | sha256sum | cut -d' ' -f1)
-if [ "$STAGED_HASH" != "$NEW_STAGED_HASH" ]; then
-  echo "✨ Files formatted by Ultracite"
-fi
+# Format the staged files in place, then re-stage. NUL-separated input keeps
+# us safe against filenames containing spaces.
+printf '%s\n' "$FORMATTABLE" | tr '\n' '\0' | xargs -0 npx ultracite fix
+printf '%s\n' "$FORMATTABLE" | tr '\n' '\0' | xargs -0 git add
 
-exit $FORMAT_EXIT_CODE
+printf '✨ Ultracite formatted staged files\n'

@@ -8,12 +8,14 @@ interface Props {
   opportunityId: string;
   opportunityTitle: string;
   notificationEmail: string | null;
+  notificationCc?: string | null;
 }
 
 export function YouthOpportunityForm({
   opportunityId,
   opportunityTitle,
   notificationEmail,
+  notificationCc = null,
 }: Props) {
   const formSteps = buildYouthOpportunityFormSteps(opportunityTitle);
   const programmeCode = getYouthOpportunityServiceCode(opportunityId);
@@ -25,6 +27,7 @@ export function YouthOpportunityForm({
       continueOnEmailFailure
       formSteps={formSteps}
       ministryName="Ministry of Youth, Sports and Community Empowerment"
+      notificationCc={notificationCc}
       notificationEmail={notificationEmail}
       serviceTitle={`Apply for ${opportunityTitle}`}
       storageKey={`youth-opportunity-${opportunityId}`}

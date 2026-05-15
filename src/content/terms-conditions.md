@@ -1,7 +1,7 @@
 ---
 title: "Terms & Conditions"
 source_url: https://www.gov.bb/terms-conditions
-publish_date: 2025-10-15
+publish_date: 2026-05-14
 ---
 
 ### Ownership of Website Content
@@ -12,7 +12,7 @@ All content on this website is and shall remain the sole and exclusive property 
 
 ### Disclaimer of Warranties
 
-GOV.BB operates this site to inform users as to our various services, projects, how to communicate with us, and other information about our company. The information contained herein is not intended as a substitute for qualified technical or engineering services and under no circumstances shall be deemed to constitute such services. Users should also note that Internet software including, but not limited to, browsers or even transmission problems can produce inaccurate or incomplete copies of documents when downloaded and displayed on a user's computer.
+GOV.BB operates this site to inform users as to our various services, projects, how to communicate with us, and other information about the Government of Barbados. The information contained herein is not intended as a substitute for qualified technical or engineering services and under no circumstances shall be deemed to constitute such services. Users should also note that Internet software including, but not limited to, browsers or even transmission problems can produce inaccurate or incomplete copies of documents when downloaded and displayed on a user's computer.
 
 GOV.BB makes no warranties or representations of any kind, whether express or implied, as to the validity, accuracy, or reliability of any of the content found herein or on any other websites linked to or from this website. Any and all information contained herein or in such other websites is provided "AS IS" and without warranties of any kind, whether express or implied.
 
@@ -23,3 +23,36 @@ As a convenience to the user, certain links in this website will connect the u
 ### Governing Law
 
 As consideration for any use of this website, including merely accessing the website, you agree to be bound by the laws of Barbados, without regard to any conflicts of law principles. You further agree to be subject to the jurisdiction of any of the courts of Barbados for any dispute relating in any way to your use of this website.
+
+### Your Data
+
+alpha.gov.bb is run by the Ministry of Innovation, Science and Smart Technology. We handle your information under the Data Protection Act 2019.
+
+### What we collect
+
+What you type into an application form, any files you upload, payment details you enter on EZpay+, and basic analytics about how the site is used.
+
+### Where it's stored
+
+The site runs on Amazon Web Services in the United States. This means your information leaves Barbados to be processed.
+
+- **Forms without payment** are emailed straight to the relevant Ministry, Department or Agency. We don't keep a copy.
+- **Forms with payment** are encrypted and held only until payment goes through, then deleted. Anything left unpaid for 72 hours is deleted automatically.
+- **Uploaded files** pass through our storage for the few seconds it takes to attach them to your application.
+- **Payment records** (your name, email, amount, transaction number) are kept for accounting and audit. They don't include what you wrote in the form.
+- **Error logs and analytics** never contain the values you type. Email addresses in logs are masked.
+- **Partly filled forms** live only in your own browser so you can go back a step without losing your work.
+
+### Cookies
+
+We use your browser's session storage to remember your progress through a form. We don't use tracking cookies.
+
+### Your rights
+
+Under the Data Protection Act 2019 you can ask to see, correct or delete the information we hold about you, and you can complain to the Data Protection Commissioner.
+
+Contact: **privacy@govtech.bb**
+
+### Changes
+
+alpha.gov.bb is still in alpha and changes often. We'll update this page when how we handle your data changes.
