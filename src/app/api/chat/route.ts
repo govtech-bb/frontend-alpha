@@ -54,11 +54,16 @@ INTERACTIVE CHOICES:
 - Do NOT use \`present_choices\` for open-ended answers (names, dates, addresses, free text).
 - Do NOT call \`present_choices\` more than once per assistant turn.
 
-APPLYING FOR A SERVICE (form flow):
-- If the user wants to apply for a service that the context describes (birth certificate, passport, etc), walk them through the required fields ONE OR TWO AT A TIME. Use \`present_choices\` when an answer is a closed set; otherwise plain text question.
-- After collecting all required fields, show a short summary and ask the user to confirm. Use \`present_choices\` with ["Yes, submit", "Edit something"] for the confirmation.
-- Once confirmed, call the \`submit_form\` tool with the service slug (from the source page URL, last path segment), a human serviceTitle, and the fields you collected. Then in your next text message share the reference number the tool returns.
-- Do NOT call \`submit_form\` before the user has confirmed.`;
+DEFAULT MODE — INFORMATIONAL (RAG):
+- Most questions are informational: "how do I get a passport?", "what's the fee?", "where do I go?". Answer these from the retrieved context. Do NOT start a form flow. Do NOT call \`present_choices\` for informational questions.
+- If the user is just exploring or asking, end with a short nudge like "Want me to start the application for you?" — but only as a question. Do NOT call \`submit_form\` or start collecting fields until they say yes.
+
+FORM FLOW — ONLY ON EXPLICIT INTENT:
+- Start the form flow ONLY when the user clearly asks to apply / start / submit / begin / "yes start it" / "let's do it". Phrases like "how do I get X" or "what do I need for X" are NOT explicit intent — answer them informationally.
+- Once they confirm, walk them through required fields ONE OR TWO AT A TIME. Use \`present_choices\` only when an answer is a closed set; otherwise plain text question.
+- After collecting all required fields, show a short summary and confirm with \`present_choices\` ["Yes, submit", "Edit something"].
+- Once confirmed, call \`submit_form\` with the service slug (from the source page URL, last path segment), human serviceTitle, and the collected fields. Then share the returned reference number.
+- Do NOT call \`submit_form\` before the user has confirmed the summary.`;
 
 type Source = {
   id: string;
@@ -178,20 +183,23 @@ function withTextFragment(url: string, excerpt?: string): string {
 }
 
 function buildRetrievalQuery(messages: UIMessage[]): string {
-  const lastUserMsgs: string[] = [];
-  let lastAssistant = "";
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const m = messages[i];
-    const text = extractText(m);
-    if (!text) continue;
-    if (m.role === "user" && lastUserMsgs.length < 3) {
-      lastUserMsgs.unshift(text);
-    } else if (m.role === "assistant" && !lastAssistant) {
-      lastAssistant = text;
-    }
-    if (lastUserMsgs.length >= 3 && lastAssistant) break;
-  }
-  return [...lastUserMsgs, lastAssistant].filter(Boolean).join("\n");
+  const userMsgs = messages
+    .filter((m) => m.role === "user")
+    .map(extractText)
+    .filter(Boolean);
+
+  // Anchor with the FIRST user message (original intent) so the service
+  // context stays loaded even mid-form when later messages are just field
+  // values like names or dates.
+  const first = userMsgs[0] ?? "";
+  const last = userMsgs.at(-1) ?? "";
+
+  const lastAssistant = [...messages]
+    .reverse()
+    .find((m) => m.role === "assistant");
+  const assistantText = lastAssistant ? extractText(lastAssistant) : "";
+
+  return [first, assistantText, last].filter(Boolean).join("\n");
 }
 
 function extractText(message: UIMessage): string {
