@@ -1,5 +1,9 @@
 import type { StreamChunk, UIMessage } from "@tanstack/ai";
-import { chat, toServerSentEventsResponse } from "@tanstack/ai";
+import {
+  chat,
+  convertMessagesToModelMessages,
+  toServerSentEventsResponse,
+} from "@tanstack/ai";
 import { anthropicText } from "@tanstack/ai-anthropic";
 import { presentChoicesDef, submitFormDef } from "@/lib/chat-tools";
 
@@ -116,7 +120,8 @@ export async function POST(req: Request): Promise<Response> {
 
   const llmStream = chat({
     adapter: anthropicText(LLM_MODEL, { apiKey: ANTHROPIC_API_KEY }),
-    messages,
+    // biome-ignore lint/suspicious/noExplicitAny: adapter type narrowing too strict for our generic conversion
+    messages: convertMessagesToModelMessages(messages) as any,
     systemPrompts: [SYSTEM_PROMPT, `Context for this turn:\n${contextBlock}`],
     tools: [presentChoicesDef, submitForm],
     maxTokens: 350,
