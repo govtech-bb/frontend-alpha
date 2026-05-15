@@ -1,5 +1,5 @@
 /**
- * Runs Lighthouse against key URLs, then Playwright (axe + navigation timings),
+ * Runs Lighthouse against key URLs, then Playwright (axe accessibility audit),
  * and writes a static `performance-report/index.html` plus per-route Lighthouse HTML.
  *
  * Expects the production server to be listening unless you rely on `playwright.perf.config.ts`
@@ -16,9 +16,14 @@ import lighthouse, { generateReport } from "lighthouse";
 import desktopConfig from "lighthouse/core/config/desktop-config.js";
 import { chromium } from "playwright";
 import waitOn from "wait-on";
+import {
+  fetchFormFunnelMetrics,
+  fetchWebsiteStats,
+} from "./umami-form-metrics.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..", "..");
+const MS_PER_DAY = 86_400_000;
 
 const PAGES = [
   { slug: "home", path: "/", label: "Home" },
@@ -113,7 +118,374 @@ async function readJson(filePath) {
   }
 }
 
-function buildIndexHtml({ lighthouseRows, playwrightMetrics, meta }) {
+function formatPercent(rate) {
+  if (rate === null || rate === undefined || Number.isNaN(rate)) return "—";
+  return `${(rate * 100).toFixed(1)}%`;
+}
+
+function formatInteger(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return "—";
+  return Number(value).toLocaleString("en-US");
+}
+
+const DELTA_COLOR_GOOD = "#16a34a";
+const DELTA_COLOR_BAD = "#dc2626";
+const DELTA_COLOR_NEUTRAL = "#64748b";
+
+/**
+ * Computes a week-over-week delta between two scalar values.
+ *
+ * `mode` controls how the difference is expressed:
+ *  - "percent-points" — for rates that are already 0..1 fractions (e.g.,
+ *    completion rate). Diff is rendered as `±N.Npp`, which is more honest
+ *    than a relative % on a percentage.
+ *  - "relative" — for counts/durations. Diff is rendered as `±N.N%`. Falls
+ *    back to "new" when the prior window was zero so the badge stays useful.
+ *
+ * Returns `null` when a delta can't be computed so callers can hide the badge.
+ *
+ * @returns {{ display: string; arrow: string; color: string } | null}
+ */
+function buildDelta({ current, previous, higherIsBetter, mode }) {
+  if (current === null || current === undefined || Number.isNaN(current)) {
+    return null;
+  }
+  if (previous === null || previous === undefined || Number.isNaN(previous)) {
+    return null;
+  }
+
+  let direction;
+  let display;
+
+  if (mode === "percent-points") {
+    const diffPp = (current - previous) * 100;
+    direction = Math.sign(diffPp);
+    const sign = diffPp > 0 ? "+" : "";
+    display = `${sign}${diffPp.toFixed(1)}pp`;
+  } else if (previous === 0) {
+    if (current === 0) {
+      direction = 0;
+      display = "no change";
+    } else {
+      direction = Math.sign(current);
+      display = current > 0 ? "new" : "—";
+    }
+  } else {
+    const rel = ((current - previous) / previous) * 100;
+    direction = Math.sign(rel);
+    const sign = rel > 0 ? "+" : "";
+    display = `${sign}${rel.toFixed(1)}%`;
+  }
+
+  const arrow = direction > 0 ? "▲" : direction < 0 ? "▼" : "→";
+  let color = DELTA_COLOR_NEUTRAL;
+  if (direction !== 0) {
+    const isGood = higherIsBetter ? direction > 0 : direction < 0;
+    color = isGood ? DELTA_COLOR_GOOD : DELTA_COLOR_BAD;
+  }
+
+  return { display, arrow, color };
+}
+
+function renderDelta(delta, windowLabel) {
+  if (!delta) return "";
+  return `<div class="stat-delta" style="color:${delta.color}">${delta.arrow} ${escapeHtml(delta.display)}<span class="stat-delta-context"> vs ${escapeHtml(windowLabel)}</span></div>`;
+}
+
+function formatSeconds(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return "—";
+  if (value < 60) return `${value.toFixed(1)}s`;
+  const minutes = Math.floor(value / 60);
+  const seconds = Math.round(value % 60);
+  return `${minutes}m ${seconds}s`;
+}
+
+function formatWindow(formMetrics) {
+  if (!formMetrics) return "";
+  const start = new Date(formMetrics.startAt).toISOString().slice(0, 10);
+  const end = new Date(formMetrics.endAt).toISOString().slice(0, 10);
+  return `${start} → ${end} (${formMetrics.days} days)`;
+}
+
+const SPARKLINE_WIDTH = 140;
+const SPARKLINE_HEIGHT = 32;
+const SPARKLINE_STARTS_COLOR = "#94a3b8";
+const SPARKLINE_COMPLETIONS_COLOR = "#0d9488";
+
+function seriesToPolylinePoints(series, max, width, height) {
+  if (series.length === 0) return "";
+  if (series.length === 1) {
+    const y = (height - (series[0].count / max) * height).toFixed(2);
+    return `0,${y} ${width},${y}`;
+  }
+  const stepX = width / (series.length - 1);
+  return series
+    .map((point, idx) => {
+      const x = (idx * stepX).toFixed(2);
+      const y = (height - (point.count / max) * height).toFixed(2);
+      return `${x},${y}`;
+    })
+    .join(" ");
+}
+
+function renderTrendSparkline(series, label) {
+  const starts = series?.starts ?? [];
+  const completions = series?.completions ?? [];
+  if (starts.length === 0 && completions.length === 0) return "—";
+
+  const max = Math.max(
+    1,
+    ...starts.map((p) => p.count),
+    ...completions.map((p) => p.count)
+  );
+
+  const startsPoints = seriesToPolylinePoints(
+    starts,
+    max,
+    SPARKLINE_WIDTH,
+    SPARKLINE_HEIGHT
+  );
+  const completionsPoints = seriesToPolylinePoints(
+    completions,
+    max,
+    SPARKLINE_WIDTH,
+    SPARKLINE_HEIGHT
+  );
+
+  return `<svg width="${SPARKLINE_WIDTH}" height="${SPARKLINE_HEIGHT}" viewBox="0 0 ${SPARKLINE_WIDTH} ${SPARKLINE_HEIGHT}" role="img" aria-label="${escapeHtml(label)} daily trend">
+  ${startsPoints ? `<polyline fill="none" stroke="${SPARKLINE_STARTS_COLOR}" stroke-width="1.25" points="${startsPoints}" />` : ""}
+  ${completionsPoints ? `<polyline fill="none" stroke="${SPARKLINE_COMPLETIONS_COLOR}" stroke-width="1.5" points="${completionsPoints}" />` : ""}
+</svg>`;
+}
+
+function renderStepsTable(steps) {
+  if (steps.length === 0) {
+    return '<p class="meta">No <code>form-step-*</code> events recorded for this form.</p>';
+  }
+  const rows = steps
+    .map(
+      (step) => `<tr>
+  <td>Step ${escapeHtml(String(step.number))}</td>
+  <td>${escapeHtml(String(step.sessions))}</td>
+  <td>${escapeHtml(formatPercent(step.conversionFromStartRate))}</td>
+  <td>${escapeHtml(formatPercent(step.conversionFromPreviousRate))}</td>
+</tr>`
+    )
+    .join("\n");
+
+  return `<table>
+  <thead>
+    <tr>
+      <th>Step</th>
+      <th>Unique sessions</th>
+      <th>From start</th>
+      <th>From previous step</th>
+    </tr>
+  </thead>
+  <tbody>${rows}</tbody>
+</table>`;
+}
+
+function renderGeneralStatsSection({
+  formMetrics,
+  formMetricsPrior,
+  websiteStats,
+  reportDays,
+}) {
+  // Skip the section entirely when neither data source is available so we
+  // don't clutter the report with placeholder cards.
+  if (!(formMetrics || websiteStats)) {
+    return `
+  <section>
+    <h2>General stats</h2>
+    <p class="meta">Skipped — set <code>UMAMI_API_KEY</code> and <code>NEXT_PUBLIC_UMAMI_SITE_ID</code> to include site-wide aggregates.</p>
+  </section>`;
+  }
+
+  // Prefer the form metrics window since both helpers are called with the same
+  // `reportDays`; fall back to website stats, then the env-supplied default.
+  const window = formMetrics ?? websiteStats;
+  const windowText = window
+    ? formatWindow({
+        startAt: window.startAt,
+        endAt: window.endAt,
+        days: window.days,
+      })
+    : `last ${reportDays} days`;
+  const deltaWindowLabel = `prior ${reportDays} days`;
+
+  const aggregate = formMetrics?.aggregate;
+  const aggregatePrior = formMetricsPrior?.aggregate;
+
+  const cards = [
+    {
+      label: "Website visits",
+      value: websiteStats ? formatInteger(websiteStats.visits) : "—",
+      delta: websiteStats
+        ? buildDelta({
+            current: websiteStats.visits,
+            previous: websiteStats.previous.visits,
+            higherIsBetter: true,
+            mode: "relative",
+          })
+        : null,
+      sub: websiteStats
+        ? `${formatInteger(websiteStats.visitors)} unique visitors · ${formatInteger(websiteStats.pageviews)} page views`
+        : "Umami stats unavailable",
+    },
+    {
+      label: "Form completion rate",
+      value: aggregate ? formatPercent(aggregate.completionRate) : "—",
+      delta:
+        aggregate && aggregatePrior
+          ? buildDelta({
+              current: aggregate.completionRate,
+              previous: aggregatePrior.completionRate,
+              higherIsBetter: true,
+              mode: "percent-points",
+            })
+          : null,
+      sub: aggregate
+        ? `${formatInteger(aggregate.completions)} of ${formatInteger(aggregate.starts)} starts completed`
+        : "No form events recorded",
+    },
+    {
+      label: "Form abandonment rate",
+      value: aggregate ? formatPercent(aggregate.abandonmentRate) : "—",
+      delta:
+        aggregate && aggregatePrior
+          ? buildDelta({
+              current: aggregate.abandonmentRate,
+              previous: aggregatePrior.abandonmentRate,
+              higherIsBetter: false,
+              mode: "percent-points",
+            })
+          : null,
+      sub: aggregate
+        ? `${formatInteger(aggregate.starts - aggregate.completions)} starts abandoned`
+        : "No form events recorded",
+    },
+    {
+      label: "Avg time to complete a form",
+      value: aggregate ? formatSeconds(aggregate.avgCompletionSeconds) : "—",
+      delta:
+        aggregate && aggregatePrior
+          ? buildDelta({
+              current: aggregate.avgCompletionSeconds,
+              previous: aggregatePrior.avgCompletionSeconds,
+              higherIsBetter: false,
+              mode: "relative",
+            })
+          : null,
+      sub: aggregate
+        ? `Median ${formatSeconds(aggregate.medianCompletionSeconds)} · p90 ${formatSeconds(aggregate.p90CompletionSeconds)}`
+        : "No form-submit duration data",
+    },
+  ];
+
+  const cardMarkup = cards
+    .map(
+      (card) => `<div class="stat">
+  <div class="stat-label">${escapeHtml(card.label)}</div>
+  <div class="stat-value">${escapeHtml(card.value)}</div>
+  ${renderDelta(card.delta, deltaWindowLabel)}
+  <div class="stat-sub">${escapeHtml(card.sub)}</div>
+</div>`
+    )
+    .join("\n");
+
+  return `
+  <section>
+    <h2>General stats</h2>
+    <p class="meta">
+      Aggregated across all forms and the entire website for ${escapeHtml(windowText)}.
+      Each card compares to the immediately preceding ${escapeHtml(String(reportDays))}-day window.
+      Form rates roll up unique-session starts and completions; the average uses the merged <code>duration_seconds</code> distribution from <code>form-submit</code>.
+    </p>
+    <div class="stats-grid">${cardMarkup}</div>
+  </section>`;
+}
+
+function renderFormMetricsSection(formMetrics) {
+  if (!formMetrics) {
+    return `
+  <section>
+    <h2>Form completion analytics</h2>
+    <p class="meta">Skipped — set <code>UMAMI_API_KEY</code> and <code>NEXT_PUBLIC_UMAMI_SITE_ID</code> to include Umami funnel metrics.</p>
+  </section>`;
+  }
+
+  if (formMetrics.rows.length === 0) {
+    return `
+  <section>
+    <h2>Form completion analytics</h2>
+    <p class="meta">Window ${escapeHtml(formatWindow(formMetrics))}. No <code>form-start</code> / <code>form-submit</code> events recorded.</p>
+  </section>`;
+  }
+
+  const summaryRows = formMetrics.rows
+    .map(
+      (row) => `<tr>
+  <td>${escapeHtml(row.label)}<br /><code style="color:#64748b;font-size:0.75rem">${escapeHtml(row.form)}</code>${row.truncated ? ' <span title="Pagination cap reached; numbers may be a lower bound" style="color:#b45309">⚠</span>' : ""}</td>
+  <td>${escapeHtml(String(row.starts))}</td>
+  <td>${escapeHtml(String(row.completions))}</td>
+  <td>${escapeHtml(formatPercent(row.completionRate))}</td>
+  <td>${escapeHtml(formatPercent(row.abandonmentRate))}</td>
+  <td>${escapeHtml(formatSeconds(row.avgCompletionSeconds))}</td>
+  <td>${escapeHtml(formatSeconds(row.medianCompletionSeconds))}</td>
+  <td>${escapeHtml(formatSeconds(row.p90CompletionSeconds))}</td>
+  <td>${renderTrendSparkline(row.series, row.label)}</td>
+</tr>`
+    )
+    .join("\n");
+
+  const stepBlocks = formMetrics.rows
+    .map(
+      (row) => `<details>
+  <summary><strong>${escapeHtml(row.label)}</strong> — ${escapeHtml(String(row.steps.length))} step${row.steps.length === 1 ? "" : "s"}</summary>
+  ${renderStepsTable(row.steps)}
+</details>`
+    )
+    .join("\n");
+
+  return `
+  <section>
+    <h2>Form completion analytics</h2>
+    <p class="meta">
+      Umami funnel for ${escapeHtml(formatWindow(formMetrics))}. Counts are unique browser sessions (de-duplicated on <code>sessionId</code>). Average / median / p90 are derived from the <code>duration_seconds</code> property on <code>form-submit</code>. Trend sparklines show unique sessions per day:
+      <span style="display:inline-flex;align-items:center;gap:0.35rem;margin-left:0.25rem"><span style="display:inline-block;width:14px;height:2px;background:${SPARKLINE_STARTS_COLOR}"></span>starts</span>
+      <span style="display:inline-flex;align-items:center;gap:0.35rem;margin-left:0.5rem"><span style="display:inline-block;width:14px;height:2px;background:${SPARKLINE_COMPLETIONS_COLOR}"></span>completions</span>.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Form</th>
+          <th>Starts</th>
+          <th>Completions</th>
+          <th>Completion rate</th>
+          <th>Abandonment rate</th>
+          <th>Avg</th>
+          <th>Median</th>
+          <th>p90</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody>${summaryRows}</tbody>
+    </table>
+    <h3 style="font-size:1rem;margin-top:1.5rem;margin-bottom:0.5rem">Per-step drop-off</h3>
+    ${stepBlocks}
+  </section>`;
+}
+
+function buildIndexHtml({
+  lighthouseRows,
+  playwrightMetrics,
+  formMetrics,
+  formMetricsPrior,
+  websiteStats,
+  reportDays,
+  meta,
+}) {
   const axeRows = Object.entries(playwrightMetrics?.axe ?? {})
     .map(([key, v]) => {
       const violations = escapeHtml(
@@ -158,10 +530,13 @@ function buildIndexHtml({ lighthouseRows, playwrightMetrics, meta }) {
     th, td { text-align: left; padding: 0.65rem 0.85rem; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
     th { background: #f1f5f9; font-weight: 600; font-size: 0.85rem; }
     tr:last-child td { border-bottom: none; }
-    .scores { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
-    .card { background: #fff; border-radius: 8px; padding: 0.85rem 1rem; box-shadow: 0 1px 3px rgb(15 23 42 / 0.08); }
-    .card .k { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.03em; }
-    .card .v { font-size: 1.5rem; font-weight: 700; margin-top: 0.15rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
+    .stat { background: #fff; border-radius: 8px; padding: 1rem 1.1rem; box-shadow: 0 1px 3px rgb(15 23 42 / 0.08); }
+    .stat-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.03em; }
+    .stat-value { font-size: 1.75rem; font-weight: 700; margin-top: 0.25rem; color: #0f172a; }
+    .stat-delta { font-size: 0.8rem; font-weight: 600; margin-top: 0.25rem; }
+    .stat-delta-context { color: #64748b; font-weight: 400; margin-left: 0.25rem; }
+    .stat-sub { font-size: 0.8rem; color: #475569; margin-top: 0.35rem; }
     .pre-json { max-height: 200px; overflow: auto; font-size: 0.75rem; background: #f1f5f9; padding: 0.5rem; border-radius: 4px; white-space: pre-wrap; word-break: break-word; }
     a { color: #0d9488; }
   </style>
@@ -174,14 +549,7 @@ function buildIndexHtml({ lighthouseRows, playwrightMetrics, meta }) {
     Run: ${escapeHtml(meta.runUrl)}
   </p>
 
-  <section>
-    <h2>Playwright timings</h2>
-    <p>Measured in Chromium (desktop) against <code>${escapeHtml(meta.baseUrl)}</code>.</p>
-    <div class="scores">
-      <div class="card"><div class="k">Form page ready</div><div class="v">${escapeHtml(String(playwrightMetrics?.timings?.formPageReadyMs ?? "—"))}<span style="font-size:0.9rem;font-weight:400"> ms</span></div></div>
-      <div class="card"><div class="k">Home → search results</div><div class="v">${escapeHtml(String(playwrightMetrics?.timings?.searchToResultsMs ?? "—"))}<span style="font-size:0.9rem;font-weight:400"> ms</span></div></div>
-    </div>
-  </section>
+  ${renderGeneralStatsSection({ formMetrics, formMetricsPrior, websiteStats, reportDays })}
 
   <section>
     <h2>Lighthouse (desktop)</h2>
@@ -200,6 +568,8 @@ function buildIndexHtml({ lighthouseRows, playwrightMetrics, meta }) {
       <tbody>${lhTable}</tbody>
     </table>
   </section>
+
+  ${renderFormMetricsSection(formMetrics)}
 
   <section>
     <h2>axe (accessibility)</h2>
@@ -260,12 +630,66 @@ async function main() {
     console.log("[perf] Running Lighthouse…");
     const lhResults = await runLighthouseSuite(baseUrl, outDir, lhArtifactDir);
 
-    console.log("[perf] Running Playwright (axe + timings)…");
+    console.log("[perf] Running Playwright (axe)…");
     runPlaywrightMetrics(baseUrl);
 
     const playwrightMetrics = await readJson(
       path.join(perfArtifacts, "playwright-metrics.json")
     );
+
+    const reportDaysRaw = Number(process.env.UMAMI_REPORT_DAYS ?? 7);
+    const reportDays = Number.isFinite(reportDaysRaw) ? reportDaysRaw : 7;
+
+    let formMetrics = null;
+    let formMetricsPrior = null;
+    let websiteStats = null;
+
+    // Anchor the prior window to the start of the current window so the two
+    // funnels never overlap, regardless of when the job runs.
+    const endAt = Date.now();
+    const priorEndAt = endAt - reportDays * MS_PER_DAY;
+
+    console.log(
+      "[perf] Fetching Umami form funnel (current + prior) + website stats…"
+    );
+    const [formMetricsResult, formMetricsPriorResult, websiteStatsResult] =
+      await Promise.allSettled([
+        fetchFormFunnelMetrics({ days: reportDays, now: endAt }),
+        fetchFormFunnelMetrics({ days: reportDays, now: priorEndAt }),
+        fetchWebsiteStats({ days: reportDays, now: endAt }),
+      ]);
+
+    if (formMetricsResult.status === "fulfilled") {
+      formMetrics = formMetricsResult.value;
+      if (!formMetrics) {
+        console.log(
+          "[perf] Skipping form funnel section — UMAMI_API_KEY or NEXT_PUBLIC_UMAMI_SITE_ID not set."
+        );
+      }
+    } else {
+      const reason = formMetricsResult.reason;
+      console.warn(
+        `[perf] Form funnel fetch failed; continuing without it: ${reason instanceof Error ? reason.message : String(reason)}`
+      );
+    }
+
+    if (formMetricsPriorResult.status === "fulfilled") {
+      formMetricsPrior = formMetricsPriorResult.value;
+    } else {
+      const reason = formMetricsPriorResult.reason;
+      console.warn(
+        `[perf] Prior-window form funnel fetch failed; continuing without comparison: ${reason instanceof Error ? reason.message : String(reason)}`
+      );
+    }
+
+    if (websiteStatsResult.status === "fulfilled") {
+      websiteStats = websiteStatsResult.value;
+    } else {
+      const reason = websiteStatsResult.reason;
+      console.warn(
+        `[perf] Website stats fetch failed; continuing without it: ${reason instanceof Error ? reason.message : String(reason)}`
+      );
+    }
 
     const lighthouseRows = lhResults.map(({ page, lhr }) => {
       const c = lhr.categories ?? {};
@@ -292,8 +716,11 @@ async function main() {
     const html = buildIndexHtml({
       lighthouseRows,
       playwrightMetrics,
+      formMetrics,
+      formMetricsPrior,
+      websiteStats,
+      reportDays,
       meta: {
-        baseUrl,
         sha,
         ref,
         runUrl,
