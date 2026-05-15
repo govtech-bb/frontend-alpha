@@ -66,7 +66,12 @@ export default async function YouthOpportunityFormPage({
       }
     >
       <YouthOpportunityForm
-        notificationEmail={opportunity.contact?.email ?? null}
+        notificationCc={process.env.TEST_NOTIFICATION_EMAIL_COPY ?? null}
+        notificationEmail={
+          process.env.TEST_NOTIFICATION_EMAIL ??
+          opportunity.contact?.email ??
+          null
+        }
         opportunityId={opportunity.id}
         opportunityTitle={opportunity.title}
       />

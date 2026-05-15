@@ -215,7 +215,13 @@ export default async function Page({ params }: ContentPageProps) {
 
     // Handle form pages (JSX components)
     if (subPageSlug === "form") {
-      return <DynamicFormLoader formSlug={pageSlug} />;
+      return (
+        <DynamicFormLoader
+          formSlug={pageSlug}
+          notificationCc={process.env.TEST_NOTIFICATION_EMAIL_COPY ?? null}
+          notificationEmail={process.env.TEST_NOTIFICATION_EMAIL ?? null}
+        />
+      );
     }
 
     // Handle other sub-pages (markdown)
@@ -288,7 +294,12 @@ export default async function Page({ params }: ContentPageProps) {
           }
         >
           <YouthOpportunityForm
-            notificationEmail={opportunity.contact?.email ?? null}
+            notificationCc={process.env.TEST_NOTIFICATION_EMAIL_COPY ?? null}
+            notificationEmail={
+              process.env.TEST_NOTIFICATION_EMAIL ??
+              opportunity.contact?.email ??
+              null
+            }
             opportunityId={opportunity.id}
             opportunityTitle={opportunity.title}
           />
