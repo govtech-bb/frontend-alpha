@@ -1,0 +1,20 @@
+{
+  "name": "frontend-alpha-rag-worker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "vectorize:create": "wrangler vectorize create frontend-alpha-rag --dimensions=768 --metric=cosine",
+    "vectorize:delete": "wrangler vectorize delete frontend-alpha-rag"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251001.0",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.91.0"
+  },
+  "dependencies": {
+    "@tanstack/ai": "^0.17.0"
+  }
+}

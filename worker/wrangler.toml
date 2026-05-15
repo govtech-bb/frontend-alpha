@@ -1,0 +1,16 @@
+name = "frontend-alpha-rag"
+main = "src/index.ts"
+compatibility_date = "2025-05-01"
+compatibility_flags = ["nodejs_compat"]
+
+[ai]
+binding = "AI"
+
+[[vectorize]]
+binding = "VECTORIZE"
+index_name = "frontend-alpha-rag"
+
+[vars]
+EMBED_MODEL = "@cf/baai/bge-base-en-v1.5"
+EMBED_DIM = "768"
+ALLOWED_ORIGIN = "*"
