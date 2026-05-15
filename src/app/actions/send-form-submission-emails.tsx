@@ -26,6 +26,7 @@ const submissionEmailPayloadSchema = z.object({
   formData: z.record(z.string(), z.unknown()),
   applicantEmail: z.string().email().nullable(),
   notificationEmail: z.string().email().nullable(),
+  notificationCc: z.array(z.string().email()).optional(),
   ministryName: z.string().optional(),
 });
 
@@ -174,11 +175,13 @@ function flattenDataForEmail(
 
 async function sendEmail({
   to,
+  cc,
   subject,
   html,
   referenceNumber,
 }: {
   to: string;
+  cc?: string[];
   subject: string;
   html: string;
   referenceNumber: string;
@@ -188,6 +191,9 @@ async function sendEmail({
   log("INFO", "ses.send.attempt", {
     referenceNumber,
     recipient: maskEmail(to),
+    cc: cc?.length
+      ? cc.map((address) => maskEmail(address)).join(",")
+      : "(none)",
     subject,
     fromAddress: maskEmail(mailFrom),
     configurationSet: configurationSet ?? "(none)",
@@ -196,7 +202,10 @@ async function sendEmail({
 
   const command = new SendEmailCommand({
     FromEmailAddress: mailFrom,
-    Destination: { ToAddresses: [to] },
+    Destination: {
+      ToAddresses: [to],
+      ...(cc?.length ? { CcAddresses: cc } : {}),
+    },
     ...(configurationSet && {
       ConfigurationSetName: configurationSet,
       ...(tagKey &&
@@ -217,6 +226,9 @@ async function sendEmail({
   log("INFO", "ses.send.success", {
     referenceNumber,
     recipient: maskEmail(to),
+    cc: cc?.length
+      ? cc.map((address) => maskEmail(address)).join(",")
+      : "(none)",
     subject,
     messageId: response.MessageId ?? "(unknown)",
     durationMs: Date.now() - sendStart,
@@ -318,6 +330,7 @@ export async function sendFormSubmissionEmails(
     formName,
     ministryName,
     notificationEmail,
+    notificationCc,
     referenceNumber,
   } = parsed.data;
 
@@ -372,6 +385,7 @@ export async function sendFormSubmissionEmails(
 
   const resolvedApplicantEmail = safeTestEmail ?? applicantEmail;
   const resolvedNotificationEmail = safeTestEmail ?? notificationEmail;
+  const resolvedNotificationCc = safeTestEmail ? undefined : notificationCc;
 
   if (safeTestEmail) {
     log("WARN", "sendFormSubmissionEmails.email_override_active", {
@@ -413,11 +427,15 @@ export async function sendFormSubmissionEmails(
     log("INFO", "sendFormSubmissionEmails.queuing_notification", {
       referenceNumber,
       recipient: maskEmail(resolvedNotificationEmail),
+      cc: resolvedNotificationCc?.length
+        ? resolvedNotificationCc.map((address) => maskEmail(address)).join(",")
+        : "(none)",
     });
     sendTasks.push({
       label: `staff notification to ${resolvedNotificationEmail}`,
       promise: sendEmail({
         to: resolvedNotificationEmail,
+        cc: resolvedNotificationCc,
         subject: `New submission: ${formName} (${referenceNumber})`,
         html: notificationHtml,
         referenceNumber,

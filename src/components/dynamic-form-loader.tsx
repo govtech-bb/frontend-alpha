@@ -6,9 +6,15 @@ import { NoScriptMessage } from "./no-script-message";
 
 interface DynamicFormLoaderProps {
   formSlug: string;
+  notificationEmail?: string | null;
+  notificationCc?: string | null;
 }
 
-export function DynamicFormLoader({ formSlug }: DynamicFormLoaderProps) {
+export function DynamicFormLoader({
+  formSlug,
+  notificationEmail = null,
+  notificationCc = null,
+}: DynamicFormLoaderProps) {
   const FormComponent = FORM_COMPONENTS[formSlug as FormSlug];
 
   if (!FormComponent) {
@@ -23,7 +29,10 @@ export function DynamicFormLoader({ formSlug }: DynamicFormLoaderProps) {
       </noscript>
       <div className="js-only">
         <Suspense fallback={<div className="container">Loading form...</div>}>
-          <FormComponent />
+          <FormComponent
+            notificationCc={notificationCc}
+            notificationEmail={notificationEmail}
+          />
         </Suspense>
       </div>
     </>

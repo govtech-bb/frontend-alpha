@@ -542,6 +542,8 @@ interface DynamicMultiStepFormProps {
   serviceTitle: string;
   storageKey?: string;
   notificationEmail?: string | null;
+  /** Additional addresses copied on staff-notification emails only (not on applicant confirmations). */
+  notificationCc?: string | string[] | null;
   ministryName?: string | null;
   submissionMode?: "api" | "serverActionOnly";
   /** Overrides pathname segment[0] for analytics when the form is not under IA routes. */
@@ -567,6 +569,7 @@ export default function DynamicMultiStepForm({
   serviceTitle,
   storageKey = "multi-step-form-storage",
   notificationEmail = null,
+  notificationCc = null,
   ministryName = null,
   submissionMode = "api",
   analyticsCategory,
@@ -1079,6 +1082,11 @@ export default function DynamicMultiStepForm({
             formName: serviceTitle,
             ministryName: ministryName ?? undefined,
             notificationEmail,
+            notificationCc: notificationCc
+              ? Array.isArray(notificationCc)
+                ? notificationCc
+                : [notificationCc]
+              : undefined,
             referenceNumber: generatedReferenceNumber,
           });
           if (!emailResult.success) {
@@ -1164,6 +1172,11 @@ export default function DynamicMultiStepForm({
             formName: serviceTitle,
             ministryName: ministryName ?? undefined,
             notificationEmail,
+            notificationCc: notificationCc
+              ? Array.isArray(notificationCc)
+                ? notificationCc
+                : [notificationCc]
+              : undefined,
             referenceNumber,
           });
           if (!emailResult.success) {
