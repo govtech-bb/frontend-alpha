@@ -252,32 +252,49 @@ function normalizeDates(value: unknown): unknown {
 function buildWebhookFormData(
   data: Record<string, unknown>
 ): Record<string, unknown> {
-  const HOISTED_KEYS = new Set(["firstName", "lastName", "email", "phone"]);
-  const {
-    applicant: applicantRaw,
-    declaration: _omitDeclaration,
-    ...rest
-  } = data;
+  // Receiver expects a flat form_data object (e.g. { parish: "..." }) rather
+  // than a nested one (e.g. { applicant: { parish: "..." } }). Hoist the
+  // inner fields of each top-level namespace (applicant, interest, etc.) to
+  // the top level of form_data. Skip:
+  //  - `declaration` entirely (operational metadata; not part of application
+  //    content)
+  //  - applicant.firstName / lastName / email / phone (already represented
+  //    on the top-level `applicant` block)
+  const APPLICANT_HOISTED_TO_TOP = new Set([
+    "firstName",
+    "lastName",
+    "email",
+    "phone",
+  ]);
+  const result: Record<string, unknown> = {};
 
-  const normalizedRest = normalizeDates(rest) as Record<string, unknown>;
+  for (const [namespaceKey, namespaceValue] of Object.entries(data)) {
+    if (namespaceKey === "declaration") {
+      continue;
+    }
 
-  if (!applicantRaw || typeof applicantRaw !== "object") {
-    return normalizedRest;
-  }
-
-  const trimmedApplicant: Record<string, unknown> = {};
-  for (const [key, value] of Object.entries(
-    applicantRaw as Record<string, unknown>
-  )) {
-    if (!HOISTED_KEYS.has(key)) {
-      trimmedApplicant[key] = normalizeDates(value);
+    if (
+      namespaceValue &&
+      typeof namespaceValue === "object" &&
+      !Array.isArray(namespaceValue)
+    ) {
+      for (const [innerKey, innerValue] of Object.entries(
+        namespaceValue as Record<string, unknown>
+      )) {
+        if (
+          namespaceKey === "applicant" &&
+          APPLICANT_HOISTED_TO_TOP.has(innerKey)
+        ) {
+          continue;
+        }
+        result[innerKey] = normalizeDates(innerValue);
+      }
+    } else {
+      result[namespaceKey] = normalizeDates(namespaceValue);
     }
   }
 
-  if (Object.keys(trimmedApplicant).length > 0) {
-    return { ...normalizedRest, applicant: trimmedApplicant };
-  }
-  return normalizedRest;
+  return result;
 }
 
 /**
