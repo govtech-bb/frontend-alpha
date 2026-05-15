@@ -26,11 +26,11 @@ jobs:
       FEEDBACK_TO_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
       FEEDBACK_FROM_EMAIL: "no-reply@notify.dev.alpha.gov.bb"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24"
           cache: npm
 
       - name: Install dependencies
@@ -65,7 +65,7 @@ jobs:
 
       - name: Upload performance report artifact
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: performance-report
           path: performance-report
@@ -73,7 +73,7 @@ jobs:
 
   deploy:
     name: Deploy to GitHub Pages
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/prod') || github.event_name == 'workflow_dispatch'
+    if: github.ref == 'refs/heads/prod' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     needs: build
     runs-on: ubuntu-latest
     environment:
@@ -81,19 +81,21 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Download report
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: performance-report
           path: performance-report
 
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
+        with:
+          enablement: true
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: performance-report
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
