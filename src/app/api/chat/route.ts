@@ -5,7 +5,9 @@ import { presentChoicesDef, submitFormDef } from "@/lib/chat-tools";
 
 const RAG_URL = process.env.NEXT_PUBLIC_RAG_URL ?? "";
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY ?? "";
-const LLM_MODEL = process.env.LLM_MODEL ?? "claude-haiku-4-5-20251001";
+const LLM_MODEL = (process.env.LLM_MODEL ?? "claude-haiku-4-5") as Parameters<
+  typeof anthropicText
+>[0];
 
 const submitForm = submitFormDef.server(
   async ({ service, serviceTitle, fields }) => {
