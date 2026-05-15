@@ -19,6 +19,14 @@ frontend:
         # Set in dev Amplify app only — redirects all emails to the safe test inbox.
         # Leave unset in prod so real recipients receive emails.
         - env | grep -e SES_DEV_NOTIFICATION_EMAIL >> .env.production || true
+        # Case-management webhook — set in both dev and prod Amplify apps.
+        # Without these, sendFormSubmittedWebhook returns "not_configured"
+        # and submissions are never registered with MoY.
+        - env | grep -e WEBHOOK_URL >> .env.production || true
+        - env | grep -e WEBHOOK_SECRET >> .env.production || true
+        # Test-only notification recipients used by forms during verification.
+        - env | grep -e TEST_NOTIFICATION_EMAIL >> .env.production || true
+        - env | grep -e TEST_NOTIFICATION_EMAIL_COPY >> .env.production || true
         - env | grep -e EZPAY_API_KEY >> .env.production || true
         - env | grep -e EZPAY_BASE_URL >> .env.production || true
         - env | grep -e NEXT_PUBLIC_EZPAY_BASE_URL >> .env.production || true
