@@ -19,6 +19,7 @@
     "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:report": "playwright show-report",
     "perf:report": "node scripts/perf/generate-performance-report.mjs",
+    "rag:ingest": "node --env-file=.env.local --import tsx scripts/rag-ingest.ts",
     "prepare": "husky"
   },
   "dependencies": {
@@ -32,6 +33,9 @@
     "@react-email/components": "^0.5.7",
     "@react-email/render": "^1.4.0",
     "@sentry/nextjs": "^10.49.0",
+    "@tanstack/ai": "^0.17.0",
+    "@tanstack/ai-anthropic": "^0.8.7",
+    "@tanstack/ai-react": "^0.9.0",
     "@tanstack/react-form": "^1.23.8",
     "@tanstack/react-store": "^0.8.0",
     "class-variance-authority": "^0.7.1",

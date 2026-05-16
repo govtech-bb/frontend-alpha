@@ -103,3 +103,18 @@ export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
 export function getFormStorageKey(formSlug: string): string | undefined {
   return FORM_STORAGE_KEYS[formSlug as FormSlug];
 }
+
+const FORM_PAGE_SLUG_BY_STORAGE_KEY: Record<string, FormSlug> = Object.entries(
+  FORM_STORAGE_KEYS
+).reduce<Record<string, FormSlug>>((acc, [page, storage]) => {
+  acc[storage] = page as FormSlug;
+  return acc;
+}, {});
+
+/**
+ * Inverse of {@link getFormStorageKey}: looks up the page slug for a given
+ * storage key. Used by the chat handoff to derive the form's URL.
+ */
+export function getFormPageSlug(storageKey: string): FormSlug | undefined {
+  return FORM_PAGE_SLUG_BY_STORAGE_KEY[storageKey];
+}
