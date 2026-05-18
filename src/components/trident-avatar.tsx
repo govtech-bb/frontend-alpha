@@ -7,28 +7,22 @@ export function TridentAvatar({
   size?: "sm" | "lg";
   className?: string;
 }) {
-  const dims = size === "lg" ? "h-24 w-24" : "h-8 w-8";
-  const tridentSize = size === "lg" ? "w-9" : "w-4";
+  const dims = size === "lg" ? "h-32 w-32" : "h-8 w-8";
+  const tridentSize = size === "lg" ? "w-24" : "w-4";
 
   return (
     <div
       aria-hidden="true"
       className={cn(
-        "relative flex shrink-0 items-center justify-center rounded-full bg-teal-00",
+        "relative flex shrink-0 items-center justify-center",
         size === "lg" &&
           "motion-safe:animate-[bot-hum_3s_ease-in-out_infinite]",
         dims,
         className
       )}
     >
-      {size === "lg" && (
-        <>
-          <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-teal-00 opacity-0 motion-safe:animate-[bot-pulse_2.6s_ease-out_infinite]" />
-          <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-teal-00 opacity-0 [animation-delay:1.3s] motion-safe:animate-[bot-pulse_2.6s_ease-out_infinite]" />
-        </>
-      )}
       <svg
-        className={cn("relative z-[1] fill-white-00", tridentSize)}
+        className={cn("relative z-[1] fill-black-00", tridentSize)}
         viewBox="0 0 26 27"
         xmlns="http://www.w3.org/2000/svg"
       >

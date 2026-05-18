@@ -156,7 +156,7 @@ export default function ChatPage() {
         >
           ←
         </Link>
-        <span className="font-semibold text-blue-100 text-sm">
+        <span className="font-semibold text-black-00 text-sm">
           Ask alpha.gov.bb
         </span>
         <TridentAvatar size="sm" />
@@ -230,7 +230,7 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
   return (
     <main className="flex flex-1 flex-col items-center justify-center px-4 text-center">
       <TridentAvatar size="lg" />
-      <h1 className="mt-6 font-bold text-4xl text-blue-100 sm:text-5xl">
+      <h1 className="mt-6 font-bold text-4xl text-black-00 sm:text-5xl">
         Hello.
       </h1>
       <p className="mt-2 text-base text-mid-grey-00 sm:text-lg">
