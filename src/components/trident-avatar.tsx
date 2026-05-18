@@ -14,9 +14,7 @@ export function TridentAvatar({
     <div
       aria-hidden="true"
       className={cn(
-        "relative flex shrink-0 items-center justify-center rounded-full",
-        "bg-[radial-gradient(circle_at_50%_40%,var(--color-yellow-10),var(--color-yellow-40))]",
-        "shadow-[0_0_0_1px_var(--color-yellow-100),0_8px_24px_-10px_var(--color-yellow-00)]",
+        "relative flex shrink-0 items-center justify-center rounded-full bg-teal-00",
         size === "lg" &&
           "motion-safe:animate-[bot-hum_3s_ease-in-out_infinite]",
         dims,
@@ -25,12 +23,12 @@ export function TridentAvatar({
     >
       {size === "lg" && (
         <>
-          <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-[var(--color-yellow-100)] opacity-0 motion-safe:animate-[bot-pulse_2.6s_ease-out_infinite]" />
-          <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-[var(--color-yellow-100)] opacity-0 [animation-delay:1.3s] motion-safe:animate-[bot-pulse_2.6s_ease-out_infinite]" />
+          <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-teal-00 opacity-0 motion-safe:animate-[bot-pulse_2.6s_ease-out_infinite]" />
+          <span className="pointer-events-none absolute inset-0 rounded-full border-2 border-teal-00 opacity-0 [animation-delay:1.3s] motion-safe:animate-[bot-pulse_2.6s_ease-out_infinite]" />
         </>
       )}
       <svg
-        className={cn("relative z-[1] fill-blue-100", tridentSize)}
+        className={cn("relative z-[1] fill-white-00", tridentSize)}
         viewBox="0 0 26 27"
         xmlns="http://www.w3.org/2000/svg"
       >

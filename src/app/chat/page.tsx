@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Bubble } from "@/components/chat/bubble";
 import { TridentAvatar } from "@/components/trident-avatar";
-import { extractText, toolCallsOf } from "@/lib/chat/messages";
+import { extractText, hasAnyToolCall } from "@/lib/chat/messages";
 import { prefillFormSession } from "@/lib/chat/prefill-form";
 import type { Source } from "@/lib/chat/types";
 import { validateFormFields } from "@/lib/chat/validate-fields";
@@ -29,6 +29,13 @@ export default function ChatPage() {
   // here until the next assistant message id shows up, then flush.
   const pendingSourcesRef = useRef<Source[] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const pendingNavRef = useRef<string | null>(null);
+  // Models often re-call open_form_review after a validation failure with
+  // ONLY the corrected field, not the full set. Keep the last submitted
+  // bundle so we can merge instead of re-failing on "missing required".
+  const lastFieldsByService = useRef<Map<string, Record<string, string>>>(
+    new Map()
+  );
 
   const router = useRouter();
 
@@ -39,11 +46,18 @@ export default function ChatPage() {
   const openFormReview = useMemo(
     () =>
       openFormReviewDef.client(async ({ service, fields }) => {
-        const result = await validateFormFields(service, fields);
+        const prior = lastFieldsByService.current.get(service) ?? {};
+        const merged = { ...prior, ...fields };
+        lastFieldsByService.current.set(service, merged);
+        const result = await validateFormFields(service, merged);
         if (!result.ok) return { ok: false, errors: result.errors };
         try {
-          const url = await prefillFormSession(service, fields);
-          router.push(url);
+          const url = await prefillFormSession(service, merged);
+          // Defer navigation until the assistant's closing line finishes
+          // streaming. Pushing immediately unmounts this page and aborts the
+          // SSE before the tool result reaches the model, which makes the
+          // next turn fall back to the generic error line.
+          pendingNavRef.current = url;
           return { ok: true, redirectedTo: url };
         } catch (err) {
           const message =
@@ -69,6 +83,14 @@ export default function ChatPage() {
   });
 
   const isStreaming = status === "submitted" || status === "streaming";
+
+  useEffect(() => {
+    if (isStreaming) return;
+    const url = pendingNavRef.current;
+    if (!url) return;
+    pendingNavRef.current = null;
+    router.push(url);
+  }, [isStreaming, router]);
   const empty = messages.length === 0;
 
   const last = messages.at(-1);
@@ -102,30 +124,39 @@ export default function ChatPage() {
   function submit(text: string) {
     const trimmed = text.trim();
     if (!trimmed || isStreaming) return;
+    pendingNavRef.current = null;
     sendMessage(trimmed);
     setInput("");
   }
 
-  function sourcesForMessage(m: UIMessage): Source[] | undefined {
+  // Once any assistant turn calls a form tool, suppress source pills for the
+  // rest of the session — open-text field questions ("What's your name?")
+  // have no tool call but still shouldn't show pills.
+  const formFlowStartIdx = useMemo(() => {
+    const formToolNames = [presentChoicesDef.name, openFormReviewDef.name];
+    return messages.findIndex((m) => hasAnyToolCall([m], formToolNames));
+  }, [messages]);
+
+  function sourcesForMessage(
+    m: UIMessage,
+    index: number
+  ): Source[] | undefined {
     if (m.role !== "assistant") return;
-    const isFormFlow = toolCallsOf(m).some(
-      (c) => c.name === "present_choices" || c.name === "open_form_review"
-    );
-    if (isFormFlow) return;
+    if (formFlowStartIdx !== -1 && index >= formFlowStartIdx) return;
     return sourcesByMessageId[m.id];
   }
 
   return (
-    <div className="flex h-dvh flex-col bg-grey-50">
-      <header className="flex items-center justify-between px-4 py-3">
+    <div className="flex h-dvh flex-col bg-white">
+      <header className="flex items-center justify-between border-grey-00 border-b px-4 py-3">
         <Link
           aria-label="Back to alpha.gov.bb"
-          className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-grey-700 shadow-sm hover:bg-grey-100"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-10 text-blue-100 transition-colors hover:bg-blue-40/30"
           href="/"
         >
           ←
         </Link>
-        <span className="font-medium text-grey-700 text-sm">
+        <span className="font-semibold text-blue-100 text-sm">
           Ask alpha.gov.bb
         </span>
         <TridentAvatar size="sm" />
@@ -136,17 +167,17 @@ export default function ChatPage() {
       ) : (
         <main className="flex-1 overflow-y-auto px-4 pb-4" ref={scrollRef}>
           <div className="mx-auto max-w-2xl space-y-4 py-4">
-            {messages.map((m) => (
+            {messages.map((m, i) => (
               <Bubble
                 key={m.id}
                 message={m}
                 onChoice={pickChoice}
-                sources={sourcesForMessage(m)}
+                sources={sourcesForMessage(m, i)}
               />
             ))}
             {isStreaming && shouldShowThinking(messages) && <ThinkingShimmer />}
             {error && (
-              <div className="rounded-md bg-red-50 px-3 py-2 text-red-700 text-sm">
+              <div className="rounded-md bg-red-10 px-3 py-2 text-red-00 text-sm">
                 {error.message}
               </div>
             )}
@@ -174,20 +205,23 @@ function shouldShowThinking(messages: UIMessage[]): boolean {
 
 function ThinkingShimmer() {
   return (
-    <div className="flex items-center px-1">
-      <span
-        className="animate-[shimmer_2.5s_linear_infinite] font-medium text-sm"
-        style={{
-          backgroundImage:
-            "linear-gradient(90deg, #9ca3af 40%, #111827 50%, #9ca3af 60%)",
-          backgroundSize: "200% 100%",
-          WebkitBackgroundClip: "text",
-          backgroundClip: "text",
-          color: "transparent",
-        }}
-      >
-        Thinking
-      </span>
+    <div className="flex max-w-[92%] items-start gap-2.5">
+      <TridentAvatar size="sm" />
+      <div className="rounded-[16px_16px_16px_4px] bg-blue-10 px-4 py-2.5 sm:px-5">
+        <span
+          className="animate-[shimmer_2.5s_linear_infinite] font-medium text-sm"
+          style={{
+            backgroundImage:
+              "linear-gradient(90deg, var(--color-blue-40) 0%, var(--color-teal-00) 35%, var(--color-teal-100) 50%, var(--color-teal-00) 65%, var(--color-blue-40) 100%)",
+            backgroundSize: "200% 100%",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+          }}
+        >
+          Thinking
+        </span>
+      </div>
     </div>
   );
 }
@@ -196,19 +230,27 @@ function EmptyState({ onPick }: { onPick: (text: string) => void }) {
   return (
     <main className="flex flex-1 flex-col items-center justify-center px-4 text-center">
       <TridentAvatar size="lg" />
-      <h1 className="mt-6 font-bold text-4xl text-grey-900">Hello.</h1>
-      <p className="mt-1 text-lg text-mid-grey-00">
+      <h1 className="mt-6 font-bold text-4xl text-blue-100 sm:text-5xl">
+        Hello.
+      </h1>
+      <p className="mt-2 text-base text-mid-grey-00 sm:text-lg">
         What can we help you with today?
       </p>
-      <div className="mt-8 flex w-full max-w-md flex-col gap-2 text-left">
+      <div className="mt-8 flex w-full max-w-md flex-col gap-2.5 text-left">
         {SUGGESTIONS.map((s) => (
           <button
-            className="w-full rounded-[10px] border border-grey-00 bg-white px-4 py-3 text-grey-900 text-sm transition hover:-translate-y-px hover:border-blue-100"
+            className="group flex w-full items-center justify-between gap-3 rounded-xl border border-grey-00 bg-white px-4 py-3.5 text-black-00 text-sm transition-all hover:-translate-y-0.5 hover:border-teal-40 hover:shadow-[0_4px_16px_-8px_var(--color-teal-40)]"
             key={s}
             onClick={() => onPick(s)}
             type="button"
           >
-            {s}
+            <span className="text-left">{s}</span>
+            <span
+              aria-hidden="true"
+              className="text-mid-grey-00 transition-colors group-hover:text-teal-40"
+            >
+              →
+            </span>
           </button>
         ))}
       </div>
@@ -234,10 +276,12 @@ function Composer({
     if (!streaming) textareaRef.current?.focus();
   }, [streaming]);
 
+  const hasInput = input.trim().length > 0;
+
   return (
     <footer className="px-4 pb-4">
       <form
-        className="relative mx-auto flex max-w-2xl flex-col rounded-3xl border border-grey-00 bg-white p-4 pr-16 shadow-sm focus-within:border-grey-300"
+        className="relative mx-auto flex max-w-2xl flex-col rounded-3xl border border-grey-00 bg-white p-4 pr-16 shadow-[0_2px_16px_-4px_rgb(0_22_74/0.08)] transition-colors focus-within:border-blue-100"
         onSubmit={(e) => {
           e.preventDefault();
           onSubmit();
@@ -245,7 +289,7 @@ function Composer({
       >
         <textarea
           aria-label="Ask anything"
-          className="max-h-48 min-h-12 w-full resize-none border-none bg-transparent text-grey-900 text-sm placeholder:text-mid-grey-00 focus:outline-none"
+          className="max-h-48 min-h-12 w-full resize-none border-none bg-transparent text-black-00 text-sm placeholder:text-mid-grey-00 focus:outline-none"
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
@@ -260,18 +304,21 @@ function Composer({
         />
         {streaming ? (
           <button
-            aria-label="Stop"
-            className="absolute right-3 bottom-3 flex h-10 w-10 items-center justify-center rounded-xl bg-grey-200 text-grey-700 hover:bg-grey-300"
+            aria-label="Stop generating"
+            className="absolute right-3 bottom-3 flex h-9 w-9 items-center justify-center rounded-full bg-mid-grey-00 text-white-00 transition-colors hover:bg-black-00"
             onClick={onStop}
             type="button"
           >
-            ■
+            <span
+              aria-hidden="true"
+              className="block h-3 w-3 rounded-sm bg-white-00"
+            />
           </button>
         ) : (
           <button
             aria-label="Send"
-            className="absolute right-3 bottom-3 flex h-10 w-10 items-center justify-center rounded-xl bg-grey-900 text-white transition hover:bg-grey-700 disabled:bg-grey-300"
-            disabled={!input.trim()}
+            className="absolute right-3 bottom-3 flex h-9 w-9 items-center justify-center rounded-full bg-teal-00 text-white-00 transition-colors hover:bg-teal-100 disabled:cursor-not-allowed disabled:bg-grey-00 disabled:text-mid-grey-00"
+            disabled={!hasInput}
             type="submit"
           >
             ↑

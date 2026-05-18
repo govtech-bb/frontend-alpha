@@ -9,7 +9,7 @@ import { normalizeMarkdown } from "@/lib/chat/normalize-markdown";
 import type { ChoicesArgs, Source } from "@/lib/chat/types";
 
 const Heading = ({ children }: { children?: ReactNode }) => (
-  <h3 className="mt-4 mb-1 font-semibold text-grey-900">{children}</h3>
+  <h3 className="mt-3 mb-1 font-bold text-blue-100 first:mt-0">{children}</h3>
 );
 
 const MARKDOWN_COMPONENTS = {
@@ -17,13 +17,13 @@ const MARKDOWN_COMPONENTS = {
     <p className="my-2 first:mt-0 last:mb-0">{children}</p>
   ),
   strong: ({ children }: { children?: ReactNode }) => (
-    <strong className="font-semibold text-grey-900">{children}</strong>
+    <strong className="font-bold text-blue-100">{children}</strong>
   ),
   ul: ({ children }: { children?: ReactNode }) => (
-    <ul className="mt-1 mb-4 list-disc space-y-1 pl-5">{children}</ul>
+    <ul className="mt-1 mb-3 list-disc space-y-1 pl-5">{children}</ul>
   ),
   ol: ({ children }: { children?: ReactNode }) => (
-    <ol className="mt-1 mb-4 list-decimal space-y-1 pl-5">{children}</ol>
+    <ol className="mt-1 mb-3 list-decimal space-y-1 pl-5">{children}</ol>
   ),
   li: ({ children }: { children?: ReactNode }) => (
     <li className="leading-relaxed">{children}</li>
@@ -33,7 +33,7 @@ const MARKDOWN_COMPONENTS = {
   h3: Heading,
   a: ({ children, href }: { children?: ReactNode; href?: string }) => (
     <a
-      className="text-blue-100 underline hover:text-blue-200"
+      className="text-teal-00 underline hover:text-teal-100"
       href={href}
       rel="noopener"
       target="_blank"
@@ -65,7 +65,7 @@ function SourcePill({ source }: { source: Source }) {
   return (
     <a
       aria-label={ariaLabel}
-      className="inline-flex h-6 max-w-44 items-center gap-1.5 overflow-hidden rounded-full bg-grey-50 py-0 pr-2.5 pl-1 text-grey-700 text-xs no-underline transition-colors hover:bg-grey-100 hover:text-blue-100"
+      className="inline-flex h-7 max-w-44 items-center gap-1.5 overflow-hidden rounded-full border border-grey-00 bg-white py-0 pr-2.5 pl-1.5 text-mid-grey-00 text-xs no-underline transition-colors hover:border-mid-grey-00 hover:bg-blue-10 hover:text-teal-00"
       href={source.url}
       rel="noopener noreferrer"
       target="_blank"
@@ -74,10 +74,10 @@ function SourcePill({ source }: { source: Source }) {
       {/* biome-ignore lint/performance/noImgElement: tiny third-party favicon, next/image is overkill */}
       <img
         alt=""
-        className="size-4 rounded-full"
-        height={16}
+        className="size-3.5 rounded-sm"
+        height={14}
         src={FAVICON}
-        width={16}
+        width={14}
       />
       <span className="truncate font-normal tabular-nums">{label}</span>
     </a>
@@ -108,7 +108,7 @@ function BubbleImpl({
   if (message.role === "user") {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[75%] rounded-[14px_14px_4px_14px] bg-blue-10 px-4 py-2 text-blue-00 text-sm">
+        <div className="max-w-[75%] rounded-[16px_16px_4px_16px] bg-blue-100 px-4 py-2.5 text-sm text-white-00 leading-relaxed">
           {text}
         </div>
       </div>
@@ -125,51 +125,54 @@ function BubbleImpl({
   // When the model emits both a text question AND the present_choices tool,
   // the question would render twice. Tool is the source of truth — hide text.
   const showText = !choicesPart && text.length > 0;
+  const hasSources = !!sources && sources.length > 0;
 
   return (
-    <div className="flex max-w-[92%] gap-3">
+    <div className="flex max-w-[92%] items-start gap-2.5">
       <TridentAvatar size="sm" />
-      <div className="flex min-w-0 flex-1 flex-col gap-2">
-        {showText && (
-          <div className="text-grey-900 text-sm leading-relaxed">
-            <ReactMarkdown
-              components={MARKDOWN_COMPONENTS}
-              remarkPlugins={[remarkGfm]}
-            >
-              {renderedMarkdown}
-            </ReactMarkdown>
-          </div>
-        )}
+      <div className="flex min-w-0 flex-1 rounded-[16px_16px_16px_4px] bg-blue-10 px-4 py-3 sm:px-5 sm:py-3.5">
+        <div className="flex min-w-0 flex-1 flex-col gap-3">
+          {showText && (
+            <div className="text-black-00 text-sm leading-relaxed">
+              <ReactMarkdown
+                components={MARKDOWN_COMPONENTS}
+                remarkPlugins={[remarkGfm]}
+              >
+                {renderedMarkdown}
+              </ReactMarkdown>
+            </div>
+          )}
 
-        {sources && sources.length > 0 && (
-          <div className="mt-1 flex flex-wrap items-center gap-1.5">
-            {sources.map((s) => (
-              <SourcePill key={s.id} source={s} />
-            ))}
-          </div>
-        )}
+          {choicesPart && (
+            <div className="flex flex-col gap-2.5">
+              {choicesArgs?.question && (
+                <p className="font-medium text-black-00 text-sm leading-relaxed">
+                  {choicesArgs.question}
+                </p>
+              )}
+              <div className="flex flex-wrap gap-2">
+                {choices.map((c) => (
+                  <button
+                    className="rounded-full border-[1.5px] border-teal-00 bg-transparent px-3.5 py-1.5 font-medium text-sm text-teal-00 transition-colors hover:bg-teal-00 hover:text-white-00 focus-visible:outline-2 focus-visible:outline-teal-00 focus-visible:outline-offset-2"
+                    key={c}
+                    onClick={() => onChoice(c)}
+                    type="button"
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
-        {choicesPart && (
-          <div className="flex flex-col gap-2">
-            {choicesArgs?.question && (
-              <p className="font-medium text-grey-900 text-sm">
-                {choicesArgs.question}
-              </p>
-            )}
-            <div className="flex flex-wrap gap-2">
-              {choices.map((c) => (
-                <button
-                  className="rounded-full border border-blue-100 bg-white px-4 py-2 text-blue-100 text-sm transition hover:bg-blue-10"
-                  key={c}
-                  onClick={() => onChoice(c)}
-                  type="button"
-                >
-                  {c}
-                </button>
+          {hasSources && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+              {sources.map((s) => (
+                <SourcePill key={s.id} source={s} />
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
