@@ -1,16 +1,13 @@
 import { FORM_STORAGE_KEYS, type FormSlug } from "@/lib/form-registry";
+import { CHAT_FORM_SCHEMA_LOADERS } from "./schema-registry";
 
-// Forms intentionally excluded from chat handoff. Calculators and permit
-// pages don't slot into the chat's "collect → review → submit" flow.
-const CHAT_EXCLUDED = new Set<FormSlug>([
-  "calculate-severance-pay",
-  "calculate-your-pension",
-  "crop-over-permits",
-]);
-
-const FORM_SLUG_ENTRIES = (
-  Object.entries(FORM_STORAGE_KEYS) as Array<[FormSlug, string]>
-).filter(([page]) => !CHAT_EXCLUDED.has(page));
+// Single source of truth: a form is chat-eligible iff its storage slug has
+// a loader in schema-registry. Build the (pageSlug, storageSlug) pairs the
+// retriever needs for URL → slug matching by intersecting the loader keys
+// with FORM_STORAGE_KEYS.
+const CHAT_FORM_ENTRIES: [FormSlug, string][] = (
+  Object.entries(FORM_STORAGE_KEYS) as [FormSlug, string][]
+).filter(([, storage]) => storage in CHAT_FORM_SCHEMA_LOADERS);
 
 export function knownFormSlugsInSources(
   urls: Array<string | undefined>
@@ -18,7 +15,7 @@ export function knownFormSlugsInSources(
   const hits = new Set<string>();
   for (const url of urls) {
     if (!url) continue;
-    for (const [pageSlug, storageSlug] of FORM_SLUG_ENTRIES) {
+    for (const [pageSlug, storageSlug] of CHAT_FORM_ENTRIES) {
       if (url.includes(`/${pageSlug}`)) hits.add(storageSlug);
     }
   }

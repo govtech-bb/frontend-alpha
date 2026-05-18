@@ -1,37 +1,5 @@
-import { formSteps as applyForConductorLicence } from "@/schema/apply-for-conductor-licence";
-import { formSteps as getBirthCertificate } from "@/schema/get-birth-certificate";
-import { formSteps as getDeathCertificate } from "@/schema/get-death-certificate";
-import { formSteps as getMarriageCertificate } from "@/schema/get-marriage-certificate";
-import { formSteps as jobstartPlusProgramme } from "@/schema/jobstart-plus-programme";
-import { formSteps as postOfficeRedirectionBusiness } from "@/schema/post-office-redirection-business";
-import { formSteps as postOfficeRedirectionDeceased } from "@/schema/post-office-redirection-deceased";
-import { formSteps as postOfficeRedirectionIndividual } from "@/schema/post-office-redirection-individual";
-import { formSteps as primarySchoolTextbookGrant } from "@/schema/primary-school-textbook-grant";
-import { formSteps as projectProtegeMentor } from "@/schema/project-protege-mentor";
-import { formSteps as requestAFireServiceInspection } from "@/schema/request-a-fire-service-inspection";
-import { formSteps as requestACentenarian } from "@/schema/request-a-presidential-visit-for-a-centenarian";
-import { formSteps as reserveSocietyName } from "@/schema/reserve-society-name";
-import { formSteps as sellGoodsServicesBeachPark } from "@/schema/sell-goods-services-beach-park";
-import { formSteps as communitySportsProgramme } from "@/schema/sports-training-programme-form-schema";
-import type { FormField, FormStep } from "@/types";
-
-const SCHEMA_BY_SLUG: Record<string, FormStep[]> = {
-  "apply-for-conductor-licence": applyForConductorLicence,
-  "community-sports-programme": communitySportsProgramme,
-  "get-birth-certificate": getBirthCertificate,
-  "get-death-certificate": getDeathCertificate,
-  "get-marriage-certificate": getMarriageCertificate,
-  "jobstart-plus-programme": jobstartPlusProgramme,
-  "post-office-redirection-business": postOfficeRedirectionBusiness,
-  "post-office-redirection-deceased": postOfficeRedirectionDeceased,
-  "post-office-redirection-individual": postOfficeRedirectionIndividual,
-  "primary-school-textbook-grant": primarySchoolTextbookGrant,
-  "project-protege-mentor": projectProtegeMentor,
-  "request-a-fire-service-inspection": requestAFireServiceInspection,
-  "request-a-presidential-visit-for-a-centenarian": requestACentenarian,
-  "reserve-society-name": reserveSocietyName,
-  "sell-goods-services-beach-park": sellGoodsServicesBeachPark,
-};
+import type { FormField } from "@/types";
+import { CHAT_FORM_SCHEMA_LOADERS } from "./schema-registry";
 
 function isRequired(field: FormField): boolean {
   const req = field.validation?.required;
@@ -79,18 +47,21 @@ function describeField(field: FormField, indent = ""): string[] {
 
 const SUMMARY_CACHE = new Map<string, string | null>();
 
-export function summarizeFormFields(slug: string): string | null {
+export async function summarizeFormFields(
+  slug: string
+): Promise<string | null> {
   const cached = SUMMARY_CACHE.get(slug);
   if (cached !== undefined) return cached;
 
-  const steps = SCHEMA_BY_SLUG[slug];
-  if (!steps) {
+  const loader = CHAT_FORM_SCHEMA_LOADERS[slug];
+  if (!loader) {
     SUMMARY_CACHE.set(slug, null);
     return null;
   }
 
+  const { formSteps } = await loader();
   const sections: string[] = [];
-  for (const step of steps) {
+  for (const step of formSteps) {
     if (!step.fields?.length) continue;
     if (step.id === "review" || step.id === "declaration") continue;
     const lines: string[] = [];

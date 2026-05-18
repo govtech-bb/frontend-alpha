@@ -6,7 +6,7 @@ import remarkGfm from "remark-gfm";
 import { TridentAvatar } from "@/components/trident-avatar";
 import { extractText, findToolCall } from "@/lib/chat/messages";
 import { normalizeMarkdown } from "@/lib/chat/normalize-markdown";
-import type { Source } from "@/lib/chat/types";
+import type { ChoicesArgs, Source } from "@/lib/chat/types";
 
 const Heading = ({ children }: { children?: ReactNode }) => (
   <h3 className="mt-4 mb-1 font-semibold text-grey-900">{children}</h3>
@@ -43,11 +43,6 @@ const MARKDOWN_COMPONENTS = {
   ),
 };
 
-interface ChoicesArgs {
-  question?: string;
-  choices?: string[];
-}
-
 function sourceDomain(rawUrl: string): string | null {
   try {
     return new URL(rawUrl, "https://alpha.gov.bb").hostname.replace(
@@ -65,13 +60,16 @@ const FAVICON =
 function SourcePill({ source }: { source: Source }) {
   const host = sourceDomain(source.url) ?? "source";
   const label = source.title || host;
+  const longLabel = source.section ? `${label} — ${source.section}` : label;
+  const ariaLabel = `Source: ${longLabel} (${host})`;
   return (
     <a
+      aria-label={ariaLabel}
       className="inline-flex h-6 max-w-44 items-center gap-1.5 overflow-hidden rounded-full bg-grey-50 py-0 pr-2.5 pl-1 text-grey-700 text-xs no-underline transition-colors hover:bg-grey-100 hover:text-blue-100"
       href={source.url}
       rel="noopener noreferrer"
       target="_blank"
-      title={source.section ? `${label} — ${source.section}` : label}
+      title={longLabel}
     >
       {/* biome-ignore lint/performance/noImgElement: tiny third-party favicon, next/image is overkill */}
       <img

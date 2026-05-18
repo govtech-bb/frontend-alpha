@@ -22,3 +22,8 @@ export interface RetrieveResponse {
   contexts: RetrievedContext[];
   sources: Source[];
 }
+
+export interface ChoicesArgs {
+  question?: string;
+  choices?: string[];
+}

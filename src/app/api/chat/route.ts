@@ -5,6 +5,7 @@ import {
   toServerSentEventsResponse,
 } from "@tanstack/ai";
 import { anthropicText } from "@tanstack/ai-anthropic";
+import { z } from "zod";
 import { summarizeFormFields } from "@/lib/chat/form-fields";
 import { knownFormSlugsInSources } from "@/lib/chat/known-forms";
 import { lastUserText } from "@/lib/chat/messages";
@@ -129,6 +130,35 @@ const NO_FORM_DISCLOSURE = `HARD OVERRIDE — NO ONLINE FORM AVAILABLE:
 - DO NOT end the message with "Want me to start the application/form for you?". Instead end with an informational follow-up (e.g. "Want the address of the registry office?", "Want the late-registration fees?").
 - Under NO circumstances call open_form_review this turn. The tool is not even available.`;
 
+// Minimum surface we actually rely on; mirrors AG-UI's RunAgentInput.messages
+// shape so callers can send extra AG-UI fields without us rejecting them.
+const ChatRequestSchema = z
+  .object({
+    messages: z.array(z.unknown()).default([]),
+  })
+  .passthrough();
+
+type ParseResult =
+  | { ok: true; messages: UIMessage[] }
+  | { ok: false; reason: string };
+
+async function parseChatRequest(req: Request): Promise<ParseResult> {
+  let raw: unknown;
+  try {
+    raw = await req.json();
+  } catch {
+    return { ok: false, reason: "Request body is not valid JSON" };
+  }
+  const result = ChatRequestSchema.safeParse(raw);
+  if (!result.success) {
+    return {
+      ok: false,
+      reason: result.error.issues[0]?.message ?? "Invalid request body",
+    };
+  }
+  return { ok: true, messages: result.data.messages as UIMessage[] };
+}
+
 function jsonError(message: string, status: number): Response {
   return new Response(JSON.stringify({ error: message }), {
     status,
@@ -141,7 +171,9 @@ export async function POST(req: Request): Promise<Response> {
     return jsonError("RAG_URL or ANTHROPIC_API_KEY missing", 500);
   }
 
-  const { messages = [] } = (await req.json()) as { messages?: UIMessage[] };
+  const parsed = await parseChatRequest(req);
+  if (!parsed.ok) return jsonError(parsed.reason, 400);
+  const { messages } = parsed;
 
   const query = buildRetrievalQuery(messages);
   const skipRetrieval = isGreetingOrTooShort(lastUserText(messages));
@@ -175,8 +207,13 @@ export async function POST(req: Request): Promise<Response> {
     systemPrompts.push(
       `Online forms available for this turn (these are the ONLY valid slugs for open_form_review): ${formSlugs.join(", ")}`
     );
-    for (const slug of formSlugs) {
-      const schema = summarizeFormFields(slug);
+    const summaries = await Promise.all(
+      formSlugs.map(async (slug) => ({
+        slug,
+        schema: await summarizeFormFields(slug),
+      }))
+    );
+    for (const { slug, schema } of summaries) {
       if (schema) systemPrompts.push(buildSchemaDisclosure(slug, schema));
     }
   } else {
@@ -212,10 +249,12 @@ async function* withSourcesPrefix(
   inner: AsyncIterable<StreamChunk>,
   sources: Source[]
 ): AsyncGenerator<StreamChunk> {
-  yield {
-    type: "CUSTOM",
-    name: "sources",
-    value: sources,
-  } as unknown as StreamChunk;
+  // CUSTOM events live in @ag-ui/core but aren't part of tanstack's narrower
+  // StreamChunk union, so one localized cast is unavoidable.
+  yield customChunk("sources", sources);
   for await (const chunk of inner) yield chunk;
+}
+
+function customChunk(name: string, value: unknown): StreamChunk {
+  return { type: "CUSTOM", name, value } as unknown as StreamChunk;
 }

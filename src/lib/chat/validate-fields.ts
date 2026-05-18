@@ -1,10 +1,6 @@
 import { generateFormSchema } from "@/lib/schema-generator";
 import { setNestedValue } from "@/lib/utils";
-import type { FormStep } from "@/types";
-
-interface SchemaModule {
-  formSteps: FormStep[];
-}
+import { CHAT_FORM_SCHEMA_LOADERS } from "./schema-registry";
 
 // The user signs the declaration on the review/declaration step itself, so
 // the chat doesn't collect it and the schema used for chat validation must
@@ -41,33 +37,6 @@ export function shouldSkipChatField(path: string): boolean {
   return path.startsWith("declaration.");
 }
 
-const SCHEMA_LOADERS: Record<string, () => Promise<SchemaModule>> = {
-  "apply-for-conductor-licence": () =>
-    import("@/schema/apply-for-conductor-licence"),
-  "community-sports-programme": () =>
-    import("@/schema/sports-training-programme-form-schema"),
-  "get-birth-certificate": () => import("@/schema/get-birth-certificate"),
-  "get-death-certificate": () => import("@/schema/get-death-certificate"),
-  "get-marriage-certificate": () => import("@/schema/get-marriage-certificate"),
-  "jobstart-plus-programme": () => import("@/schema/jobstart-plus-programme"),
-  "post-office-redirection-business": () =>
-    import("@/schema/post-office-redirection-business"),
-  "post-office-redirection-deceased": () =>
-    import("@/schema/post-office-redirection-deceased"),
-  "post-office-redirection-individual": () =>
-    import("@/schema/post-office-redirection-individual"),
-  "primary-school-textbook-grant": () =>
-    import("@/schema/primary-school-textbook-grant"),
-  "project-protege-mentor": () => import("@/schema/project-protege-mentor"),
-  "request-a-fire-service-inspection": () =>
-    import("@/schema/request-a-fire-service-inspection"),
-  "request-a-presidential-visit-for-a-centenarian": () =>
-    import("@/schema/request-a-presidential-visit-for-a-centenarian"),
-  "reserve-society-name": () => import("@/schema/reserve-society-name"),
-  "sell-goods-services-beach-park": () =>
-    import("@/schema/sell-goods-services-beach-park"),
-};
-
 export interface ValidationError {
   field: string;
   message: string;
@@ -82,7 +51,7 @@ const SCHEMA_CACHE = new Map<string, ReturnType<typeof generateFormSchema>>();
 async function getSchema(slug: string) {
   const cached = SCHEMA_CACHE.get(slug);
   if (cached) return cached;
-  const loader = SCHEMA_LOADERS[slug];
+  const loader = CHAT_FORM_SCHEMA_LOADERS[slug];
   if (!loader) return undefined;
   const mod = await loader();
   const stepsForChat = mod.formSteps.filter(

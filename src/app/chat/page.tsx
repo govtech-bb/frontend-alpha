@@ -22,7 +22,12 @@ const SUGGESTIONS = [
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
-  const [sourcesByTurn, setSourcesByTurn] = useState<Source[][]>([]);
+  const [sourcesByMessageId, setSourcesByMessageId] = useState<
+    Record<string, Source[]>
+  >({});
+  // Sources arrive over SSE BEFORE the assistant message is created. Hold them
+  // here until the next assistant message id shows up, then flush.
+  const pendingSourcesRef = useRef<Source[] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -34,25 +39,16 @@ export default function ChatPage() {
   const openFormReview = useMemo(
     () =>
       openFormReviewDef.client(async ({ service, fields }) => {
-        console.log("[open_form_review] called", { service, fields });
         const result = await validateFormFields(service, fields);
-        if (!result.ok) {
-          console.log("[open_form_review] validation errors", result.errors);
-          return { ok: false, errors: result.errors };
-        }
+        if (!result.ok) return { ok: false, errors: result.errors };
         try {
-          const url = prefillFormSession(service, fields);
-          console.log("[open_form_review] redirecting", url);
+          const url = await prefillFormSession(service, fields);
           router.push(url);
           return { ok: true, redirectedTo: url };
         } catch (err) {
           const message =
             err instanceof Error ? err.message : "Unable to open review page";
-          console.error("[open_form_review] redirect failed", err);
-          return {
-            ok: false,
-            errors: [{ field: "service", message }],
-          };
+          return { ok: false, errors: [{ field: "service", message }] };
         }
       }),
     [router]
@@ -67,7 +63,7 @@ export default function ChatPage() {
     tools,
     onCustomEvent: (eventType, data) => {
       if (eventType === "sources") {
-        setSourcesByTurn((prev) => [...prev, data as Source[]]);
+        pendingSourcesRef.current = data as Source[];
       }
     },
   });
@@ -75,12 +71,19 @@ export default function ChatPage() {
   const isStreaming = status === "submitted" || status === "streaming";
   const empty = messages.length === 0;
 
-  const assistantIndices = useMemo(
-    () => buildAssistantIndexMap(messages),
-    [messages]
-  );
-
   const last = messages.at(-1);
+
+  // Flush pending sources onto the latest assistant message id as soon as one
+  // appears that we haven't keyed yet.
+  useEffect(() => {
+    if (!pendingSourcesRef.current) return;
+    if (last?.role !== "assistant") return;
+    if (sourcesByMessageId[last.id]) return;
+    const sources = pendingSourcesRef.current;
+    pendingSourcesRef.current = null;
+    setSourcesByMessageId((prev) => ({ ...prev, [last.id]: sources }));
+  }, [last, sourcesByMessageId]);
+
   const scrollSignal =
     messages.length * 1_000_000 +
     (last ? last.parts.length + extractText(last).length : 0);
@@ -103,13 +106,13 @@ export default function ChatPage() {
     setInput("");
   }
 
-  function sourcesForMessage(m: UIMessage, idx: number): Source[] | undefined {
+  function sourcesForMessage(m: UIMessage): Source[] | undefined {
     if (m.role !== "assistant") return;
     const isFormFlow = toolCallsOf(m).some(
       (c) => c.name === "present_choices" || c.name === "open_form_review"
     );
     if (isFormFlow) return;
-    return sourcesByTurn[assistantIndices[idx]];
+    return sourcesByMessageId[m.id];
   }
 
   return (
@@ -133,12 +136,12 @@ export default function ChatPage() {
       ) : (
         <main className="flex-1 overflow-y-auto px-4 pb-4" ref={scrollRef}>
           <div className="mx-auto max-w-2xl space-y-4 py-4">
-            {messages.map((m, i) => (
+            {messages.map((m) => (
               <Bubble
                 key={m.id}
                 message={m}
                 onChoice={pickChoice}
-                sources={sourcesForMessage(m, i)}
+                sources={sourcesForMessage(m)}
               />
             ))}
             {isStreaming && shouldShowThinking(messages) && <ThinkingShimmer />}
@@ -187,16 +190,6 @@ function ThinkingShimmer() {
       </span>
     </div>
   );
-}
-
-function buildAssistantIndexMap(messages: UIMessage[]): number[] {
-  const map: number[] = [];
-  let count = -1;
-  for (const m of messages) {
-    if (m.role === "assistant") count += 1;
-    map.push(count);
-  }
-  return map;
 }
 
 function EmptyState({ onPick }: { onPick: (text: string) => void }) {

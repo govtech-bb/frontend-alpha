@@ -1,5 +1,6 @@
 import { getFormPageSlug } from "@/lib/form-registry";
 import { findCategoryByPageSlug, setNestedValue } from "@/lib/utils";
+import { CHAT_FORM_SCHEMA_LOADERS } from "./schema-registry";
 import { coerceValue, shouldSkipChatField } from "./validate-fields";
 
 interface PersistedFormState {
@@ -20,20 +21,29 @@ interface PersistedEnvelope {
   version: number;
 }
 
-// Number of "completed step" slots to seed. Large enough that the review step
-// is reachable by URL on any reasonable form (its index < MAX_STEPS).
-const MAX_STEPS = 50;
-
-export function prefillFormSession(
+export async function prefillFormSession(
   slug: string,
   fields: Record<string, string>
-): string {
+): Promise<string> {
   const url = formReviewUrl(slug);
   if (!url) {
     throw new Error(
       `No local form route for slug "${slug}". Chat must use a slug listed in FORM_STORAGE_KEYS.`
     );
   }
+
+  const loader = CHAT_FORM_SCHEMA_LOADERS[slug];
+  if (!loader) {
+    throw new Error(`No schema registered for slug "${slug}".`);
+  }
+  const { formSteps } = await loader();
+
+  // Seed currentStep to the review step's index and mark every preceding step
+  // complete so the form's URL-effect can navigate to ?step=review on mount.
+  const reviewIndex = Math.max(
+    formSteps.findIndex((s) => s.id === "review"),
+    0
+  );
 
   const formData: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(fields)) {
@@ -43,17 +53,15 @@ export function prefillFormSession(
 
   const envelope: PersistedEnvelope = {
     state: {
-      // Render-safe initial index; the form's URL-effect navigates to the real
-      // review step on mount once ?step=review is parsed.
-      currentStep: 0,
-      completedSteps: Array.from({ length: MAX_STEPS }, (_, i) => i),
+      currentStep: reviewIndex,
+      completedSteps: Array.from({ length: reviewIndex + 1 }, (_, i) => i),
       formData,
       lastSaved: new Date().toISOString(),
       isSubmitted: false,
       referenceNumber: null,
       customerName: null,
       paymentData: null,
-      totalSteps: MAX_STEPS,
+      totalSteps: formSteps.length,
     },
     version: 0,
   };
