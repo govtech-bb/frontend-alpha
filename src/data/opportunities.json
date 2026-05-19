@@ -21,6 +21,7 @@
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/cip/",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -41,6 +42,7 @@
     "url": "https://comdev.gov.bb/programmes/cap/",
     "applyUrl": "https://comdev.gov.bb/registration-cap/",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -61,6 +63,7 @@
     "url": "https://comdev.gov.bb/programmes/ceep/",
     "applyUrl": "https://comdev.gov.bb/registration-ceep/",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -80,6 +83,7 @@
     "url": "https://comdev.gov.bb/programmes/mission-barbados/",
     "applyUrl": "https://control.missionbarbados.gov.bb/group-registrations/register",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -100,6 +104,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/barbados-youthadvance-corps-2/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -118,6 +123,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/yes-2/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -139,6 +145,7 @@
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
     "applyUrl": "https://linktr.ee/myscebb",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -159,6 +166,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/pathways/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -183,6 +191,7 @@
         "description": "Free vocational training in 20+ courses: Motor Vehicle Engineering, Professional Housekeeping, Basic Trade Cookery, Bar Operations, hospitality, beauty, construction, healthcare."
       }
     ],
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb",
       "phone": "(246) 535-3835 / (246) 832-7602 / (246) 832-9024 / (246) 832-9022"
@@ -205,6 +214,7 @@
     "url": "https://youthaffairs.gov.bb/programme-channels/national-summer-camp-2/",
     "applyUrl": "https://linktr.ee/myscebb",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -225,6 +235,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -245,6 +256,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -265,6 +277,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -285,6 +298,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -305,6 +319,7 @@
     "deadline": null,
     "url": "https://youthaffairs.gov.bb/programme-channels/youth-development-programme/",
     "source": "youthaffairs.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -323,6 +338,7 @@
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/libraries/",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -341,6 +357,7 @@
     "deadline": null,
     "url": "https://comdev.gov.bb/canvas/",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -360,6 +377,7 @@
     "url": "https://comdev.gov.bb/programmes/cmc/",
     "applyUrl": "https://docs.google.com/forms/d/e/1FAIpQLSeWEt-xl67n-xNcPJs0PI2GzS06jWpzHIGzbp4_3UfwBC4ksA/viewform",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -380,6 +398,7 @@
     "startDate": "2025-12-15",
     "url": "https://comdev.gov.bb/programmes/spreading-joy/",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }
@@ -398,6 +417,7 @@
     "deadline": null,
     "url": "https://comdev.gov.bb/programmes/centre-access/",
     "source": "comdev.gov.bb",
+    "notificationEmail": "ydp.blockcommittee@barbados.gov.bb",
     "contact": {
       "email": "testing@govtech.bb"
     }

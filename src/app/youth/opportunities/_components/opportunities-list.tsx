@@ -34,6 +34,8 @@ export interface Opportunity {
   source?: string;
   subProgrammes?: { name: string; description: string }[];
   contact?: { email?: string; phone?: string };
+  notificationEmail?: string;
+  notificationCc?: string;
 }
 
 const CATEGORY_LABEL: Record<OpportunityCategory, string> = {
