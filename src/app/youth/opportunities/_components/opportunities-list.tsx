@@ -33,7 +33,6 @@ export interface Opportunity {
   applyUrl?: string;
   source?: string;
   subProgrammes?: { name: string; description: string }[];
-  contact?: { email?: string; phone?: string };
   notificationEmail?: string;
   notificationCc?: string;
 }
