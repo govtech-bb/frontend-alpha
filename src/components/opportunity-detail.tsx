@@ -98,30 +98,6 @@ export function OpportunityDetail({
           </Text>
         </section>
       )}
-
-      {opportunity.contact && (
-        <section className="space-y-xs">
-          <Heading as="h2">Contact</Heading>
-          <ul className="space-y-xs">
-            {opportunity.contact.email && (
-              <li>
-                <Text as="span">Email: </Text>
-                <Link
-                  as={NextLink}
-                  href={`mailto:${opportunity.contact.email}`}
-                >
-                  {opportunity.contact.email}
-                </Link>
-              </li>
-            )}
-            {opportunity.contact.phone && (
-              <li>
-                <Text as="span">Phone: {opportunity.contact.phone}</Text>
-              </li>
-            )}
-          </ul>
-        </section>
-      )}
     </article>
   );
 }
