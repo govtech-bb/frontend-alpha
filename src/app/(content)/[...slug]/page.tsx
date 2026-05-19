@@ -195,10 +195,15 @@ export default async function Page({ params }: ContentPageProps) {
         notFound();
       }
       return (
-        <OpportunityDetail
-          applyHref={`/${categorySlug}/${pageSlug}/${subPageSlug}/form`}
-          opportunity={opportunity}
-        />
+        <>
+          <ClearFormStorage
+            storageKey={`youth-opportunity-${opportunity.id}`}
+          />
+          <OpportunityDetail
+            applyHref={`/${categorySlug}/${pageSlug}/${subPageSlug}/form`}
+            opportunity={opportunity}
+          />
+        </>
       );
     }
 
