@@ -17,10 +17,6 @@ import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess } from "@/lib/research-access";
 import {
-  getYouthOpportunityNotificationCc,
-  getYouthOpportunityNotificationEmail,
-} from "@/lib/youth-opportunity-notification";
-import {
   fetchServiceConfig,
   hasProtectedSubpages,
   isServiceProtected,
@@ -298,10 +294,8 @@ export default async function Page({ params }: ContentPageProps) {
           }
         >
           <YouthOpportunityForm
-            notificationCc={getYouthOpportunityNotificationCc(opportunity)}
-            notificationEmail={getYouthOpportunityNotificationEmail(
-              opportunity
-            )}
+            notificationCc="testing@govtech.bb"
+            notificationEmail="shannon.clarke@govtech.bb"
             opportunityId={opportunity.id}
             opportunityTitle={opportunity.title}
           />
