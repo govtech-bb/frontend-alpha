@@ -1,6 +1,6 @@
 import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
-import type { Opportunity } from "@/app/youth/opportunities/_components/opportunities-list";
+import type { Opportunity } from "@/types/opportunity";
 
 function formatAgeRange(ageMin?: number, ageMax?: number): string | null {
   if (ageMin != null && ageMax != null) return `Ages ${ageMin}–${ageMax}`;

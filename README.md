@@ -43,6 +43,20 @@ Additionally, the `content-directory.ts` must be updated to list the new entry p
 
 > When adding new markdown content, make sure that you update the test snapshots. See below for instructions
 
+### Adding a youth opportunity
+
+Youth opportunities (programmes, workshops, initiatives, volunteer roles) live in `src/data/opportunities.json` as the single source of truth. The IA tree under `/youth-and-community/<subcategory>/<id>` derives its subcategory index, detail page and application form from that file at render time — opportunities are **not** listed in `content-directory.ts`, and there are no parallel dedicated routes for them.
+
+To add a new opportunity:
+
+1. Add an entry to `src/data/opportunities.json` with a unique URL-safe `id`, a canonical `title`, and a `subcategory` set to one of the five IA subcategory slugs:
+   - `youth-development-leadership`
+   - `skills-trades-vocational-training`
+   - `entrepreneurship-business`
+   - `arts-culture`
+   - `children-families-community`
+2. That's it — the opportunity is picked up by the matching subcategory index and gets a detail page and form automatically.
+
 ### Branch deployments to Live/Dev custom domains
 
 Code is deployed and hosted via AWS Amplify where the environment variables are also stored. Note the following:
