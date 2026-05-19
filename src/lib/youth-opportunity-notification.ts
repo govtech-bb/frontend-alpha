@@ -1,4 +1,4 @@
-import type { Opportunity } from "@/app/youth/opportunities/_components/opportunities-list";
+import type { Opportunity } from "@/types/opportunity";
 
 export const DEFAULT_YOUTH_OPPORTUNITY_NOTIFICATION_EMAIL =
   "shannon.clarke@govtech.bb";
