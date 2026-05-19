@@ -4,13 +4,14 @@ import { Suspense } from "react";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import opportunitiesData from "@/data/opportunities.json";
 import { SITE_URL } from "@/lib/site-url";
+import {
+  getYouthOpportunityNotificationCc,
+  getYouthOpportunityNotificationEmail,
+} from "@/lib/youth-opportunity-notification";
 import type { Opportunity } from "../../_components/opportunities-list";
 import { YouthOpportunityForm } from "./_components/youth-opportunity-form";
 
 const opportunities = opportunitiesData as Opportunity[];
-
-const DEFAULT_YOUTH_OPPORTUNITY_NOTIFICATION_EMAIL =
-  "shannon.clarke@govtech.bb";
 
 function findOpportunity(id: string): Opportunity | undefined {
   return opportunities.find((opp) => opp.id === id);
@@ -69,11 +70,8 @@ export default async function YouthOpportunityFormPage({
       }
     >
       <YouthOpportunityForm
-        notificationCc={opportunity.notificationCc ?? null}
-        notificationEmail={
-          opportunity.notificationEmail ??
-          DEFAULT_YOUTH_OPPORTUNITY_NOTIFICATION_EMAIL
-        }
+        notificationCc={getYouthOpportunityNotificationCc(opportunity)}
+        notificationEmail={getYouthOpportunityNotificationEmail(opportunity)}
         opportunityId={opportunity.id}
         opportunityTitle={opportunity.title}
       />
