@@ -15,12 +15,6 @@ import opportunitiesData from "@/data/opportunities.json";
 import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess } from "@/lib/research-access";
-import {
-  fetchServiceConfig,
-  hasProtectedSubpages,
-  isServiceProtected,
-  isSubpageProtected,
-} from "@/lib/service-access-api";
 import { SITE_URL } from "@/lib/site-url";
 import { findSubPageTitleFromPath } from "@/lib/utils";
 import {
@@ -53,6 +47,11 @@ export default async function Page({ params }: ContentPageProps) {
       return <MarkdownContent markdown={markdownContent} />;
     }
 
+    const researchAccess = await hasResearchAccess();
+    const visiblePages = category.pages.filter(
+      (p) => !p.protected || researchAccess
+    );
+
     return (
       <>
         <Heading as="h1">{category.title}</Heading>
@@ -64,7 +63,7 @@ export default async function Page({ params }: ContentPageProps) {
             </Text>
           ))}
         <div className="flex flex-col divide-y-2 divide-grey-00 last:border-grey-00 last:border-b-2">
-          {category.pages.map((service) => (
+          {visiblePages.map((service) => (
             <div
               className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
               key={service.title}
@@ -143,14 +142,12 @@ export default async function Page({ params }: ContentPageProps) {
       );
     }
 
-    const serviceConfig = await fetchServiceConfig(pageSlug);
-
-    // Hide the start-link CTA when the service itself is flagged OR when
-    // any subpage (start/form) is flagged — but the entry page still renders.
-    const startLinkHidden =
-      isServiceProtected(serviceConfig) || hasProtectedSubpages(serviceConfig);
-
-    const hasAccess = startLinkHidden ? await hasResearchAccess() : true;
+    if (page.protected) {
+      const hasAccess = await hasResearchAccess();
+      if (!hasAccess) {
+        notFound();
+      }
+    }
 
     const markdownContent = await getMarkdownContent([pageSlug]);
     if (!markdownContent) {
@@ -164,10 +161,7 @@ export default async function Page({ params }: ContentPageProps) {
           event="page-service-view"
           form={pageSlug}
         />
-        <MarkdownContent
-          hasResearchAccess={hasAccess}
-          markdown={markdownContent}
-        />
+        <MarkdownContent markdown={markdownContent} />
       </>
     );
   }
@@ -210,16 +204,11 @@ export default async function Page({ params }: ContentPageProps) {
       );
     }
 
-    const serviceConfig = await fetchServiceConfig(pageSlug);
+    const subPage = page.subPages?.find((sp) => sp.slug === subPageSlug);
+    const isProtected = page.protected || subPage?.protected;
 
-    // Block a subpage when it is individually flagged OR the whole service is flagged
-    const subpageFlagged =
-      isServiceProtected(serviceConfig) ||
-      isSubpageProtected(serviceConfig, subPageSlug);
-
-    let hasAccess = true;
-    if (subpageFlagged) {
-      hasAccess = await hasResearchAccess();
+    if (isProtected) {
+      const hasAccess = await hasResearchAccess();
       if (!hasAccess) {
         notFound();
       }
@@ -256,10 +245,7 @@ export default async function Page({ params }: ContentPageProps) {
             form={pageSlug}
           />
         )}
-        <MarkdownContent
-          hasResearchAccess={hasAccess}
-          markdown={markdownContent}
-        />
+        <MarkdownContent markdown={markdownContent} />
       </>
     );
   }
@@ -389,12 +375,9 @@ export async function generateMetadata({ params }: ContentPageProps) {
     }
 
     if (page) {
-      const serviceConfig = await fetchServiceConfig(pageSlug);
-      const subpageFlagged =
-        isServiceProtected(serviceConfig) ||
-        isSubpageProtected(serviceConfig, subPageSlug);
-
-      if (subpageFlagged) {
+      const subPage = page.subPages?.find((sp) => sp.slug === subPageSlug);
+      const isProtected = page.protected || subPage?.protected;
+      if (isProtected) {
         const hasAccess = await hasResearchAccess();
         if (!hasAccess) {
           return { title: "Page not found" };

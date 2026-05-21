@@ -100,6 +100,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Request a Presidential Visit for a Centenarian",
         slug: "request-a-presidential-visit-for-a-centenarian",
+        protected: true,
         description:
           "Ask the President to visit a Barbadian who is turning 100 years old. Submit at least 3 months before the birthday.",
         subPages: [

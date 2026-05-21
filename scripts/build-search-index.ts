@@ -239,6 +239,7 @@ async function collectServices(): Promise<IndexDoc[]> {
   const docs: IndexDoc[] = [];
   for (const category of INFORMATION_ARCHITECTURE) {
     for (const page of category.pages) {
+      if (page.protected) continue;
       const fullSlug = `${category.slug}/${page.slug}`;
       const md = await gatherMarkdownForService(page.slug);
       docs.push({

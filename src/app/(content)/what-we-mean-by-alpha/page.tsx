@@ -1,6 +1,7 @@
 import { Heading, Link, Text } from "@govtech-bb/react";
 import type { Metadata } from "next";
 import NextLink from "next/link";
+import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { getAlphaServices } from "@/lib/markdown";
 import { SITE_URL } from "@/lib/site-url";
 
@@ -9,7 +10,17 @@ export const metadata: Metadata = {
 };
 
 export default async function WhatWeMeanByAlphaPage() {
-  const alphaServices = await getAlphaServices();
+  const allAlphaServices = await getAlphaServices();
+
+  const protectedSlugs = new Set(
+    INFORMATION_ARCHITECTURE.flatMap((cat) =>
+      cat.pages.filter((p) => p.protected).map((p) => p.slug)
+    )
+  );
+
+  const alphaServices = allAlphaServices.filter(
+    (s) => !protectedSlugs.has(s.slug)
+  );
 
   return (
     <article className="flex flex-col gap-xm">

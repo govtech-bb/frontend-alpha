@@ -51,11 +51,17 @@ export default async function ServicesPage() {
   const alphaServices = await getAlphaServices();
   const alphaSlugs = new Set(alphaServices.map((s) => s.slug));
 
+  const protectedSlugs = new Set(
+    INFORMATION_ARCHITECTURE.flatMap((cat) =>
+      cat.pages.filter((p) => p.protected).map((p) => p.slug)
+    )
+  );
+
   const items: AlphaListItem[] = [];
   for (const category of INFORMATION_ARCHITECTURE) {
     for (const page of category.pages) {
       const fullSlug = `${category.slug}/${page.slug}`;
-      if (alphaSlugs.has(fullSlug)) {
+      if (alphaSlugs.has(fullSlug) && !protectedSlugs.has(page.slug)) {
         items.push({
           title: page.title,
           href: page.href ?? `/${fullSlug}`,
