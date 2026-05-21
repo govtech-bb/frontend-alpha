@@ -142,11 +142,9 @@ export default async function Page({ params }: ContentPageProps) {
       );
     }
 
-    if (page.protected) {
-      const hasAccess = await hasResearchAccess();
-      if (!hasAccess) {
-        notFound();
-      }
+    const researchAccess = await hasResearchAccess();
+    if (page.protected && !researchAccess) {
+      notFound();
     }
 
     const markdownContent = await getMarkdownContent([pageSlug]);
@@ -161,7 +159,10 @@ export default async function Page({ params }: ContentPageProps) {
           event="page-service-view"
           form={pageSlug}
         />
-        <MarkdownContent markdown={markdownContent} />
+        <MarkdownContent
+          hasResearchAccess={!page.protected || researchAccess}
+          markdown={markdownContent}
+        />
       </>
     );
   }
@@ -207,11 +208,9 @@ export default async function Page({ params }: ContentPageProps) {
     const subPage = page.subPages?.find((sp) => sp.slug === subPageSlug);
     const isProtected = page.protected || subPage?.protected;
 
-    if (isProtected) {
-      const hasAccess = await hasResearchAccess();
-      if (!hasAccess) {
-        notFound();
-      }
+    const researchAccess = await hasResearchAccess();
+    if (isProtected && !researchAccess) {
+      notFound();
     }
 
     // Handle form pages (JSX components)
@@ -245,7 +244,10 @@ export default async function Page({ params }: ContentPageProps) {
             form={pageSlug}
           />
         )}
-        <MarkdownContent markdown={markdownContent} />
+        <MarkdownContent
+          hasResearchAccess={!isProtected || researchAccess}
+          markdown={markdownContent}
+        />
       </>
     );
   }
