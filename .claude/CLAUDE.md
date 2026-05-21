@@ -125,4 +125,12 @@ Biome's linter will catch most issues automatically. Focus your attention on:
 
 ---
 
+## Data conventions
+
+### Youth opportunities
+
+`src/data/opportunities.json` is the single source of truth for youth opportunity content. The IA tree under `/youth-and-community/<subcategory>/<id>` derives its subcategory indexes, detail pages and application forms from that file at render time — never mirror opportunity entries into `content-directory.ts`, and don't introduce parallel dedicated routes for opportunities. To add an opportunity, edit `opportunities.json` and set its `subcategory` field to one of the five IA subcategory slugs (`youth-development-leadership`, `skills-trades-vocational-training`, `entrepreneurship-business`, `arts-culture`, `children-families-community`).
+
+---
+
 Most formatting and common issues are automatically fixed by Biome. Run `npx ultracite fix` before committing to ensure compliance.

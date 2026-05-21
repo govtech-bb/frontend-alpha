@@ -2,8 +2,6 @@ import { Heading, Link, Text } from "@govtech-bb/react";
 import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import type { Opportunity } from "@/app/youth/opportunities/_components/opportunities-list";
-import { YouthOpportunityForm } from "@/app/youth/opportunities/[id]/form/_components/youth-opportunity-form";
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
@@ -11,23 +9,19 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { MarkdownContent } from "@/components/markdown-content";
 import { OpportunityDetail } from "@/components/opportunity-detail";
 import { PageViewTracker } from "@/components/page-view-tracker";
+import { YouthOpportunityForm } from "@/components/youth-opportunity-form/youth-opportunity-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import opportunitiesData from "@/data/opportunities.json";
 import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess } from "@/lib/research-access";
+import { SITE_URL } from "@/lib/site-url";
+import { findSubPageTitleFromPath } from "@/lib/utils";
 import {
   getYouthOpportunityNotificationCc,
   getYouthOpportunityNotificationEmail,
 } from "@/lib/youth-opportunity-notification";
-import {
-  fetchServiceConfig,
-  hasProtectedSubpages,
-  isServiceProtected,
-  isSubpageProtected,
-} from "@/lib/service-access-api";
-import { SITE_URL } from "@/lib/site-url";
-import { findSubPageTitleFromPath } from "@/lib/utils";
+import type { Opportunity } from "@/types/opportunity";
 
 const opportunities = opportunitiesData as Opportunity[];
 
@@ -53,6 +47,11 @@ export default async function Page({ params }: ContentPageProps) {
       return <MarkdownContent markdown={markdownContent} />;
     }
 
+    const researchAccess = await hasResearchAccess();
+    const visiblePages = category.pages.filter(
+      (p) => !p.protected || researchAccess
+    );
+
     return (
       <>
         <Heading as="h1">{category.title}</Heading>
@@ -64,7 +63,7 @@ export default async function Page({ params }: ContentPageProps) {
             </Text>
           ))}
         <div className="flex flex-col divide-y-2 divide-grey-00 last:border-grey-00 last:border-b-2">
-          {category.pages.map((service) => (
+          {visiblePages.map((service) => (
             <div
               className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
               key={service.title}
@@ -113,24 +112,28 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    // Subcategory index: render the nested pages as clickable tiles
-    if (page.pages && page.pages.length > 0) {
+    // Subcategory index for youth-and-community: derive opportunities from
+    // opportunities.json, matching on `opportunity.subcategory === pageSlug`.
+    if (categorySlug === "youth-and-community") {
+      const subcategoryOpportunities = opportunities.filter(
+        (opp) => opp.subcategory === pageSlug
+      );
       return (
         <>
           <Heading as="h1">{page.title}</Heading>
           {page.description && <Text as="p">{page.description}</Text>}
           <div className="flex flex-col divide-y-2 divide-grey-00 last:border-grey-00 last:border-b-2">
-            {page.pages.map((child) => (
+            {subcategoryOpportunities.map((opp) => (
               <div
                 className="py-4 first:pt-4 lg:py-8 first:lg:pt-8"
-                key={child.slug}
+                key={opp.id}
               >
                 <Link
                   as={NextLink}
                   className="cursor-pointer text-[20px] leading-normal lg:text-3xl"
-                  href={`/${categorySlug}/${pageSlug}/${child.slug}`}
+                  href={`/${categorySlug}/${pageSlug}/${opp.id}`}
                 >
-                  {child.title}
+                  {opp.title}
                 </Link>
               </div>
             ))}
@@ -139,14 +142,12 @@ export default async function Page({ params }: ContentPageProps) {
       );
     }
 
-    const serviceConfig = await fetchServiceConfig(pageSlug);
-
-    // Hide the start-link CTA when the service itself is flagged OR when
-    // any subpage (start/form) is flagged — but the entry page still renders.
-    const startLinkHidden =
-      isServiceProtected(serviceConfig) || hasProtectedSubpages(serviceConfig);
-
-    const hasAccess = startLinkHidden ? await hasResearchAccess() : true;
+    if (page.protected) {
+      const hasAccess = await hasResearchAccess();
+      if (!hasAccess) {
+        notFound();
+      }
+    }
 
     const markdownContent = await getMarkdownContent([pageSlug]);
     if (!markdownContent) {
@@ -160,10 +161,7 @@ export default async function Page({ params }: ContentPageProps) {
           event="page-service-view"
           form={pageSlug}
         />
-        <MarkdownContent
-          hasResearchAccess={hasAccess}
-          markdown={markdownContent}
-        />
+        <MarkdownContent markdown={markdownContent} />
       </>
     );
   }
@@ -184,13 +182,12 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    // Opportunity detail under a subcategory: third slug is the opportunity id
-    if (page.pages && page.pages.length > 0) {
-      const childPage = page.pages.find((p) => p.slug === subPageSlug);
-      if (!childPage) {
-        notFound();
-      }
-      const opportunity = opportunities.find((opp) => opp.id === subPageSlug);
+    // Opportunity detail under a youth-and-community subcategory: third slug
+    // is the opportunity id, and the opportunity's subcategory must match.
+    if (categorySlug === "youth-and-community") {
+      const opportunity = opportunities.find(
+        (opp) => opp.id === subPageSlug && opp.subcategory === pageSlug
+      );
       if (!opportunity) {
         notFound();
       }
@@ -207,16 +204,11 @@ export default async function Page({ params }: ContentPageProps) {
       );
     }
 
-    const serviceConfig = await fetchServiceConfig(pageSlug);
+    const subPage = page.subPages?.find((sp) => sp.slug === subPageSlug);
+    const isProtected = page.protected || subPage?.protected;
 
-    // Block a subpage when it is individually flagged OR the whole service is flagged
-    const subpageFlagged =
-      isServiceProtected(serviceConfig) ||
-      isSubpageProtected(serviceConfig, subPageSlug);
-
-    let hasAccess = true;
-    if (subpageFlagged) {
-      hasAccess = await hasResearchAccess();
+    if (isProtected) {
+      const hasAccess = await hasResearchAccess();
       if (!hasAccess) {
         notFound();
       }
@@ -253,18 +245,15 @@ export default async function Page({ params }: ContentPageProps) {
             form={pageSlug}
           />
         )}
-        <MarkdownContent
-          hasResearchAccess={hasAccess}
-          markdown={markdownContent}
-        />
+        <MarkdownContent markdown={markdownContent} />
       </>
     );
   }
 
-  // Four slugs: Opportunity application form under a subcategory
+  // Four slugs: Opportunity application form under a youth-and-community subcategory
   if (slug.length === 4) {
     const [categorySlug, pageSlug, opportunitySlug, leafSlug] = slug;
-    if (leafSlug !== "form") {
+    if (leafSlug !== "form" || categorySlug !== "youth-and-community") {
       notFound();
     }
 
@@ -276,16 +265,13 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     const page = category.pages.find((p) => p.slug === pageSlug);
-    if (!page?.pages || page.pages.length === 0) {
+    if (!page) {
       notFound();
     }
 
-    const childPage = page.pages.find((p) => p.slug === opportunitySlug);
-    if (!childPage) {
-      notFound();
-    }
-
-    const opportunity = opportunities.find((opp) => opp.id === opportunitySlug);
+    const opportunity = opportunities.find(
+      (opp) => opp.id === opportunitySlug && opp.subcategory === pageSlug
+    );
     if (!opportunity) {
       notFound();
     }
@@ -322,9 +308,15 @@ export async function generateMetadata({ params }: ContentPageProps) {
   const { slug } = await params;
 
   // Opportunity application form (4 slugs)
-  if (slug.length === 4 && slug[3] === "form") {
-    const [, , opportunitySlug] = slug;
-    const opportunity = opportunities.find((opp) => opp.id === opportunitySlug);
+  if (
+    slug.length === 4 &&
+    slug[3] === "form" &&
+    slug[0] === "youth-and-community"
+  ) {
+    const [, pageSlug, opportunitySlug] = slug;
+    const opportunity = opportunities.find(
+      (opp) => opp.id === opportunitySlug && opp.subcategory === pageSlug
+    );
     if (opportunity) {
       const title = `Apply for ${opportunity.title}`;
       const description = `Apply for ${opportunity.title}. ${opportunity.description}`;
@@ -348,9 +340,11 @@ export async function generateMetadata({ params }: ContentPageProps) {
     );
     const page = category?.pages.find((p) => p.slug === pageSlug);
 
-    // Opportunity detail under a subcategory
-    if (page?.pages && page.pages.length > 0) {
-      const opportunity = opportunities.find((opp) => opp.id === subPageSlug);
+    // Opportunity detail under a youth-and-community subcategory
+    if (page && categorySlug === "youth-and-community") {
+      const opportunity = opportunities.find(
+        (opp) => opp.id === subPageSlug && opp.subcategory === pageSlug
+      );
       if (opportunity) {
         const canonical = `${SITE_URL}/${slug.join("/")}`;
         return {
@@ -381,12 +375,9 @@ export async function generateMetadata({ params }: ContentPageProps) {
     }
 
     if (page) {
-      const serviceConfig = await fetchServiceConfig(pageSlug);
-      const subpageFlagged =
-        isServiceProtected(serviceConfig) ||
-        isSubpageProtected(serviceConfig, subPageSlug);
-
-      if (subpageFlagged) {
+      const subPage = page.subPages?.find((sp) => sp.slug === subPageSlug);
+      const isProtected = page.protected || subPage?.protected;
+      if (isProtected) {
         const hasAccess = await hasResearchAccess();
         if (!hasAccess) {
           return { title: "Page not found" };
@@ -456,7 +447,7 @@ export async function generateMetadata({ params }: ContentPageProps) {
     const page = category?.pages.find((p) => p.slug === pageSlug);
 
     // Subcategory index — no markdown, use the page's own metadata
-    if (page?.pages && page.pages.length > 0) {
+    if (page && categorySlug === "youth-and-community") {
       const canonical = `${SITE_URL}/${slug.join("/")}`;
       const description = page.description || "";
       return {
