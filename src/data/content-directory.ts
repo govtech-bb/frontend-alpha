@@ -370,6 +370,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Visitor permit application",
         slug: "visitor-permit-application",
+        protected: true,
         source_url:
           "https://www.gov.bb/Visit-Barbados/visitorpermitapplication",
         description:
