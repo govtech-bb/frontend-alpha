@@ -45,6 +45,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     for (const page of category.pages) {
+      if (page.protected) continue;
+
       const contentFile = await findContentFile(page.slug);
       if (!contentFile) continue;
 

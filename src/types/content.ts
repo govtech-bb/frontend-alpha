@@ -17,7 +17,10 @@ export interface PageType {
     slug: string;
     title?: string;
     type: "markdown" | "component";
+    protected?: boolean;
   }[];
+  /** When true, the page and all its subpages are hidden from public listings, search, sitemap, and require research access to view. */
+  protected?: boolean;
   /** Search-only tags. Useful for abbreviations and common alternate names. */
   keywords?: string[];
   /**
