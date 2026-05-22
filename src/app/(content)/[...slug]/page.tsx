@@ -16,7 +16,7 @@ import { getFormStorageKey } from "@/lib/form-registry";
 import { getMarkdownContent } from "@/lib/markdown";
 import { hasResearchAccess } from "@/lib/research-access";
 import { SITE_URL } from "@/lib/site-url";
-import { findSubPageTitleFromPath } from "@/lib/utils";
+import { findSubPageTitleFromPath, isCategoryHidden } from "@/lib/utils";
 import {
   getYouthOpportunityNotificationCc,
   getYouthOpportunityNotificationEmail,
@@ -48,6 +48,9 @@ export default async function Page({ params }: ContentPageProps) {
     }
 
     const researchAccess = await hasResearchAccess();
+    if (!researchAccess && isCategoryHidden(category)) {
+      notFound();
+    }
     const visiblePages = category.pages.filter(
       (p) => !p.protected || researchAccess
     );
