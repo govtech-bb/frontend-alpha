@@ -456,6 +456,30 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         ],
       },
       {
+        title: "Justice of the Peace",
+        slug: "justice-of-the-peace",
+        protected: true,
+        subPages: [
+          {
+            slug: "find",
+            title: "Find a Justice of the Peace",
+            type: "component",
+          },
+        ],
+        keywords: [
+          "JP",
+          "justices of the peace",
+          "certify",
+          "certified copy",
+          "affidavit",
+          "witness",
+          "swear",
+          "statutory declaration",
+        ],
+        description:
+          "Find a Justice of the Peace in Barbados to certify copies, witness signatures, or take an affidavit — free of charge.",
+      },
+      {
         title: "Redirect my personal mail",
         slug: "post-office-redirection-individual",
         description: "Redirect my personal mail",

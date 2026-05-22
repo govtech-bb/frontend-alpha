@@ -29,7 +29,9 @@ const ALL_SERVICES: ServiceSummary[] = INFORMATION_ARCHITECTURE.flatMap(
       categorySlug: category.slug,
       categoryTitle: category.title,
       hasImplementation:
-        page.subPages?.some((sp) => sp.type === "component") ?? false,
+        page.subPages?.some(
+          (sp) => sp.slug === "form" && sp.type === "component"
+        ) ?? false,
     }))
 );
 
