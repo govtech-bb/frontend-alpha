@@ -298,6 +298,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Calculate your pension",
         slug: "calculate-your-pension",
+        protected: true,
         description:
           "Estimate your public sector pension and gratuity (lump sum) based on your pensionable service and last annual salary.",
         subPages: [
