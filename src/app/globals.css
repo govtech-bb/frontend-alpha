@@ -100,3 +100,78 @@
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+
+/* Justice of the Peace map markers
+   Rendered inside Leaflet DivIcons, so they must be plain CSS classes
+   (Tailwind utilities passed via className would be purged). */
+.jp-marker {
+  width: 28px;
+  height: 28px;
+  background: var(--color-green-00);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.jp-marker--selected {
+  background: var(--color-yellow-100, #facc15);
+  color: var(--color-dark-grey-00, #1f2937);
+  transform: scale(1.15);
+}
+
+.jp-parish-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.jp-parish-label {
+  display: inline-block;
+  background: #fff;
+  border: 2px solid var(--color-green-00);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-green-00);
+  cursor: pointer;
+  white-space: nowrap;
+  line-height: 1.4;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -50%);
+  transition:
+    background 150ms,
+    color 150ms,
+    transform 120ms;
+}
+.jp-parish-label:hover {
+  background: var(--color-green-00);
+  color: #fff;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+.jp-parish-label--active {
+  background: var(--color-green-00);
+  color: #fff;
+}
+
+.leaflet-tooltip.jp-here-tooltip {
+  background: var(--color-green-00);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+.leaflet-tooltip.jp-here-tooltip::before {
+  border-top-color: var(--color-green-00);
+}
