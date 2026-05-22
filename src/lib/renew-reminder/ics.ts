@@ -27,8 +27,8 @@ function buildEventDescription(reminder: ReminderEvent): string {
 
 export function googleCalendarURL(reminder: ReminderEvent): string {
   const eventDate = new Date(reminder.reminderDateISO);
-  const start = formatDateUTC(eventDate);
-  const end = formatDateUTC(addDays(eventDate, 1));
+  const start = formatDateLocal(eventDate);
+  const end = formatDateLocal(addDays(eventDate, 1));
 
   const params = new URLSearchParams({
     action: "TEMPLATE",
@@ -41,18 +41,22 @@ export function googleCalendarURL(reminder: ReminderEvent): string {
 }
 
 export function outlookCalendarURL(reminder: ReminderEvent): string {
+  // Outlook Live's all-day deeplink can treat enddt as inclusive, producing
+  // a 2-day block. Schedule a short timed event at 09:00 local instead so
+  // the reminder sits unambiguously on the chosen day.
   const eventDate = new Date(reminder.reminderDateISO);
-  const startdt = formatDateOnly(eventDate);
-  const enddt = formatDateOnly(addDays(eventDate, 1));
+  const start = new Date(eventDate);
+  start.setHours(9, 0, 0, 0);
+  const end = new Date(start);
+  end.setMinutes(30);
 
   const params = new URLSearchParams({
     path: "/calendar/action/compose",
     rru: "addevent",
     subject: eventTitle(reminder),
     body: buildEventDescription(reminder),
-    startdt,
-    enddt,
-    allday: "true",
+    startdt: formatDateTimeLocal(start),
+    enddt: formatDateTimeLocal(end),
   });
 
   return `https://outlook.live.com/calendar/0/deeplink/compose?${params.toString()}`;
@@ -60,8 +64,8 @@ export function outlookCalendarURL(reminder: ReminderEvent): string {
 
 export function buildICS(reminder: ReminderEvent): string {
   const eventDate = new Date(reminder.reminderDateISO);
-  const dtstart = formatDateUTC(eventDate);
-  const dtend = formatDateUTC(addDays(eventDate, 1));
+  const dtstart = formatDateLocal(eventDate);
+  const dtend = formatDateLocal(addDays(eventDate, 1));
   const dtstamp = formatDateTimeUTC(new Date());
 
   const lines = [
@@ -116,14 +120,25 @@ function pad(n: number): string {
   return String(n).padStart(2, "0");
 }
 
-function formatDateUTC(d: Date): string {
-  return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}`;
+// All-day calendar events are date-only and have no time zone. We construct
+// reminderDate from local Y/M/D, so we read it back with local getters too —
+// using UTC getters here would shift the event by a day for anyone not at
+// UTC+0 at midnight.
+function formatDateLocal(d: Date): string {
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}`;
 }
 
-function formatDateOnly(d: Date): string {
-  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(d.getUTCDate())}`;
+// YYYY-MM-DDTHH:MM:SS — Outlook deeplink timed-event format (no timezone
+// suffix; Outlook treats it as the user's local time).
+function formatDateTimeLocal(d: Date): string {
+  return (
+    `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` +
+    `T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`
+  );
 }
 
+// DTSTAMP is a UTC timestamp of "when this iCalendar object was created" —
+// that one is genuinely UTC per RFC 5545.
 function formatDateTimeUTC(d: Date): string {
   return (
     `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}` +
@@ -133,7 +148,7 @@ function formatDateTimeUTC(d: Date): string {
 
 function addDays(d: Date, days: number): Date {
   const out = new Date(d);
-  out.setUTCDate(out.getUTCDate() + days);
+  out.setDate(out.getDate() + days);
   return out;
 }
 

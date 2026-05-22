@@ -13,7 +13,7 @@ import {
   Text,
 } from "@govtech-bb/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import {
   downloadICS,
@@ -83,32 +83,70 @@ function formatLongDate(d: Date): string {
   });
 }
 
+interface ExpiryFieldErrors {
+  day?: string;
+  month?: string;
+  year?: string;
+  summary?: string;
+}
+
 type ParseDateResult =
   | { ok: true; date: Date }
-  | { ok: false; reason: "incomplete" | "invalid" | "past" };
+  | { ok: false; errors: ExpiryFieldErrors };
 
 function parseExpiry(parts: DateInputValue): ParseDateResult {
-  if (!(parts.day && parts.month && parts.year))
-    return { ok: false, reason: "incomplete" };
   const d = Number.parseInt(parts.day, 10);
   const m = Number.parseInt(parts.month, 10);
   const y = Number.parseInt(parts.year, 10);
-  if (
-    !(Number.isFinite(d) && Number.isFinite(m) && Number.isFinite(y)) ||
-    d < 1 ||
-    d > 31 ||
-    m < 1 ||
-    m > 12 ||
-    y < 1900 ||
-    y > 2100
-  )
-    return { ok: false, reason: "invalid" };
+
+  const allBlank = !(parts.day || parts.month || parts.year);
+  if (allBlank) {
+    return {
+      ok: false,
+      errors: {
+        day: "Enter the expiry date",
+        summary: "Enter the expiry date",
+      },
+    };
+  }
+
+  const errors: ExpiryFieldErrors = {};
+  if (!parts.day) errors.day = "Enter the day";
+  else if (!Number.isFinite(d) || d < 1 || d > 31)
+    errors.day = "Day must be a number between 1 and 31";
+
+  if (!parts.month) errors.month = "Enter the month";
+  else if (!Number.isFinite(m) || m < 1 || m > 12)
+    errors.month = "Month must be a number between 1 and 12";
+
+  if (!parts.year) errors.year = "Enter the year";
+  else if (!Number.isFinite(y) || y < 1900 || y > 2100)
+    errors.year = "Year must be a 4-digit number, like 2027";
+
+  if (errors.day || errors.month || errors.year) {
+    errors.summary =
+      errors.day ?? errors.month ?? errors.year ?? "Enter a valid expiry date";
+    return { ok: false, errors };
+  }
+
   const dt = new Date(y, m - 1, d);
-  if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== d)
-    return { ok: false, reason: "invalid" };
+  if (dt.getFullYear() !== y || dt.getMonth() !== m - 1 || dt.getDate() !== d) {
+    const msg = "Enter a real date — for example, 15 6 2027";
+    return {
+      ok: false,
+      errors: { day: msg, month: msg, year: msg, summary: msg },
+    };
+  }
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  if (dt.getTime() < today.getTime()) return { ok: false, reason: "past" };
+  if (dt.getTime() < today.getTime()) {
+    const msg = "The expiry date must be today or in the future";
+    return {
+      ok: false,
+      errors: { day: msg, month: msg, year: msg, summary: msg },
+    };
+  }
   return { ok: true, date: dt };
 }
 
@@ -134,7 +172,28 @@ export default function RenewReminderForm() {
 
   const [itemError, setItemError] = useState("");
   const [customNameError, setCustomNameError] = useState("");
-  const [expiryError, setExpiryError] = useState("");
+  const [expiryFieldErrors, setExpiryFieldErrors] =
+    useState<ExpiryFieldErrors | null>(null);
+  const [offsetAdjusted, setOffsetAdjusted] = useState<{
+    from: number;
+    to: number;
+  } | null>(null);
+
+  // Update document.title when the step changes so screen readers re-read
+  // the heading and the browser tab reflects which step the user is on.
+  // The form is a single client component, so Next.js's RouteAnnouncer
+  // doesn't fire between steps — this is our only signal that the page
+  // advanced.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const stepTitle: Record<Step, string> = {
+      item: "What do you want a reminder for?",
+      expiry: "When does it expire?",
+      check: "Check your answers",
+      save: "Save your reminder to your calendar",
+    };
+    document.title = `${stepTitle[step]} — ${SERVICE_TITLE}`;
+  }, [step]);
 
   const go = (next: Step) => {
     setStep(next);
@@ -183,19 +242,16 @@ export default function RenewReminderForm() {
   }
 
   function submitExpiry() {
-    setExpiryError("");
+    setExpiryFieldErrors(null);
     if (!expiryResult.ok) {
-      const msg =
-        expiryResult.reason === "incomplete"
-          ? "Enter the expiry date including day, month and year"
-          : expiryResult.reason === "past"
-            ? "The expiry date must be today or in the future"
-            : "Enter a real date — for example, 15 6 2027";
-      setExpiryError(msg);
+      setExpiryFieldErrors(expiryResult.errors);
       return;
     }
     // Normalise the chosen offset so we don't land on Check Answers with
-    // a default 30-day offset selected when only 7 days fits.
+    // a default 30-day offset selected when only 7 days fits. Record the
+    // adjustment so we can surface it on the Check step — silently
+    // overriding the user's prior choice would let them save a reminder
+    // they never explicitly confirmed.
     const d = expiryResult.date;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -204,9 +260,13 @@ export default function RenewReminderForm() {
       x.setDate(x.getDate() - days);
       return x.getTime() >= today.getTime();
     };
-    if (!fits(offset)) {
+    if (fits(offset)) {
+      setOffsetAdjusted(null);
+    } else {
       const next = OFFSET_CHOICES.find((c) => fits(c.days));
-      setOffset(next?.days ?? 7);
+      const nextDays = next?.days ?? 7;
+      setOffsetAdjusted({ from: offset, to: nextDays });
+      setOffset(nextDays);
     }
     go("check");
   }
@@ -233,7 +293,8 @@ export default function RenewReminderForm() {
     setReminder(null);
     setItemError("");
     setCustomNameError("");
-    setExpiryError("");
+    setExpiryFieldErrors(null);
+    setOffsetAdjusted(null);
     go("item");
   }
 
@@ -241,6 +302,20 @@ export default function RenewReminderForm() {
     <>
       <div className="container py-4 lg:py-6">
         <Breadcrumbs />
+      </div>
+      <div
+        aria-atomic="true"
+        aria-live="polite"
+        className="sr-only"
+        // Announces the new step's heading to screen readers, since the
+        // single-page form has no route change for the route announcer
+        // to catch.
+        key={step}
+      >
+        {step === "item" && "What do you want a reminder for?"}
+        {step === "expiry" && "When does it expire?"}
+        {step === "check" && "Check your answers"}
+        {step === "save" && "Save your reminder to your calendar"}
       </div>
       <div className="container pt-4 pb-8 lg:py-8">
         {step === "item" && (
@@ -328,9 +403,34 @@ export default function RenewReminderForm() {
               submitExpiry();
             }}
           >
-            {expiryError && (
+            {expiryFieldErrors && (
               <ErrorSummary
-                errors={[{ text: expiryError, target: "expiry-date-day" }]}
+                errors={[
+                  ...(expiryFieldErrors.day
+                    ? [
+                        {
+                          text: expiryFieldErrors.day,
+                          target: "expiry-date-day",
+                        },
+                      ]
+                    : []),
+                  ...(expiryFieldErrors.month
+                    ? [
+                        {
+                          text: expiryFieldErrors.month,
+                          target: "expiry-date-month",
+                        },
+                      ]
+                    : []),
+                  ...(expiryFieldErrors.year
+                    ? [
+                        {
+                          text: expiryFieldErrors.year,
+                          target: "expiry-date-year",
+                        },
+                      ]
+                    : []),
+                ]}
                 title="There is a problem"
               />
             )}
@@ -342,12 +442,20 @@ export default function RenewReminderForm() {
             </Text>
             <DateInput
               description="For example, 15 6 2027"
-              error={expiryError || undefined}
+              error={
+                expiryFieldErrors
+                  ? {
+                      day: expiryFieldErrors.day,
+                      month: expiryFieldErrors.month,
+                      year: expiryFieldErrors.year,
+                    }
+                  : undefined
+              }
               label="Expiry date"
               name="expiry-date"
               onChange={(v) => {
                 setExpiry(v);
-                if (expiryError) setExpiryError("");
+                if (expiryFieldErrors) setExpiryFieldErrors(null);
               }}
               required
               value={expiry}
@@ -401,11 +509,31 @@ export default function RenewReminderForm() {
               </div>
             </dl>
 
+            {offsetAdjusted && (
+              <div
+                aria-live="polite"
+                className="rounded-sm bg-blue-10 px-6 py-4"
+                role="status"
+              >
+                <Text as="p">
+                  Your <strong>{offsetAdjusted.from} days before</strong>{" "}
+                  reminder would land in the past, so we&rsquo;ve switched it to{" "}
+                  <strong>{offsetAdjusted.to} days before</strong>. You can
+                  change it below.
+                </Text>
+              </div>
+            )}
+
             {anyOffsetValid ? (
               <RadioGroup
                 description="Choose one — your calendar can only hold one reminder event per save."
                 label="When should we remind you?"
-                onValueChange={(v) => setOffset(Number(v))}
+                onValueChange={(v) => {
+                  setOffset(Number(v));
+                  // The user explicitly picked an offset — dismiss the
+                  // auto-adjust notice so it doesn't linger.
+                  if (offsetAdjusted) setOffsetAdjusted(null);
+                }}
                 value={String(offset)}
               >
                 {OFFSET_CHOICES.map(({ days, label }) => {
