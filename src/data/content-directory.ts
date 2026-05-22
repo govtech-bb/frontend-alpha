@@ -435,6 +435,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Justice of the Peace",
         slug: "justice-of-the-peace",
+        protected: true,
         keywords: [
           "JP",
           "justices of the peace",
