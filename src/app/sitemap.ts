@@ -3,6 +3,7 @@ import path from "node:path";
 import type { MetadataRoute } from "next";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
 import { SITE_URL } from "@/lib/site-url";
+import { isCategoryHidden } from "@/lib/utils";
 
 const contentDir = path.join(process.cwd(), "src", "content");
 
@@ -38,6 +39,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   for (const category of INFORMATION_ARCHITECTURE) {
+    if (isCategoryHidden(category)) continue;
+
     entries.push({
       url: `${SITE_URL}/${category.slug}`,
       changeFrequency: "weekly",

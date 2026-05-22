@@ -121,3 +121,10 @@ export const findCategoryByPageSlug = (
   INFORMATION_ARCHITECTURE.find((category) =>
     category.pages.some((page) => page.slug === slug)
   );
+
+/**
+ * A category is hidden from the public when it has no pages, or every page
+ * is protected. Research-access users still see it.
+ */
+export const isCategoryHidden = (category: InformationContent): boolean =>
+  category.pages.length === 0 || category.pages.every((page) => page.protected);
