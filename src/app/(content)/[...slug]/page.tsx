@@ -5,6 +5,10 @@ import { Suspense } from "react";
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
+import {
+  FindJusticeOfThePeacePage,
+  findJusticeOfThePeaceMetadata,
+} from "@/components/justice-of-the-peace/find-page";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { MarkdownContent } from "@/components/markdown-content";
 import { OpportunityDetail } from "@/components/opportunity-detail";
@@ -216,6 +220,14 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    if (
+      categorySlug === "travel-id-citizenship" &&
+      pageSlug === "justice-of-the-peace" &&
+      subPageSlug === "find"
+    ) {
+      return <FindJusticeOfThePeacePage />;
+    }
+
     // Handle form pages (JSX components)
     if (subPageSlug === "form") {
       return (
@@ -388,6 +400,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
           return { title: "Page not found" };
         }
       }
+    }
+
+    if (
+      slug[0] === "travel-id-citizenship" &&
+      slug[1] === "justice-of-the-peace" &&
+      slug[2] === "find"
+    ) {
+      return findJusticeOfThePeaceMetadata;
     }
 
     if (subPageSlug === "form") {

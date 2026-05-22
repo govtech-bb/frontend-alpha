@@ -12,7 +12,7 @@ const DESCRIPTION =
   "Search the directory of Justices of the Peace in Barbados by parish or by your current location.";
 const CANONICAL = `${SITE_URL}/travel-id-citizenship/justice-of-the-peace/find`;
 
-export const metadata: Metadata = {
+export const findJusticeOfThePeaceMetadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: CANONICAL },
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FindAJusticeOfThePeacePage() {
+export function FindJusticeOfThePeacePage() {
   return (
     <>
       <Heading as="h1">{TITLE}</Heading>
