@@ -44,7 +44,10 @@ interface AlphaListItem {
 }
 
 function pageHasOnlineForm(page: PageType): boolean {
-  return page.subPages?.some((s) => s.type === "component") ?? false;
+  return (
+    page.subPages?.some((s) => s.slug === "form" && s.type === "component") ??
+    false
+  );
 }
 
 export default async function ServicesPage() {
