@@ -1,7 +1,9 @@
 import { Heading, Link, Text } from "@govtech-bb/react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { JusticeOfThePeaceFinder } from "@/components/justice-of-the-peace/finder";
 import jpData from "@/data/justices-of-the-peace.json";
+import { hasResearchAccess } from "@/lib/research-access";
 import { SITE_URL } from "@/lib/site-url";
 import type { JusticeOfThePeace } from "@/types/justice-of-the-peace";
 
@@ -36,7 +38,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function FindAJusticeOfThePeacePage() {
+export default async function FindAJusticeOfThePeacePage() {
+  if (!(await hasResearchAccess())) {
+    notFound();
+  }
+
   return (
     <>
       <Heading as="h1">{TITLE}</Heading>
