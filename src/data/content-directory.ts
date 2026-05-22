@@ -433,6 +433,30 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           "Information on how to get a document notarised in Barbados, including the role of Notary Publics and contact details.",
       },
       {
+        title: "Get a reminder before a document expires",
+        slug: "renew-reminder",
+        protected: true,
+        keywords: [
+          "reminder",
+          "renew",
+          "expiry",
+          "driver's licence",
+          "passport",
+          "national ID",
+          "vehicle registration",
+          "permit",
+        ],
+        description:
+          "Set a free calendar reminder before your driver's licence, passport, National ID Card, vehicle registration, or permit runs out.",
+        subPages: [
+          {
+            slug: "form",
+            title: "Get a reminder before a document expires",
+            type: "component",
+          },
+        ],
+      },
+      {
         title: "Justice of the Peace",
         slug: "justice-of-the-peace",
         protected: true,

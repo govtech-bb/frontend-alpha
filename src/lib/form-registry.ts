@@ -64,6 +64,9 @@ export const FORM_COMPONENTS = {
         "@/components/forms/request-a-presidential-visit-for-a-centenarian-form"
       )
   ),
+  "renew-reminder": lazy(
+    () => import("@/components/forms/renew-reminder-form")
+  ),
   // Add other forms here
 } as const;
 
@@ -94,6 +97,7 @@ export const FORM_STORAGE_KEYS: Record<FormSlug, string> = {
   "crop-over-permits": "crop-over-permits",
   "request-a-presidential-visit-for-a-centenarian":
     "request-a-presidential-visit-for-a-centenarian",
+  "renew-reminder": "renew-reminder",
 };
 
 /**
