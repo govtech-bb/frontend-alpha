@@ -50,3 +50,31 @@ export function formatDistance(km: number): string {
 export function listParishes(jps: JusticeOfThePeace[]): string[] {
   return [...new Set(jps.map((jp) => jp.parish))].sort();
 }
+
+export const PARISH_CENTRES: Record<string, Coordinates> = {
+  "Christ Church": { lat: 13.075, lng: -59.55 },
+  "St. Andrew": { lat: 13.192, lng: -59.553 },
+  "St. George": { lat: 13.135, lng: -59.574 },
+  "St. James": { lat: 13.167, lng: -59.635 },
+  "St. John": { lat: 13.13, lng: -59.498 },
+  "St. Joseph": { lat: 13.187, lng: -59.523 },
+  "St. Lucy": { lat: 13.278, lng: -59.604 },
+  "St. Michael": { lat: 13.112, lng: -59.612 },
+  "St. Peter": { lat: 13.253, lng: -59.615 },
+  "St. Philip": { lat: 13.08, lng: -59.482 },
+  "St. Thomas": { lat: 13.162, lng: -59.602 },
+};
+
+const MILES_TO_KM = 1.609_34;
+
+export function milesToKm(miles: number): number {
+  return miles * MILES_TO_KM;
+}
+
+export function filterByRadiusKm(
+  jps: JusticeOfThePeace[],
+  origin: Coordinates,
+  radiusKm: number
+): JusticeOfThePeace[] {
+  return jps.filter((jp) => haversineKm(origin, jp) <= radiusKm);
+}

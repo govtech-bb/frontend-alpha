@@ -10,7 +10,7 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "no-referrer" },
   {
     key: "Permissions-Policy",
-    value: "geolocation=(), microphone=(), camera=(), payment=(), usb=()",
+    value: "geolocation=(self), microphone=(), camera=(), payment=(), usb=()",
   },
   { key: "X-Frame-Options", value: "DENY" },
 ];

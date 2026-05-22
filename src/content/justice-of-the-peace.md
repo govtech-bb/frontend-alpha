@@ -46,15 +46,23 @@ If you are signing something in front of the JP, **do not sign it before you arr
 
 ## How to find a Justice of the Peace
 
-1. **Search the directory.** Look up JPs by parish or use your device's location. The directory lists every JP on the official register.
+1. #### Search the directory
+
+   Look up JPs by parish or use your device's location. The directory lists every JP on the official register.
 
    <a data-start-link href="/travel-id-citizenship/justice-of-the-peace/find">Find a JP</a>
 
-2. **Get help by phone.** We do not show personal contact details for JPs online. If you cannot find one in the directory, contact one of the offices below.
+2. #### Get help by phone
 
-   **Office of the Attorney General.** Phone [(246) 467-7370](tel:+12464677370) or email [agoffice@barbados.gov.bb](mailto:agoffice@barbados.gov.bb).
+   We do not show personal contact details for JPs online. If you cannot find one in the directory, contact one of the offices below.
 
-   **Barbados Judicial System**, for JP services linked to court matters. Phone [(246) 535-9700](tel:+12465359700).
+   **Office of the Attorney General**
+
+   Phone [(246) 467-7370](tel:+12464677370) or email [agoffice@barbados.gov.bb](mailto:agoffice@barbados.gov.bb).
+
+   **Barbados Judicial System**, for JP services linked to court matters.
+
+   Phone [(246) 535-9700](tel:+12465359700).
 
 ## If you live overseas
 
