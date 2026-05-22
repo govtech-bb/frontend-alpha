@@ -2,19 +2,23 @@ import { cn } from "@/lib/utils";
 
 export function TridentAvatar({
   size = "sm",
+  tone = "plain",
   className,
 }: {
   size?: "sm" | "lg";
+  tone?: "plain" | "filled";
   className?: string;
 }) {
   const dims = size === "lg" ? "h-32 w-32" : "h-8 w-8";
   const tridentSize = size === "lg" ? "w-24" : "w-4";
+  const filled = tone === "filled";
 
   return (
     <div
       aria-hidden="true"
       className={cn(
         "relative flex shrink-0 items-center justify-center",
+        filled && "rounded-full bg-teal-00",
         size === "lg" &&
           "motion-safe:animate-[bot-hum_3s_ease-in-out_infinite]",
         dims,
@@ -22,7 +26,11 @@ export function TridentAvatar({
       )}
     >
       <svg
-        className={cn("relative z-[1] fill-black-00", tridentSize)}
+        className={cn(
+          "relative z-1",
+          filled ? "fill-white-00" : "fill-black-00",
+          tridentSize
+        )}
         viewBox="0 0 26 27"
         xmlns="http://www.w3.org/2000/svg"
       >

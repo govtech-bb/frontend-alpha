@@ -101,6 +101,23 @@
   word-break: break-word;
 }
 
+@utility text-bubble {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  @media (min-width: 768px) {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+  }
+}
+
+@utility text-disclaimer {
+  font-size: 0.875rem;
+  line-height: var(--line-height-caption);
+  @media (min-width: 768px) {
+    font-size: var(--font-size-caption);
+  }
+}
+
 @keyframes bot-hum {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.03); }
