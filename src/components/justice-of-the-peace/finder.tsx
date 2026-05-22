@@ -384,16 +384,6 @@ export function JusticeOfThePeaceFinder({ jps }: JusticeOfThePeaceFinderProps) {
             on the register, the row is tagged{" "}
             <em>&ldquo;Work address&rdquo;</em>.
           </Text>
-
-          <Text as="p" className="mt-2 text-base text-gray-800">
-            <strong>About these pins.</strong> The official register lists each
-            JP&rsquo;s parish and address as text — it has no map coordinates.
-            We have looked the addresses up against OpenStreetMap to place each
-            pin, so positions are usually within a few hundred metres of the
-            real address. Where the address is not in OpenStreetMap, the pin
-            shows the nearest known landmark instead. Always confirm using the
-            address shown in the list.
-          </Text>
         </div>
 
         <div
@@ -442,6 +432,15 @@ export function JusticeOfThePeaceFinder({ jps }: JusticeOfThePeaceFinderProps) {
                 selectedParish={parish}
                 userLocation={userLocation}
               />
+              <Text as="p" className="mt-2 text-base text-gray-800">
+                <strong>About these pins.</strong> The official register lists
+                each JP&rsquo;s parish and address as text — it has no map
+                coordinates. We have looked the addresses up against
+                OpenStreetMap to place each pin, so positions are usually within
+                a few hundred metres of the real address. Where the address is
+                not in OpenStreetMap, the pin shows the nearest known landmark
+                instead. Always confirm using the address shown in the list.
+              </Text>
             </div>
           </div>
         </div>
