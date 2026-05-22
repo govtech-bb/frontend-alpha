@@ -1,8 +1,10 @@
 "use client";
 
-import { BackButton, Button, Input } from "@govtech-bb/react";
+import { BackButton, Button, Input, Logo, Text } from "@govtech-bb/react";
 import type { UIMessage } from "@tanstack/ai";
 import { fetchServerSentEvents, useChat } from "@tanstack/ai-react";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Bubble } from "@/components/chat/bubble";
@@ -125,7 +127,8 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex h-dvh flex-col bg-white-00">
+      <SiteHeader />
       <ChatHeader />
 
       <main className="flex-1 overflow-y-auto px-s pb-s" ref={scrollRef}>
@@ -155,6 +158,39 @@ export default function ChatPage() {
         onSubmit={() => submit(input)}
         streaming={isStreaming}
       />
+    </div>
+  );
+}
+
+function SiteHeader() {
+  return (
+    <div>
+      <div className="bg-blue-100 text-white-00">
+        <div className="flex items-center gap-xs px-s py-xs md:px-xl">
+          <Image
+            alt=""
+            aria-hidden="true"
+            className="block"
+            height={16}
+            src="/images/coat-of-arms.png"
+            width={17}
+          />
+          <Text as="span" className="text-white-00" size="caption">
+            Official government website
+          </Text>
+        </div>
+      </div>
+      <header className="bg-yellow-100">
+        <div className="px-s py-s md:px-xl md:py-m">
+          <Link aria-label="Go to the alpha.gov.bb homepage" href="/">
+            <Logo
+              aria-hidden="true"
+              className="h-7 w-auto md:h-9"
+              width="auto"
+            />
+          </Link>
+        </div>
+      </header>
     </div>
   );
 }

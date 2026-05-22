@@ -1,6 +1,7 @@
-import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import { Heading, Link, Text } from "@govtech-bb/react";
 import type { Metadata } from "next";
 import NextLink from "next/link";
+import { ChatAssistant } from "@/components/chat-assistant";
 import { HelpfulBox } from "@/components/layout/helpful-box";
 import { SearchForm } from "@/components/search-form";
 import { INFORMATION_ARCHITECTURE } from "@/data/content-directory";
@@ -36,75 +37,62 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <section className="border-yellow-00 border-b-4 bg-yellow-100">
+      <section className="border-yellow-00 border-b-4 bg-blue-00 text-white-00">
         <div className="container">
-          <div className="space-y-4 py-8">
-            <Heading as="h1">
-              How you find and use government services is changing
-            </Heading>
-            <Text as="p">
-              It will be clearer, simpler and faster for citizens to get things
-              done.
-            </Text>
-            <LinkButton
-              className="bg-[#1a777d]!"
-              href="/tell-us"
-              variant="primary"
-            >
-              Tell us what's important
-            </LinkButton>
+          <div className="space-y-m py-m lg:py-l">
+            <div className="max-w-210 space-y-s">
+              <Heading as="h1" className="text-balance">
+                Find and use Barbados government services
+              </Heading>
+              <Text as="p" className="text-pretty">
+                Ask anything — applications, certificates, licences, benefits,
+                and more. Get instant guidance.
+              </Text>
+            </div>
+            <ChatAssistant />
           </div>
         </div>
       </section>
 
-      <section className="border-teal-40 border-b-4 bg-teal-10">
+      <section className="border-teal-100 border-b-4 bg-green-10">
         <div className="container">
-          <div className="space-y-4 py-8">
-            <Heading as="h2">Alpha services</Heading>
-
-            <Text as="p">
-              These services are new. We're working on them and they are likely
-              to change as we learn more.
-            </Text>
-
-            <div className="flex flex-col gap-2">
-              <Text as="p" className="font-bold">
-                Search for a service
-              </Text>
-              <SearchForm />
-            </div>
-
-            <Link as={NextLink} href="/services">
-              View all services
-            </Link>
+          <div className="space-y-m py-m">
+            <Heading as="h3">
+              Or search all government services directly
+            </Heading>
+            <SearchForm />
           </div>
         </div>
       </section>
 
       <section>
         <div className="container">
-          <div className="space-y-4 py-8">
-            <Heading as="h2">Government services</Heading>
+          <div className="space-y-m py-m lg:py-l">
+            <Heading as="h1" className="text-balance">
+              All government services
+            </Heading>
 
             <div className="flex flex-col">
               {INFORMATION_ARCHITECTURE.map((service) => (
                 <div
-                  className="border-grey-00 border-t-2 py-4 first:border-0 lg:py-8"
+                  className="border-grey-00 border-b-2 py-s lg:py-xm"
                   key={service.title}
                 >
                   <Link
                     as={NextLink}
-                    className="mb-2 text-[20px] leading-normal lg:gap-3 lg:text-[1.5rem] lg:leading-[2rem]"
+                    className="font-bold text-[20px] leading-normal lg:text-3xl"
                     href={service.slug}
                   >
                     {service.title}
                   </Link>
-                  <Text as="p">{service.description}</Text>
+                  <Text as="p" className="mt-xxs text-pretty">
+                    {service.description}
+                  </Text>
                 </div>
               ))}
             </div>
           </div>
-          <HelpfulBox className="mb-4 lg:mb-16" />
+          <HelpfulBox className="mb-s lg:mb-l" />
         </div>
       </section>
     </>
