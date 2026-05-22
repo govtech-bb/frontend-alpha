@@ -435,6 +435,7 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Get a reminder before a document expires",
         slug: "renew-reminder",
+        protected: true,
         keywords: [
           "reminder",
           "renew",
