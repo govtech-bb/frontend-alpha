@@ -56,3 +56,8 @@ next-env.d.ts
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# RAG worker
+/worker/node_modules
+/worker/.wrangler
+/vectors.ndjson
