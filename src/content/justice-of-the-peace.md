@@ -48,7 +48,7 @@ If you are signing something in front of the JP, **do not sign it before you arr
 
 1. **Search the directory.** Look up JPs by parish or use your device's location. The directory lists every JP on the official register.
 
-   [Find a JP](/travel-id-citizenship/justice-of-the-peace/find)
+   <a data-start-link href="/travel-id-citizenship/justice-of-the-peace/find">Find a JP</a>
 
 2. **Get help by phone.** We do not show personal contact details for JPs online. If you cannot find one in the directory, contact one of the offices below.
 
