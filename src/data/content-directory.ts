@@ -629,6 +629,39 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
     ],
   },
   {
+    title: "Health and emergency services",
+    slug: "health-and-emergency-services",
+    description:
+      "Find a pharmacy that accepts SBS prescriptions, and other health and emergency services.",
+    pages: [
+      {
+        title: "Find an open pharmacy",
+        slug: "open-pharmacy",
+        protected: true,
+        keywords: [
+          "pharmacy",
+          "pharmacies",
+          "SBS",
+          "Special Benefit Service",
+          "drugs",
+          "prescription",
+          "polyclinic",
+          "Barbados Drug Service",
+          "BDS",
+        ],
+        description:
+          "Find a pharmacy in Barbados that accepts Special Benefit Service (SBS) prescriptions, with live opening hours and directions.",
+        subPages: [
+          {
+            slug: "find",
+            title: "Find an open pharmacy",
+            type: "component",
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: "Public safety",
     slug: "public-safety",
     description: "Reporting crime, raising a concern and safeguarding",

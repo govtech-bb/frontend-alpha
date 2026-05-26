@@ -11,6 +11,10 @@ import {
 } from "@/components/justice-of-the-peace/find-page";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { MarkdownContent } from "@/components/markdown-content";
+import {
+  FindOpenPharmacyPage,
+  findOpenPharmacyMetadata,
+} from "@/components/open-pharmacy/find-page";
 import { OpportunityDetail } from "@/components/opportunity-detail";
 import { PageViewTracker } from "@/components/page-view-tracker";
 import { YouthOpportunityForm } from "@/components/youth-opportunity-form/youth-opportunity-form";
@@ -228,6 +232,14 @@ export default async function Page({ params }: ContentPageProps) {
       return <FindJusticeOfThePeacePage />;
     }
 
+    if (
+      categorySlug === "health-and-emergency-services" &&
+      pageSlug === "open-pharmacy" &&
+      subPageSlug === "find"
+    ) {
+      return <FindOpenPharmacyPage />;
+    }
+
     // Handle form pages (JSX components)
     if (subPageSlug === "form") {
       return (
@@ -408,6 +420,14 @@ export async function generateMetadata({ params }: ContentPageProps) {
       slug[2] === "find"
     ) {
       return findJusticeOfThePeaceMetadata;
+    }
+
+    if (
+      slug[0] === "health-and-emergency-services" &&
+      slug[1] === "open-pharmacy" &&
+      slug[2] === "find"
+    ) {
+      return findOpenPharmacyMetadata;
     }
 
     if (subPageSlug === "form") {
