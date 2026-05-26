@@ -1,9 +1,15 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: Using any to avoid multiple complex types for each html tag */
 
-import { Heading, Link, LinkButton, Text } from "@govtech-bb/react";
+import { Heading, Link, LinkButton, ShowHide, Text } from "@govtech-bb/react";
 import { format, parseISO } from "date-fns";
 import NextLink from "next/link";
-import type { ComponentPropsWithoutRef } from "react";
+import {
+  Children,
+  type ComponentPropsWithoutRef,
+  isValidElement,
+  type ReactElement,
+  type ReactNode,
+} from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
@@ -90,6 +96,21 @@ export const markdownComponents: Components = {
       >
         {children}
       </Link>
+    );
+  },
+  details: ({ children }: ComponentPropsWithoutRef<"details">) => {
+    const items = Children.toArray(children);
+    const summaryElement = items.find(
+      (child): child is ReactElement<{ children?: ReactNode }> =>
+        isValidElement(child) && child.type === "summary"
+    );
+    const body = items.filter(
+      (child) => !(isValidElement(child) && child.type === "summary")
+    );
+    return (
+      <ShowHide summary={summaryElement?.props.children ?? null}>
+        {body}
+      </ShowHide>
     );
   },
   blockquote: (props: BlockquoteProps) => (
@@ -179,7 +200,7 @@ export const markdownComponents: Components = {
   },
 };
 
-type MarkdownContentProps = {
+interface MarkdownContentProps {
   markdown: {
     frontmatter: {
       [key: string]: any;
@@ -187,11 +208,14 @@ type MarkdownContentProps = {
     content: string;
   };
   hasResearchAccess?: boolean;
-};
+  /** Optional content rendered after the markdown, within the content column. */
+  footer?: ReactNode;
+}
 
 export const MarkdownContent = ({
   markdown,
   hasResearchAccess = false,
+  footer,
 }: MarkdownContentProps) => {
   const { frontmatter, content } = markdown;
   return (
@@ -233,6 +257,7 @@ export const MarkdownContent = ({
         >
           {content}
         </ReactMarkdown>
+        {footer}
       </div>
     </div>
   );
