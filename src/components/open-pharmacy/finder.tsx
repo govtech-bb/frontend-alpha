@@ -1,8 +1,9 @@
 "use client";
 
-import { Button, Select } from "@govtech-bb/react";
+import { Select, Text } from "@govtech-bb/react";
+import { Clock, Map as MapIcon, MapPin, Phone } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   BARBADOS_PARISHES,
   buildDirectionsHref,
@@ -19,6 +20,8 @@ import {
   nextOpening,
   openStatus,
   sortPharmacies,
+  TYPE_COLOURS,
+  TYPE_LEGEND_LABELS,
 } from "@/lib/open-pharmacy";
 import type { Pharmacy, PharmacyType } from "@/types/pharmacy";
 
@@ -65,12 +68,30 @@ export function OpenPharmacyFinder({ pharmacies }: OpenPharmacyFinderProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [mapVisible, setMapVisible] = useState(false);
   const [barbadosNow, setBarbadosNow] = useState(() => getBarbadosTime());
+  const [isStuck, setIsStuck] = useState(false);
+  const filterRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const id = setInterval(() => {
       setBarbadosNow(getBarbadosTime());
     }, TICK_INTERVAL_MS);
     return () => clearInterval(id);
+  }, []);
+
+  // Detect when the filter bar becomes stuck to the top of the viewport.
+  // A fully-visible bar has intersectionRatio 1; once it sticks at top:0 the
+  // 1px shrunk root margin clips its top edge, dropping the ratio below 1.
+  useEffect(() => {
+    const el = filterRef.current;
+    if (!el) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsStuck(entry.intersectionRatio < 1),
+      { threshold: [1], rootMargin: "-1px 0px 0px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const { day, minutes, date } = barbadosNow;
@@ -102,8 +123,8 @@ export function OpenPharmacyFinder({ pharmacies }: OpenPharmacyFinderProps) {
     setActiveParish(event.target.value);
     setCurrentPage(1);
   };
-  const handleOpenOnlyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOpenOnly(event.target.checked);
+  const handleOpenOnlyChange = (next: boolean) => {
+    setOpenOnly(next);
     setCurrentPage(1);
   };
 
@@ -114,81 +135,117 @@ export function OpenPharmacyFinder({ pharmacies }: OpenPharmacyFinderProps) {
   const timeChip = `${formatBarbadosDate(date)}, ${formatBarbadosTime(date)}`;
 
   return (
-    <div className="mt-6 flex flex-col gap-6">
-      <div
-        aria-live="polite"
-        className="inline-flex w-fit items-center gap-2 border border-grey-00 bg-grey-00 px-3 py-1.5 font-bold text-blue-100 text-sm"
-      >
-        {timeChip}
-      </div>
+    <div className="mt-4 flex flex-col gap-6">
+      <p className="m-0 flex items-center gap-2 text-mid-grey-00">
+        <Clock aria-hidden="true" className="size-5 shrink-0" />
+        <span aria-live="polite">{timeChip}</span>
+      </p>
+
+      <Text as="p" className="text-mid-grey-00">
+        12 government polyclinic pharmacies (free) and over 70 private
+        pharmacies that accept Special Benefit Service (SBS) prescriptions, with
+        a small dispensing fee, across Barbados. Filter by parish or type to
+        find one near you.
+      </Text>
 
       <section
         aria-label="Filter pharmacies"
-        className="flex flex-col gap-4 border border-grey-00 bg-grey-00 p-4"
+        className={`sticky top-0 z-20 border-grey-00 border-y bg-white ${
+          isStuck ? "ml-[calc(50%-50vw)] w-screen" : ""
+        }`}
+        ref={filterRef}
       >
-        <label className="flex items-center gap-3">
-          <input
+        <div
+          className={`flex flex-wrap items-center gap-4 py-4 ${
+            isStuck ? "container" : ""
+          }`}
+        >
+          <button
             aria-checked={openOnly}
-            checked={openOnly}
-            className="h-5 w-5 cursor-pointer"
-            onChange={handleOpenOnlyChange}
+            className="inline-flex cursor-pointer items-center gap-3"
+            onClick={() => handleOpenOnlyChange(!openOnly)}
             role="switch"
-            type="checkbox"
-          />
-          <span className="font-bold text-sm">Open now only</span>
-        </label>
+            type="button"
+          >
+            <span
+              className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors ${
+                openOnly ? "bg-green-00" : "bg-grey-00"
+              }`}
+            >
+              <span
+                className={`inline-block size-5 transform rounded-full bg-white shadow transition-transform ${
+                  openOnly ? "translate-x-5" : "translate-x-0.5"
+                }`}
+              />
+            </span>
+            <span className="font-bold text-base">Open now only</span>
+          </button>
 
-        <fieldset className="m-0 border-0 p-0">
-          <legend className="mb-2 block font-bold text-blue-100 text-sm">
-            Type
-          </legend>
-          <div className="flex flex-wrap gap-2">
+          <fieldset className="m-0 flex flex-wrap items-center gap-2 border-0 p-0">
+            <legend className="float-left mr-2 font-bold text-base text-black-00">
+              Type:
+            </legend>
             {TYPE_OPTIONS.map((opt) => {
               const isActive = activeType === opt.value;
+              const swatch =
+                opt.value === "all" ? null : TYPE_COLOURS[opt.value];
               return (
                 <button
                   aria-pressed={isActive}
-                  className={`cursor-pointer border-2 px-3.5 py-1 font-bold text-sm leading-snug transition-colors ${
+                  className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-1.5 font-bold text-sm transition-colors ${
                     isActive
-                      ? "border-blue-100 bg-blue-100 text-white"
-                      : "border-grey-00 bg-white text-blue-100 hover:border-blue-100"
+                      ? "border-green-00 bg-green-00 text-white"
+                      : "border-grey-00 bg-white text-black-00 hover:border-green-00"
                   }`}
                   key={opt.value}
                   onClick={() => handleTypeChange(opt.value)}
                   type="button"
                 >
+                  {swatch && (
+                    <span
+                      aria-hidden="true"
+                      className="size-3 shrink-0 rounded-[2px]"
+                      style={{ backgroundColor: swatch }}
+                    />
+                  )}
                   {opt.label}
                 </button>
               );
             })}
-          </div>
-        </fieldset>
+          </fieldset>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-end">
-          <Select
-            label="Parish"
-            name="parish"
-            onChange={handleParishChange}
-            value={activeParish}
-          >
-            <option value="all">All parishes</option>
-            {BARBADOS_PARISHES.map((p) => (
-              <option key={p} value={p}>
-                {p}
-              </option>
-            ))}
-          </Select>
-
-          <div className="flex flex-col gap-2">
-            <span className="font-bold text-blue-100 text-sm">Map</span>
-            <Button
-              onClick={() => setMapVisible((v) => !v)}
-              type="button"
-              variant="secondary"
+          <div className="flex items-center gap-2">
+            <label
+              className="font-bold text-base text-black-00"
+              htmlFor="parish-filter"
             >
-              {mapVisible ? "Hide map" : "Show map"}
-            </Button>
+              Parish:
+            </label>
+            <div className="w-48">
+              <Select
+                id="parish-filter"
+                name="parish"
+                onChange={handleParishChange}
+                value={activeParish}
+              >
+                <option value="all">All parishes</option>
+                {BARBADOS_PARISHES.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </Select>
+            </div>
           </div>
+
+          <button
+            className="ml-auto inline-flex cursor-pointer items-center gap-2 rounded-sm border-2 border-teal-00 px-4 py-2 font-bold text-teal-00 transition-colors hover:bg-teal-00 hover:text-white"
+            onClick={() => setMapVisible((v) => !v)}
+            type="button"
+          >
+            <MapIcon aria-hidden="true" className="size-5 shrink-0" />
+            {mapVisible ? "Hide map" : "Show map"}
+          </button>
         </div>
       </section>
 
@@ -203,8 +260,8 @@ export function OpenPharmacyFinder({ pharmacies }: OpenPharmacyFinderProps) {
         <FinderMap day={day} minutes={minutes} pharmacies={filtered} />
       )}
 
-      <div className="flex items-baseline justify-between gap-3 border-dark-grey-00 border-b-2 pb-2">
-        <p className="font-bold text-blue-100">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="m-0 font-bold text-black-00">
           {filtered.length === 0
             ? "No pharmacies match your filters"
             : `Showing ${start + 1}–${end} of ${filtered.length} pharmacies`}
@@ -215,6 +272,21 @@ export function OpenPharmacyFinder({ pharmacies }: OpenPharmacyFinderProps) {
             </>
           )}
         </p>
+        <ul className="m-0 flex flex-wrap items-center gap-x-4 gap-y-1.5 p-0">
+          {(Object.keys(TYPE_LEGEND_LABELS) as PharmacyType[]).map((type) => (
+            <li
+              className="flex list-none items-center gap-2 text-mid-grey-00 text-sm"
+              key={type}
+            >
+              <span
+                aria-hidden="true"
+                className="size-3 shrink-0 rounded-[2px]"
+                style={{ backgroundColor: TYPE_COLOURS[type] }}
+              />
+              {TYPE_LEGEND_LABELS[type]}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {filtered.length === 0 ? (
@@ -257,7 +329,11 @@ function PharmacyCard({ pharmacy, day, minutes }: PharmacyCardProps) {
       const closingNote =
         closesAt === null ? "" : ` · closes ${formatMinutesAsTime(closesAt)}`;
       return (
-        <span className="inline-flex items-center bg-green-40 px-2 py-0.5 font-bold text-green-00 text-xs">
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-green-40 px-3 py-1 font-bold text-green-00 text-xs">
+          <span
+            aria-hidden="true"
+            className="size-1.5 rounded-full bg-green-00"
+          />
           Open now{closingNote}
         </span>
       );
@@ -265,63 +341,101 @@ function PharmacyCard({ pharmacy, day, minutes }: PharmacyCardProps) {
     if (status === false) {
       const nextNote = next ? ` · opens ${nextLabel(next, day)}` : "";
       return (
-        <span className="inline-flex items-center bg-red-10 px-2 py-0.5 font-bold text-red-00 text-xs">
+        <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-red-10 px-3 py-1 font-bold text-red-00 text-xs">
+          <span
+            aria-hidden="true"
+            className="size-1.5 rounded-full bg-red-00"
+          />
           Closed now{nextNote}
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center bg-grey-00 px-2 py-0.5 font-bold text-mid-grey-00 text-xs">
+      <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-grey-00 px-3 py-1 font-bold text-mid-grey-00 text-xs">
+        <span
+          aria-hidden="true"
+          className="size-1.5 rounded-full bg-mid-grey-00"
+        />
         Hours unconfirmed
       </span>
     );
   })();
 
   return (
-    <li className="border border-grey-00 bg-white p-4">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-        <h3 className="m-0 font-bold text-blue-100 text-lg leading-tight">
+    <li className="relative overflow-hidden rounded-lg border border-grey-00 bg-white p-6 pl-7 shadow-sm">
+      <span
+        aria-hidden="true"
+        className="absolute inset-y-0 left-0 w-1.5 bg-blue-00"
+      />
+
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <h3 className="m-0 font-bold text-black-00 text-xl leading-tight">
           {pharmacy.name}
         </h3>
-        <div className="flex flex-wrap gap-2">
-          <span className="inline-flex items-center bg-grey-00 px-2 py-0.5 text-dark-grey-00 text-xs">
+        <div className="flex flex-col items-end gap-1.5">
+          <span className="inline-flex w-fit items-center rounded-full bg-blue-00 px-3 py-1 font-bold text-white text-xs">
             {TYPE_LABEL[pharmacy.type]}
           </span>
           {statusBadge}
         </div>
       </div>
 
-      <p className="mt-2 text-mid-grey-00 text-sm">{pharmacy.address}</p>
-
-      {pharmacy.phone && (
-        <p className="mt-1 text-sm">
-          <a
-            className="text-blue-100 underline"
-            href={formatPhoneHref(pharmacy.phone)}
-          >
-            {pharmacy.phone}
-          </a>
+      <div className="mt-4 flex flex-col gap-3">
+        <p className="m-0 flex items-start gap-2 text-mid-grey-00">
+          <MapPin aria-hidden="true" className="mt-0.5 size-5 shrink-0" />
+          <span>{pharmacy.address}</span>
         </p>
-      )}
 
-      <p className="mt-1 text-mid-grey-00 text-sm">{pharmacy.hoursText}</p>
+        {pharmacy.phone && (
+          <p className="m-0 flex items-center gap-2">
+            <Phone
+              aria-hidden="true"
+              className="size-5 shrink-0 text-mid-grey-00"
+            />
+            <a
+              className="font-bold text-lg text-teal-00 no-underline hover:underline"
+              href={formatPhoneHref(pharmacy.phone)}
+            >
+              {pharmacy.phone}
+            </a>
+          </p>
+        )}
+      </div>
 
-      {pharmacy.notes && (
-        <p className="mt-2 text-mid-grey-00 text-sm">{pharmacy.notes}</p>
-      )}
+      <hr className="my-4 border-grey-00" />
 
-      {pharmacy.routes && (
-        <p className="mt-1 text-mid-grey-00 text-sm">{pharmacy.routes}</p>
-      )}
+      <div className="flex flex-col gap-3">
+        <p className="m-0 flex items-start gap-2 text-black-00">
+          <Clock
+            aria-hidden="true"
+            className="mt-0.5 size-5 shrink-0 text-mid-grey-00"
+          />
+          <span>{pharmacy.hoursText}</span>
+        </p>
 
-      <div className="mt-3">
+        {pharmacy.notes && (
+          <p className="m-0 rounded bg-grey-00 px-4 py-2.5 text-mid-grey-00 italic">
+            {pharmacy.notes}
+          </p>
+        )}
+
+        {pharmacy.routes && (
+          <p className="m-0 flex items-start gap-2 text-mid-grey-00">
+            <MapIcon aria-hidden="true" className="mt-0.5 size-5 shrink-0" />
+            <span>{pharmacy.routes}</span>
+          </p>
+        )}
+      </div>
+
+      <div className="mt-4">
         <a
           aria-label={`Get directions to ${pharmacy.name}`}
-          className="inline-flex items-center border-2 border-blue-100 px-3 py-1 font-bold text-blue-100 text-sm hover:bg-blue-100 hover:text-white"
+          className="inline-flex items-center gap-2 rounded bg-teal-00 px-5 py-3 font-bold text-white transition-opacity hover:opacity-90"
           href={buildDirectionsHref(pharmacy)}
           rel="noopener"
           target="_blank"
         >
+          <MapIcon aria-hidden="true" className="size-5 shrink-0" />
           Directions
         </a>
       </div>
@@ -348,13 +462,23 @@ interface PaginationProps {
   onChange: (page: number) => void;
 }
 
+// Layout-only base — colours are applied per state so they never conflict.
+const PAGINATION_BUTTON_BASE =
+  "min-w-12 cursor-pointer rounded-lg border px-4 py-2.5 text-center font-bold text-base shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50";
+const PAGINATION_BUTTON_INACTIVE =
+  "border-grey-00 bg-white text-black-00 hover:border-teal-00 disabled:hover:border-grey-00";
+const PAGINATION_BUTTON_ACTIVE = "border-green-00 bg-green-00 text-white";
+
 function Pagination({ currentPage, totalPages, onChange }: PaginationProps) {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   return (
-    <nav aria-label="Pharmacy list pages" className="flex flex-wrap gap-2">
+    <nav
+      aria-label="Pharmacy list pages"
+      className="flex flex-wrap justify-center gap-2 pt-4 pb-10"
+    >
       <button
         aria-label="Previous page"
-        className="cursor-pointer border-2 border-grey-00 px-3 py-1 font-bold text-blue-100 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+        className={`${PAGINATION_BUTTON_BASE} ${PAGINATION_BUTTON_INACTIVE}`}
         disabled={currentPage === 1}
         onClick={() => onChange(currentPage - 1)}
         type="button"
@@ -367,10 +491,8 @@ function Pagination({ currentPage, totalPages, onChange }: PaginationProps) {
           <button
             aria-current={isCurrent ? "page" : undefined}
             aria-label={`Go to page ${p}`}
-            className={`cursor-pointer border-2 px-3 py-1 font-bold text-sm ${
-              isCurrent
-                ? "border-blue-100 bg-blue-100 text-white"
-                : "border-grey-00 text-blue-100"
+            className={`${PAGINATION_BUTTON_BASE} ${
+              isCurrent ? PAGINATION_BUTTON_ACTIVE : PAGINATION_BUTTON_INACTIVE
             }`}
             key={p}
             onClick={() => onChange(p)}
@@ -382,7 +504,7 @@ function Pagination({ currentPage, totalPages, onChange }: PaginationProps) {
       })}
       <button
         aria-label="Next page"
-        className="cursor-pointer border-2 border-grey-00 px-3 py-1 font-bold text-blue-100 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+        className={`${PAGINATION_BUTTON_BASE} ${PAGINATION_BUTTON_INACTIVE}`}
         disabled={currentPage === totalPages}
         onClick={() => onChange(currentPage + 1)}
         type="button"

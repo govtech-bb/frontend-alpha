@@ -19,7 +19,9 @@ Use the Special Benefit Service (SBS) to collect prescription medication from a 
 
 <a data-start-link href="/health-and-emergency-services/open-pharmacy/find">Find an open pharmacy</a>
 
-Need help? Call the Barbados Drug Service on [(246) 535-4300](tel:+12465354300).
+<small>Need help? Call the Barbados Drug Service on [(246) 535-4300](tel:+12465354300).</small>
+
+<hr />
 
 ## Check if you can use this service
 
@@ -48,15 +50,22 @@ You will need your **Barbados ID card**, plus one of the following to prove perm
 
 If you are collecting for a child, bring the child's birth certificate or ID, your own ID, and your permanent residency documents. If you are not the parent, bring a letter of guardianship.
 
-If your stamp is in an old passport, bring both old and new passports. If your new passport has no stamp, visit Immigration at Careenage House, The Wharf, Bridgetown first.
+> If your stamp is in an old passport, bring both old and new passports. If your new passport has no stamp, visit Immigration at Careenage House, The Wharf, Bridgetown first.
 
 ### 2. Get a prescription
 
-A prescription can come from a public-sector doctor (polyclinic or Queen Elizabeth Hospital) or a private doctor. The paper colour tells you where it can be used:
+A prescription can come from a public-sector doctor (polyclinic or Queen Elizabeth Hospital) or a private doctor. 
+
+<details>
+<summary>Find out which prescription colour you have</summary>
+
+The paper colour tells you where it can be used.
 
 - **Blue** — from a public polyclinic or health centre. Free at a government pharmacy, dispensing fee only at a private SBS pharmacy.
 - **Pink** — from a private doctor. Free at a government pharmacy, dispensing fee only at a private SBS pharmacy.
 - **Yellow or green** — from a Queen Elizabeth Hospital outpatient clinic. Free at a government pharmacy. **Not covered at private pharmacies**, so you will pay full price. Ask your hospital doctor to reissue on a standard form if you want to use a private pharmacy.
+
+</details>
 
 ### 3. Choose where to go
 
@@ -71,41 +80,50 @@ A prescription can come from a public-sector doctor (polyclinic or Queen Elizabe
 3. If you are eligible, the pharmacist will give you your medication.
 4. At a government pharmacy you pay nothing. At a private SBS pharmacy you pay the dispensing fee only.
 
-If your documents are not accepted, do not pay full price. Ask the pharmacist to call the Barbados Drug Service on [(246) 535-4300](tel:+12465354300) first.
+> If your documents are not accepted, do not pay full price. Ask the pharmacist to call the Barbados Drug Service on [(246) 535-4300](tel:+12465354300) first.
 
 <a data-start-link href="/health-and-emergency-services/open-pharmacy/find">Find an open pharmacy</a>
 
 ## If something goes wrong
 
-### My drug is not on the formulary
+<details>
+<summary>My drug is not on the formulary</summary>
 
 Ask your doctor about a therapeutically equivalent alternative on the Barbados National Drug Formulary. If no equivalent exists, your doctor can request a Category B exception through the Drug and Therapeutics Committee at Queen Elizabeth Hospital, or through the Barbados Drug Service Director.
 
-### My ID was not accepted
+</details>
+
+<details>
+<summary>My ID was not accepted</summary>
 
 Ask the pharmacist to contact BDS on [(246) 535-4300](tel:+12465354300) before you pay. If your permanent residency documentation needs updating, contact the Immigration Department at Careenage House, The Wharf, Bridgetown.
 
-### I was charged full price but think I qualify
+</details>
+
+<details>
+<summary>I was charged full price but think I qualify</summary>
 
 Keep your receipt. Contact BDS on [(246) 535-4300](tel:+12465354300) or email [director@drugservice.gov.bb](mailto:director@drugservice.gov.bb) with your prescription, receipt and ID documents. You may be entitled to a refund.
 
-### My child just turned 16
+</details>
+
+<details>
+<summary>My child just turned 16</summary>
 
 The under-16 benefit ends on the child's 16th birthday. If the child has a qualifying chronic condition (asthma, diabetes, etc.), the benefit continues under that category. Ask the doctor to show the qualifying condition on future prescriptions.
 
-### The pharmacy is out of stock
+</details>
+
+<details>
+<summary>The pharmacy is out of stock</summary>
 
 The pharmacy should direct you to another participating pharmacy. If they cannot help, call BDS on [(246) 535-4300](tel:+12465354300).
 
-### Collecting on someone else's behalf
+</details>
+
+<details>
+<summary>Collecting on someone else's behalf</summary>
 
 Medication must be collected in person. This service is not available online. Someone else can collect for you. They will need to bring your prescription, your ID, your permanent residency documents, and their own ID.
 
-## Barbados Drug Service
-
-6th Floor, Warrens Tower II  
-Phone: [(246) 535-4300](tel:+12465354300)  
-Email: [director@drugservice.gov.bb](mailto:director@drugservice.gov.bb)  
-Website: [drugservice.gov.bb](https://drugservice.gov.bb)
-
-If a pharmacy is refusing your SBS prescription, call the Barbados Drug Service before you pay.
+</details>

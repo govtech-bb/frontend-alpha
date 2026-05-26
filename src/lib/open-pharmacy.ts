@@ -45,6 +45,23 @@ const TYPE_SORT_ORDER: Record<PharmacyType, number> = {
   unconfirmed: 2,
 };
 
+/**
+ * Swatch colour for each pharmacy type. Shared by the map markers, the type
+ * filter pills, and the results legend so the colour coding stays in sync.
+ */
+export const TYPE_COLOURS: Record<PharmacyType, string> = {
+  government: "#00267f",
+  "private-sbs": "#e8a833",
+  unconfirmed: "#c8cdd3",
+};
+
+/** Short legend labels for each pharmacy type. */
+export const TYPE_LEGEND_LABELS: Record<PharmacyType, string> = {
+  government: "Government · Free",
+  "private-sbs": "Private SBS · Dispensing fee",
+  unconfirmed: "SBS unconfirmed",
+};
+
 const BARBADOS_UTC_OFFSET_HOURS = -4;
 const MINUTES_PER_HOUR = 60;
 const HOURS_PER_DAY = 24;

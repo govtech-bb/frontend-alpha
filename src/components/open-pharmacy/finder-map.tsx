@@ -8,17 +8,12 @@ import {
   closingMinutes,
   formatMinutesAsTime,
   openStatus,
+  TYPE_COLOURS,
 } from "@/lib/open-pharmacy";
 import type { Pharmacy, PharmacyType } from "@/types/pharmacy";
 
 const BARBADOS_CENTER: L.LatLngTuple = [13.15, -59.62];
 const DEFAULT_ZOOM = 11;
-
-const TYPE_COLOURS: Record<PharmacyType, string> = {
-  government: "#00267f",
-  "private-sbs": "#e8a833",
-  unconfirmed: "#c8cdd3",
-};
 
 interface FinderMapProps {
   pharmacies: Pharmacy[];
@@ -79,7 +74,7 @@ export function FinderMap({ pharmacies, day, minutes }: FinderMapProps) {
   return (
     <section
       aria-label="Map of pharmacies"
-      className="h-[clamp(380px,60vh,560px)] w-full border border-grey-00"
+      className="isolate h-[clamp(380px,60vh,560px)] w-full border border-grey-00"
       ref={containerRef}
     />
   );
@@ -115,11 +110,11 @@ function buildPopupHtml(
           const cl = closingMinutes(pharmacy, day, minutes);
           const note =
             cl === null ? "" : ` · closes ${formatMinutesAsTime(cl)}`;
-          return `<span style="color:#00654a;font-weight:700;">● Open now${escapeHtml(note)}</span>`;
+          return statusBadgeHtml("#00654a", `Open now${escapeHtml(note)}`);
         })()
       : status === false
-        ? '<span style="color:#a42c2c;font-weight:700;">● Closed now</span>'
-        : '<span style="color:#888;">○ Hours unconfirmed</span>';
+        ? statusBadgeHtml("#a42c2c", "Closed now")
+        : statusBadgeHtml("#595959", "Hours unconfirmed");
 
   const typeLabel = {
     government: "Government · Free",
@@ -128,20 +123,25 @@ function buildPopupHtml(
   }[pharmacy.type];
 
   const phoneHtml = pharmacy.phone
-    ? `<div style="margin-top:4px;"><a href="tel:+1${pharmacy.phone.replace(/\D/g, "")}">${escapeHtml(pharmacy.phone)}</a></div>`
+    ? `<div style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:16px;">📞 <a style="color:#0e5f64;font-weight:700;text-decoration:none;" href="tel:+1${pharmacy.phone.replace(/\D/g, "")}">${escapeHtml(pharmacy.phone)}</a></div>`
     : "";
 
   return `
-    <strong>${escapeHtml(pharmacy.name)}</strong>
-    <div style="font-size:12px;color:#555;margin-top:2px;">${escapeHtml(typeLabel)}</div>
-    <div style="margin-top:6px;">${statusHtml}</div>
-    <div style="font-size:12px;margin-top:6px;">${escapeHtml(pharmacy.address)}</div>
+    <div style="font-size:20px;font-weight:700;color:#000;line-height:1.2;">${escapeHtml(pharmacy.name)}</div>
+    <div style="font-size:13px;color:#595959;margin-top:4px;">${escapeHtml(typeLabel)}</div>
+    <div style="margin-top:12px;">${statusHtml}</div>
+    <div style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:15px;color:#000;">📍 <span>${escapeHtml(pharmacy.address)}</span></div>
     ${phoneHtml}
-    <div style="font-size:12px;margin-top:4px;">${escapeHtml(pharmacy.hoursText)}</div>
-    <div style="margin-top:8px;">
-      <a href="${buildDirectionsHref(pharmacy)}" target="_blank" rel="noopener">Directions ↗</a>
+    <div style="display:flex;align-items:flex-start;gap:8px;margin-top:10px;font-size:14px;color:#595959;">🕐 <span>${escapeHtml(pharmacy.hoursText)}</span></div>
+    <div style="margin-top:14px;">
+      <a style="display:inline-block;background:#0e5f64;color:#ffffff;font-weight:700;text-decoration:none;padding:10px 20px;border-radius:6px;font-size:15px;" href="${buildDirectionsHref(pharmacy)}" target="_blank" rel="noopener">Directions</a>
     </div>
   `;
+}
+
+// A coloured status dot followed by a label, matching the list-card design.
+function statusBadgeHtml(colour: string, label: string): string {
+  return `<span style="display:inline-flex;align-items:center;gap:8px;color:${colour};font-weight:700;font-size:15px;"><span style="width:10px;height:10px;border-radius:9999px;background:${colour};display:inline-block;"></span>${label}</span>`;
 }
 
 function escapeHtml(value: string): string {

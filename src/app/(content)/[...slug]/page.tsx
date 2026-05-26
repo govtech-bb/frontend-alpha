@@ -3,6 +3,7 @@ import NextLink from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ClearFormStorage } from "@/components/clear-form-storage";
+import { ContactCallout } from "@/components/contact-callout";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
 import {
@@ -163,6 +164,10 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    const isOpenPharmacy =
+      categorySlug === "health-and-emergency-services" &&
+      pageSlug === "open-pharmacy";
+
     return (
       <>
         <PageViewTracker
@@ -171,6 +176,24 @@ export default async function Page({ params }: ContentPageProps) {
           form={pageSlug}
         />
         <MarkdownContent
+          footer={
+            isOpenPharmacy ? (
+              <ContactCallout
+                action={{ label: "Call BDS", href: "tel:+12465354300" }}
+                address="6th Floor, Warrens Tower II"
+                email="director@drugservice.gov.bb"
+                phone={{ display: "(246) 535-4300", href: "tel:+12465354300" }}
+                title="Barbados Drug Service"
+                website={{
+                  display: "drugservice.gov.bb",
+                  href: "https://drugservice.gov.bb",
+                }}
+              >
+                If a pharmacy is refusing your SBS prescription, call the
+                Barbados Drug Service before you pay.
+              </ContactCallout>
+            ) : undefined
+          }
           hasResearchAccess={!page.protected || researchAccess}
           markdown={markdownContent}
         />
