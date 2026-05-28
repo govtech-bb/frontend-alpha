@@ -1,14 +1,15 @@
 #!/usr/bin/env node
+
 // Build a static HTML site from docs/fact-check/*.md
 // Output: docs/fact-check/site/
 //
 // Usage: node scripts/build-fact-check-site.mjs
 //        or: npm run fact-check:build
 
-import { Marked } from "marked";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { Marked } from "marked";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "..");
@@ -40,7 +41,7 @@ function parseMeta(src) {
 
   // Summary line: `- **Summary:** N claims reviewed — X verified, Y discrepant, Z unverifiable. Average certainty: NN%.`
   const summary = src.match(
-    /\*\*Summary:\*\*\s*(\d+)\s+claims?\s+reviewed.*?(\d+)\s+verified.*?(\d+)\s+discrepant.*?(\d+)\s+unverifiable.*?(\d+)%/i,
+    /\*\*Summary:\*\*\s*(\d+)\s+claims?\s+reviewed.*?(\d+)\s+verified.*?(\d+)\s+discrepant.*?(\d+)\s+unverifiable.*?(\d+)%/i
   );
   const stats = summary
     ? {
@@ -73,7 +74,7 @@ function transformInternalLinks(html) {
   // Convert "foo.md" (bare) → "foo.html"
   return html.replace(
     /href="(?:\/docs\/fact-check\/|\.\/)?([a-z_][a-z0-9_-]*)\.md"/gi,
-    'href="$1.html"',
+    'href="$1.html"'
   );
 }
 
@@ -100,7 +101,7 @@ function annotateFindings(html) {
         ? `<label class="tick"><input type="checkbox" data-finding="${id}"><span>Fixed</span></label>`
         : "";
       return `<section class="finding" data-tier="${tier}" data-finding-id="${id}">${checked}<h3${hAttrs}>${hContent}</h3>${body}</section>`;
-    },
+    }
   );
 }
 
@@ -110,7 +111,7 @@ function buildSidebar(reports, currentFile) {
   const dashboard = reports.find((r) => r.file === "README.md");
   const supporting = reports.filter((r) => r.file.startsWith("_"));
   const perPage = reports.filter(
-    (r) => r.file !== "README.md" && !r.file.startsWith("_"),
+    (r) => r.file !== "README.md" && !r.file.startsWith("_")
   );
 
   function navItem(r) {
@@ -122,7 +123,10 @@ function buildSidebar(reports, currentFile) {
     const tag = r.stats?.discrepant
       ? `<span class="badge badge-bad">${r.stats.discrepant}</span>`
       : "";
-    const title = r.file === "README.md" ? "Dashboard" : r.title.replace(/^Fact-check:\s*/, "");
+    const title =
+      r.file === "README.md"
+        ? "Dashboard"
+        : r.title.replace(/^Fact-check:\s*/, "");
     return `<li class="${cls}"><a href="${htmlNameFor(r.file)}">${escapeHtml(title)}${badge}${tag}</a></li>`;
   }
 
@@ -605,8 +609,10 @@ function build() {
 
   fs.writeFileSync(path.join(OUT_DIR, "styles.css"), STYLES);
   fs.writeFileSync(path.join(OUT_DIR, "app.js"), APP_JS);
-  console.log(`  wrote styles.css, app.js`);
-  console.log(`\nDone. Open ${path.relative(REPO_ROOT, OUT_DIR)}/index.html in a browser.`);
+  console.log("  wrote styles.css, app.js");
+  console.log(
+    `\nDone. Open ${path.relative(REPO_ROOT, OUT_DIR)}/index.html in a browser.`
+  );
 }
 
 build();

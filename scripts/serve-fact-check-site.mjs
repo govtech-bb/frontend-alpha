@@ -6,8 +6,8 @@
 //        or: npm run fact-check:serve
 
 import { spawnSync } from "node:child_process";
-import { createServer } from "node:http";
 import fs from "node:fs";
+import { createServer } from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -38,14 +38,16 @@ const MIME = {
 
 function ensureBuilt() {
   if (
-    !fs.existsSync(SITE_DIR) ||
-    !fs.existsSync(path.join(SITE_DIR, "index.html"))
+    !(
+      fs.existsSync(SITE_DIR) &&
+      fs.existsSync(path.join(SITE_DIR, "index.html"))
+    )
   ) {
     console.log("site/ not found — running build first…");
     const result = spawnSync(
       "node",
       [path.join(__dirname, "build-fact-check-site.mjs")],
-      { stdio: "inherit" },
+      { stdio: "inherit" }
     );
     if (result.status !== 0) {
       console.error("Build failed.");
@@ -65,7 +67,7 @@ function safeJoin(root, urlPath) {
 
 function serve() {
   const server = createServer((req, res) => {
-    let pathName = req.url === "/" ? "/index.html" : req.url;
+    const pathName = req.url === "/" ? "/index.html" : req.url;
     let filePath = safeJoin(SITE_DIR, pathName);
     if (!filePath) {
       res.writeHead(403);
@@ -82,7 +84,9 @@ function serve() {
     fs.stat(filePath, (err, stat) => {
       if (err || !stat.isFile()) {
         res.writeHead(404, { "Content-Type": "text/html; charset=utf-8" });
-        res.end(`<h1>404</h1><p>Not found: ${pathName}</p><p><a href="/">← back to dashboard</a></p>`);
+        res.end(
+          `<h1>404</h1><p>Not found: ${pathName}</p><p><a href="/">← back to dashboard</a></p>`
+        );
         return;
       }
       const ext = path.extname(filePath).toLowerCase();
@@ -96,7 +100,7 @@ function serve() {
 
   server.listen(PORT, "127.0.0.1", () => {
     const url = `http://127.0.0.1:${PORT}/`;
-    console.log(`\n  GovBB fact-check site`);
+    console.log("\n  GovBB fact-check site");
     console.log(`  Serving ${path.relative(REPO_ROOT, SITE_DIR)}/`);
     console.log(`  → ${url}\n`);
     console.log("  Press Ctrl-C to stop.\n");
