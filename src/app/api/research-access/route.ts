@@ -1,6 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { COOKIE_NAME, isValidToken } from "@/lib/research-access";
-import { SITE_URL } from "@/lib/site-url";
 
 /**
  * Validate redirect URL to prevent open redirect attacks.
@@ -29,10 +28,11 @@ export function GET(request: NextRequest) {
   const token = searchParams.get("token");
   const redirectTo = getSafeRedirect(searchParams.get("redirect"));
   const revoke = searchParams.get("revoke");
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? request.nextUrl.origin;
 
   // Handle revoke request
   if (revoke === "true") {
-    const response = NextResponse.redirect(new URL(redirectTo, SITE_URL));
+    const response = NextResponse.redirect(new URL(redirectTo, origin));
     response.cookies.set(COOKIE_NAME, "", { maxAge: 0, path: "/" });
     return response;
   }
@@ -49,7 +49,7 @@ export function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid token" }, { status: 403 });
   }
 
-  const response = NextResponse.redirect(new URL(redirectTo, SITE_URL));
+  const response = NextResponse.redirect(new URL(redirectTo, origin));
   response.cookies.set(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
