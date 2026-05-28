@@ -28,10 +28,11 @@ export function GET(request: NextRequest) {
   const token = searchParams.get("token");
   const redirectTo = getSafeRedirect(searchParams.get("redirect"));
   const revoke = searchParams.get("revoke");
+  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? request.nextUrl.origin;
 
   // Handle revoke request
   if (revoke === "true") {
-    const response = NextResponse.redirect(new URL(redirectTo, request.url));
+    const response = NextResponse.redirect(new URL(redirectTo, origin));
     response.cookies.set(COOKIE_NAME, "", { maxAge: 0, path: "/" });
     return response;
   }
@@ -48,7 +49,7 @@ export function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid token" }, { status: 403 });
   }
 
-  const response = NextResponse.redirect(new URL(redirectTo, request.url));
+  const response = NextResponse.redirect(new URL(redirectTo, origin));
   response.cookies.set(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
