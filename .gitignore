@@ -22,7 +22,20 @@
 # next.js
 /.next/
 /out/
-/docs/
+
+# docs (mostly local-only output, but track fact-check markdown source)
+/docs/*
+!/docs/fact-check/
+/docs/fact-check/site/
+
+# netlify CLI local state
+/.netlify/
+
+# husky runtime (auto-generated)
+/.husky/_/
+
+# deno (used internally by netlify edge functions tooling)
+/deno.lock
 
 # production
 /build
