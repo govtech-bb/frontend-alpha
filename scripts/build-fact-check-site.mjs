@@ -88,19 +88,77 @@ function escapeHtml(s) {
 
 // --- finding parsing (for filter chips + checkboxes) ------------------
 
-function annotateFindings(html) {
+const SLUG_REFERENCE_RE = /src\/content\/([a-z0-9][a-z0-9_-]*)\.md/g;
+
+const CLAIM_BLOCK_PAIR_RE =
+  /<div class="claim-block claim-block--current">\s*<div class="claim-block-label">[^<]*<\/div>\s*<pre class="claim-block-content">([\s\S]*?)<\/pre>\s*<\/div>\s*<div class="claim-block claim-block--correct">\s*<div class="claim-block-label">[^<]*<\/div>\s*<pre class="claim-block-content">([\s\S]*?)<\/pre>\s*<\/div>/g;
+
+function collapseRedundantClaimBlocks(html) {
+  // When "Currently on the page" and "Verified correct" contain identical text,
+  // the side-by-side comparison adds noise — collapse to a single "verified" pill.
+  return html.replace(
+    CLAIM_BLOCK_PAIR_RE,
+    (match, currentText, verifiedText) => {
+      if (currentText.trim() === verifiedText.trim()) {
+        return '<p class="claim-verified-noop">✓ Verified — text on page is correct.</p>';
+      }
+      return match;
+    }
+  );
+}
+
+function annotateFindings(html, slugToLive, pageTiersMap, tierCounts) {
   // Wrap each F-NNN finding card in a <section> with data-tier and data-id.
   // Finding headings render as: <h3 ...>F-NNN · Tier A · Title</h3>
   // The heading content MUST start with F-NNN to qualify.
   return html.replace(
     /<h3([^>]*)>(F-[0-9A-F]+\s*[·.]\s*Tier\s+([ABC])[^]*?)<\/h3>([\s\S]*?)(?=<h3[^>]*>F-[0-9A-F]+|<h2|<hr\s*\/?>|$)/g,
     (_match, hAttrs, hContent, tier, body) => {
+      tierCounts[tier] = (tierCounts[tier] || 0) + 1;
       const idMatch = hContent.match(/F-([0-9A-F]+)/);
       const id = idMatch ? `F-${idMatch[1]}` : "";
       const checked = id
         ? `<label class="tick"><input type="checkbox" data-finding="${id}"><span>Fixed</span></label>`
         : "";
-      return `<section class="finding" data-tier="${tier}" data-finding-id="${id}">${checked}<h3${hAttrs}>${hContent}</h3>${body}</section>`;
+
+      const slugs = new Set();
+      for (const match of body.matchAll(SLUG_REFERENCE_RE)) {
+        slugs.add(match[1]);
+      }
+      for (const slug of slugs) {
+        if (!pageTiersMap.has(slug)) pageTiersMap.set(slug, new Set());
+        pageTiersMap.get(slug).add(tier);
+      }
+      let linksHtml = "";
+      if (slugs.size > 0) {
+        const rows = [...slugs]
+          .map((slug) => {
+            const live = slugToLive.get(slug);
+            const reportLink = `<a href="${slug}.html">Report</a>`;
+            const liveLink = live
+              ? `<a href="${live}" target="_blank" rel="noopener">Live page</a>`
+              : "";
+            const sep = liveLink ? " · " : "";
+            return `<span class="finding-link-row"><code>${escapeHtml(slug)}</code> · ${reportLink}${sep}${liveLink}</span>`;
+          })
+          .join("");
+        linksHtml = `<div class="finding-links">${rows}</div>`;
+      }
+
+      return `<section class="finding" data-tier="${tier}" data-finding-id="${id}">${checked}<h3${hAttrs}>${hContent}</h3>${linksHtml}${body}</section>`;
+    }
+  );
+}
+
+function annotateTableRows(html, pageTiersMap) {
+  // Tag each Slice 1 table row with the tiers of findings that reference its page,
+  // so the tier chips can filter the table in sync with the findings list.
+  return html.replace(
+    /<tr>([\s\S]*?<a href="([a-z0-9_-]+)\.html">Report<\/a>[\s\S]*?)<\/tr>/g,
+    (_match, body, slug) => {
+      const tiers = pageTiersMap.get(slug);
+      const tiersAttr = tiers ? [...tiers].sort().join(",") : "";
+      return `<tr data-page-tiers="${tiersAttr}">${body}</tr>`;
     }
   );
 }
@@ -144,6 +202,28 @@ function buildSidebar(reports, currentFile) {
   `;
 }
 
+// --- fault banner (dashboard only) ------------------------------------
+
+function buildFaultBanner(tierCounts) {
+  const a = tierCounts.A || 0;
+  const b = tierCounts.B || 0;
+  const c = tierCounts.C || 0;
+  const total = a + b + c;
+  return `
+    <div class="fault-banner">
+      <div class="fault-banner-total">
+        <span class="fault-banner-number">${total}</span>
+        <span class="fault-banner-label">faults found</span>
+      </div>
+      <div class="fault-banner-tiers">
+        <span class="fault-tier fault-tier--A"><strong>${a}</strong><span>Tier A · fix today</span></span>
+        <span class="fault-tier fault-tier--B"><strong>${b}</strong><span>Tier B · verify</span></span>
+        <span class="fault-tier fault-tier--C"><strong>${c}</strong><span>Tier C · agency confirm</span></span>
+      </div>
+    </div>
+  `;
+}
+
 // --- filter chips (dashboard only) ------------------------------------
 
 function buildFilterChips() {
@@ -160,7 +240,7 @@ function buildFilterChips() {
 
 // --- page template ---------------------------------------------------
 
-function renderPage({ title, body, sidebar, isDashboard }) {
+function renderPage({ title, body, sidebar, isDashboard, tierCounts }) {
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -173,6 +253,7 @@ function renderPage({ title, body, sidebar, isDashboard }) {
   <div class="layout">
     ${sidebar}
     <main class="content">
+      ${isDashboard ? buildFaultBanner(tierCounts) : ""}
       ${isDashboard ? buildFilterChips() : ""}
       <article>${body}</article>
     </main>
@@ -368,6 +449,75 @@ td:has(✅), td:has(❌), td:has(⚠️) { text-align: center; }
 strong { color: var(--fg); }
 em { color: var(--muted); }
 
+/* --- fault banner --- */
+.fault-banner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin: 0 0 20px;
+  box-shadow: var(--shadow);
+  flex-wrap: wrap;
+}
+.fault-banner-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 24px;
+  border-right: 1px solid var(--border);
+}
+.fault-banner-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--fg);
+  line-height: 1;
+}
+.fault-banner-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.fault-banner-tiers {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.fault-tier {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  border-left: 4px solid;
+  background: var(--bg);
+  color: var(--muted);
+}
+.fault-tier strong {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fg);
+}
+.fault-tier--A { border-left-color: var(--tier-a); }
+.fault-tier--B { border-left-color: var(--tier-b); }
+.fault-tier--C { border-left-color: var(--tier-c); }
+
+@media (max-width: 600px) {
+  .fault-banner-total {
+    border-right: 0;
+    padding-right: 0;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    width: 100%;
+  }
+}
+
 /* --- filter chips --- */
 .filter-chips {
   display: flex;
@@ -427,6 +577,33 @@ em { color: var(--muted); }
 }
 .finding.is-fixed h3 { text-decoration: line-through; }
 .finding.is-hidden { display: none; }
+.finding-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: 13px;
+}
+.finding-link-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: var(--accent-bg);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.finding-link-row code {
+  background: transparent;
+  padding: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.finding-link-row a {
+  text-decoration: none;
+  font-weight: 500;
+}
+.finding-link-row a:hover { text-decoration: underline; }
 
 /* --- claim blocks (verbatim page content vs verified) --- */
 .claim-block {
@@ -452,6 +629,17 @@ em { color: var(--muted); }
 .claim-block--current .claim-block-label { color: var(--bad); }
 .claim-block--correct .claim-block-label { color: var(--good); }
 .claim-block--pending .claim-block-label { color: var(--warn); }
+
+.claim-verified-noop {
+  display: inline-block;
+  padding: 4px 12px;
+  background: var(--good-bg);
+  color: var(--good);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 6px 0 14px;
+}
 
 .claim-block-content {
   font-family: inherit;
@@ -563,6 +751,14 @@ const APP_JS = `// Persists "Fixed" checkbox state and filters findings.
         }
         card.classList.toggle("is-hidden", !show);
       });
+      document.querySelectorAll("tr[data-page-tiers]").forEach(row => {
+        let show = true;
+        if (f === "A" || f === "B" || f === "C") {
+          const tiers = row.dataset.pageTiers ? row.dataset.pageTiers.split(",") : [];
+          show = tiers.includes(f);
+        }
+        row.classList.toggle("is-hidden", !show);
+      });
     });
   });
 
@@ -594,14 +790,25 @@ function build() {
     const sidebar = buildSidebar(reports, r.file);
     let html = marked.parse(r.src);
     html = transformInternalLinks(html);
+    html = collapseRedundantClaimBlocks(html);
     const isDashboard = r.file === "README.md";
-    if (isDashboard) html = annotateFindings(html);
+    const tierCounts = { A: 0, B: 0, C: 0 };
+    if (isDashboard) {
+      const slugToLive = new Map();
+      for (const other of reports) {
+        if (other.livePage) slugToLive.set(slugFor(other.file), other.livePage);
+      }
+      const pageTiersMap = new Map();
+      html = annotateFindings(html, slugToLive, pageTiersMap, tierCounts);
+      html = annotateTableRows(html, pageTiersMap);
+    }
     const fileName = isDashboard ? "index.html" : htmlNameFor(r.file);
     const page = renderPage({
       title: r.title,
       body: html,
       sidebar,
       isDashboard,
+      tierCounts,
     });
     fs.writeFileSync(path.join(OUT_DIR, fileName), page);
     console.log(`  wrote ${fileName}`);
