@@ -2,20 +2,20 @@
 
 - **Live page:** <https://alpha.gov.bb/money-financial-support/ezpay>
 - **Source file:** `src/content/ezpay.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 15 claims reviewed — 13 verified, 1 discrepant, 1 unverifiable. Average certainty: **84%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 16 claims reviewed — 13 verified, 2 discrepant, 1 unverifiable. Average certainty: **84%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Intro copy error: "Visa Debit Cards" omits Mastercard (line 11).** The intro paragraph on both alpha.gov.bb and its upstream source (`www.gov.bb/ezpay`) lists "Visa Debit Cards" while the body of the same page (line 25) correctly says "Visa or Mastercard Debit Cards". The gov.bb source has the identical upstream inconsistency. A citizen with only a Mastercard Debit card reading only the intro could incorrectly conclude EZpay does not accept their card. The fix should be applied on alpha.gov.bb even though the upstream gov.bb source has not yet corrected it.
+1. **Intro copy error: "Visa Debit Cards" omits Mastercard (line 11) — unfixed since prior pass.** The intro paragraph lists "Visa Debit Cards" while the body of the same page (line 25) correctly says "Visa or Mastercard Debit Cards". bra.gov.bb independently confirms "VISA or Mastercard debit or credit cards". A citizen with only a Mastercard Debit card reading only the intro could incorrectly conclude EZpay does not accept their card. This was flagged on 2026-05-28 and remains unchanged.
 
-2. **Intro copy error: "Barbados Post Office" is the wrong official name (line 11).** The intro uses "Barbados Post Office" while the official name is "Barbados Postal Service" (confirmed by bps.gov.bb). The body of the page (line 31) uses the correct name. Again, both gov.bb and alpha.gov.bb share this inconsistency — but it is still wrong, and alpha.gov.bb should lead with the correct name. bps.gov.bb makes no mention of EZpay, which also deserves a follow-up with the postal service.
+2. **Intro copy error: "Barbados Post Office" is the wrong official name (line 11) — unfixed since prior pass.** The intro uses "Barbados Post Office" while the official name is "Barbados Postal Service" (confirmed by bps.gov.bb). The body of the page (line 31) correctly uses "Barbados Postal Service". gov.bb's own intro paragraph also uses "Barbados Post Office", but alpha.gov.bb should lead with the correct name. Flagged 2026-05-28, still unchanged.
 
-3. **Portal carries "EZ123" branding, not "EZpay+".** Every page under ezpay.gov.bb (login, service, payment page) displays the title "EZ123" and the EZ123 logo. The public-facing name used on gov.bb and alpha.gov.bb remains "EZpay+". No formal rebrand announcement was found on gisbarbados.gov.bb or gov.bb. The GovBB team should confirm whether a rebrand is in progress and whether public copy should be updated. This is an additional finding, not a content error on alpha.gov.bb itself.
+3. **Frontmatter `section` field mismatch.** `src/content/ezpay.md` line 6 reads `section: "Work and Employment"` but the page lives under the `money-financial-support` category in content-directory.ts (title: "Money and financial support"). If the `section` field drives breadcrumbs or navigation, citizens will see the wrong category label.
 
-4. **EFT (Electronic Funds Transfer) status is unverifiable from the public web.** The alpha.gov.bb page does not mention EFT, and no gov.bb, bra.gov.bb, or GIS source mentions EFT as a distinct EZpay payment option. The ezpay-terms page describes EZpay+ as using "the Barbados Automated Clearing House" for direct debit, which is ACH not EFT per se. No claim about EFT appears to require correction, but the page should be confirmed as complete with agency staff.
+4. **Portal carries "EZ123" branding, not "EZpay+".** Every page under ezpay.gov.bb (login, homepage) displays the title "EZ123" rather than "EZpay+". No formal rebrand announcement was found on gisbarbados.gov.bb or gov.bb. The GovBB team should confirm whether a rebrand is in progress. If so, all "EZpay+" references on alpha.gov.bb would need updating.
 
 ---
 
@@ -34,10 +34,10 @@
 </div>
 
 - **Type:** descriptive / process step
-- **Sources:** [gov.bb — EZpay+ (canonical URL)](https://www.gov.bb/ezpay) — intro paragraph reads "Credit Cards, Visa Debit Cards, Direct Debit, Payce Digital and the Barbados Post Office" (same upstream error); body section under "Visa/Mastercard Debit Cards" reads "You can use your Visa or Mastercard Debit Card"; [bps.gov.bb — Barbados Postal Service homepage](https://bps.gov.bb/) — official name is "Barbados Postal Service" throughout; [bra.gov.bb — Land Tax payments](https://bra.gov.bb/Popular-Topics/Property/How-can-I-make-Land-Tax-payments/Overview) — independently refers to "EZpay+" accepting "VISA or Mastercard debit or credit cards"
+- **Sources:** [gov.bb — EZpay+ (canonical)](https://www.gov.bb/ezpay) — intro paragraph reads "Credit Cards, Visa Debit Cards, Direct Debit, Payce Digital and the Barbados Post Office" (same upstream error); body section reads "Visa or Mastercard Debit Card"; [bps.gov.bb — Barbados Postal Service homepage](https://bps.gov.bb/) — official name is "Barbados Postal Service" throughout; [bra.gov.bb — Land Tax payments](https://bra.gov.bb/Popular-Topics/Property/How-can-I-make-Land-Tax-payments/Overview) — independently refers to EZpay+ accepting "VISA or Mastercard debit or credit cards"
 - **Status:** discrepant — two sub-issues:
   - **"Visa Debit Cards"**: Mastercard Debit is omitted from the intro. The same page (line 25) and bra.gov.bb both confirm "Visa or Mastercard Debit Cards" is the correct enumeration.
-  - **"Barbados Post Office"**: the official name is "Barbados Postal Service" per bps.gov.bb. The body of the same page (line 31) uses the correct name. Note: gov.bb's intro also uses "Barbados Post Office" — the error is shared upstream, but alpha.gov.bb should use the correct name.
+  - **"Barbados Post Office"**: the official name is "Barbados Postal Service" per bps.gov.bb. The body of the same page (line 31) uses the correct name.
 - **Certainty:** 85%
 - **Confidence it's wrong:** 92% (Mastercard omission — confirmed by the same page's body and bra.gov.bb); 95% (wrong postal service name — confirmed by bps.gov.bb)
 - **Citizen impact:** LOW — both errors are in introductory copy. The body of the page (lines 25, 31) correctly states both Mastercard Debit and Barbados Postal Service. A citizen reading only the intro might hesitate, but the body resolves it.
@@ -58,7 +58,7 @@
 </div>
 
 - **Type:** descriptive
-- **Sources:** [gov.bb — EZpay+ (canonical URL)](https://www.gov.bb/ezpay) — same wording confirmed verbatim; [gov.bb — EZpay+ (Citizens URL)](https://www.gov.bb/Citizens/ezpay) — also confirmed
+- **Sources:** [gov.bb — EZpay+ (canonical)](https://www.gov.bb/ezpay) — same wording confirmed verbatim; [gov.bb — EZpay+ (Citizens URL)](https://www.gov.bb/Citizens/ezpay) — also confirmed
 - **Status:** verified
 - **Certainty:** 90%
 
@@ -77,10 +77,10 @@
 </div>
 
 - **Type:** URL / process step
-- **Sources:** [ezpay.gov.bb — portal](https://www.ezpay.gov.bb) — URL is live and resolves to the Government of Barbados payment portal (currently displaying "EZ123" branding); [gov.bb — EZpay+](https://www.gov.bb/ezpay) — confirms "www.ezpay.gov.bb" as the registration URL
+- **Sources:** [ezpay.gov.bb — portal](https://www.ezpay.gov.bb) — URL is live and resolves to the Government of Barbados payment portal (currently displaying "EZ123" branding, page title "EZ123 | LOGIN"); [gov.bb — EZpay+](https://www.gov.bb/ezpay) — confirms "www.ezpay.gov.bb" as the registration URL
 - **Status:** verified — URL is live and functional.
 - **Certainty:** 90%
-- **Note:** The portal at ezpay.gov.bb currently displays "EZ123" branding (title: "EZ123 | LOGIN") rather than "EZpay+". This is a portal-side branding discrepancy, not an error in the alpha.gov.bb content, but the GovBB team should monitor whether a public rebrand announcement is forthcoming.
+- **Note:** The portal at ezpay.gov.bb currently displays "EZ123" branding rather than "EZpay+". This is a portal-side branding discrepancy; the URL itself is correct.
 
 ---
 
@@ -270,7 +270,7 @@
 
 - **Type:** process step
 - **Sources:** [gov.bb — EZpay+](https://www.gov.bb/ezpay) — same process described verbatim in the body; [bps.gov.bb — Barbados Postal Service](https://bps.gov.bb/) — confirms official name is "Barbados Postal Service" (so "Barbados Postal Service" in this line is correct)
-- **Status:** verified — the body of the page correctly uses "Barbados Postal Service" (the error is only in the intro at line 11, addressed in Claim 1)
+- **Status:** verified — the body of the page correctly uses "Barbados Postal Service" (the naming error is only in the intro at line 11, addressed in Claim 1)
 - **Certainty:** 85%
 
 ---
@@ -305,29 +305,49 @@
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Verified functional — canonical form unclear</div>
 <pre class="claim-block-content">https://www.ezpay.gov.bb/login.php — resolves and returns the login page (title: "EZ123 | LOGIN").
-https://ezpay.gov.bb/login — also confirmed live (same page, returned by search index and confirmed via fetch).
-The .php extension is functional but the canonical portal URL indexed by search engines is /login (no extension).</pre>
+The .php extension is functional and matches the URL cited by gov.bb's own EZpay+ page.
+The portal branding shows "EZ123" throughout, not "EZpay+".</pre>
 </div>
 
-- **Type:** URL
-- **Sources:** [ezpay.gov.bb/login.php](https://www.ezpay.gov.bb/login.php) — confirmed live and returns login form (page title: "EZ123 | LOGIN", footer: "Copyright 2023 Government of Barbados. All Rights Reserved"); [ezpay.gov.bb/login](https://ezpay.gov.bb/login) — also live (same content, confirmed via search index); [gov.bb — EZpay+](https://www.gov.bb/ezpay) — gov.bb also cites `https://www.ezpay.gov.bb/login.php` as the login URL
-- **Status:** unverifiable (canonical form) — the `/login.php` URL works and is used by the upstream gov.bb source, so it is not wrong. However, whether `/login` is the canonical redirect target (making `/login.php` technically redundant) cannot be determined from a static fetch alone. The page branding mismatch ("EZ123" vs "EZpay+") is an additional finding.
+- **Type:** URL / link CTA
+- **Sources:** [ezpay.gov.bb/login.php](https://www.ezpay.gov.bb/login.php) — confirmed live and returns login form (page title: "EZ123 | LOGIN", footer: "Copyright 2023 Government of Barbados. All Rights Reserved"); [gov.bb — EZpay+](https://www.gov.bb/ezpay) — gov.bb also cites `https://www.ezpay.gov.bb/login.php` as the login URL
+- **Status:** unverifiable (canonical form) — the `/login.php` URL is functional and matches the upstream gov.bb source citation, so it is not wrong. Whether a redirect path exists cannot be confirmed from a static fetch.
 - **Certainty:** 80% — URL is functional and matches gov.bb's own citation; canonical form question is a minor housekeeping issue
-- **Open question:** Confirm with the Data Processing Department whether `/login.php` and `/login` are synonymous, or whether one redirects to the other. If `/login` is canonical, update the link.
+- **Open question:** Confirm with the Data Processing Department whether `/login.php` is the canonical path or whether a cleaner URL (e.g. `/login`) is preferred. If `/login` is canonical, update the link.
+
+---
+
+### Claim 16 — Frontmatter section field: "Work and Employment" (line 6)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">section: "Work and Employment"</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Should say</div>
+<pre class="claim-block-content">section: "Money and financial support"
+(or be removed if the field is unused)</pre>
+</div>
+
+- **Type:** descriptive / process step (frontmatter that affects citizens)
+- **Sources:** [src/data/content-directory.ts line 229–230](../../../src/data/content-directory.ts) — category slug is `money-financial-support`, title is "Money and financial support"; `src/content/ezpay.md` line 6 — reads `section: "Work and Employment"`
+- **Status:** discrepant — the frontmatter `section` value does not match the category the page is filed under in content-directory.ts.
+- **Certainty:** 90%
+- **Confidence it's wrong:** 90%
+- **Citizen impact:** LOW to MEDIUM — if the `section` field is used to drive breadcrumbs, navigation labels, or search facets, citizens will see "Work and Employment" as the category for a financial payments page.
 
 ---
 
 ## Additional findings (not on the page but should be)
 
-- **"EZ123" portal branding.** Every page under ezpay.gov.bb — including `/login`, `/login.php`, `/common_service`, and `/payment_page` — displays "EZ123" branding in the page title and interface. The public-facing name used on gov.bb and alpha.gov.bb remains "EZpay+". No formal rebrand announcement was found on gisbarbados.gov.bb or gov.bb (search conducted 2026-05-28). The GovBB team should confirm whether a rebrand is underway and, if so, when alpha.gov.bb should be updated. If the rebrand is official, all references to "EZpay+" on alpha.gov.bb would need updating.
+- **"EZ123" portal branding.** Every page under ezpay.gov.bb — including `/login.php` and the homepage — displays "EZ123" branding in the page title and interface. The public-facing name used on gov.bb and alpha.gov.bb remains "EZpay+". No formal rebrand announcement was found on gisbarbados.gov.bb or gov.bb (search conducted 2026-05-29). The GovBB team should confirm whether a rebrand is underway and, if so, when alpha.gov.bb should be updated.
 
-- **EFT not present anywhere.** A search of all EZpay-related gov.bb pages, bra.gov.bb, and GIS found no mention of "Electronic Funds Transfer" or "EFT" as a distinct payment option. The EZpay+ Terms and Conditions describe the system as using "the Barbados Automated Clearing House" (ACH) for direct debit — which is ACH-based rather than a separate EFT offering. If EFT was ever listed or planned as a payment option, it is not reflected in any currently accessible public source.
+- **bps.gov.bb does not mention EZpay.** The Barbados Postal Service website (bps.gov.bb) lists "Money Orders" and "Cashing Government Cheques" under financial services — no reference to EZpay or the barcode-scan cash payment process. Citizens visiting bps.gov.bb to confirm EZpay cash payments are accepted at post offices will find no corroboration. GovBB may wish to flag this to the postal service for inclusion in their service listing.
 
-- **Source URL is live.** The `source_url` in `content-directory.ts` for this page (`https://www.gov.bb/Citizens/ezpay`) resolves successfully and contains matching content. Update `_links.md` from any pending status to confirmed live.
+- **Source URL is live.** The `source_url` in `content-directory.ts` for this page (`https://www.gov.bb/Citizens/ezpay`) resolves successfully and contains matching content. Status: confirmed live.
 
-- **Frontmatter `section` field mismatch.** `src/content/ezpay.md` line 6 reads `section: "Work and Employment"` but the page lives under `money-financial-support` in content-directory.ts. If the `section` field drives navigation or breadcrumbs, this will produce incorrect output.
-
-- **bps.gov.bb does not mention EZpay.** The Barbados Postal Service website (bps.gov.bb) lists only "Money Orders" and "Cashing Government Cheques" under Financial services — no reference to EZpay or the barcode-scan cash payment process. If a citizen visits bps.gov.bb to confirm EZpay cash payments are accepted, they will find no corroboration. GovBB may wish to flag this to the postal service for inclusion in their service listing.
+- **No mentions of EFT.** A search of all EZpay-related gov.bb pages, bra.gov.bb, and GIS found no mention of "Electronic Funds Transfer" or "EFT" as a distinct payment option. The EZpay+ Terms and Conditions describe the system as using "the Barbados Automated Clearing House" (ACH) for direct debit. No EFT-related claim appears on the alpha page, so no correction is required.
 
 ---
 
@@ -335,14 +355,10 @@ The .php extension is functional but the canonical portal URL indexed by search 
 
 - [gov.bb — EZpay+ (canonical URL)](https://www.gov.bb/ezpay)
 - [gov.bb — EZpay+ (Citizens URL)](https://www.gov.bb/Citizens/ezpay)
-- [gov.bb — About Our Payment Services (ezpay-memo)](https://www.gov.bb/General/ezpay-memo)
-- [gov.bb — eZpay Terms and Conditions](https://www.gov.bb/ezpay-terms)
 - [ezpay.gov.bb — portal homepage](https://www.ezpay.gov.bb)
 - [ezpay.gov.bb — login page (/login.php)](https://www.ezpay.gov.bb/login.php)
-- [ezpay.gov.bb — login page (/login)](https://ezpay.gov.bb/login)
-- [ezpay.gov.bb — service page](https://ezpay.gov.bb/common_service)
 - [bps.gov.bb — Barbados Postal Service homepage](https://bps.gov.bb/)
 - [bra.gov.bb — Where can I make Land Tax Payments?](https://bra.gov.bb/Popular-Topics/Property/How-can-I-make-Land-Tax-payments/Overview)
-- [bra.gov.bb — Land Tax Frequently Asked Questions](https://bra.gov.bb/Popular-Topics/Property/Frequently-Asked-Questions)
 - [IDB Invest — Payce Digital Senior Loan (Sep 2025)](https://idbinvest.org/en/news-media/idb-invest-and-payce-digital-join-forces-strengthen-access-financial-services-barbados)
 - [Barbados Today — EZPAY on Payce Digital Mobile App (Sep 2021)](https://barbadostoday.bb/2021/09/14/ezpay-now-available-on-payce-digital-mobile-app/)
+- [alpha.gov.bb — EZPay live page](https://alpha.gov.bb/money-financial-support/ezpay)

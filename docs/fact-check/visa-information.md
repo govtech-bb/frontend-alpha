@@ -2,22 +2,22 @@
 
 - **Live page:** <https://alpha.gov.bb/travel-id-citizenship/visa-information>
 - **Source file:** `src/content/visa-information.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 8 claims reviewed — 0 verified, 6 discrepant, 2 unverifiable (both are legacy fax numbers not confirmed on any current source). Average certainty: **46%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 8 claims reviewed — 0 verified, 6 discrepant, 2 unverifiable. Average certainty: **46%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Address is for a building the Immigration Department vacated in 2018.** The page lists "Careenage House, Wharf Road, Bridgetown" as the main Immigration Department office. The department moved to BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael following a Caribbean Development Bank–funded fit-out. All current Tier 1 sources (immigration.gov.bb, gov.bb/Departments/immigration, GIS) confirm the new address. A citizen who travels to Careenage House will find empty or repurposed premises. This is a HIGH-impact error that has already been flagged against open-pharmacy.md (F-00A) — visa-information.md is an additional instance.
+1. **Address is for a building the Immigration Department vacated c. 2018–2020.** The page lists "Careenage House, Wharf Road, Bridgetown" as the main Immigration Department office. The department moved to BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael. All current Tier 1 sources (immigration.gov.bb, gov.bb/Departments/immigration) confirm the new address. A citizen who travels to Careenage House will find empty or repurposed premises. This is a HIGH-impact error.
 
-2. **Phone number is stale.** The page lists the main office phone as (246) 434-4100. The Immigration Department's telephone numbers changed in February 2017 (GIS announcement). The current main switchboard (PBX) is (246) 535-4100. The old 434-4xxx series was decommissioned at or around the time of the move. A citizen dialling 434-4100 will not reach the Immigration Department.
+2. **Phone numbers are stale (both offices).** The page lists (246) 434-4100 for the head office and (246) 418-4180 for GAIA. A 2017 GIS announcement confirmed all Immigration numbers changed to the 535-xxxx series. Current numbers: main PBX 535-4100, GAIA primary 535-4180. Citizens dialling the listed numbers will not reach Immigration.
 
-3. **Email address is obsolete.** The page uses `imm-dept@caribsurf.com` for both offices. Caribbean Surf no longer provides email services to Government of Barbados departments. Immigration's current primary email is `immigration.department@barbados.gov.bb` (gov.bb) / `Immigration.department@barbados.gov.bb` (immigration.gov.bb). The GAIA airport office has its own address: `Immigration.gaia@barbados.gov.bb`. No current Tier 1 source references the caribsurf.com address.
+3. **Email address is obsolete (both offices).** The page uses `imm-dept@caribsurf.com` for both offices. Caribbean Surf no longer provides email services to Government departments. The current head office email is `Immigration.department@barbados.gov.bb`; GAIA airport is `Immigration.gaia@barbados.gov.bb`. Emails to the caribsurf.com address will bounce or go unread.
 
-4. **Airport phone number is stale.** The page lists the GAIA office phone as (246) 418-4180. The current number published on immigration.gov.bb is 535-4180 (with additional lines at 535-4119, 535-4183, 535-4187). The 418-xxxx series was replaced in the same 2017 renumbering.
+4. **Visa application is now online — the paper-form instruction is obsolete.** The page tells applicants to complete a paper form "in duplicate." The immigration.gov.bb homepage carries a banner: "The Barbados Entry visa process is now a fully online process. Please click HERE to apply and pay for your entry visa to Barbados." The portal is live at `apps.immigration.gov.bb`. The paper duplicate requirement is inapplicable.
 
-5. **Visa application is now a fully online process — the paper-form instruction is obsolete.** The page tells applicants to complete a paper form "in duplicate." The Barbados Entry Visa process moved fully online in 2025 (announced 1 July 2025 by Minister Wilfred Abrahams; online payments via EZPay+ available from 14 March 2025). Applicants now apply and pay at `apps.immigration.gov.bb`. The requirement for two printed copies is no longer applicable.
+5. **Fax numbers unverifiable.** Both fax numbers listed ((246) 426-0819 for head office, (246) 420-7180 for GAIA) are the Careenage House-era numbers and appear nowhere in current Tier 1 sources. immigration.gov.bb/pages/contactus.aspx lists no fax at all; gov.bb/Departments/immigration lists fax 535-4183 for the department. Whether the old numbers are still routed is unconfirmable from the public web.
 
 ---
 
@@ -36,11 +36,11 @@
 </div>
 
 - **Type:** process step
-- **Sources:** [immigration.gov.bb — Home (online visa notice)](https://immigration.gov.bb/) — "The Barbados Entry visa process is now a fully online process. Please click HERE to apply and pay for your entry visa to Barbados."; [Barbados Today — Govt rolls out new online visa and payment systems (1 Jul 2025)](https://barbadostoday.bb/2025/07/01/govt-rolls-out-new-online-visa-and-payment-systems/); [immigration.gov.bb — Visa Requirements](https://immigration.gov.bb/pages/visa_requirements.aspx) — lists one passport-size photograph (not two) in the required documents for the online application
-- **Status:** discrepant — the requirement to complete a paper form "in duplicate" is obsolete; the process is now online. The visa requirements page also specifies one photograph, not two.
+- **Sources:** [immigration.gov.bb — Home](https://immigration.gov.bb/) — "The Barbados Entry visa process is now a fully online process. Please click HERE to apply and pay for your entry visa to Barbados."; [immigration.gov.bb — Visa Requirements](https://immigration.gov.bb/pages/visa_requirements.aspx) — lists one passport-size photograph (not two) in the required documents for the current application; [apps.immigration.gov.bb — Online portal](https://apps.immigration.gov.bb/portal/portal/login) — portal is live
+- **Status:** discrepant — the requirement to complete a paper form "in duplicate" is obsolete; the process is now online. The two-photo requirement is also superseded (one photo required for the online application).
 - **Certainty:** 85% (that the page is wrong)
 - **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — a visitor who prints and fills out a paper form cannot submit it; they will be directed online. The two-photo requirement may cause over-preparation, though a photo is still needed.
+- **Citizen impact:** MEDIUM — a visitor who prints and fills out a paper form cannot submit it; they must apply online. The two-photo requirement may cause over-preparation, though one photo is still needed.
 
 ---
 
@@ -57,7 +57,7 @@
 </div>
 
 - **Type:** address
-- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — "BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael, BARBADOS"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — confirms BTI Corporate Centre; [GIS — New HQ For Immigration Department](https://gisbarbados.gov.bb/blog/new-hq-for-immigration-department/) (HTTP 403 on direct fetch; confirmed via search result snippets) — "the first phase of the relocation of the entire department from its present location at Careenage House, Wharf Road, The City"; see also [_inventory.md — Barbados Immigration Department](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md) and [open-pharmacy.md — Claim 14](/home/gavin/frontend-alpha/docs/fact-check/open-pharmacy.md)
+- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — "BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael, BARBADOS"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — confirms "BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, BARBADOS"; see also [_inventory.md — Barbados Immigration Department](/docs/fact-check/_inventory.md)
 - **Status:** discrepant — department moved from Careenage House c. 2018–2020. Building name is wrong.
 - **Certainty:** 99%
 - **Confidence it's wrong:** 99%
@@ -83,7 +83,7 @@ BARBADOS</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — full address "BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael, BARBADOS"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — confirms same; [connectb1m.com — Immigration Department](https://connectb1m.com/immigration-department/) — corroborates "behind the Cheapside Public Market (opposite the Fisheries Division)"
+- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — full address "BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael, BARBADOS"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — confirms same
 - **Status:** discrepant — the street address is for the former (pre-2018) location.
 - **Certainty:** 99%
 - **Confidence it's wrong:** 99%
@@ -104,8 +104,8 @@ BARBADOS</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — "Main switchboard: 535-4100 | Chief Immigration Officer: 535-4195 | Front Desk: 535-4101, 4102"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — "PBX: 535-4100"; [GIS — Immigration Department Telephone Numbers Change](https://gisbarbados.gov.bb/blog/immigration-department-telephone-numbers-change-2/) (HTTP 403; confirmed via search snippet) — February 2017 announcement of new numbers replacing the 434-xxxx series; see also [_inventory.md — Barbados Immigration Department](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md)
-- **Status:** discrepant — (246) 434-4100 was the PABX number confirmed in 2010; replaced by (246) 535-4100 no later than February 2017.
+- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — "Main switchboard: 535-4100 | Chief Immigration Officer: 535-4195 | Front Desk: 535-4101, 4102"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — "PBX: 535-4100"; see also [_inventory.md — Barbados Immigration Department](/docs/fact-check/_inventory.md)
+- **Status:** discrepant — (246) 434-4100 was the PABX number prior to February 2017; replaced by (246) 535-4100.
 - **Certainty:** 99%
 - **Confidence it's wrong:** 99%
 - **Citizen impact:** HIGH — a citizen dialling the listed number will not reach the Immigration Department.
@@ -123,16 +123,17 @@ BARBADOS</pre>
 <div class="claim-block-label">Unverifiable from public web</div>
 <pre class="claim-block-content">The current Immigration Department fax number, per gov.bb/Departments/immigration, is (246) 535-4183.
 The page lists (246) 426-0819 — this was the Careenage House-era fax number (pre-2018).
+immigration.gov.bb/pages/contactus.aspx lists no fax number at all for any office.
 Whether 426-0819 was formally decommissioned cannot be confirmed from the public web; it is not published on any current Tier 1 source.
 
-Checked: immigration.gov.bb/pages/contactus.aspx (fax 535-4183); gov.bb/Departments/immigration (fax 535-4183); connectb1m.com (no fax listed) — none publish 426-0819.</pre>
+Checked: [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — no fax listed; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — fax listed as 535-4183; no current source publishes 426-0819.</pre>
 </div>
 
 - **Type:** phone (fax)
-- **Checked:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — fax listed as 535-4183; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — confirms 535-4183
-- **Status:** unverifiable — the 426-0819 number is almost certainly the former (Careenage House-era) fax and is not published on any current source. Current fax appears to be 535-4183.
+- **Checked:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — no fax listed; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — fax 535-4183
+- **Status:** unverifiable — the 426-0819 number is almost certainly the former (Careenage House-era) fax and is not published on any current source. Current department-wide fax appears to be 535-4183.
 - **Certainty:** 20% (that 426-0819 is still the active fax)
-- **Open question:** Immigration Department to confirm whether (246) 426-0819 is still an active fax line; if not, the page should use (246) 535-4183.
+- **Open question:** Immigration Department to confirm whether (246) 426-0819 is still an active fax line; if not, the page should use (246) 535-4183 or remove the fax entry.
 
 ---
 
@@ -149,7 +150,7 @@ Checked: immigration.gov.bb/pages/contactus.aspx (fax 535-4183); gov.bb/Departme
 </div>
 
 - **Type:** email
-- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — head office email "immigration.department@barbados.gov.bb"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — same; no current Tier 1 source references imm-dept@caribsurf.com; search results for the caribsurf.com address return only older third-party pages and the stale gov.bb source page itself
+- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — head office email "Immigration.department@barbados.gov.bb"; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — lists "immigration@barbados.gov.bb" (a variant; likely an alias); no current Tier 1 source references imm-dept@caribsurf.com
 - **Status:** discrepant — imm-dept@caribsurf.com is an obsolete email address. Caribbean Surf no longer hosts Government of Barbados department email. The current authoritative address is `Immigration.department@barbados.gov.bb`.
 - **Certainty:** 95%
 - **Confidence it's wrong:** 95%
@@ -170,7 +171,7 @@ Checked: immigration.gov.bb/pages/contactus.aspx (fax 535-4183); gov.bb/Departme
 </div>
 
 - **Type:** phone
-- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — GAIA office: "535-4180/4119/4183/4187, Email: Immigration.gaia@barbados.gov.bb"; this matches the same 2017 renumbering that replaced the main office 434-xxxx series; [GIS — Immigration Department Telephone Numbers Change](https://gisbarbados.gov.bb/blog/immigration-department-telephone-numbers-change-2/) — covers the GAIA office numbers changing at the same time
+- **Sources:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — GAIA office: "535-4180/4119/4183/4187, Email: Immigration.gaia@barbados.gov.bb"; this matches the same 2017 renumbering that replaced the main office 434-xxxx series
 - **Status:** discrepant — (246) 418-4180 was the former airport immigration number; current primary is (246) 535-4180.
 - **Certainty:** 95%
 - **Confidence it's wrong:** 95%
@@ -190,9 +191,9 @@ Email: imm-dept@caribsurf.com</pre>
 <div class="claim-block-label">Unverifiable from public web (fax) / Discrepant (email)</div>
 <pre class="claim-block-content">EMAIL: immigration.gov.bb lists the GAIA office email as Immigration.gaia@barbados.gov.bb — not imm-dept@caribsurf.com. The caribsurf.com address is obsolete (see Claim 6).
 
-FAX: (246) 420-7180 is the former Careenage House-era airport fax number. The current immigration.gov.bb contact page does not publish a separate fax number for the GAIA office (it lists 535-4183 as the department-wide fax). Whether 420-7180 is still active cannot be confirmed from the public web.
+FAX: (246) 420-7180 is the former Careenage House-era airport fax number. immigration.gov.bb/pages/contactus.aspx does not publish any fax number; gov.bb/Departments/immigration lists only the department-wide fax 535-4183. Whether 420-7180 is still active cannot be confirmed from the public web.
 
-Checked: immigration.gov.bb/pages/contactus.aspx — GAIA fax not listed separately; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — no separate GAIA fax; no current source publishes 420-7180.</pre>
+Checked: [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx) — GAIA email is Immigration.gaia@barbados.gov.bb; no fax listed for any office; [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration) — no separate GAIA fax; no current source publishes 420-7180.</pre>
 </div>
 
 - **Type:** phone (fax) + email
@@ -208,21 +209,24 @@ Checked: immigration.gov.bb/pages/contactus.aspx — GAIA fax not listed separat
 
 ## Additional findings (not on the page but should be)
 
-1. **Online application portal.** The page makes no mention of the online visa application portal. The current process for nationals of countries requiring a Barbados entry visa is entirely online: apply and pay at `https://apps.immigration.gov.bb/portal/portal/login`. The portal launched with online payments from 14 March 2025 and was announced as a fully online process on 1 July 2025. Citizens currently reading the alpha.gov.bb page have no way to know this.
+1. **Online application portal.** The page makes no mention of the online visa application portal. The current process for nationals of countries requiring a Barbados entry visa is entirely online: apply and pay at `https://apps.immigration.gov.bb/portal/portal/login`. The immigration.gov.bb homepage carries a prominent notice: "The Barbados Entry visa process is now a fully online process."
 
-2. **Visa fees.** The page contains no visa fee information. The official fees are: single entry US$107.00 (one entry within three months); multiple entry US$211.00 (multiple entries within six months). Payment is by banker's draft addressed to the Chief Immigration Officer for postal applications; online payment via EZPay+ for the digital portal.
+2. **Visa fees.** The page contains no visa fee information. The official fees are: single entry US$107.00 (one entry within three months); multiple entry US$211.00 (multiple entries within six months). Source: [immigration.gov.bb — Visa Requirements](https://immigration.gov.bb/pages/visa_requirements.aspx).
 
-3. **Processing time.** The immigration.gov.bb visa requirements page states processing takes three weeks and that "Updates are NOT given on the process of applications." This is operationally important for applicants; it is absent from the alpha.gov.bb page.
+3. **Processing time.** The immigration.gov.bb visa requirements page states: "PROCESSING PERIOD IS THREE (3) WEEKS. Updates are NOT given on the process of applications." This is operationally important for applicants; it is absent from the alpha.gov.bb page.
 
 4. **CARICOM nationals.** CARICOM nationals (except Haiti) are visa-exempt and may stay for up to six months per year under the Right of Entry. From 1 October 2025, nationals of Barbados, Belize, Dominica, and St. Vincent and the Grenadines have full free movement (indefinite stay). Neither the visa exemption nor the new free movement arrangement is mentioned on the page.
 
-5. **Country list.** The page does not link to or describe the list of countries whose nationals require a visa. The official list is available as a PDF from the Ministry of Foreign Affairs: [foreign.gov.bb — Visa Information](https://www.foreign.gov.bb/visa-information/).
+5. **Country list.** The page does not link to or describe the list of countries whose nationals require a visa. The official list is available through the Ministry of Foreign Affairs: [foreign.gov.bb — Visa Information](https://www.foreign.gov.bb/visa-information/).
 
-6. **Complete current contact block.** For reference, the verified current Immigration Department contact details are:
+6. **Entry visas email.** The immigration.gov.bb contact page lists a dedicated entry visas email `Immigration.entryvisas@barbados.gov.bb` and phone lines 535-4187, 4694, 4171. This would be more useful to applicants than a general department email.
+
+7. **Complete current contact block.** For reference, the verified current Immigration Department contact details are:
    - **Head office:** BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael
    - **Phone (main PBX):** (246) 535-4100
-   - **Fax:** (246) 535-4183
+   - **Fax:** (246) 535-4183 (per gov.bb; immigration.gov.bb no longer publishes a fax number)
    - **Email:** Immigration.department@barbados.gov.bb
+   - **Entry Visas:** Immigration.entryvisas@barbados.gov.bb; (246) 535-4187, 4694, 4171
    - **GAIA airport office:** (246) 535-4180 / 535-4119 / 535-4183 / 535-4187; Email: Immigration.gaia@barbados.gov.bb
    - **Bridgetown Port:** (246) 535-4177; Email: Immigration.seaport@barbados.gov.bb
    - **Port St. Charles Marina:** (246) 535-4178; Email: Immigration.portstc@barbados.gov.bb
@@ -234,17 +238,8 @@ Checked: immigration.gov.bb/pages/contactus.aspx — GAIA fax not listed separat
 - [immigration.gov.bb — Home](https://immigration.gov.bb/)
 - [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx)
 - [immigration.gov.bb — Visa Requirements](https://immigration.gov.bb/pages/visa_requirements.aspx)
-- [immigration.gov.bb — Visitor Requirements](https://immigration.gov.bb/pages/visitor.aspx)
 - [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration)
 - [gov.bb — Visa Information (source_url)](https://www.gov.bb/Visit-Barbados/visa-information)
-- [GIS — New HQ For Immigration Department](https://gisbarbados.gov.bb/blog/new-hq-for-immigration-department/)
-- [GIS — Immigration Department Telephone Numbers Change](https://gisbarbados.gov.bb/blog/immigration-department-telephone-numbers-change-2/)
-- [GIS — A New Era For Barbados Immigration Department](https://gisbarbados.gov.bb/blog/a-new-era-for-barbados-immigration-department/)
-- [GIS — New Numbers At Immigration Dept.](https://gisbarbados.gov.bb/blog/new-numbers-at-immigration-dept/)
-- [Barbados Today — Govt rolls out new online visa and payment systems (1 Jul 2025)](https://barbadostoday.bb/2025/07/01/govt-rolls-out-new-online-visa-and-payment-systems/)
-- [foreign.gov.bb — Visa Information](https://www.foreign.gov.bb/visa-information/)
 - [apps.immigration.gov.bb — Online visa portal](https://apps.immigration.gov.bb/portal/portal/login)
-- [CARICOM — Barbados, Belize, Dominica and St. Vincent and the Grenadines Ready for Full Free Movement on 1 October 2025](https://caricom.org/barbados-belize-dominica-and-st-vincent-and-the-grenadines-ready-for-full-free-movement-on-1-october-2025/)
-- [connectb1m.com — Immigration Department](https://connectb1m.com/immigration-department/)
-- [_inventory.md — Barbados Immigration Department](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md)
-- [open-pharmacy.md — prior finding F-00A](/home/gavin/frontend-alpha/docs/fact-check/open-pharmacy.md)
+- [foreign.gov.bb — Visa Information](https://www.foreign.gov.bb/visa-information/)
+- [_inventory.md — Barbados Immigration Department](/docs/fact-check/_inventory.md)

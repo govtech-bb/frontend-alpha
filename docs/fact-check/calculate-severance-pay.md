@@ -1,19 +1,21 @@
-# Fact-check: Find out how much severance payment you are owed (Calculate severance pay)
+# Fact-check: Find out how much severance payment you are owed
 
 - **Live page:** <https://alpha.gov.bb/money-financial-support/calculate-severance-pay>
 - **Source files:** `src/content/calculate-severance-pay/index.md`, `src/content/calculate-severance-pay/start.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 13 claims reviewed — 9 verified, 2 discrepant, 2 unverifiable. Average certainty: **82%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 15 claims reviewed — 12 verified, 1 discrepant, 2 unverifiable. Average certainty: **88%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **"Usual gross pay — include overtime or bonuses" is factually wrong.** The Severance Payments Act and the NIS calculate severance on *basic pay* (average weekly basic earnings over the last 104 weeks), which explicitly excludes overtime, commissions, and service charges. The start.md instruction to "include overtime or bonuses" will cause citizens to over-estimate their entitlement. This is the most significant factual error on the page and could lead to real financial disappointment for newly redundant workers. (Claim 12.)
+1. **REVERSED — Claim 12 (gross pay / overtime) is now verified.** The previous pass flagged "your usual gross pay — include overtime or bonuses" (start.md) as discrepant, arguing severance is calculated on *basic pay* which excludes overtime. On re-verification, the NIS's own severance page defines "Basic Average Pay" as "(Total Earnings within the last 104 weeks of employment) divided by (104)" and explicitly states that insurable earnings "include but are not limited to: Overtime payments, Commission on sales or profits on sales, Service charge, Production bonus, Holiday pay." The start.md instruction to include overtime and bonuses is therefore consistent with the NIS calculation methodology. The prior finding was incorrect; the page text is accurate.
 
-2. **"Death of employer" trigger is absent from the NIS severance page.** The index.md includes "your employer died" as a qualifying reason, and the Act (Cap. 355A) does contain provisions about death of employer. However, the NIS's own /severance/ page omits this from its list of four qualifying events (redundancy, laid-off, short-time, natural disaster). This creates a consistency gap that should be clarified with NIS. (Claim 4.)
+2. **NIS department name uses non-official styling (Claim 6).** The page names the contact as "NIS Severance Payment Department." The NIS Contact Us page lists the department simply as "Severance" with email `severancedepartment@bginis.gov.bb`. The word "Payment" in the name is not used in any NIS publication. Low citizen impact but worth correcting for consistency.
 
-3. **NIS department name uses non-official styling.** The page calls it the "NIS Severance Payment Department"; the NIS Contact Us page and the severancedepartment@bginis.gov.bb email address use "Severance Department" (not "Severance Payment Department"). Low citizen impact but inconsistent with official naming. (Claim 6.)
+3. **"Death of employer" trigger absent from NIS qualifying-events list (Claim 4 / Claim 13).** The alpha.gov.bb page lists "your employer died" as a qualifying reason. The NIS's own /severance/ page only lists four triggers (redundancy, laid-off, short-time, natural disaster) and does not include death of employer. The Act (Cap. 355A) does contain provisions on death of employer, so the claim is partially supported by statute, but the NIS citizen-facing guidance is silent on it. This remains an open question for NIS confirmation.
+
+4. **Hours-per-week eligibility threshold missing from page (additional finding).** The NIS page requires employees to "be contracted to work for no less than 21 hours a week" to be eligible. The alpha.gov.bb page does not mention this threshold. A part-time worker on fewer than 21 contracted hours would not be eligible but would not know from this page.
 
 ---
 
@@ -32,13 +34,13 @@
 </div>
 
 - **Type:** legal reference
-- **Sources:** [Cap. 355A Severance Payments — Barbados Law Courts (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf); [NIS — Severance Payments Act, CAP355A](https://www.nis.gov.bb/legislation/severance-payments-act-cap355a/); [NIS — Severance](https://www.nis.gov.bb/severance/) (uses "Severance Payment Act (CAP 355A)"); [OAG — Severance Payments (Amendment) Act 2020-15](https://oag.gov.bb/attachments/Severance%20Payments%20(Amendment)%20Act,%202020-15.pdf)
+- **Sources:** [Cap. 355A — Barbados Law Courts (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf); [NIS — Severance Payments Act CAP355A portal](https://www.nis.gov.bb/legislation/severance-payments-act-cap355a/); [NIS — Severance](https://www.nis.gov.bb/severance/); [OAG — Severance Payments (Amendment) Act 2020-15](https://oag.gov.bb/attachments/Severance%20Payments%20(Amendment)%20Act,%202020-15.pdf)
 - **Status:** verified
 - **Certainty:** 99%
 
 ---
 
-### Claim 2 — Link target for the Act (index.md line 9)
+### Claim 2 — Link target for the Act: nis.gov.bb/severance/ (index.md line 9)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -52,8 +54,8 @@ criteria, calculation formula, and NIS Severance Fund information</pre>
 </div>
 
 - **Type:** URL
-- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — fetched 2026-05-28, page loads and contains relevant content
-- **Status:** verified — the URL is live and delivers the correct content. Note: it points to the NIS severance summary page, not directly to the Act text (barbadoslawcourts.gov.bb hosts the Act PDF). The NIS page is more accessible for citizens than the raw statute, so the choice is reasonable.
+- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — fetched 2026-05-29, page loads and contains relevant content on eligibility, calculation formula, and contact details
+- **Status:** verified — URL is live and delivers relevant content. Note: it links to the NIS severance summary page rather than the Act PDF directly, which is more citizen-accessible.
 - **Certainty:** 99%
 
 ---
@@ -71,10 +73,10 @@ criteria, calculation formula, and NIS Severance Fund information</pre>
 </div>
 
 - **Type:** eligibility
-- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — "be working for at least 104 continuous weeks with the same employer". 104 weeks = exactly 2 years; the plain-English phrasing is equivalent and appropriate for citizen-facing copy.
-- **Status:** verified — "2 years" is accurate plain-English rendering of the statutory "104 continuous weeks".
+- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — "be working for at least 104 continuous weeks with the same employer." 104 weeks = exactly 2 years; the plain-English phrasing is an accurate and appropriate rendering for citizen-facing copy.
+- **Status:** verified
 - **Certainty:** 95%
-- **Note:** The NIS page also requires the employee to be "contracted to work for no less than 21 hours a week". This hours threshold is not mentioned on the alpha.gov.bb page; it is a gap rather than an error (see Additional Findings).
+- **Note:** The NIS page also requires the employee to be "contracted to work for no less than 21 hours a week." This is not mentioned on the alpha.gov.bb page — see Additional Findings.
 
 ---
 
@@ -87,17 +89,17 @@ by a disaster, you had no work for a long time, or your employer died</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct for three of four; "death of employer" needs NIS confirmation</div>
+<div class="claim-block-label">Three of four verified; "death of employer" needs NIS confirmation</div>
 <pre class="claim-block-content">Redundancy, natural disaster, lay-off/short-time: confirmed on NIS page.
-Death of employer: confirmed as a section heading in Cap. 355A but NOT
-listed among the four qualifying events on nis.gov.bb/severance/.</pre>
+Death of employer: present in Cap. 355A but NOT listed among qualifying
+events on nis.gov.bb/severance/.</pre>
 </div>
 
 - **Type:** eligibility / process step
-- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — lists "terminated for redundancy, laid-off, kept on short-time or because of a natural disaster" as the four qualifying events. Death of employer is absent from this list. [Cap. 355A — Barbados Law Courts PDF](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf) — search results confirm the Act contains a section on "Death of employer or employee". [OAG — Severance Payments (Amendment) Act 2020-15](https://oag.gov.bb/attachments/Severance%20Payments%20(Amendment)%20Act,%202020-15.pdf) — amends Fifth Schedule with provisions about death of employer.
-- **Status:** partially verified — the first three triggers are confirmed; death of employer exists in the Act but is not independently listed on the NIS citizen-facing summary page.
-- **Certainty:** 80% (for the "death of employer" trigger specifically; the other three are 95%)
-- **Open question:** Should the NIS be asked to confirm whether "death of employer" is a live, everyday-use trigger, or a legacy provision that rarely applies? The NIS's omission from their own summary page is notable.
+- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — lists "terminated for redundancy, laid-off, kept on short-time or because of a natural disaster" as qualifying events; death of employer absent. [Cap. 355A — Barbados Law Courts PDF](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf) — Act contains a section on "Death of employer or employee." [OAG — Severance Payments (Amendment) Act 2020-15](https://oag.gov.bb/attachments/Severance%20Payments%20(Amendment)%20Act,%202020-15.pdf) — amends Fifth Schedule with employer death provisions.
+- **Status:** partially verified — redundancy, disaster, lay-off/short-time are confirmed. Death of employer exists in the Act but the NIS citizen-facing summary does not list it.
+- **Certainty:** 80% (for the package; the three main triggers are 95%; the death-of-employer trigger is ~60%)
+- **Open question:** Should NIS confirm whether "death of employer" is a routine qualifying trigger their office processes? Its absence from the NIS summary page is notable and may cause confusion.
 
 ---
 
@@ -114,8 +116,8 @@ listed among the four qualifying events on nis.gov.bb/severance/.</pre>
 </div>
 
 - **Type:** eligibility
-- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — "be over 16 years old and under pensionable age at the time of the termination". [NIS — Old-Age Contributory Pension](https://www.nis.gov.bb/old-age-contributory-pension/) — pensionable age is 67 years, effective 1 January 2018. [GIS — Ministerial Statement On Revitalisation Of National Insurance Scheme](https://gisbarbados.gov.bb/blog/ministerial-statement-on-revitalisation-of-national-insurance-scheme/) — confirms 67.
-- **Status:** verified — "under pensionable age" = under 67 (since January 2018); "over 16" = 16 minimum. The alpha.gov.bb phrasing "between 16 and 67" is accurate.
+- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — "be over 16 years old and under pensionable age at the time of the termination." [NIS — Old-Age Contributory Pension](https://www.nis.gov.bb/old-age-contributory-pension/) — pensionable age is 67, effective 1 January 2018. The alpha.gov.bb phrasing "between 16 and 67" accurately renders the statutory "over 16 and under pensionable age."
+- **Status:** verified
 - **Certainty:** 95%
 
 ---
@@ -133,11 +135,11 @@ listed among the four qualifying events on nis.gov.bb/severance/.</pre>
 </div>
 
 - **Type:** agency name
-- **Sources:** [NIS — Contact Us](https://www.nis.gov.bb/contact-us/) — lists the department as "Severance" with extensions 1502–1509 and email severancedepartment@bginis.gov.bb (the email slug uses "severancedepartment", not "severancepaymentdepartment"). [NIS — Severance](https://www.nis.gov.bb/severance/) — section heading uses "Severance" throughout, not "Severance Payment Department". [gov.bb — National Insurance Department](https://www.gov.bb/Departments/national-insurance) — no sub-department naming visible.
-- **Status:** discrepant — "Payment" is an extraneous word not used in any NIS publication. Official name appears to be "Severance Department" (within the National Insurance and Social Security Department).
+- **Sources:** [NIS — Contact Us](https://www.nis.gov.bb/contact-us/) — lists the department simply as "Severance" with extensions 1502–1509 and email `severancedepartment@bginis.gov.bb` (the email slug uses "severancedepartment" not "severancepaymentdepartment"). [NIS — Severance](https://www.nis.gov.bb/severance/) — section headings use "Severance" throughout, not "Severance Payment Department."
+- **Status:** discrepant — "Payment" is an extraneous word not used in any NIS publication. Official name appears to be "Severance Department."
 - **Certainty:** 80%
 - **Confidence it's wrong:** 75%
-- **Citizen impact:** LOW — citizens will still reach the right department.
+- **Citizen impact:** LOW — citizens will reach the correct department regardless.
 
 ---
 
@@ -180,6 +182,7 @@ St. Michael</pre>
 - **Sources:** [NIS — Contact Us](https://www.nis.gov.bb/contact-us/) — "(246) 431-7400"; [NIS — Severance](https://www.nis.gov.bb/severance/) — "(246) 431-7400"; [gov.bb — National Insurance Department](https://www.gov.bb/Departments/national-insurance) — "1 (246) 431-7400"
 - **Status:** verified
 - **Certainty:** 99%
+- **Note:** The NIS Severance page also lists a second NIS number `(246) 467-4647` which is not shown on the alpha.gov.bb page. See Additional Findings.
 
 ---
 
@@ -196,10 +199,9 @@ St. Michael</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [NIS — Contact Us](https://www.nis.gov.bb/contact-us/) — "431-7400 Ext. 1502 to 1509" for the Severance department specifically. An earlier NIS search result surfaced "Ext. 1501 to 1509" from the severance-payment-applications page, but the definitive Contact Us page confirms 1502–1509.
+- **Sources:** [NIS — Contact Us](https://www.nis.gov.bb/contact-us/) — "431-7400 Ext. 1502 to 1509" for the Severance department specifically.
 - **Status:** verified
 - **Certainty:** 90%
-- **Note:** One NIS page (severance-payment-applications-employers) appeared to list "1501 to 1509"; the Contact Us page (more authoritative) says "1502 to 1509". The alpha.gov.bb figure of 1502–1509 matches the Contact Us page.
 
 ---
 
@@ -217,15 +219,15 @@ If you wait longer, you may lose your right to severance payment.</pre>
 If you wait longer, you may lose your right to severance payment.</pre>
 </div>
 
-- **Type:** eligibility / hours (deadline)
-- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — "An employee has one (1) year from the date of termination to claim the severance"; [Barbados Today — Statement on the timeframe for claiming a severance payment (19 Sep 2020)](https://barbadostoday.bb/2020/09/19/statement-on-the-timeframe-for-claiming-a-severance-payment/amp/) — Labour Department confirms "the worker has 1 year to claim severance" and "before the expiry of 12 months following the date on which he/she became entitled to claim."
+- **Type:** eligibility / deadline
+- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — "An employee has one (1) year from the date of termination to claim the severance"; [Barbados Today — Statement on the timeframe for claiming a severance payment (19 Sep 2020)](https://barbadostoday.bb/2020/09/19/statement-on-the-timeframe-for-claiming-a-severance-payment/amp/) — Labour Department confirms "the worker has 1 year to claim severance."
 - **Status:** verified
 - **Certainty:** 95%
-- **Note:** The Act technically requires two sequential steps: (a) notify employer of intention to claim within 4 weeks; (b) submit the formal written claim within 12 months. The alpha.gov.bb page correctly gives the outer 12-month boundary as the headline; the 4-week notification requirement is an operational detail best confirmed with NIS.
+- **Note:** The Act technically requires two sequential steps: (a) notify employer of intention within 4 weeks; (b) submit formal written claim within 12 months. The alpha.gov.bb page correctly gives the outer 12-month boundary; the 4-week notification is an operational detail best confirmed with NIS.
 
 ---
 
-### Claim 11 — Severance Payments Act legal citation (start.md line 9)
+### Claim 11 — Legal citation in start.md: Severance Payments Act (Cap. 355A) (start.md line 9)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -240,13 +242,13 @@ If you wait longer, you may lose your right to severance payment.</pre>
 </div>
 
 - **Type:** legal reference
-- **Sources:** same as Claim 1 — [Cap. 355A — Barbados Law Courts](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf); [NIS — Severance](https://www.nis.gov.bb/severance/)
+- **Sources:** [Cap. 355A — Barbados Law Courts](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf); [NIS — Severance](https://www.nis.gov.bb/severance/)
 - **Status:** verified
 - **Certainty:** 99%
 
 ---
 
-### Claim 12 — "Usual gross pay (weekly or monthly) — include overtime or bonuses" (start.md line 22)
+### Claim 12 — "Usual gross pay — include overtime or bonuses" (start.md line 22)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -254,17 +256,15 @@ If you wait longer, you may lose your right to severance payment.</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">your usual basic pay (weekly or monthly) — do not include overtime,
-commissions, service charges, or bonuses</pre>
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">your usual gross pay (weekly or monthly) — include overtime or bonuses</pre>
 </div>
 
-- **Type:** process step / eligibility
-- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — the Act calculates severance on "basic average weekly pay", which the NIS defines as total earnings over the last 104 weeks divided by 104. The NIS page explicitly distinguishes "basic pay" from "insurable earnings": "Insurable earnings refer to the payments on which national insurance contributions are made and they include but are not limited to the following: Overtime payments, Commission on sales or profits on sales, Service charge, Production bonus." These items are insurable earnings but are NOT basic pay for severance computation purposes. The severance formula uses "weeks' **basic pay**" throughout. [Cap. 355A Schedule — Barbados Law Courts](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf) — Schedule uses "basic pay" as the computation base, not gross pay.
-- **Status:** discrepant — "gross pay" and "include overtime or bonuses" is wrong. Severance is calculated on basic pay, which excludes overtime, commission, service charges, and production bonuses. A citizen who enters a gross figure that includes a large bonus or habitual overtime will receive an over-stated estimate.
+- **Type:** process step
+- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — "Basic Average Pay is calculated as (Total Earnings within the last 104 weeks of employment) divided by (104)." The page further states that insurable earnings "include but are not limited to the following: Overtime payments, Commission on sales or profits on sales, Service charge, Production bonus, Holiday pay." Total Earnings for the NIS formula = insurable earnings, which explicitly include overtime and bonuses.
+- **Status:** verified — **REVERSED from prior pass.** The previous report flagged this as discrepant, arguing severance uses "basic pay" that excludes overtime. Re-verification shows the NIS defines "Basic Average Pay" using "Total Earnings" (= insurable earnings including overtime, commissions, bonuses). The start.md instruction to "include overtime or bonuses" is therefore consistent with the NIS calculation methodology.
 - **Certainty:** 85%
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** HIGH — calculator will produce an inflated estimate for any worker who regularly earns overtime or bonuses. This could mislead a newly redundant employee into expecting more than they will receive, causing real financial hardship when the actual payment is lower.
+- **Note:** The pay figure is capped at $1,201 per week (effective January 1, 2024 per NIS). This cap is not mentioned on the alpha.gov.bb page — see Additional Findings.
 
 ---
 
@@ -277,48 +277,86 @@ or death of employer)</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Three of four verified; "death of employer" partially verified — see Claim 4</div>
+<div class="claim-block-label">Three of four verified; "death of employer" needs NIS confirmation — see Claim 4</div>
 <pre class="claim-block-content">Redundancy, disaster, lay-off or short time: confirmed.
 Death of employer: present in Cap. 355A but absent from
 nis.gov.bb/severance/ qualifying events list.</pre>
 </div>
 
 - **Type:** eligibility
-- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/) — lists four qualifying events (redundancy, laid-off, short-time, natural disaster); "death of employer" not in the NIS summary list. [Cap. 355A — search results](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf) — Act contains a section on "Death of employer or employee". [OAG — 2020 Amendment Act](https://oag.gov.bb/attachments/Severance%20Payments%20(Amendment)%20Act,%202020-15.pdf) — amends Fifth Schedule with employer death provisions.
-- **Status:** partially verified — same finding as Claim 4; cross-reference noted.
+- **Sources:** [NIS — Severance](https://www.nis.gov.bb/severance/); [Cap. 355A — Barbados Law Courts PDF](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf); [OAG — 2020 Amendment Act](https://oag.gov.bb/attachments/Severance%20Payments%20(Amendment)%20Act,%202020-15.pdf)
+- **Status:** partially verified — same finding as Claim 4.
 - **Certainty:** 80%
-- **Open question:** Is "death of employer" a qualifying trigger that the NIS Severance Department routinely processes, or is it a legacy provision? If it is live, the NIS should add it to nis.gov.bb/severance/; if it rarely applies, the alpha.gov.bb page should confirm the NIS will handle such claims.
+- **Open question:** Is "death of employer" a qualifying trigger the NIS Severance Department routinely processes? Its absence from the NIS summary page is notable.
+
+---
+
+### Claim 14 — CTA link: index.md "Start your estimate now" (index.md line 23)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">linked to /money-financial-support/calculate-severance-pay/start</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">/money-financial-support/calculate-severance-pay/start — live page loads</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — /money-financial-support/calculate-severance-pay/start](https://alpha.gov.bb/money-financial-support/calculate-severance-pay/start) — page loads and presents the "before you start" content with the calculator CTA.
+- **Status:** verified
+- **Certainty:** 99%
+
+---
+
+### Claim 15 — CTA link: start.md "Start your estimate now" (start.md line 23)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">linked to /money-financial-support/calculate-severance-pay/form</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">/money-financial-support/calculate-severance-pay/form — page loads
+(interactive component renders)</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — /money-financial-support/calculate-severance-pay/form](https://alpha.gov.bb/money-financial-support/calculate-severance-pay/form) — page loads and shows an interactive calculator form (first question: "Are you self-employed?").
+- **Status:** verified
+- **Certainty:** 95%
 
 ---
 
 ## Additional findings (not on the page but should be)
 
-**A. Hours threshold missing.** The NIS page states an employee must "be contracted to work for no less than 21 hours a week" to be eligible for severance. This requirement is not mentioned on the alpha.gov.bb page. A part-time worker on fewer than 21 contracted hours per week will be ineligible, but the page does not warn them. Consider adding "you were contracted to work at least 21 hours per week" to the eligibility checklist on index.md.
+**A. Hours threshold missing.** The NIS page states an employee must "be contracted to work for no less than 21 hours a week" to be eligible for severance. This is not mentioned on the alpha.gov.bb page. A part-time worker on fewer than 21 contracted hours per week will be ineligible but the page does not warn them. Consider adding to the eligibility checklist on index.md.
 - Source: [NIS — Severance](https://www.nis.gov.bb/severance/)
 
-**B. NIS Severance Fund (employer rebate) not mentioned.** The NIS page notes that "the insured employer of the severed employee is entitled to claim a 25% rebate from the NIS Severance Fund" within 6 months of payment. While this is employer-facing information rather than citizen-facing, it affects the calculation context. Not an error but a useful addition for completeness.
+**B. Weekly pay cap not disclosed.** The NIS page notes the weekly basic pay is capped at $1,201 per week (effective 1 January 2024). Workers earning more than this will have their severance calculated on the cap, not their actual pay. The alpha.gov.bb page does not mention this cap; citizens with high earnings may over-estimate their entitlement.
+- Source: [NIS — Severance](https://www.nis.gov.bb/severance/) — "capped at $1,201 weekly (as of January 1, 2024)"
+
+**C. Second NIS phone number not shown.** The NIS Severance page lists a second telephone number for NIS: `(246) 467-4647`. This is not on the alpha.gov.bb page. Adding it as an alternative number would help citizens who cannot reach the main line.
 - Source: [NIS — Severance](https://www.nis.gov.bb/severance/)
 
-**C. NIS email address not on the page.** The NIS Contact Us page publishes severancedepartment@bginis.gov.bb for written queries. This is not on the alpha.gov.bb page; adding it would benefit citizens who cannot call.
+**D. NIS email address not on the page.** The NIS Contact Us page publishes `severancedepartment@bginis.gov.bb` for written queries. This is not on the alpha.gov.bb page; adding it would help citizens who cannot call.
 - Source: [NIS — Contact Us](https://www.nis.gov.bb/contact-us/)
 
-**D. No source_url declared in content-directory.ts.** The `calculate-severance-pay` entry in `src/data/content-directory.ts` (around line 234) has no `source_url` field. The natural candidate would be `https://www.nis.gov.bb/severance/` (the NIS severance page, which is the authoritative government reference). No action required on the content page itself, but the metadata gap is noted.
+**E. No source_url declared in content-directory.ts.** The `calculate-severance-pay` entry (around line 235) has no `source_url` field. The natural candidate is `https://www.nis.gov.bb/severance/`.
 
 ---
 
 ## Sources cited
 
 - [NIS — Severance](https://www.nis.gov.bb/severance/) — primary Tier 1 source for eligibility, formula, address, phone
-- [NIS — Contact Us](https://www.nis.gov.bb/contact-us/) — extension 1502–1509 confirmation
-- [NIS — Severance Payment Applications & Employers](https://www.nis.gov.bb/severance-payment-applications-employers/) — email address
-- [NIS — Layoff/Amended Severance Procedures](https://www.nis.gov.bb/layoff-procedures/) — COVID-era lay-off amendments
+- [NIS — Contact Us](https://www.nis.gov.bb/contact-us/) — extension 1502–1509 confirmation, email address
 - [NIS — Severance Payments Act, CAP355A (portal page)](https://www.nis.gov.bb/legislation/severance-payments-act-cap355a/)
 - [NIS — Old-Age Contributory Pension](https://www.nis.gov.bb/old-age-contributory-pension/) — pensionable age = 67
 - [gov.bb — National Insurance Department](https://www.gov.bb/Departments/national-insurance) — address and main phone
 - [Barbados Law Courts — Cap. 355A Severance Payments (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SeverancePaymentsCAP355A.pdf)
-- [Barbados Law Courts — Severance Payments (Tribunal) Regulations 1974](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/subsidiary_legislation_of_barbados/SeverancePayments(Tribunal)Regulations,1974Cap355A'G.pdf)
-- [Barbados Law Courts — Severance Payments (Calculation of Maximum Basic Pay) Order 1991](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/subsidiary_legislation_of_barbados/SeverancePayments(CalculationofMaximumBasicPay)Order,1991Cap355A'B.pdf)
 - [OAG — Severance Payments (Amendment) Act 2020-15 (PDF)](https://oag.gov.bb/attachments/Severance%20Payments%20(Amendment)%20Act,%202020-15.pdf)
 - [Barbados Today — Statement on the timeframe for claiming a severance payment (19 Sep 2020)](https://barbadostoday.bb/2020/09/19/statement-on-the-timeframe-for-claiming-a-severance-payment/amp/)
-- [GIS — Severance Payment Applications & Employers](https://gisbarbados.gov.bb/blog/severance-payment-applications-employers/) — 403 at time of check; search snippet confirmed email and extensions
-- [GIS — Reminder on Age of Retirement in Private Sector](https://gisbarbados.gov.bb/blog/reminder-on-age-of-retirement-in-private-sector/) — 403 at time of check; confirms pensionable age 67
+- [alpha.gov.bb — calculate-severance-pay/start](https://alpha.gov.bb/money-financial-support/calculate-severance-pay/start) — CTA live check
+- [alpha.gov.bb — calculate-severance-pay/form](https://alpha.gov.bb/money-financial-support/calculate-severance-pay/form) — calculator form live check

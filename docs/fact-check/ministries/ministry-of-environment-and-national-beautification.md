@@ -3,22 +3,22 @@
 - **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-environment-and-national-beautification>
 - **Source file:** `src/content/ministries/ministry-of-environment-and-national-beautification.md`
 - **Data file:** `src/data/ministries.ts` (lines 347–401)
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 19 claims reviewed — 12 verified, 4 discrepant, 3 unverifiable. Average certainty: **80%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **"Natural Beautification" typo on line 1 — misspells the ministry name.** The very first sentence reads "The Ministry of Environment and *Natural* Beautification." Every authoritative source — `gov.bb/Ministries/environment`, `ozone.gov.bb/the-ministry/`, `barbadosparliament.com` — uses **National** Beautification. The same source file correctly uses "National Beautification" at lines 17, 39, 41, and 169, making this a clear one-word typo. High citizen impact: it is the first text citizens and search engines read.
+1. **"Natural Beautification" typo on line 1 — misspells the ministry name.** The very first sentence reads "The Ministry of Environment and *Natural* Beautification." Every authoritative source — `gov.bb/Ministries/environment`, `ozone.gov.bb/the-ministry/`, Parliament — uses **National** Beautification. The same source file correctly uses "National Beautification" at lines 17, 39, 41, and 169, making this a clear one-word typo. High citizen impact: it is the first text citizens and search engines read.
 
 2. **Ministry name is incomplete — "Fisheries" is missing.** Since the 2022 cabinet appointment (reconfirmed February 2026), the full official name is **"Ministry of the Environment, National Beautification and Fisheries."** The `ozone.gov.bb` ministry site, Parliament, and Barbados Today all use this expanded name. The alpha.gov.bb page and `ministries.ts` name field (line 349) still say "Ministry of Environment and National Beautification" without Fisheries.
 
-3. **nhdbdos.com link is broken (line 119).** The Natural Heritage section links to `http://www.nhdbdos.com/` which returns connection refused as of 2026-05-28. The authoritative replacement is `https://www.gov.bb/Departments/natural-heritage` or `https://biodiversity.gov.bb/ministry/natural-heritage-department/`.
+3. **nhdbdos.com link is broken (line 119).** The Natural Heritage section links to `http://www.nhdbdos.com/` which returns connection refused as of 2026-05-29 (re-confirmed on this pass). The authoritative replacement is `https://www.gov.bb/Departments/natural-heritage` or `https://biodiversity.gov.bb/ministry/natural-heritage-department/`.
 
-4. **weplantin.org link is broken (line 202).** The We Plantin' section links to `http://www.weplantin.org/` which also returns connection refused. The programme is confirmed active (NCC, Jan 2026 Barbados Today report); the live page is `https://www.nccbarbados.com/a-million-trees/`.
+4. **weplantin.org link is broken (line 202).** The We Plantin' section links to `http://www.weplantin.org/` which also returns connection refused as of 2026-05-29 (re-confirmed on this pass). The programme is confirmed active (NCC, hotline 536-TREE / (246) 536-8733); the live page is `https://www.nccbarbados.com/a-million-trees/`.
 
-5. **Permanent Secretary direct line (535-4354) is absent from the directory table.** Gov.bb lists five contact lines for this ministry; the alpha.gov.bb source markdown includes only three, omitting the PS direct number and the main PBX (535-4350, though that is in `ministries.ts`).
+5. **Permanent Secretary direct line (535-4354) is absent from the directory table.** Gov.bb lists five contact lines for this ministry; the alpha.gov.bb source markdown includes only three, omitting the PS direct number. The main PBX (535-4350) is stored in `ministries.ts` and renders on the live page, but the PS direct line 535-4354 is absent entirely.
 
 ---
 
@@ -135,7 +135,7 @@ Checked: [ozone.gov.bb — About the MENB](https://ozone.gov.bb/the-ministry/); 
 
 - **Type:** phone
 - **Status:** verified
-- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment); [gov.bb — directory/environment](https://www.gov.bb/government-main/directory/environment)
+- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment) (lists 535-4357 for Secretary to the Permanent Secretary)
 - **Certainty:** 99%
 
 ---
@@ -154,7 +154,7 @@ Checked: [ozone.gov.bb — About the MENB](https://ozone.gov.bb/the-ministry/); 
 
 - **Type:** phone
 - **Status:** verified
-- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment); [gov.bb — directory/environment](https://www.gov.bb/government-main/directory/environment)
+- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment)
 - **Certainty:** 99%
 
 ---
@@ -173,7 +173,7 @@ Checked: [ozone.gov.bb — About the MENB](https://ozone.gov.bb/the-ministry/); 
 
 - **Type:** phone
 - **Status:** verified
-- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment); [gov.bb — directory/environment](https://www.gov.bb/government-main/directory/environment)
+- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment)
 - **Certainty:** 99%
 
 ---
@@ -198,7 +198,7 @@ Checked: [ozone.gov.bb — About the MENB](https://ozone.gov.bb/the-ministry/); 
 
 - **Type:** phone
 - **Status:** discrepant — (246) 535-4354 is published on gov.bb as the Permanent Secretary's direct number but is absent from the alpha.gov.bb directory table
-- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment) (lists "(246) 535-4354" for "Permanent Secretary"); [gov.bb — directory/environment](https://www.gov.bb/government-main/directory/environment) (same); [UNCCD — David Leacock, Barbados focal point](https://www.unccd.int/focal-points/barbados/mr-david-leacock) (records +1-246 535-4354 for Ministry PS)
+- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment) (lists "(246) 535-4354" for "Permanent Secretary"); [UNCCD — David Leacock, Barbados focal point](https://www.unccd.int/focal-points/barbados/mr-david-leacock) (records +1-246 535-4354 for Ministry PS)
 - **Certainty:** 97%
 - **Confidence it's wrong:** 95%
 - **Citizen impact:** MEDIUM — citizens needing the Permanent Secretary directly cannot find the number on this page.
@@ -220,7 +220,7 @@ Deputy Prime Minister, Minister of the Environment, National Beautification and 
 </div>
 
 - **Type:** agency name
-- **Status:** discrepant — `ministries.ts` omits the article "the" before "Environment." Barbados Today's sworn-in article uses "Minister of the Environment"; the Parliament page omits "the." The ozone.gov.bb and Barbados Today usages both favour "of the Environment."
+- **Status:** discrepant — `ministries.ts` omits the article "the" before "Environment." Barbados Today's sworn-in article and ozone.gov.bb both use "Minister of the Environment." Parliament's own page is inconsistent, making this a low-confidence discrepancy.
 - **Sources:** [barbadosparliament.com — Cabinet Ministers](https://www.barbadosparliament.com/page_content/show_content/8) (Parliament omits "the": "Minister of Environment, National Beautification and Fisheries"); [Barbados Today — Cabinet sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/) (includes "the": "Minister of the Environment, National Beautification and Fisheries"); [ozone.gov.bb — About the MENB](https://ozone.gov.bb/the-ministry/) (uses "Ministry of the Environment")
 - **Certainty:** 80%
 - **Confidence it's wrong:** 65% — Parliament itself is inconsistent on the article; this is a low-confidence discrepancy
@@ -248,7 +248,7 @@ Barbados, W.I.</pre>
 
 - **Type:** address
 - **Status:** verified
-- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment); [gov.bb — directory/environment](https://www.gov.bb/government-main/directory/environment)
+- **Sources:** [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment)
 - **Certainty:** 99%
 
 ---
@@ -269,7 +269,7 @@ Barbados, W.I.</pre>
 
 - **Type:** URL
 - **Status:** verified — live, updated as recently as May 2026, maintained by MENB
-- **Sources:** [biodiversity.gov.bb](https://biodiversity.gov.bb/)
+- **Sources:** [biodiversity.gov.bb](https://biodiversity.gov.bb/) (live; most recent article dated May 22, 2026)
 - **Certainty:** 99%
 
 ---
@@ -291,10 +291,10 @@ Alternative: https://biodiversity.gov.bb/ministry/natural-heritage-department/</
 </div>
 
 - **Type:** URL
-- **Status:** discrepant — `http://www.nhdbdos.com/` returns connection refused as of 2026-05-28; the site is no longer live. The Natural Heritage Department now has authoritative pages on gov.bb and biodiversity.gov.bb.
-- **Sources:** [Attempted fetch of nhdbdos.com](http://www.nhdbdos.com/) (ECONNREFUSED); [gov.bb — Natural Heritage Department](https://www.gov.bb/Departments/natural-heritage) (live); [biodiversity.gov.bb — Natural Heritage Department](https://biodiversity.gov.bb/ministry/natural-heritage-department/) (live)
-- **Certainty:** 97%
-- **Confidence it's wrong:** 97%
+- **Status:** discrepant — `http://www.nhdbdos.com/` returns ECONNREFUSED as of 2026-05-29; the site is not live. The Natural Heritage Department has authoritative pages on gov.bb and biodiversity.gov.bb. Re-confirmed broken on this pass.
+- **Sources:** [nhdbdos.com attempt](http://www.nhdbdos.com/) (ECONNREFUSED); [gov.bb — Natural Heritage Department](https://www.gov.bb/Departments/natural-heritage) (live; lists director Steve Devonish, location St. Thomas); [biodiversity.gov.bb — Natural Heritage Department](https://biodiversity.gov.bb/ministry/natural-heritage-department/) (live)
+- **Certainty:** 99%
+- **Confidence it's wrong:** 99%
 - **Citizen impact:** HIGH — broken link on a government page erodes trust; citizens seeking Natural Heritage information are left without a working destination.
 
 ---
@@ -334,7 +334,7 @@ Alternative: https://biodiversity.gov.bb/ministry/natural-heritage-department/</
 
 - **Type:** address / descriptive
 - **Status:** verified — the National Botanical Gardens is confirmed at Waterford, St. Michael, established 2019, spanning approx. 36 acres
-- **Sources:** [barbados.org — National Botanical Gardens](https://barbados.org/barbados-botanical-gardens.htm); [events.barbados.org — National Botanical Gardens venue](https://events.barbados.org/venue/national-botanical-gardens/); [GIS — Plans For National Botanical Gardens](https://gisbarbados.gov.bb/blog/plans-for-national-botanical-gardens/) (403 on direct fetch, but URL in search results confirms Waterford)
+- **Sources:** [barbados.org — National Botanical Gardens](https://barbados.org/barbados-botanical-gardens.htm); [events.barbados.org — National Botanical Gardens venue](https://events.barbados.org/venue/national-botanical-gardens/); [GIS — Plans For National Botanical Gardens](https://gisbarbados.gov.bb/blog/plans-for-national-botanical-gardens/) (confirms Waterford)
 - **Certainty:** 90%
 
 ---
@@ -352,7 +352,7 @@ Alternative: https://biodiversity.gov.bb/ministry/natural-heritage-department/</
 </div>
 
 - **Type:** legal reference / descriptive
-- **Status:** verified — the Montreal Protocol is formally a protocol under the Vienna Convention for the Protection of the Ozone Layer (1985). The phrasing "Montreal Protocol to the Vienna Convention on the Protection of the Ozone Layer" is the standard accepted description. Barbados operates the National Ozone Unit under MENB in compliance with this protocol.
+- **Status:** verified — the Montreal Protocol is formally a protocol under the Vienna Convention for the Protection of the Ozone Layer (1985). The phrasing is the standard accepted description. Barbados operates the National Ozone Unit under MENB in compliance with this protocol.
 - **Sources:** [ozone.unep.org — Montreal Protocol](https://ozone.unep.org/treaties/montreal-protocol); [ozone.gov.bb — The Ministry](https://ozone.gov.bb/the-ministry/) (confirms Barbados MENB's ODS phase-out mandate)
 - **Certainty:** 98%
 
@@ -390,7 +390,7 @@ Alternative: https://biodiversity.gov.bb/ministry/natural-heritage-department/</
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — account status not confirmable</div>
-<pre class="claim-block-content">The URL https://instagram.com/cleanandgreenbarbados could not be confirmed as live. Instagram's anti-scraping measures prevented verification via WebFetch. A web search for "cleanandgreenbarbados" returned no direct match confirming this as the current official account. A different handle (@becleanandgreen) appeared in search results. Gov.bb's Ministry of Environment page does not list any social media handles.
+<pre class="claim-block-content">The URL https://instagram.com/cleanandgreenbarbados could not be confirmed as live. Instagram's anti-scraping measures prevented verification via WebFetch. A web search for "cleanandgreenbarbados" returned no direct match confirming this as the current official account. Gov.bb's Ministry of Environment page does not list any social media handles.
 
 Checked: [instagram.com/cleanandgreenbarbados](https://instagram.com/cleanandgreenbarbados) (page loads; content unreadable via automated fetch); [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment) (no social handles listed).</pre>
 </div>
@@ -413,14 +413,14 @@ Checked: [instagram.com/cleanandgreenbarbados](https://instagram.com/cleanandgre
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — Twitter/X anti-scraping prevents confirmation</div>
-<pre class="claim-block-content">Twitter.com redirects to X.com and requires login for most profile views. Web searches for "@BarbadosGreen Clean Green Barbados" did not return direct confirmation of the account's current status or ownership. The URL http://twitter.com/BarbadosGreen was not confirmed as active. Gov.bb does not list any Twitter handle for the ministry or the Clean and Green programme.
+<pre class="claim-block-content">Twitter.com redirects to X.com and requires login for most profile views. Web searches for "@BarbadosGreen Clean Green Barbados" did not return direct confirmation of the account's current status or ownership. Gov.bb does not list any Twitter handle for the ministry or the Clean and Green programme.
 
 Checked: [twitter.com/BarbadosGreen](http://twitter.com/BarbadosGreen) (unconfirmable via automated fetch); [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment) (no social handles listed); [PMO — Clean and Green (2021)](https://pmo.gov.bb/2021/03/17/creating-a-clean-and-green-barbados/) (does not reference Twitter handle).</pre>
 </div>
 
 - **Type:** URL
 - **Status:** unverifiable — Twitter/X's anti-scraping measures prevent automated verification; no Tier 1 or Tier 2 source confirms @BarbadosGreen as the official handle
-- **Sources:** [Attempted access twitter.com/BarbadosGreen](http://twitter.com/BarbadosGreen) (unconfirmable); [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment)
+- **Sources:** [twitter.com/BarbadosGreen attempt](http://twitter.com/BarbadosGreen) (unconfirmable); [gov.bb — Ministry of Environment](https://www.gov.bb/Ministries/environment)
 - **Certainty:** 45%
 - **Open question:** Confirm with MENB / Clean and Green team whether @BarbadosGreen on X (formerly Twitter) is the current official account for the programme.
 
@@ -441,10 +441,10 @@ Checked: [twitter.com/BarbadosGreen](http://twitter.com/BarbadosGreen) (unconfir
 </div>
 
 - **Type:** URL
-- **Status:** discrepant — `http://www.weplantin.org/` returns connection refused as of 2026-05-28. The programme is confirmed active (NCC administers it with hotline 536-TREE / (246) 536-8733; Barbados Today reported activity in January 2026). The authoritative live page is hosted by the NCC.
-- **Sources:** [Attempted fetch of weplantin.org](http://www.weplantin.org/) (ECONNREFUSED); [nccbarbados.com — We Plantin'](https://www.nccbarbados.com/a-million-trees/) (live); [Barbados Today — Tree planting drive (Jan 2026)](https://barbadostoday.bb/2026/01/11/tree-planting-drive-strengthens-environmental-food-security-goals-2/)
-- **Certainty:** 97%
-- **Confidence it's wrong:** 95%
+- **Status:** discrepant — `http://www.weplantin.org/` returns ECONNREFUSED as of 2026-05-29 (re-confirmed on this pass). The programme is confirmed active (NCC administers it with hotline 536-TREE / (246) 536-8733; most recent dated content from 2025). The authoritative live page is hosted by the NCC.
+- **Sources:** [weplantin.org attempt](http://www.weplantin.org/) (ECONNREFUSED); [nccbarbados.com — We Plantin'](https://www.nccbarbados.com/a-million-trees/) (live; programme active, tree counter and participation guidance included); [Barbados Today — Tree planting drive (Jan 2026)](https://barbadostoday.bb/2026/01/11/tree-planting-drive-strengthens-environmental-food-security-goals-2/)
+- **Certainty:** 99%
+- **Confidence it's wrong:** 99%
 - **Citizen impact:** HIGH — broken link to an active national programme; citizens wishing to participate in the national tree planting initiative cannot reach the site.
 
 ---
@@ -472,22 +472,19 @@ The main PBX (246) 535-4350 is stored in `ministries.ts` line 367 and rendered o
 ## Sources cited
 
 - [gov.bb — Ministry of Environment and National Beautification](https://www.gov.bb/Ministries/environment) — primary authoritative source; all phones, fax, email, address verified here
-- [gov.bb — directory/environment](https://www.gov.bb/government-main/directory/environment) — second authoritative source; full directory cross-check
 - [ozone.gov.bb — About the MENB](https://ozone.gov.bb/the-ministry/) — ministry's dedicated National Ozone Unit site; current mission statement, vision, core values, and full official name
-- [biodiversity.gov.bb — Ministry](https://biodiversity.gov.bb/ministry/) — MENB biodiversity site; lists ministry departments including Natural Heritage Department
+- [biodiversity.gov.bb](https://biodiversity.gov.bb/) — MENB biodiversity site; confirmed live May 2026
 - [biodiversity.gov.bb — Natural Heritage Department](https://biodiversity.gov.bb/ministry/natural-heritage-department/) — live replacement for defunct nhdbdos.com
-- [gov.bb — Natural Heritage Department](https://www.gov.bb/Departments/natural-heritage) — second live replacement for nhdbdos.com
+- [gov.bb — Natural Heritage Department](https://www.gov.bb/Departments/natural-heritage) — second live replacement for nhdbdos.com; lists director Steve Devonish
 - [solid.gov.bb](https://solid.gov.bb/) — Solid Waste Management Programme; confirmed live
-- [nccbarbados.com — We Plantin'](https://www.nccbarbados.com/a-million-trees/) — NCC's live We Plantin' programme page; replacement for weplantin.org
-- [barbadosparliament.com — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8) — confirms Santia Bradshaw's portfolio title
-- [barbadosparliament.com — Cabinet Ministers 2022–2027](https://www.barbadosparliament.com/page_content/show_content/70) — additional portfolio reference
+- [nccbarbados.com — We Plantin'](https://www.nccbarbados.com/a-million-trees/) — NCC's live We Plantin' programme page; replacement for weplantin.org; hotline (246) 536-8733
+- [barbadosparliament.com — Cabinet Ministers](https://www.barbadosparliament.com/page_content/show_content/8) — confirms Santia Bradshaw's portfolio title
 - [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/) — confirms "Minister of the Environment, National Beautification and Fisheries" with article "the"
 - [Barbados Today — Tree planting drive (Jan 2026)](https://barbadostoday.bb/2026/01/11/tree-planting-drive-strengthens-environmental-food-security-goals-2/) — confirms We Plantin' programme is still active
 - [facebook.com/officalcleanandgreen](https://www.facebook.com/officalcleanandgreen/) — Clean and Green Barbados Facebook; confirmed live
 - [PMO — Creating a clean and green Barbados (Mar 2021)](https://pmo.gov.bb/2021/03/17/creating-a-clean-and-green-barbados/) — background on the programme
-- [GIS — Barbados advances SIDS priorities at Environment Ministers Forum](https://gisbarbados.gov.bb/blog/barbados-advances-sids-priorities-at-environment-ministers-forum/) — confirms Bradshaw as current Environment Minister (2026)
 - [UNCCD — David Leacock, Barbados focal point](https://www.unccd.int/focal-points/barbados/mr-david-leacock) — corroborates PS direct line 535-4354
 - [ozone.unep.org — Montreal Protocol](https://ozone.unep.org/treaties/montreal-protocol) — confirms Montreal Protocol is under Vienna Convention
 - [barbados.org — National Botanical Gardens](https://barbados.org/barbados-botanical-gardens.htm) — confirms Waterford, St. Michael location; 36 acres; established 2019
-- [nhdbdos.com attempt](http://www.nhdbdos.com/) — ECONNREFUSED; confirmed dead link
-- [weplantin.org attempt](http://www.weplantin.org/) — ECONNREFUSED; confirmed dead link
+- [nhdbdos.com attempt](http://www.nhdbdos.com/) — ECONNREFUSED; confirmed dead link (re-confirmed 2026-05-29)
+- [weplantin.org attempt](http://www.weplantin.org/) — ECONNREFUSED; confirmed dead link (re-confirmed 2026-05-29)

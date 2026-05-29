@@ -2,28 +2,28 @@
 
 - **Live page:** <https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme>
 - **Source files:** `src/content/apply-to-jobstart-plus-programme/index.md`, `src/content/apply-to-jobstart-plus-programme/start.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 15 claims reviewed — 8 verified, 3 discrepant, 4 unverifiable. Average certainty: 71%.
+- **Last checked:** 2026-05-29
+- **Summary:** 17 claims reviewed — 8 verified, 4 discrepant, 5 unverifiable. Average certainty: 69%.
 
 ---
 
 ## Headline issues for triage
 
-1. **Ministry address contains "Warrens Close" — a street name that does not appear in any official source.** Every authoritative source (gov.bb, labour.gov.bb, ministries.ts) uses "Warrens, St. Michael" (the district name, not a close/street). The address also omits "Wing" — the correct designation is "3rd Floor West Wing", not "3rd Floor West". A citizen following this address could struggle to locate the correct office.
+1. **Primary form CTA renders "Loading form..." — the application form may be broken for citizens.** The `/work-employment/apply-to-jobstart-plus-programme/form` page (linked from both the index and start pages) renders "Loading form..." with no actual form content. If this is a persistent rendering failure, citizens cannot complete the online application. Tier A.
 
-2. **Training duration — conflict between alpha.gov.bb (3 weeks) and the official programme page (2 weeks).** The March 2026 Barbados Today article quotes programme manager Erika Watson confirming the programme was expanded from 2 to 3 weeks. However, the official labour.gov.bb/jobstartplus/ page (updated April 2025) still says "two-week World of Work Training Workshops" and has not been updated to reflect the expansion. Alpha.gov.bb is therefore more current than the official page on this point, but the discrepancy should be monitored and the two pages should be reconciled.
+2. **Ministry address contains "Warrens Close" — a street name that does not exist in any official source.** All authoritative sources (gov.bb, labour.gov.bb, `src/data/ministries.ts`) use "Warrens" (the district/locality), not "Warrens Close". Additionally "3rd Floor West" should be "3rd Floor West Wing" per gov.bb and ministries.ts. Citizens submitting paper forms to this address risk mail going astray or being unable to locate the office.
 
-3. **Training hours (8:45am–4:30pm, 5 days a week) are not corroborated by any authoritative source.** No government or news source consulted specifies daily start/end times or confirms a 5-day week. These specific operational details require confirmation from the Ministry.
+3. **"Registration is open throughout the year" contradicts the official programme page.** The labour.gov.bb/jobstartplus/ page shows cohort-specific registration deadlines (e.g. "deadline Friday 11 April 2025 for May 2025 cohort"). Describing registration as year-round could cause citizens to miss the active cohort window and wait months for the next one.
 
-4. **"Registration is open throughout the year" is misleading.** The official programme page runs cohort-based registrations with hard deadlines (e.g., "deadline Friday 11 April 2025 for May 2025 cohort"). Describing registration as "open throughout the year" implies a rolling intake that is not borne out by official practice.
+4. **Training duration conflict: alpha.gov.bb says "3 weeks", labour.gov.bb still says "two-week".** The March 2026 Barbados Today article quotes programme manager Erika Watson confirming expansion to 3 weeks, so alpha.gov.bb is likely more current — but the two official sources remain in conflict and need reconciliation.
 
-5. **Two typographical errors in the source file.** "suitablity" (index.md line 65) and "trainingg" (index.md line 68) are spelling errors that affect the published page.
+5. **Two typographical errors in the source file.** "suitablity" (index.md line 65) and "trainingg" (index.md line 68) are published to the live page and erode trust in the service.
 
 ---
 
 ## Claims
 
-### Claim 1 — Programme description and external URL (index.md lines 9–9)
+### Claim 1 — Programme description and external URL (index.md line 9)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -42,7 +42,7 @@ to be placed in a place of work.</pre>
 </div>
 
 - **Type:** descriptive, URL
-- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — "The Job Start Plus Programme delivers tailored training, career guidance, and direct placement opportunities. It empowers participants to develop the skills and confidence needed to succeed in today's competitive job market." Link is live as of 2026-05-28.
+- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — "The Job Start Plus Programme delivers tailored training, career guidance, and direct placement opportunities. It empowers participants to develop the skills and confidence needed to succeed in today's competitive job market." Link live as of 2026-05-29.
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -61,7 +61,7 @@ to be placed in a place of work.</pre>
 </div>
 
 - **Type:** eligibility
-- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — "Young persons ages 16 to 24 years and Persons with Disabilities of ages 16 to 34 years"; [GIS search result — Youth Urged To Sign Up](https://gisbarbados.gov.bb/blog/youth-urged-to-sign-up-for-training-under-job-start-plus-programme/) — same age bands confirmed
+- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — "Young persons ages 16 to 24 years and Persons with Disabilities of ages 16 to 34 years"
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -94,20 +94,20 @@ to be placed in a place of work.</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct (most current source) — but official page not yet updated</div>
+<div class="claim-block-label">Verified correct per most recent source — but official page not yet updated</div>
 <pre class="claim-block-content">'World of Work' training workshops are held in person over 3 weeks at a central location.
 
-Note: labour.gov.bb/jobstartplus/ (as of April 2025) still reads "two-week World of Work
-Training Workshops". The March 2026 Barbados Today article quotes programme manager Erika
-Watson: "It used to be two weeks, but it's three weeks of training where they cover core
-skills." The alpha.gov.bb page reflects the expanded duration correctly.</pre>
+Note: labour.gov.bb/jobstartplus/ (last updated April 2025) still reads "two-week World of
+Work Training Workshops". The March 2026 Barbados Today article quotes programme manager
+Erika Watson: "It used to be two weeks, but it's three weeks of training where they cover
+core skills." Alpha.gov.bb reflects the expanded duration correctly.</pre>
 </div>
 
 - **Type:** process step, statistic
-- **Sources:** [Barbados Today — Funding cut, limited placements hamper Job Start Plus (March 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/) — programme manager Watson quoted confirming 3 weeks; [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — still says "two-week" (April 2025 page, not yet updated)
-- **Status:** verified per most current authoritative source (2026 programme manager statement), but the official programme page has not been updated. Flag for reconciliation.
+- **Sources:** [Barbados Today — Funding cut, limited placements hamper Job Start Plus (10 March 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/) — programme manager Watson confirms 3-week expansion; [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — still says "two-week" (April 2025 snapshot, not updated)
+- **Status:** verified per most current authoritative source (2026 programme manager statement), but the official programme page has not been updated — flag for reconciliation.
 - **Certainty:** 80%
-- **Citizen impact:** LOW — citizens currently benefit from the more accurate figure, but the discrepancy between alpha.gov.bb and the official page is a governance concern.
+- **Citizen impact:** LOW — alpha.gov.bb currently has the more accurate figure, but the discrepancy between the two pages is a governance concern.
 
 ---
 
@@ -121,11 +121,11 @@ skills." The alpha.gov.bb page reflects the expanded duration correctly.</pre>
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — not corroborated</div>
 <pre class="claim-block-content">No authoritative source specifies that workshops are held at "a central location" as a
-general rule. Cohort-specific venues are not publicly listed.</pre>
+general rule. Cohort-specific venues are not publicly listed on labour.gov.bb or GIS.</pre>
 </div>
 
 - **Type:** process step
-- **Sources consulted:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/); [GIS — Youth Urged To Sign Up](https://gisbarbados.gov.bb/blog/youth-urged-to-sign-up-for-training-under-job-start-plus-programme/) (403 on direct fetch); [Barbados Today — World Of Work Training resumes (Feb 2022)](https://barbadostoday.bb/2022/02/14/world-of-work-training-resumes-for-youth/) — none specifies "a central location" as a standing rule.
+- **Sources consulted:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/); [GIS — Youth Urged To Sign Up](https://gisbarbados.gov.bb/blog/youth-urged-to-sign-up-for-training-under-job-start-plus-programme/) (HTTP 403 on direct fetch); [Barbados Today — Funding cut (Mar 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/) — none specify "a central location" as a standing rule.
 - **Status:** unverifiable
 - **Certainty:** 45%
 - **Open question:** Confirm with the Ministry whether workshops are held at a fixed central location or at rotating/participant-dependent venues.
@@ -142,13 +142,12 @@ general rule. Cohort-specific venues are not publicly listed.</pre>
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — not corroborated by any source found</div>
 <pre class="claim-block-content">No authoritative source (labour.gov.bb, GIS, news outlets) specifies these exact hours
-or the 5-day weekly schedule. The 2022 Barbados Today article mentions "half-day sessions",
-which would be inconsistent with an 8:45am–4:30pm schedule.</pre>
+or the 5-day weekly schedule. No source consulted in this pass changes this finding.</pre>
 </div>
 
 - **Type:** hours
-- **Sources consulted:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/); [Barbados Today — World Of Work Training resumes (Feb 2022)](https://barbadostoday.bb/2022/02/14/world-of-work-training-resumes-for-youth/) — describes "half-day sessions"; [Barbados Today — Funding cut (Mar 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/); [Nation News — Training for jobless youth (Aug 2024)](https://nationnews.com/2024/08/18/training-for-jobless-youth/) — none specify these hours.
-- **Status:** unverifiable — and potentially inconsistent with the "half-day sessions" described in a 2022 article (though the programme has evolved since then)
+- **Sources consulted:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — no schedule details; [Barbados Today — Funding cut (Mar 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/) — no schedule details; [Nation News — Training for jobless youth (Aug 2024)](https://nationnews.com/2024/08/18/training-for-jobless-youth/) — no schedule details.
+- **Status:** unverifiable
 - **Certainty:** 30%
 - **Citizen impact:** MEDIUM — a citizen attending on the wrong schedule could miss sessions or make unnecessary childcare/transport arrangements.
 - **Open question:** Confirm exact daily schedule (start time, end time, days per week) with the Ministry for the current cohort format.
@@ -183,11 +182,11 @@ which would be inconsistent with an 8:45am–4:30pm schedule.</pre>
 - work ethics</pre>
 </div>
 
-- **Type:** document requirement / process step
-- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — lists: Effective Communication, Teamwork, Conflict Resolution, Anger Management, Time Management, Work Ethics, Resume Writing, Effective Job Search Strategies, Interview Techniques. Alpha.gov.bb matches all nine topics (using slightly simplified labels); [Nation News — Training for jobless youth (Aug 2024)](https://nationnews.com/2024/08/18/training-for-jobless-youth/) — same nine topics confirmed.
+- **Type:** process step / descriptive
+- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — lists: "Effective Communication; Teamwork; Conflict Resolution; Anger Management; Time Management; Work Ethics; Resume Writing; Effective Job Search Strategies and Interview Techniques." All nine topics match (using slightly simplified labels).
 - **Status:** verified
 - **Certainty:** 95%
-- **Note:** The March 2026 Barbados Today article mentions additional components now incorporated (psychosocial topics, National Transformation Initiative citizen education, financial literacy, customer service excellence). These are not listed on the alpha.gov.bb page. Omission is not an error, but the curriculum may be more extensive than currently described.
+- **Note:** The March 2026 Barbados Today article mentions additional components now incorporated (psychosocial topics, National Transformation Initiative citizen education, financial literacy, customer service excellence). These are absent from the alpha.gov.bb page but the omission is not a factual error — the page may be intentionally concise.
 
 ---
 
@@ -200,19 +199,17 @@ which would be inconsistent with an 8:45am–4:30pm schedule.</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Partially verified — stipend confirmed; "lunch and travel" not explicitly corroborated</div>
-<pre class="claim-block-content">A stipend is confirmed. The March 2026 Barbados Today article quotes programme manager
-Watson: "a stipend is paid to assist with the expenses of the company for the three weeks
-of training." The precise purpose (lunch and travel) is not stated in any authoritative
-source found. An earlier search result noted Cabinet agreed to increase the weekly stipend
-for persons with disabilities from $150 to $250, confirming the stipend exists — but the
-$150/$250 amounts apply to the disability cohort; the general stipend amount is unpublished.</pre>
+<pre class="claim-block-content">A stipend is confirmed by the March 2026 Barbados Today article (programme manager Watson:
+"a stipend is paid to assist with the expenses of the company for the three weeks of
+training"). The precise purpose (lunch and travel) is not stated in any authoritative source.
+The general stipend amount is also unpublished publicly.</pre>
 </div>
 
 - **Type:** fee / process step
-- **Sources consulted:** [Barbados Today — Funding cut (Mar 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/) — confirms stipend exists; [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — does not mention stipend; [Nation News — Training for jobless youth (Aug 2024)](https://nationnews.com/2024/08/18/training-for-jobless-youth/) — does not mention stipend.
-- **Status:** partially verified — existence of stipend is confirmed; "to cover lunch and travel expenses" is unverified in its specifics
+- **Sources consulted:** [Barbados Today — Funding cut (Mar 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/) — confirms stipend exists; [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — does not mention stipend.
+- **Status:** unverifiable in its specifics (existence verified; "lunch and travel" framing not confirmed)
 - **Certainty:** 55%
-- **Open question:** Confirm with the Ministry (a) that the stipend specifically covers lunch and travel (not a general training allowance), and (b) the current stipend amount for the general (non-disability) cohort.
+- **Open question:** Confirm with the Ministry (a) that the stipend specifically covers lunch and travel, and (b) the current stipend amount for the general (non-disability) cohort.
 
 ---
 
@@ -230,10 +227,10 @@ labour.gov.bb/jobstartplus/ for the current registration deadline.</pre>
 </div>
 
 - **Type:** process step / hours
-- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — "The deadline for registration is Friday April 11, 2025 and all forms must be completed in full, in order to be considered for entry into the programme." The page is titled "Job Start Plus 2025" and lists a specific registration cut-off date, inconsistent with a perpetually open, year-round registration model; [Nation News — Training for jobless youth (Aug 2024)](https://nationnews.com/2024/08/18/training-for-jobless-youth/) — mentions an "August 28" registration deadline for the 2024 cohort, confirming cohort-based intake.
-- **Status:** discrepant — the official programme operates cohort by cohort with hard registration deadlines. "Open throughout the year" is misleading.
+- **Sources:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — "The deadline for registration is Friday April 11, 2025 and all forms must be completed in full, in order to be considered for entry into the programme." This is a specific cut-off date, inconsistent with year-round rolling intake; [Nation News — Training for jobless youth (Aug 2024)](https://nationnews.com/2024/08/18/training-for-jobless-youth/) — notes an "August 28" registration deadline for the 2024 cohort, confirming cohort-based intake.
+- **Status:** discrepant — the official programme runs cohort by cohort with hard registration deadlines. "Open throughout the year" is misleading.
 - **Confidence it's wrong:** 85%
-- **Citizen impact:** HIGH — a citizen told registration is "open throughout the year" may defer applying and miss the active cohort window. This could cause them to wait months for the next cohort.
+- **Citizen impact:** HIGH — a citizen told registration is "open throughout the year" may defer applying and miss the active cohort window, waiting months for the next one.
 
 ---
 
@@ -258,8 +255,8 @@ St. Michael</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [gov.bb — Ministry of Labour, Social Security and Third Sector](https://www.gov.bb/Ministries/labour-social-security) — "3rd Floor West Wing, Warrens Office Complex, Warrens, St. Michael, Barbados, W.I."; [labour.gov.bb homepage](https://labour.gov.bb/) — "3rd Floor West, Warrens Office Complex, Warrens, St. Michael" (omits "Wing" but does not use "Warrens Close"); `src/data/ministries.ts` (line 819–825) — "3rd Floor West Wing, Warrens Office Complex, Warrens, St. Michael, Barbados, W.I." (canonical data file confirms "West Wing")
-- **Status:** discrepant — two errors: (1) "West" should be "West Wing"; (2) "Warrens Close" does not appear in any official source and is likely an invented street name — the correct locality is simply "Warrens"
+- **Sources:** [gov.bb — Ministry of Labour, Social Security and Third Sector](https://www.gov.bb/Ministries/labour-social-security) — "3rd Floor West Wing, Warrens Office Complex, Warrens, St. Michael, Barbados, W.I."; [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/) — "Ministry of Labour, Social Security and Third Sector, Warrens Office Complex, Warrens, St. Michael, Barbados" (no "Warrens Close"); `src/data/ministries.ts` lines 818–824 — `["3rd Floor West Wing", "Warrens Office Complex", "Warrens", "St. Michael", "Barbados, W.I."]` — canonical data confirms "West Wing", no "Warrens Close".
+- **Status:** discrepant — two errors: (1) "West" should be "West Wing"; (2) "Warrens Close" does not appear in any official source — correct locality is simply "Warrens".
 - **Confidence it's wrong:** 95%
 - **Citizen impact:** HIGH — a citizen attempting to submit a paper form to an address with a non-existent street qualifier ("Warrens Close") may have mail returned or be unable to locate the correct office floor.
 
@@ -278,7 +275,7 @@ St. Michael</pre>
 </div>
 
 - **Type:** agency name
-- **Sources:** [gov.bb — Ministries](https://www.gov.bb/Ministries/labour-social-security) — "Ministry of Labour, Social Security and Third Sector"; `src/data/ministries.ts` (line 783) — `name: "Ministry of Labour, Social Security and Third Sector"`; [labour.gov.bb homepage](https://labour.gov.bb/) — consistent naming
+- **Sources:** [gov.bb — Ministries](https://www.gov.bb/Ministries/labour-social-security) — "Ministry of Labour, Social Security and Third Sector"; `src/data/ministries.ts` line 783 — `name: "Ministry of Labour, Social Security and Third Sector"`; [labour.gov.bb homepage](https://labour.gov.bb/) — consistent naming.
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -306,7 +303,7 @@ Note also: "suitablity" is a typo — should be "suitability".</pre>
 </div>
 
 - **Type:** process step
-- **Sources consulted:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/); [labour.gov.bb — Guidance and Counselling](https://labour.gov.bb/employment-services/guidance-and-counselling/); [GIS — Youth Urged To Sign Up](https://gisbarbados.gov.bb/blog/youth-urged-to-sign-up-for-training-under-job-start-plus-programme/) (403 on fetch) — none describe this specific three-item assessment process.
+- **Sources consulted:** [labour.gov.bb — Job Start Plus 2025](https://labour.gov.bb/jobstartplus/); [labour.gov.bb — Guidance and Counselling](https://labour.gov.bb/employment-services/guidance-and-counselling/); [Barbados Today — Funding cut (Mar 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/) — none describe this specific three-item assessment process.
 - **Status:** unverifiable
 - **Certainty:** 40%
 - **Open question:** Confirm with the Ministry whether a formal assessment stage exists between registration and the World of Work training, and what the evaluation criteria are.
@@ -353,7 +350,29 @@ Note also: "suitablity" is a typo — should be "suitability".</pre>
 
 ---
 
-### Claim 15 — start.md: "It should not take more than 20 minutes" (start.md line 11)
+### Claim 15 — start.md: cannot save and return (start.md line 7)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">You should complete your registration in one go. At the moment, it is not possible to save your answers and come back to them later.</pre>
+</div>
+
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Testable against the form only</div>
+<pre class="claim-block-content">This is a claim about form behaviour. It can only be confirmed by attempting to use the
+form at /work-employment/apply-to-jobstart-plus-programme/form — which currently renders
+"Loading form..." and may be broken (see Claim 16). Cannot be independently verified from
+external sources.</pre>
+</div>
+
+- **Type:** process step (negative statement — "it is not possible to")
+- **Sources consulted:** Testable against the form at [alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/form](https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/form) — form not loading as of 2026-05-29.
+- **Status:** unverifiable (form not accessible for testing)
+- **Certainty:** 50%
+
+---
+
+### Claim 16 — start.md: form completion estimate "not more than 20 minutes" (start.md line 11)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -361,26 +380,53 @@ Note also: "suitablity" is a typo — should be "suitability".</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Testable against the form only</div>
-<pre class="claim-block-content">This is a usability claim about the form itself. It can only be verified by completing the
-form at /work-employment/apply-to-jobstart-plus-programme/form. No external source
-corroborates or contradicts this estimate.</pre>
+<div class="claim-block-label">Testable against the form only — form currently not loading</div>
+<pre class="claim-block-content">This usability claim can only be verified by completing the form. The form page
+(/work-employment/apply-to-jobstart-plus-programme/form) currently renders "Loading form..."
+with no form content visible. If the form is broken, this claim is irrelevant until fixed.</pre>
 </div>
 
 - **Type:** hours (form completion estimate)
-- **Sources consulted:** Testable against the form at [alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/form](https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/form) — not independently verifiable from external sources; [Barbados Job Start Plus Registration Form example PDF](https://labour.gov.bb/wp-content/uploads/2023/01/Example-of-Completed-Registration-Form.pdf) — this is the paper version; the online form may differ.
-- **Status:** unverifiable by external sources
+- **Sources consulted:** Testable against the form at [alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/form](https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/form) — "Loading form..." displayed, no form accessible as of 2026-05-29.
+- **Status:** unverifiable
 - **Certainty:** 50%
-- **Open question:** Complete a test run of the online form to validate the 20-minute estimate.
+- **Citizen impact:** HIGH (if form is genuinely broken) — citizens cannot complete online registration.
+- **Open question:** Investigate why the form page renders "Loading form..." and whether the online application is functional.
+
+---
+
+### Claim 17 — CTA link: "Register now" → /work-employment/apply-to-jobstart-plus-programme/start (index.md line 48)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content"><a data-start-link href="/work-employment/apply-to-jobstart-plus-programme/start">Register now</a></pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content"><a data-start-link href="/work-employment/apply-to-jobstart-plus-programme/start">Register now</a>
+
+The /start page loads correctly and shows the pre-application introduction.</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — /work-employment/apply-to-jobstart-plus-programme/start](https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/start) — page loads and displays correct content (last updated January 13th, 2026).
+- **Status:** verified
+- **Certainty:** 95%
 
 ---
 
 ## Additional findings (not on the page but should be)
 
+- **Form CTA broken:** The "Start now" link on the start.md page leads to `/work-employment/apply-to-jobstart-plus-programme/form`, which rendered "Loading form..." during this check (2026-05-29). This is a high-priority technical issue that needs investigation — if the online form is down, citizens cannot apply online at all.
+
+- **`src/data/ministries.ts` internal link is incorrect:** The `onlineServices` entry for this page (line 801–804) uses `href: "/apply-to-jobstart-plus-programme"` (no category prefix). Since the page is not `protected: true`, the correct href is `/work-employment/apply-to-jobstart-plus-programme`. A citizen clicking through from a ministry-based navigation would reach a 404 page.
+
 - **Contact email** — `jobstartplus@labour.gov.bb` is published on the official programme page and is the direct programme contact. It is absent from the alpha.gov.bb page and would be useful to citizens with questions.
-- **Ministry phone number** — `(246) 535-1400` (Planning and Administration) and `(246) 535-1535` (Barbados Employment and Career Counselling Service, 1st Floor East) are published on labour.gov.bb. Neither appears on the alpha.gov.bb page.
+
+- **Ministry phone number** — `(246) 535-1400` (Planning and Administration) is published on labour.gov.bb and in `src/data/ministries.ts`. It does not appear on the alpha.gov.bb page.
+
 - **Placement duration** — The official programme page specifies that work placements run for "a minimum of three months and a maximum of one year's work experience." The alpha.gov.bb page says only "the opportunity to be placed in a place of work" with no duration guidance. Adding this would help citizens set expectations.
-- **Disability-specific note** — Cabinet has approved an increase to the weekly stipend for participants with disabilities (from $150 to $250). This may be worth a short note on the page for clarity.
 
 ---
 
@@ -391,9 +437,8 @@ corroborates or contradicts this estimate.</pre>
 - [gov.bb — Ministry of Labour, Social Security and Third Sector](https://www.gov.bb/Ministries/labour-social-security)
 - [GIS — Youth Urged To Sign Up For Training Under Job Start Plus Programme](https://gisbarbados.gov.bb/blog/youth-urged-to-sign-up-for-training-under-job-start-plus-programme/) (HTTP 403 on direct fetch — URL confirmed from search index)
 - [Barbados Today — Funding cut, limited placements hamper Job Start Plus (10 March 2026)](https://barbadostoday.bb/2026/03/10/funding-cut-limited-placements-hamper-job-start-plus-officials/)
-- [Barbados Today — Official lauds success of Job Start Plus (14 August 2025)](https://barbadostoday.bb/2025/08/14/official-lauds-success-of-job-start-plus/amp/)
-- [Barbados Today — World Of Work Training resumes for youth (14 February 2022)](https://barbadostoday.bb/2022/02/14/world-of-work-training-resumes-for-youth/)
 - [Nation News — Training for jobless youth (18 August 2024)](https://nationnews.com/2024/08/18/training-for-jobless-youth/)
-- [CBC — Hundreds benefit from Job Start Plus](https://www.cbc.bb/news/local-news/hundreds-benefit-from-job-start-plus/)
-- [Barbados Job Start Plus Registration Form (PDF)](https://labour.gov.bb/wp-content/uploads/2023/01/Example-of-Completed-Registration-Form.pdf)
-- `src/data/ministries.ts` — canonical ministry name and address (lines 782–832)
+- [alpha.gov.bb — Apply to Job Start Plus Programme (live page)](https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme)
+- [alpha.gov.bb — Job Start Plus start page](https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/start)
+- [alpha.gov.bb — Job Start Plus form page](https://alpha.gov.bb/work-employment/apply-to-jobstart-plus-programme/form) (rendered "Loading form..." — possible breakage)
+- `src/data/ministries.ts` — canonical ministry name and address (lines 783–832)

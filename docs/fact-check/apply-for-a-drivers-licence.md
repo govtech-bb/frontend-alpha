@@ -2,20 +2,20 @@
 
 - **Live page:** <https://alpha.gov.bb/travel-id-citizenship/apply-for-a-drivers-licence>
 - **Source file:** `src/content/apply-for-a-drivers-licence.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 15 claims reviewed — 8 verified, 5 discrepant, 2 unverifiable. Average certainty: **80%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 15 claims reviewed — 8 verified, 5 discrepant, 2 unverifiable. Average certainty: **79%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **"Motor Vehicles Act, 1988" is the wrong legislation.** No Barbados statute by that name exists. The actual governing law is the **Road Traffic Act, CAP 295**, most recently consolidated to 2022. The "Motor Vehicles Act, 1988" is India's motor vehicle legislation. Both gov.bb and the alpha.gov.bb page appear to have copied this phrase from a non-Barbadian template source. This is a high-confidence legal error affecting citizen trust.
+1. **"Motor Vehicles Act, 1988" is the wrong legislation.** No Barbados statute by that name exists. The actual governing law is the **Road Traffic Act, CAP 295**, most recently consolidated to 2022. The "Motor Vehicles Act, 1988" is India's motor vehicle legislation. Both gov.bb and the alpha.gov.bb page appear to have copied this phrase from a non-Barbadian template source. This is a high-confidence legal error affecting citizen trust. Still unresolved as of 2026-05-29.
 
-2. **"Apply after 30 days" conflicts with BLA's own requirement of 3 months.** The BLA's Learner Permit service page states first-time permit holders must "practice for a minimum three (3) months before applying for the driving examination." The alpha.gov.bb page (mirroring gov.bb) says 30 days. A citizen who follows the page and books a driving test at 30 days will be turned away.
+2. **"Apply after 30 days" conflicts with BLA's own requirement of 3 months.** The BLA's Learner Permit service page states first-time permit holders must "practice for a minimum three (3) months before applying for the driving examination." The alpha.gov.bb page (mirroring gov.bb) says 30 days. A citizen who follows the page and books a driving test at 30 days will be turned away. Still unresolved as of 2026-05-29.
 
-3. **Phone number `1-246-536-0264` is confirmed present on the BLA site**, but `0267` and `0278` — also listed on the BLA's contact page — are missing from the alpha.gov.bb page. The page gives only two of four published BLA numbers.
+3. **International Permit documents list includes two items not on the BLA's page.** "Attested copy of address proof" and "Attested copy of Birth Certificate" do not appear on the BLA's official International Permit page, which lists: valid driver licence, proof of identity, valid passport, itinerary, and two passport photos. The extra items appear to be Indian template artefacts. Still unresolved as of 2026-05-29.
 
-4. **International Permit documents list includes two items not on the BLA's page** — "Attested copy of address proof" and "Attested copy of Birth Certificate". The BLA's official International Permit page lists only: valid driver licence, proof of identity, valid passport, itinerary, and two passport photos. The extra items appear to be template artefacts.
+4. **Phone number `0264` is no longer published on the current BLA homepage.** The BLA homepage (verified 2026-05-29) lists only `+1 (246) 536-0265 / 0267 / 0278`. The number `0264` appears on the alpha.gov.bb page but is absent from both the current BLA homepage and the BLA Learner Permit service page. The page omits the confirmed numbers `0267` and `0278`. Citizen impact: LOW-MEDIUM — two of the three currently published BLA numbers are missing.
 
 5. **No physical address for the BLA on the page.** BLA's address — Pine East–West Boulevard, Bridgetown, St. Michael — is not mentioned anywhere. Citizens needing in-person service have no address to follow.
 
@@ -40,7 +40,7 @@
 - **Certainty:** 20% that the page is correct
 - **Confidence it's wrong:** 85%
 - **Citizen impact:** MEDIUM — incorrect legal citation undermines page credibility; citizens verifying the law will find no Barbados statute by this name.
-- **Evidence:** Every official Barbados government publication on driving — the Barbados Law Courts statute database, the Ministry of Transport & Works consolidated legislation, the OAG amendments archive, and Road Traffic (Amendment) Act 2018 and 2022 — refers to "the Road Traffic Act, Cap. 295". No Barbados statute titled "Motor Vehicles Act, 1988" exists in the consolidated laws. The "Motor Vehicles Act, 1988" is Act No. 59 of 1988 of the **Indian Parliament**, confirmed by India Code (indiacode.nic.in) and multiple Indian legal databases. The phrasing on alpha.gov.bb matches the Indian act's preamble almost verbatim. The gov.bb source page (https://www.gov.bb/Citizens/driver-licence) carries the same error, suggesting the original content was templated from an Indian government source.
+- **Evidence:** Every official Barbados government publication on driving — the Barbados Law Courts statute database, the Ministry of Transport & Works consolidated legislation, the OAG amendments archive, and Road Traffic (Amendment) Act 2018 and 2022 — refers to "the Road Traffic Act, Cap. 295". No Barbados statute titled "Motor Vehicles Act, 1988" exists in the consolidated laws. The "Motor Vehicles Act, 1988" is Act No. 59 of 1988 of the **Indian Parliament**, confirmed by India Code (indiacode.nic.in) and multiple Indian legal databases. The phrasing on alpha.gov.bb matches the Indian act's preamble almost verbatim. The gov.bb source page carries the same error, suggesting the original content was templated from an Indian government source.
 - **Sources:** [Road Traffic Act, CAP 295 — Barbados Law Courts (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/RoadTrafficCAP295.pdf); [Road Traffic Act CAP 295 consolidated to 2022 — Ministry of Transport & Works (PDF)](https://mtw.gov.bb/wp-content/uploads/2024/04/Road-Traffic-Act-295-consolidated-up-to-2022-21-2022-12-23-1-1.pdf); [Road Traffic (Amendment) Act, 2018-31 — OAG (PDF)](https://oag.gov.bb/attachments/Road%20Traffic%20(Amendment)%20Act,%202018-31.pdf); [India Code — Motor Vehicles Act, 1988 (Indian legislation, not Barbados)](https://www.indiacode.nic.in/handle/123456789/1798)
 
 ---
@@ -57,8 +57,8 @@
 <pre class="claim-block-content">The minimum age for a Learner's Permit for a private motor vehicle is 16 years (with parental/guardian consent).</pre>
 </div>
 
-- **Type:** legal/age threshold
-- **Status:** verified (the age fact is correct; the sentence is garbled and has a duplication error — see F-012)
+- **Type:** eligibility / age threshold
+- **Status:** verified (the age fact is correct; the sentence is garbled and contains a duplication error)
 - **Certainty:** 95%
 - **Sources:** [gov.bb — Get a Driver Licence](https://www.gov.bb/Citizens/driver-licence) — "If you are at least 16 years old you may be obtaining a Learner's License"; [BLA — Learner Permit](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=) — "Applicants must be at least 16 years old"
 
@@ -76,7 +76,7 @@
 <pre class="claim-block-content">If you are at least 18 years of age you may apply for a permanent licence to drive a private motor vehicle.</pre>
 </div>
 
-- **Type:** legal/age threshold
+- **Type:** eligibility / age threshold
 - **Status:** verified
 - **Certainty:** 95%
 - **Sources:** [gov.bb — Get a Driver Licence](https://www.gov.bb/Citizens/driver-licence) — "If you are at least 18 years of age you may apply for a permanent license to drive a private motor vehicle."
@@ -95,7 +95,7 @@
 <pre class="claim-block-content">A person who is at least 20 years old can obtain a licence for driving a commercial vehicle.</pre>
 </div>
 
-- **Type:** legal/age threshold
+- **Type:** eligibility / age threshold
 - **Status:** verified
 - **Certainty:** 95%
 - **Sources:** [gov.bb — Get a Driver Licence](https://www.gov.bb/Citizens/driver-licence) — "A person who is at least 20 years old can obtain a License for driving a commercial vehicle."
@@ -211,13 +211,13 @@
 <pre class="claim-block-content">For obtaining a licence, first-time permit holders must practice for a minimum of three (3) months before applying for the driving examination. The driving test must be taken within 180 days of issue of the Learner's Permit.</pre>
 </div>
 
-- **Type:** process/timeline
+- **Type:** process / timeline
 - **Status:** discrepant
 - **Certainty:** 25% that the page is correct
 - **Confidence it's wrong:** 85%
-- **Citizen impact:** HIGH — a first-time learner who follows the alpha.gov.bb page and books a driving test at 30 days will be refused; the BLA requires 3 months (90 days) minimum. The 180-day upper bound is consistent with other sources and appears correct.
-- **Evidence:** The BLA's Learner Permit service page states verbatim: "First time permit holders must practice for a minimum three (3) months before applying for the driving examination." The DrivingYouth FAQ (referencing BLA guidance) similarly states "you must be in possession of a valid driver's permit for a period of three (3) months before taking the driving test." The gov.bb source page uses "30 days" — but this appears to conflict with the BLA's own published requirement. The "30 days" figure may apply to permit renewals (not first-time holders), or may be a template error imported from the Indian source material. The BLA is the authoritative body.
-- **Sources:** [BLA — Learner Permit](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=) — "you are required by law to practice for a minimum three (3) months before applying for the driving examination"; [DrivingYouth — Barbados Driving Licence FAQs](https://drivingyouth.com/frequently-asked-questions/barbados-driving-licence-faqs/) — "you must be in possession of a valid driver's permit for a period of three (3) months before taking the driving test"; [gov.bb — Get a Driver Licence](https://www.gov.bb/Citizens/driver-licence) — uses "30 days" (disagreeing source)
+- **Citizen impact:** HIGH — a first-time learner who follows the alpha.gov.bb page and books a driving test at 30 days will be refused; the BLA requires 3 months (90 days) minimum. The 180-day upper bound is consistent and appears correct.
+- **Evidence:** The BLA's Learner Permit service page states verbatim: "First time permit holders must practice for a minimum three (3) months before applying for the driving examination." (Confirmed on re-check 2026-05-29.) The gov.bb source page uses "30 days" — but this conflicts with the BLA's own published requirement. The "30 days" figure may apply to permit renewals (not first-time holders), or may be a template error imported from the Indian source material. The BLA is the authoritative body.
+- **Sources:** [BLA — Learner Permit](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=) — "you are required by law to practice for a minimum three (3) months before applying for the driving examination"; [gov.bb — Get a Driver Licence](https://www.gov.bb/Citizens/driver-licence) — uses "30 days" (disagreeing source)
 
 ---
 
@@ -271,9 +271,9 @@
 - **Status:** discrepant — two items ("Attested copy of address proof" and "Attested copy of Birth Certificate") are not on the BLA's official list and appear to be Indian template artefacts.
 - **Certainty:** 25% that the page's full list is correct
 - **Confidence it's wrong:** 80%
-- **Citizen impact:** MEDIUM — citizens preparing for a trip may gather unnecessary documents (minor inconvenience), but they are more likely to be harmed by the missing distinction between "proof of identity" and "birth certificate".
-- **Evidence:** The BLA's International Permit service page lists five document requirements: valid driver licence; proof of identity; valid passport (with visa where necessary); itinerary listing countries to be visited; two passport photographs. It does not list "attested copy of address proof" or "attested copy of birth certificate". These two items appear in Indian driving licence application forms and are consistent with the Indian template origin identified in Claim 1. "Proof of identity" subsumes the birth certificate for domestic applicants; "address proof" is not a BLA requirement for this service.
-- **Sources:** [BLA — International Permit](https://bla.gov.bb/servicedetails/SW50ZXJuYXRpb25hbCBQZXJtaXQ=) — full document list: "Valid driver licence; Proof of Identity; Valid Passport (with Visa where necessary); Itinerary listing countries to be visited; Two passport photographs for the permit book."
+- **Citizen impact:** MEDIUM — citizens preparing for a trip may gather unnecessary documents; the presence of "birth certificate" language (not required by BLA) may cause confusion.
+- **Evidence:** The BLA's International Permit service page (re-checked 2026-05-29) lists six requirements: valid driver licence; proof of identity; valid passport (with visa where necessary); itinerary listing countries to be visited; two passport photographs; fee of $65.00. It does not list "attested copy of address proof" or "attested copy of birth certificate". These two items appear in Indian driving licence application forms and are consistent with the Indian template origin identified in Claim 1.
+- **Sources:** [BLA — International Permit](https://bla.gov.bb/servicedetails/SW50ZXJuYXRpb25hbCBQZXJtaXQ=) — full document list confirmed 2026-05-29: "Valid driver licence; Proof of Identity; Valid Passport (with Visa where necessary); Itinerary listing countries to be visited; Two passport photographs; Fee of $65.00 BBD."
 
 ---
 
@@ -289,10 +289,10 @@
 <pre class="claim-block-content">https://bla.gov.bb — live and returning valid content.</pre>
 </div>
 
-- **Type:** external URL
+- **Type:** external URL / CTA link
 - **Status:** verified — live
 - **Certainty:** 100%
-- **Sources:** [Barbados Licensing Authority](https://bla.gov.bb) — directly fetched 2026-05-28, returned valid content including contact information, service listings, and operating hours.
+- **Sources:** [Barbados Licensing Authority](https://bla.gov.bb) — directly fetched 2026-05-29, returned valid content including contact information, service listings, and operating hours.
 
 ---
 
@@ -311,7 +311,7 @@
 - **Type:** contact / email
 - **Status:** verified (email addresses are case-insensitive; `blasupport@` and `BLASupport@` are equivalent)
 - **Certainty:** 95%
-- **Sources:** [BLA — Learner Permit](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=) — contact footer shows "BLASupport@barbados.gov.bb"; [BLA homepage](https://bla.gov.bb) — same address confirmed.
+- **Sources:** [BLA homepage](https://bla.gov.bb) — "BLASupport@barbados.gov.bb" confirmed 2026-05-29; [BLA — Learner Permit](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=) — same address in contact footer.
 
 ---
 
@@ -324,16 +324,16 @@
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">Tel: +1 (246) 536-0264 / 536-0265 / 536-0267 / 536-0278</pre>
+<pre class="claim-block-content">Tel: +1 (246) 536-0265 / 536-0267 / 536-0278</pre>
 </div>
 
 - **Type:** phone
-- **Status:** discrepant — partially correct but incomplete
-- **Certainty:** 70% that the two listed numbers are current; the page omits two further published numbers.
-- **Confidence it's wrong (as a complete listing):** 90%
-- **Citizen impact:** LOW-MEDIUM — `0264` and `0265` are both on the BLA's contact page so the listed numbers will connect, but citizens who find both lines busy will not know about `0267` and `0278`.
-- **Evidence:** The BLA homepage and all individual service pages show two sets of contact numbers. The contact page displays both "+1 (246) 536-0264 / 0265" and "+1 (246) 536-0265 / 0267 / 0278". The complete published set is therefore four numbers: `0264`, `0265`, `0267`, `0278`. The alpha.gov.bb page lists only `0264` and `0265`. Note: the Phases A–C report flagged `0264` as potentially invalid — this is now resolved; `0264` **is** a BLA number.
-- **Sources:** [BLA homepage — contact information](https://bla.gov.bb) — verified 2026-05-28, shows "+1 (246) 536-0264 / 0265" and "+1 (246) 536-0265 / 0267 / 0278"; [BLA — Learner Permit service page footer](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=) — shows "+1 (246) 536-0265 / 0267 / 0278"
+- **Status:** discrepant — `0264` is no longer published on the current BLA website; `0267` and `0278` are missing from the alpha.gov.bb page.
+- **Certainty:** 40% that the listed numbers are a complete and current listing
+- **Confidence it's wrong (as a complete listing):** 85%
+- **Citizen impact:** LOW-MEDIUM — `0265` is still live, but `0264` may no longer be active; `0267` and `0278` are published BLA numbers absent from the page.
+- **Evidence (updated 2026-05-29):** The BLA homepage now shows "+1 (246) 536-0265 / 0267 / 0278" as its primary contact numbers. The number `0264` does not appear on the current BLA homepage or any BLA service page checked in this pass. The previous pass noted `0264` as confirmed, but this is no longer supported by current BLA web content. The alpha.gov.bb page lists `0264` and `0265`, omitting `0267` and `0278`. The correct listing from the BLA as of 2026-05-29 is: `0265`, `0267`, `0278`.
+- **Sources:** [BLA homepage — contact information](https://bla.gov.bb) — verified 2026-05-29, shows "+1 (246) 536-0265 / 0267 / 0278"; [BLA — Learner Permit service page footer](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=) — shows "+1 (246) 536-0265 / 0267 / 0278"
 
 ---
 
@@ -341,11 +341,13 @@
 
 1. **BLA physical address is missing.** The BLA's address — Pine East–West Boulevard, Bridgetown, St. Michael, Barbados — appears on every BLA service page but is absent from alpha.gov.bb. Citizens needing in-person service have no address to follow.
 
-2. **BLA opening hours are not mentioned.** The BLA is open Monday–Friday, 8:15 am to 4:30 pm (closed weekends), per the BLA service pages. Useful context for citizens planning a visit.
+2. **BLA opening hours are not mentioned.** The BLA is open Monday–Friday, 8:15 am to 4:30 pm (closed weekends), per the BLA service pages (confirmed 2026-05-29). Useful context for citizens planning a visit.
 
-3. **Learner's Permit validity period (6 months) is not mentioned.** The BLA page states a first-issue Learner's Permit is valid for 6 months. If the citizen misses the 180-day window for the driving test, they will need to renew ($35 for another 3 months or $60 for another 6 months). This is operationally important and absent from the page.
+3. **Learner's Permit validity period (6 months) is not mentioned.** The permit is valid for 6 months from issue. If the citizen misses the 180-day window for the driving test, they will need to renew. This is operationally important and absent from the page.
 
-4. **"Attested copy" terminology is non-standard in Barbados.** The International Permit document list uses "Attested copy of address proof" and "Attested copy of Birth Certificate" — language standard in Indian bureaucratic usage, not Barbadian. The BLA uses "proof of identity" without the "attested copy" qualifier.
+4. **"Attested copy" terminology is non-standard in Barbados.** The International Permit document list uses language standard in Indian bureaucratic usage, not Barbadian. The BLA uses "proof of identity" without the "attested copy" qualifier.
+
+5. **Regulation exam prerequisite mismatch.** The BLA Learner Permit page lists "a pass certificate from Regulation Examination" as a prerequisite for the Learner Permit — meaning the regulation test comes *before* the learner permit is issued. The alpha.gov.bb page describes Step 1 as obtaining the permit then Step 2 as the regulation test, reversing the BLA's stated order. This is an unverifiable-scope finding — the BLA's own website language is slightly ambiguous — but warrants agency confirmation.
 
 ---
 
@@ -360,8 +362,5 @@
 - [Road Traffic Act, CAP 295 — Barbados Law Courts (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/RoadTrafficCAP295.pdf)
 - [Road Traffic Act CAP 295 consolidated to 2022 — Ministry of Transport & Works (PDF)](https://mtw.gov.bb/wp-content/uploads/2024/04/Road-Traffic-Act-295-consolidated-up-to-2022-21-2022-12-23-1-1.pdf)
 - [Road Traffic (Amendment) Act, 2018-31 — OAG (PDF)](https://oag.gov.bb/attachments/Road%20Traffic%20(Amendment)%20Act,%202018-31.pdf)
-- [Road Traffic Act CAP 295 Amendment 2017 — NCSA (PDF)](https://www.ncsa.gov.bb/Download.ashx?file=Attachments/Road+Traffic+Act+Cap+295+Amendment+2017.pdf&disposition=inline&name=Road+Traffic+Act+Cap+295+Amendment+2017)
 - [OAG — Statutes of Barbados](https://oag.gov.bb/Laws/Consolidated-Laws/Statutes-of-Barbados/)
 - [India Code — Motor Vehicles Act, 1988 (Indian legislation, for reference)](https://www.indiacode.nic.in/handle/123456789/1798)
-- [DrivingYouth — Barbados Driving Licence FAQs](https://drivingyouth.com/frequently-asked-questions/barbados-driving-licence-faqs/)
-- [GIS — Barbados Licensing Authority tag](https://gisbarbados.gov.bb/blog/tag/barbados-licensing-authority/)

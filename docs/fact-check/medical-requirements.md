@@ -2,18 +2,28 @@
 
 - **Live page:** <https://alpha.gov.bb/travel-id-citizenship/medical-requirements>
 - **Source file:** `src/content/medical-requirements.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 8 claims reviewed — 4 verified, 2 discrepant, 2 unverifiable. Average certainty: **72%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 8 claims reviewed — 3 verified, 3 discrepant, 2 unverifiable. Average certainty: **68%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Clinic name is outdated.** The page names "The Diagnostic Clinic" as the mandatory facility for US immigrant visa medical examinations. The US State Department's authoritative Bridgetown supplement (BGN, dated April 30, 2025) no longer lists "The Diagnostic Clinic" at all. The Beckles Road premises now operate under **MedPlus Management Services, Inc.** The phone number on the page (246-426-5051) is corroborated for the MedPlus Beckles Road location by business directories, confirming this is the same premises under a new corporate name. Citizens directed to "The Diagnostic Clinic" may be confused when they arrive.
+1. **Clinic name is wrong — the authorised facility is now MedPlus Management Services, Inc. at Wildey, not "The Diagnostic Clinic" at Beckles Road.** The US State Department's BGN Bridgetown supplement (the sole authoritative source for panel physician listings in Barbados) now lists one authorised facility: MedPlus Management Services, Inc., Clapham Court, Wildey Main Road, St. Michael, BB14007. "The Diagnostic Clinic" does not appear anywhere in the current supplement. The Beckles Road address on the page is not the address of the currently authorised facility. Citizens who follow this page's instructions will attend the wrong clinic and be unable to complete their visa application.
 
-2. **A second, primary MedPlus location at Wildey is not mentioned.** The current State Department BGN supplement lists two MedPlus locations authorised for US immigrant visa medical exams. The primary listing — "Clapham Court, Wildey Main Road, St. Michael, BB14007" — is entirely absent from the page. Citizens who would prefer the Wildey location have no way of knowing it exists. This is an omission with real citizen impact for anyone scheduling an appointment.
+2. **Citizen impact: HIGH — address and clinic name are both wrong.** The page gives "Beckles Road, St Michael" and the name "Diagnostic Clinic". The authorised facility is at Clapham Court, Wildey Main Road. These are different streets and neighbourhoods in St. Michael. A citizen who goes to Beckles Road will not find an authorised panel physician. This is the highest-severity discrepancy in this report.
 
-3. **Address is incomplete.** The Beckles Road address on the page omits the cross-street junction that the State Department uses to identify the location: "Corner of Jessamie Ave., Beckles Road, St. Michael." The current address block ("Beckles Road, St Michael") is technically in the right area but does not match any authoritative source exactly and may not be sufficient for wayfinding.
+3. **Critical practical information is missing.** The State Department supplement specifies: (a) the facility is walk-in — arrive by 7:00 a.m. Monday–Friday, no appointment needed; (b) exam fees are USD $200 (age 15+) / USD $120 (under 15); (c) results take at least 72 hours, so travel to Barbados must be planned around a minimum 3-day stay; (d) a specific list of documents applicants must bring. None of this appears on the alpha.gov.bb page. The instruction to "contact the facility directly to schedule an appointment" is also wrong — the facility is walk-in.
+
+---
+
+## Reversed findings from prior pass
+
+- **Prior Claim 2 (clinic name discrepant): scope widened.** The previous pass (2026-05-28) flagged that "The Diagnostic Clinic" had been rebranded as "MedPlus" and that a *second* Wildey location existed. This pass finds the situation is more severe: the BGN supplement now lists **only** the Wildey (Clapham Court) location, with no mention of any Beckles Road location at all. The Beckles Road contact block on the page is now entirely without an authoritative basis. Confidence it's wrong raised from 80% to 95%.
+
+- **Prior Claim 3 (address discrepant): scope widened.** The previous pass suggested adding a cross-street to the Beckles Road address. This pass finds the Beckles Road address is not the address of the authorised facility at all. Status remains discrepant, citizen impact raised to HIGH.
+
+- **Prior Claim 5 (process: "contact the facility directly"): now discrepant.** The previous pass marked this as "partially verified". This pass confirms it is discrepant: the BGN supplement specifies the facility is walk-in (arrive by 7:00 a.m., no appointment needed). Status changed from partially verified to discrepant.
 
 ---
 
@@ -32,47 +42,37 @@ must be completed before your immigrant visa interview can take place.</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">Applicants for U.S. immigrant visas must undergo the mandatory medical
-examination only at the designated facility. You should contact the
-facility directly to schedule an appointment. The exam must be completed
-before your immigrant visa interview can take place.</pre>
+<div class="claim-block-label">Verified correct (procedural requirement only)</div>
+<pre class="claim-block-content">Applicants for U.S. immigrant visas must undergo a mandatory medical
+examination at a designated facility before their immigrant visa interview
+can take place.</pre>
 </div>
 
 - **Type:** process step / descriptive
-- **Sources:** [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) (mirrors the page content verbatim); [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — confirms "it is your responsibility to attend a medical exam with one of the doctors listed below before your visa interview appointment at the U.S. Embassy"
-- **Status:** verified — procedural claims are accurate; the requirement to complete the exam before the interview is confirmed by two authoritative sources.
+- **Sources:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — confirms the medical exam must be completed before the visa interview; [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — mirrors the alpha.gov.bb content
+- **Status:** verified — the procedural requirement (exam before interview) is accurate. However, the rest of the introductory paragraph contains discrepant details (clinic name, scheduling method) covered in Claims 2, 4, and 5.
 - **Certainty:** 95%
 
 ---
 
-### Claim 2 — Clinic name: "The Diagnostic Clinic" (lines 15–18)
+### Claim 2 — Clinic name: "The Diagnostic Clinic" (line 15)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">Diagnostic Clinic
-Beckles Road, St Michael
-Barbados, W.I.
-(246) 426-5051</pre>
+<pre class="claim-block-content">Diagnostic Clinic</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">MedPlus Management Services, Inc.
-Corner of Jessamie Ave., Beckles Road, St. Michael, Barbados, W.I.
-(246) 426-5051
-
-MedPlus Management Services, Inc. (second location)
-Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007
-[phone number not yet confirmed — contact clinic directly]</pre>
+<pre class="claim-block-content">MedPlus Management Services, Inc.</pre>
 </div>
 
 - **Type:** agency name
-- **Sources:** [US State Department — BGN Bridgetown supplement (April 30, 2025)](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — lists the approved facility as "MedPlus Management Services, Inc." at two locations; no mention of "The Diagnostic Clinic"; [Waze — MedPlus Doctor's Office, Beckles Road, Bayville, St. Michael](https://www.waze.com/live-map/directions/medplus-doctors-office-beckles-road-bayville,-st.-michael?to=place.w.196870275.1968702749.17833177) — confirms MedPlus operates at Beckles Road; [barbadosindex.com — Diagnostic Clinic](https://www.barbadosindex.com/company/6224/Diagnostic_Clinic) and [x-radiology.com](https://x-radiology.com/mri/diagnostic-radiology-services-inc/beckles-road-bridgetown-barbados) — confirm "Diagnostic Clinic" on Beckles Road with phone 426-5051, but these are business directory entries that have not been recently maintained
-- **Status:** discrepant — "The Diagnostic Clinic" is the former trading name of the premises at Beckles Road; the US State Department's most current authoritative source (BGN supplement, April 2025) lists the facility exclusively as "MedPlus Management Services, Inc." Citizens arriving at the premises looking for "The Diagnostic Clinic" may be confused.
-- **Certainty:** 80%
-- **Confidence it's wrong:** 80% — the State Department supplement is the authoritative source for the panel physician listing; it was last updated April 30, 2025 and makes no reference to "The Diagnostic Clinic." The same phone number (426-5051) is associated with the MedPlus Beckles Road location in multiple directories, confirming these are the same premises.
-- **Citizen impact:** MEDIUM — a citizen scheduling an appointment may not recognise the venue name when arriving; a citizen calling the number and asking for "The Diagnostic Clinic" may be confused if staff identify the practice under a different name.
+- **Sources:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — the current supplement lists the authorised panel physician facility exclusively as "MedPlus Management Services, Inc." at Clapham Court, Wildey Main Road. "The Diagnostic Clinic" does not appear anywhere in the supplement. [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — the gov.bb source page also uses the outdated "Diagnostic Clinic" name, confirming it has not been updated; the gov.bb page is therefore also stale relative to the State Department's authoritative listing.
+- **Status:** discrepant — "The Diagnostic Clinic" is not listed as an authorised panel physician facility in the current State Department BGN supplement. The authorised facility is MedPlus Management Services, Inc.
+- **Certainty:** 30% (that "Diagnostic Clinic" is still the correct name)
+- **Confidence it's wrong:** 95%
+- **Citizen impact:** HIGH — a citizen directed to "The Diagnostic Clinic" will not find the name on any current State Department documentation; more critically, the address given for "The Diagnostic Clinic" (Beckles Road) does not match the authorised facility's address (Wildey Main Road).
 
 ---
 
@@ -85,15 +85,15 @@ Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">Corner of Jessamie Ave., Beckles Road, St. Michael</pre>
+<pre class="claim-block-content">Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [US State Department — BGN Bridgetown supplement (April 30, 2025)](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — gives the address as "Corner of Jessamie Ave., Beckles Road, St. Michael, Barbados" for the MedPlus Beckles Road location; [caribfind.tel — MedPlus Management Services, Bayville, St. Michael](https://caribfind.tel/listing/medplus-management-services-inc-barbados.html) — corroborates "Jessamine Avenue, Beckles Road" location in Bayville, St. Michael
-- **Status:** discrepant — the street name alone is insufficient for reliable wayfinding; the authoritative State Department source uses the cross-street junction as the locator. "St Michael" (no period) is also a minor formatting inconsistency with standard Barbados government address style "St. Michael".
-- **Certainty:** 75%
-- **Confidence it's wrong:** 75% — the address is in the correct area but lacks the cross-street locator used by the authoritative source, reducing wayfinding accuracy.
-- **Citizen impact:** MEDIUM — a citizen unfamiliar with Beckles Road may not locate the clinic. The Wildey location is omitted entirely (see Additional Findings).
+- **Sources:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — the authorised MedPlus facility is listed at "Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007". Beckles Road is not mentioned in the supplement at all.
+- **Status:** discrepant — the address on the page does not match the address of the currently authorised panel physician facility. Wildey Main Road and Beckles Road are different locations in St. Michael.
+- **Certainty:** 20% (that Beckles Road is the correct address)
+- **Confidence it's wrong:** 95%
+- **Citizen impact:** HIGH — a citizen who travels to Beckles Road will not find the authorised medical examination facility and will be unable to proceed with their visa application.
 
 ---
 
@@ -104,16 +104,21 @@ Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007
 <pre class="claim-block-content">(246) 426-5051</pre>
 </div>
 
-<div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">(246) 426-5051</pre>
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Unverifiable — no phone number in the current authoritative source</div>
+<pre class="claim-block-content">The US State Department BGN Bridgetown supplement does not list a phone
+number for MedPlus Management Services, Inc. at Wildey. The supplement
+instructs applicants to arrive as a walk-in; no phone contact is given.
+The number (246) 426-5051 is associated with the former "Diagnostic
+Clinic" at Beckles Road in business directories, not with the Wildey
+facility.</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [WebSearch — "Diagnostic Clinic" Barbados "Beckles Road" phone](https://www.google.com) — multiple business directories (barbadosindex.com, x-radiology.com, amerpages.com, bizexposed.com) independently list (246) 426-5051 as the phone number for the Beckles Road clinic; [WebSearch — MedPlus Management Services Barbados "Beckles Road"](https://www.google.com) — the same phone number (246-426-5051) is associated with the MedPlus Beckles Road / Jessamie Ave. location in the search results summary from caribfind.tel and related directories
-- **Status:** verified — the phone number appears consistent across both the former "Diagnostic Clinic" listing and the current MedPlus Beckles Road location. This cross-confirmation supports the conclusion that the clinic was rebranded, not replaced or relocated.
-- **Certainty:** 80% — confirmed by multiple business directories; no Tier 1 gov.bb source independently publishes this phone number. The US State Department supplement does not include a phone number for the Beckles Road MedPlus location.
-- **Note:** Additional phone numbers for the Beckles Road location exist: (246) 426-5053 and (246) 426-2423 also appear in some directories. These are not currently on the page and have not been verified as live.
+- **Sources:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — no phone number listed for MedPlus at Wildey; [barbadosindex.com — Diagnostic Clinic](https://www.barbadosindex.com/company/6224/Diagnostic_Clinic) — lists 426-5051 for "Diagnostic Clinic" at Beckles Road (stale business directory); [caribfind.tel — MedPlus Management Services](https://caribfind.tel/listing/medplus-management-services-inc-barbados.html) — associates MedPlus with Beckles Road / Jessamie Ave., not Wildey
+- **Status:** unverifiable — the phone number 426-5051 is associated with the Beckles Road premises, not with the Wildey (Clapham Court) facility that the State Department currently lists as the sole authorised location. Whether MedPlus at Wildey can be reached at this number is not confirmed by any authoritative source.
+- **Certainty:** 35%
+- **Open question:** Confirm whether (246) 426-5051 is a valid contact number for MedPlus Management Services, Inc. at Clapham Court, Wildey Main Road. The State Department supplement does not list a phone number for this facility.
 
 ---
 
@@ -125,15 +130,18 @@ Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">You should contact the facility directly to schedule an appointment.</pre>
+<div class="claim-block-label">Should say</div>
+<pre class="claim-block-content">No appointment is needed. Arrive at Clapham Court by 7:00 a.m. on any
+Monday through Friday. The facility is closed on Barbadian public
+holidays but open on US holidays.</pre>
 </div>
 
-- **Type:** process step
-- **Sources:** [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) (mirrors content); [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — for the Wildey location, instructs applicants to "arrive at Clapham Court by 7:00 a.m. on any Monday through Friday" (walk-in, no appointment needed); the Beckles Road location's scheduling process is not separately described in the BGN supplement
-- **Status:** partially verified — the instruction to contact the facility directly is confirmed for the Beckles Road/MedPlus location by the gov.bb mirror. However, the BGN supplement indicates the primary Wildey location operates as a walk-in (no appointment needed), which creates an internal inconsistency. The page's "contact the facility" instruction may not apply to the Wildey location.
-- **Certainty:** 70%
-- **Open question:** Confirm with MedPlus Beckles Road whether prior appointment is required, or whether the location also operates as a walk-in like the Wildey site.
+- **Type:** process step / procedural instruction
+- **Sources:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — "arrive at Clapham Court by 7:00 a.m. on any Monday through Friday"; the supplement describes a walk-in service with no mention of advance appointment booking.
+- **Status:** discrepant — the instruction to "contact the facility directly to schedule an appointment" is contradicted by the State Department supplement, which describes a walk-in service requiring only an early arrival. Telling citizens to pre-book an appointment for a walk-in facility wastes their time and may cause confusion.
+- **Certainty:** 25% (that advance appointment booking is required)
+- **Confidence it's wrong:** 90%
+- **Citizen impact:** HIGH — a citizen who tries to pre-book may be told appointments are unnecessary; a citizen who does not arrive early enough may miss the walk-in window.
 
 ---
 
@@ -148,91 +156,85 @@ interview can take place.</pre>
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct</div>
 <pre class="claim-block-content">The exam must be completed before your immigrant visa interview can take
-place. Note: exam results typically take 72 hours (three days), so
-applicants should plan travel to Barbados accordingly.</pre>
+place.</pre>
 </div>
 
 - **Type:** process step
-- **Sources:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — "Exam results typically require 72 hours for completion, necessitating separate visits from visa interviews. Applicants must 'plan your travel accordingly'"; [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) (mirrors content)
-- **Status:** verified — the pre-interview requirement is confirmed. The page omits the useful operational detail that results take 72 hours, which has a practical planning implication for applicants travelling to Barbados for their interview.
+- **Sources:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — confirms the exam precedes the interview; also notes results take "at least 72 hours", so applicants must plan travel accordingly.
+- **Status:** verified — the pre-interview requirement is correct. The page omits the 72-hour result turnaround time, which is a significant planning detail for applicants (see Additional findings).
 - **Certainty:** 95%
-- **Note:** The BGN supplement also states applicants should "arrive having eaten breakfast" — another practical detail absent from the alpha.gov.bb page. These are not errors, but useful additions.
 
 ---
 
-### Claim 7 — Declared `source_url` in `content-directory.ts` (line 384)
+### Claim 7 — Declared `source_url` in `content-directory.ts` (line 383)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently in src/data/content-directory.ts (line 384)</div>
+<div class="claim-block-label">Currently in src/data/content-directory.ts (line 383)</div>
 <pre class="claim-block-content">source_url: "https://www.gov.bb/Visit-Barbados/medical-requirements"</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct</div>
+<div class="claim-block-label">Verified correct (URL is live, but source content is also stale)</div>
 <pre class="claim-block-content">source_url: "https://www.gov.bb/Visit-Barbados/medical-requirements"</pre>
 </div>
 
 - **Type:** URL
-- **Sources:** [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — fetched 2026-05-28; page resolves, content is live, and the text on gov.bb mirrors the alpha.gov.bb content exactly including the "Diagnostic Clinic" name and Beckles Road address.
-- **Status:** verified — URL is live. Note however that the gov.bb source page itself uses the same outdated "Diagnostic Clinic" name, which means the underlying source is also out of date. The alpha.gov.bb content faithfully reproduces gov.bb, but both are now stale relative to the State Department's BGN supplement.
-- **Certainty:** 95%
+- **Sources:** [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — fetched 2026-05-29; page resolves and is live. The gov.bb source page uses the same outdated "Diagnostic Clinic" name and Beckles Road address, confirming that the gov.bb source has not been updated to reflect the State Department's current panel physician listing.
+- **Status:** verified (URL is live). However, the gov.bb source page is itself stale — it mirrors the same outdated information. The alpha.gov.bb page faithfully reproduces the gov.bb source, but both are now wrong relative to the authoritative State Department BGN supplement. Updating the alpha.gov.bb page requires going beyond the gov.bb source.
+- **Certainty:** 90%
 
 ---
 
-### Claim 8 — Page description in `content-directory.ts`: "information on the medical requirements for visiting or immigrating to Barbados" (line 385–386)
+### Claim 8 — Content-directory description: "information on the medical requirements for visiting or immigrating to Barbados" (lines 384–385)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently in src/data/content-directory.ts (lines 385–386)</div>
+<div class="claim-block-label">Currently in src/data/content-directory.ts (lines 384–385)</div>
 <pre class="claim-block-content">description:
   "Information on the medical requirements for visiting or immigrating to
   Barbados, including details on mandatory medical examinations."</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Partially verified — description is broader than the page content</div>
-<pre class="claim-block-content">The page content is narrower than this description implies. It covers
-only the US immigrant visa medical examination at a specific clinic. It
-does not address: medical requirements for visitors more generally,
-vaccination requirements, travel health advice, medical requirements for
-Barbados work permits or citizenship, or any other immigrant category.</pre>
+<div class="claim-block-label">Unverifiable — description is broader than the page content</div>
+<pre class="claim-block-content">The page covers only the US immigrant visa medical examination at one
+specific panel physician facility. It does not address: medical
+requirements for visitors generally, vaccination requirements, travel
+health advice, medical requirements for Barbados work permits or
+citizenship applications, or any other immigrant category.</pre>
 </div>
 
 - **Type:** descriptive
-- **Sources:** Checked: [health.gov.bb](https://www.health.gov.bb/) — no public-facing page for visitor medical requirements found; [immigration.gov.bb — Medical Form](https://immigration.gov.bb/documents/Medical%20Form.pdf) — a Medical Form exists for work permits and citizenship applications, but this is not mentioned on the page; [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — the source page also covers only the US immigrant visa case.
-- **Status:** unverifiable as written — the description overstates the page's scope. The page is specifically about US immigrant visa applicants who need a panel physician exam; it is not a general guide to medical requirements for visitors or immigrants to Barbados.
+- **Sources:** Checked: [health.gov.bb](https://www.health.gov.bb/) — no public-facing page for general visitor medical requirements found; [immigration.gov.bb — Medical Form](https://immigration.gov.bb/documents/Medical%20Form.pdf) — a Medical Form exists for work permits and citizenship, but is not mentioned on this page; [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — the source page also covers only the US immigrant visa case.
+- **Status:** unverifiable as written — the description in content-directory.ts overstates the page's scope.
 - **Certainty:** 40%
-- **Open question:** Is a broader "Medical requirements" page for visitors (vaccination advisories, travel health, work permit medicals, etc.) planned? If not, the content-directory.ts description and possibly the page title should be narrowed to reflect the US-immigrant-visa-specific scope. The Barbados Immigration Department's Medical Form for work permits and citizenship applications could warrant a separate page or a note here.
+- **Open question:** Is a broader "Medical requirements" page for visitors (vaccination advisories, travel health, work permit medicals) planned? If not, the content-directory.ts description and possibly the page title should be narrowed to reflect that this page covers US immigrant visa applicants only.
 
 ---
 
 ## Additional findings (not on the page but should be)
 
-**Second MedPlus location (Wildey) is missing.** The US State Department's BGN supplement (April 30, 2025) lists a second MedPlus Management Services, Inc. location as the **primary** panel physician site for the US Embassy Bridgetown:
+**Exam fees not mentioned.** The BGN supplement states the basic exam fee is USD $200.00 (age 15+) and USD $120.00 (under 15). Additional charges may apply for x-rays and blood tests. Payment is accepted in US or Barbados dollars, by credit card, electronic funds, or cash. Applicants need this information before travelling to Barbados.
 
-> MedPlus Management Services, Inc.
-> Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007
-> Panel physicians: Dr. Sandra Reece, Dr. Ingrid Durrant
+**72-hour result turnaround is missing.** The BGN supplement states results "typically require at least 72 hours for completion." Applicants who are travelling from abroad to Barbados specifically for this exam need to plan a minimum 3-day stay before their visa interview. This is essential travel planning information.
 
-The Wildey location is a walk-in (no appointment needed — arrive by 7:00 a.m., Monday–Friday). Citizens who cannot access the Beckles Road location, or who prefer the Wildey site, have no way of knowing it exists from the alpha.gov.bb page. This should be added.
+**Walk-in procedure and arrival time are missing.** The facility at Wildey operates as a walk-in; applicants should "arrive at Clapham Court by 7:00 a.m. on any Monday through Friday." The facility is "closed on Barbadian holidays but open on U.S. holidays." These operational details directly affect whether a citizen successfully accesses the service.
 
-**Exam fees are not mentioned.** The BGN supplement states: "The basic exam fee for each applicant is USD $200.00 (age 15 years and older) and USD $120.00 (for younger than 15 years). Any medical examination fees, including x-ray and blood test fees, must be paid directly to the examining physician in either U.S. dollars or Barbados dollars. The clinic accepts payments by credit card, electronic funds, or cash." This is practical information that US immigrant visa applicants will need before arriving for the exam.
+**Documents required for the exam are not listed.** The BGN supplement specifies applicants must bring: visa interview appointment letter, valid passport, four recent colour passport photos, US residential address with zip code, email address, immunisation records, DS-260 confirmation page, and (for those with medical conditions) a letter from a family doctor. Citizens will not know to bring these without consulting the State Department supplement directly.
 
-**72-hour result turnaround is missing.** The BGN supplement notes that exam results "typically require 72 hours for completion" and that applicants should "plan your travel accordingly." This is essential information for applicants who are travelling to Barbados specifically for the exam — they need to factor in a 3-day stay minimum.
+**Panel physicians' names are not listed.** The BGN supplement lists Dr. Sandra Reece and Dr. Ingrid Durrant as the accredited physicians at the Wildey location. This is standard information on government medical examination pages and helps citizens confirm they are seeing an accredited physician.
 
-**Documents required for the exam are not listed.** The BGN supplement specifies what applicants must bring: visa appointment letter, valid passport, four colour passport photos, US residential address with zip code, email contact, immunisation records, DS-260 confirmation page, and (for those with medical conditions) a letter from a family doctor.
+**Sealed results instruction is missing.** The BGN supplement instructs applicants: "Do not open" the sealed envelope containing exam results; bring it directly to the visa interview. This is a procedural requirement that could cause problems if ignored.
 
 ---
 
 ## Sources cited
 
-- [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — source page; fetched 2026-05-28; live; mirrors alpha.gov.bb content
-- [US State Department — BGN Bridgetown supplement (HTML)](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — authoritative panel physician listing for Barbados; accessed 2026-05-28
-- [US State Department — BGN Bridgetown PDF (April 30, 2025)](https://travel.state.gov/content/dam/visas/iv-dv-supplemental/BGN%20-%20Bridgetown-4-30-2025.pdf) — PDF version of supplement (404 on direct fetch; content confirmed via HTML version and search results)
-- [US Embassy Barbados — Visas](https://bb.usembassy.gov/visas/) — general visa page; specific medical content was not machine-readable on fetch
-- [US Embassy Barbados — Medical Assistance Barbados](https://bb.usembassy.gov/medical-assistance-barbados/) — content not retrieved due to encoding issue on fetch; URL confirmed in search index
-- [WebSearch results — "Diagnostic Clinic" Barbados Beckles Road phone](https://www.barbadosindex.com/company/6224/Diagnostic_Clinic) — business directory entry for Diagnostic Clinic; phone 426-5051 confirmed
-- [x-radiology.com — Diagnostic Radiology Services Inc., Beckles Road, Bridgetown](https://x-radiology.com/mri/diagnostic-radiology-services-inc/beckles-road-bridgetown-barbados) — confirms 426-5051 at Beckles Road
-- [caribfind.tel — MedPlus Management Services Inc., Bayville, St. Michael](https://caribfind.tel/listing/medplus-management-services-inc-barbados.html) — MedPlus at Beckles Road / Jessamie Ave.; 403 on direct fetch; confirmed via search index
-- [Waze — MedPlus Doctor's Office, Beckles Road, Bayville, St. Michael](https://www.waze.com/live-map/directions/medplus-doctors-office-beckles-road-bayville,-st.-michael?to=place.w.196870275.1968702749.17833177) — confirms MedPlus operating at Beckles Road
-- [immigration.gov.bb — Medical Form (PDF)](https://immigration.gov.bb/documents/Medical%20Form.pdf) — Barbados Immigration Department medical form for work permits and citizenship (separate from US visa process)
-- [health.gov.bb — Ministry of Health and Wellness](https://www.health.gov.bb/) — checked for visitor/immigration medical requirements; no relevant public-facing page found
+- [US State Department — BGN Bridgetown supplement (HTML)](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html) — authoritative panel physician listing for Barbados; fetched 2026-05-29; lists MedPlus Management Services, Inc. at Wildey as the sole authorised facility
+- [gov.bb — Medical Requirements](https://www.gov.bb/Visit-Barbados/medical-requirements) — source page; fetched 2026-05-29; live; mirrors alpha.gov.bb content including outdated "Diagnostic Clinic" name and Beckles Road address
+- [US State Department — BGN Bridgetown PDF (April 30, 2025)](https://travel.state.gov/content/dam/visas/iv-dv-supplemental/BGN%20-%20Bridgetown-4-30-2025.pdf) — 404 on direct fetch; content confirmed via HTML version
+- [bb.usembassy.gov — Visas](https://bb.usembassy.gov/visas/) — showing "Technical Difficulties" error; no useful content retrieved
+- [bb.usembassy.gov — Medical Assistance Barbados](https://bb.usembassy.gov/medical-assistance-barbados/) — showing "Technical Difficulties" error; no content retrieved
+- [barbadosindex.com — Diagnostic Clinic](https://www.barbadosindex.com/company/6224/Diagnostic_Clinic) — stale business directory; confirms 426-5051 at Beckles Road for "Diagnostic Clinic"
+- [caribfind.tel — MedPlus Management Services](https://caribfind.tel/listing/medplus-management-services-inc-barbados.html) — associates MedPlus with Beckles Road / Jessamie Ave.; not the currently authorised Wildey address
+- [health.gov.bb — Ministry of Health and Wellness](https://www.health.gov.bb/) — checked for general visitor medical requirements; no relevant public-facing page found
+- [immigration.gov.bb — Medical Form (PDF)](https://immigration.gov.bb/documents/Medical%20Form.pdf) — Barbados Immigration Department medical form for work permits/citizenship; separate from US visa process

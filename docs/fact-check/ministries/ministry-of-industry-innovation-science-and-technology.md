@@ -3,20 +3,22 @@
 - **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-industry-innovation-science-and-technology>
 - **Source file:** `src/content/ministries/ministry-of-industry-innovation-science-and-technology.md`
 - **Data file:** `src/data/ministries.ts` (lines 717–780)
-- **Last checked:** 2026-05-28
-- **Summary:** 13 claims reviewed — 8 verified, 3 discrepant, 2 unverifiable. Average certainty: **82%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 14 claims reviewed — 9 verified, 3 discrepant, 2 unverifiable. Average certainty: **83%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Minister role title has wrong word order (F-096).** `ministries.ts` line 727 records the minister's role as "Minister of **Innovation**, Industry, Science and Technology." The canonical order — confirmed by gov.bb/Ministries, the GIS official tag, and Barbados Today's budget coverage — is "Minister of **Industry**, Innovation, Science and Technology." The ministry's own name (correctly "Ministry of Industry, Innovation, Science and Technology") puts "Industry" first; the role label should follow suit. Citizens and media following the alpha.gov.bb page will see the wrong word order for the portfolio.
+1. **Minister role title has wrong word order (F-096).** `ministries.ts` line 727 records the minister's role as "Minister of **Innovation**, Industry, Science and Technology." The canonical order — confirmed by gov.bb/Ministries, the GIS official tag, and Barbados Today's budget coverage — is "Minister of **Industry**, Innovation, Science and Technology." The ministry's own name (correctly "Ministry of Industry, Innovation, Science and Technology") puts "Industry" first; the role label should follow suit. Citizens and media following the alpha.gov.bb page will see the wrong word order for the portfolio. (Note: the Barbados Parliament site also uses "Innovation first" order — an authoritative conflict is noted below.)
 
-2. **Primary phone number is incomplete — only one line of a three-line PBX published (F-097).** `ministries.ts` lists only `(246) 535-1200`. The gov.bb ministry page publishes the full PBX range as `(246) 535-1200/1201/1202`, with `535-1201` as the primary directory number. A citizen calling just 535-1200 may reach a busy line with no indication that 535-1201 or 535-1202 are alternatives.
+2. **Primary phone number is incomplete — only one line of a three-line PBX published (F-097).** `ministries.ts` lists only `(246) 535-1200`. The gov.bb ministry page publishes the full PBX range as `(246) 535-1200 /1201 /1202`, with `535-1201` as the primary directory number. A citizen calling just 535-1200 may reach a busy line with no indication that 535-1201 or 535-1202 are alternatives.
 
-3. **`originalSource` URL slug encodes the old ministry name.** The `originalSource` field (line 756–757) points to `https://www.gov.bb/Ministries/innovation-science-smart-technology`, a slug that reflects the pre-2021 name "Ministry of Innovation, Science and Smart Technology." The URL still resolves and the page behind it is correctly titled "Ministry of Industry, Innovation, Science and Technology (MIST)," so this is a stale artefact in the data file rather than a broken link — but it is an internal consistency issue and echoes the wrong name that was also found in the terms-conditions page (F-090).
+3. **`keywords` array uses "MIIST" (two I's); the official abbreviation is "MIST" (one I).** `ministries.ts` line 719 includes `"MIIST"` as a keyword/abbreviation. Every authoritative source — gov.bb, GIS, Barbados Today budget coverage — uses the four-letter acronym "MIST." "MIIST" appears to be a typographic error that could cause search mismatches on alpha.gov.bb.
 
-4. **`keywords` array uses "MIIST" (two I's); the official abbreviation is "MIST" (one I).** `ministries.ts` line 719 includes `"MIIST"` as a keyword/abbreviation. Every authoritative source — gov.bb, GIS, Barbados Today budget coverage — uses the four-letter acronym "MIST." "MIIST" appears to be a typographic error that could cause search mismatches.
+4. **`originalSource` URL slug encodes the old ministry name.** The `originalSource` field (line 756–757) points to `https://www.gov.bb/Ministries/innovation-science-smart-technology`, a slug reflecting the pre-2021 name "Ministry of Innovation, Science and Smart Technology." The URL still resolves correctly; the page title is now correct. This is a stale gov.bb artefact documented for completeness.
+
+No findings reversed from the 2026-05-28 pass. All three CTA links (`/start-a-business`, `/registering-a-business-name`, `/business-policies-and-law`) confirmed HTTP 200 as of 2026-05-29.
 
 ---
 
@@ -37,7 +39,7 @@ The source markdown contains only one line of content:
 </div>
 
 - **Type:** agency name
-- **Sources:** [gov.bb — Ministry of Industry, Innovation, Science and Technology](https://www.gov.bb/Ministries/innovation-science-smart-technology) — page title is verbatim "MINISTRY OF INDUSTRY, INNOVATION, SCIENCE AND TECHNOLOGY"; [gov.bb — Ministries listing](https://www.gov.bb/Ministries) — confirms "Ministry of Industry, Innovation, Science and Technology"; [GIS tag — minister-of-industry-innovation-science-and-technology](https://gisbarbados.gov.bb/blog/tag/minister-of-industry-innovation-science-and-technology/)
+- **Sources:** [gov.bb — Ministry of Industry, Innovation, Science and Technology](https://www.gov.bb/Ministries/innovation-science-smart-technology) — page title is verbatim "MINISTRY OF INDUSTRY, INNOVATION, SCIENCE AND TECHNOLOGY (MIST)"; [gov.bb — Ministries listing](https://www.gov.bb/Ministries) — confirms "Ministry of Industry, Innovation, Science and Technology"; [GIS tag — minister-of-industry-innovation-science-and-technology](https://gisbarbados.gov.bb/blog/tag/minister-of-industry-innovation-science-and-technology/)
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -83,7 +85,7 @@ The source markdown contains only one line of content:
 
 ---
 
-### Claim 4 — Ministry intro / mandate text (ministries.ts line 723–724)
+### Claim 4 — Ministry intro / mandate text (ministries.ts lines 723–724)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently in ministries.ts (lines 723–724)</div>
@@ -142,8 +144,8 @@ mandate text found; [Barbados Today — budget coverage (Mar 2026)](https://barb
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology) — publishes "Main: (246) 535-1200/1201/1202"; [gov.bb — MIST directory](https://www.gov.bb/government-main/directory/ministry-of-industry/) — lists `(246) 535-1201` as the primary line
-- **Status:** discrepant — `ministries.ts` lists only `535-1200`. The gov.bb page publishes three PBX lines `535-1200/1201/1202`. The directory page treats `535-1201` as the primary. Citizens calling only `535-1200` may reach a busy or secondary line with no knowledge of alternatives.
+- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology) — publishes "PBX: (246) 535-1200 /1201 /1202"; [gov.bb — MIST directory](https://www.gov.bb/government-main/directory/ministry-of-industry/) — lists `(246) 535-1201` as the primary line
+- **Status:** discrepant — `ministries.ts` lists only `535-1200`. The gov.bb page publishes three PBX lines `535-1200/1201/1202`. Citizens calling only `535-1200` may reach a busy or secondary line with no knowledge of alternatives.
 - **Certainty:** 95%
 - **Confidence it's wrong (incomplete):** 90%
 - **Citizen impact:** LOW — `535-1200` is a valid ministry number; the omission of the full PBX range is an inconvenience rather than a misdirection.
@@ -163,7 +165,7 @@ mandate text found; [Barbados Today — budget coverage (Mar 2026)](https://barb
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology); [gov.bb — MIST directory](https://www.gov.bb/government-main/directory/ministry-of-industry/) — both confirm fax `(246) 535-1284`
+- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology) — publishes fax `(246) 535-1284`
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -186,7 +188,7 @@ St. Michael</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology) — "3rd and 4th Floor Baobab Tower, Warrens, St. Michael"; [gov.bb — MIST directory](https://www.gov.bb/government-main/directory/ministry-of-industry/) — corroborates; [gov.bb — Business/start-business footer](https://www.gov.bb/Business/start-business) — footer attribution confirms same address
+- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology) — "3rd and 4th Floor Baobab Tower, Warrens, St. Michael"
 - **Status:** verified
 - **Certainty:** 99%
 - **Note:** The address omits "Barbados, W.I." which is present in most other ministry entries in `ministries.ts`. This is a minor formatting inconsistency within the data file, not a factual error.
@@ -273,14 +275,14 @@ Innovation, Science and Technology: Efficiency Unit</pre>
 </div>
 
 - **Type:** agency name
-- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology) — lists exactly these internal units; [gov.bb — Departments: Analytical Services](https://www.gov.bb/Departments/analytical-services) — attributed to MIST; [gov.bb — Departments: SMRI](https://www.gov.bb/Departments/smri) — "Science, Market Research and Innovation" confirmed under MIST; [gov.bb — Departments: Data Protection Commission](https://www.gov.bb/Departments/data-protection-commissioner) — confirmed under MIST
+- **Sources:** [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology) — lists exactly these internal units; [gov.bb — Departments: Data Protection Commission](https://www.gov.bb/Departments/data-protection-commissioner) — confirmed under MIST; [gov.bb — Departments: SMRI](https://www.gov.bb/Departments/smri) — "Science, Market Research and Innovation" confirmed under MIST
 - **Status:** verified — all listed units match the gov.bb MIST page
 - **Certainty:** 95%
-- **Note:** The Barbados National Standards Institution (BNSI) is also confirmed under MIST (`gov.bb/State-Bodies/national-standards`) but is not listed in `associatedDepartments`. This is an omission rather than an error; BNSI may be considered a state body rather than an internal department. The Analytical Services Department (also under MIST, at Culloden Road, St. Michael) is similarly absent. Both are optional additions.
+- **Note:** The Barbados National Standards Institution (BNSI) and the Analytical Services Department are also confirmed under MIST on gov.bb but are not listed in `associatedDepartments`. These omissions are noted in Additional findings below.
 
 ---
 
-### Claim 12 — Data Protection Commission contact details (implied by listing it as an associated body)
+### Claim 12 — Data Protection Commission body attribution (ministries.ts line 764)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently in ministries.ts (line 764) — listed as associated body</div>
@@ -297,12 +299,35 @@ Ministry attribution: Ministry of Industry, Innovation, Science and Technology</
 
 - **Type:** agency name / address / phone
 - **Sources:** [gov.bb — Data Protection Commission](https://www.gov.bb/Departments/data-protection-commissioner) — "5th Floor, SSA Building, Vaucluse, St. Thomas"; phone: "Tel: 1 (246) 536-1200/ (246) 536-1212"; ministry attribution confirmed as MIST
-- **Status:** verified (body attribution to MIST is correct; contact details not shown on the MIST page but verified from the DPC's own gov.bb entry)
+- **Status:** verified (body attribution to MIST is correct)
 - **Certainty:** 97%
 
 ---
 
-### Claim 13 — onlineServices attribution: business pages listed under MIST (ministries.ts lines 729–745)
+### Claim 13 — onlineServices CTAs: links are live (ministries.ts lines 729–745)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently in ministries.ts (lines 729–745) — three linked service pages</div>
+<pre class="claim-block-content">Start a business → /start-a-business
+Register a business name → /registering-a-business-name
+Business policies and law → /business-policies-and-law</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified — all three return HTTP 200</div>
+<pre class="claim-block-content">https://alpha.gov.bb/start-a-business → HTTP 200
+https://alpha.gov.bb/registering-a-business-name → HTTP 200
+https://alpha.gov.bb/business-policies-and-law → HTTP 200</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** Live HTTP checks performed 2026-05-29 — all three URLs return HTTP 200
+- **Status:** verified (links are live)
+- **Certainty:** 99%
+
+---
+
+### Claim 14 — onlineServices attribution: business pages under MIST (ministries.ts lines 729–745)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently in ministries.ts (lines 729–745)</div>
@@ -324,11 +349,11 @@ content from labour.gov.bb — the Ministry of Labour attribution for
 that page has been documented in prior fact-checks (F-029).
 Checked: [gov.bb — start-business](https://www.gov.bb/Business/start-business);
 [gov.bb — policies-laws](https://www.gov.bb/Ministries/policies-laws);
-[start-a-business fact-check](/home/gavin/frontend-alpha/docs/fact-check/start-a-business.md) Claim 4.</pre>
+[start-a-business fact-check](/docs/fact-check/start-a-business.md) Claim 4.</pre>
 </div>
 
 - **Type:** agency name / process step
-- **Sources:** [gov.bb — Start a Business](https://www.gov.bb/Business/start-business) — MIST footer confirmed; [gov.bb — Business Policies and Law](https://www.gov.bb/Ministries/policies-laws) — MIST footer confirmed; see [start-a-business fact-check](/home/gavin/frontend-alpha/docs/fact-check/start-a-business.md) Claim 4 (F-086); prior reports F-029 and F-075 for the other two pages
+- **Sources:** [gov.bb — Start a Business](https://www.gov.bb/Business/start-business) — MIST footer confirmed; [gov.bb — Business Policies and Law](https://www.gov.bb/Ministries/policies-laws) — MIST footer confirmed; see [start-a-business fact-check](/docs/fact-check/start-a-business.md) Claim 4 (F-086); prior reports F-029 and F-075 for the other two pages
 - **Status:** unverifiable as a group — `start-a-business` attribution is partially corroborated by gov.bb footer; `registering-a-business-name` attribution is wrong (F-075, Business Barbados is under MEBD not MIST); `business-policies-and-law` attribution is wrong (F-029, content is from Labour ministry)
 - **Certainty:** 55% (as a group)
 - **Open question:** The MIST ministry page currently lists three `onlineServices` pages, two of which (`registering-a-business-name` and `business-policies-and-law`) have already been flagged in prior reports as incorrectly attributed to MIST. These should be removed from MIST's `onlineServices` and moved to their correct ministries. See F-029, F-074, and F-075.
@@ -339,7 +364,7 @@ Checked: [gov.bb — start-business](https://www.gov.bb/Business/start-business)
 
 ### Source markdown is effectively empty
 
-`src/content/ministries/ministry-of-industry-innovation-science-and-technology.md` contains only one line of content: `"Ministry of Industry, Innovation, Science and Technology (MIST)."` — essentially a placeholder. All meaningful content rendered on the alpha.gov.bb ministry page (contacts, minister, associated departments, services) is sourced from `ministries.ts`. The one-line markdown correctly names the ministry, so there are no factual errors in the source file itself, but the file contains no unique verifiable claims beyond the ministry name.
+`src/content/ministries/ministry-of-industry-innovation-science-and-technology.md` contains only one line of content: `"Ministry of Industry, Innovation, Science and Technology (MIST)."` — essentially a placeholder. All meaningful content rendered on the alpha.gov.bb ministry page (contacts, minister, associated departments, services) is sourced from `ministries.ts`. The one-line markdown correctly names the ministry, so there are no factual errors in the source file itself.
 
 ### Additional phone numbers not captured in ministries.ts
 
@@ -361,7 +386,7 @@ As of March 2026, Future Barbados has moved from the Prime Minister's Office to 
 
 ### "Barbados, W.I." missing from address
 
-Unlike all other ministry entries in `ministries.ts`, the MIST address (lines 752–754) omits `"Barbados, W.I."` as a final address line. This is a minor formatting inconsistency within the data file.
+Unlike most other ministry entries in `ministries.ts`, the MIST address (lines 752–754) omits `"Barbados, W.I."` as a final address line. This is a minor formatting inconsistency within the data file.
 
 ---
 
@@ -380,10 +405,11 @@ Unlike all other ministry entries in `ministries.ts`, the MIST address (lines 75
 - [GIS tag — minister-of-industry-innovation-science-and-technology](https://gisbarbados.gov.bb/blog/tag/minister-of-industry-innovation-science-and-technology/) — GIS canonical tag uses "Industry" first
 - [GIS — MIST Focusing On Data Protection](https://gisbarbados.gov.bb/blog/mist-focusing-on-data-protection/) — confirms "MIST" (not "MIIST") abbreviation
 - [barbadosparliament.com — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8) — minister name confirmed; title listed as "Minister of Innovation, Industry, Science and Technology" (reversed order — discrepancy with gov.bb noted)
-- [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/) — full cabinet list; Reid's title given as "Minister of Innovation, Industry, Science and Technology"
+- [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/) — full cabinet list
 - [Barbados Today — Reid seeks nearly $188m (11 Mar 2026)](https://barbadostoday.bb/2026/03/11/reid-seeks-nearly-188m-to-drive-barbados-digital-transformation/) — photo caption uses "Minister of Industry, Innovation, Science and Technology"
 - [Barbados Today — Future Barbados to scale up innovation drive (12 Mar 2026)](https://barbadostoday.bb/2026/03/12/future-barbados-to-scale-up-innovation-drive-under-new-ministry/) — Future Barbados transition to MIST confirmed
 - [Barbados Today — Government sets course for digital overhaul (30 Dec 2025)](https://barbadostoday.bb/2025/12/30/government-sets-course-for-sweeping-digital-overhaul/)
 - [src/data/ministries.ts lines 717–780](/home/gavin/frontend-alpha/src/data/ministries.ts) — source data file reviewed
-- [start-a-business fact-check](/home/gavin/frontend-alpha/docs/fact-check/start-a-business.md) — prior report on MIST-attributed business pages (Claims 3–4, F-074, F-075, F-086)
-- [terms-conditions fact-check](/home/gavin/frontend-alpha/docs/fact-check/terms-conditions.md) — prior report on wrong ministry name (F-090, F-091)
+- [start-a-business fact-check](/docs/fact-check/start-a-business.md) — prior report on MIST-attributed business pages (Claims 3–4, F-074, F-075, F-086)
+- [terms-conditions fact-check](/docs/fact-check/terms-conditions.md) — prior report on wrong ministry name (F-090, F-091)
+- Live HTTP checks performed 2026-05-29: alpha.gov.bb/start-a-business (200), alpha.gov.bb/registering-a-business-name (200), alpha.gov.bb/business-policies-and-law (200)

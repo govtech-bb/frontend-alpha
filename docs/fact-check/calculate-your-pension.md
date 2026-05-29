@@ -1,29 +1,52 @@
 # Fact-check: Calculate your pension
 
-- **Live page:** <https://alpha.gov.bb/pensions-and-gratuities/calculate-your-pension>
+- **Live page:** <https://alpha.gov.bb/calculate-your-pension>
 - **Source file:** `src/content/calculate-your-pension/index.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 9 claims reviewed — 4 verified, 3 discrepant, 2 unverifiable. Average certainty: **77%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 11 claims reviewed — 5 verified, 4 discrepant, 2 unverifiable. Average certainty: **78%**.
+
+> **Note on live URL:** The page entry in `content-directory.ts` has `protected: true`, which means the live URL is `/calculate-your-pension` (no category prefix). The previous report recorded `/pensions-and-gratuities/calculate-your-pension` — that URL returns HTTP 404. Corrected this pass.
 
 ---
 
 ## Headline issues for triage
 
-1. **Voluntary retirement age table has a boundary error.** The page puts persons appointed "on" 15 July 1985 in the age-60 group ("On or after 15 July 1985 → 60"). Every authoritative source — MPS, Treasury, the MPS FAQ — consistently states the threshold as "on or before 15th July 1985 → 55 years" and "after 15th July 1985 → 60 years". A person appointed exactly on 15 July 1985 qualifies for age-55 retirement, not age-60. The row labelling needs a one-word fix ("Before" → "On or before") to match the statute.
+1. **"Start now" CTA is broken (404).** The primary citizen action — the "Start now" button linking to `/pensions-and-gratuities/calculate-your-pension/form` — returns HTTP 404. Because the parent page is `protected: true`, the form sub-page must also be reached at `/calculate-your-pension/form`, not the category-prefixed path. This is the most severe issue: a citizen who navigates to the page cannot complete the calculator. Tier A.
 
-2. **Compulsory retirement age table is incomplete.** The alpha page shows three rows starting from 1 January 2010. The Ministry of Public Service's authoritative table at `mps.gov.bb/People_Resourcing/age` shows four rows, beginning with **1 January 2006 to 31 December 2009 → 65½**. Any public servant appointed in that window who has not yet retired may be misled by the truncated table. The Treasury Department's own "Considerations" page also begins at 2010, so the truncation is shared by another gov source — but the MPS page is the definitive authority.
+2. **PAD is a dissolved entity (two occurrences).** The page refers to "the Personnel Administration Division (PAD)" in both the introductory disclaimer (line 16) and the "What you'll need" section (line 23). The PAD was absorbed into the Ministry of Public Service in January 2019. Citizens contacting "the PAD" will be unable to locate the successor. Correct entity: Ministry of Public Service, People Resourcing and Compliance Directorate, Tel. (246) 535-4500.
 
-3. **"PAD" is a dissolved entity.** The page tells citizens to contact "the Personnel Administration Division (PAD)" to confirm their pensionable service figures. The PAD was abolished in January 2019 when it was absorbed into the newly formed Ministry of Public Service (People Resourcing and Compliance Directorate). Directing citizens to a defunct body risks confusion and lost enquiries.
+3. **Voluntary retirement age table has a boundary error.** The table assigns persons appointed "On or after 15 July 1985" to the age-60 group. Both MPS sources use "on or before 15th July 1985 → 55" and "after 15th July 1985 → 60". A person appointed on exactly 15 July 1985 is entitled to voluntary retirement at 55, not 60.
 
-4. **NI pension vs. government pension claim omits a key qualifier.** The page states the rule ("you will receive only the higher of the two — not both") as if it applies universally. The governing legislation — the Pensions (Miscellaneous Provisions) Act, 1975-31 — only applies this abatement to officers who entered service **after 1 September 1975**. Officers who entered before that date are not subject to abatement. The omission may be low-stakes in practice (very few current retirees entered before 1975) but it is a legal inaccuracy.
+4. **Compulsory retirement table omits the 2006–2009 row.** The MPS authoritative table lists four rows beginning with "1 January 2006 to 31 December 2009 → 65½". The alpha page starts at 2010, so officers in that earlier window have no guidance.
 
-5. **No source URL declared** in `content-directory.ts` for this page (`source_url` is absent from the entry). The Treasury Department's pension pages are the authoritative source and should be listed.
+5. **NIS/government pension rule stated without its qualifying scope.** The abatement rule ("only the higher of the two") only applies to officers who entered service after 1 September 1975 per the Pensions (Miscellaneous Provisions) Act, 1975-31. The page presents it as universal. Low practical impact today but is a legal inaccuracy.
 
 ---
 
 ## Claims
 
-### Claim 1 — PAD named as contact for pensionable service records (lines 23–24)
+### Claim 1 — PAD named in estimate disclaimer (line 16)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">This is an estimate only. Your actual pension depends on records held by the Personnel Administration Division (PAD) and your last employer.</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Should say</div>
+<pre class="claim-block-content">This is an estimate only. Your actual pension depends on records held by the Ministry of Public Service (People Resourcing and Compliance Directorate) and your last employer.</pre>
+</div>
+
+- **Type:** agency name / process step
+- **Sources:** [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — "The Ministry of the Public Service was created in January 2019, through the amalgamation of the entities: Ministry of the Civil Service, Personnel Administration Division, and Training Administration Division."; [MPS — Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing) — names "People Resourcing and Compliance Directorate" as responsible unit, Tel. (246) 535-4500
+- **Status:** discrepant — PAD ceased to exist as a standalone entity in January 2019.
+- **Certainty:** 90%
+- **Confidence it's wrong:** 90%
+- **Citizen impact:** MEDIUM — citizens phoning or emailing "the PAD" may not locate the successor; enquiries could be delayed or lost.
+
+---
+
+### Claim 2 — PAD named as contact for confirming pensionable service (line 23)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -36,15 +59,15 @@
 </div>
 
 - **Type:** agency name / process step
-- **Sources:** [MPS — Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing) — names "People Resourcing and Compliance Directorate" as the responsible unit; [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — states the Ministry "was created in January 2019, through the amalgamation of the entities: Ministry of the Civil Service, Personnel Administration Division, and Training Administration Division"; [gov.bb — Ministry of the Public Service and Talent Development](https://www.gov.bb/ministries/public-service)
-- **Status:** discrepant — PAD ceased to exist as a standalone entity in January 2019.
+- **Sources:** [MPS — Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing); [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — PAD absorbed into MPS January 2019
+- **Status:** discrepant — same issue as Claim 1; second occurrence of the same error on the same page.
 - **Certainty:** 90%
 - **Confidence it's wrong:** 90%
-- **Citizen impact:** MEDIUM — citizens phoning or emailing "the PAD" may not be able to locate the successor contact; enquiries could be delayed or lost.
+- **Citizen impact:** MEDIUM — see Claim 1.
 
 ---
 
-### Claim 2 — No-pay leave does not count towards pensionable service (line 27)
+### Claim 3 — No-pay leave does not count towards pensionable service (line 27)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -57,13 +80,13 @@
 </div>
 
 - **Type:** eligibility / process step
-- **Sources:** [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — "No-pay leave cannot be taken into account when calculating length of service."; [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — "All no pay leave is deducted from total pensionable service and would therefore reduce pension benefits."
+- **Sources:** [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — "No-pay leave cannot be taken into account when calculating length of service."; [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — "All no pay leave is deducted from total pensionable service."
 - **Status:** verified — two independent Tier 1 sources agree.
 - **Certainty:** 98%
 
 ---
 
-### Claim 3 — Temporary continuous workers with 10 years or fewer who leave get no pension (lines 28–29)
+### Claim 4 — Temporary continuous workers with 10 years or fewer get no pension (line 28)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -77,45 +100,44 @@
 
 - **Type:** eligibility
 - **Sources:** [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — "Temporary continuous workers, working for ten years or less and leaving the service during this period will not receive a pension."
-- **Status:** verified — wording matches the Treasury source exactly in substance ("10 years or fewer" = "ten years or less").
+- **Status:** verified — wording matches the Treasury source in substance.
 - **Certainty:** 90%
-- **Note:** The MPS FAQ mentions that "a person who is temporarily employed for not less than two (2) years and whose service has been terminated may be granted a lump sum payment as compensation" — this is a separate entitlement (a lump-sum gratuity on termination, not a pension). The page's claim about no pension is consistent with sources; the lump-sum option is simply not mentioned.
 
 ---
 
-### Claim 4 — Voluntary retirement age table: "Before 15 July 1985 → 55" and "On or after 15 July 1985 → 60" (lines 32–35)
+### Claim 5 — Voluntary retirement age table: boundary at 15 July 1985 (lines 32–35)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">| Appointment date        | Voluntary retirement age |
-| Before 15 July 1985     | 55                       |
-| On or after 15 July 1985| 60                       |</pre>
+<pre class="claim-block-content">| Appointment date         | Voluntary retirement age |
+| Before 15 July 1985      | 55                       |
+| On or after 15 July 1985 | 60                       |</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">| Appointment date           | Voluntary retirement age |
-| On or before 15 July 1985  | 55                       |
-| After 15 July 1985         | 60                       |</pre>
+<pre class="claim-block-content">| Appointment date            | Voluntary retirement age |
+| On or before 15 July 1985   | 55                       |
+| After 15 July 1985          | 60                       |</pre>
 </div>
 
 - **Type:** eligibility / statistic
 - **Sources:** [MPS — Age](https://mps.gov.bb/People_Resourcing/age) — "Persons who were permanently appointed with effect from 15th July, 1985 **and before** may retire voluntarily at age 55 years. Persons who were permanently appointed **after** 15th July 1985 may retire voluntarily at age 60 years."; [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — "Voluntarily on reaching the age of fifty-five (55) years if permanently appointed **on or before** the 15th July 1985 and in other cases on reaching the age of sixty (60) years"
-- **Status:** discrepant — the page uses "Before" (excluding 15 July 1985) in the first row and "On or after" (including 15 July 1985) in the second row. Both authoritative sources agree the cut-off includes 15 July 1985 in the age-55 group ("on or before" / "with effect from … and before"). A person appointed on exactly 15 July 1985 is entitled to voluntary retirement at 55, not 60.
+- **Status:** discrepant — the page uses "Before" (excluding 15 July 1985) in row 1 and "On or after" (including it) in row 2. Both authoritative sources agree 15 July 1985 falls in the age-55 group ("on or before"). A person appointed on exactly that date is misclassified.
 - **Certainty:** 95%
 - **Confidence it's wrong:** 85%
-- **Citizen impact:** LOW in aggregate (very few staff appointed on exactly that date), but factually wrong and sets a wrong precedent for the table boundary.
+- **Citizen impact:** LOW in aggregate (very few staff appointed on exactly that date) but factually wrong.
 
 ---
 
-### Claim 5 — Compulsory retirement age table: three rows from 1 January 2010 (lines 38–43)
+### Claim 6 — Compulsory retirement table: three rows starting 1 January 2010 (lines 39–43)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">| Effective from   | Age  |
-| 1 January 2010   | 66   |
-| 1 January 2014   | 66½  |
-| 1 January 2018   | 67   |</pre>
+<pre class="claim-block-content">| Effective from | Age  |
+| 1 January 2010 | 66   |
+| 1 January 2014 | 66½  |
+| 1 January 2018 | 67   |</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
@@ -128,15 +150,15 @@
 </div>
 
 - **Type:** statistic / eligibility
-- **Sources:** [MPS — Age](https://mps.gov.bb/People_Resourcing/age) — shows a four-row table beginning with "1st January 2006 to 31st December 2009 (inclusive) → 65½"; [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — shows three rows beginning from 1 January 2010 (consistent with alpha page but less complete than MPS); [GIS — Ministry of Labour's Statement On Age Of Retirement](https://gisbarbados.gov.bb/blog/ministry-of-labours-statement-on-age-of-retirement/)
-- **Status:** discrepant — the page omits the 2006–2009 row (65½). While the Treasury page also omits it, the MPS page — the definitive authority for public service conditions — includes it. Any officer whose compulsory retirement date falls in the 2006–2009 window is not served by the page's table.
-- **Certainty:** 90% (MPS is the authoritative source for public service retirement ages)
+- **Sources:** [MPS — Age](https://mps.gov.bb/People_Resourcing/age) — shows four-row table beginning "1st January 2006 to 31st December 2009 (inclusive) → 65½"; [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — shows only three rows starting 2010 (consistent with alpha page but less complete)
+- **Status:** discrepant — the page omits the 2006–2009 row. The three rows it does show are individually correct (see Claim 7). MPS is the definitive authority for public service conditions.
+- **Certainty:** 90%
 - **Confidence it's wrong (by omission):** 80%
-- **Citizen impact:** MEDIUM — public servants appointed in or around 2006 may miscalculate when they must retire. The missing row also undermines the table's historical completeness for officers assessing their position.
+- **Citizen impact:** MEDIUM — public servants whose compulsory retirement date falls in the 2006–2009 window receive no guidance from this page.
 
 ---
 
-### Claim 6 — Three rows of the compulsory table are individually correct (lines 40–43)
+### Claim 7 — Three rows of compulsory table are individually correct (lines 41–43)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -154,12 +176,12 @@
 
 - **Type:** statistic / eligibility
 - **Sources:** [MPS — Age](https://mps.gov.bb/People_Resourcing/age) — "1st January 2010 to 31st December 2013 (inclusive) → 66", "1st January 2014 to 31st December 2017 (inclusive) → 66½", "1st January 2018 and thereafter → 67"; [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — identical values confirmed
-- **Status:** verified — all three rows that the page does show are correct.
+- **Status:** verified — all three rows the page shows are correct.
 - **Certainty:** 99%
 
 ---
 
-### Claim 7 — NIS pension vs. government pension: only the higher is paid (line 45)
+### Claim 8 — NIS pension vs. government pension: only the higher is paid (line 45)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -168,19 +190,19 @@
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say (with qualifying scope)</div>
-<pre class="claim-block-content">If you qualify for both a National Insurance pension and a government pension, and you entered public service after 1 September 1975, you will receive only the higher of the two — not both. Officers who entered service before that date are not subject to this abatement rule.</pre>
+<pre class="claim-block-content">If you qualify for both a National Insurance pension and a government pension, and you entered public service after 1 September 1975, you will receive only the higher of the two — not both. Officers who entered service on or before that date are not subject to this abatement rule.</pre>
 </div>
 
 - **Type:** eligibility / legal reference
-- **Sources:** [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — "if a person is eligible for both a National Insurance and government pension the higher of the two will be provided"; same page specifies this flows from "The Pensions (Miscellaneous Provisions) Act, 1975-31 provides for the abatement of pension payable under Caps 25, 30, 56 by the amount of pension payable in accordance with the National Insurance and Social Security Act, Cap 47, to those officers entering the service after 1st September, 1975."
-- **Status:** partially discrepant — the core statement ("higher of the two") is correct and matches the Treasury source. However, the page presents it as a universal rule when it only applies to officers who entered service after 1 September 1975. The omission of this qualifier is a legal inaccuracy, though in practice the vast majority of current retirees entered service after 1975.
-- **Certainty:** 90% (the rule as stated is confirmed; the scope qualifier is supported by both Treasury and the Act)
+- **Sources:** [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension) — confirms "if a person is eligible for both a National Insurance and government pension the higher of the two will be provided" and that this flows from "The Pensions (Miscellaneous Provisions) Act, 1975-31 … to those officers entering the service after 1st September, 1975."
+- **Status:** partially discrepant — the core statement is confirmed, but the page presents it as universal when it only applies to officers who entered service after 1 September 1975. The omission is a legal inaccuracy; practical impact is low (negligible number of active officers entered before 1975).
+- **Certainty:** 90%
 - **Confidence it's wrong (by omission of qualifier):** 70%
-- **Citizen impact:** LOW in practice (negligible number of active officers entered before 1 September 1975), but technically incorrect.
+- **Citizen impact:** LOW in practice, but technically incorrect.
 
 ---
 
-### Claim 8 — "Estimate your public sector pension and gratuity (lump sum)" — page covers both full and reduced pension options (lines 9–16)
+### Claim 9 — Tool covers both full and reduced pension options with gratuity (lines 9–14)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -201,30 +223,54 @@ The tool will show you:
 </div>
 
 - **Type:** descriptive / process step
-- **Sources:** [Treasury — Pension Calculations](https://www.treasury.gov.bb/content/pension-calculations) — confirms the two options: full pension (formula: pensionable months / 600 × last annual salary) and reduced pension (75% of full pension), plus gratuity (full pension / 4 × 12.5); [Treasury — Government Pension Information](https://treasury.gov.bb/content/government-pension-information) — confirms an officer may "opt to receive a gratuity and a reduced pension in lieu of a full pension."
+- **Sources:** [Treasury — Pension Calculations](https://www.treasury.gov.bb/content/pension-calculations) — confirms full pension formula (pensionable months / 600 × last annual salary), reduced pension (75% of full), and gratuity (full pension / 4 × 12.5); [Treasury — Government Pension Information](https://treasury.gov.bb/content/government-pension-information) — confirms an officer may "opt to receive a gratuity and a reduced pension in lieu of a full pension."
 - **Status:** verified
 - **Certainty:** 95%
 
 ---
 
-### Claim 9 — "Actual pension depends on records held by the Personnel Administration Division (PAD) and your last employer" (lines 15–17)
+### Claim 10 — "Start now" CTA link resolves (line 47)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">This is an estimate only. Your actual pension depends on records held by the Personnel Administration Division (PAD) and your last employer.</pre>
+<pre class="claim-block-content"><a data-start-link href="/pensions-and-gratuities/calculate-your-pension/form">Start now</a></pre>
 </div>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">This is an estimate only. Your actual pension depends on records held by the Ministry of Public Service (People Resourcing and Compliance Directorate) and your last employer.</pre>
+<pre class="claim-block-content"><a data-start-link href="/calculate-your-pension/form">Start now</a></pre>
 </div>
 
-- **Type:** agency name / process step
-- **Sources:** [MPS — Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing) — "People Resourcing and Compliance Directorate prepares a paper on the retiring benefits as calculated and verified by the Accountant General and Auditor General"; address given as "1st Floor E. Humphrey Walcott Building, Cnr. Collymore Rock & Culloden Road, St. Michael. Tel. (246) 535-4500"; [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — confirms PAD was merged into MPS in January 2019
-- **Status:** discrepant (same issue as Claim 1 — PAD is dissolved). This is the second occurrence on the page; both should be fixed together.
-- **Certainty:** 90%
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** MEDIUM — see Claim 1.
+- **Type:** link / CTA
+- **Sources:** Live-checked [https://alpha.gov.bb/calculate-your-pension/form](https://alpha.gov.bb/calculate-your-pension/form) — returns HTTP 404. The category-prefixed path `/pensions-and-gratuities/calculate-your-pension/form` (as hard-coded in the source) also 404s. Because the parent page has `protected: true` in `content-directory.ts` (line 301), the correct sub-page URL would be `/calculate-your-pension/form` — but even that 404s, suggesting the form route itself may not be deployed or registered correctly.
+- **Status:** discrepant — the CTA href uses the category-prefixed path which cannot work for a protected-page subpage. The href is wrong regardless of whether the form route itself is live.
+- **Certainty:** 99%
+- **Confidence it's wrong:** 99%
+- **Citizen impact:** HIGH — this is the sole citizen action on the page; a broken "Start now" button means no one can use the calculator.
+
+---
+
+### Claim 11 — No source_url in content-directory.ts (metadata)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">(No source_url field in src/data/content-directory.ts entry for calculate-your-pension, lines 298–311)</pre>
+</div>
+
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Checked — unverifiable by automated means</div>
+<pre class="claim-block-content">Authoritative sources exist at:
+- https://www.treasury.gov.bb/content/pension-calculations
+- https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension
+- https://mps.gov.bb/People_Resourcing/age
+A source_url should be added by the content team.</pre>
+</div>
+
+- **Type:** descriptive / policy claim about the page
+- **Sources:** Checked [src/data/content-directory.ts](/home/gavin/frontend-alpha/src/data/content-directory.ts) lines 298–311 — no `source_url` field present; [Treasury — Pension Calculations](https://www.treasury.gov.bb/content/pension-calculations) — live and relevant; [MPS — Age](https://mps.gov.bb/People_Resourcing/age) — live and relevant
+- **Status:** unverifiable — absence of source_url is confirmed; which URL should be added is a content team decision.
+- **Certainty:** 40%
+- **Open question:** Which authoritative URL should be recorded as the primary source? Treasury pension-calculations or MPS retirement-age page?
 
 ---
 
@@ -232,9 +278,9 @@ The tool will show you:
 
 1. **Missing contact details for the successor to PAD.** Now that PAD is dissolved, the page should direct citizens to: Ministry of Public Service, People Resourcing and Compliance Directorate, 1st Floor E. Humphrey Walcott Building, Cnr. Collymore Rock & Culloden Road, St. Michael; Tel. (246) 535-4500. Source: [MPS — Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing).
 
-2. **Missing source_url in content-directory.ts.** The `calculate-your-pension` entry in `src/data/content-directory.ts` (lines 298–312) has no `source_url` field. The authoritative government source is the Treasury Department's pension suite: [Treasury — Pension Calculations](https://www.treasury.gov.bb/content/pension-calculations) and [Treasury — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension). The MPS page at [mps.gov.bb/People_Resourcing/age](https://mps.gov.bb/People_Resourcing/age) is the definitive authority for retirement ages.
+2. **Minimum service requirement not stated.** The page does not mention that a minimum of **10 years' pensionable service** is required to qualify for a pension at all. A citizen with fewer than 10 years who runs the calculator may receive an estimate without knowing they are ineligible. Source: [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — "An officer or employee may qualify for a pension if he held a pensionable office for ten (10) years or more."; [Treasury — Considerations](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension).
 
-3. **Minimum service requirement not stated.** The page does not mention that a minimum of **10 years' pensionable service** is required to qualify for a pension at all. A citizen who has fewer than 10 years and runs the calculator may receive an estimate without knowing they are ineligible. Source: [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php); [Treasury — Considerations](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension).
+3. **Treasury's own pension calculator also references PAD.** [Treasury — Pension Calculations](https://www.treasury.gov.bb/content/pension-calculations) contains the same outdated "Personnel Administration Division" reference in its disclaimer. The alpha page mirrors this error from the source it was based on. Both should be updated together.
 
 4. **Abatement effective date (1 September 1975) not stated.** Officers who entered service on or before 1 September 1975 are not subject to the NIS abatement rule. While a rare edge case today, it should be noted for legal completeness.
 
@@ -242,14 +288,12 @@ The tool will show you:
 
 ## Sources cited
 
-- [Ministry of Public Service — Age / Compulsory Retirement Ages](https://mps.gov.bb/People_Resourcing/age)
+- [Ministry of Public Service — Age / Retirement Ages](https://mps.gov.bb/People_Resourcing/age)
 - [Ministry of Public Service — FAQ](https://mps.gov.bb/People_Resourcing/faq.php)
-- [Ministry of Public Service — Retiring Benefits](https://mps.gov.bb/People_Resourcing/benefits)
 - [Ministry of Public Service — Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing)
 - [Barbados Treasury Department — Considerations When Calculating Your Pension](https://www.treasury.gov.bb/content/considerations-when-calculating-your-pension)
 - [Barbados Treasury Department — Pension Calculations](https://www.treasury.gov.bb/content/pension-calculations)
 - [Barbados Treasury Department — Government Pension Information](https://treasury.gov.bb/content/government-pension-information)
-- [NIS — Old-Age Contributory Pension](https://www.nis.gov.bb/old-age-contributory-pension/)
-- [NIS — Payment of Public Sector Pensions by NISSS](https://www.nis.gov.bb/payment-of-public-sector-pensions-by-the-national-insurance-and-social-security-service/)
-- [GIS — Ministry of Labour's Statement On Age Of Retirement](https://gisbarbados.gov.bb/blog/ministry-of-labours-statement-on-age-of-retirement/)
-- [Pensions Act CAP 25 PDF (hosted by Treasury)](https://treasury.gov.bb/sites/default/downloads/Legislation/Pension%20Legislation/PensionsAct_Cap25C.pdf)
+- [Live page: alpha.gov.bb/calculate-your-pension](https://alpha.gov.bb/calculate-your-pension)
+- [Live CTA target (404): alpha.gov.bb/calculate-your-pension/form](https://alpha.gov.bb/calculate-your-pension/form)
+- [src/data/content-directory.ts](/home/gavin/frontend-alpha/src/data/content-directory.ts) lines 298–311

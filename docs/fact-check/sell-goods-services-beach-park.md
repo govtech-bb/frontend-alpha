@@ -2,22 +2,22 @@
 
 - **Live page:** <https://alpha.gov.bb/business-trade/sell-goods-services-beach-park>
 - **Source files:** `src/content/sell-goods-services-beach-park/index.md`, `src/content/sell-goods-services-beach-park/start.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 14 claims reviewed — 7 verified, 1 discrepant, 6 unverifiable. Average certainty: **72%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 16 claims reviewed — 8 verified, 1 discrepant, 7 unverifiable. Average certainty: **70%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **NCC address contains "Bridgetown" — should be "Waterford".** The page gives the paper-form return address as "Codrington Road, Bridgetown, Saint Michael". Multiple Tier 1 and Tier 2 sources (gov.bb, GIS directory, BARP directory, mapcarta/OSM) consistently give the address as "Codrington Road, **Waterford**, Saint Michael, BB11042". "Bridgetown" does not appear in any NCC official source. A citizen posting a paper form to the NCC or keying the address into a map app will not find "Codrington Road, Bridgetown".
+1. **NCC address contains "Bridgetown" — should be "Waterford".** The page gives the paper-form return address as "Codrington Road, Bridgetown, Saint Michael". Multiple Tier 1 and Tier 2 sources (gov.bb, GIS directory, BARP directory, mapcarta/OSM) consistently give the address as "Codrington Road, **Waterford**, Saint Michael, BB11042". "Bridgetown" does not appear in any NCC official source. A citizen posting a paper form to the NCC or keying the address into a map app will not find "Codrington Road, Bridgetown". This finding is unchanged from the 2026-05-28 pass.
 
-2. **Licence fees are unverifiable from the public web.** The page lists four specific fee amounts including VAT ($117.50 regular licence; $176.25 watersports licence; $11.75 licence book; $12.87 ID badge). The NCC's own "Fees & Licenses" page at nccbarbados.com/process-for-using-nccs-facilities/ and the renewal notice at nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/ do not publish specific dollar amounts — the renewal notice directs vendors to the NCC Accounts Department. The figures cannot be independently confirmed or contradicted without a direct call to the NCC. The VAT arithmetic is internally consistent (all four figures resolve cleanly to BDS $100, $150, $10, and ~$10.95 pre-VAT at 17.5%), which gives some confidence the numbers are plausible — but they remain unverifiable.
+2. **Licence fees are unverifiable from the public web.** The page lists four specific fee amounts including VAT ($117.50 regular licence; $176.25 watersports licence; $11.75 licence book; $12.87 ID badge). The NCC's own "Fees & Licenses" page and the renewal notice at nccbarbados.com do not publish specific dollar amounts — the renewal notice directs vendors to the NCC Accounts Department. The figures cannot be independently confirmed or contradicted without a direct call to the NCC. The VAT arithmetic is internally consistent (all four figures resolve cleanly to BDS $100, $150, $10, and ~$10.95 pre-VAT at 17.5%), which gives some confidence the numbers are plausible — but they remain unverifiable.
 
-3. **Referee and testimonial requirements unverifiable.** No NCC public source (nccbarbados.com, gov.bb, GIS) mentions the two-referee / two-testimonial requirement. The NCC's published guidance for new applicants cites only a police certificate of character and information about the proposed beach and business type. The current page's framing — including the rule that testimonials must not come from the named referees — cannot be confirmed or contradicted from public sources and requires direct NCC confirmation.
+3. **Referee and testimonial requirements unverifiable.** No NCC public source (nccbarbados.com, gov.bb, GIS) mentions the two-referee / two-testimonial requirement. The NCC's published guidance for new applicants cites only a police certificate of character and information about the proposed beach and business type. The current page's framing — including the rule that testimonials must not come from the named referees — cannot be confirmed or contradicted from public sources.
 
-4. **Office hours for payment are more restrictive than the page implies.** The NCC renewal notice specifies Accounts Department hours as "8:30 A.M. – 3:00 P.M., Monday–Friday" for payment/collection. The page does not state any hours, leaving citizens to assume the general office opening hours of 8:30 a.m. – 4:30 p.m. A citizen arriving at 3:30 p.m. will be unable to pay for their licence documentation. This is an omission rather than a factual error, but it carries moderate citizen impact.
+4. **Office hours for payment are more restrictive than the page implies.** The NCC renewal notice specifies Accounts Department hours as "8:30 A.M. – 3:00 P.M., Monday–Friday" for payment/collection. The page does not state any hours, leaving citizens to assume the general office opening hours of 8:30 a.m. – 4:30 p.m. A citizen arriving at 3:30 p.m. will be unable to pay for their licence documentation.
 
-5. **"letter of authorisation" document name unconfirmed.** The page states applicants collect "a letter of authorisation" from the NCC. The NCC's own vendor information pages do not use this term. The verifiable post-approval documentation consists of a licence book and identification card (confirmed by multiple NCC and GIS sources). Whether the NCC also issues a separate letter under that specific name cannot be confirmed from public sources.
+5. **"Start now" CTA on start.md links to a form component — loads but shows "Loading form…".** The CTA at `/business-trade/sell-goods-services-beach-park/form` renders the page shell but the form body shows only "Loading form…" at fetch time (likely a dynamic/JS-rendered component). This may be working correctly for end users with JavaScript enabled, but cannot be confirmed as fully functional without a browser session.
 
 ---
 
@@ -36,7 +36,7 @@
 </div>
 
 - **Type:** process step / statistic
-- **Sources:** [NCC — Renewal of Vendors' Licenses July 01, 2024 – June 30, 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — "Local vendors licensed by the National Conservation Commission have until **June 30** to renew their licences"; [CBC — NCC reminds vendors to renew licences](https://www.cbc.bb/news/local-news/ncc-reminds-vendors-to-renew-licences/) — deadline confirmed; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — "licenses are valid for a period of one (1) year and are renewable annually during the month of June"
+- **Sources:** [NCC — Renewal of Vendors' Licenses July 01, 2024 – June 30, 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — "Local vendors licensed by the National Conservation Commission have until **June 30** to renew their licences"; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — "licenses are valid for a period of one (1) year and are renewable annually during the month of June"; [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/) — "licenses have been issued since June 1979, valid for one year"
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -55,7 +55,7 @@
 </div>
 
 - **Type:** agency name / process step
-- **Sources:** [National Conservation Commission Act, CAP 393](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/NationalConservationCommissionCAP393.pdf) — "any person who desires to operate a business of selling goods or services in a public park, in a public garden, on a beach or in a cave shall first obtain from the Commission a license for the purpose"; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — confirms NCC issues vendor licences
+- **Sources:** [National Conservation Commission Act, CAP 393](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/NationalConservationCommissionCAP393.pdf) — "any person who desires to operate a business of selling goods or services in a public park, in a public garden, on a beach or in a cave shall first obtain from the Commission a license for the purpose"; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — confirms NCC issues vendor licences; [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/) — "approximately 250 licensed vendors and 100 watersports operators are active"
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -78,7 +78,7 @@ Saint Michael</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — "Codrington House, St. Michael" (no Bridgetown); [BARP Business Directory — National Conservation Commission](https://barpmember.com/directory/directory/national-conservation-commission/) — "Codrington Road, Waterford, Saint Michael, BB11042"; [mapcarta.com — NCC Headquarters (OpenStreetMap data)](https://mapcarta.com/N5219008439) — "Codrington Road, Waterford, Saint Michael, BB11042"; [GIS — National Conservation Commission location](https://gisbarbados.gov.bb/locations/national-conservation-commission-codrington-house/) — "Codrington Road, Waterford, Saint Michael" (URL confirmed, page returned 403 on direct fetch)
+- **Sources:** [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — "Codrington House, St. Michael" (no Bridgetown locality listed); [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — "Submit payment to the Accounts Department at Codrington House, St. Michael" (no Bridgetown); [BARP Business Directory — National Conservation Commission](https://barpmember.com/directory/directory/national-conservation-commission/) — "Codrington Road, Waterford, Saint Michael, BB11042"; [mapcarta.com — NCC Headquarters (OpenStreetMap data)](https://mapcarta.com/N5219008439) — "Codrington Road, Waterford, Saint Michael, BB11042"; [GIS — National Conservation Commission — Codrington House (location)](https://gisbarbados.gov.bb/locations/national-conservation-commission-codrington-house/) — "Codrington Road, Waterford, Saint Michael" (HTTP 403 on direct fetch — URL confirmed via web search index)
 - **Status:** discrepant — "Bridgetown" does not appear in any NCC or Tier 1 source; the correct locality is "Waterford"
 - **Certainty:** 90%
 - **Confidence it's wrong:** 90%
@@ -99,7 +99,7 @@ Saint Michael</pre>
 </div>
 
 - **Type:** descriptive / process step
-- **Sources:** [NCC — nccbarbados.com](https://www.nccbarbados.com/) — confirms Accounts Department open Mon–Fri 8:30 a.m.–3:00 p.m. for in-person payments; general procedural claim is plausible and not contradicted by any source
+- **Sources:** [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/) — confirms in-person processing at Codrington House; [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — confirms Accounts Department open Mon–Fri 8:30 a.m.–3:00 p.m. for in-person payments; general procedural claim is plausible and not contradicted by any source
 - **Status:** verified (descriptive — not externally testable)
 - **Certainty:** 65% (inherently operational claim; confirmed in spirit by NCC guidance that in-person renewal is the expected mechanism)
 
@@ -123,7 +123,7 @@ cannot be confirmed or contradicted from the public web.</pre>
 </div>
 
 - **Type:** document requirement / eligibility
-- **Checked:** [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission); [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/); [GIS — Beach Vending](https://gisbarbados.gov.bb/blog/beach-vending/) (403 on fetch); [NCC renewal notice July 2024–June 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/); [Gov.bb NCC application form PDF (2003)](https://www.gov.bb/media_files/ncc_publicactappform.pdf) (binary — not machine-readable)
+- **Checked:** [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission); [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/); [NCC renewal notice July 2024–June 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/); [GIS — Beach Vending](https://gisbarbados.gov.bb/blog/beach-vending/) (HTTP 403 on fetch); [gov.bb NCC application form PDF (2003)](https://www.gov.bb/media_files/ncc_publicactappform.pdf) (binary — not machine-readable)
 - **Status:** unverifiable
 - **Certainty:** 35%
 - **Open question:** Does the NCC's current vendor licence application require 2 referees (one professional, one personal)? Confirm with NCC Accounts Department: (246) 536-0617 / ncc@ncc.gov.bb.
@@ -166,7 +166,7 @@ found on the public web.</pre>
 </div>
 
 - **Type:** URL / document requirement
-- **Sources:** [forms.gov.bb/CertificateOfCharacter](https://forms.gov.bb/CertificateOfCharacter) — live; confirmed BBD $20 fee; [_inventory.md — Police Certificate of Character](/docs/fact-check/_inventory.md) — "BBD $20; apply at forms.gov.bb/CertificateOfCharacter; pay via EZPAY+ … Status: verified 2026-05-28"; [NCC — Beach Vending (GIS)](https://gisbarbados.gov.bb/blog/beach-vending/) — "present a police certificate of character" confirmed as application requirement
+- **Sources:** [forms.gov.bb/CertificateOfCharacter](https://forms.gov.bb/CertificateOfCharacter) — live 2026-05-29; confirmed BBD $20 fee, 24–48 hour processing after payment; [_inventory.md — Police Certificate of Character](/docs/fact-check/_inventory.md) — "BBD $20; apply at forms.gov.bb/CertificateOfCharacter; pay via EZPAY+ … Status: verified 2026-05-28"; [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — "Recent Police Certificate of Character (apply at forms.gov.bb)" confirmed as application requirement
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -189,7 +189,7 @@ from public NCC sources.</pre>
 </div>
 
 - **Type:** document requirement
-- **Checked:** [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/); [nccbarbados.com — Beach management](https://www.nccbarbados.com/beach-management/); [NCC renewal notice July 2024–June 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/); [Gov.bb NCC application form PDF (2003)](https://www.gov.bb/media_files/ncc_publicactappform.pdf) (binary — unreadable)
+- **Checked:** [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/); [nccbarbados.com — Beach management](https://www.nccbarbados.com/beach-management/); [NCC renewal notice July 2024–June 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/); [gov.bb NCC application form PDF (2003)](https://www.gov.bb/media_files/ncc_publicactappform.pdf) (binary — unreadable)
 - **Status:** unverifiable
 - **Certainty:** 40% (plausible given ID badge production; number "2" unconfirmed)
 - **Open question:** How many passport-sized photographs must be submitted with a new NCC vendor licence application?
@@ -206,11 +206,11 @@ from public NCC sources.</pre>
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — checked the following sources</div>
 <pre class="claim-block-content">No NCC public source confirms or describes a formal site-assessment meeting
-as a step in the vendor licence process. The GIS beach-vending article states
-applicants must "apply to the NCC's general manager, present a police
-certificate of character, information on the proposed beach and the nature
-of the business" — consistent with a location-review element but not
-confirming an in-person site meeting is a mandatory distinct step.</pre>
+as a mandatory step in the vendor licence process. The GIS beach-vending
+article states applicants must "apply to the NCC's general manager, present
+a police certificate of character, information on the proposed beach and
+the nature of the business" — consistent with a location-review element
+but not confirming an in-person site meeting is a mandatory distinct step.</pre>
 </div>
 
 - **Type:** process step
@@ -240,7 +240,7 @@ cannot be confirmed or contradicted.</pre>
 </div>
 
 - **Type:** process step / document
-- **Sources:** [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — "Vendors must carry their license book and identification cards while operating"; [CBC — NCC reminds vendors](https://www.cbc.bb/news/local-news/ncc-reminds-vendors-to-renew-licences/) — confirms licence book; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — licence book confirmed; "letter of authorisation" not mentioned
+- **Sources:** [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — "Vendors must carry their license book and identification cards while operating"; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — licence book confirmed; "letter of authorisation" not mentioned in any source
 - **Status:** unverifiable (for "letter of authorisation" name specifically; licence book confirmed)
 - **Certainty:** 60% (licence book 95% confirmed; letter of authorisation 25% — net average for composite claim)
 - **Open question:** Does the NCC issue a document specifically called a "letter of authorisation" as part of the vendor licence approval process, or is this a colloquial description of the licence book/approval notification?
@@ -260,7 +260,7 @@ cannot be confirmed or contradicted.</pre>
 </div>
 
 - **Type:** process step
-- **Sources:** [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — confirms vendors carry identification cards; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — "approximately 250 licensed beach vendors … easily identified" through NCC-issued polo shirts and ID cards; both sources confirm a separate vendor ID is issued
+- **Sources:** [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — confirms vendors carry identification cards; [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission) — "approximately 250 licensed beach vendors … easily identified" through NCC-issued polo shirts and ID cards; [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/) — ID cards confirmed as issued to vendors
 - **Status:** verified (in substance; timing/notification method not independently tested)
 - **Certainty:** 75%
 
@@ -273,8 +273,8 @@ cannot be confirmed or contradicted.</pre>
 <pre class="claim-block-content">You will pay for your vendor documentation when you visit the NCC. You can pay in cash or by card.</pre>
 </div>
 
-<div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified in part — payment at NCC confirmed; card acceptance unconfirmed</div>
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Partially verified — card acceptance unconfirmed</div>
 <pre class="claim-block-content">You will pay for your vendor documentation when you visit the NCC. You can pay in cash or by card.</pre>
 </div>
 
@@ -318,7 +318,7 @@ public web.</pre>
 - **Status:** unverifiable
 - **Certainty:** 40% (VAT maths are internally consistent but no Tier 1 or Tier 2 source publishes these amounts)
 - **Citizen impact:** HIGH — fees are the primary decision-making information for vendors; if any figure is stale or wrong, a vendor will arrive at the NCC with the incorrect amount
-- **Open question:** Are the four fee amounts ($117.50, $176.25, $11.75, $12.87) correct for the 2024–2025 or 2025–2026 licence year? Confirm with NCC Accounts Department: (246) 536-0617 or ncc@ncc.gov.bb.
+- **Open question:** Are the four fee amounts ($117.50, $176.25, $11.75, $12.87) correct for the 2025–2026 licence year? Confirm with NCC Accounts Department: (246) 536-0617 or ncc@ncc.gov.bb.
 
 ---
 
@@ -339,6 +339,49 @@ public web.</pre>
 - **Status:** verified
 - **Certainty:** 99%
 - **Note:** The sentence "The Conservation Commission is responsible for Apply for a licence to sell goods and services at a beach or park" reads as a template/data-driven attribution fragment rather than natural prose. The agency name is correct; the sentence structure appears to be a rendering artifact, not a factual error.
+
+---
+
+### Claim 15 — "Apply online" CTA link (index.md line 24)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content"><a data-start-link href="/business-trade/sell-goods-services-beach-park/start">Apply online</a></pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content"><a data-start-link href="/business-trade/sell-goods-services-beach-park/start">Apply online</a></pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb/business-trade/sell-goods-services-beach-park/start](https://alpha.gov.bb/business-trade/sell-goods-services-beach-park/start) — live 2026-05-29; page loads with correct title and content
+- **Status:** verified
+- **Certainty:** 99%
+
+---
+
+### Claim 16 — "Start now" CTA on start.md (start.md line 26)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content"><a data-start-link href="/business-trade/sell-goods-services-beach-park/form">Start now</a></pre>
+</div>
+
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Partially verified — page shell loads; form body shows "Loading form…"</div>
+<pre class="claim-block-content">The URL resolves without a 404. The page renders a government header and
+footer correctly. The main content area shows "Loading form…" — likely a
+JavaScript-rendered component that requires a real browser session to
+complete rendering. Cannot confirm the form fully functions from a static
+fetch.</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb/business-trade/sell-goods-services-beach-park/form](https://alpha.gov.bb/business-trade/sell-goods-services-beach-park/form) — URL resolves 2026-05-29
+- **Status:** unverifiable (route live; full form functionality requires browser session)
+- **Certainty:** 70% (route exists; form rendering depends on JS — standard for this site's dynamic form components)
+- **Open question:** Does the online application form at `/business-trade/sell-goods-services-beach-park/form` fully render and function for end users? Test in a browser with JavaScript enabled.
 
 ---
 
@@ -364,7 +407,7 @@ For watersports licence renewals the NCC additionally requires: valid vessel reg
 
 ### Licence is non-transferable
 
-The NCC licence conditions state that licences are "not transferable." This condition is not mentioned anywhere on the alpha.gov.bb page but is a significant trading restriction.
+The NCC licence conditions state that licences are "not transferable." This condition is not mentioned anywhere on the alpha.gov.bb page but is a significant trading restriction for anyone considering sharing or passing on a vendor licence.
 
 **Source:** [NCC — Renewal of Vendors' Licenses July 01, 2024 – June 30, 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/)
 
@@ -376,9 +419,9 @@ The page gives no phone number, email address, or website for the NCC beyond the
 - **Email:** ncc@ncc.gov.bb (general) / specialprojectsoffice@ncc.gov.bb
 - **Website:** nccbarbados.com
 
-Adding these would let applicants check status, ask questions about their application, or confirm hours before making a journey.
+Adding these would let applicants check status, ask questions, or confirm hours before making a journey.
 
-**Source:** [nccbarbados.com — Home](https://www.nccbarbados.com/); [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission)
+**Sources:** [nccbarbados.com — Home](https://www.nccbarbados.com/); [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission)
 
 ---
 
@@ -389,15 +432,15 @@ Adding these would let applicants check status, ask questions about their applic
 - [nccbarbados.com — Fees & Licenses (Process for using NCC facilities)](https://www.nccbarbados.com/process-for-using-nccs-facilities/)
 - [nccbarbados.com — Renewal of Vendors' Licenses July 01, 2024 – June 30, 2025](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/)
 - [nccbarbados.com — Beach management](https://www.nccbarbados.com/beach-management/)
-- [nccbarbados.com — Stipulations for the Use of Parks, Beaches and Open Areas](https://www.nccbarbados.com/stipulations-for-the-use-of-parks-beaches-and-open-areas/)
-- [nccbarbados.com — About the NCC](https://www.nccbarbados.com/about-the-ncc/)
 - [National Conservation Commission Act CAP 393 (Barbados Law Courts PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/NationalConservationCommissionCAP393.pdf)
-- [CBC — NCC reminds vendors to renew licences](https://www.cbc.bb/news/local-news/ncc-reminds-vendors-to-renew-licences/)
+- [forms.gov.bb — Application for Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
 - [GIS — Beach Vending](https://gisbarbados.gov.bb/blog/beach-vending/) (HTTP 403 on direct fetch — URL confirmed via web search index)
 - [GIS — National Conservation Commission — Codrington House (location)](https://gisbarbados.gov.bb/locations/national-conservation-commission-codrington-house/) (HTTP 403 on direct fetch — URL confirmed via web search index)
 - [BARP Business Directory — National Conservation Commission](https://barpmember.com/directory/directory/national-conservation-commission/)
 - [mapcarta.com — NCC Headquarters (OpenStreetMap data)](https://mapcarta.com/N5219008439)
-- [forms.gov.bb — Application for Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
 - [BRA — VAT Rates](https://bra.gov.bb/Popular-Topics/Value-Added-Tax/VAT-Rates)
 - [SBA e-Toolkit — Licences and Certificates](https://e-toolkit.sba.bb/etoolkit/licences-and-certificates/)
 - [gov.bb — NCC Public Act Application Form (PDF, 2003)](https://www.gov.bb/media_files/ncc_publicactappform.pdf) (binary — not machine-readable)
+- [alpha.gov.bb — sell-goods-services-beach-park (live page)](https://alpha.gov.bb/business-trade/sell-goods-services-beach-park)
+- [alpha.gov.bb — sell-goods-services-beach-park/start (start page)](https://alpha.gov.bb/business-trade/sell-goods-services-beach-park/start)
+- [alpha.gov.bb — sell-goods-services-beach-park/form (form)](https://alpha.gov.bb/business-trade/sell-goods-services-beach-park/form)

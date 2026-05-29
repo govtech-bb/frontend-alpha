@@ -2,22 +2,22 @@
 
 - **Live page:** <https://alpha.gov.bb/family-birth-relationships/marriage-licences>
 - **Source file:** `src/content/marriage-licences.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 22 claims reviewed — 16 verified, 3 discrepant, 3 unverifiable. Average certainty: **84%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 24 claims reviewed — 16 verified, 4 discrepant, 4 unverifiable. Average certainty: **82%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **"Male and female" applicant language is legally out of step.** Line 13 states applications must be made by "both (male and female) persons". The Marriage Act CAP 218A uses gender-neutral language ("two persons"), and the Sexual Offences Act sections criminalising same-sex relations were struck down in December 2022. The explicit "male and female" restriction warrants legal review before the page is published on a government portal.
+1. **`gisbarbados.gov.bb/faqs` link is broken (HTTP 403).** Line 100 directs citizens to the GIS FAQs page for appointment booking. That URL returns HTTP 403 Forbidden as of 2026-05-29. The direct appointment link (`govtbarbadosapointmentsystem.as.me/MarriageLicense`) resolves and is functional. The broken GIS link should be removed or replaced with the direct booking URL.
 
-2. **Registration Department building name is wrong.** Lines 114–115 say "Judicial Centre" as the building name. Every authoritative source — `barbadoslawcourts.gov.bb`, `gov.bb/Departments/registration`, and `oag.gov.bb` — consistently uses "Supreme Court Complex, Whitepark Road, St. Michael". "Judicial Centre" does not appear on any official source checked.
+2. **"Male and female" applicant language is legally out of step.** Line 13 states applications must be made by "both (male and female) persons". The Marriage Act CAP 218A uses gender-neutral language ("two persons"), and the Sexual Offences Act sections criminalising same-sex relations were struck down in December 2022. The explicit "male and female" restriction warrants legal review before the page is published on a government portal.
 
-3. **Registration Department fax number is discrepant.** Line 126 lists fax `(246) 426-2405`. The `gov.bb/Departments/registration` page lists `1 (246) 427-8917`. Both numbers appear in various public sources; the official gov.bb source should be treated as authoritative.
+3. **Registration Department building name is wrong.** Lines 116–122 say "Judicial Centre" as the building name. Authoritative sources — `gov.bb/Departments/registration` and `barbadoslawcourts.gov.bb` — consistently use "Supreme Court Complex, Whitepark Road, St. Michael". Note: the source `gov.bb/Citizens/marriage-licence` also uses "Judicial Centre", so this is an upstream discrepancy mirrored by the page. The road name "White Park Road" (two words) vs. "Whitepark Road" (one word) also diverges from authoritative sources.
 
-4. **Appointment booking reference to `gisbarbados.gov.bb/faqs` is stale.** Line 100 directs citizens to the GIS FAQs page for appointment booking. The GIS FAQs page does not directly list marriage licence appointment links. The live appointment URL (`govtbarbadosapointmentsystem.as.me/MarriageLicense`) resolves and appears active — it is better cited directly, which the page also does.
+4. **Registration Department email address has a typo.** Line 132 lists `registrar@lawcourt.gov.bb` (singular "lawcourt"). The `gov.bb/Departments/registration` page lists `registrar@lawcourts.gov.bb` (plural "lawcourts"). The `barbadoslawcourts.gov.bb/Certificates` page lists a third variant: `registrarsupremecourt@barbados.gov.bb`. Three official sources give three different addresses; the page's singular variant is almost certainly a typo of the `lawcourts.gov.bb` form.
 
-5. **Ministry address uses "Webster's Business Park" (apostrophe-s); official sources are inconsistent.** The gov.bb ministry page uses "Webster Business Park" (no possessive). A low-stakes formatting issue but worth aligning to the canonical form.
+5. **Registration Department fax number conflict persists.** Line 126 lists fax `(246) 426-2405`. The `gov.bb/Departments/registration` page lists `1 (246) 427-8917`. The `barbadoslawcourts.gov.bb/Certificates` page lists `1-246-426-2405`. Two authoritative sources disagree; this requires agency confirmation.
 
 ---
 
@@ -36,12 +36,12 @@
 </div>
 
 - **Type:** eligibility / legal reference
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — mirrors the same "male and female" language; [Barbados Consulate General Toronto](https://toronto.foreign.gov.bb/general-information/how-can-i-plan-to-get-married-in-barbados/) — same phrasing (last reviewed April 2024); [Marriage Act CAP 218A — LII/Gender Justice](https://www.law.cornell.edu/gender-justice/resource/Marriage_Act_1978-40_Cap_218A_Barbados) — Act uses gender-neutral "two persons" in most sections; section 3 references "man and woman" only in the context of prohibited-degree void marriages
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — mirrors the same "male and female" language; [Barbados Consulate General Toronto](https://toronto.foreign.gov.bb/general-information/how-can-i-plan-to-get-married-in-barbados/) — same phrasing; [Marriage Act CAP 218A — LII/Gender Justice](https://www.law.cornell.edu/gender-justice/resource/Marriage_Act_1978-40_Cap_218A_Barbados) — Act uses gender-neutral "two persons" in most sections; section 3 references "man and woman" only for prohibited-degree void marriages
 - **Status:** discrepant (legal language concern)
 - **Certainty:** 80%
-- **Confidence it's wrong:** 65% — the "male and female" phrasing mirrors the source gov.bb page exactly and may reflect current administrative practice. However, the Marriage Act CAP 218A predominantly uses gender-neutral language, and post-2022 decriminalisation developments make this restriction legally contested. The GovBB team should seek legal advice before publishing.
+- **Confidence it's wrong:** 65% — the "male and female" phrasing mirrors the source gov.bb page exactly and may reflect current administrative practice. However, the Marriage Act CAP 218A predominantly uses gender-neutral language, and post-2022 decriminalisation developments make this restriction legally contested.
 - **Citizen impact:** HIGH — if Barbados law does not restrict marriage to opposite-sex couples (a live legal question post-2022), this language either misstates the law or incorrectly advises same-sex couples they cannot apply.
-- **Open question:** has the Marriage Act CAP 218A been amended since the 1995 L.R.O. version to either expressly permit or prohibit same-sex marriage? If not, does the current administrative practice at the Ministry of Home Affairs restrict applications to opposite-sex couples? The GovBB team should obtain a written opinion from the Office of the Attorney General before publishing this text.
+- **Open question:** has the Marriage Act CAP 218A been amended since the 1995 L.R.O. version to either expressly permit or prohibit same-sex marriage? The GovBB team should obtain a written opinion from the Office of the Attorney General before publishing this text.
 
 ---
 
@@ -58,7 +58,7 @@
 </div>
 
 - **Type:** legal reference / process step
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — "valid for three (3) months only"; [Barbados Judicial System — Getting Married and Registration of Marriages](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — "valid for three (3) months only"; [Barbados Judicial System — Getting Married and Registration of Marriages](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -77,7 +77,7 @@
 </div>
 
 - **Type:** document requirement
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — mirrors this requirement exactly; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent ("Original or certified birth certificate or valid passport")
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — mirrors this requirement exactly; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent ("Original or certified birth certificate or valid passport")
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -98,7 +98,7 @@ Non-Nationals must present to the Officer at the Ministry of Home Affairs and In
 </div>
 
 - **Type:** document requirement / eligibility
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — confirms both requirements; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — confirms both requirements; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -117,7 +117,7 @@ Non-Nationals must present to the Officer at the Ministry of Home Affairs and In
 </div>
 
 - **Type:** document requirement
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — confirms both certificates; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — "certified marriage and death certificates of deceased spouse"
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — confirms both certificates; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — "certified marriage and death certificates of deceased spouse"
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -136,7 +136,7 @@ Non-Nationals must present to the Officer at the Ministry of Home Affairs and In
 </div>
 
 - **Type:** document requirement / legal reference
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — confirms Decree Absolute or certified copy; Decree Nisi not acceptable; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — "original or certified Decree Absolute/Final Judgment (translated if foreign language)"
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — confirms Decree Absolute or certified copy; Decree Nisi not acceptable; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — "original or certified Decree Absolute/Final Judgment (translated if foreign language)"
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -170,7 +170,7 @@ Barbados, W.I.</pre>
 - **Sources:** [gov.bb — Ministry of Home Affairs and Information](https://www.gov.bb/Ministries/home-affairs) — "Ground Floor Jones Building, Webster Business Park, Wildey, St. Michael, Barbados, W.I."; [Barbados Parliament — Cabinet Ministers](https://www.barbadosparliament.com/member/details/19) — same address
 - **Status:** verified (with minor variants)
 - **Certainty:** 90%
-- **Note:** The page says "Webster's Business Park" (possessive). Official gov.bb and parliamentary sources use "Webster Business Park" (no possessive). "Ground Floor" is also omitted from the page address. Low-stakes but worth aligning. The renovation in May–July 2024 was temporary; the Ministry has returned to Jones Building per current parliamentary records.
+- **Note:** The page says "Webster's Business Park" (possessive). Official gov.bb uses "Webster Business Park" (no possessive). "Ground Floor" is also omitted from the page address. Low-stakes but worth aligning.
 
 ---
 
@@ -211,10 +211,10 @@ Where both parents are dead or are non-compos mentis (mentally incapable of mana
 </div>
 
 - **Type:** legal reference / eligibility
-- **Sources:** [Marriage Act CAP 218A — LII/Gender Justice](https://www.law.cornell.edu/gender-justice/resource/Marriage_Act_1978-40_Cap_218A_Barbados) — "Section 26: consent required from parties in Schedule 2 (parents, guardians, or judge if unavailable)"; search results from [barbadoslawcourts.gov.bb](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/MarriageCAP218A.pdf) confirm these provisions match the Act; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent with general description
+- **Sources:** [Marriage Act CAP 218A — LII/Gender Justice](https://www.law.cornell.edu/gender-justice/resource/Marriage_Act_1978-40_Cap_218A_Barbados) — "Section 26: consent required from parties in Schedule 2 (parents, guardians, or judge if unavailable)"; [Marriage Act CAP 218A PDF — barbadoslawcourts.gov.bb](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/MarriageCAP218A.pdf) — confirms provisions match the Act; [Barbados Judicial System — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages) — consistent
 - **Status:** verified
 - **Certainty:** 85%
-- **Note:** The PDF of the Act is not machine-readable via WebFetch; the LII/Gender Justice transcription of CAP 218A was used as the primary legal reference. The overall consent provisions match the page exactly.
+- **Note:** The PDF of the Act is not machine-readable via WebFetch; the LII/Gender Justice transcription of CAP 218A was used as the primary legal reference.
 
 ---
 
@@ -272,7 +272,7 @@ Stamps obtainable at the Ministry at time of application.</pre>
 </div>
 
 - **Type:** fee
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — confirms both fee lines exactly; [gov.bb — List of Marriage Licence Fees](https://www.gov.bb/Citizens/marriage-fees) — "marriage licence issuance: $200.00 (both categories)"; stamp duty: "$10 nationals / $25 non-nationals"
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — confirms both fee lines exactly
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -291,13 +291,35 @@ Stamps obtainable at the Ministry at time of application.</pre>
 </div>
 
 - **Type:** fee
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — "Special arrangements fee: BDS$100 or USD$50"; [gov.bb — List of Marriage Licence Fees](https://www.gov.bb/Citizens/marriage-fees) — "Special requests: $100.00 (both categories)"
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — "Special arrangements fee: BDS$100 or USD$50"
 - **Status:** verified
 - **Certainty:** 95%
 
 ---
 
-### Claim 14 — Registration Department address: "Judicial Centre", White Park Road, St. Michael (lines 114–122)
+### Claim 14 — `gisbarbados.gov.bb/faqs` appointment booking link (line 100)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">To book an appointment, kindly visit the BGIS website gisbarbados.gov.bb/faqs or www.gov.bb under the heading Marriage Licence Appointments.</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Should say</div>
+<pre class="claim-block-content">Remove or replace the gisbarbados.gov.bb/faqs link — it returns HTTP 403 Forbidden.
+The direct appointment link (govtbarbadosapointmentsystem.as.me/MarriageLicense) resolves and should be cited directly.</pre>
+</div>
+
+- **Type:** link / CTA
+- **Checked:** [gisbarbados.gov.bb/faqs](http://gisbarbados.gov.bb/faqs) — HTTP 403 Forbidden as of 2026-05-29; [govtbarbadosapointmentsystem.as.me/MarriageLicense](https://govtbarbadosapointmentsystem.as.me/MarriageLicense) — resolves (title: "Schedule Appointment with Government of Barbados")
+- **Status:** discrepant
+- **Certainty:** 95%
+- **Confidence it's wrong:** 95% — HTTP 403 Forbidden is a hard failure; the link does not work for citizens.
+- **Citizen impact:** MEDIUM — citizens directed to book appointments via this link will hit a broken page. However, the direct appointment URL on the same line does work, reducing impact.
+
+---
+
+### Claim 15 — Registration Department address: "Judicial Centre", White Park Road, St. Michael (lines 116–122)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -320,16 +342,16 @@ BARBADOS</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — "Supreme Court Complex, Whitepark Road, St. Michael, Barbados, W.I."; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "Registration Department, Supreme Court Complex, Whitepark Road, St. Michael"; [Barbados Judicial System — Supreme Court Registry](https://www.barbadoslawcourts.gov.bb/court-administration/supreme-court-registry/) — "Supreme Court Complex, Whitepark, Bridgetown"
+- **Sources:** [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — "Supreme Court Complex, Whitepark Road, St. Michael, Barbados, W.I."; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "Registration Department, Supreme Court Complex, Whitepark Road, St. Michael"; [gov.bb — Get a Marriage Licence (source page)](https://www.gov.bb/Citizens/marriage-licence) — also uses "Judicial Centre" — upstream discrepancy mirrored from source
 - **Status:** discrepant
 - **Certainty:** 95%
-- **Confidence it's wrong:** 95% — "Judicial Centre" does not appear on any authoritative source checked. Every official source uses "Supreme Court Complex". The road name "White Park Road" (two words) vs. "Whitepark Road" (one word) also differs; all authoritative sources use "Whitepark Road" as one word.
-- **Citizen impact:** MEDIUM — the address is for obtaining a marriage certificate after the fact, not for the licence itself. A citizen following the wrong building name could have difficulty locating the department; Whitepark Road is correct and will get them there, but the building name should match official usage.
-- **Cross-reference:** see [_inventory.md](/docs/fact-check/_inventory.md) — Supreme Court Complex / Registration Department entry (confirmed "Supreme Court Complex, Whitepark Road, St. Michael").
+- **Confidence it's wrong:** 95% — "Judicial Centre" does not appear on `gov.bb/Departments/registration` or `barbadoslawcourts.gov.bb`. Every authoritative departmental source uses "Supreme Court Complex". The source gov.bb marriage-licence page also uses "Judicial Centre" — this is an upstream error mirrored faithfully by the alpha page. The road name "White Park Road" (two words) also diverges; all department sources use "Whitepark Road" (one word).
+- **Citizen impact:** MEDIUM — a citizen following the wrong building name could have difficulty locating the department; the road name is correct and will get them to the right area, but "Judicial Centre" is not an official building name.
+- **Cross-reference:** see [_inventory.md](/docs/fact-check/_inventory.md) — Supreme Court Complex / Registration Department entry.
 
 ---
 
-### Claim 15 — Registration Department phone (246) 535-9700 (line 124)
+### Claim 16 — Registration Department phone (246) 535-9700 (line 124)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -345,11 +367,11 @@ BARBADOS</pre>
 - **Sources:** [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — "1 (246) 535-9700"; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "1-246-535-9700"
 - **Status:** verified
 - **Certainty:** 95%
-- **Cross-reference:** see [_inventory.md](/docs/fact-check/_inventory.md) — Barbados Judicial System / Registration Department phone entry.
+- **Cross-reference:** see [_inventory.md](/docs/fact-check/_inventory.md) — Registration Department phone entry.
 
 ---
 
-### Claim 16 — Registration Department fax (246) 426-2405 (line 126)
+### Claim 17 — Registration Department fax (246) 426-2405 (line 126)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -357,21 +379,23 @@ BARBADOS</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">Fax No.: (246) 427-8917</pre>
+<div class="claim-block-label">Should say (disputed — two authoritative sources disagree)</div>
+<pre class="claim-block-content">Fax No.: (246) 427-8917 [per gov.bb/Departments/registration]
+— OR —
+Fax No.: (246) 426-2405 [per barbadoslawcourts.gov.bb/Certificates and gov.bb/Citizens/marriage-licence]</pre>
 </div>
 
 - **Type:** phone (fax)
-- **Sources:** [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — fax `1 (246) 427-8917`; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — fax `1-246-426-2405`
+- **Sources:** [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — fax `1 (246) 427-8917`; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — fax `1-246-426-2405`; [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — `(246) 426-2405`
 - **Status:** discrepant (two authoritative sources disagree)
 - **Certainty:** 70%
-- **Confidence it's wrong:** 65% — gov.bb/Departments/registration publishes `427-8917`; barbadoslawcourts.gov.bb publishes `426-2405`. Both are Tier 1 sources. The gov.bb departments page is likely more recently maintained (it also lists the current Acting Registrar by name). This is flagged as a governance issue requiring human adjudication rather than a clear-cut correction.
-- **Citizen impact:** LOW — fax is rarely the primary contact method; phone and email are preferred. However, overseas applicants relying on fax could reach the wrong line.
-- **Open question:** the GovBB team should confirm the current fax number directly with the Registration Department. Both `426-2405` and `427-8917` appear in official sources; one may be stale.
+- **Confidence it's wrong:** 55% — two Tier 1 sources give 426-2405; one Tier 1 source gives 427-8917. The gov.bb/Departments/registration page is likely the more recently maintained source (it also lists the current Acting Registrar). This requires human adjudication.
+- **Citizen impact:** LOW — fax is rarely the primary contact; phone and email are preferred.
+- **Open question:** the GovBB team should confirm the current fax number directly with the Registration Department.
 
 ---
 
-### Claim 17 — Registration Department additional phones (246) 536-3507 / 3504 / 3631 (line 128)
+### Claim 18 — Registration Department additional phones (246) 536-3507 / 3504 / 3631 (line 128)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -380,21 +404,22 @@ BARBADOS</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot fully verify — partial match</div>
-<pre class="claim-block-content">gov.bb/Citizens/marriage-licence (the source page for this content) lists the same three numbers.
+<pre class="claim-block-content">gov.bb/Citizens/marriage-licence (the source page) lists the same three numbers.
 barbadoslawcourts.gov.bb/Certificates lists only 1-246-535-9700.
 gov.bb/Departments/registration lists only 1 (246) 535-9700.
-The three 536-xxxx numbers appear to be direct lines within the Registration Department, not the main switchboard. Their currency cannot be independently confirmed from public sources beyond the gov.bb marriage-licence page itself.</pre>
+The three 536-xxxx numbers appear to be direct lines within the Registration Department.
+Their currency cannot be independently confirmed from public sources beyond the source page.</pre>
 </div>
 
 - **Type:** phone
-- **Checked:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — same three numbers listed; [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — lists only main 535-9700; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — lists only 535-9700; [barbadosgen.wordpress.com — Registration Department](https://barbadosgen.wordpress.com/about/registration-department/) — mentions 536-3507 as a Registration Department line (non-authoritative secondary source)
+- **Checked:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — same three numbers listed; [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — lists only main 535-9700; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — lists only 535-9700
 - **Status:** unverifiable (appears on source page but no independent Tier 1 confirmation)
 - **Certainty:** 60%
-- **Open question:** confirm whether (246) 536-3507 / 3504 / 3631 are current working direct lines to the Registration Department. If they are specific-service direct lines (e.g., vital statistics, marriage certificates, births), noting what each is for would help citizens.
+- **Open question:** confirm whether (246) 536-3507 / 3504 / 3631 are current working direct lines to the Registration Department.
 
 ---
 
-### Claim 18 — Registration Department emails: registrar@lawcourt.gov.bb and correspondenceregistration@live.com (lines 131–134)
+### Claim 19 — Registration Department emails (lines 131–134)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -403,24 +428,24 @@ correspondenceregistration@live.com</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Partially verified — domain discrepancy on first address</div>
-<pre class="claim-block-content">registrar@lawcourt.gov.bb — the page uses "lawcourt" (singular). 
-barbadoslawcourts.gov.bb/Certificates lists registrarsupremecourt@barbados.gov.bb.
+<div class="claim-block-label">Partially verified — domain discrepancy and likely typo on first address</div>
+<pre class="claim-block-content">registrar@lawcourt.gov.bb — page uses "lawcourt" (singular). 
 gov.bb/Departments/registration lists registrar@lawcourts.gov.bb (plural "courts").
-correspondenceregistration@live.com is corroborated by multiple sources including 
-the gov.bb marriage-licence page and barbadosgen.wordpress.com.</pre>
+barbadoslawcourts.gov.bb/Certificates lists registrarsupremecourt@barbados.gov.bb.
+The singular "lawcourt" variant on the page is almost certainly a typo.
+correspondenceregistration@live.com is corroborated by the gov.bb source marriage-licence page.</pre>
 </div>
 
 - **Type:** email
-- **Checked:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — lists both; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — lists `registrarsupremecourt@barbados.gov.bb` (different address); [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — lists `registrar@lawcourts.gov.bb` (plural); [barbadosgen.wordpress.com](https://barbadosgen.wordpress.com/about/registration-department/) — lists `correspondenceregistration@live.com`
+- **Checked:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — lists both; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — lists `registrarsupremecourt@barbados.gov.bb` (different address); [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — lists `registrar@lawcourts.gov.bb` (plural)
 - **Status:** unverifiable (three different email addresses appear across Tier 1 sources for the Registrar)
 - **Certainty:** 55%
-- **Citizen impact:** MEDIUM — a citizen sending to a stale email address gets no response and cannot easily self-diagnose the problem.
-- **Open question:** the GovBB team should confirm with the Registration Department which is the current canonical contact email: `registrar@lawcourt.gov.bb` (page), `registrar@lawcourts.gov.bb` (gov.bb departments page), or `registrarsupremecourt@barbados.gov.bb` (barbadoslawcourts.gov.bb). The `lawcourt` (singular) variant on the page looks like a typo of `lawcourts` (plural).
+- **Citizen impact:** MEDIUM — a citizen sending to a stale or mistyped email address gets no response.
+- **Open question:** the GovBB team should confirm with the Registration Department which is the current canonical contact email: `registrar@lawcourt.gov.bb` (page — likely typo), `registrar@lawcourts.gov.bb` (gov.bb departments page), or `registrarsupremecourt@barbados.gov.bb` (barbadoslawcourts.gov.bb). The "lawcourt" singular variant is almost certainly wrong.
 
 ---
 
-### Claim 19 — Registration Department office hours: Monday to Friday 8:30 a.m. – 3:45 p.m. (line 138)
+### Claim 20 — Registration Department office hours: Monday to Friday 8:30 a.m. – 3:45 p.m. (line 138)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -433,14 +458,13 @@ the gov.bb marriage-licence page and barbadosgen.wordpress.com.</pre>
 </div>
 
 - **Type:** hours
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — confirms "Monday-Friday, 8:30 a.m. - 3:45 p.m." for the Registration Department
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — confirms "Monday-Friday, 8:30 a.m. - 3:45 p.m." for the Registration Department
 - **Status:** verified
 - **Certainty:** 85%
-- **Note:** The barbadoslawcourts.gov.bb Certificates page does not separately list office hours but is consistent with the general court administration schedule.
 
 ---
 
-### Claim 20 — Court fees (Magistrate): Nationals $125 outside/$100 within; Non-nationals $350 outside/$250 within (lines 144–146)
+### Claim 21 — Court fees (Magistrate): Nationals $125 outside/$100 within; Non-nationals $350 outside/$250 within (lines 144–146)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -455,13 +479,13 @@ Non-nationals: BDS$250 (in court) / BDS$350 (outside court).</pre>
 </div>
 
 - **Type:** fee
-- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — confirms all four amounts exactly; [gov.bb — List of Marriage Licence Fees](https://www.gov.bb/Citizens/marriage-fees) — consistent fee structure
+- **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — confirms all four amounts exactly
 - **Status:** verified
 - **Certainty:** 95%
 
 ---
 
-### Claim 21 — Marriage certificate fees: Nationals $10, Non-nationals $20 (lines 150–152)
+### Claim 22 — Marriage certificate fees: Nationals $10, Non-nationals $20 (lines 150–152)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -476,13 +500,13 @@ Non-nationals: BDS$20.00</pre>
 </div>
 
 - **Type:** fee
-- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "Nationals: BDS$10.00; Non-nationals: BDS$20.00"; [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — confirms both; [gov.bb — List of Marriage Licence Fees](https://www.gov.bb/Citizens/marriage-fees) — "For the issue of a marriage certificate: $10.00 (citizens/residents) or $20.00 (non-nationals)"
+- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "Nationals: BDS$10.00; Non-nationals: BDS$20.00"; [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — confirms both
 - **Status:** verified
 - **Certainty:** 95%
 
 ---
 
-### Claim 22 — Apostille fee: $50 charged by Registration Department (lines 153–154)
+### Claim 23 — Apostille fee: $50 charged by Registration Department (lines 153–154)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -495,44 +519,56 @@ Non-nationals: BDS$20.00</pre>
 </div>
 
 - **Type:** fee
-- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "Apostille: BDS$50.00 for foreign government authentication"; [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) — "Apostille: BDS$50"
+- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "Apostille (when required by foreign authorities): additional fee of BDS$50.00"; [gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence) — "Apostille: BDS$50"
 - **Status:** verified
 - **Certainty:** 95%
 
 ---
 
+### Claim 24 — BTMI phone number (246) 535-3700 (line 94)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">contact the Barbados Tourism Marketing Inc. (BTMI) at (246) 535-3700, for the relevant assistance.</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">BTMI main contact: 246-535-3700
+Address: One Barbados Place, Warrens, St. Michael, BB12001</pre>
+</div>
+
+- **Type:** phone / agency name
+- **Sources:** [BTMI — Contact Us](https://corporate.visitbarbados.org/contact-us/) — "246-535-3700" confirmed as main contact number; Warrens, St. Michael address confirmed
+- **Status:** verified
+- **Certainty:** 90%
+
+---
+
 ## Additional findings (not on the page but should be)
 
-- **Ministry phone numbers and office hours for the Marriage Licence office.** The "Ministry of Home Affairs and Information's Office Hours and Bookings" section (line 99) correctly states hours 8:30 a.m.–3:30 p.m., booking phone 535-7260, email `haffairs@mha.gov.bb`, and desk officer 535-7267. These are all corroborated by [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence) and [gov.bb — Ministry of Home Affairs](https://www.gov.bb/Ministries/home-affairs). These are on the page and correct — noted here for completeness.
+- **Banns as an alternative to a marriage licence.** The gov.bb fee page ([gov.bb — Get a Marriage Licence](https://www.gov.bb/Citizens/marriage-licence)) mentions "certificate of publication of banns" as an alternative procedure. The page makes no mention of banns. Citizens who are members of denominations that use banns should be signposted to this option.
 
-- **Banns as an alternative to a marriage licence.** The gov.bb fee page ([gov.bb — List of Marriage Licence Fees](https://www.gov.bb/Citizens/marriage-fees)) includes a fee for "issue of a certificate of publication of banns" ($40 nationals / $75 non-nationals). The page makes no mention of banns as an alternative procedure. Citizens who are members of denominations that use banns should be signposted to this option.
+- **Civil marriage ceremony fee vs. Magistrate fee.** The gov.bb source page lists a "civil marriage ceremony" fee separate from Magistrate court fees. The distinction is not explained on the page.
 
-- **Civil marriage ceremony fee.** The [gov.bb fee page](https://www.gov.bb/Citizens/marriage-fees) lists a "civil marriage ceremony" fee: $50 nationals / $100 non-nationals. This is different from the Magistrate court fees on the page (which are for a Magistrate performing the ceremony). The distinction between a civil marriage ceremony fee and the Magistrate court fee is not explained on the page.
+- **`registrarsupremecourt@barbados.gov.bb` as the canonical Registrar email.** The Barbados Judicial System website publishes `registrarsupremecourt@barbados.gov.bb` as the Registrar's email. Adding or replacing with this address would align the page with the official court website.
 
-- **`registrarsupremecourt@barbados.gov.bb` as the canonical Registrar email.** The Barbados Judicial System website publishes `registrarsupremecourt@barbados.gov.bb` as the Registrar's email, while the page lists `registrar@lawcourt.gov.bb`. Adding the `.barbados.gov.bb` address (or replacing the current one) would align the page with the official court website.
-
-- **The BTMI phone number (246) 535-3700 is verified.** Line 94 refers citizens to BTMI for wedding planning assistance. [BTMI — Contact Us](https://corporate.visitbarbados.org/contact-us/) confirms `246-535-3700` and the Warrens address. This is correct.
+- **Ministry PBX number discrepancy.** The page lists `535-7260` for appointment bookings and `535-7267` as the "Desk Officer" line. The gov.bb Ministry page lists `535-7260` as the main PBX. Both numbers are consistent with the gov.bb source and are correct as cited.
 
 ---
 
 ## Sources cited
 
-- [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence)
-- [gov.bb — Citizens/marriage-licence](https://www.gov.bb/Citizens/marriage-licence)
-- [gov.bb — List of Marriage Licence Fees](https://www.gov.bb/Citizens/marriage-fees)
+- [gov.bb — Get a Marriage Licence (Citizens)](https://www.gov.bb/Citizens/marriage-licence)
 - [gov.bb — Ministry of Home Affairs and Information](https://www.gov.bb/Ministries/home-affairs)
 - [gov.bb — Registration Department](https://www.gov.bb/Departments/registration)
 - [Barbados Judicial System — Getting Married and Registration of Marriages](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages)
 - [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates)
-- [Barbados Judicial System — Supreme Court Registry](https://www.barbadoslawcourts.gov.bb/court-administration/supreme-court-registry/)
-- [Barbados Judicial System — Registration of Marriage Officers](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/registration-of-marriage-officers)
-- [Marriage Act CAP 218A — LII / Gender Justice / US Law](https://www.law.cornell.edu/gender-justice/resource/Marriage_Act_1978-40_Cap_218A_Barbados)
+- [Marriage Act CAP 218A — LII / Gender Justice](https://www.law.cornell.edu/gender-justice/resource/Marriage_Act_1978-40_Cap_218A_Barbados)
 - [Marriage Act CAP 218A — Barbados Law Courts (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/MarriageCAP218A.pdf)
-- [Marriage (Forms and Fees) Regulations, 1979 — Barbados Law Courts (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/subsidiary_legislation_of_barbados/Marriage(FormsandFees)Regulations,1979Cap218A'A.pdf)
 - [Barbados Parliament — Cabinet Ministers (MHAI address)](https://www.barbadosparliament.com/member/details/19)
-- [GIS — Temporary Relocation of Ministry of Home Affairs (blocked 403)](https://gisbarbados.gov.bb/blog/temporary-relocation-of-ministry-of-home-affairs-information/)
-- [Barbados Today — Temporary Relocation of Ministry of Home Affairs (May 2024)](https://barbadostoday.bb/2024/05/15/temporary-relocation-of-the-ministry-of-home-affairs-and-information/)
 - [Consulate General of Barbados at Toronto — Getting Married in Barbados](https://toronto.foreign.gov.bb/general-information/how-can-i-plan-to-get-married-in-barbados/)
 - [BTMI — Contact Us](https://corporate.visitbarbados.org/contact-us/)
-- [barbadosgen.wordpress.com — Registration Department](https://barbadosgen.wordpress.com/about/registration-department/)
+- [gisbarbados.gov.bb/faqs](http://gisbarbados.gov.bb/faqs) — HTTP 403 Forbidden (broken link)
+- [govtbarbadosapointmentsystem.as.me/MarriageLicense](https://govtbarbadosapointmentsystem.as.me/MarriageLicense) — resolves
 - [_inventory.md](/docs/fact-check/_inventory.md) — Supreme Court Complex / Registration Department address and phone entries

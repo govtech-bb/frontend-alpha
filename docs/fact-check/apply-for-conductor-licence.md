@@ -2,7 +2,7 @@
 
 - **Live page:** <https://alpha.gov.bb/work-employment/apply-for-conductor-licence>
 - **Source files:** `src/content/apply-for-conductor-licence/index.md`, `src/content/apply-for-conductor-licence/start.md`
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 10 claims reviewed — 4 verified, 4 discrepant, 2 unverifiable. Average certainty: **65%**.
 
 ---
@@ -11,13 +11,13 @@
 
 1. **Ministry name is out of date.** The page calls the issuing body "Ministry of Transport and Works" but the current official name — confirmed on gov.bb, the ministry's own homepage, and all GIS press releases — is the **Ministry of Transport, Works and Water Resources (MTWW)**. The older short form survives on the ministry's own website branding (mtw.gov.bb) but the full legal name has been updated. The gov.bb canonical ministry page uses the full name. Every citizen-facing reference should match the official name.
 
-2. **Phone number 246-536-0282 is unverifiable.** Neither the Ministry of Transport, Works and Water Resources directory, the BLA FAQ page, nor any published government source lists this number. The MTW main PBX is 536-0000; BLA publishes 536-0264/0265/0267/0278. The number 536-0282 does not appear in any government contact directory searched. Citizens told to call this number to book their oral test may be unable to reach the right department.
+2. **Phone number 246-536-0282 is unverifiable.** Neither the Ministry of Transport, Works and Water Resources directory, the BLA FAQ page, nor any published government source lists this number. The MTW main PBX is 536-0000; BLA publishes 536-0265/0267/0278. The number 536-0282 does not appear in any government contact directory searched. Citizens told to call this number to book their oral test may be unable to reach the right department.
 
-3. **The ministry address shown (2nd Floor, The Goddard Building, Haggatt Hall) is a temporary relocation.** The MTW's official permanent address is Pine East–West Boulevard, The Pine, St. Michael. The Goddard Building address appears on mtw.gov.bb itself as a temporary location resulting from renovation works to the Pine headquarters. The page presents this as the standard address without any caveat about its temporary status; it may change without notice.
+3. **The ministry address shown (2nd Floor, The Goddard Building, Haggatt Hall) is a temporary relocation.** The MTW's official permanent address is Pine East–West Boulevard, The Pine, St. Michael. The MTW Contact FAQ explicitly labels the Goddard Building address as a "Temporary address" — this is confirmed on direct fetch (2026-05-29). The page presents this as the standard address without any caveat about its temporary status; it may change without notice.
 
 4. **No conductor licence fee is stated.** Neither the BLA service page for conductor licences nor any public source discloses the application fee. The page does not mention one either, which is a gap citizens need filled. This is flagged as an open question for the GovBB team to confirm with the BLA.
 
-5. **Police Certificate of Character link resolves correctly, and the fee is confirmed at BBD $20.** No correction needed here; the URL and fee align with the authoritative forms.gov.bb source.
+5. **Police Certificate of Character link resolves correctly, and the fee is confirmed at BBD $20.** No correction needed here; the URL and fee align with the authoritative forms.gov.bb source (confirmed live 2026-05-29).
 
 ---
 
@@ -61,8 +61,8 @@
 - **Certainty:** 25% that the page's name is current
 - **Confidence it's wrong:** 90%
 - **Citizen impact:** MEDIUM — incorrect ministry name undermines page credibility and may confuse citizens trying to locate the correct department or verify the issuing authority.
-- **Evidence:** The gov.bb canonical ministry listing — which is the authoritative Government of Barbados directory — names this ministry "Ministry of Transport, Works and Water Resources (MTWW)". GIS press releases consistently use "Ministry of Transport, Works and Water Resources". The ministry's own website (mtw.gov.bb) uses the shorthand "Ministry of Transport & Works" in its branding, but the gov.bb listing is the definitive authority on official ministry names. The alpha.gov.bb page uses the older name "Ministry of Transport and Works" which predates the addition of Water Resources to the portfolio. This matches the discrepancy already recorded in `docs/fact-check/_inventory.md` (Agency / ministry names section).
-- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/ministries/transport-works-water-resources) — official name confirmed as "Ministry of Transport, Works and Water Resources (MTWW)"; [GIS Facebook — MTWW project post](https://www.facebook.com/gisbarbados/posts/the-ministry-of-transport-works-and-water-resources-mtww-has-embarked-on-a-proje/718543146978771/) — GIS uses full name; [Give Back Barbados directory](https://givebackbarbados.com/directory/ministry-of-transport-works-and-water-resources/) — full name listing
+- **Evidence:** The gov.bb canonical ministry listing — which is the authoritative Government of Barbados directory — names this ministry "Ministry of Transport, Works and Water Resources (MTWW)". GIS press releases consistently use "Ministry of Transport, Works and Water Resources". The ministry's own website (mtw.gov.bb) uses the shorthand "Ministry of Transport & Works" in its branding, but the gov.bb listing is the definitive authority on official ministry names. The alpha.gov.bb page uses the older name "Ministry of Transport and Works" which predates the addition of Water Resources to the portfolio.
+- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/ministries/transport-works-water-resources) — official name confirmed as "Ministry of Transport, Works and Water Resources (MTWW)" (verified live 2026-05-29); [GIS Facebook — MTWW project post](https://www.facebook.com/gisbarbados/posts/the-ministry-of-transport-works-and-water-resources-mtww-has-embarked-on-a-proje/718543146978771/) — GIS uses full name; [Give Back Barbados directory](https://givebackbarbados.com/directory/ministry-of-transport-works-and-water-resources/) — full name listing
 
 ---
 
@@ -87,12 +87,12 @@ Haggatt Hall, St. Michael
 </div>
 
 - **Type:** address
-- **Status:** discrepant — the building address appears to be factually accurate for the current temporary location, but it is presented without any indication that it is temporary. The correct permanent address is Pine East–West Boulevard, The Pine, St. Michael. The page should either reflect the current temporary address with that caveat, or use the permanent address.
+- **Status:** discrepant — the Goddard Building address is a confirmed real but explicitly temporary location. The MTW Contact FAQ page labels it as "Temporary address" (confirmed on direct fetch 2026-05-29). The page presents this as the only address without any caveat about its temporary status.
 - **Certainty:** 70% that this is currently where the MTW Accounts/Admin offices are located
 - **Confidence it's wrong (as complete, permanent address):** 80%
-- **Citizen impact:** MEDIUM — a citizen who travels to The Goddard Building when the MTW offices have relocated back to Pine will have wasted a journey. The presentation of a temporary address as the definitive address is misleading.
-- **Evidence:** The MTW FAQ page at mtw.gov.bb confirms the ministry's main office address is "Pine East-West Boulevard, The Pine, St. Michael" and notes the Goddard Building as an address for specific relocated offices. The gov.bb ministry page also lists "Pine East/West Boulevard, The Pine, St. Michael, Barbados." A GIS press release (403 on direct fetch, but confirmed via search snippet) documented the temporary relocation of MTW Accounts and Administrative offices to 2nd Floor, The Goddard Building during renovation of the western wing. The Goddard Building address is thus a real but potentially temporary location.
-- **Sources:** [MTW — Contact FAQ](https://mtw.gov.bb/ufaq/how-can-i-contact-the-ministry-of-transport-and-works/) — lists Pine East-West Boulevard as main address and Goddard Building for specific departments; [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/ministries/transport-works-water-resources) — "Pine East/West Boulevard, The Pine, St. Michael"; [GIS — Some MTW Offices Relocated To Goddard Building](https://gisbarbados.gov.bb/blog/some-mtw-offices-relocated-to-goddard-building/) — documented the relocation (403 on direct fetch, confirmed via search snippet)
+- **Citizen impact:** MEDIUM — a citizen who travels to The Goddard Building when the MTW offices have relocated back to Pine will have wasted a journey. The presentation of a temporary address as the definitive address without a caveat is misleading.
+- **Evidence:** The MTW Contact FAQ at mtw.gov.bb confirms the ministry's main office address is "Pine East-West Boulevard, The Pine, St. Michael" and explicitly labels the Goddard Building listing as a "Temporary address". The gov.bb ministry page also lists "Pine East/West Boulevard, The Pine, St. Michael, Barbados." Direct fetch of the MTW Contact FAQ on 2026-05-29 confirmed this language is still current.
+- **Sources:** [MTW — Contact FAQ](https://mtw.gov.bb/ufaq/how-can-i-contact-the-ministry-of-transport-and-works/) — lists Pine East-West Boulevard as main address and labels Goddard Building as "Temporary address" (verified live 2026-05-29); [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/ministries/transport-works-water-resources) — "Pine East/West Boulevard, The Pine, St. Michael" (verified live 2026-05-29); [GIS — Some MTW Offices Relocated To Goddard Building](https://gisbarbados.gov.bb/blog/some-mtw-offices-relocated-to-goddard-building/) — documented the relocation (403 on direct fetch, confirmed via search snippet)
 
 ---
 
@@ -108,7 +108,7 @@ Haggatt Hall, St. Michael
 <pre class="claim-block-content">The number 246-536-0282 does not appear in any published government contact directory.
 Published MTW/BLA numbers are:
   MTW main PBX:     (246) 536-0000
-  BLA:              (246) 536-0264 / 0265 / 0267 / 0278
+  BLA:              (246) 536-0265 / 0267 / 0278
   Transport Authority: (246) 536-0300 / 536-0318
 
 Open question: Which department handles conductor licence oral test bookings, 
@@ -116,10 +116,10 @@ and what is the correct direct number?</pre>
 </div>
 
 - **Type:** phone
-- **Status:** unverifiable — the number 536-0282 is not published in any accessed government source. It is not on the MTW directory page, the MTW contact FAQ, the BLA FAQ, the BLA homepage, or any GIS press release. It may be a valid internal extension not listed publicly, or it may be incorrect.
+- **Status:** unverifiable — the number 536-0282 is not published in any accessed government source. It is not on the MTW directory page, the MTW contact FAQ, the BLA FAQ, the BLA homepage, or any GIS press release. The MTW directory only shows the main PBX (536-0000) on direct fetch (2026-05-29). It may be a valid internal extension not listed publicly, or it may be incorrect.
 - **Certainty:** 30%
 - **Citizen impact:** HIGH — citizens must call this number to book the mandatory oral test. If the number is wrong or unmaintained, there is no fallback contact on the page.
-- **Checked:** [MTW Directory](https://mtw.gov.bb/directory/) — 536-0282 not listed; [MTW Contact FAQ](https://mtw.gov.bb/ufaq/how-can-i-contact-the-ministry-of-transport-and-works/) — 536-0282 not listed; [BLA FAQ at MTW](https://mtw.gov.bb/faq/bla-faq/) — lists 536-0264/0265/0270 only; [BLA homepage](https://bla.gov.bb) — lists 536-0265/0267/0278 only; [Transport Authority contact](https://ta.gov.bb/Contact/) — lists 536-0300/0318 only
+- **Checked:** [MTW Directory](https://mtw.gov.bb/directory/) — 536-0282 not listed (verified live 2026-05-29, only 536-0000 shown); [MTW Contact FAQ](https://mtw.gov.bb/ufaq/how-can-i-contact-the-ministry-of-transport-and-works/) — 536-0282 not listed (verified live 2026-05-29); [BLA — Conductor Licence service page](https://bla.gov.bb/servicedetails/Q29uZHVjdG9yIExpY2VuY2U=) — lists 536-0265/0267/0278 only (verified live 2026-05-29); [Transport Authority contact](https://ta.gov.bb/Contact/) — lists 536-0300/0318 only
 - **Open question:** Which agency and department handles conductor licence oral test bookings, and what is the currently published direct-dial number? The GovBB team should confirm with the BLA or MTW directly.
 
 ---
@@ -162,8 +162,8 @@ Inga Lodge, Pinfold Street, St. Michael. Fee: BBD $20.</pre>
 - **Type:** URL + document requirement
 - **Status:** verified — URL is live and resolves to the correct government application form
 - **Certainty:** 95%
-- **Evidence:** The URL https://forms.gov.bb/CertificateOfCharacter resolves to a functional Government of Barbados application form for the Police Certificate of Character, administered by the Royal Barbados Police Force at "the Police Certificate of Character Office, Inga Lodge, Pinfold Street, St. Michael." Fee is confirmed as BBD $20. This matches the `_inventory.md` entry for Police Certificate of Character.
-- **Sources:** [forms.gov.bb — Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter) — live URL confirmed 2026-05-28, fee BBD $20 confirmed; [GIS — How To Apply For A Police Certificate Of Character](https://gisbarbados.gov.bb/blog/how-to-apply-for-a-police-certificate-of-character/) — corroborating source (403 on direct fetch; confirmed via search snippet)
+- **Evidence:** The URL https://forms.gov.bb/CertificateOfCharacter resolves to a functional Government of Barbados application form for the Police Certificate of Character, administered by the Royal Barbados Police Force at "the Police Certificate of Character Office, Inga Lodge, Pinfold Street, St. Michael." Fee is confirmed as BBD $20. Verified live on 2026-05-29.
+- **Sources:** [forms.gov.bb — Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter) — live URL confirmed 2026-05-29, fee BBD $20 confirmed; [GIS — How To Apply For A Police Certificate Of Character](https://gisbarbados.gov.bb/blog/how-to-apply-for-a-police-certificate-of-character/) — corroborating source (403 on direct fetch; confirmed via search snippet)
 
 ---
 
@@ -199,7 +199,7 @@ five items listed in start.md? The GovBB team should confirm with BLA.</pre>
 - **Status:** unverifiable — the BLA Conductor Licence service page exists and confirms the service, but does not expose the application form fields publicly. The listed items are plausible and consistent with comparable PSV licensing requirements (the Transport Authority's PSV permit application requires a Police Certificate of Character, for instance), but cannot be verified verbatim.
 - **Certainty:** 55%
 - **Citizen impact:** MEDIUM — if any listed field is wrong or missing, citizens may arrive unprepared.
-- **Checked:** [BLA — Conductor Licence](https://bla.gov.bb/servicedetails/Q29uZHVjdG9yIExpY2VuY2U=) — service page exists, no public form field disclosure; [Transport Authority — Apply for New Permit](https://ta.gov.bb/Permits/Apply/) — Police Certificate of Character confirmed as a PSV application requirement; [Road Traffic Regulations 1984](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/subsidiary_legislation_of_barbados/RoadTraffiicRegulations,1984Cap295'I.pdf) — confirms special licensing requirements for PSV conductors
+- **Checked:** [BLA — Conductor Licence](https://bla.gov.bb/servicedetails/Q29uZHVjdG9yIExpY2VuY2U=) — service page exists, no public form field disclosure (verified live 2026-05-29); [Transport Authority — Apply for New Permit](https://ta.gov.bb/Permits/Apply/) — Police Certificate of Character confirmed as a PSV application requirement; [Road Traffic Regulations 1984](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/subsidiary_legislation_of_barbados/RoadTraffiicRegulations,1984Cap295'I.pdf) — confirms special licensing requirements for PSV conductors
 - **Open question:** Confirm with BLA that all five application form items listed in start.md are accurate and complete for the conductor licence application.
 
 ---
@@ -270,7 +270,7 @@ so there is no "Motor Vehicles Act, 1988" template error to flag here.</pre>
 
 1. **No conductor licence application fee is stated.** The BLA service page for conductor licences does not publicly disclose the fee, and no published government source itemises it. This is a genuine gap — citizens would benefit from knowing the cost before starting. The GovBB team should obtain the fee schedule from the BLA directly.
 
-2. **BLA address is missing.** If the online application is not possible or the citizen needs to attend in person, the BLA address (Pine East–West Boulevard, Bridgetown, St. Michael) is not on the page. The BLA is the issuing authority for the conductor licence; their address, hours (Mon–Fri 8:15 am–4:30 pm), and full set of phone numbers (536-0264/0265/0267/0278) would be useful additions.
+2. **BLA address is missing.** If the online application is not possible or the citizen needs to attend in person, the BLA address (Pine East–West Boulevard, Bridgetown, St. Michael) is not on the page. The BLA is the issuing authority for the conductor licence; their address, hours (Mon–Fri 8:15 am–4:30 pm), and full set of phone numbers (536-0265/0267/0278) would be useful additions.
 
 3. **Transport Authority training requirement not mentioned.** A November 2024 Barbados Today report documents that all PSV conductors must complete a mandatory certification course (currently offered at Barbados Community College, cost BBD $200), with recertification every two years. This requirement — imposed under Transport Authority Regulations 2024 — may affect conductor licence applicants and is not reflected on the page. The GovBB team should confirm with the Transport Authority whether this training is a prerequisite or parallel requirement for the conductor licence.
 

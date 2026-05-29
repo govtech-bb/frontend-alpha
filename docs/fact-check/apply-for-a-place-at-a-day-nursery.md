@@ -2,22 +2,22 @@
 
 - **Live page:** <https://alpha.gov.bb/family-birth-relationships/apply-for-a-place-at-a-day-nursery>
 - **Source file:** `src/content/apply-for-a-place-at-a-day-nursery.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 12 claims reviewed — 5 verified, 1 discrepant, 6 unverifiable. Average certainty: **63%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 13 claims reviewed — 5 verified, 1 discrepant, 7 unverifiable. Average certainty: **61%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Responsible body may now be the Social Empowerment Agency (SEA), not the Child Care Board.** The Child Care Board was formally merged into the Social Empowerment Agency on 2 January 2026. The page makes no reference to either body, but any contact or escalation pathway should reflect the current structure. The CCB website (childcareboard.gov.bb) and gov.bb listing remain live, so the change's operational impact on day nursery services cannot be fully confirmed from the public web — this is the most urgent open question.
+1. **Responsible body may now be the Social Empowerment Agency (SEA), not the Child Care Board.** A January 2026 Barbados Today article reports the SEA was launched on 7 January 2026 as "an amalgamation of the island's social services." However, that article does not name the Child Care Board specifically as a merged entity. The childcareboard.gov.bb website continues to operate independently, gov.bb still lists the CCB as a standalone State Body, and neither site references the SEA. The exact operational status of the CCB post-SEA launch cannot be confirmed from public sources. This remains the most urgent open question for the GovBB team to confirm directly with the agency.
 
-2. **Key procedural claims cannot be verified from authoritative public sources.** The application process described — supervisor completes the form, applicant receives a copy, senior officer reviews eligibility — is plausible given CCB practice, but none of these procedural steps appear on childcareboard.gov.bb, gov.bb, or in any GIS press release. The process is unverifiable at 30% certainty and requires CCB/SEA confirmation.
+2. **Key procedural claims cannot be verified from authoritative public sources.** The application process described — supervisor completes the form, applicant receives a copy, senior officer reviews eligibility — is plausible but none of these steps appear on childcareboard.gov.bb, gov.bb, or in any GIS press release. The process is unverifiable at 30% certainty and requires CCB/SEA confirmation.
 
-3. **"Green Book" terminology is unverifiable as an official CCB document name.** No authoritative Barbados government source uses the term "Green Book" for a child health record. The immunisation/health card issued at polyclinics is confirmed to exist; whether it is formally called the "Green Book" by the CCB, and whether it is the document required, cannot be established from the public web.
+3. **"Green Book" terminology is unverifiable as an official CCB document name.** No authoritative Barbados government source uses the term "Green Book" for a child health record. The child immunisation/health card issued at polyclinics is confirmed to exist, but its official name and whether it matches the "Green Book" described on the page cannot be established from public sources.
 
-4. **The page is missing the responsible agency's contact details.** The Child Care Board / SEA contact information (Fred Edgehill Building, Cheapside, Bridgetown; (246) 535-2800; childcareboard@barbados.gov.bb) is not on the page. Citizens who need to follow up cannot do so without finding this information separately.
+4. **Accessibility section claim (representative at application; guardian at orientation) is unverifiable.** The claim added in lines 69–72 — that a representative may complete the application form on behalf of a parent, but a parent/guardian must attend orientation in person — appears nowhere on childcareboard.gov.bb, gov.bb, or GIS. This is a new unverifiable claim not covered in the prior pass.
 
-5. **The "under 5" age ceiling claim is verified, but the "3 months minimum" claim cannot be independently confirmed** from the primary authoritative source (childcareboard.gov.bb does not publish this detail). The 3-months figure appears in secondary aggregator sources that quote the CCB's day care provision as serving children from 3 months to 5 years, but not on childcareboard.gov.bb itself.
+5. **The page is missing the responsible agency's contact details.** The Child Care Board contact information (Fred Edghill Building, Cheapside, Bridgetown; (246) 535-2800; childcareboard@barbados.gov.bb; Mon–Fri 8:30 AM–4:30 PM) is not on the page. Citizens who need to follow up have no contact point.
 
 ---
 
@@ -39,10 +39,10 @@ and five (5) years.</pre>
 </div>
 
 - **Type:** eligibility
-- **Sources:** [Barbados Children Directory — CCB Outline](https://www.barbadoschildrendirectory.com/ccb-outline) — quotes CCB directly: "children between the ages of three (3) months and five (5) years"; [childcareboard.gov.bb — Daycare](https://childcareboard.gov.bb/daycare/) — lists 15 day care centres (page does not explicitly state the age range but is the official daycare page); [gov.bb — The Child Care Board](https://www.gov.bb/State-Bodies/child-care-board) — confirms CCB mandate
+- **Sources:** [Barbados Children Directory — CCB Outline](https://www.barbadoschildrendirectory.com/ccb-outline) — quotes CCB directly: "children between the ages of three (3) months and five (5) years"; [childcareboard.gov.bb — Daycare](https://childcareboard.gov.bb/daycare/) — lists 15 day care centres; [gov.bb — The Child Care Board](https://www.gov.bb/State-Bodies/child-care-board) — confirms CCB mandate
 - **Status:** verified
 - **Certainty:** 85%
-- **Note:** The page says "under the age of 5" which is consistent with the age ceiling, but omits the 3-month minimum age — see Claim 2.
+- **Note:** The page says "under the age of 5" which is consistent with the age ceiling. The 3-month minimum is not stated here but is addressed in Claim 2.
 
 ---
 
@@ -57,23 +57,22 @@ and five (5) years.</pre>
 <div class="claim-block-label">Cannot confirm — 3-month minimum stated in secondary sources but not on childcareboard.gov.bb</div>
 <pre class="claim-block-content">Secondary sources quoting CCB materials consistently state the age range as
 "three (3) months and five (5) years". This corroborates the 3-month figure,
-but neither childcareboard.gov.bb nor gov.bb State-Bodies/child-care-board
-explicitly states a 3-month minimum in published online content checked on
-2026-05-28.
+but neither childcareboard.gov.bb nor gov.bb explicitly states a 3-month
+minimum in published online content checked on 2026-05-29.
 
-Checked: [childcareboard.gov.bb/daycare/](https://childcareboard.gov.bb/daycare/) — lists nurseries and
-phone numbers only; no age minimum stated.
-[gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board) — no age minimum stated.
-[childcareboard.gov.bb/faqs/](https://childcareboard.gov.bb/faqs/) — covers only adoption and foster care.
-[Barbados Children Directory — CCB Outline](https://www.barbadoschildrendirectory.com/ccb-outline) — quotes 3 months as
-lower bound, consistent with claim.</pre>
+Checked: childcareboard.gov.bb/daycare/ — lists nurseries and phone numbers only;
+no age minimum stated.
+gov.bb — Child Care Board — no age minimum stated.
+childcareboard.gov.bb/faqs/ — covers only adoption and foster care.
+Barbados Children Directory — CCB Outline — quotes 3 months as lower bound,
+consistent with claim.</pre>
 </div>
 
 - **Type:** eligibility
 - **Checked:** [childcareboard.gov.bb — Daycare](https://childcareboard.gov.bb/daycare/); [gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board); [childcareboard.gov.bb — FAQs](https://childcareboard.gov.bb/faqs/); [Barbados Children Directory — CCB Outline](https://www.barbadoschildrendirectory.com/ccb-outline)
 - **Status:** unverifiable (corroborated by secondary source; not confirmed by Tier 1)
 - **Certainty:** 55%
-- **Open question:** Confirm with CCB/SEA that the minimum start age is 3 calendar months, and that this applies at enrolment (i.e. the child must be 3 months old on the day they begin attending, not on the day of application).
+- **Open question:** Confirm with CCB/SEA that the minimum start age is 3 calendar months, and whether this applies at enrolment (child must be 3 months old on the day they begin attending) or at application.
 
 ---
 
@@ -90,10 +89,10 @@ Applications are open all year round.</pre>
 <div class="claim-block-label">Cannot confirm — neither claim appears in CCB published materials</div>
 <pre class="claim-block-content">Neither "apply as soon as a child is born" nor "applications are open all
 year round" appears on childcareboard.gov.bb, gov.bb, or any GIS press
-release checked on 2026-05-28.
+release checked on 2026-05-29.
 
-Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/); [gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board);
-[GIS — Child Care Board tag](https://gisbarbados.gov.bb/blog/tag/child-care-board/) (HTTP 403 on this pass).</pre>
+Checked: childcareboard.gov.bb; gov.bb — Child Care Board;
+GIS — Child Care Board tag (HTTP 403 on this pass).</pre>
 </div>
 
 - **Type:** eligibility / process step
@@ -114,7 +113,7 @@ Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/); [gov.bb — Ch
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot confirm — no authoritative source for this recommendation</div>
 <pre class="claim-block-content">The recommendation to apply to 3 nurseries appears nowhere on
-childcareboard.gov.bb, gov.bb, or GIS materials checked on 2026-05-28.
+childcareboard.gov.bb, gov.bb, or GIS materials checked on 2026-05-29.
 It may reflect CCB operational advice given in-person but is not
 documented publicly.</pre>
 </div>
@@ -138,11 +137,11 @@ documented publicly.</pre>
 <div class="claim-block-label">Cannot confirm — no authoritative source for this procedural detail</div>
 <pre class="claim-block-content">The application procedure — visiting each nursery and having a supervisor
 complete the form — is not documented on childcareboard.gov.bb, gov.bb,
-or GIS. The childcareboard.gov.bb Downloads page (checked 2026-05-28)
-does not include a public day nursery enrolment application form.
+or GIS. The childcareboard.gov.bb Downloads page does not include a public
+day nursery enrolment application form.
 
-Checked: [childcareboard.gov.bb — Downloads](https://childcareboard.gov.bb/downloads/);
-[childcareboard.gov.bb — Daycare](https://childcareboard.gov.bb/daycare/).</pre>
+Checked: childcareboard.gov.bb — Downloads;
+childcareboard.gov.bb — Daycare.</pre>
 </div>
 
 - **Type:** process step
@@ -197,7 +196,7 @@ enrolment form. This list cannot be verified or refuted from the public web.</pr
 is not documented on childcareboard.gov.bb or gov.bb. No GIS press
 release checked confirms it.
 
-Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/); [gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board).</pre>
+Checked: childcareboard.gov.bb; gov.bb — Child Care Board.</pre>
 </div>
 
 - **Type:** process step
@@ -219,33 +218,32 @@ Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/); [gov.bb — Ch
 <div class="claim-block-label">Cannot confirm — "Green Book" as a document name is not used on any gov.bb source</div>
 <pre class="claim-block-content">No authoritative Barbados government source — childcareboard.gov.bb,
 gov.bb, health.gov.bb, gisbarbados.gov.bb, or any Ministry press release
-checked on 2026-05-28 — uses the phrase "Green Book" to describe a child
+checked on 2026-05-29 — uses the phrase "Green Book" to describe a child
 health record.
 
 Barbados polyclinic immunisation services issue an immunisation/health
-card to caregivers when a child is vaccinated (confirmed:
-barbadoschildrendirectory.com/immunisation, citing CCB/polyclinic
-practice). The Ministry of Health confirmed nurses check vaccine records
-at day care facilities (Barbados Today, 2026-04-16). However, the
-official name of this record, and whether it is the same as the "Green
-Book" described on the page, cannot be verified from public sources.
+card to caregivers when a child is vaccinated. The Ministry of Health
+confirmed nurses check vaccine records at day care facilities (Barbados
+Today, 2026-04-16). However, the official name of this record, and whether
+it is the same as the "Green Book" described on the page, cannot be
+verified from public sources.
 
 The term "Green Book" is widely used informally in Barbados for the
 child health/immunisation card, but this informal usage has not been
 confirmed by the CCB as the official document name they require at
 application.
 
-Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/);
-[health.gov.bb — Vaccinations](https://www.health.gov.bb/Vaccinations);
-[barbadoschildrendirectory.com — Immunisation](https://www.barbadoschildrendirectory.com/immunisation);
-[Barbados Today — Measles coverage (2026-04-16)](https://barbadostoday.bb/2026/04/16/barbados-records-increase-in-measles-coverage/).</pre>
+Checked: childcareboard.gov.bb;
+health.gov.bb — Vaccinations;
+barbadoschildrendirectory.com — Immunisation;
+Barbados Today — Measles coverage (2026-04-16).</pre>
 </div>
 
 - **Type:** document requirement
 - **Checked:** [childcareboard.gov.bb](https://childcareboard.gov.bb/); [health.gov.bb — Vaccinations](https://www.health.gov.bb/Vaccinations); [barbadoschildrendirectory.com — Immunisation](https://www.barbadoschildrendirectory.com/immunisation); [Barbados Today — Measles coverage (2026-04-16)](https://barbadostoday.bb/2026/04/16/barbados-records-increase-in-measles-coverage/)
 - **Status:** unverifiable
 - **Certainty:** 35%
-- **Citizen impact:** MEDIUM — if "Green Book" is not the correct or complete term for the required document, a parent may bring the wrong item or not bring the right one.
+- **Citizen impact:** MEDIUM — if "Green Book" is not the correct or complete term for the required document, a parent may bring the wrong item.
 - **Open question:** Confirm with CCB/SEA: (a) what the official name of the child health record required at application is, (b) whether "Green Book" is an accepted informal name, and (c) whether the immunisation card issued at polyclinics is the document intended.
 
 ---
@@ -265,8 +263,7 @@ The general claim that eligibility and availability are assessed is
 plausible and consistent with day care practice, but the role title
 cannot be verified from the public web.
 
-Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/);
-[gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board).</pre>
+Checked: childcareboard.gov.bb; gov.bb — Child Care Board.</pre>
 </div>
 
 - **Type:** process step / agency name
@@ -277,7 +274,7 @@ Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/);
 
 ---
 
-### Claim 10 — Successful application: enrolled immediately or at start of new term in September (lines 52–53)
+### Claim 10 — Successful application: enrolled immediately or at start of new term in September (line 53)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -289,13 +286,13 @@ Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/);
 <pre class="claim-block-content">Neither childcareboard.gov.bb nor gov.bb documents the CCB day nursery
 term structure or confirms that September is the start of the main
 intake term. A March 2026 announcement from the Ministry of Education
-Transformation refers to a "September 1 cutoff" for the new universal
+Transformation refers to a "September" rollout for the new universal
 nursery programme for 3–4 year olds, which is consistent with a
 September term start, but this refers to Ministry of Education nursery
 schools, not CCB day care centres.
 
-Checked: [childcareboard.gov.bb](https://childcareboard.gov.bb/);
-[Barbados Today — Universal nursery access from September (2026-03-03)](https://barbadostoday.bb/2026/03/03/universal-nursery-access-from-september/).</pre>
+Checked: childcareboard.gov.bb;
+Barbados Today — Universal nursery access from September (2026-03-03).</pre>
 </div>
 
 - **Type:** process step / statistic
@@ -324,16 +321,15 @@ You will need to share:
 <pre class="claim-block-content">An orientation session, an "acceptance document", and the two documents
 listed (birth certificate photocopy; passport photo) are not mentioned
 on childcareboard.gov.bb, gov.bb, or in any GIS press release checked
-on 2026-05-28.
+on 2026-05-29.
 
 The general requirement for a birth certificate photocopy is plausible
-(it is a standard CCB/day care practice) and consistent with the child's
-birth certificate being confirmed on file, but no Tier 1 or Tier 2
-source confirms these specific orientation requirements.
+(standard CCB/day care practice) but no Tier 1 or Tier 2 source
+confirms these specific orientation requirements.
 
-Checked: [childcareboard.gov.bb — Daycare](https://childcareboard.gov.bb/daycare/);
-[childcareboard.gov.bb — FAQs](https://childcareboard.gov.bb/faqs/);
-[gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board).</pre>
+Checked: childcareboard.gov.bb — Daycare;
+childcareboard.gov.bb — FAQs;
+gov.bb — Child Care Board.</pre>
 </div>
 
 - **Type:** document requirement / process step
@@ -355,7 +351,7 @@ Checked: [childcareboard.gov.bb — Daycare](https://childcareboard.gov.bb/dayca
 <div class="claim-block-label">Cannot confirm — reserve list policy not documented publicly</div>
 <pre class="claim-block-content">A "reserve list" for oversubscribed CCB day nurseries is not mentioned
 on childcareboard.gov.bb, gov.bb, or in any GIS materials checked
-on 2026-05-28. The claim is plausible but unverifiable from public sources.</pre>
+on 2026-05-29. The claim is plausible but unverifiable from public sources.</pre>
 </div>
 
 - **Type:** process step / eligibility
@@ -366,7 +362,38 @@ on 2026-05-28. The claim is plausible but unverifiable from public sources.</pre
 
 ---
 
-### Claim 13 — Responsible agency: Child Care Board (implicit throughout; category "family-birth-relationships")
+### Claim 13 — Accessibility: representative may attend in place of parent for application; parent/guardian must attend orientation (lines 69–72)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">If you cannot attend the nursery to complete an application form, you can send a representative. However, a parent or guardian must attend the orientation session.</pre>
+</div>
+
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Cannot confirm — accessibility provision not documented on any authoritative source</div>
+<pre class="claim-block-content">The claim that a representative may complete the application form on behalf of
+a parent/guardian, and that a parent/guardian must personally attend the
+orientation session, does not appear on childcareboard.gov.bb, gov.bb, or
+in any GIS press release checked on 2026-05-29.
+
+The restriction (parent/guardian required at orientation but not at application)
+is a meaningful procedural distinction for citizens with mobility, work, or
+travel constraints. It should be confirmed by the CCB/SEA.
+
+Checked: childcareboard.gov.bb; gov.bb — Child Care Board;
+childcareboard.gov.bb — FAQs.</pre>
+</div>
+
+- **Type:** process step / eligibility / procedural instruction
+- **Checked:** [childcareboard.gov.bb](https://childcareboard.gov.bb/); [gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board); [childcareboard.gov.bb — FAQs](https://childcareboard.gov.bb/faqs/)
+- **Status:** unverifiable
+- **Certainty:** 30%
+- **Citizen impact:** MEDIUM — if this is wrong (e.g. the parent must attend both steps, or a representative cannot attend), a citizen who sends a representative may find their application rejected or delayed.
+- **Open question:** Confirm with CCB/SEA: (a) whether a representative (non-parent/guardian) may attend the nursery to complete the application form, (b) whether written authorisation or ID is required for the representative, and (c) whether a parent/guardian must personally attend the orientation session.
+
+---
+
+### Claim 14 — Responsible agency: Child Care Board (implicit throughout; category "family-birth-relationships")
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -381,36 +408,38 @@ category on alpha.gov.bb.)</pre>
 <pre class="claim-block-content">Government day nurseries are operated by the Child Care Board (CCB),
 established under the Child Care Board Act, Cap. 381.
 
-As of 2 January 2026, the Child Care Board was merged into the Social
-Empowerment Agency (SEA), which consolidates the former CCB, Welfare
-Department, National Assistance Board, National Disabilities Unit, and
-Resilience and Reintegration Unit under the Ministry of People
-Empowerment and Elder Affairs (Minister: Hon. Adrian R. Forde, M.P.).
+The Social Empowerment Agency (SEA) was launched on 7 January 2026 as
+an amalgamation of social services. Whether the CCB was merged into the SEA
+is not confirmed in the SEA launch article (which does not name the CCB).
+The CCB website (childcareboard.gov.bb), its contact details, and the gov.bb
+State Bodies listing all remain live and operational as of 2026-05-29 with no
+reference to the SEA merger.
 
-The CCB website (childcareboard.gov.bb) and gov.bb listing remain live
-as of 2026-05-28. Whether day nursery applications are now processed
-through the SEA or continue under the CCB name is not confirmed from
-public sources.</pre>
+Status: CCB appears to remain the operational body for day nurseries.
+The GovBB team should confirm the current agency structure before
+naming either body on the page.</pre>
 </div>
 
 - **Type:** agency name / legal reference
-- **Sources:** [childcareboard.gov.bb — Legal](https://childcareboard.gov.bb/legal/) — "Child Care Board Act – CAP 381"; [Barbados Today — SEA launched (2026-01-07)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/) — CCB merged into SEA on 2 January 2026; [Barbados Today — Child neglect worry (2025-05-01)](https://barbadostoday.bb/2025/05/01/child-neglect-a-worry-for-child-care-board/) — CCB under Ministry of People Empowerment and Elder Affairs; [src/data/ministries.ts lines 834–915] — canonical ministry data; [src/data/state-bodies.ts lines 1294–1316] — CCB entry in local data file
-- **Status:** discrepant — page omits agency name entirely; also, the agency structure has changed since the page was likely authored
-- **Certainty:** 90% (that the CCB/SEA is the relevant body, under Ministry of People Empowerment and Elder Affairs)
-- **Confidence it's wrong:** 80% (that the current operator is wholly the CCB with no SEA involvement)
-- **Citizen impact:** MEDIUM — citizens who have a complaint, need to escalate, or need to verify the process have no contact point from this page. With the SEA merger, the agency name on any updated page should be confirmed before publishing.
+- **Sources:** [childcareboard.gov.bb — Legal](https://childcareboard.gov.bb/legal/) — "Child Care Board Act – CAP 381"; [Barbados Today — SEA launched (2026-01-07)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/) — SEA launched as amalgamation; CCB not named in article; [gov.bb — The Child Care Board](https://www.gov.bb/State-Bodies/child-care-board) — CCB listed as active State Body as of 2026-05-29
+- **Status:** discrepant — page omits agency name entirely; the applicable agency structure requires direct confirmation
+- **Certainty:** 90% (that the CCB is the relevant body for day nurseries)
+- **Confidence it's wrong:** 50% (reduced from prior pass — the SEA launch article does not name CCB as a merged entity; CCB website and gov.bb listing remain fully operational with no merger notice)
+- **Citizen impact:** MEDIUM — citizens who need to follow up or escalate have no contact point from this page.
 
 ---
 
 ## Additional findings (not on the page but should be)
 
-- **Contact details for the Child Care Board / SEA are absent.** The page gives citizens no way to follow up if they have questions or problems. Based on authoritative sources, the relevant contact is: Child Care Board (Social Empowerment Agency), Fred Edgehill Building, Cheapside, Bridgetown; Phone: (246) 535-2800; Email: childcareboard@barbados.gov.bb. This should be confirmed with the SEA (post-merger) to check whether phone and email have changed.
+- **Contact details for the Child Care Board are absent.** The page gives citizens no way to follow up. Verified contact: Child Care Board, Fred Edghill Building, Cheapside, Bridgetown, Barbados; Phone: (246) 535-2800; Email: childcareboard@barbados.gov.bb; Hours: Monday–Friday, 8:30 AM–4:30 PM. Source: [childcareboard.gov.bb — Contact](https://childcareboard.gov.bb/contact-page/contact/); corroborated by [gov.bb — Child Care Board](https://www.gov.bb/State-Bodies/child-care-board). This should be confirmed with the SEA if the merger has affected contact routing.
 
-- **The 15 CCB day nurseries are not listed or linked.** Citizens have no way from this page to find which nurseries are near them. The CCB Daycare page ([childcareboard.gov.bb/daycare/](https://childcareboard.gov.bb/daycare/)) lists all 15 nurseries with addresses and phone numbers. A link to this page (or a direct list) would substantially improve usability.
+- **The 15 CCB day nurseries are not listed or linked.** Citizens cannot identify which nurseries are near them from this page. The CCB Daycare page ([childcareboard.gov.bb/daycare/](https://childcareboard.gov.bb/daycare/)) lists all 15 nurseries with addresses and phone numbers. A link or embedded list would substantially improve usability.
 
-- **Upcoming universal nursery expansion (September 2026).** The Ministry of Education Transformation announced in March 2026 that all three- and four-year-olds in Barbados will have a guaranteed nursery place from September 2026 ([Barbados Today — Universal nursery access from September, 2026-03-03](https://barbadostoday.bb/2026/03/03/universal-nursery-access-from-september/)). This is a Ministry of Education programme (nursery schools) distinct from the CCB day care centres, but the overlap in age group (3–4 years) means the alpha.gov.bb day nursery page may need a cross-reference or disclaimer once the September 2026 rollout is confirmed.
+- **Upcoming universal nursery expansion (September 2026).** The Ministry of Education Transformation announced all three- and four-year-olds will have a guaranteed nursery place from September 2026 ([Barbados Today — Universal nursery access from September, 2026-03-03](https://barbadostoday.bb/2026/03/03/universal-nursery-access-from-september/)). This is a Ministry of Education programme (nursery schools) distinct from CCB day care centres, but the overlap in age group (3–4 years) means the page may need a cross-reference or disclaimer once the September 2026 rollout is confirmed.
 
-- **The Child Care Board Act, Cap. 381 is the governing statute.** The page contains no legal reference. The applicable Act is the Child Care Board Act, Cap. 381 (Laws of Barbados), with Child Care Board Regulations 1985 (Cap. 381'B) as subsidiary legislation. A statutory reference would allow citizens to understand the legal basis for the service and the CCB's obligations.
+- **The Child Care Board Act, Cap. 381 is the governing statute.** The page contains no legal reference. The applicable Act is the Child Care Board Act, Cap. 381 (Laws of Barbados), with Child Care Board Regulations 1985 (Cap. 381'B) as subsidiary legislation.
+
+- **No links are present on this page apart from standard navigation.** The live-checked page contains no external or deep-linking CTAs that could break. The absence of any link to childcareboard.gov.bb/daycare/ (nursery list) is a usability gap rather than a broken link.
 
 ---
 
@@ -423,19 +452,16 @@ public sources.</pre>
 - [childcareboard.gov.bb — Legal](https://childcareboard.gov.bb/legal/)
 - [childcareboard.gov.bb — Contact](https://childcareboard.gov.bb/contact-page/contact/)
 - [gov.bb — The Child Care Board (State Bodies)](https://www.gov.bb/State-Bodies/child-care-board)
-- [gov.bb — Ministry of People Empowerment and Elder Affairs (via ministries.ts)](https://www.gov.bb/Ministries/social-care)
 - [Barbados Children Directory — CCB Outline](https://www.barbadoschildrendirectory.com/ccb-outline)
-- [Barbados Children Directory — CCB Day Nurseries](https://www.barbadoschildrendirectory.com/government-nursery-schools)
 - [Barbados Children Directory — Immunisation](https://www.barbadoschildrendirectory.com/immunisation)
 - [Barbados Judicial System — Child Care Board (Private Child Care Centres) Regulations, 1986 Cap. 381'A](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/subsidiary_legislation_of_barbados/ChildCareBoard(PrivateChildCareCentres)Regulations,1986Cap381'A.pdf)
 - [Barbados Judicial System — Child Care Board Regulations, 1985 Cap. 381'B](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/subsidiary_legislation_of_barbados/ChildCareBoardRegulations,1985Cap381'B.pdf)
-- [Barbados Today — SEA launched: Islandwide overhaul of social services begins (2026-01-07)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/)
-- [Barbados Today — Govt opens second SEA social services centre (2026-03-27)](https://barbadostoday.bb/2026/03/27/govt-opens-second-sea-social-services-centre/)
+- [Barbados Today — SEA launched: Islandwide overhaul of social services begins (2026-01-07)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/) — CCB not mentioned in this article
 - [Barbados Today — Universal nursery access from September (2026-03-03)](https://barbadostoday.bb/2026/03/03/universal-nursery-access-from-september/)
-- [Barbados Today — Child neglect a worry for Child Care Board (2025-05-01)](https://barbadostoday.bb/2025/05/01/child-neglect-a-worry-for-child-care-board/)
-- [health.gov.bb — Vaccinations](https://www.health.gov.bb/Vaccinations)
 - [Barbados Today — Barbados records increase in measles coverage (2026-04-16)](https://barbadostoday.bb/2026/04/16/barbados-records-increase-in-measles-coverage/)
-- [GIS — Child Care Board tag](https://gisbarbados.gov.bb/blog/tag/child-care-board/) — returned HTTP 403 on 2026-05-28
-- [socialempowermentbb.org](https://socialempowermentbb.org/) — returned ECONNREFUSED on 2026-05-28; site may be temporarily down
-- [src/data/state-bodies.ts](/home/gavin/frontend-alpha/src/data/state-bodies.ts) — CCB entry lines 1294–1316
-- [src/data/ministries.ts](/home/gavin/frontend-alpha/src/data/ministries.ts) — Ministry of People Empowerment and Elder Affairs lines 833–916
+- [health.gov.bb — Vaccinations](https://www.health.gov.bb/Vaccinations)
+- [GIS — Child Care Board tag](https://gisbarbados.gov.bb/blog/tag/child-care-board/) — returned HTTP 403 on 2026-05-29
+- [socialempowermentbb.org](https://socialempowermentbb.org/) — returned ECONNREFUSED on 2026-05-29
+- [alpha.gov.bb — Apply for a place at a day nursery (live page)](https://alpha.gov.bb/family-birth-relationships/apply-for-a-place-at-a-day-nursery) — page loads, confirmed 2026-05-29
+- [src/data/state-bodies.ts](/home/gavin/frontend-alpha/src/data/state-bodies.ts) — CCB entry
+- [src/data/ministries.ts](/home/gavin/frontend-alpha/src/data/ministries.ts) — Ministry of People Empowerment and Elder Affairs

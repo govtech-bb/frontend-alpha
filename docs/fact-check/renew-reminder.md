@@ -2,18 +2,20 @@
 
 - **Live page:** <https://alpha.gov.bb/travel-id-citizenship/renew-reminder>
 - **Source file:** `src/content/renew-reminder/index.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 9 claims reviewed — 7 verified, 1 discrepant, 1 unverifiable. Average certainty: **85%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 10 claims reviewed — 8 verified, 1 discrepant, 1 unverifiable. Average certainty: **87%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Body copy omits "National ID Card" from the document-type list.** The live form at `/renew-reminder/form` offers six explicit options, including "National ID Card — Barbados National Identification Card" as the first item. The start-page body text (line 17) names only "driver's licence, vehicle registration, passport, or other government permit." A citizen with an expiring National ID Card reading only the start page may not realise the service applies to them. The frontmatter `keywords` field (line 11) does include "national ID", creating an internal inconsistency between the keywords, the body, and the form.
+1. **Body copy omits "National ID Card" and "Other" from document-type list (unfixed since 2026-05-28).** The live form offers six options: National ID Card, Driver's Licence, Passport, Vehicle Registration, Permit, and "Other — Anything else with an expiry date." The start-page body text (line 17) names only "driver's licence, vehicle registration, passport, or other government permit." A citizen with an expiring National ID Card reading only the start page may not realise the service applies to them. The `content-directory.ts` description correctly includes "National ID Card"; the body copy does not. This discrepancy was flagged in the previous pass (2026-05-28) and remains unfixed.
 
-2. **"Terms & Conditions" URL functions as the privacy notice.** The page links to `https://alpha.gov.bb/terms-conditions` as its "privacy notice." The page at that URL is titled "Terms & Conditions" and covers both site terms and data-handling practices, but it is not labelled a "privacy notice" in the page heading. The privacy section within that document does address data collection, retention, and user rights under the Data Protection Act 2019. This is an editorial framing issue, not a factual error — but worth flagging for consistency with Data Protection Act 2019 terminology, which requires a distinct privacy notice.
+2. **"Other" document type not signalled anywhere on the start page (new finding).** The form's sixth option — "Other — Anything else with an expiry date — you'll be asked to give it a name below" — is entirely absent from the start page. Citizens with non-standard expiring documents (e.g. work permits, food-handler certificates, firearm licences) will not know the service covers them.
 
-3. **No major structural errors.** This page is an internal alpha.gov.bb utility with no external government agency facts (no fees, addresses, phone numbers, or legal references requiring cross-verification). All verifiable claims about what the service does and does not collect are consistent with the live page, the live form, and the terms-conditions page.
+3. **"Terms & Conditions" URL used as privacy notice link (editorial framing issue).** The page links to `https://alpha.gov.bb/terms-conditions` with link text "privacy notice." The destination page is headed "Terms & Conditions", though it contains a substantive "Your Data" section referencing the Data Protection Act 2019. No factual claim is wrong, but the label mismatch is inconsistent with Data Protection Act 2019 plain-language best practice.
+
+4. **No major structural errors.** This is a native alpha.gov.bb utility with no external agency facts (no fees, addresses, phone numbers, or legal references requiring cross-verification). All verifiable claims about data collection and process steps are consistent with the live form and the terms-conditions page.
 
 ---
 
@@ -30,16 +32,16 @@ vehicle registration, passport, or other government permit runs out.</pre>
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say</div>
 <pre class="claim-block-content">Use this service to set a free reminder before your driver's licence,
-vehicle registration, passport, National ID Card, or other government
-permit runs out.</pre>
+vehicle registration, passport, National ID Card, or any other
+document with an expiry date runs out.</pre>
 </div>
 
 - **Type:** descriptive / eligibility
-- **Status:** discrepant — "National ID Card" is a first-class option on the live form but absent from this sentence. The frontmatter keywords (line 11) include "national ID", confirming the omission is unintentional.
-- **Sources:** [live form at /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — lists "National ID Card — Barbados National Identification Card" as the first selectable document type; [source file frontmatter keywords](https://alpha.gov.bb/travel-id-citizenship/renew-reminder) — includes "national ID" in keyword list
-- **Certainty:** 97% (directly testable against the live form)
+- **Status:** discrepant — "National ID Card" is the first option on the live form but absent from the body sentence. The form also offers "Other — Anything else with an expiry date", which is not signalled at all. The `content-directory.ts` description (line 449) correctly includes "National ID Card", confirming the omission is unintentional. Confirmed live 2026-05-29.
+- **Sources:** [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — "National ID Card — Barbados National Identification Card" confirmed as first option; "Other — Anything else with an expiry date" confirmed as sixth option; [live start page](https://alpha.gov.bb/travel-id-citizenship/renew-reminder) — body text confirmed unchanged
+- **Certainty:** 97%
 - **Confidence it's wrong:** 97%
-- **Citizen impact:** MEDIUM — a citizen whose National ID Card is expiring may read this page and conclude the service does not apply to them, then not set a reminder.
+- **Citizen impact:** MEDIUM — a citizen whose National ID Card is expiring may read this page and conclude the service does not apply to them, and not set a reminder.
 
 ---
 
@@ -88,19 +90,20 @@ permit runs out.</pre>
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Checked — unverifiable from external sources</div>
 <pre class="claim-block-content">The form collects only a document type and an expiry date (two
-interactions), consistent with a sub-minute completion time. This
-claim is testable only by completing the form.</pre>
+interactions for most paths; the "Other" path adds a document-name
+field). Consistent with a sub-minute completion time, but testable
+only by completing the form end-to-end.</pre>
 </div>
 
 - **Type:** descriptive / process
-- **Status:** unverifiable — there is no external source against which to verify a self-reported completion time. The form structure (document-type selector + date picker + calendar-export step) is consistent with a sub-minute experience, but cannot be formally verified without completing the form end-to-end.
-- **Checked:** [live form at /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — visible structure is a single-step document selection; full end-to-end flow not confirmed
+- **Status:** unverifiable — there is no external source against which to verify a self-reported completion time. The form structure (document-type selector + date picker + calendar-export step) is consistent with a sub-minute experience. The "Other" path also prompts for a document name, adding one step.
+- **Checked:** [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — visible structure is a single-step document selection; full end-to-end flow not confirmed
 - **Certainty:** 65% (plausible given the minimal inputs described, but untested)
-- **Open question:** GovBB team to confirm that the full form journey (document type → expiry date → calendar export/download) completes in under 60 seconds on a standard mobile connection.
+- **Open question:** GovBB team to confirm that the full form journey (document type → expiry date → calendar export/download, including the "Other" name-entry path) completes in under 60 seconds on a standard mobile connection.
 
 ---
 
-### Claim 4 — Internal form link (line 21)
+### Claim 4 — Internal form link / primary CTA (line 21)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -119,7 +122,7 @@ claim is testable only by completing the form.</pre>
 
 ---
 
-### Claim 5 — "Before you start" requirements: document type + expiry date (lines 27–28)
+### Claim 5 — "Before you start" requirements: document type + expiry date (lines 26–28)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -138,8 +141,8 @@ claim is testable only by completing the form.</pre>
 </div>
 
 - **Type:** document requirement / process step
-- **Status:** verified — the live form's first step presents a document-type selector; the second step requires an expiry date. No other inputs are requested per the form structure observed.
-- **Sources:** [live form at /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form)
+- **Status:** verified — the live form's first step presents a document-type selector; the second step requires an expiry date. No other mandatory inputs are requested. (The "Other" path also asks for a document name, but this is an edge-case extension, not a baseline requirement.)
+- **Sources:** [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form)
 - **Certainty:** 95%
 
 ---
@@ -158,10 +161,10 @@ expiry date.</pre>
 expiry date.</pre>
 </div>
 
-- **Type:** process step / eligibility
-- **Status:** verified — the live form structure confirms only document type and expiry date are collected. This is also consistent with the terms-conditions page data-handling section: "Forms without payment are emailed straight to the relevant Ministry, Department or Agency. We don't keep a copy."
-- **Sources:** [live form at /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form); [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions)
-- **Certainty:** 95%
+- **Type:** process step / descriptive
+- **Status:** verified — the live form confirms only document type and expiry date are collected as mandatory inputs. (The "Other" path adds a document-name field, but this only asks what to call an unlisted document type, not any identity data.) Consistent with the terms-conditions page: "We don't keep a copy."
+- **Sources:** [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form); [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions)
+- **Certainty:** 92%
 
 ---
 
@@ -179,9 +182,9 @@ reminder. You save it to your own calendar.</pre>
 reminder. You save it to your own calendar.</pre>
 </div>
 
-- **Type:** process step / descriptive
-- **Status:** verified — the terms-conditions page confirms: "We don't keep a copy" for forms without payment; analytics logs "never contain the values you type." The calendar-save mechanism (iCal / Google Calendar export) is the standard approach for this type of service and consistent with "You save it to your own calendar."
-- **Sources:** [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions) — data handling section confirms no retained copy of form submissions; form page confirms calendar-export delivery mechanism
+- **Type:** process step / descriptive / negative statement
+- **Status:** verified — the terms-conditions page confirms: "We don't keep a copy" for forms without payment, and that analytics logs "never contain the values you type." The calendar-save mechanism is consistent with "You save it to your own calendar." Data stored on AWS US per terms-conditions.
+- **Sources:** [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions) — "Your Data" section: Ministry of Innovation, Science and Smart Technology; Data Protection Act 2019; no retained copy of form submissions; [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — no email/account required
 - **Certainty:** 90%
 
 ---
@@ -200,9 +203,9 @@ numbers.</pre>
 numbers.</pre>
 </div>
 
-- **Type:** process step / descriptive
+- **Type:** process step / descriptive / negative statement
 - **Status:** verified — the live form confirms no name, address, DOB, or document number fields are present. The terms-conditions page confirms analytics logs mask email addresses and do not capture field values.
-- **Sources:** [live form at /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form); [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions)
+- **Sources:** [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form); [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions)
 - **Certainty:** 97%
 
 ---
@@ -226,24 +229,47 @@ page, or relabelling the link text as "terms and conditions" to
 match the destination page title.</pre>
 </div>
 
-- **Type:** URL / legal reference
-- **Status:** verified (URL is live with substantive data-handling content) — with editorial note on label mismatch
-- **Sources:** [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions) — page loads with heading "Terms & Conditions" and a data-handling section explicitly referencing the Barbados Data Protection Act 2019
+- **Type:** link / legal reference
+- **Status:** verified (URL is live; data-handling content is substantive and references Data Protection Act 2019) — with editorial note on label mismatch between link text "privacy notice" and page heading "Terms & Conditions"
+- **Sources:** [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions) — confirmed live 2026-05-29: heading "Terms & Conditions", "Your Data" section references Data Protection Act 2019, data contact privacy@govtech.bb
 - **Certainty:** 95%
-- **Citizen impact:** LOW — the URL resolves and the data-handling information is present; the only issue is the label mismatch ("privacy notice" vs "Terms & Conditions").
+- **Citizen impact:** LOW — the URL resolves and data-handling information is present; only issue is the label mismatch.
+
+---
+
+### Claim 10 — Service is free: "set a free reminder" (line 17)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">Use this service to set a free reminder before your driver's licence,
+vehicle registration, passport, or other government permit runs out.</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">Use this service to set a free reminder before your driver's licence,
+vehicle registration, passport, or other government permit runs out.</pre>
+</div>
+
+- **Type:** fee
+- **Status:** verified — the form collects no payment details. The terms-conditions page distinguishes forms with and without payment; this form has no payment step and charges no fee.
+- **Sources:** [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — no payment step present; [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions) — explicitly distinguishes "Forms without payment" (no copy retained) from payment forms
+- **Certainty:** 99%
 
 ---
 
 ## Additional findings (not on the page but should be)
 
-**Form delivers a "National ID Card" option inconsistently labelled in content-directory.ts.** The `content-directory.ts` entry for `renew-reminder` (lines 436–457) gives the page description as: "Set a free calendar reminder before your driver's licence, passport, National ID Card, vehicle registration, or permit runs out." This description correctly includes "National ID Card." The `index.md` body text does not. Aligning the body text with the `content-directory.ts` description would resolve Claim 1 above.
+**"Other" document type is absent from the start page.** The form's sixth option — "Other — Anything else with an expiry date — you'll be asked to give it a name below" — is not mentioned anywhere on the start page. Citizens with non-standard expiring documents (e.g. work permits, food-handler certificates, firearm licences) may not know the service covers them. Suggested fix: add a note such as "or any other document with an expiry date" to the body copy.
 
-**No `source_url` is declared** in the `content-directory.ts` entry for `renew-reminder`. This is appropriate — the service is native to alpha.gov.bb with no external government source to cite.
+**`content-directory.ts` description already correct.** The description at line 449 reads: "Set a free calendar reminder before your driver's licence, passport, National ID Card, vehicle registration, or permit runs out." This correctly includes "National ID Card". Aligning the `index.md` body text to this description would partially resolve Claim 1.
+
+**No `source_url` declared** in the `content-directory.ts` entry for `renew-reminder`. This is appropriate — the service is native to alpha.gov.bb with no external government source to cite.
 
 ---
 
 ## Sources cited
 
-- [alpha.gov.bb/travel-id-citizenship/renew-reminder](https://alpha.gov.bb/travel-id-citizenship/renew-reminder) — live start page
-- [alpha.gov.bb/travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — live form (document type selector confirmed; 6 options verified)
-- [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions) — Terms & Conditions page (data-handling section, Data Protection Act 2019 reference)
+- [alpha.gov.bb/travel-id-citizenship/renew-reminder](https://alpha.gov.bb/travel-id-citizenship/renew-reminder) — live start page (fetched 2026-05-29)
+- [alpha.gov.bb/travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form) — live form: 6 options confirmed (National ID Card, Driver's Licence, Passport, Vehicle Registration, Permit, Other — Anything else with an expiry date)
+- [alpha.gov.bb/terms-conditions](https://alpha.gov.bb/terms-conditions) — Terms & Conditions page (fetched 2026-05-29): "Your Data" section, Data Protection Act 2019 reference, AWS US storage, contact privacy@govtech.bb

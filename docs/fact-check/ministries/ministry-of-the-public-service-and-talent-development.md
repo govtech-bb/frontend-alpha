@@ -3,7 +3,7 @@
 - **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-the-public-service-and-talent-development>
 - **Source file:** `src/content/ministries/ministry-of-the-public-service-and-talent-development.md`
 - **Data file:** `src/data/ministries.ts` (lines 917–950)
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 14 claims reviewed — 12 verified, 1 discrepant, 1 unverifiable. Average certainty: **90%**.
 
 ---
@@ -356,18 +356,18 @@ Source: [gov.bb — State Bodies: Directorate, Learning and Development](https:/
 
 ## Sources cited
 
-- [gov.bb — Ministry of the Public Service and Talent Development](https://www.gov.bb/Ministries/public-service) — accessed 2026-05-28
-- [mps.gov.bb — Home](https://mps.gov.bb/) — accessed 2026-05-28
-- [mps.gov.bb — Contact](https://mps.gov.bb/contact) — accessed 2026-05-28
-- [mps.gov.bb — Human Resources Contact](https://mps.gov.bb/Human_Resources/contact) — accessed 2026-05-28
-- [mps.gov.bb — People Resourcing / Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing) — accessed 2026-05-28
-- [mps.gov.bb — People Resourcing / Age](https://mps.gov.bb/People_Resourcing/age) — accessed 2026-05-28
-- [mps.gov.bb — FAQ](https://mps.gov.bb/faq.php) — accessed 2026-05-28
-- [mps.gov.bb — Role of Director General (Human Resources)](https://mps.gov.bb/director_role) — accessed 2026-05-28
-- [mps.gov.bb — Learning and Development Home](https://mps.gov.bb/Learning_Development/home) — accessed 2026-05-28
-- [gov.bb — State Bodies: Directorate, Learning and Development](https://www.gov.bb/State-Bodies/directorate-learning-development) — accessed 2026-05-28
-- [OAG — Public Service (Miscellaneous Provisions) Act, 2019-35 (PDF)](https://oag.gov.bb/attachments/Public%20Service%20(Miscellaneous%20Provisions)%20Act,%202019-35.pdf) — accessed 2026-05-28
-- [GIS — Official Gazette August 1, 2019 No. 62](https://gisbarbados.gov.bb/download/official-gazette-august-1-2019-no-62-package/) — accessed 2026-05-28
-- [Barbados Parliament — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8) — accessed 2026-05-28
-- [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/) — accessed 2026-05-28
-- [gov.bb — Ministries listing](https://www.gov.bb/ministries) — accessed 2026-05-28
+- [gov.bb — Ministry of the Public Service and Talent Development](https://www.gov.bb/Ministries/public-service) — accessed 2026-05-29
+- [mps.gov.bb — Home](https://mps.gov.bb/) — accessed 2026-05-29
+- [mps.gov.bb — Contact](https://mps.gov.bb/contact) — accessed 2026-05-29
+- [mps.gov.bb — Human Resources Contact](https://mps.gov.bb/Human_Resources/contact) — accessed 2026-05-29
+- [mps.gov.bb — People Resourcing / Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing) — accessed 2026-05-29
+- [mps.gov.bb — People Resourcing / Age](https://mps.gov.bb/People_Resourcing/age) — accessed 2026-05-29
+- [mps.gov.bb — FAQ](https://mps.gov.bb/faq.php) — accessed 2026-05-29
+- [mps.gov.bb — Role of Director General (Human Resources)](https://mps.gov.bb/director_role) — accessed 2026-05-29
+- [mps.gov.bb — Learning and Development Home](https://mps.gov.bb/Learning_Development/home) — accessed 2026-05-29
+- [gov.bb — State Bodies: Directorate, Learning and Development](https://www.gov.bb/State-Bodies/directorate-learning-development) — accessed 2026-05-29
+- [OAG — Public Service (Miscellaneous Provisions) Act, 2019-35 (PDF)](https://oag.gov.bb/attachments/Public%20Service%20(Miscellaneous%20Provisions)%20Act,%202019-35.pdf) — accessed 2026-05-29
+- [GIS — Official Gazette August 1, 2019 No. 62](https://gisbarbados.gov.bb/download/official-gazette-august-1-2019-no-62-package/) — accessed 2026-05-29
+- [Barbados Parliament — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8) — accessed 2026-05-29
+- [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/) — accessed 2026-05-29
+- [gov.bb — Ministries listing](https://www.gov.bb/ministries) — accessed 2026-05-29

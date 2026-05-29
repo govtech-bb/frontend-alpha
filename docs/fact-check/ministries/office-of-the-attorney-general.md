@@ -3,22 +3,28 @@
 - **Live page:** <https://alpha.gov.bb/government/organisations/office-of-the-attorney-general>
 - **Source file:** `src/content/ministries/office-of-the-attorney-general.md`
 - **Data file:** `src/data/ministries.ts` (lines 116–154)
-- **Last checked:** 2026-05-28
-- **Summary:** 11 claims reviewed — 6 verified, 3 discrepant, 2 unverifiable. Average certainty: **74%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 14 claims reviewed — 8 verified, 3 discrepant, 3 unverifiable. Average certainty: **78%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **OAG main address is incomplete.** The page shows only "Webster's Business Park / St. Michael". The authoritative address (oag.gov.bb Contact and gov.bb/Ministries/attorney-general) is "Jones Building, Webster's Business Park, Wildey, St. Michael". The building name ("Jones Building") and locality ("Wildey") are both absent. Citizens navigating to the office need the building name; two distinct buildings sit within Webster's Business Park.
+1. **All four contact tables in the body content have empty phone cells.** The source markdown (`office-of-the-attorney-general.md`) has empty telephone columns across all four sections (OAG main, CPC, SG, DPP). While `ministries.ts` stores the main PBX (246) 535-0467 and fax numbers for sidebar rendering, the direct-dial numbers for individual roles (AG, PS, Deputy PS, Financial Controller, CPC, Deputy CPC, SG, Deputy SGs, DPP Director, Deputy Director) are absent from both the markdown and the data file. gov.bb publishes a full set of these numbers. Citizens requiring specific officials cannot reach them from this page.
 
-2. **DPP address is incomplete and inconsistently abbreviated.** The source file says "Frank Walcott BLDG / St. Michael". The Barbados Bar Association directory and multiple secondary sources confirm the full address is "4th Floor, Frank Walcott Building, Culloden Road, St. Michael". Floor and street name are both missing, and "BLDG" is a non-standard abbreviation.
+2. **DPP address is still incomplete.** The source markdown says "Frank Walcott BLDG / St. Michael". The live page renders "Frank Walcott Building, St. Michael" (the abbreviation is corrected via rendering, but the street address — Culloden Road — and floor (4th Floor) remain absent). The oag.gov.bb DPP page itself now shows the Jones Building address (suggesting the DPP may have relocated), creating an unresolved discrepancy between sources.
 
-3. **Solicitor General's Chambers is at a different building from the main OAG.** oag.gov.bb/Departments/Solicitor-General-s-Chambers lists the Solicitor General's Chambers address as "Spencer Building, Webster Business Park, Wildey, St. Michael BB14006" — a separate building from the Jones Building where the AG's main office sits. The page does not mention this distinction. Citizens directed to "Webster's Business Park" for the Solicitor General may arrive at the wrong building.
+3. **oag.gov.bb still shows the former Attorney General.** oag.gov.bb/About/Meet-the-Attorney-General/ still lists Hon. Dale D. Marshall as Attorney General. The canonical current AG is The Hon. Wilfred A. Abrahams, S.C., M.P. (confirmed by gov.bb/cabinet.php as of Feb 2026 election). This is an oag.gov.bb content problem, not an alpha.gov.bb problem — alpha.gov.bb reflects the correct person via ministries.ts. Worth flagging for the OAG team to update their own site.
 
-4. **All phone numbers are blank in the source content.** Every telephone cell in all four contact tables (OAG main, CPC, SG, DPP) is empty. gov.bb and oag.gov.bb publish a full set of direct-dial numbers. This is the highest-impact gap on the page — a citizen in legal need cannot reach any of these offices from this page.
+4. **OAG website URL in ministries.ts uses HTTP.** `ministries.ts` line 132 stores `http://www.oag.gov.bb/` — HTTP rather than HTTPS. The canonical URL is `https://oag.gov.bb/`. A user clicking this link will be redirected but browsers may warn on HTTP links.
 
-5. **ministries.ts associated departments list does not match gov.bb.** `ministries.ts` lists four departments (Registration Department, Supreme Court, Police Department, Criminal Justice Research and Planning Unit), which exactly matches gov.bb/Ministries/attorney-general. No discrepancy in the data file itself.
+5. **Solicitor General's Chambers fax number conflict between two Tier 1 sources.** gov.bb lists the SG Chambers fax as (246) 535-0561, while oag.gov.bb/Departments/Solicitor-General-s-Chambers/ lists (246) 435-9533. These differ in both area code pattern and number. Needs agency confirmation before either is published.
+
+---
+
+## Reversed findings from prior pass
+
+- **Claim 2 (prior pass — OAG main address incomplete):** The prior report found only "Webster's Business Park / St. Michael" on the page. The live page now renders the full address "Jones Building, Webster's Business Park, Wildey, St. Michael, Barbados" sourced from `ministries.ts` contact data. This is now **verified** from the user-facing perspective, though the source markdown still omits the building name. The ministries.ts data file carries the correct full address.
 
 ---
 
@@ -39,68 +45,72 @@
 - **Type:** descriptive
 - **Sources:** [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — verbatim match in the Ministry overview section.
 - **Status:** verified
-- **Certainty:** 95% — verbatim match on gov.bb. Note: oag.gov.bb's own Strategic Plan & Mandate page uses a more expansive policy-objective framing (five bullet points) that does not contradict this text but is more granular; the gov.bb summary phrasing is the correct short-form mandate for a ministry listing page.
+- **Certainty:** 95%
 
 ---
 
-### Claim 2 — OAG main office address (lines 5–6)
+### Claim 2 — OAG main office address (ministries.ts lines 134–141 / content lines 5–6)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">Webster's Business Park
-St. Michael</pre>
-</div>
-
-<div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
+<div class="claim-block-label">Currently on the live page (rendered from ministries.ts)</div>
 <pre class="claim-block-content">Jones Building
 Webster's Business Park
 Wildey
-St. Michael</pre>
-</div>
-
-- **Type:** address
-- **Sources:** [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) — "Jones Building, Webster's Business Park, Wildey, St. Michael, Barbados"; [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — same address; [GIS — OAG Returning To Jones Building; Will Reopen October 1](https://gisbarbados.gov.bb/blog/oag-returning-to-jones-building-will-reopen-october-1/) — confirms OAG's current building is the Jones Building (returned Oct 2024 after refurbishment).
-- **Status:** discrepant — building name ("Jones Building") and locality ("Wildey") are both absent from the page.
-- **Certainty:** 99%
-- **Confidence it's wrong:** 99%
-- **Citizen impact:** HIGH — citizens cannot identify which building within Webster's Business Park to enter. The Jones Building is a specific structure; "Webster's Business Park" alone is insufficient for navigation.
-
----
-
-### Claim 3 — OAG main contact table: all phone cells empty (lines 8–17)
-
-<div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">| Role                          | Telephone |
-| PBX                           |           |
-| Attorney General              |           |
-| Fax                           |           |
-| Permanent Secretary           |           |
-| Secretary to the PS           |           |
-| Dep Permanent Secretary       |           |
-| Financial Controller          |           |
-| Sen. Admin Officer            |           |</pre>
+St. Michael
+Barbados, W.I.</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">| Role                          | Telephone        |
-| PBX                           | (246) 535-0467   |
-| Attorney General              | (246) 535-0434   |
-| Fax                           | (246) 535-0559   |
-| Permanent Secretary           | (246) 535-0437   |
-| Dep Permanent Secretary       | (246) 535-0470   |
-| Financial Controller          | (246) 535-0440   |
-| Sen. Admin Officer            | (unverified)     |</pre>
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">Jones Building
+Webster's Business Park
+Wildey
+St. Michael
+Barbados, W.I.</pre>
+</div>
+
+- **Type:** address
+- **Sources:** [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) — "Jones Building, Webster's Business Park, Wildey, St. Michael, Barbados"; [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — same address; [GIS — OAG Returning To Jones Building; Will Reopen October 1](https://gisbarbados.gov.bb/blog/oag-returning-to-jones-building-will-reopen-october-1/) — confirms Jones Building is the current OAG home (returned Oct 2024 after refurbishment).
+- **Status:** verified — `ministries.ts` carries the full correct address and the live page renders it. Note: the source markdown (lines 5–6) still only says "Webster's Business Park / St. Michael" without the building name or locality — this is a latent issue if the markdown is ever rendered independently, but the page currently renders correctly.
+- **Certainty:** 99%
+- **Note (reversal):** Prior pass (2026-05-28) flagged this as discrepant. The live page now renders the full address from `ministries.ts`. Status updated to verified.
+
+---
+
+### Claim 3 — OAG main contact table: all body-content phone cells empty (lines 8–17)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently in source markdown (lines 8–17)</div>
+<pre class="claim-block-content">| Role                             | Telephone |
+| PBX                              |           |
+| Attorney General                 |           |
+| Fax                              |           |
+| Permanent Secretary              |           |
+| Secretary to the Permanent Secretary |       |
+| Dep Permanent Secretary          |           |
+| Financial Controller             |           |
+| Sen. Admin Officer               |           |</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Should say (from gov.bb authoritative source)</div>
+<pre class="claim-block-content">| Role                             | Telephone        |
+| PBX                              | (246) 535-0467   |
+| Attorney General                 | (246) 535-0434   |
+| Fax                              | (246) 535-0559   |
+| Permanent Secretary              | (246) 535-0437   |
+| Secretary to the Permanent Secretary | (246) 535-0438 |
+| Dep Permanent Secretary          | (246) 535-0470   |
+| Financial Controller             | (246) 535-0440   |
+| Sen. Admin Officer               | (246) 535-0452   |</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — lists PBX 535-0467, AG direct 535-0434, PS 535-0437, Deputy PS 535-0470, Financial Controller 535-0440, Fax 535-0559; [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) — corroborates PBX (246) 535-0467 and email ps.oag@barbados.gov.bb. Cross-reference: [_inventory.md — Office of the Attorney General phone](/docs/fact-check/_inventory.md) confirms canonical PBX (246) 535-0467.
-- **Status:** discrepant — five of the seven role rows have verifiable numbers; all are missing from the page. The "Secretary to the Permanent Secretary" and "Sen. Admin Officer" direct lines are not published on any authoritative Tier 1 source.
-- **Certainty:** 95% (for the five numbers identified above)
-- **Confidence it's wrong:** 99% (the table is provably empty; numbers are publicly available)
-- **Citizen impact:** HIGH — no published phone numbers means citizens cannot contact the office from this page.
+- **Sources:** [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — lists PBX 535-0467, AG direct 535-0434, PS 535-0437, Secretary to PS 535-0438, Deputy PS 535-0470, Financial Controller 535-0440, Sen. Admin Officer 535-0452, Fax 535-0559; [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) — corroborates PBX (246) 535-0467.
+- **Status:** discrepant — all eight role rows have verifiable numbers from Tier 1; all are missing from the source markdown. (Note: ministries.ts carries the PBX and main fax for sidebar rendering, but individual role direct-dials are absent from the data entirely.)
+- **Certainty:** 95% for the numbers identified above
+- **Confidence it's wrong:** 99% (the table is provably empty; numbers are publicly available on gov.bb)
+- **Citizen impact:** HIGH — citizens cannot reach specific officials at the OAG from the body contact table.
 
 ---
 
@@ -126,21 +136,21 @@ St. Michael</pre>
 ### Claim 5 — Chief Parliamentary Counsel's Office: all phone cells empty (lines 21–26)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">| Role                            | Telephone |
-| PBX                             |           |
-| Fax                             |           |
-| Chief Parliamentary Counsel     |           |
-| Deputy Chief Parliamentary Counsel |        |</pre>
+<div class="claim-block-label">Currently in source markdown (lines 21–26)</div>
+<pre class="claim-block-content">| Role                               | Telephone |
+| PBX                                |           |
+| Fax                                |           |
+| Chief Parliamentary Counsel        |           |
+| Deputy Chief Parliamentary Counsel |           |</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">| Role                            | Telephone        |
-| PBX                             | (246) 535-0400   |
-| Fax                             | (246) 535-0560   |
-| Chief Parliamentary Counsel     | (246) 535-0409   |
-| Deputy Chief Parliamentary Counsel | (246) 535-0406 |</pre>
+<div class="claim-block-label">Should say (from gov.bb authoritative source)</div>
+<pre class="claim-block-content">| Role                               | Telephone        |
+| PBX                                | (246) 535-0400   |
+| Fax                                | (246) 535-0560   |
+| Chief Parliamentary Counsel        | (246) 535-0409   |
+| Deputy Chief Parliamentary Counsel | (246) 535-0406   |</pre>
 </div>
 
 - **Type:** phone
@@ -148,7 +158,7 @@ St. Michael</pre>
 - **Status:** discrepant — all four numbers are available from Tier 1 but absent from the page.
 - **Certainty:** 92%
 - **Confidence it's wrong:** 99%
-- **Citizen impact:** MEDIUM — drafting attorneys and legal practitioners who need to contact the CPC office cannot reach it from this page.
+- **Citizen impact:** MEDIUM — legal practitioners who need to contact the CPC office cannot reach it from this page.
 
 ---
 
@@ -174,7 +184,7 @@ St. Michael</pre>
 ### Claim 7 — Solicitor General's Chambers: all phone cells empty (lines 30–37)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently on the page</div>
+<div class="claim-block-label">Currently in source markdown (lines 30–37)</div>
 <pre class="claim-block-content">| Role                  | Telephone |
 | PBX                   |           |
 | Fax                   |           |
@@ -185,10 +195,10 @@ St. Michael</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Partially verifiable from Tier 1</div>
+<div class="claim-block-label">Partially verifiable — fax number conflict between two Tier 1 sources</div>
 <pre class="claim-block-content">| Role                  | Telephone         |
 | PBX                   | (246) 535-0400    |
-| Fax                   | (246) 435-9533    |
+| Fax                   | ??? (see below)   |
 | Solicitor General     | (246) 535-0528    |
 | Dep Solicitor General | (246) 535-0527    |
 | Dep Solicitor General | (246) 535-0530    |
@@ -196,10 +206,10 @@ St. Michael</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — SG PBX 535-0400, SG direct 535-0528, Deputy SG 535-0527/535-0530/535-0516, Fax 535-0561 (note: gov.bb lists fax 535-0561 for SG, while oag.gov.bb/Departments/Solicitor-General-s-Chambers lists fax 435-9533 — discrepancy between two Tier 1 sources; flagged as open question); [oag.gov.bb — Solicitor General's Chambers](https://oag.gov.bb/Departments/Solicitor-General-s-Chambers/)
-- **Status:** unverifiable (for the fax: two authoritative sources disagree — 535-0561 on gov.bb vs 435-9533 on oag.gov.bb); other numbers are verifiable
-- **Certainty:** 85% for the PBX and direct lines; 50% for the fax number
-- **Open question:** Which fax number is current for the Solicitor General's Chambers — (246) 535-0561 (gov.bb) or (246) 435-9533 (oag.gov.bb/Departments/Solicitor-General-s-Chambers)? Needs confirmation with the Solicitor General's office. Also note: the SG Chambers is at Spencer Building, Webster Business Park — a different building from the Jones Building (main OAG). This distinction is not surfaced on the alpha.gov.bb page.
+- **Sources:** [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — SG PBX 535-0400, SG direct 535-0528, Deputy SGs 535-0527/535-0530/535-0516, Fax 535-0561; [oag.gov.bb — Solicitor General's Chambers](https://oag.gov.bb/Departments/Solicitor-General-s-Chambers/) — Fax listed as (246) 435-9533 (different number and different area-code pattern).
+- **Status:** unverifiable for the fax number (two Tier 1 sources disagree — 535-0561 on gov.bb vs 435-9533 on oag.gov.bb); the direct-dial numbers are verifiable from gov.bb.
+- **Certainty:** 88% for PBX and direct lines; 40% for fax number
+- **Open question:** Which fax number is current for the Solicitor General's Chambers — (246) 535-0561 (gov.bb) or (246) 435-9533 (oag.gov.bb/Departments/Solicitor-General-s-Chambers/)? Needs confirmation with the Solicitor General's office.
 
 ---
 
@@ -222,34 +232,34 @@ St. Michael</pre>
 
 ---
 
-### Claim 9 — DPP address: "Frank Walcott BLDG, St. Michael" (lines 41–42)
+### Claim 9 — DPP address: "Frank Walcott BLDG, St. Michael" (source markdown lines 41–42)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently on the page</div>
+<div class="claim-block-label">Currently in source markdown (lines 41–42)</div>
 <pre class="claim-block-content">Frank Walcott BLDG
 St. Michael</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">4th Floor, Frank Walcott Building
+<div class="claim-block-label">Should say — but DPP location is now unverifiable (see note)</div>
+<pre class="claim-block-content">Frank Walcott Building
 Culloden Road
 St. Michael</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [Barbados Bar Association — Director of Public Prosecutions](https://www.barbadosbarassociation.com/members_directory.cfm?FirmID=75&PageAction=DetailsFirm) — "Frank Walcott Building, Culloden Road, St. Michael Barbados"; multiple secondary sources (Give Back Barbados, givebackbarbados.com) confirm "4th Floor, Frank Walcott Building, Culloden Road, Saint Michael"; [GIS — Frank Walcott building tag](https://gisbarbados.gov.bb/blog/tag/frank-walcott-building/) — confirms building is on Culloden Road; [gov.bb — Director of Public Prosecutions (donna-babb-agard)](https://www.gov.bb/Government/donna-babb-agard) — links DPP to this office.
-- **Status:** discrepant — "Frank Walcott BLDG" is a non-standard abbreviation. The street ("Culloden Road") and floor ("4th Floor") are both missing.
-- **Certainty:** 90% that full address is 4th Floor, Frank Walcott Building, Culloden Road, St. Michael (Barbados Bar Association is Tier 3; no Tier 1 source on oag.gov.bb's DPP department page currently provides the full street address — only the main office Jones Building address appears in the footer).
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** MEDIUM — citizens who need to attend the DPP's office cannot determine the street address or floor from this page.
+- **Sources:** [Barbados Bar Association — Director of Public Prosecutions](https://www.barbadosbarassociation.com/members_directory.cfm?FirmID=75&PageAction=DetailsFirm) — "Frank Walcott Building, Culloden Road, St. Michael Barbados" (Tier 3); [oag.gov.bb — Director of Public Prosecutions](https://oag.gov.bb/Departments/Director-of-Public-Prosecutions/) — currently shows Jones Building, Webster's Business Park, Wildey, St. Michael (the OAG main address, not Frank Walcott Building) — this may indicate the DPP has relocated to the Jones Building, or the oag.gov.bb DPP page is using a generic footer address.
+- **Status:** unverifiable — the source markdown abbreviates "BLDG" (non-standard) and omits the street, but the two available sources now disagree on whether the DPP is still at Frank Walcott Building. The oag.gov.bb DPP page shows Jones Building; the Bar Association directory shows Frank Walcott Building.
+- **Certainty:** 50%
+- **Open question:** Has the DPP office relocated from Frank Walcott Building, Culloden Road to the Jones Building, Webster's Business Park? The alpha page should show the current physical address where citizens need to attend. Needs confirmation from the DPP's office.
+- **Citizen impact:** HIGH — citizens who need to attend the DPP's office may go to the wrong location.
 
 ---
 
 ### Claim 10 — DPP contact table: all phone cells empty (lines 44–48)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently on the page</div>
+<div class="claim-block-label">Currently in source markdown (lines 44–48)</div>
 <pre class="claim-block-content">| Role            | Telephone |
 | Director        |           |
 | Deputy Director |           |
@@ -257,7 +267,7 @@ St. Michael</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
+<div class="claim-block-label">Should say (from gov.bb authoritative source)</div>
 <pre class="claim-block-content">| Role            | Telephone        |
 | Director        | (246) 535-0500   |
 | Deputy Director | (246) 535-0492   |
@@ -288,37 +298,95 @@ role: "Attorney-General and Senior Minister coordinating Governance Policy"</pre
 </div>
 
 - **Type:** agency name / statistic
-- **Sources:** [gov.bb — Cabinet](https://www.gov.bb/cabinet.php) — "The Hon. Wilfred A. Abrahams, S.C., M.P. – Attorney-General and Senior Minister coordinating Governance Policy" (verbatim); [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/); [Nation News — Abrahams is new Attorney General (12 Feb 2026)](https://nationnews.com/2026/02/12/abrahams-is-new-attorney-general/). Note: oag.gov.bb/About/Meet-the-Attorney-General still shows the previous AG (Dale D. Marshall) — that page has not been updated post-February 2026 election; gov.bb/cabinet.php is the authoritative current source.
+- **Sources:** [gov.bb — Cabinet](https://www.gov.bb/cabinet.php) — "The Hon. Wilfred A. Abrahams, S.C., M.P. – Attorney-General and Senior Minister coordinating Governance Policy" (verbatim); [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/); [Nation News — Abrahams is new Attorney General (12 Feb 2026)](https://nationnews.com/2026/02/12/abrahams-is-new-attorney-general/).
 - **Status:** verified
 - **Certainty:** 99%
-- **Note:** The barbadosparliament.com member details page for Abrahams still shows his previous role "Minister of Home Affairs and Information" — that page has not been updated either. The gov.bb cabinet page is the current authoritative source.
+- **Note:** oag.gov.bb/About/Meet-the-Attorney-General/ still shows the previous AG (Hon. Dale D. Marshall) — that page has not been updated post-February 2026 election. gov.bb/cabinet.php is the authoritative current source. The OAG should update their own site.
+
+---
+
+### Claim 12 — OAG website URL (ministries.ts line 132)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently in ministries.ts (line 132)</div>
+<pre class="claim-block-content">{ label: "Website", type: "website", value: "http://www.oag.gov.bb/" }</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Should say</div>
+<pre class="claim-block-content">{ label: "Website", type: "website", value: "https://oag.gov.bb/" }</pre>
+</div>
+
+- **Type:** URL
+- **Sources:** [oag.gov.bb](https://oag.gov.bb/) — site serves over HTTPS; the canonical URL is `https://oag.gov.bb/` (HTTP redirects automatically but the data file should use the canonical HTTPS URL to avoid browser warnings).
+- **Status:** discrepant — HTTP rather than HTTPS; `www` subdomain redirects to bare domain.
+- **Certainty:** 95%
+- **Confidence it's wrong:** 90%
+- **Citizen impact:** LOW — redirect works, but canonical form should be stored.
+
+---
+
+### Claim 13 — Associated departments (ministries.ts lines 145–153)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently in ministries.ts</div>
+<pre class="claim-block-content">The Registration Department
+The Supreme Court
+The Police Department
+The Criminal Justice Research and Planning Unit</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">The Registration Department
+The Supreme Court
+The Police Department
+The Criminal Justice Research and Planning Unit</pre>
+</div>
+
+- **Type:** agency name
+- **Sources:** [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — lists exactly these four departments under the OAG.
+- **Status:** verified
+- **Certainty:** 95%
+
+---
+
+### Claim 14 — Email address (ministries.ts line 126)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently in ministries.ts (line 126)</div>
+<pre class="claim-block-content">{ label: "Email", type: "email", value: "ps@oag.gov.bb" }</pre>
+</div>
+
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Unverifiable — two Tier 1 sources disagree</div>
+<pre class="claim-block-content">gov.bb lists: ps@oag.gov.bb
+oag.gov.bb lists: ps.oag@barbados.gov.bb</pre>
+</div>
+
+- **Type:** email
+- **Sources:** [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — `ps@oag.gov.bb`; [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) — `ps.oag@barbados.gov.bb`.
+- **Status:** unverifiable — two Tier 1 sources give different email addresses. ministries.ts uses the gov.bb variant (`ps@oag.gov.bb`). The oag.gov.bb variant uses the standard `@barbados.gov.bb` government domain pattern.
+- **Certainty:** 60% that `ps@oag.gov.bb` is correct (it may be an alias; the `@barbados.gov.bb` pattern is the government standard)
+- **Open question:** Which email is the current canonical Permanent Secretary address — `ps@oag.gov.bb` (gov.bb) or `ps.oag@barbados.gov.bb` (oag.gov.bb)? Needs confirmation from the OAG.
 
 ---
 
 ## Additional findings (not on the page but should be)
 
-### A. OAG email address missing from content
-
-The email `ps.oag@barbados.gov.bb` (oag.gov.bb) / `ps@oag.gov.bb` (gov.bb) is not present in the source markdown. The inventory at `_inventory.md` records both variants. The canonical email published on oag.gov.bb's own Contact page is `ps.oag@barbados.gov.bb`; gov.bb publishes `ps@oag.gov.bb`. This discrepancy between two Tier 1 sources needs agency confirmation. The page should surface at least one email contact.
-
-- **Checked:** [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) — lists `ps.oag@barbados.gov.bb`; [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — lists `ps@oag.gov.bb`
-- **Open question:** Which email address is canonical — `ps.oag@barbados.gov.bb` or `ps@oag.gov.bb`?
-
-### B. Solicitor General's Chambers is in a different building
+### A. Solicitor General's Chambers is in a different building from the main OAG
 
 oag.gov.bb explicitly lists the Solicitor General's Chambers at "Spencer Building, Webster Business Park, Wildey, St. Michael BB14006" — a distinct building from the Jones Building (main OAG). Citizens directed to the OAG at Jones Building who need the Solicitor General will be at the wrong building. The page should note this distinction.
 
 - **Source:** [oag.gov.bb — Solicitor General's Chambers](https://oag.gov.bb/Departments/Solicitor-General-s-Chambers/)
 
-### C. OAG website URL in ministries.ts
+### B. DPP location ambiguity — possible relocation
 
-`ministries.ts` line 132 lists the OAG website as `http://www.oag.gov.bb/` (HTTP, not HTTPS). The site redirects to `https://oag.gov.bb/`. The link should use `https://oag.gov.bb/`.
+oag.gov.bb/Departments/Director-of-Public-Prosecutions/ currently shows the Jones Building address for the DPP, while the Barbados Bar Association directory and secondary sources show Frank Walcott Building, Culloden Road. This conflict should be resolved with the DPP's office directly. If the DPP has moved to Jones Building, the source markdown address is wrong in two ways: wrong building name and wrong location.
 
-- **Source:** [oag.gov.bb](https://oag.gov.bb/) — site serves over HTTPS; HTTP redirects automatically but the data file should use the canonical HTTPS URL.
+### C. Source markdown address (lines 5–6) remains incomplete despite live page rendering correctly
 
-### D. Associated departments — Prison and Immigration missing (ministries.ts correct)
-
-The task brief noted to check whether Prison and Immigration are associated departments. Neither appears in `ministries.ts` (lines 145–153) or on gov.bb/Ministries/attorney-general. The four departments listed in ministries.ts (Registration Department, Supreme Court, Police Department, Criminal Justice Research and Planning Unit) match gov.bb exactly. No discrepancy.
+The source markdown still reads only "Webster's Business Park / St. Michael" without the building name or locality. This is harmless while the live page renders from `ministries.ts`, but creates a latent bug risk if the markdown content is ever rendered independently or reused. The markdown should be updated to match the ministries.ts full address.
 
 ---
 
@@ -327,18 +395,14 @@ The task brief noted to check whether Prison and Immigration are associated depa
 - [oag.gov.bb — Contact Us](https://oag.gov.bb/contact)
 - [oag.gov.bb — Home](https://oag.gov.bb/)
 - [oag.gov.bb — Meet the Attorney General](https://oag.gov.bb/About/Meet-the-Attorney-General/)
-- [oag.gov.bb — Mission and Vision](https://oag.gov.bb/About/Mission-Vision/)
-- [oag.gov.bb — Strategic Plan and Mandate](https://oag.gov.bb/About/Strategic-Plan-Mandate/)
 - [oag.gov.bb — Chief Parliamentary Counsel](https://oag.gov.bb/Departments/Chief-Parliamentary-Counsel/)
 - [oag.gov.bb — Solicitor General's Chambers](https://oag.gov.bb/Departments/Solicitor-General-s-Chambers/)
 - [oag.gov.bb — Director of Public Prosecutions](https://oag.gov.bb/Departments/Director-of-Public-Prosecutions/)
 - [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general)
 - [gov.bb — Cabinet](https://www.gov.bb/cabinet.php)
-- [gov.bb — Director of Public Prosecutions (Donna Babb-Agard)](https://www.gov.bb/Government/donna-babb-agard)
 - [GIS — OAG Returning To Jones Building; Will Reopen October 1](https://gisbarbados.gov.bb/blog/oag-returning-to-jones-building-will-reopen-october-1/)
-- [GIS — Frank Walcott building tag](https://gisbarbados.gov.bb/blog/tag/frank-walcott-building/)
 - [Barbados Bar Association — Director of Public Prosecutions](https://www.barbadosbarassociation.com/members_directory.cfm?FirmID=75&PageAction=DetailsFirm)
 - [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/)
 - [Nation News — Abrahams is new Attorney General (12 Feb 2026)](https://nationnews.com/2026/02/12/abrahams-is-new-attorney-general/)
-- [barbadosparliament.com — Hon. Wilfred A. Abrahams](https://www.barbadosparliament.com/member/details/19)
+- [alpha.gov.bb — Office of the Attorney General (live)](https://alpha.gov.bb/government/organisations/office-of-the-attorney-general)
 - [_inventory.md — Office of the Attorney General phone](/docs/fact-check/_inventory.md)

@@ -2,20 +2,20 @@
 
 - **Live page:** <https://alpha.gov.bb/family-birth-relationships/get-death-certificate>
 - **Source files:** `src/content/get-death-certificate/index.md`, `src/content/get-death-certificate/start.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 13 claims reviewed — 7 verified, 2 discrepant, 4 unverifiable. Average certainty: **76%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 14 claims reviewed — 8 verified, 2 discrepant, 4 unverifiable. Average certainty: **77%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Opening hours are wrong (3:15pm stated; 3:30pm correct).** The page lists the Registration Department as open until 3:15pm Monday to Friday (index.md line 48). Two independent gov.bb sources (gov.bb/register-birth and gov.bb/Citizens/register-birth) confirm the hours as 8:30am to 3:30pm. This is the same discrepancy flagged on the sibling get-birth-certificate page — strongly suggesting the 3:15pm figure is a copy-and-paste from a May 2020 COVID-era temporary schedule, not current operating hours. Citizens arriving at 3:20pm could be turned away.
+1. **Opening hours are wrong (3:15pm stated; 3:30pm correct).** The page lists the Registration Department as open until 3:15pm Monday to Friday (index.md line 48). Two independent gov.bb sources (gov.bb/register-birth and gov.bb/Citizens/register-birth) confirm the hours as 8:30am to 3:30pm. This is the same discrepancy flagged on the sibling get-birth-certificate page — strongly suggesting the 3:15pm figure is a copy-and-paste from a May 2020 COVID-era temporary schedule, not current operating hours. Citizens arriving at 3:20pm could be turned away. **Still unresolved on 2026-05-29.**
 
-2. **"5 to 7 business days" turnaround is unverifiable from authoritative sources.** No Tier 1 source (barbadoslawcourts.gov.bb, gov.bb, GIS) publishes a "5 to 7 business days" standard for death certificate copies. The birth certificate fact-check flagged this identical phrasing as potentially having been copied between the two pages. UK government guidance (gov.uk) references certificates typically ready "within 3 days of the post-mortem" — but that is initial registration, not a copy turnaround. The GIS applying-for-certificates article that might confirm this returned HTTP 403 and is inaccessible. Until an authoritative source is found, this should be treated as unverified.
+2. **"5 to 7 business days" turnaround is unverifiable from authoritative sources.** No Tier 1 source (barbadoslawcourts.gov.bb, gov.bb, GIS) publishes a "5 to 7 business days" standard for death certificate copies. The birth certificate fact-check flagged this identical phrasing as potentially having been copied between pages. The GIS article that might confirm this returns HTTP 403 (still inaccessible on 2026-05-29). Until an authoritative source is found, this should be treated as unverified.
 
-3. **Overseas direct-dial number +1 (246) 535-9751 not confirmed on any Tier 1 source.** The same number appears on the sibling birth certificate page. barbadoslawcourts.gov.bb and gov.bb/Departments/registration both list only 535-9700 (PBX) and fax numbers. A third-party directory (GiveBackBarbados) associates 535-9751 with the Registrar's Secretary, which is consistent with it being a direct extension rather than a public-facing line — but no Tier 1 source has published it as the correct number for overseas callers.
+3. **Overseas direct-dial number +1 (246) 535-9751 not confirmed on any Tier 1 source.** The same number appears on the sibling birth certificate page. barbadoslawcourts.gov.bb and gov.bb/Departments/registration both list only 535-9700 (PBX) and fax numbers. A third-party directory (GiveBackBarbados) associates 535-9751 with the Registrar's Secretary, which is consistent with it being a direct extension — but no Tier 1 source has published it as the correct overseas contact.
 
-4. **Start.md asks for "cause of death" as a form field — but the page itself says cause-of-death certificates cannot be requested online.** This is an internal consistency issue: index.md line 29 states you must go in person to get a certificate of cause of death, yet start.md line 29 lists "the cause of death" as a mandatory field in the online form. This could confuse applicants — it may be that the form asks for cause of death as a search identifier (to locate the record), not as a means of obtaining a cause-of-death certificate, but the distinction is not drawn on the page.
+4. **Start.md asks for "cause of death" as a form field — but the page itself says cause-of-death certificates cannot be requested online.** index.md line 29 states you must go in person; start.md line 29 lists "the cause of death" as a mandatory form field. The distinction between "cause of death as a search identifier" vs. "applying for a cause-of-death certificate" is not drawn on the page, which could confuse applicants.
 
 ---
 
@@ -66,7 +66,7 @@ However, copies for a deceased Barbadian citizen can be requested at any point.<
 - **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "Completed application forms may also be mailed to the Registration Department and should be accompanied by a Money Order for the relevant processing fee as well as return postage. Money Orders should be made out to the Registrar of the Supreme Court." [gov.bb — Registering for a Death Certificate](https://www.gov.bb/register-death) — confirms mail pathway exists with Money Order.
 - **Status:** verified
 - **Certainty:** 90%
-- **Note:** The page correctly points overseas applicants to the Registration Department directly but does not specify the mail/Money Order procedure. Adding that detail would help overseas users. See also [get-birth-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-birth-certificate.md) Claim 1 (identical finding for birth certificates).
+- **Note:** The page correctly points overseas applicants to the Registration Department directly but does not specify the mail/Money Order procedure. Adding that detail would help overseas users. See also [get-birth-certificate.md](/docs/fact-check/get-birth-certificate.md) Claim 1 (identical finding for birth certificates).
 
 ---
 
@@ -103,10 +103,10 @@ However, copies for a deceased Barbadian citizen can be requested at any point.<
 </div>
 
 - **Type:** payment requirement
-- **Sources:** [gov.bb — EZPay](https://www.gov.bb/ezpay) — confirms EZPay+ as the Government of Barbados payments platform accepting credit cards, Visa Debit Cards, Direct Debit, Payce Digital, and the Barbados Postal Service; [EZPay.gov.bb](https://ezpay.gov.bb/login) — confirmed live portal. The general-purpose nature of EZPay+ as the government payment gateway is well-established; no specific confirmation that death certificates are processed through it was found, but the alpha.gov.bb platform design is consistent with EZPay+ integration.
+- **Sources:** [gov.bb — EZPay](https://www.gov.bb/ezpay) — confirms EZPay+ as the Government of Barbados payments platform accepting credit cards, Visa Debit Cards, Direct Debit, Payce Digital, and the Barbados Postal Service; [EZPay.gov.bb](https://ezpay.gov.bb/login) — confirmed live portal (accessed 2026-05-29). The general-purpose nature of EZPay+ as the government payment gateway is well-established.
 - **Status:** verified
 - **Certainty:** 85%
-- **Cross-reference:** see [get-birth-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-birth-certificate.md) Claim 3 — identical claim, same finding.
+- **Cross-reference:** see [get-birth-certificate.md](/docs/fact-check/get-birth-certificate.md) Claim 3 — identical claim, same finding.
 
 ---
 
@@ -123,10 +123,10 @@ However, copies for a deceased Barbadian citizen can be requested at any point.<
 </div>
 
 - **Type:** fee
-- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "BDS$5.00"; [gov.bb — Registering for a Death Certificate](https://www.gov.bb/register-death) — "Standard certificate: BDS$5.00 per copy"; [gov.bb — register-death](https://www.gov.bb/Citizens/register-death) — confirms $5.00. All three independent Tier 1 sources agree.
+- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — "BDS$5.00"; [gov.bb — Registering for a Death Certificate](https://www.gov.bb/register-death) — "Standard certificate copy: BDS$5.00 per copy"; [gov.bb — Citizens/register-death](https://www.gov.bb/Citizens/register-death) — confirms $5.00. All three independent Tier 1 sources agree.
 - **Status:** verified
 - **Certainty:** 95%
-- **Cross-reference:** see [_inventory.md](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md) — Birth certificate copy fee entry ($5 BBD); the death certificate fee is identical and confirmed on the same authoritative sources.
+- **Cross-reference:** see [_inventory.md](/docs/fact-check/_inventory.md) — Birth certificate copy fee entry ($5 BBD); the death certificate fee is identical and confirmed on the same authoritative sources.
 
 ---
 
@@ -156,7 +156,7 @@ St. Michael, Barbados, W.I.
 - **Status:** verified (address and phone); see Claim 7 for hours
 - **Certainty:** 95%
 - **Note:** gov.bb/register-death uses "New Supreme Court Complex" and "White Park Road" (spaced). barbadoslawcourts.gov.bb uses "Supreme Court Complex" and "Whitepark Road" (one word). Both refer to the same building. The page's "Supreme Court Complex, Whitepark Road" form matches the Barbados Judicial System's usage.
-- **Cross-reference:** see [_inventory.md](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md) — Supreme Court Complex / Registration Department entry; see [get-birth-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-birth-certificate.md) Claim 6.
+- **Cross-reference:** see [_inventory.md](/docs/fact-check/_inventory.md) — Supreme Court Complex / Registration Department entry; see [get-birth-certificate.md](/docs/fact-check/get-birth-certificate.md) Claim 6.
 
 ---
 
@@ -173,12 +173,12 @@ St. Michael, Barbados, W.I.
 </div>
 
 - **Type:** hours
-- **Sources:** [gov.bb — Register a Birth](https://www.gov.bb/register-birth) — "between the hours of 8:30 am and 3:30 pm Monday to Friday"; [gov.bb — Citizens/register-birth](https://www.gov.bb/Citizens/register-birth) — same hours confirmed. The GIS "Resumption of Service" article returned HTTP 403 (inaccessible). A Barbados Today article from May 2020 reports temporary hours of "8:30 a.m. and 3:15 p.m." for the Registration Department's COVID-era phased reopening — not current normal hours. Neither gov.bb/register-death nor barbadoslawcourts.gov.bb explicitly states hours for death certificate applications, but the same Registration Department operates both services; the 3:30pm close is the consistent figure across all authoritative gov.bb sources that do state hours.
+- **Sources:** [gov.bb — Register a Birth](https://www.gov.bb/register-birth) — "between the hours of 8:30 am and 3:30 pm Monday to Friday"; [gov.bb — Citizens/register-birth](https://www.gov.bb/Citizens/register-birth) — same hours confirmed (accessed 2026-05-29). The GIS "Resumption of Service" article returned HTTP 403 (still inaccessible on 2026-05-29). A Barbados Today article from May 2020 reports temporary hours of "8:30 a.m. and 3:15 p.m." for the Registration Department's COVID-era phased reopening — not current normal hours. Neither gov.bb/register-death nor barbadoslawcourts.gov.bb explicitly states hours for death certificate applications, but the same Registration Department operates both services; the 3:30pm close is the consistent figure across all authoritative gov.bb sources that do state hours.
 - **Status:** discrepant
 - **Certainty:** 85%
 - **Confidence it's wrong:** 85%
 - **Citizen impact:** MEDIUM — a citizen arriving at 3:20pm could be turned away. The same error appears on the sibling birth certificate page, strongly suggesting a shared template is using the 2020 COVID-era figure.
-- **Cross-reference:** identical discrepancy on [get-birth-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-birth-certificate.md) Claim 8, where the finding was first established.
+- **Cross-reference:** identical discrepancy on [get-birth-certificate.md](/docs/fact-check/get-birth-certificate.md) Claim 8, where the finding was first established.
 
 ---
 
@@ -196,20 +196,20 @@ St. Michael, Barbados, W.I.
 
 barbadoslawcourts.gov.bb gives no turnaround time for certificate copies.
 gov.bb/register-death gives no turnaround time.
-UK gov.uk guidance states certificates are "usually within 3 days of the
-post-mortem" — but this refers to initial registration issuance, not
-a standalone copy request.
 
 The identical "5 to 7 business days" phrasing and same-day emergency clause
 (Claim 9) both appear verbatim on the sibling get-birth-certificate page
 (index.md line 51). The birth-cert fact-check raised the possibility that
 this block of text may have been copied from the death certificate content
 — or vice versa. Either way, neither page has an authoritative source for
-the 5–7 day figure.</pre>
+the 5–7 day figure.
+
+GIS article on obtaining certificates returned HTTP 403 — still inaccessible
+on 2026-05-29.</pre>
 </div>
 
 - **Type:** turnaround time
-- **Checked:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — no turnaround stated; [gov.bb — Registering for a Death Certificate](https://www.gov.bb/register-death) — no turnaround stated; [gov.uk — When someone dies in Barbados](https://www.gov.uk/guidance/what-to-do-after-a-british-person-dies-in-barbados) — "usually within 3 days of the post-mortem" (but this is first-registration, not copy requests); [GIS — Applying For Certificates From Registration Dept.](https://gisbarbados.gov.bb/blog/how-to-apply-for-certificates-from-the-registration-department/) — HTTP 403, inaccessible; [alpha.gov.bb — Get a birth certificate](https://alpha.gov.bb/family-birth-relationships/get-birth-certificate) — identical "5 to 7 business days" language present.
+- **Checked:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — no turnaround stated; [gov.bb — Registering for a Death Certificate](https://www.gov.bb/register-death) — no turnaround stated; [GIS — Applying For Certificates From Registration Dept.](https://gisbarbados.gov.bb/blog/how-to-apply-for-certificates-from-the-registration-department/) — HTTP 403, inaccessible; [alpha.gov.bb — Get a birth certificate](https://alpha.gov.bb/family-birth-relationships/get-birth-certificate) — identical "5 to 7 business days" language present.
 - **Status:** unverifiable
 - **Certainty:** 40%
 - **Citizen impact:** MEDIUM — if the actual turnaround is faster (e.g. 3 days), the page sets expectations too conservatively. If it was copied between pages and only one is correct, one page is wrong.
@@ -264,7 +264,7 @@ and is dependent on the Coroner's Office.</pre>
 </div>
 
 - **Type:** process step
-- **Sources:** [gov.uk — When someone dies in Barbados](https://www.gov.uk/guidance/what-to-do-after-a-british-person-dies-in-barbados) — corroborates that post-mortems occur within approximately 48 hours subject to pathologist availability; delays are possible. [Barbados Judicial System — Registration of Deaths](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/registration-of-deaths) — confirms that a Medical Certificate of Death is required, which is consistent with coroner-pathway delays. General operational practice in jurisdictions with coronial systems confirms that coroner involvement delays death registration.
+- **Sources:** [Barbados Judicial System — Registration of Deaths](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/registration-of-deaths) — confirms that a Medical Certificate of Death is required, consistent with coroner-pathway delays; [gov.uk — When someone dies in Barbados](https://www.gov.uk/guidance/what-to-do-after-a-british-person-dies-in-barbados) — corroborates that post-mortems occur within approximately 48 hours subject to pathologist availability; delays are possible. General operational practice in jurisdictions with coronial systems confirms coroner involvement delays death registration.
 - **Status:** verified
 - **Certainty:** 80%
 - **Note:** This claim is more specific to death certificates than to birth certificates, and it is not on the birth certificate page. It is correctly stated here.
@@ -318,11 +318,11 @@ Registration Department.</pre>
 </div>
 
 - **Type:** email / phone
-- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — `registrarsupremecourt@barbados.gov.bb` and `1-246-535-9700` confirmed; fax `1-246-426-2405` also listed; no mention of 535-9751. [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — `1 (246) 535-9700` (PBX) confirmed; fax `1 (246) 427-8917`; email `registrar@lawcourts.gov.bb` (alternate). No 535-9751. A third-party directory at givebackbarbados.com (Tier 4 — could not be fetched directly) reportedly associates 535-9751 with the "Registrar's Secretary" desk.
+- **Sources:** [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) — `registrarsupremecourt@barbados.gov.bb` and `1-246-535-9700` confirmed; fax `1-246-426-2405` also listed; no mention of 535-9751. [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) — `1 (246) 535-9700` (PBX) confirmed; fax `1 (246) 427-8917`; email `registrar@lawcourts.gov.bb` (alternate). No 535-9751.
 - **Status:** partially verified — email and main number confirmed; overseas direct-dial not corroborated on Tier 1
 - **Certainty:** 70% (email + main: 95%; overseas number alone: 40%)
-- **Open question:** confirm whether +1 (246) 535-9751 is a current publicly-facing overseas contact for the Registration Department. If confirmed, add to [_inventory.md](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md).
-- **Cross-reference:** see [get-birth-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-birth-certificate.md) Claim 13 — identical finding.
+- **Open question:** confirm whether +1 (246) 535-9751 is a current publicly-facing overseas contact for the Registration Department. If confirmed, add to [_inventory.md](/docs/fact-check/_inventory.md).
+- **Cross-reference:** see [get-birth-certificate.md](/docs/fact-check/get-birth-certificate.md) Claim 13 — identical finding.
 
 ---
 
@@ -343,7 +343,8 @@ an applicant identity check — consistent with Registration Department practice
 
 The deceased's name, date of death, place of death, and National ID number are
 consistent with the official paper application form (Death-Cert-Appl.pdf hosted
-at barbadoslawcourts.gov.bb), which was found but could not be rendered (binary PDF).
+at barbadoslawcourts.gov.bb), which is confirmed live but is a scanned image-based
+PDF and cannot be read as machine text.
 
 The "cause of death" field raises a specific concern: index.md line 29 states
 that cause-of-death certificates cannot be obtained online (paper form required).
@@ -351,25 +352,46 @@ If the online form also asks for "cause of death", it should be clarified whethe
 this is a search/identification field (used to locate the death record) or
 a means of obtaining a cause-of-death certificate. The distinction is not drawn.
 
-The official paper application form PDF exists at:
-https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/applications-forms/Death-Cert-Appl.pdf
-but is binary and could not be rendered for field-level verification.</pre>
+The form page at https://alpha.gov.bb/family-birth-relationships/get-death-certificate/form
+loads (confirmed 2026-05-29) but renders as a JS component showing "Loading form…"
+and cannot be verified via WebFetch.</pre>
 </div>
 
 - **Type:** data requirement / document requirement
-- **Checked:** [Barbados Judicial System — Application for Death Certificate (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/applications-forms/Death-Cert-Appl.pdf) — confirmed live; binary PDF, not directly machine-readable. [Barbados Judicial System — Application Forms](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/application-forms/) — confirms the form exists and is the official form. Testable against the [live online form](https://alpha.gov.bb/family-birth-relationships/get-death-certificate/form).
-- **Status:** unverifiable (binary PDF; internal consistency concern)
+- **Checked:** [Barbados Judicial System — Application for Death Certificate (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/applications-forms/Death-Cert-Appl.pdf) — confirmed live (533.6 KB, scanned image-based, fields not machine-readable). [Barbados Judicial System — Application Forms](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/application-forms/) — confirms the form exists as official. Testable against the [live online form](https://alpha.gov.bb/family-birth-relationships/get-death-certificate/form) — page loads, form is JS-rendered (not scrapable).
+- **Status:** unverifiable (image-based PDF; internal consistency concern)
 - **Certainty:** 65%
 - **Citizen impact:** MEDIUM — if "cause of death" on the online form misleads citizens into thinking they can obtain a cause-of-death certificate online (which the page itself says they cannot), it would cause confusion and wasted visits to the department.
 - **Open question:** (1) confirm whether the online form's "cause of death" field is a search identifier or an application for a cause-of-death certificate; (2) manually inspect the paper form PDF to verify all declared fields.
 
 ---
 
+### Claim 14 — CTA links resolve (index.md line 31 / start.md line 31)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">index.md: <a data-start-link href="/family-birth-relationships/get-death-certificate/start">Complete the online form</a>
+start.md: <a data-start-link href="/family-birth-relationships/get-death-certificate/form">Start</a></pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct — both pages load</div>
+<pre class="claim-block-content">https://alpha.gov.bb/family-birth-relationships/get-death-certificate/start — loads (confirmed 2026-05-29)
+https://alpha.gov.bb/family-birth-relationships/get-death-certificate/form — loads, JS-rendered form (confirmed 2026-05-29)</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — Get a death certificate start page](https://alpha.gov.bb/family-birth-relationships/get-death-certificate/start) — confirmed live 2026-05-29; [alpha.gov.bb — Get a death certificate form](https://alpha.gov.bb/family-birth-relationships/get-death-certificate/form) — confirmed live 2026-05-29 (renders "Loading form…" — JS component, expected behavior).
+- **Status:** verified
+- **Certainty:** 95%
+
+---
+
 ## Cross-page consistency
 
 - **$5 BBD per certified copy** — consistent with `get-birth-certificate/index.md` Claim 4 and `register-a-birth/index.md` (line 23). All three verified at 95%. No discrepancy.
-- **Registration Department address** — consistent with [get-birth-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-birth-certificate.md) Claim 6, [register-a-birth.md](/home/gavin/frontend-alpha/docs/fact-check/register-a-birth.md) Claim 7, and [_inventory.md](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md) verified entry.
-- **Phone (246) 535-9700** — consistent with [_inventory.md](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md) verified entry.
+- **Registration Department address** — consistent with [get-birth-certificate.md](/docs/fact-check/get-birth-certificate.md) Claim 6, [register-a-birth.md](/docs/fact-check/register-a-birth.md) Claim 7, and [_inventory.md](/docs/fact-check/_inventory.md) verified entry.
+- **Phone (246) 535-9700** — consistent with [_inventory.md](/docs/fact-check/_inventory.md) verified entry.
 - **Opening hours 3:15pm — same discrepancy as on birth certificate page.** Both pages share this error. The fix applies to both.
 - **Turnaround "5 to 7 business days" and same-day emergency** — the identical text appears on both this page and the birth certificate page. The birth-cert fact-check hypothesised it may have been copied from this death-cert page. Neither page has a Tier 1 source. The claim is more contextually appropriate here (death = time pressure for estates, repatriation, insurance) than on the birth certificate page.
 - **Overseas phone +1 (246) 535-9751** — identical status on both pages: not found on any Tier 1 source.
@@ -391,21 +413,23 @@ but is binary and could not be rendered for field-level verification.</pre>
 
 ## Sources consulted
 
-- [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) (accessed 2026-05-28)
-- [Barbados Judicial System — Registration of Deaths](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/registration-of-deaths) (accessed 2026-05-28)
-- [Barbados Judicial System — Application for Death Certificate (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/applications-forms/Death-Cert-Appl.pdf) (accessed 2026-05-28 — binary PDF, not machine-readable)
-- [Barbados Judicial System — Application Forms](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/application-forms/) (accessed 2026-05-28)
-- [gov.bb — Registering for a Death Certificate](https://www.gov.bb/register-death) (accessed 2026-05-28)
-- [gov.bb — Citizens/register-death](https://www.gov.bb/Citizens/register-death) (accessed 2026-05-28)
-- [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) (accessed 2026-05-28)
-- [gov.bb — Register a Birth](https://www.gov.bb/register-birth) (accessed 2026-05-28 — for opening hours cross-reference)
-- [gov.bb — Citizens/register-birth](https://www.gov.bb/Citizens/register-birth) (accessed 2026-05-28 — for opening hours cross-reference)
-- [gov.bb — EZPay](https://www.gov.bb/ezpay) (accessed 2026-05-28)
-- [EZPay.gov.bb — login portal](https://ezpay.gov.bb/login) (accessed 2026-05-28)
-- [Office of the Attorney General — Registration Department](https://oag.gov.bb/Departments/Registration-Department/) (accessed 2026-05-28)
-- [gov.uk — When someone dies in Barbados](https://www.gov.uk/guidance/what-to-do-after-a-british-person-dies-in-barbados) (accessed 2026-05-28)
+- [alpha.gov.bb — Get a copy of a death certificate](https://alpha.gov.bb/family-birth-relationships/get-death-certificate) (accessed 2026-05-29)
+- [alpha.gov.bb — Get a death certificate start page](https://alpha.gov.bb/family-birth-relationships/get-death-certificate/start) (accessed 2026-05-29)
+- [alpha.gov.bb — Get a death certificate form](https://alpha.gov.bb/family-birth-relationships/get-death-certificate/form) (accessed 2026-05-29)
+- [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates) (accessed 2026-05-29)
+- [Barbados Judicial System — Registration of Deaths](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/registration-of-deaths) (accessed 2026-05-29)
+- [Barbados Judicial System — Application for Death Certificate (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/applications-forms/Death-Cert-Appl.pdf) (accessed 2026-05-29 — scanned image PDF, fields not machine-readable)
+- [Barbados Judicial System — Application Forms](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/application-forms/) (accessed 2026-05-29)
+- [gov.bb — Registering for a Death Certificate](https://www.gov.bb/register-death) (accessed 2026-05-29)
+- [gov.bb — Citizens/register-death](https://www.gov.bb/Citizens/register-death) (accessed 2026-05-29)
+- [gov.bb — Registration Department](https://www.gov.bb/Departments/registration) (accessed 2026-05-29)
+- [gov.bb — Register a Birth](https://www.gov.bb/register-birth) (accessed 2026-05-29 — for opening hours cross-reference)
+- [gov.bb — Citizens/register-birth](https://www.gov.bb/Citizens/register-birth) (accessed 2026-05-29 — for opening hours cross-reference)
+- [gov.bb — EZPay](https://www.gov.bb/ezpay) (accessed 2026-05-29)
+- [EZPay.gov.bb — login portal](https://ezpay.gov.bb/login) (accessed 2026-05-29)
+- [gov.uk — When someone dies in Barbados](https://www.gov.uk/guidance/what-to-do-after-a-british-person-dies-in-barbados) (accessed 2026-05-29)
 - [GIS — Applying For Certificates From Registration Dept.](https://gisbarbados.gov.bb/blog/how-to-apply-for-certificates-from-the-registration-department/) (returned HTTP 403 — inaccessible; URL recorded for manual follow-up)
 - [GIS — Registration Dept. & Magistrates' Courts Update](https://gisbarbados.gov.bb/blog/resumption-of-service-at-the-registration-department-and-magistrates-courts/) (returned HTTP 403 — inaccessible)
-- [alpha.gov.bb — Get a birth certificate](https://alpha.gov.bb/family-birth-relationships/get-birth-certificate) (accessed 2026-05-28 — cross-reference for shared turnaround/emergency language)
-- [_inventory.md](/home/gavin/frontend-alpha/docs/fact-check/_inventory.md) — Supreme Court address; Registration Department phone; birth-certificate fee entries
-- [get-birth-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-birth-certificate.md) — cross-page consistency (Claims 1, 3–9, 12–13)
+- [alpha.gov.bb — Get a birth certificate](https://alpha.gov.bb/family-birth-relationships/get-birth-certificate) (accessed 2026-05-29 — cross-reference for shared turnaround/emergency language)
+- [_inventory.md](/docs/fact-check/_inventory.md) — Supreme Court address; Registration Department phone; birth-certificate fee entries
+- [get-birth-certificate.md](/docs/fact-check/get-birth-certificate.md) — cross-page consistency (Claims 1, 3–9, 12–13)

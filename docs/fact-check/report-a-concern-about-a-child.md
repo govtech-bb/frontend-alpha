@@ -2,7 +2,7 @@
 
 - **Live page:** <https://alpha.gov.bb/public-safety/report-a-concern-about-a-child>
 - **Source file:** `src/content/report-a-concern-about-a-child.md`
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 15 claims reviewed — 6 verified, 5 discrepant, 4 unverifiable. Average certainty: **62%**.
 
 > **Crisis service — accuracy is critical.** This page directs citizens to report suspected child abuse. A wrong agency name, address, or phone number delays the protection of a child at risk. Every contact detail has been individually verified; discrepancies are flagged for urgent correction.
@@ -11,13 +11,13 @@
 
 ## Headline issues for triage
 
-1. **"Child Care Board" is the wrong agency name as of 2 January 2026.** The Child Care Board was formally merged into the Social Empowerment Agency (SEA) on 2 January 2026. The page uses "Child Care Board" and "CCB" throughout (7 instances). A citizen calling (246) 535-2800 will still reach the Fred Edghill Building where child protection services continue to operate, but all branding is wrong. The correct body is the Social Empowerment Agency (SEA). This is the single most pervasive discrepancy on the page.
+1. **"Child Care Board" is the wrong agency name.** The Social Empowerment Agency (SEA) was proclaimed on 2 January 2026 and now operates child protection services — SEA's "Director of Social Care and Delivery" (not a CCB officer) publicly represents the agency on child protection matters (Barbados Today, April 2026). The page uses "Child Care Board" and "CCB" throughout (7 instances). Note: `childcareboard.gov.bb` and `gov.bb` still display "Child Care Board" branding as of 2026-05-29, meaning neither agency website has been updated — but the GovBB page should nonetheless use the current legal entity name. Phone (246) 535-2800 and email childcareboard@barbados.gov.bb remain valid.
 
 2. **The Police address is wrong: "Roebuck Street" should be "Lower Roebuck Street".** The page lists the Barbados Police Service address as "Roebuck Street, Bridgetown, St. Michael." Every authoritative source — gov.bb, OAG, govserv.org — consistently names the headquarters as the "former Barclays Bank Complex on Lower Roebuck Street." Omitting "Lower" is a navigational error; Roebuck Street and Lower Roebuck Street are distinct sections.
 
 3. **Response-time claims ("immediately", "less than 24 hours") are unverifiable.** The page states that for children in serious danger, officers attend "immediately", and for children under 5, they begin investigation "in less than 24 hours." Neither the CCB website, gov.bb, the Child Care Board Act Cap. 381, nor any GIS press release publishes these specific response-time standards. They must be confirmed with the SEA before the page can be trusted on this critical operational claim.
 
-4. **A major new child protection statute was proclaimed on 2 January 2026.** A Child Protection Act (originating as "Child Protection Bill, 2023", proclaimed in force 2 January 2026) introduces mandatory reporting as a legal requirement. The page contains no legal reference and no mention of mandatory reporting obligations, which are now legally required for anyone who recognises abuse and is in proximity to children. This is a significant omission on a safeguarding page.
+4. **Mandatory reporting is now law — the page does not mention it.** The Child Protection Act (proclaimed 2 January 2026) makes mandatory reporting a legal requirement for professionals and caregivers, with penalties up to $100,000 or 10 years imprisonment for failure to report. The page's framing — "can report" — does not reflect this legal duty. This is a significant omission for a safeguarding page used by professionals (teachers, health providers, social workers).
 
 5. **The abuse definition on the page does not align with standard Barbados child-specific framing.** The definition given closely matches the WHO's elder-abuse / family-violence definition. Including "financial and material abuse" and "serious loss of dignity and respect" are standard elder-abuse categories in Barbados (per the Older Persons framework) but not standard child-protection categories. The definition is not factually wrong, but it conflates elder-abuse and child-abuse frameworks and is unverifiable against the new Child Protection Act 2026.
 
@@ -59,11 +59,12 @@ in use as of 2026-05-28.</pre>
 </div>
 
 - **Type:** agency name
-- **Sources:** [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/); [Barbados Today — Hundreds of children caught in wave of abuse (8 Apr 2026)](https://barbadostoday.bb/2026/04/08/hundreds-of-children-caught-in-wave-of-abuse-neglect-officials-reveal/); [Nation News — Neglect tops child abuse cases (10 Apr 2026)](https://nationnews.com/2026/04/10/neglect-tops-child-abuse-cases/); [Bajan Reporter — SEA launches Child Abuse Awareness Prevention Month (Apr 2026)](https://www.bajanreporter.com/2026/04/social-empowerment-agency-launches-child-abuse-awareness-prevention-month-activities/)
-- **Status:** discrepant — the Child Care Board no longer exists as a standalone body; merged into SEA on 2 January 2026
-- **Certainty:** 95%
-- **Confidence it's wrong:** 95%
+- **Sources:** [CBC Barbados — Most advanced child protection legislation (Jan 2026)](https://www.cbc.bb/main-stories/barbados-now-has-most-advanced-child-protection-legislation-in-the-region/); [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/); [Barbados Today — Hundreds of children caught in wave of abuse (8 Apr 2026)](https://barbadostoday.bb/2026/04/08/hundreds-of-children-caught-in-wave-of-abuse-neglect-officials-reveal/); [Nation News — Neglect tops child abuse cases (10 Apr 2026)](https://nationnews.com/2026/04/10/neglect-tops-child-abuse-cases/); [Bajan Reporter — SEA launches Child Abuse Awareness Prevention Month (Apr 2026)](https://www.bajanreporter.com/2026/04/social-empowerment-agency-launches-child-abuse-awareness-prevention-month-activities/)
+- **Status:** discrepant — child protection functions now operate under the Social Empowerment Agency (SEA), proclaimed 2 January 2026; CCB no longer exists as a standalone body
+- **Certainty:** 90%
+- **Confidence it's wrong:** 90%
 - **Citizen impact:** HIGH — a citizen searching for "Child Care Board" may not connect this with the SEA. The phone number still works, but the page branding is wrong.
+- **Note:** `childcareboard.gov.bb` and `gov.bb` still display "Child Care Board" branding as of 2026-05-29 — neither agency website has been updated. The GovBB page should use the current legal entity name (SEA) regardless.
 - **See also:** [apply-for-a-place-at-a-day-nursery.md](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) Claim 13; [get-support-for-a-victim-of-domestic-abuse.md](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) Claim 10
 
 ---
@@ -237,8 +238,8 @@ page's "can report" understates the duty.</pre>
 </div>
 
 - **Type:** eligibility + legal reference
-- **Sources:** [childcareboard.gov.bb — Reporting Child Abuse](https://childcareboard.gov.bb/reporting-child-abuse/); [Barbados Today — Forde stresses public's child protection role (24 Apr 2026)](https://barbadostoday.bb/2026/04/24/forde-stresses-publics-child-protection-role-as-laws-takes-effect/); [CBC Barbados — Most advanced child protection legislation (Jan 2026)](https://www.cbc.bb/main-stories/barbados-now-has-most-advanced-child-protection-legislation-in-the-region/)
-- **Status:** verified (factually correct) but incomplete
+- **Sources:** [childcareboard.gov.bb — Reporting Child Abuse](https://childcareboard.gov.bb/reporting-child-abuse/); [Barbados Today — Forde stresses public's child protection role (24 Apr 2026)](https://barbadostoday.bb/2026/04/24/forde-stresses-publics-child-protection-role-as-laws-takes-effect/) ("We have mandatory reporting as part of the child protection legislation. Fines up to $100,000 and prison sentences up to 10 years apply."); [CBC Barbados — Most advanced child protection legislation (Jan 2026)](https://www.cbc.bb/main-stories/barbados-now-has-most-advanced-child-protection-legislation-in-the-region/)
+- **Status:** verified (factually correct) but materially incomplete — mandatory reporting is now a legal duty with severe penalties; page should state this clearly
 - **Certainty:** 85%
 
 ---
@@ -394,23 +395,23 @@ orders. Agency name should be updated to "Social Empowerment Agency
 
 ## Additional findings (not on the page but should be)
 
-- **Mandatory reporting under the new Child Protection Act 2026.** Since 2 January 2026 mandatory reporting is a legal requirement. The page should note duties for teachers, social workers, healthcare professionals, daycare employees.
+- **Mandatory reporting under the Child Protection Act 2026.** Since 2 January 2026, mandatory reporting is a legal requirement with penalties up to $100,000 or 10 years imprisonment. The page should note duties for teachers, social workers, healthcare professionals, daycare employees, and parents/guardians. Good-faith reporters are legally protected even if information proves inaccurate.
 - **No governing legislation cited.** Relevant Acts: Child Care Board Act Cap. 381; Child Protection Act (proclaimed 2 Jan 2026); Prevention of Cruelty to Children Act Cap. 145.
 - **SEA contact block.** When updating, use: Social Empowerment Agency (SEA) — Children's Services, Fred Edghill Building, Cheapside, Bridgetown; (246) 535-2800; childcareboard@barbados.gov.bb.
-- **"Child care officer" terminology** may have changed post-SEA — confirm with agency.
+- **"Child care officer" terminology** (line 47) may have changed post-SEA — confirm with agency whether the role title is now "SEA officer" or another designation.
 
 ---
 
 ## Sources cited
 
-- [childcareboard.gov.bb — Reporting Child Abuse](https://childcareboard.gov.bb/reporting-child-abuse/)
+- [childcareboard.gov.bb — Reporting Child Abuse](https://childcareboard.gov.bb/reporting-child-abuse/) — live 2026-05-29
 - [childcareboard.gov.bb — Child Abuse](https://childcareboard.gov.bb/child-abuse/)
-- [childcareboard.gov.bb — Contact](https://childcareboard.gov.bb/contact-page/contact/)
+- [childcareboard.gov.bb — Contact](https://childcareboard.gov.bb/contact-page/contact/) — live 2026-05-29
 - [childcareboard.gov.bb — Legal (Child Care Board Act Cap. 381)](https://childcareboard.gov.bb/legal/)
-- [gov.bb — The Child Care Board](https://www.gov.bb/State-Bodies/child-care-board)
-- [gov.bb — The Police Department](https://www.gov.bb/Departments/police-department)
-- [OAG — The Barbados Police Service](https://oag.gov.bb/Departments/Police/)
-- [govserv.org — The Barbados Police Service (2025)](https://www.govserv.org/BB/Bridgetown/200807736607301/The-Barbados-Police-Service)
+- [gov.bb — The Child Care Board](https://www.gov.bb/State-Bodies/child-care-board) — live 2026-05-29; still shows "Child Care Board" branding
+- [gov.bb — The Police Department](https://www.gov.bb/Departments/police-department) — live 2026-05-29; confirms "Lower Roebuck Street"
+- [OAG — The Barbados Police Service](https://oag.gov.bb/Departments/Police/) — live 2026-05-29; confirms "Lower Roebuck Street"
+- [tbps.gov.bb](https://www.tbps.gov.bb/) — live 2026-05-29
 - [HCCH — Barbados Central Authority](https://www.hcch.net/en/states/authorities/details3/?aid=1131)
 - [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/)
 - [Barbados Today — Hundreds of children caught in wave of abuse (8 Apr 2026)](https://barbadostoday.bb/2026/04/08/hundreds-of-children-caught-in-wave-of-abuse-neglect-officials-reveal/)

@@ -3,20 +3,22 @@
 - **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-energy-and-business-development>
 - **Source file:** `src/content/ministries/ministry-of-energy-and-business-development.md`
 - **Data file:** `src/data/ministries.ts` (lines 288–347)
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 32 claims reviewed — 25 verified, 4 discrepant, 3 unverifiable. Average certainty: **82%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Chief Project Analyst phone number is wrong.** The directory on the page lists `(246) 535-2506` for the Chief Project Analyst role. The energy.gov.bb Our Team page (Tier 1) lists the Chief Project Analyst (Mrs. Claire Corbin) at `+1246 535-2536`. The connectb1m.com directory (sourced from the gov.bb directory) also lists 535-2506 for this role, creating a genuine conflict between two secondary-derived sources. However, the energy.gov.bb Our Team page is a first-party Tier 1 source and should be authoritative for current personal assignments. This warrants agency confirmation.
+*2026-05-29 refresh: live page content is unchanged from 2026-05-28 pass. All four prior findings remain open — no reversals. No new Tier-A findings.*
+
+1. **Chief Project Analyst phone number is wrong.** The directory on the page lists `(246) 535-2506` for the Chief Project Analyst role. The energy.gov.bb Our Team page (Tier 1, re-confirmed 2026-05-29) still lists the Chief Project Analyst (Mrs. Claire Corbin) at `+1246 535-2536`. The conflict persists: gov.bb Ministries directory shows 535-2506; energy.gov.bb Our Team shows 535-2536. Agency confirmation needed to determine which is current.
 
 2. **Both Facebook URLs on the page point to non-canonical slugs.** The page lists `facebook.com/energydivisionbarbados` and `facebook.com/energydivision-barbados` as two separate Facebook entries. The actual canonical Facebook page for the Energy Division is `facebook.com/EnergyBarbados/` — confirmed by Facebook search results, GIS Barbados's own Facebook posts linking to that page, and the Energy Division's own published contact info. The two slugs listed on the page do not exist as active standalone pages; `EnergyBarbados` is the live canonical URL. Citizens clicking either listed link may encounter a dead end or be redirected unexpectedly.
 
-3. **`ministries.ts` minister role title omits "Commerce".** The `ministries.ts` data file (line 294) records the minister's role as "Minister of Energy, Business Development and Commerce, and Senior Minister coordinating Productive Sector" — this is **correct**. However, the ministry slug name "Ministry of Energy and Business Development" does not include "Commerce", whereas the Barbados Parliament cabinet list (February 2026) and Barbados Today report the portfolio as "Energy, Business Development and Commerce". The ministry's own commercial website is `commerce.gov.bb`. The omission of "Commerce" from the ministry name as displayed to citizens may create confusion.
+3. **`ministries.ts` minister role title omits "Commerce".** The `ministries.ts` data file (line 294) records the minister's role as "Minister of Energy, Business Development and Commerce, and Senior Minister coordinating Productive Sector" — this is **correct**. However, the ministry slug name "Ministry of Energy and Business Development" does not include "Commerce", whereas the Barbados Parliament cabinet list (February 2026, re-confirmed 2026-05-29) reports the portfolio as "Energy, Business Development and Commerce". The ministry's own commercial website is `commerce.gov.bb`. The omission of "Commerce" from the ministry name as displayed to citizens may create confusion.
 
-4. **Renewable Energy Licence link resolves to a raw PDF with no context.** The inline hyperlink on line 5 (`?wpdmdl=1885&ind=1616784951507`) downloads a PDF directly from energy.gov.bb with no landing page. The PDF was created in Adobe InDesign CS6 in November 2017 and is 430 KB. There is no way to verify from public sources that this is the current, in-force version of the licence form — the Electric Light and Power Act has been amended multiple times since 2017 (2015, 2019, 2021 amendments confirmed), and an Electricity Supply Bill 2023 is in draft. Citizens clicking this link receive an undated PDF download with no surrounding guidance.
+4. **Renewable Energy Licence link resolves to a raw PDF with no context.** The inline hyperlink on line 5 (`?wpdmdl=1885&ind=1616784951507`) downloads a PDF directly from energy.gov.bb with no landing page. The PDF was created in Adobe InDesign CS6 in November 2017 and is 430 KB. There is no way to verify from public sources that this is the current, in-force version of the licence form — the Electric Light and Power Act has been amended multiple times since 2017 (2015, 2019, 2021 amendments confirmed), and an Electricity Supply Bill 2023 is in draft. Citizens clicking this link receive an undated PDF download with no surrounding guidance. Re-confirmed 2026-05-29: URL still resolves to the same 430 KB PDF.
 
 ---
 

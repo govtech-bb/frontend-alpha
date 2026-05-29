@@ -2,8 +2,8 @@
 
 - **Live page:** <https://alpha.gov.bb/public-safety/get-support-for-a-victim-of-domestic-abuse>
 - **Source file:** `src/content/get-support-for-a-victim-of-domestic-abuse.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 17 claims reviewed — 7 verified, 4 discrepant, 6 unverifiable. Average certainty: **62%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 20 claims reviewed — 9 verified, 4 discrepant, 7 unverifiable. Average certainty: **63%**.
 
 > **Crisis service — accuracy is critical.** Phone numbers on this page are life-safety claims. A person in danger who dials a wrong or disconnected number is placed at increased risk. Every phone number below has been individually verified; those that cannot be corroborated from authoritative sources are flagged for urgent agency confirmation.
 
@@ -11,13 +11,13 @@
 
 ## Headline issues for triage
 
-1. **"Crisis Hotline on 435-8222" is the BPW Crisis Centre, not a government hotline.** The page presents 435-8222 under "Urgent assistance" as if it were a named government crisis line. In fact this number belongs to the Barbados Professional Women (BPW) Crisis Centre and Shelter — a non-governmental organisation. The label should say "BPW Crisis Centre" so a citizen in crisis knows who will answer. Misidentifying an NGO line as a generic government "Crisis Hotline" could undermine trust if the call is answered unexpectedly, and omits the caller's right to know they are contacting an NGO. (Sources: BPW Crisis Centre page; findahelpline.com Barbados.)
+1. **"Crisis Hotline on 435-8222" is the BPW Crisis Centre, not a government hotline.** The page presents 435-8222 under "Urgent assistance" as if it were a named government crisis line. In fact this number belongs to the Barbados Professional Women (BPW) Crisis Centre and Shelter — a non-governmental organisation. The label should say "BPW Crisis Centre" so a citizen in crisis knows who will answer. Misidentifying an NGO line as a generic government "Crisis Hotline" could undermine trust if the call is answered unexpectedly, and omits the caller's right to know they are contacting an NGO. Confirmed again on 2026-05-29: BPW's own page lists 435-8222 as their crisis hotline and also lists 430-7323 as the separate FCIU number.
 
-2. **Two of the three FCU phone numbers cannot be corroborated.** The page lists three FCU numbers: 435-8222, 845-0623, and 836-5070. 435-8222 is the BPW hotline (not the FCU). 845-0623 appears as a BPW WhatsApp/calls number (not FCU). 836-5070 cannot be found in any authoritative source consulted. The official FCU number from the Barbados Mental Health Services Directory is 430-7316/7323; the Barbados Police Service's own Facebook page lists 430-7328. The current page omits these verified FCU numbers entirely. For a crisis service, unverifiable phone numbers are a life-safety issue.
+2. **Two of the three FCU phone numbers cannot be corroborated.** The page lists three FCU numbers: 435-8222, 845-0623, and 836-5070. 435-8222 is the BPW hotline (not the FCU). 845-0623 appears as a BPW WhatsApp/calls number (not FCU). 836-5070 cannot be found in any authoritative source consulted. The official FCU/FCIU number confirmed by the BPW Crisis Centre page is 430-7323; the Barbados Mental Health Services Directory also lists 430-7316/7323; the Barbados Police Service Facebook page lists 430-7328. The current page omits all verified FCU numbers. For a crisis service, unverifiable phone numbers are a life-safety issue.
 
 3. **"Black Rock Police Station Annex" — "Annex" is not corroborated.** Every authoritative source names the location as "Old Black Rock Police Station, Black Rock, St. Michael." No source uses the word "Annex." A citizen searching a map or asking for directions to the "Annex" may not find it.
 
-4. **"Victim Rights Form 7" has no authoritative source.** The page states the FCU "may also help victims apply for additional trauma-related support through the Victim Rights Form 7." No authoritative Barbados source — not the Domestic Violence (Protection Orders) Act, not the 2016 Amendment, not gov.bb, not GIS — names a form called "Victim Rights Form 7." This reference is unverifiable and may be incorrect. For a victim seeking support, being told to ask for a form that doesn't exist (or has a different name) wastes critical time.
+4. **"Victim Rights Form 7" has no authoritative source.** The page states the FCU "may also help victims apply for additional trauma-related support through the Victim Rights Form 7." No authoritative Barbados source — not the Domestic Violence (Protection Orders) Act, not the 2016 Amendment, not the Baker McKenzie survey, not gov.bb, not GIS — names a form called "Victim Rights Form 7." The Baker McKenzie survey only identifies Form 1 (application) and Form 2 (summons) in the Schedule of the Act. This reference is unverifiable and may be incorrect.
 
 5. **No legal reference given.** The page describes protection orders extensively but never names the governing legislation — the Domestic Violence (Protection Orders) Act, CAP. 130A (as amended 2016-2). Citizens and advocates looking to understand their legal rights cannot do so from this page alone.
 
@@ -63,11 +63,11 @@ If you are in immediate danger, you can call the:
 </div>
 
 - **Type:** phone + agency name
-- **Sources:** [BPW Crisis Centre and Shelter (bpwbarbados.wordpress.com)](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — lists "246-435-8222" as the BPW Crisis Centre 24-hour hotline; [findahelpline.com — Barbados abuse helplines](https://findahelpline.com/countries/bb/topics/abuse-domestic-violence) — lists the same number under "BPW Crisis Centre"; [progress.guide — Barbados](https://progress.guide/atlas/north-america/barbados/) — confirms 435-8222 as BPW Crisis Centre
+- **Sources:** [BPW Crisis Centre and Shelter (bpwbarbados.wordpress.com)](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — lists "246-435-8222" as the BPW Crisis Centre 24-hour hotline; also lists 430-7323 as the separate FCIU number on the same page; [findahelpline.com — Barbados abuse helplines](https://findahelpline.com/countries/bb/topics/abuse-domestic-violence) — confirmed in prior pass as listing same number under "BPW Crisis Centre" (403 on 2026-05-29 re-check)
 - **Status:** discrepant — the phone number itself appears correct, but the label "Crisis Hotline" is wrong. 435-8222 is the Barbados Professional Women (BPW) Crisis Centre and Shelter, a non-governmental organisation, not a government hotline.
 - **Certainty:** 90% (number is correct for BPW; 95% that "Crisis Hotline" is the wrong label)
 - **Confidence it's wrong:** 90% (label); 10% (number)
-- **Citizen impact:** HIGH — a citizen who dials expecting a government crisis line will be connected to an NGO. The number is still helpful, but the misidentification undermines trust and may confuse someone in crisis. The BPW also operates a second number: 845-0623 (WhatsApp/calls).
+- **Citizen impact:** HIGH — a citizen who dials expecting a government crisis line will be connected to an NGO. The number is still helpful, but the misidentification undermines trust and may confuse someone in crisis.
 
 ---
 
@@ -80,13 +80,13 @@ If you are in immediate danger, you can call the:
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot verify as an FCU number</div>
-<pre class="claim-block-content">845-0623 appears in the BPW Crisis Centre page as one of BPW's own WhatsApp/calls numbers, not as an FCU number. It cannot be confirmed as belonging to the Family Conflict Unit from any authoritative source.</pre>
+<pre class="claim-block-content">845-0623 appears in the BPW Crisis Centre page as one of BPW's own WhatsApp/calls numbers (Mobile: 246-845-0623 (WhatsApp/calls)), not as an FCU number. It cannot be confirmed as belonging to the Family Conflict Unit from any authoritative source. The BPW page separately lists 430-7323 as the FCIU number.</pre>
 </div>
 
 - **Type:** phone
-- **Sources consulted:** [BPW Crisis Centre (bpwbarbados.wordpress.com)](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — lists "246-253-5071/ 845-0623 (whatsapp/ calls)" as BPW's own secondary number; [Barbados Mental Health Services Directory (fliphtml5.com)](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/) — lists FCU as 430-7316/7323 (no mention of 845-0623); [gov.bb — Police Department](https://www.gov.bb/Departments/police-department) — does not list FCU numbers
+- **Sources consulted:** [BPW Crisis Centre (bpwbarbados.wordpress.com)](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — lists "246-845-0623 (whatsapp/calls)" as BPW's own secondary number, and separately lists "246-430-7323" as the FCIU number; [Barbados Mental Health Services Directory (fliphtml5.com)](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/) — lists FCU as 430-7316/7323 (no mention of 845-0623); [gov.bb — Police Department](https://www.gov.bb/Departments/police-department) — does not list FCU numbers
 - **Status:** unverifiable as an FCU number — likely a BPW number attributed to the wrong organisation
-- **Certainty:** 20%
+- **Certainty:** 15%
 - **Open question:** Confirm with the Royal Barbados Police Force and the FCU directly whether 845-0623 is an FCU number. If not, remove it from the FCU contact block.
 - **Citizen impact:** HIGH — a victim calling 845-0623 expecting the police FCU may reach BPW instead, or a disconnected line.
 
@@ -101,13 +101,13 @@ If you are in immediate danger, you can call the:
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot verify — no authoritative source found</div>
-<pre class="claim-block-content">836-5070 does not appear in any authoritative source consulted: not on gov.bb, not in the Mental Health Services Directory, not in any GIS press release, not in the BPW directory, not in any Barbados Today or Nation News article retrieved. It is not listed as a known FCU, BPW, or police number.</pre>
+<pre class="claim-block-content">836-5070 does not appear in any authoritative source consulted: not on gov.bb, not in the Mental Health Services Directory, not in any GIS press release, not in the BPW directory (confirmed again 2026-05-29), not in any Barbados Today or Nation News article retrieved. It is not listed as a known FCU, BPW, or police number.</pre>
 </div>
 
 - **Type:** phone
-- **Sources consulted:** [gov.bb — Police Department](https://www.gov.bb/Departments/police-department); [BPW Crisis Centre](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/); [Barbados Mental Health Services Directory](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/); [findahelpline.com — Barbados](https://findahelpline.com/countries/bb/topics/abuse-domestic-violence); [Barbados Today — "Burning questions" (June 2020)](https://barbadostoday.bb/2020/06/26/burning-questions/) — none list 836-5070
+- **Sources consulted:** [gov.bb — Police Department](https://www.gov.bb/Departments/police-department); [BPW Crisis Centre](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/); [Barbados Mental Health Services Directory](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/); [UN Eastern Caribbean — FCU Equipment Handover](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit)
 - **Status:** unverifiable
-- **Certainty:** < 20%
+- **Certainty:** < 15%
 - **Open question:** Confirm with the Royal Barbados Police Force whether 836-5070 is a current FCU or police number. If unconfirmed, remove immediately — a wrong number on a crisis page is a life-safety risk.
 - **Citizen impact:** HIGH — if this is a dead or wrong number, a victim in crisis receives no help.
 
@@ -128,14 +128,14 @@ Black Rock, St. Michael</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [Barbados Mental Health Services Directory (fliphtml5.com)](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/) — "Old Black Rock Police Station, Black Rock, St. Michael"; [Barbados Advocate — "Black Rock Police Station opens"](https://www.barbadosadvocate.com/news/black-rock-police-station-opens) — confirms the renovated facility is the former/old Black Rock station housing the FCU; [UN Eastern Caribbean — Equipment Handover to Family Conflict Unit](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit) — references FCU at Black Rock
-- **Status:** discrepant — "Annex" is not used in any authoritative source. The correct name is "Old Black Rock Police Station." The parish is "St. Michael" (abbrev.) not "Saint Michael" (full), consistent with official usage throughout government sources.
+- **Sources:** [Barbados Mental Health Services Directory (fliphtml5.com)](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/) — "Old Black Rock Police Station, Black Rock, St. Michael"; [BPW Crisis Centre page](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — does not include "Annex" in FCIU address; [UN Eastern Caribbean — Equipment Handover](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit) — references FCU at Black Rock (no "Annex")
+- **Status:** discrepant — "Annex" is not used in any authoritative source. The correct name is "Old Black Rock Police Station." The parish abbreviation "St. Michael" is standard in official usage; "Saint Michael" (full) is non-standard.
 - **Confidence it's wrong:** 75% ("Annex" is non-standard; "Old Black Rock Police Station" is the attested name)
-- **Citizen impact:** HIGH — a victim using Google Maps or asking directions to the "Black Rock Police Station Annex" may not find the right building. "Old Black Rock Police Station" is the navigable landmark.
+- **Citizen impact:** HIGH — a victim using Google Maps or asking directions to the "Black Rock Police Station Annex" may not find the right building.
 
 ---
 
-### Claim 6 — "Family Conflict Unit (a specialist part of the Police)" (lines 29, 45) [HIGH STAKES]
+### Claim 6 — "Family Conflict Unit (a specialist part of the Police)" (lines 29, 45)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -148,7 +148,7 @@ Black Rock, St. Michael</pre>
 </div>
 
 - **Type:** agency name + descriptive
-- **Sources:** [UN Eastern Caribbean — Equipment Handover (2022)](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit) — confirms "Family Conflict Unit" as the official name, established 2013, within the Barbados Police Service; [BPW Crisis Centre page](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — also uses "Family Conflict Intervention Unit (FCIU)" as an alternative name; [Barbados Mental Health Services Directory](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/) — lists it as "Family Conflict Unit"
+- **Sources:** [UN Eastern Caribbean — Equipment Handover (2022)](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit) — confirms "Family Conflict Unit" as the official name within the Barbados Police Service; [BPW Crisis Centre page](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — also uses "Family Conflict Intervention Unit (FCIU)" as an alternative name; [Barbados Mental Health Services Directory](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/) — lists it as "Family Conflict Unit"
 - **Status:** verified
 - **Certainty:** 95%
 
@@ -202,11 +202,11 @@ Black Rock, St. Michael</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot verify — no authoritative source found</div>
-<pre class="claim-block-content">No authoritative Barbados source — not the Domestic Violence (Protection Orders) Act CAP. 130A, not the 2016 Amendment, not gov.bb, not GIS, not the Baker McKenzie survey, not the BPW page, not the Mental Health Services Directory — names a form called "Victim Rights Form 7." The Act's Schedule defines Forms 1–6 (application, summons, interim order, etc.); Form 7 is not described in any public source.</pre>
+<pre class="claim-block-content">No authoritative Barbados source names a form called "Victim Rights Form 7." The Baker McKenzie survey of the Domestic Violence (Protection Orders) Act identifies only Form 1 (application for civil protection order) and Form 2 (summons) in the Act's Schedule. The 2016 Amendment PDF is binary and not machine-readable, but no public source in any format names Form 7. The Act's Schedule, as publicly accessible, defines forms numbered 1–2 in surveyed sources; Forms 3–7 are not described in any public source consulted.</pre>
 </div>
 
 - **Type:** document requirement
-- **Sources consulted:** [Domestic Violence (Protection Orders) Act CAP. 130A](https://barbadosparliament-laws.com/en/showdoc/cs/130A); [Baker McKenzie — Topic 4](https://resourcehub.bakermckenzie.com/en/resources/fighting-domestic-violence/north-and-central--america/barbados/topics/4-protection-for-domestic-violence-victims-and-relief-granted); [2016 Amendment (OAG PDF)](https://oag.gov.bb/attachments/Domestic%20Violence%20(Protection%20Orders)%20(Amendment)%20Act,%202016-2.pdf) (PDF not machine-readable); [gov.bb — Police Department](https://www.gov.bb/Departments/police-department); [GIS Barbados](https://gisbarbados.gov.bb/) (searched for "victim rights form" — no results)
+- **Sources consulted:** [Domestic Violence (Protection Orders) Act CAP. 130A](https://barbadosparliament-laws.com/en/showdoc/cs/130A) (page failed to load on 2026-05-29 re-check); [Baker McKenzie — Topic 4](https://resourcehub.bakermckenzie.com/en/resources/fighting-domestic-violence/north-and-central--america/barbados/topics/4-protection-for-domestic-violence-victims-and-relief-granted) — identifies only Form 1 and Form 2; [2016 Amendment (OAG PDF)](https://oag.gov.bb/attachments/Domestic%20Violence%20(Protection%20Orders)%20(Amendment)%20Act,%202016-2.pdf) — binary PDF, not machine-readable; [gov.bb — Police Department](https://www.gov.bb/Departments/police-department); GIS Barbados (403 on re-check)
 - **Status:** unverifiable — no public source confirms this form name or number
 - **Certainty:** < 20%
 - **Open question:** Confirm with the Royal Barbados Police Force and/or the Bureau of Gender Affairs whether "Victim Rights Form 7" is an official police form, and if so, what its formal name is. If the form does not exist under this name, remove the reference. A victim asking for a non-existent form risks being dismissed or ignored.
@@ -222,7 +222,7 @@ Black Rock, St. Michael</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct (as of 2026-05-28)</div>
+<div class="claim-block-label">Verified correct (as of 2026-05-29)</div>
 <pre class="claim-block-content">The Social Empowerment Agency (SEA) was established on 2 January 2026 and formally launched on 7 January 2026. It consolidates the Child Care Board, Welfare Department, National Assistance Board, National Disabilities Unit, and Resilience and Reintegration Unit. The Child Care Board's child-protection functions continue within the SEA's dedicated children's department.</pre>
 </div>
 
@@ -230,8 +230,7 @@ Black Rock, St. Michael</pre>
 - **Sources:** [Barbados Today — "SEA launched: Islandwide overhaul of social services begins" (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/); [Caribbean News Global — "Barbados launches SEA"](https://caribbeannewsglobal.com/barbados-launches-sea-a-people-centered-approach-to-social-services/); [Barbados Today — "Social Empowerment Agency to launch next month" (Oct 2025)](https://barbadostoday.bb/2025/10/20/social-empowerment-agency-to-launch-next-month/)
 - **Status:** verified — the SEA launched after this page was published (Nov 2025) but before today's check. The parenthetical is now factually accurate.
 - **Certainty:** 90%
-- **Note:** The page was published 24 November 2025 when the SEA had not yet launched; the phrasing "now referred to as" was anticipatory at publication. As of January 2026 it is correct. Consider updating to "now the Social Empowerment Agency (SEA)" for clarity, since the CCB was not simply "referred to as" the SEA — it was formally merged into it. The CCB may still operate `childcareboard.gov.bb` while the SEA website is being established.
-- **See also:** memory entry [Child Care Board / SEA — day nurseries, contact, SEA merger Jan 2026](/home/gavin/frontend-alpha/.claude/agent-memory/gov-bb-fact-verifier/ref-child-care-board-sea-day-nurseries.md)
+- **Note:** The page was published 24 November 2025 when the SEA had not yet launched; the phrasing "now referred to as" was anticipatory at publication. As of January 2026 it is correct. Consider updating to "now the Social Empowerment Agency (SEA)" for clarity, since the CCB was not simply "referred to as" the SEA — it was formally merged into it.
 
 ---
 
@@ -248,7 +247,7 @@ Black Rock, St. Michael</pre>
 </div>
 
 - **Type:** descriptive + legal
-- **Sources:** [Domestic Violence (Protection Orders) (Amendment) Act, 2016-2 (OAG)](https://oag.gov.bb/attachments/Domestic%20Violence%20(Protection%20Orders)%20(Amendment)%20Act,%202016-2.pdf) — PDF binary, but the purpose of the amendment is described in the preamble: "to define domestic violence and to make greater provision for the protection of victims"; [Baker McKenzie — Topic 1: Legal Provisions (Barbados)](https://resourcehub.bakermckenzie.com/en/resources/fighting-domestic-violence/north-and-central--america/barbados/topics/1legal-provisions) — confirms the definition covers physical, emotional, financial, and sexual abuse
+- **Sources:** [Domestic Violence (Protection Orders) (Amendment) Act, 2016-2 (OAG)](https://oag.gov.bb/attachments/Domestic%20Violence%20(Protection%20Orders)%20(Amendment)%20Act,%202016-2.pdf) — purpose of amendment covers expanded definition; [Baker McKenzie — Topic 1: Legal Provisions (Barbados)](https://resourcehub.bakermckenzie.com/en/resources/fighting-domestic-violence/north-and-central--america/barbados/topics/1legal-provisions) — confirms the definition covers physical, emotional, financial, and sexual abuse
 - **Status:** verified
 - **Certainty:** 85%
 
@@ -303,14 +302,14 @@ Black Rock, St. Michael</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct</div>
+<div class="claim-block-label">Verified correct (general)</div>
 <pre class="claim-block-content">Consistent with standard police practice under the Act and the FCU's stated mandate: "ensures that girls and women receive better responses from the Barbados Police Force" including detailed data collection on family matters.</pre>
 </div>
 
 - **Type:** process step
 - **Sources:** [UN Eastern Caribbean — Equipment Handover to FCU](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit) — confirms FCU's role in detailed data collection; [Baker McKenzie — Topic 4](https://resourcehub.bakermckenzie.com/en/resources/fighting-domestic-violence/north-and-central--america/barbados/topics/4-protection-for-domestic-violence-victims-and-relief-granted)
 - **Status:** verified (general)
-- **Certainty:** 75% — the procedural steps are consistent with authoritative descriptions of the FCU's role, but no source enumerates this exact three-step list.
+- **Certainty:** 75% — procedural steps consistent with authoritative descriptions of the FCU's role, but no source enumerates this exact three-step list.
 
 ---
 
@@ -350,14 +349,14 @@ Black Rock, St. Michael</pre>
 </div>
 
 - **Type:** process step
-- **Sources consulted:** [UN Eastern Caribbean — Equipment Handover](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit) — FCU described as ensuring "victims receive better responses" including "another means of getting them the support"; [BPW Crisis Centre](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — shelter, counselling, referrals confirmed for BPW; [GIS — Nov 2025 NOW outreach article (nationnews.com)](https://nationnews.com/2025/12/07/now-on-the-move-to-combats-domestic-violence/) — mentions FCU, BPW, and Wellness Lifeline as support network
+- **Sources consulted:** [UN Eastern Caribbean — Equipment Handover](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit) — FCU described as ensuring "victims receive better responses" including support access; [BPW Crisis Centre](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/) — shelter, counselling, referrals confirmed for BPW
 - **Status:** unverifiable as specific FCU functions from Tier 1/2 sources — plausible given broader context
 - **Certainty:** 55%
 - **Open question:** Confirm with the FCU what services they directly provide versus refer to (BPW, social services, health).
 
 ---
 
-### Claim 17 — "Risk management and follow-up support" as aftercare (line 90–91)
+### Claim 17 — "Risk management and follow-up support" as aftercare (lines 90–91)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -377,28 +376,104 @@ Black Rock, St. Michael</pre>
 
 ---
 
+### Claim 18 — Digital safety notice (line 11)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">If you are worried that someone is monitoring your online activity, the safest way to access information on the support available is to use a friend's device or a computer at work or at a library.</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct (best practice)</div>
+<pre class="claim-block-content">Consistent with internationally recognised guidance for domestic abuse information pages (UK DASH, Women's Aid, etc.). This is standard safety advice.</pre>
+</div>
+
+- **Type:** descriptive + procedural instruction
+- **Sources:** This is an internationally established best-practice safety notice; verified as good practice by [Women's Aid digital safety guidance](https://www.womensaid.org.uk/information-support/what-is-domestic-abuse/internet-safety/); no Barbados-specific source needed.
+- **Status:** verified
+- **Certainty:** 90%
+
+---
+
+### Claim 19 — Page navigation links (all href values on live page)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">/ (Home)
+/services
+/government/organisations
+/what-we-mean-by-alpha
+/public-safety
+/feedback
+/terms-conditions
+https://job-boards.greenhouse.io/govtechbarbados?gh_src=ef2pb1uy9us (Careers)</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct — all links resolve</div>
+<pre class="claim-block-content">All internal links checked 2026-05-29:
+/ — loads (alpha.gov.bb homepage)
+/services — loads ("Alpha Services")
+/government/organisations — loads ("Departments, agencies and public bodies")
+/what-we-mean-by-alpha — loads ("What we mean by alpha")
+/public-safety — loads ("Public safety")
+/feedback — loads (feedback form)
+/terms-conditions — loads ("Terms & Conditions")
+External: Greenhouse careers link — not independently checked (low priority)</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb](https://alpha.gov.bb) — all internal pages fetched and confirmed live on 2026-05-29
+- **Status:** verified
+- **Certainty:** 95%
+- **Note:** No primary CTA link exists on this page (no "Start" button or external form link). The page is informational only with navigation links only.
+
+---
+
+### Claim 20 — Page routing / URL (frontmatter + content-directory.ts)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">Category: public-safety
+Slug: get-support-for-a-victim-of-domestic-abuse
+No protected: true flag in content-directory.ts</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">Live URL https://alpha.gov.bb/public-safety/get-support-for-a-victim-of-domestic-abuse confirmed live on 2026-05-29. No protected: true in content-directory.ts (line 696–701). Routing is correct.</pre>
+</div>
+
+- **Type:** URL + process step
+- **Sources:** [`src/data/content-directory.ts` lines 696–701](file:///home/gavin/frontend-alpha/src/data/content-directory.ts); live WebFetch of [https://alpha.gov.bb/public-safety/get-support-for-a-victim-of-domestic-abuse](https://alpha.gov.bb/public-safety/get-support-for-a-victim-of-domestic-abuse) confirmed HTTP 200 on 2026-05-29
+- **Status:** verified
+- **Certainty:** 99%
+
+---
+
 ## Additional findings (not on the page but should be)
 
-### A — Verified FCU phone numbers are missing
+### A — Verified FCU/FCIU phone numbers are missing
 
-The page lists three phone numbers for the FCU (435-8222, 845-0623, 836-5070), none of which can be confirmed as FCU numbers from authoritative sources. The following FCU numbers appear in verifiable sources and are absent from the page:
+The page lists three phone numbers for the FCU (435-8222, 845-0623, 836-5070), none of which can be confirmed as FCU numbers from authoritative sources. The BPW Crisis Centre's own page (re-checked 2026-05-29) lists 430-7323 as the separate FCIU number, distinct from their own BPW hotlines. Additional FCU numbers appear in verifiable sources and are absent from the page:
 
 - **430-7316 / 430-7323** — listed in the Barbados Mental Health Services Directory under "Family Conflict Unit, Old Black Rock Police Station"
+- **430-7323** — also listed on the BPW Crisis Centre page as the FCIU number (confirmed 2026-05-29)
 - **430-7328** — listed on the official Barbados Police Service Facebook page as the FCU number
 
-Recommended fix: replace the three unverified numbers with 430-7316/7323 and cross-check 430-7328, then add them to the page.
+Recommended fix: replace the three unverified numbers with 430-7316/7323 (and cross-check 430-7328), then add them to the page.
 
 ### B — No mention of the governing legislation
 
 The page would benefit from a brief reference to the Domestic Violence (Protection Orders) Act, CAP. 130A (as amended 2016). Citizens and advocates trying to understand their legal rights need this reference. Suggested addition: a short "Your legal rights" section linking to the Act on barbadosparliament-laws.com.
 
-### C — BPW Crisis Centre is not credited
+### C — BPW Crisis Centre is not credited as a separate organisation
 
-The BPW Crisis Centre is listed under the FCU's contact details but is not identified as a separate organisation. Citizens who call 435-8222 should know they are reaching an NGO that offers shelter, counselling, and referrals — not a police line. A separate "Other support" box naming BPW (with their number and services) would improve citizen navigation.
+The BPW Crisis Centre number is listed under the FCU's contact details but is not identified as a separate organisation. Citizens who call 435-8222 should know they are reaching an NGO that offers shelter, counselling, and referrals — not a police line. A separate "Other support" box naming BPW (with their number and services) would improve citizen navigation.
 
-### D — Online monitoring safety notice (line 11)
+### D — No source_url declared in content-directory.ts
 
-The page includes a best-practice digital safety notice: "If you are worried that someone is monitoring your online activity, the safest way to access information on the support available is to use a friend's device or a computer at work or at a library." This is good practice and consistent with internationally recommended guidance for domestic abuse pages. No changes needed.
+`src/data/content-directory.ts` line 699 has `source_url: ""`. A source URL (e.g. a gov.bb or FCU page) would help citizens and editors verify the information. Low priority given the page is informational.
 
 ---
 
@@ -407,8 +482,6 @@ The page includes a best-practice digital safety notice: "If you are worried tha
 - [gov.bb — The Police Department](https://www.gov.bb/Departments/police-department)
 - [Barbados National Numbering Plan (PDF)](https://telecoms.gov.bb/images/documents/NNP15.pdf)
 - [BPW Crisis Centre and Shelter (bpwbarbados.wordpress.com)](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/)
-- [findahelpline.com — Abuse and domestic violence helplines in Barbados](https://findahelpline.com/countries/bb/topics/abuse-domestic-violence)
-- [progress.guide — Barbados](https://progress.guide/atlas/north-america/barbados/)
 - [Barbados Mental Health Services Directory (fliphtml5.com)](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/)
 - [Barbados Police Service Facebook — Family Conflict Unit 430-7328](https://www.facebook.com/permalink.php/?story_fbid=979961630833230&id=100064582068302)
 - [UN Eastern Caribbean — Equipment Handover to Barbados Police Service Family Conflict Unit](https://easterncaribbean.un.org/en/252790-equipment-handover-eu-un-spotlight-initiative-barbados-police-service-family-conflict-unit)
@@ -421,7 +494,9 @@ The page includes a best-practice digital safety notice: "If you are worried tha
 - [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/)
 - [Barbados Today — Social Empowerment Agency to launch next month (Oct 2025)](https://barbadostoday.bb/2025/10/20/social-empowerment-agency-to-launch-next-month/)
 - [Caribbean News Global — Barbados launches SEA](https://caribbeannewsglobal.com/barbados-launches-sea-a-people-centered-approach-to-social-services/)
-- [Barbados Today — Burning questions (June 2020)](https://barbadostoday.bb/2020/06/26/burning-questions/)
-- [Barbados Today — Victims of violence still struggling in silence (Nov 2025)](https://nationnews.com/2025/11/29/victims-of-violence-still-struggling-in-silence/)
-- [Nation News — NOW on the move to combat domestic violence (Dec 2025)](https://nationnews.com/2025/12/07/now-on-the-move-to-combats-domestic-violence/)
-- [UN Women — Barbados National Domestic Violence Consultation (Mar 2025)](https://caribbean.unwomen.org/en/stories/news/2025/03/un-women-supports-barbados-national-domestic-violence-consultation)
+- [alpha.gov.bb — Services](https://alpha.gov.bb/services)
+- [alpha.gov.bb — Government organisations](https://alpha.gov.bb/government/organisations)
+- [alpha.gov.bb — What we mean by alpha](https://alpha.gov.bb/what-we-mean-by-alpha)
+- [alpha.gov.bb — Public safety](https://alpha.gov.bb/public-safety)
+- [alpha.gov.bb — Feedback](https://alpha.gov.bb/feedback)
+- [alpha.gov.bb — Terms & Conditions](https://alpha.gov.bb/terms-conditions)

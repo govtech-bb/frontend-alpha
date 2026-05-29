@@ -2,18 +2,18 @@
 
 - **Live page:** <https://alpha.gov.bb/travel-id-citizenship/ports-of-entry>
 - **Source file:** `src/content/ports-of-entry.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 23 claims reviewed — 19 verified, 3 discrepant, 2 unverifiable. Average certainty: **87%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 23 claims reviewed — 18 verified, 3 discrepant, 2 unverifiable. Average certainty: **86%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **"BTA" is the old name for Barbados's tourism agency.** The Barbados Tourism Authority (BTA) was restructured in 2014 into two successor bodies: Barbados Tourism Marketing Inc. (BTMI) and the Barbados Tourism Product Authority (BTPA). The acronym "BTA" now has no official standing. Using it on a government-facing page undermines accuracy. The entertainment at the Bridgetown Cruise Terminal is organised by one or both of these successors — most likely BTMI (which handles product/experience), but this needs agency confirmation since neither BTMI's nor BTPA's websites specifically document the quayside entertainment programme.
+1. **"BTA" is an obsolete acronym — still on the live page.** The Barbados Tourism Authority (BTA) was restructured in 2014 into two successor bodies: Barbados Tourism Marketing Inc. (BTMI) and the Barbados Tourism Product Authority (BTPA). The acronym "BTA" no longer refers to any official body. The entertainment at the Bridgetown Cruise Terminal is organised by one or both of these successors. The [BTMI corporate site](https://corporate.visitbarbados.org/our-company/) confirms the restructuring explicitly. The specific successor responsible for the quayside programme needs agency confirmation, but "BTA" is definitively wrong.
 
-2. **Port Saint Charles is on the northwest coast, not the western coast.** The official Port St. Charles website (portstcharles.com) describes the property as being on the "northwest coast of Barbados." This is corroborated by multiple independent sources describing it as on the "northwest tip." The page's description of "western coast" is imprecise at best and potentially misleading to a visitor navigating by cardinal direction.
+2. **Port Saint Charles is on the northwest coast, not the western coast.** The [official Port St. Charles website](https://www.portstcharles.com/) states it is "Located on the beautiful northwest coast of Barbados." The alpha.gov.bb page says "western coast," which is imprecise and inconsistent with the official operator's description.
 
-3. **Port Saint Charles offers homes up to six bedrooms, not five.** The page says "one bedroom to five bedroom homes" but the official portstcharles.com sales and rental listings include 6-bedroom units. Wikipedia's article on Port Saint Charles confirms the upper range is also noted variously as five or six depending on the phase of development. The official website lists 6-bedroom as the maximum.
+3. **Port Saint Charles offers homes up to six bedrooms, not five.** The alpha.gov.bb page says "one bedroom to five bedroom homes." The [official portstcharles.com](https://www.portstcharles.com/) lists 1-, 2-, 3-, 4-, and 6-bedroom configurations — no 5-bedroom is listed, and the upper limit is 6, not 5. Multiple independent villa rental aggregators confirm 6-bedroom units exist in the development.
 
 ---
 
@@ -51,8 +51,8 @@
 </div>
 
 - **Type:** agency name
-- **Sources:** [tourism.gov.bb — Agencies](https://www.tourism.gov.bb/About/Agencies/) — "The Barbados Tourism Authority" was split into Barbados Tourism Marketing Inc. (BTMI) and the Barbados Tourism Product Authority (BTPA) with effect from 2014. Gov.bb no longer lists any agency named "BTA." The BTMI website at [corporate.visitbarbados.org/our-company/](https://corporate.visitbarbados.org/our-company/) confirms it is the marketing and tourism-experience body. Neither BTMI nor BTPA's publicly accessible websites specifically document the quayside performance programme, so the specific successor agency responsible cannot be confirmed from public sources alone.
-- **Status:** discrepant — "BTA" is an obsolete acronym. The entertainment is organised by a successor body, most likely BTMI. The precise body should be confirmed with the Bridgetown Cruise Terminal operator (Barbados Port Inc.) or with BTMI directly.
+- **Sources:** [corporate.visitbarbados.org — Our Company](https://corporate.visitbarbados.org/our-company/) — "In 2014 the Barbados Government announced its newest division of tourism affairs, the Barbados Tourism Marketing Inc. (BTMI) and the Barbados Tourism Product Authority (BTPA). Built as a reform to the original Barbados Tourism Authority (BTA)..." The BTA no longer exists as an official body. The specific successor (BTMI or BTPA) responsible for the quayside programme is not confirmed from public sources; the marketing/experience role points to BTMI.
+- **Status:** discrepant — "BTA" is an obsolete acronym. The entertainment is organised by a successor body, most likely BTMI, confirmed with the Bridgetown Cruise Terminal operator (Barbados Port Inc.) or with BTMI directly.
 - **Certainty:** 80% (that "BTA" is wrong); 60% (that BTMI rather than BTPA is the responsible successor)
 - **Confidence it's wrong:** 80%
 - **Citizen impact:** LOW — visitors will still receive the entertainment; the error is a credibility and accuracy signal for the government page.
@@ -74,7 +74,7 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** descriptive / process
-- **Checked:** [barbadosport.com — Home](https://barbadosport.com/); [Barbados Tourism Marketing Inc. — Products](https://corporate.visitbarbados.org/product/); [tourism.gov.bb — Home](https://tourism.gov.bb/) — none describe the entertainment composition.
+- **Checked:** [barbadosport.com — Home](https://barbadosport.com/); [corporate.visitbarbados.org — Products](https://corporate.visitbarbados.org/); [tourism.gov.bb — Home](https://www.tourism.gov.bb/) — none describe the entertainment composition.
 - **Status:** unverifiable from public web — operational detail not published on any gov.bb source
 - **Certainty:** 55%
 - **Open question:** BTMI or the Bridgetown Cruise Terminal to confirm whether a steel band, dancers, and singer still constitute the standard quayside entertainment programme and whether this is current.
@@ -94,7 +94,7 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** URL
-- **Sources:** [barbadosport.com — Home](https://barbadosport.com/) — live and resolves to the official Barbados Port Inc. website. Note: the link uses `http://` — the site now redirects to `https://barbadosport.com/`. The link works but `https://` would be cleaner.
+- **Sources:** [barbadosport.com — Home](https://barbadosport.com/) — live and resolves to the official Barbados Port Inc. website. The site has recent news from December 2025, confirming it is actively maintained. The link uses `http://` — the site serves over HTTPS; updating to `https://` would be cleaner but the link resolves.
 - **Status:** verified — URL is live and correct
 - **Certainty:** 99%
 - **Note:** Minor: the link text is "BRIDGETOWN PORT" in all-caps; the organisation's brand name is "Barbados Port Inc." This is a presentation choice, not an error.
@@ -114,7 +114,7 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** statistic / descriptive
-- **Sources:** [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — confirms GAIA as the country's sole commercial airport. No secondary commercial airports operate in Barbados. The Barbados Tourism Master Plan (tourism.gov.bb) confirms the same.
+- **Sources:** [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — confirms GAIA as the country's sole commercial airport. No secondary commercial airports operate in Barbados.
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -133,7 +133,7 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** descriptive
-- **Sources:** [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — uses the identical description "GAIA is Barbados's only airport and the aviation hub of the Eastern Caribbean"; [tourism.gov.bb — GAIA](https://tourism.gov.bb/About/Agencies/GAIA/) — confirms GAIA's hub role.
+- **Sources:** [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — uses identical description "GAIA is Barbados's only airport and the aviation hub of the Eastern Caribbean."
 - **Status:** verified — this is the exact phrasing used on the official gov.bb state bodies page.
 - **Certainty:** 95%
 
@@ -171,10 +171,10 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** statistic / descriptive
-- **Sources:** [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — uses the near-identical wording "Nonstop flights occur daily to London, Toronto, New York, and Miami as well as to most of our Caribbean neighbours." This appears to be the source text the page is drawing from.
+- **Sources:** [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — uses the near-identical wording "Nonstop flights occur daily to London, Toronto, New York, and Miami as well as to most of our Caribbean neighbours." This appears to be the source text the page draws from.
 - **Status:** verified against gov.bb
 - **Certainty:** 90%
-- **Note:** Flight schedules change seasonally. While daily nonstop service to these four cities is well-established, this claim should be treated as broadly directional (general description of route network) rather than a guaranteed daily schedule claim. No single source confirms all four cities have maintained daily nonstop service through 2026, though the seasonal winter market strongly supports London and Toronto at minimum.
+- **Note:** Flight schedules change seasonally. This claim should be treated as broadly directional (general description of route network) rather than a guaranteed daily schedule claim.
 
 ---
 
@@ -191,8 +191,8 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** address / location
-- **Sources:** [Grantley Adams International Airport — Wikipedia](https://en.wikipedia.org/wiki/Grantley_Adams_International_Airport) — "The airport lies in the south-eastern portion of the parish of Christ Church, close to the southern tip of the island." [tourism.gov.bb — GAIA](https://tourism.gov.bb/About/Agencies/GAIA/) — confirms location in Seawell, Christ Church. Christ Church parish occupies the south coast; the airport is in Seawell on its south-eastern edge. Multiple airport guides confirm it is approximately 13 km southeast of Bridgetown.
-- **Status:** verified — "south-east of the island" is consistent with authoritative descriptions of the airport's position in the south-eastern part of Christ Church, southeast of the capital.
+- **Sources:** [Wikipedia — Grantley Adams International Airport](https://en.wikipedia.org/wiki/Grantley_Adams_International_Airport) — "The airport lies in the south-eastern portion of the parish of Christ Church, close to the southern tip of the island." Christ Church parish occupies the south coast; the airport is in Seawell on its south-eastern edge.
+- **Status:** verified — "south-east of the island" is consistent with authoritative descriptions.
 - **Certainty:** 85%
 
 ---
@@ -210,7 +210,7 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** address / road name
-- **Sources:** [Ministry of Transport and Works — ABC Highway](https://mtw.gov.bb/section-of-abc-highway-by-the-wildey-triangle-to-be-closed-at-night-for-two-weeks/) — confirms "ABC Highway" is the Adams-Barrow-Cummins Highway; [Grantley Adams International Airport — Wikipedia](https://en.wikipedia.org/wiki/Grantley_Adams_International_Airport) — "easy access to the ABC Highway/highway 7 heading towards the capital."
+- **Sources:** [Ministry of Transport and Works — ABC Highway](https://mtw.gov.bb/section-of-abc-highway-by-the-wildey-triangle-to-be-closed-at-night-for-two-weeks/) — confirms "ABC Highway" is the Adams-Barrow-Cummins Highway; [Wikipedia — Grantley Adams International Airport](https://en.wikipedia.org/wiki/Grantley_Adams_International_Airport) — "easy access to the ABC Highway."
 - **Status:** verified — the Adams-Barrow-Cummins (ABC) Highway is the correct road associated with GAIA.
 - **Certainty:** 90%
 
@@ -229,10 +229,10 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 </div>
 
 - **Type:** hours / descriptive
-- **Sources:** Multiple travel guides and airport information sources (Barbados.org, grantleyadamsinternationalairport.com, Virgin Atlantic travel advice) confirm the west coast is approximately 30 minutes by car from GAIA under normal traffic conditions. Gov.bb's own Grantley Adams page uses near-identical language on the source text this page appears to mirror.
-- **Status:** verified — 30 minutes to the west coast is widely confirmed for normal driving conditions, and matches the gov.bb source copy.
+- **Sources:** [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — uses near-identical language on the source text this page mirrors. Multiple travel guides confirm approximately 30 minutes by car from GAIA to the west coast under normal traffic conditions.
+- **Status:** verified — 30 minutes to the west coast is widely confirmed and matches the gov.bb source copy.
 - **Certainty:** 80%
-- **Note:** Travel time varies by traffic and specific destination; "half an hour" is an approximation, not a guarantee. This is acceptable framing for a tourism information page.
+- **Note:** Travel time varies by traffic and specific destination; "half an hour" is an approximation acceptable for a tourism information page.
 
 ---
 
@@ -245,7 +245,7 @@ Checked: barbadosport.com (home, cruise schedule, customer service pages); corpo
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable from public web</div>
-<pre class="claim-block-content">The gaia.bb services-and-amenities page (checked 2026-05-28) does not list ATMs, currency/money exchange facilities, ambulance centres, or charging stations as available services. The listed services are: WiFi, self-service check-in, parking, ground transportation, accessibility services, customer service information desks, and lost and found.
+<pre class="claim-block-content">The gaia.bb services-and-amenities page (checked 2026-05-29) does not list ATMs, currency/money exchange facilities, ambulance centres, or charging stations as available services. The listed services are: WiFi, self-service check-in kiosks, parking, ground transportation, and accessibility services.
 
 The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-entry (the source_url), suggesting it has been carried over from that source rather than independently confirmed. The specific services named cannot be verified or refuted from the public gaia.bb amenities page.</pre>
 </div>
@@ -254,7 +254,7 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 - **Checked:** [gaia.bb — Services and Amenities](https://gaia.bb/services-amenities/) — does not list ATMs, money exchange, ambulance centres, or charging stations; [gov.bb — Grantley Adams International Airport](https://www.gov.bb/owa/State-Bodies/grantley-adams-international) — no service-level detail.
 - **Status:** unverifiable from public web — gaia.bb's own published services page does not confirm the four named categories
 - **Certainty:** 50%
-- **Open question:** GAIA (contact: (246) 536-1300) to confirm whether ATM, money exchange, ambulance and EV/device charging station services remain available in the terminal. This is especially relevant given ongoing terminal expansion works referenced on the gaia.bb homepage (as of 2026-05-28).
+- **Open question:** GAIA (contact: (246) 536-1300) to confirm whether ATM, money exchange, ambulance and device/EV charging station services remain available in the terminal. Relevant given ongoing terminal expansion works referenced on the gaia.bb homepage.
 
 ---
 
@@ -271,7 +271,7 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** URL
-- **Sources:** [gaia.bb](https://gaia.bb/) — live and resolves to the official GAIA Inc. website. The link uses `http://www.gaia.bb/` but the site serves over HTTPS; minor update to `https://gaia.bb/` would be cleaner.
+- **Sources:** [gaia.bb](https://gaia.bb/) — live and resolves to the official GAIA Inc. website. The link uses `http://www.gaia.bb/` but the site serves over HTTPS; updating to `https://gaia.bb/` would be cleaner.
 - **Status:** verified — URL is live and correct
 - **Certainty:** 99%
 
@@ -290,10 +290,10 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** address / location
-- **Sources:** [portstcharles.com — Home](https://www.portstcharles.com/) — the official Port St. Charles website describes it as "Located on the beautiful northwest coast of Barbados"; [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) — "situated on the western coast of Barbados" (Wikipedia uses the same wording as alpha.gov.bb); [Totally Barbados — Port St Charles](https://www.totallybarbados.com/articles/beaches/west-coast-beaches/port-st-charles/) and [visitbarbados.org — Port St. Charles](https://www.visitbarbados.org/port-st-charles) — describe it as northwestern/northwest coast.
-- **Status:** discrepant — the official portstcharles.com uses "northwest coast," not "western coast." The distinction matters geographically: Saint Peter parish is on the upper western/northwestern coast of Barbados; "western coast" encompasses a much longer stretch from Bridgetown northward. The official property website uses the more precise "northwest coast" consistently.
+- **Sources:** [portstcharles.com — Home](https://www.portstcharles.com/) — "Located on the beautiful northwest coast of Barbados" (confirmed live 2026-05-29); [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) — uses "western coast" (same as alpha.gov.bb, likely the same source); [visitbarbados.org — Port St. Charles](https://www.visitbarbados.org/port-st-charles) — describes it as northwestern/northwest coast.
+- **Status:** discrepant — the official portstcharles.com uses "northwest coast," not "western coast." The official property website takes precedence over Wikipedia as a source.
 - **Certainty:** 80%
-- **Confidence it's wrong:** 75% — the official property website says "northwest coast"; the Wikipedia article (which this page may have sourced from) says "western coast." Both are defensible in different senses, but the official property source takes precedence.
+- **Confidence it's wrong:** 75% — the official property website says "northwest coast"; Wikipedia (which this page may have sourced from) says "western coast." The official operator's description takes precedence.
 - **Citizen impact:** LOW — no citizen will miss the port by navigating to the "western coast," but the correct directional description is "northwest coast" per the official operator.
 
 ---
@@ -311,7 +311,7 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** address
-- **Sources:** [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) — "Found within the parish of Saint Peter"; [marinas.com — Port St. Charles Marina](https://marinas.com/view/marina/n8cexq_Port_St_Charles_Marina_St_Peter_Barbados) — "St. Peter, Barbados"; [TripAdvisor — Port St. Charles](https://www.tripadvisor.com/Hotel_Review-g1183146-d578939-Reviews-Port_St_Charles-Saint_Peter_Parish_Barbados.html) — "Saint Peter Parish, Barbados."
+- **Sources:** [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) — "Found within the parish of Saint Peter"; [marinas.com — Port St. Charles Marina](https://marinas.com/view/marina/n8cexq_Port_St_Charles_Marina_St_Peter_Barbados) — "St. Peter, Barbados."
 - **Status:** verified — Saint Peter is the correct parish for Port Saint Charles.
 - **Certainty:** 99%
 
@@ -349,7 +349,7 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** address / descriptive
-- **Sources:** [portstcharles.com — Home](https://www.portstcharles.com/) — "charming Speightstown just steps away"; [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) — "in close proximity to Speightstown"; Heywoods is approximately 1 km north of Speightstown.
+- **Sources:** [portstcharles.com — Home](https://www.portstcharles.com/) — "charming Speightstown just steps away"; [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) — "in close proximity to Speightstown." Heywoods is approximately 1 km north of Speightstown.
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -369,9 +369,9 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 
 - **Type:** statistic
 - **Sources:** [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) — "a total ad-measurement of 1549 m²"; [superyachtservicesguide.com — Port St. Charles](https://www.superyachtservicesguide.com/20/9429/port-st-charles) — independently confirms the 1549 m² admeasurement figure.
-- **Status:** verified — the 1549 m² figure is confirmed by multiple independent sources; this refers specifically to the marina water area.
+- **Status:** verified — the 1549 m² figure is confirmed by multiple independent sources.
 - **Certainty:** 80%
-- **Note:** "Admeasurement" (the official measurement of a vessel or berth space) is an unusual word choice in running prose; it likely derives directly from the marina's official documentation. The figure is correct but the phrasing is technical.
+- **Note:** "Admeasurement" is an unusual word choice in running prose; it likely derives from official marina documentation. The figure refers specifically to the marina water area.
 
 ---
 
@@ -407,8 +407,8 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** statistic
-- **Sources:** [portstcharles.com — Villa Rentals](https://www.portstcharles.com/villa-rentals) — the official website lists "6 Bedroom Beach-Front Apt" as available; the home page references a 6-bedroom unit; [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles) mentions the range up to 5 bedrooms (older phases), while [worldwidedreamvillas.com — Port St. Charles](https://www.worldwidedreamvillas.com/vacation-rentals/barbados/port-st-charles) and other villa-rental aggregators confirm 6-bedroom properties exist within the development; [insandoutsbarbados.com — Port St. Charles](https://www.insandoutsbarbados.com/listing/port-st-charles) — "one-bedroom apartments to six-bedroom villas."
-- **Status:** discrepant — the official portstcharles.com lists 6-bedroom units. The "five bedroom" upper limit appears to reflect the earlier phases of the development; later phases added 6-bedroom homes.
+- **Sources:** [portstcharles.com — Home](https://www.portstcharles.com/) — confirmed live 2026-05-29: the official website lists 1-, 2-, 3-, 4-, and 6-bedroom configurations with no 5-bedroom listed; [insandoutsbarbados.com — Port St. Charles](https://www.insandoutsbarbados.com/listing/port-st-charles) — "one-bedroom apartments to six-bedroom villas"; [worldwidedreamvillas.com — Port St. Charles](https://www.worldwidedreamvillas.com/vacation-rentals/barbados/port-st-charles) — confirms 6-bedroom properties in the development.
+- **Status:** discrepant — the official portstcharles.com lists 6-bedroom units as the maximum, not 5. The "five bedroom" upper limit reflects the earlier phases of the development; later phases added 6-bedroom homes.
 - **Certainty:** 75%
 - **Confidence it's wrong:** 75% — the official property site and at least two independent rental aggregators confirm 6-bedroom units exist.
 - **Citizen impact:** LOW — a visitor will not be materially harmed; but the information is factually incorrect per the official property website.
@@ -428,7 +428,7 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** statistic
-- **Sources:** [worldwidedreamvillas.com — Port St. Charles](https://www.worldwidedreamvillas.com/vacation-rentals/barbados/port-st-charles) — "a private 22-acre estate"; multiple independent travel and real estate listing sites confirm the 22-acre figure for the Port St. Charles community.
+- **Sources:** [worldwidedreamvillas.com — Port St. Charles](https://www.worldwidedreamvillas.com/vacation-rentals/barbados/port-st-charles) — "a private 22-acre estate"; multiple independent travel and real estate listing sites confirm the 22-acre figure.
 - **Status:** verified
 - **Certainty:** 80%
 
@@ -447,7 +447,7 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** URL
-- **Sources:** [portstcharles.com](https://www.portstcharles.com/) — live and resolves to the official Port St. Charles resort website. The link uses `http://` but the site is HTTPS; minor update would be cleaner.
+- **Sources:** [portstcharles.com](https://www.portstcharles.com/) — live and resolves to the official Port St. Charles resort website (confirmed 2026-05-29). The link uses `http://` but the site is HTTPS; a minor update would be cleaner.
 - **Status:** verified — URL is live and correct
 - **Certainty:** 99%
 
@@ -466,7 +466,7 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 </div>
 
 - **Type:** URL
-- **Sources:** [gov.bb — Ports of Entry](https://www.gov.bb/Visit-Barbados/ports-of-entry) — live and returns the source page. The alpha.gov.bb content closely mirrors the gov.bb source text, confirming this is the correct source URL.
+- **Sources:** [gov.bb — Ports of Entry](https://www.gov.bb/Visit-Barbados/ports-of-entry) — live and returns the source page. The alpha.gov.bb content closely mirrors the gov.bb source text, including the "BTA" reference, confirming the error originates in the gov.bb source and has been carried over unchanged.
 - **Status:** verified — source_url is live and correct
 - **Certainty:** 99%
 
@@ -474,13 +474,15 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 
 ## Additional findings (not on the page but should be)
 
-1. **Port Saint Charles is one of two official sea-based ports of entry in Barbados.** Multiple authoritative sources (visitbarbados.org, marinas.com, Wikipedia) confirm Port St. Charles marina is an officially designated port of entry into Barbados, allowing arrivals by private yacht to clear customs and immigration dockside. The page does not make this explicit — it may be worth noting for yachting visitors that immigration and customs clearance is available at the marina.
+1. **Port Saint Charles is an officially designated port of entry for private yachts.** Multiple authoritative sources (visitbarbados.org, marinas.com, Wikipedia) confirm Port St. Charles marina is an officially designated port of entry into Barbados, allowing arrivals by private yacht to clear customs and immigration dockside. The page does not make this explicit — it may be worth noting for yachting visitors that immigration and customs clearance is available at the marina.
 
 2. **Barbados Port Inc. contact information.** The official Bridgetown Port contact is: Barbados Port Inc., Cube Blue, Prescod Boulevard, Bridgetown, St. Michael, BB 11142; phone: 1 (246) 434-6100. Not on the page but useful for cruise operators or visitors with queries.
 
-3. **GAIA contact.** The main GAIA number is (246) 536-1300 (Reception: 536-1302; Duty Manager: 536-1336). Not on the page but useful for stranded or connecting travellers.
+3. **GAIA contact.** The main GAIA number is (246) 536-1300. Not on the page but useful for stranded or connecting travellers.
 
 4. **HTTP links.** All three external links use `http://` rather than `https://`. All three target domains serve HTTPS. Consider updating to HTTPS links as a minor security and trust improvement.
+
+5. **"BTA" error originates in the gov.bb source page.** The gov.bb/Visit-Barbados/ports-of-entry source page also uses "BTA," meaning the error has been inherited directly from the source. Correcting the alpha.gov.bb page would diverge from the source, but the correction is clearly warranted.
 
 ---
 
@@ -491,19 +493,16 @@ The claim appears in almost identical form on gov.bb/Visit-Barbados/ports-of-ent
 - [gaia.bb — Home](https://gaia.bb/)
 - [gaia.bb — Airlines](https://gaia.bb/home/airline/)
 - [gaia.bb — Services and Amenities](https://gaia.bb/services-amenities/)
-- [gaia.bb — Ground Transportation](https://gaia.bb/ground-transportation/)
-- [tourism.gov.bb — GAIA](https://tourism.gov.bb/About/Agencies/GAIA/)
-- [tourism.gov.bb — Agencies](https://www.tourism.gov.bb/About/Agencies/)
+- [tourism.gov.bb — Home](https://www.tourism.gov.bb/)
+- [corporate.visitbarbados.org — Our Company](https://corporate.visitbarbados.org/our-company/)
 - [Barbados Port Inc. — Home](https://barbadosport.com/)
-- [Barbados Port Inc. — Contacts](https://barbadosport.com/contact/)
+- [Barbados Port Inc. — Contact](https://barbadosport.com/contact/)
 - [portstcharles.com — Home](https://www.portstcharles.com/)
-- [portstcharles.com — Villa Rentals](https://www.portstcharles.com/villa-rentals)
 - [Wikipedia — Port Saint Charles](https://en.wikipedia.org/wiki/Port_Saint_Charles)
 - [Wikipedia — Grantley Adams International Airport](https://en.wikipedia.org/wiki/Grantley_Adams_International_Airport)
 - [marinas.com — Port St. Charles Marina](https://marinas.com/view/marina/n8cexq_Port_St_Charles_Marina_St_Peter_Barbados)
 - [superyachtservicesguide.com — Port St. Charles](https://www.superyachtservicesguide.com/20/9429/port-st-charles)
 - [visitbarbados.org — Port St. Charles](https://www.visitbarbados.org/port-st-charles)
 - [Ministry of Transport and Works — ABC Highway](https://mtw.gov.bb/section-of-abc-highway-by-the-wildey-triangle-to-be-closed-at-night-for-two-weeks/)
-- [corporate.visitbarbados.org — Our Company](https://corporate.visitbarbados.org/our-company/)
 - [insandoutsbarbados.com — Port St. Charles](https://www.insandoutsbarbados.com/listing/port-st-charles)
 - [worldwidedreamvillas.com — Port St. Charles](https://www.worldwidedreamvillas.com/vacation-rentals/barbados/port-st-charles)

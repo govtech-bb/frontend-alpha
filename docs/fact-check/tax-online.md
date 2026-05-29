@@ -2,7 +2,7 @@
 
 - **Live page:** <https://alpha.gov.bb/money-financial-support/tax-online>
 - **Source file:** `src/content/tax-online.md`
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 10 claims reviewed — 8 verified, 1 discrepant, 1 unverifiable. Average certainty: **83%**.
 
 ---

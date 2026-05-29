@@ -2,50 +2,52 @@
 
 - **Live page:** <https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised>
 - **Source file:** `src/content/get-a-document-notarised.md`
-- **Last checked:** 2026-05-27
-- **Summary:** 12 claims reviewed — 6 verified, 4 discrepant (incl. 1 broken URL), 2 unverifiable. Average certainty: 73%.
+- **Last checked:** 2026-05-29
+- **Summary:** 14 claims reviewed — 6 verified, 4 discrepant, 4 unverifiable. Average certainty: 68%.
 
 ---
 
 ## Headline issues for triage
 
-1. **Broken declared source URL** — `https://www.gov.bb/Citizens/notarize-document` (declared in `src/data/content-directory.ts`) returns 404. Replace with the Barbados Judicial System URL.
-2. **CAIPO/IPO address is wrong** — page says "Baobab Tower, Highway 2"; authoritative sources say "Ground Floor, Baobab Towers, Warrens, St. Michael".
-3. **"Execution of a document — $20" is not corroborated** by any authoritative source. May be confused with the pre-2017 notarial seal fee.
-4. **Two requirements omitted from the page**: (a) a BDS $10 adhesive postage stamp the applicant must bring, (b) a BDS $5 fee for marking each exhibit. Both are documented on the Barbados Judicial System site.
-5. **The "Documents that can be notarised" list looks UK-derived** (mentions gas/electricity bills, letters from a Ministry) and isn't corroborated by any Barbados source — flag for confirmation.
+1. **Notarial seal fee conflict — $50 vs $20.** The page says "Notarial seal — BBD $50". The official Barbados Judicial System site currently states "The fee for affixing a notarial seal is BDS$20.00 for each notarial act." A GIS press release from April 2017 announced a change *to* $50. The 2024 Notaries Public Act says "no change in fees from the previous regime." It is unclear whether the court's own website has not been updated since the 2017 change (and $50 is correct) or whether $50 applied to a different category and the Registrar still charges $20. A citizen could overpay or underpay. Recommend agency confirmation. (Status now elevated to discrepant/conflicted — prior report marked this verified at 85%.)
+
+2. **CAIPO / Intellectual Property Office address is wrong.** Page says "Baobab Tower, Highway 2, Saint Michael." Authoritative sources (CAIPO website and gov.bb State Bodies page) confirm the address is "Ground Floor, Baobab Towers, Warrens, St. Michael." Building name is plural (Towers), and location is Warrens, not Highway 2.
+
+3. **Missing citizen requirement: $10 adhesive postage stamp.** The Barbados Judicial System site explicitly states "Persons desirous of having a document notarized are required to bring a $10.00 adhesive postage stamp which will be affixed to the document and cancelled by the registrar." This is omitted from the page's "What to take" section — a citizen arriving without it would be turned away or charged extra.
+
+4. **Broken declared source URL.** `https://www.gov.bb/Citizens/notarize-document` (in `src/data/content-directory.ts`) returns HTTP 404. The correct live source is the Barbados Judicial System's notarising page.
+
+5. **New Notaries Public Act 2024 in effect since 1 September 2024.** The 2024 Act replaced the 2017 Act and expanded who can be a notary (attorneys-at-law, chartered accountants, qualified professionals with 15+ years experience). The page's description — which implies notarisation is only available at three specific government offices — may now be incomplete, since private notaries are now more accessible. The page should be reviewed in light of the expanded notary pool.
 
 ---
 
 ## Claims
 
-### Claim 1 — Land Registry address (lines 19–23)
+### Claim 1 — Land Registry address (lines 21–23)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
 <pre class="claim-block-content">Ground Floor Warrens Office Complex
 Warrens
 St. Michael</pre>
-<div class="claim-block-source">— <a href="https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised">alpha.gov.bb/travel-id-citizenship/get-a-document-notarised</a> (lines 21–23)</div>
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Source says <span class="claim-match claim-match--partial">PARTIAL MATCH</span></div>
+<div class="claim-block-label">Partially verified — "Ground Floor" unconfirmed</div>
 <pre class="claim-block-content">Barbados Land Registry
 Warrens Office Complex
 Warrens
 St. Michael BB12001
 Barbados</pre>
-<div class="claim-block-source">— official Land Registry site, <a href="http://www.landregistry.gov.bb">www.landregistry.gov.bb</a></div>
 </div>
 
 - **Type:** address
-- **Sources:** [Barbados Land Registry (landregistry.gov.bb)](http://www.landregistry.gov.bb); [Lands and Surveys Department — Contact Us](https://www.landsandsurveys.gov.bb/pages/ContactUs.html) (different department, same building)
-- **Status:** partial match — page adds "Ground Floor", which is not directly attested by the Land Registry's own site. Plausible (Land Registry is on the ground floor of Warrens Office Complex per common knowledge), but unconfirmed.
-- **Certainty:** 75% — building and parish match exactly; "Ground Floor" qualifier is plausible but needs direct confirmation from the Registrar.
-- **Open question:** is the Land Registry specifically on the ground floor of Warrens Office Complex? The Lands and Surveys Department (a separate department in the same building) is on the "Ground Floor East" — easy for these to get conflated.
+- **Sources:** [Barbados Land Registry](http://www.landregistry.gov.bb) — lists "Warrens Office Complex, Warrens, St. Michael BB12001" but does not specify which floor; [Lands and Surveys Department — Contact Us](https://www.landsandsurveys.gov.bb/pages/ContactUs.html) — separate department in the same building, on "Ground Floor East"
+- **Status:** partial match — building and parish are correct; "Ground Floor" qualifier is plausible but not confirmed on the Land Registry's own website
+- **Certainty:** 75%
+- **Open question:** confirm with the Registrar of Lands which floor the Land Registry counter service operates from.
 
-### Claim 2 — Supreme Court address (lines 25–29)
+### Claim 2 — Supreme Court address (lines 27–29)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -55,18 +57,19 @@ Saint Michael</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">Whitepark Road
-St. Michael</pre>
+<div class="claim-block-label">Verified correct (minor phrasing variation)</div>
+<pre class="claim-block-content">Barbados Supreme Court Complex
+Whitepark
+Bridgetown
+Barbados</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [Barbados Judicial System — Supreme Court Registry](https://www.barbadoslawcourts.gov.bb/court-administration/supreme-court-registry/); [GIS — Supreme Court Complex tag](https://gisbarbados.gov.bb/blog/tag/supreme-court-complex/)
-- **Status:** verified (minor)
-- **Certainty:** 90% — official address is "Whitepark Road, St. Michael". "Bridgetown" is loosely accurate (Bridgetown lies within St. Michael) but not how the Court itself states the address.
-- **Suggested fix (optional):** drop "Bridgetown" line to match official phrasing.
+- **Sources:** [Barbados Judicial System — Supreme Court Registry](https://www.barbadoslawcourts.gov.bb/court-administration/supreme-court-registry/) — "level 2/3, Barbados Supreme Court Complex, Whitepark, Bridgetown, Barbados"; [GIS — Supreme Court Complex](https://gisbarbados.gov.bb/blog/tag/supreme-court-complex/)
+- **Status:** verified (minor) — "Whitepark Road, Bridgetown" is close to official phrasing "Whitepark, Bridgetown". "Saint Michael" vs "Barbados" is a minor difference; Bridgetown lies within St. Michael. The street name "Whitepark Road" vs "Whitepark" is a small discrepancy but not citizen-impacting.
+- **Certainty:** 85%
 
-### Claim 3 — Intellectual Property Office address (lines 31–35)
+### Claim 3 — Intellectual Property Office address (lines 33–35)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -83,11 +86,11 @@ St. Michael</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [CAIPO](https://caipo.gov.bb/); [gov.bb — Corporate Affairs and Intellectual Property](https://www.gov.bb/State-Bodies/corporate-affairs-intellectual-property)
+- **Sources:** [CAIPO — caipo.gov.bb](https://caipo.gov.bb/) — "Ground Floor, Baobab Towers, Warrens, St. Michael, Barbados, W.I."; [gov.bb — Corporate Affairs and Intellectual Property](https://www.gov.bb/State-Bodies/corporate-affairs-intellectual-property) — same address confirmed
 - **Status:** discrepant
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** HIGH — a citizen following this page could turn up to the wrong place.
-- **Notes:** Building name is "Baobab Towers" (plural). Located in Warrens, not on "Highway 2".
+- **Certainty:** 30% (page is likely wrong)
+- **Confidence it's wrong:** 92%
+- **Citizen impact:** HIGH — a citizen could arrive at the wrong location; "Highway 2" is not how the building is addressed, and "Baobab Tower" (singular) differs from the official "Baobab Towers" (plural).
 
 ### Claim 4 — Notarial seal fee BBD $50 (line 79)
 
@@ -96,16 +99,20 @@ St. Michael</pre>
 <pre class="claim-block-content">Notarial seal (when a notary issues an official stamp to authenticate a document) BBD $50</pre>
 </div>
 
-<div class="claim-block claim-block--correct">
-<div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">Notarial seal: BBD $50 (per April 2017 GIS announcement)</pre>
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Conflicting authoritative sources</div>
+<pre class="claim-block-content">Barbados Judicial System site (current): BDS$20.00 per notarial act
+GIS press release (April 2017): fee changed to $50 per seal
+Notaries Public Act 2024: "no change in fees from previous regime"
+Resolution unclear — court website may not have been updated since 2017.</pre>
 </div>
 
 - **Type:** fee
-- **Sources:** [GIS — Change In Notary Fees (April 2017 announcement)](https://gisbarbados.gov.bb/blog/change-in-notary-fees/) — confirms $50 per seal from 18 April 2017; [Barbados Judicial System — Notarizing documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates) — lists $20 (likely pre-2017 figure that was never updated)
-- **Status:** verified (but sources disagree)
-- **Certainty:** 85% — the GIS press release is the authoritative announcement of the fee change; the Judicial System page appears stale.
-- **Note for triage:** worth pinging the Registrar to confirm $50 is the current price and that the Judicial System website needs updating.
+- **Sources:** [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates) — "The fee for affixing a notarial seal is BDS$20.00 for each notarial act"; [GIS — Change In Notary Fees](https://gisbarbados.gov.bb/blog/change-in-notary-fees/) — announced $50 per seal from 18 April 2017; [businessbarbados.com — Barbados Enhances Notarial Services](https://www.businessbarbados.com/articles/barbados-enhances-notarial-services) — 2024 Act: "no change in fees from previous regime"
+- **Status:** unverifiable — authoritative sources conflict
+- **Certainty:** 50%
+- **Citizen impact:** MEDIUM — citizen may overpay or be refused service if the court counter charges $20 but expects $50 (or vice versa).
+- **Open question:** confirm with the Supreme Court Registrar's office (1-246-535-9700 / registrarsupremecourt@barbados.gov.bb) which fee is currently charged at the counter.
 
 ### Claim 5 — Notarial certificate fee BBD $50 (line 81)
 
@@ -116,13 +123,13 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">Notarial certificate: BBD $50</pre>
+<pre class="claim-block-content">Notarial certificate: BBD $50 (BDS$50 per Barbados Judicial System site)</pre>
 </div>
 
 - **Type:** fee
-- **Sources:** [GIS — Change In Notary Fees](https://gisbarbados.gov.bb/blog/change-in-notary-fees/); [Barbados Judicial System — Notarizing documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates)
+- **Sources:** [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates) — "The fee for issuing a notarized Registrar's Certificate is BDS$50.00"
 - **Status:** verified
-- **Certainty:** 95% — both sources agree.
+- **Certainty:** 90%
 
 ### Claim 6 — "Execution of a document" fee BBD $20 (line 83)
 
@@ -133,14 +140,15 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot verify</div>
-<pre class="claim-block-content">No authoritative source uses the term "execution of a document" as a fee line item. Likely confusion with the pre-April-2017 notarial seal fee ($20).</pre>
+<pre class="claim-block-content">No authoritative Barbados source lists "execution of a document" as a distinct notarial fee category. The $20 figure matches what the Barbados Judicial System site currently lists as the notarial seal fee — possible misclassification.</pre>
 </div>
 
 - **Type:** fee
-- **Sources consulted:** [GIS — Change In Notary Fees](https://gisbarbados.gov.bb/blog/change-in-notary-fees/); [Barbados Judicial System — Notarizing documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates); [Notaries Public Act 2017-09 (PDF)](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf). None lists "execution" as a distinct fee category.
+- **Sources consulted:** [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates); [GIS — Change In Notary Fees](https://gisbarbados.gov.bb/blog/change-in-notary-fees/); [Notaries Public Act, 2017-09 (PDF)](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf) — none lists "execution of a document" as a distinct fee line
 - **Status:** unverifiable — likely discrepant
-- **Confidence it's wrong:** 60%
-- **Open question for the GovBB team:** confirm with the Registrar's office whether "execution of a document" is a distinct fee, or whether this $20 figure is the pre-April-2017 notarial seal fee that was misclassified.
+- **Certainty:** 35%
+- **Confidence it's wrong:** 65%
+- **Open question:** confirm with the Registrar whether "execution of a document" is a distinct fee, or whether $20 is the notarial seal fee (possibly pre-2017 or currently charged at the counter despite the GIS announcement).
 
 ### Claim 7 — "Most fees are between BBD $10–50" (line 75)
 
@@ -151,11 +159,11 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">Fee range $10–$50 is consistent with documented fees: $5 exhibit certification, $10 adhesive stamp, $20 or $50 notarial seal (depending on source), $50 notarial certificate.</pre>
+<pre class="claim-block-content">Fee range $10–$50 is consistent with documented fees: $5 exhibit marking, $10 adhesive stamp, $20 notarial seal (per court site), $50 notarial certificate.</pre>
 </div>
 
 - **Type:** fee range
-- **Sources:** [GIS — Change In Notary Fees](https://gisbarbados.gov.bb/blog/change-in-notary-fees/); [Barbados Judicial System — Notarizing documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates)
+- **Sources:** [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates)
 - **Status:** verified
 - **Certainty:** 80%
 
@@ -167,15 +175,14 @@ St. Michael</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Partially confirmed</div>
-<pre class="claim-block-content">The Notaries Public Act 2017 sets statutory fees for ex-officio Registrar notaries. Less clear whether the same schedule binds all notaries public appointed under the Act.</pre>
+<div class="claim-block-label">Partially verified — new Act strengthens this claim</div>
+<pre class="claim-block-content">The Notaries Public Act 2024 prescribes fixed fees that notaries cannot exceed. Notaries may voluntarily waive fees. The 2024 Act thus supports standardisation but allows downward flexibility.</pre>
 </div>
 
 - **Type:** pricing / policy
-- **Sources consulted:** [Notaries Public Act, 2017-09 (PDF)](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf)
-- **Status:** partially verified
-- **Certainty:** 60%
-- **Open question:** does the statutory fee schedule apply to private notaries (attorneys-at-law who hold notarial commission), or only to Registrar/ex-officio notaries?
+- **Sources:** [businessbarbados.com — Barbados Enhances Notarial Services](https://www.businessbarbados.com/articles/barbados-enhances-notarial-services) — "The legislation also prescribes fixed fees to be charged for notarial acts"; [chancerychambers.com — Barbados Enhances Notarial Services](https://chancerychambers.com/2024/09/06/barbados-enhances-notarial-services/)
+- **Status:** partially verified — fixed maximum fees are prescribed; individual notaries may waive fees below that maximum
+- **Certainty:** 70%
 
 ### Claim 9 — Documents that can be notarised (lines 64–71)
 
@@ -193,14 +200,15 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot verify — likely template-derived</div>
-<pre class="claim-block-content">No Barbados source enumerates an accepted-document list of this form. The list reads as if adapted from UK Home Office address-verification guidance (where "gas or electricity bills" and "letters from a hospital or doctor" are the canonical proof-of-address examples).</pre>
+<pre class="claim-block-content">No Barbados source enumerates an accepted-document list of this form. The list appears adapted from UK address-verification guidance (where "gas or electricity bills" and "letters from a hospital or doctor" are canonical proof-of-address examples). In Barbados, utility bills are less commonly used for this purpose.</pre>
 </div>
 
 - **Type:** document list
-- **Sources consulted:** [Notaries Public Act 2017-09 (PDF)](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf); [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates)
+- **Sources consulted:** [Notaries Public Act, 2017-09 (PDF)](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf); [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates) — neither enumerates an accepted-document list
 - **Status:** unverifiable — likely template-derived, not Barbados-specific
+- **Certainty:** 40%
 - **Confidence it's wrong:** 65%
-- **Open question for the GovBB team:** confirm with the Registrar what documents are actually presented for notarisation in Barbados, and whether "gas or electricity bills" are a meaningful example here.
+- **Open question:** confirm with the Registrar what documents are actually presented for notarisation in Barbados, and whether "gas or electricity bills" are a meaningful example.
 
 ### Claim 10 — "Notarisation is used for documents that need to be authenticated for use overseas" (line 11)
 
@@ -211,13 +219,14 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">Notarisation in Barbados is primarily used to authenticate documents for use overseas. Confirmed by GIS.</pre>
+<pre class="claim-block-content">Notarisation in Barbados is primarily used to authenticate documents for use overseas. Also used domestically for land transfers, commercial contracts, etc. Note: "authenticated before for use overseas" contains a typo ("before for").</pre>
 </div>
 
 - **Type:** descriptive claim
-- **Sources:** [GIS — Notarisation Of Documents & Affixing Of Apostilles](https://gisbarbados.gov.bb/blog/notarisation-of-documents-affixing-of-apostilles/)
+- **Sources:** [GIS — Notarisation Of Documents & Affixing Of Apostilles](https://gisbarbados.gov.bb/blog/notarisation-of-documents-affixing-of-apostilles/) (403 on this pass — confirmed in prior pass); general description consistent with Notaries Public Act 2024 scope
 - **Status:** verified
-- **Certainty:** 90%
+- **Certainty:** 85%
+- **Note:** "authenticated before for use overseas" contains a typo — "before" is redundant and should be removed.
 
 ### Claim 11 — The process description (lines 49–56)
 
@@ -235,16 +244,34 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Plausible but unverifiable in detail</div>
-<pre class="claim-block-content">Consistent with general description of registrar notarial practice on the Barbados Judicial System site, but no source enumerates these exact procedural steps in this order. Turnaround time "immediately afterwards" may vary in practice.</pre>
+<pre class="claim-block-content">Consistent with general description of registrar notarial practice on the Barbados Judicial System site, but no source enumerates these exact procedural steps. "Immediately afterwards" turnaround may vary. Also: step 2 describes the notarial certificate for small documents, but the court site says certificates attract a separate $50 fee — this distinction is not flagged to the citizen.</pre>
 </div>
 
 - **Type:** process step
-- **Sources consulted:** [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates) describes the general practice; no source enumerates these exact procedural steps.
+- **Sources consulted:** [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates)
 - **Status:** plausible — unverifiable in this level of detail
 - **Certainty:** 55%
-- **Open question:** confirm with the Registrar's office whether the described process matches actual practice.
+- **Open question:** confirm with the Registrar's office whether the described process matches actual practice; confirm whether the $50 certificate fee applies when a notarial certificate is issued for a small document.
 
-### Claim 12 — Declared `source_url` in `content-directory.ts`
+### Claim 12 — "You can pay by card or cash" (line 60)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">You can pay by card or cash.</pre>
+</div>
+
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Cannot verify</div>
+<pre class="claim-block-content">No authoritative source confirms payment methods accepted at the Supreme Court Registry or Land Registry notarial counter. Card acceptance at government counters in Barbados is not universal.</pre>
+</div>
+
+- **Type:** process step / payment
+- **Sources consulted:** [Barbados Judicial System — Notarizing Documents](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates) — no payment method mentioned; [Barbados Judicial System — Other Services](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/) — no payment methods listed
+- **Status:** unverifiable
+- **Certainty:** 40%
+- **Open question:** confirm with the Registrar's office (and the Land Registry and IPO counters) whether card payment is accepted.
+
+### Claim 13 — Declared `source_url` in `content-directory.ts` (line 431)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently in src/data/content-directory.ts (line 431)</div>
@@ -256,28 +283,55 @@ St. Michael</pre>
 <pre class="claim-block-content">source_url: "https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates"</pre>
 </div>
 
-- **Type:** URL (declared in data file, not in content body)
-- **Verification:** direct fetch returned HTTP 404 (verified 2026-05-27).
+- **Type:** URL (metadata field in data file)
+- **Verification:** [gov.bb/Citizens/notarize-document](https://www.gov.bb/Citizens/notarize-document) — direct fetch returned HTTP 404 (confirmed this pass 2026-05-29).
 - **Status:** discrepant — broken
-- **Confidence it's wrong:** 100% (verified directly)
-- **Citizen impact:** LOW (it's a metadata field), but indicates the underlying source has moved.
+- **Certainty:** 100% (404 confirmed directly)
+- **Confidence it's wrong:** 100%
+- **Citizen impact:** LOW for the metadata field itself, but indicates the underlying source has moved and the content may be out of date.
+
+### Claim 14 — Notaries Public Act 2024 and expanded notary access (new finding)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">This service is not available online yet so you will need to visit a notary public in person. You can go to any of the following places to get a document notarised: [Land Registry, Supreme Court, Intellectual Property Office]</pre>
+</div>
+
+<div class="claim-block claim-block--pending">
+<div class="claim-block-label">Outdated — new Act expands notary pool</div>
+<pre class="claim-block-content">The Notaries Public Act 2024 (in force from 1 September 2024) allows attorneys-at-law, chartered accountants, and professionals with 15+ years experience to be appointed as notaries. Citizens now have a wider choice of notaries beyond the three government offices listed.</pre>
+</div>
+
+- **Type:** descriptive / eligibility claim
+- **Sources:** [businessbarbados.com — Barbados Enhances Notarial Services](https://www.businessbarbados.com/articles/barbados-enhances-notarial-services); [chancerychambers.com — Barbados Enhances Notarial Services](https://chancerychambers.com/2024/09/06/barbados-enhances-notarial-services/)
+- **Status:** discrepant — the page presents only three government offices; since September 2024 the notary pool has substantially expanded
+- **Certainty:** 85% (that the page is now incomplete)
+- **Confidence it's wrong:** 80%
+- **Citizen impact:** MEDIUM — citizens who cannot easily reach these three offices (or want a private notary) are not informed of their options under the new Act.
 
 ---
 
-## Claims missing from the page (gaps, not errors)
+## Additional findings (not on the page but should be)
 
-- **$10 adhesive postage stamp** — applicants are required to bring this for the registrar to affix and cancel at the time of notarisation. Documented on the [Barbados Judicial System site](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates); absent from the page.
-- **$5 fee for marking each exhibit** — documented fee, absent from the page.
-- **Contact details** — Registrar phone 1-246-535-9700 and email <registrarsupremecourt@barbados.gov.bb> are not mentioned anywhere on the page; useful for citizens who have questions.
+- **$10 adhesive postage stamp (missing requirement):** The Barbados Judicial System site states "Persons desirous of having a document notarized are required to bring a $10.00 adhesive postage stamp which will be affixed to the document and cancelled by the registrar at the time of notarization." This should appear in the "What to take" section (currently: original document, photocopy, photo ID). A citizen arriving without this stamp would be turned away or delayed.
+- **$5 fee for marking each exhibit:** Documented on the Barbados Judicial System site ("The fee for marking each exhibit is BDS$5.00"); absent from the fee table.
+- **Registrar contact details:** Phone 1-246-535-9700 and email registrarsupremecourt@barbados.gov.bb are not mentioned on the page; useful for citizens with questions before attending in person.
+- **Remote notarisation (future):** The 2024 Act contemplates future regulations allowing remote notarisation; the page could note this is coming even if not yet available.
+- **Typo in body copy (line 11):** "authenticated before for use overseas" — the word "before" is redundant and should be removed.
 
 ---
 
 ## Sources cited
 
 - [Barbados Judicial System — Notarizing Documents and Issuing Notarial Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates)
-- [GIS — Change In Notary Fees](https://gisbarbados.gov.bb/blog/change-in-notary-fees/)
-- [GIS — Notarisation Of Documents & Affixing Of Apostilles](https://gisbarbados.gov.bb/blog/notarisation-of-documents-affixing-of-apostilles/)
-- [Notaries Public Act, 2017-09 (PDF)](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf)
-- [CAIPO](https://caipo.gov.bb/) and [gov.bb — Corporate Affairs and Intellectual Property](https://www.gov.bb/State-Bodies/corporate-affairs-intellectual-property)
-- [Lands and Surveys Department — Contact Us](https://www.landsandsurveys.gov.bb/pages/ContactUs.html)
 - [Barbados Judicial System — Supreme Court Registry](https://www.barbadoslawcourts.gov.bb/court-administration/supreme-court-registry/)
+- [Barbados Judicial System — Other Services and Registrations](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/)
+- [GIS — Change In Notary Fees](https://gisbarbados.gov.bb/blog/change-in-notary-fees/) (HTTP 403 on this pass — content summarised from prior pass and web search snippet)
+- [GIS — Notarisation Of Documents & Affixing Of Apostilles](https://gisbarbados.gov.bb/blog/notarisation-of-documents-affixing-of-apostilles/) (HTTP 403 on this pass — confirmed in prior pass)
+- [CAIPO — caipo.gov.bb](https://caipo.gov.bb/)
+- [gov.bb — Corporate Affairs and Intellectual Property](https://www.gov.bb/State-Bodies/corporate-affairs-intellectual-property)
+- [Barbados Land Registry — landregistry.gov.bb](http://www.landregistry.gov.bb)
+- [Notaries Public Act, 2017-09 (PDF)](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf)
+- [businessbarbados.com — Barbados Enhances Notarial Services (2024)](https://www.businessbarbados.com/articles/barbados-enhances-notarial-services)
+- [chancerychambers.com — Barbados Enhances Notarial Services (2024)](https://chancerychambers.com/2024/09/06/barbados-enhances-notarial-services/)
+- [gov.bb/Citizens/notarize-document](https://www.gov.bb/Citizens/notarize-document) — 404 confirmed

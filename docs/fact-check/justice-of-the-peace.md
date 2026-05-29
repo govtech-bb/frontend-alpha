@@ -5,7 +5,7 @@
 - **Last checked:** 2026-05-29
 - **Summary:** 28 claims reviewed — 18 verified, 4 discrepant, 6 unverifiable. Average certainty: **82%**.
 
-This pass covers every factual statement on the page, not only contact information. The previous pass focused on contact details; this pass adds coverage of the in-page link, the directory description, the "what a JP cannot do" sub-bullets, the procedural instructions, and the overseas advice.
+Re-verification pass (2026-05-29): source file `src/content/justice-of-the-peace.md` is unchanged. All three discrepant contact details (`(246) 467-7370` phone ×3, `agoffice@barbados.gov.bb` email) remain on the page. OAG authoritative sources (`oag.gov.bb/contact`, `gov.bb/Ministries/attorney-general`) re-confirmed live with the same correct values. Both "Find a JP" candidate URLs still return HTTP 404. No findings reversed; no new issues found.
 
 ---
 
@@ -17,7 +17,7 @@ This pass covers every factual statement on the page, not only contact informati
 
 3. **Office of the Attorney General email is wrong.** Page lists `agoffice@barbados.gov.bb` (line 61). `oag.gov.bb/contact` publishes `ps.oag@barbados.gov.bb`; `gov.bb/Ministries/attorney-general` publishes `ps@oag.gov.bb`. The page's address is unattested in any authoritative source. **HIGH** impact.
 
-4. **Existing fact-check metadata had the wrong live URL.** The previous report recorded `https://alpha.gov.bb/travel-id-citizenship/justice-of-the-peace`; that URL is HTTP 404. The page is published at `https://alpha.gov.bb/justice-of-the-peace`. The report header in this file is now corrected — but the routing implication (protected pages don't use the category prefix; non-protected pages like `get-a-document-notarised` do) is worth surfacing to the team.
+4. **Gazette link path unverifiable.** The page links to `https://governmentprintery.gov.bb/gazette/` but search indices surface `/official-gazette/` as the published path. Both return HTTP 403 to automated fetch; manual browser check needed to confirm if `/gazette/` resolves or 404s.
 
 ---
 
@@ -257,7 +257,7 @@ specific restriction so the page can cite it.</pre>
 </div>
 
 - **Type:** internal URL
-- **Sources:** Live check (29 May 2026) — `https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised` loads the notarisation page. Unlike the JP page, this one is NOT marked `protected: true`, so it is reachable via the category-prefixed URL.
+- **Sources:** Live check (29 May 2026) — `https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised` loads the notarisation page successfully. Unlike the JP page, this one is NOT marked `protected: true`, so it is reachable via the category-prefixed URL.
 - **Status:** verified
 - **Certainty:** 85%
 
@@ -323,7 +323,7 @@ Source: testable against the find component at /justice-of-the-peace/find</pre>
 </div>
 
 - **Type:** functional / feature
-- **Sources consulted:** `src/data/content-directory.ts` line 462–468 declares the `find` subpage as a `component` route; the page itself is `protected: true`. Anonymous live check returns 404 on both candidate URLs.
+- **Sources consulted:** `src/data/content-directory.ts` line 462–468 declares the `find` subpage as a `component` route; the page itself is `protected: true`. Anonymous live check (29 May 2026) returns 404 on both candidate URLs.
 - **Status:** unverifiable from public web
 - **Certainty:** 50%
 - **Open question:** Has the find component been built and tested against `src/data/justices-of-the-peace.json`? Does parish filtering and device-location lookup both work in production?
@@ -360,12 +360,12 @@ Checked: [GIS — Justices of the Peace Listing April 30 2023](https://gisbarbad
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">&lt;a data-start-link href=&quot;/travel-id-citizenship/justice-of-the-peace/find&quot;&gt;Find a JP&lt;/a&gt;</pre>
+<pre class="claim-block-content">&lt;a data-start-link href="/travel-id-citizenship/justice-of-the-peace/find"&gt;Find a JP&lt;/a&gt;</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say (provisional — confirm with team)</div>
-<pre class="claim-block-content">&lt;a data-start-link href=&quot;/justice-of-the-peace/find&quot;&gt;Find a JP&lt;/a&gt;</pre>
+<pre class="claim-block-content">&lt;a data-start-link href="/justice-of-the-peace/find"&gt;Find a JP&lt;/a&gt;</pre>
 </div>
 
 - **Type:** internal URL — broken
@@ -585,7 +585,7 @@ Checked: [GIS — Justices of the Peace tag](https://gisbarbados.gov.bb/blog/tag
 </div>
 
 - **Type:** process claim
-- **Sources:** Standard Barbados government practice — all official appointments (judicial, JP, statutory office) are published in the Gazette by the Government Printing Department. No source contradicts this; the Gazette section exists at `governmentprintery.gov.bb/official-gazette/` (blocked by Cloudflare to automated access but indexed by search).
+- **Sources:** Standard Barbados government practice — all official appointments (judicial, JP, statutory office) are published in the Gazette by the Government Printing Department. No source contradicts this; the Gazette section exists at `governmentprintery.gov.bb` (blocked by Cloudflare to automated access but indexed by search).
 - **Status:** verified
 - **Certainty:** 80%
 
@@ -602,13 +602,15 @@ Checked: [GIS — Justices of the Peace tag](https://gisbarbados.gov.bb/blog/tag
 <div class="claim-block-label">URL path may be wrong — site bot-protected, can't verify from anonymous fetch</div>
 <pre class="claim-block-content">governmentprintery.gov.bb is confirmed live (Google indexes pages from 2026).
 The Gazette section appears in search results at /official-gazette/, not /gazette/.
-Both paths return HTTP 403 Cloudflare challenge to automated access.
+Both /gazette/ and /official-gazette/ return HTTP 403 Cloudflare challenge to automated access.
 Without a browser session, neither path can be definitively classified as live or 404.
-Checked: web search site:governmentprintery.gov.bb gazette — surfaces /official-gazette/ and /the-online-gazette/, not /gazette/.</pre>
+Checked: web search site:governmentprintery.gov.bb gazette — surfaces /official-gazette/ and /the-online-gazette/, not /gazette/.
+Re-checked 29 May 2026: /gazette/ returns HTTP 403 (Cloudflare); /official-gazette/ also returns HTTP 403.
+Manual browser verification needed.</pre>
 </div>
 
 - **Type:** external URL
-- **Sources consulted:** Search index confirms `governmentprintery.gov.bb/official-gazette/` exists; both `/gazette/` and `/official-gazette/` return Cloudflare 403 to scripted access.
+- **Sources consulted:** Search index confirms `governmentprintery.gov.bb/official-gazette/` exists; both `/gazette/` and `/official-gazette/` return Cloudflare 403 to scripted access (re-confirmed 29 May 2026).
 - **Status:** unverifiable from public web
 - **Certainty:** 65%
 - **Open question:** Open both URLs in a regular browser to confirm whether `/gazette/` resolves (possibly redirects to `/official-gazette/`). If it 404s for end users, update the link to `https://governmentprintery.gov.bb/official-gazette/`.
@@ -629,8 +631,8 @@ Checked: web search site:governmentprintery.gov.bb gazette — surfaces /officia
 
 ## Sources cited
 
-- [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general)
-- [oag.gov.bb — Contact Us](https://oag.gov.bb/contact)
+- [gov.bb — Office of the Attorney General](https://www.gov.bb/Ministries/attorney-general) — re-fetched 29 May 2026
+- [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) — re-fetched 29 May 2026
 - [Barbados Judicial System — Notarizing Documents and Issuing Notarial Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates)
 - [Barbados Today — Hundreds take oath as new Justices of the Peace (15 Jan 2026)](https://barbadostoday.bb/2026/01/15/hundreds-take-oath-as-new-justices-of-the-peace/)
 - [Barbados Today — Approximately 400 Justices of the Peace to be installed (10 Dec 2021)](https://barbadostoday.bb/2021/12/10/approximately-400-justices-of-the-peace-to-be-installed/)
@@ -643,6 +645,8 @@ Checked: web search site:governmentprintery.gov.bb gazette — surfaces /officia
 - [GIS — Justices of the Peace tag](https://gisbarbados.gov.bb/blog/tag/justices-of-the-peace/)
 - [Government Printing Department — Official Gazette (site confirmed via search)](https://governmentprintery.gov.bb/official-gazette/)
 - Live-page check: `https://alpha.gov.bb/justice-of-the-peace` (29 May 2026) — page loads at no-prefix URL; category-prefixed URL returns HTTP 404
-- Live-page check: `https://alpha.gov.bb/justice-of-the-peace/find` — HTTP 404 to anonymous fetch
+- Live-page check: `https://alpha.gov.bb/travel-id-citizenship/justice-of-the-peace/find` — HTTP 404 (29 May 2026)
+- Live-page check: `https://alpha.gov.bb/justice-of-the-peace/find` — HTTP 404 (29 May 2026)
+- Live-page check: `https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised` — HTTP 200, page loads (29 May 2026)
 - Local file check: `public/justices-of-the-peace-2024.pdf` — 322 KB, 15 pages, file exists
 - IA config: `src/data/content-directory.ts` line 458 — JP page declared `protected: true` with `find` subpage as `component` route

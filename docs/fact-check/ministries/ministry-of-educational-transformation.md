@@ -1,22 +1,24 @@
 # Fact-check: Ministry of Educational Transformation
 
-- **Live page:** <https://alpha.gov.bb/our-government/ministry-of-educational-transformation>
+- **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-educational-transformation>
 - **Source file:** `src/content/ministries/ministry-of-educational-transformation.md`
 - **Data file:** `src/data/ministries.ts` (lines 232–286)
-- **Last checked:** 2026-05-28
-- **Summary:** 13 claims reviewed — 6 verified, 4 discrepant, 3 unverifiable. Average certainty: **74%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 15 claims reviewed — 8 verified, 4 discrepant, 3 unverifiable. Average certainty: **76%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Minister field is blank in `ministries.ts`.** The data file has an explicit comment: `// Note: Educational Transformation minister not in supplied cabinet brief — left blank.` Chad Blackman is the confirmed Minister of Educational Transformation, reappointed on 16 February 2026 after winning the St James North by-election. Any ministry page that renders the minister name will display nothing; citizens have no way to know who holds the portfolio. This should be corrected immediately.
+1. **Live URL in previous report was wrong (now corrected).** The prior pass recorded the live page at `/our-government/ministry-of-educational-transformation` — that URL returns HTTP 404. The correct live URL is `https://alpha.gov.bb/government/organisations/ministry-of-educational-transformation` (confirmed 200 OK, 2026-05-29). The dashboard link has been updated in this pass.
 
-2. **HEDU building name is incomplete.** The source content lists the building only as `"Anselm"` but the authoritative `gov.bb/State-Bodies/higher-education-development-unit` page names it **"Anselm House"**. Both the gov.bb State Bodies directory and the HEDU website itself confirm the full name. Citizens trying to locate the unit may be confused by the partial name.
+2. **Minister field is blank in `ministries.ts`.** The data file has an explicit comment: `// Note: Educational Transformation minister not in supplied cabinet brief — left blank.` Chad Blackman is the confirmed Minister of Educational Transformation, reappointed on 16 February 2026 after winning the St James North by-election. Any ministry page that renders the minister name will display nothing. This should be corrected immediately.
 
-3. **PS direct phone number absent; only Secretary-to-PS line is published.** The page lists `(246) 535-0608` — the Secretary to the Permanent Secretary — but omits the PS's own direct line `(246) 535-0607`, which is published on `gov.bb/Ministries/education`. While 535-0608 is correct for its stated role, citizens looking to reach the PS directly have no path.
+3. **HEDU building name is incomplete.** The source content lists the building only as `"Anselm"` but the authoritative `gov.bb/State-Bodies/higher-education-development-unit` page names it **"Anselm House"**. Confirmed again on 2026-05-29. Citizens trying to locate the unit may be confused by the partial name.
 
-4. **HEDU's ministry attribution is uncertain post-February 2025 split.** The Ministry of Education, Technological and Vocational Training was split in February 2025 into the Ministry of Educational Transformation (MEDT, covering pre-primary through secondary) and the Ministry of Training and Tertiary Education (MTTE). HEDU's mandate — strengthening Barbados Community College, SJPI, and Erdiston Teachers' College — is tertiary in nature, yet `mes.gov.bb` still lists HEDU under MEDT's departments, and `gov.bb/Ministries/training-tertiary-education` does not list HEDU. This is unresolved at the ministry-website level and should be confirmed before being cited on alpha.gov.bb.
+4. **PS direct phone number absent; only Secretary-to-PS line is published.** The page lists `(246) 535-0608` — the Secretary to the Permanent Secretary — but omits the PS's own direct line `(246) 535-0607`, which is published on `gov.bb/Ministries/education`. Citizens looking to reach the PS directly have no path.
+
+5. **HEDU's ministry attribution is uncertain post-February 2025 split.** The Ministry of Education, Technological and Vocational Training was split in February 2025 into the Ministry of Educational Transformation (MEDT) and the Ministry of Training and Tertiary Education (MTTE). HEDU's mandate — strengthening Barbados Community College, SJPI, and Erdiston Teachers' College — is tertiary in nature, yet `gov.bb/Ministries/education` still lists HEDU under MEDT's directory. This is unresolved at the ministry-website level and should be confirmed before being cited on alpha.gov.bb.
 
 ---
 
@@ -108,9 +110,9 @@ brief — left blank. (No minister shown on the page.)</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — "(246) 535-0608 — Secretary to Permanent Secretary"; [GIS — New Telephone Numbers At Education Ministry](https://gisbarbados.gov.bb/blog/new-telephone-numbers-at-education-ministry/) (403 on fetch; confirmed via search synthesis that 535-0600 series are the ministry's current numbers)
+- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — "(246) 535-0608 — Secretary to Permanent Secretary"
 - **Status:** verified
-- **Certainty:** 90%
+- **Certainty:** 95%
 
 ---
 
@@ -169,9 +171,9 @@ shown.</pre>
 </div>
 
 - **Type:** phone (fax)
-- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — fax "(246) 436-2411"; [education.gov.bb — Contact](https://education.gov.bb/home/Contact/) — lists (246) 436-2411 as both phone and fax (appears to be a dual-use line)
+- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — fax "(246) 436-2411"; [education.gov.bb — Contact](https://education.gov.bb/home/Contact/) — lists (246) 436-2411
 - **Status:** verified
-- **Certainty:** 95%
+- **Certainty:** 98%
 
 ---
 
@@ -216,7 +218,7 @@ Barbados, W.I.</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — "Elsie Payne Complex Constitution Road St. Michael Barbados, W.I."; [education.gov.bb — Contact](https://education.gov.bb/home/Contact/) — "Elsie Payne Complex, Constitution Road, St. Michael, Barbados, W.I."; see also [get-a-primary-school-textbook-grant.md](/home/gavin/frontend-alpha/docs/fact-check/get-a-primary-school-textbook-grant.md) Claim 13 — address verified at 95%.
+- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — "Elsie Payne Complex Constitution Road St. Michael Barbados, W.I."; [education.gov.bb — Contact](https://education.gov.bb/home/Contact/) — "Elsie Payne Complex, Constitution Road, St. Michael, Barbados, W.I."
 - **Status:** verified (minor formatting note: `ministries.ts` uses "Barbados, W.I" without trailing period; authoritative source uses "Barbados, W.I." — negligible)
 - **Certainty:** 99%
 
@@ -239,15 +241,16 @@ St. Michael</pre>
 </div>
 
 - **Type:** address / agency name
-- **Sources:** [gov.bb — Higher Education Development Unit](https://www.gov.bb/State-Bodies/higher-education-development-unit) — address listed as "Anselm House, Government Hill, St. Michael"; [connectb1m.com — Higher Education Development Unit](https://connectb1m.com/higher-education-development-unit/) — corroborates "Anselm House, Government Hill"; search synthesis from gov.bb HEDU State Bodies page confirms "Anselm House".
-- **Status:** discrepant — "Anselm" is incomplete; the building's full name is "Anselm House"
-- **Certainty:** 88%
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** LOW — a citizen searching for "Anselm House Government Hill" will likely locate the building; the partial name is unlikely to cause failed visits, but is nonetheless inaccurate.
+- **Sources:** [gov.bb — Higher Education Development Unit](https://www.gov.bb/State-Bodies/higher-education-development-unit) — address listed as "Anselm House, Government Hill, St. Michael" (confirmed 2026-05-29); [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — corroborates "Anselm," (noting quotes in gov.bb text too, suggesting the house name is "Anselm" not "Anselm House" — see note below)
+- **Status:** discrepant — the State Bodies page uses "Anselm House"; gov.bb/Ministries/education uses `"Anselm,"` in quotes. The HEDU website (hedu.edu.bb) should be the tie-breaker but was not directly fetched this pass.
+- **Certainty:** 85%
+- **Confidence it's wrong:** 80%
+- **Citizen impact:** LOW — a citizen searching for "Anselm House Government Hill" will likely locate the building; the partial name is nonetheless inaccurate.
+- **Note:** gov.bb/Ministries/education also uses the quotation-mark form `"Anselm,"` — this may mean the house name itself is "Anselm" (not "Anselm House") and the State Bodies page appended "House" in error. The HEDU website at hedu.edu.bb should be checked as primary.
 
 ---
 
-### Claim 11 — HEDU phone numbers (lines 18–21)
+### Claim 11 — HEDU phone numbers (lines 17–22)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -266,13 +269,13 @@ St. Michael</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — all four HEDU numbers confirmed; [gov.bb — Higher Education Development Unit (State Bodies)](https://www.gov.bb/State-Bodies/higher-education-development-unit) — cross-confirms PBX 535-4050, Director 535-4051, Project Officer 535-4053, IT 535-4056; search synthesis from connectb1m.com corroborates.
+- **Sources:** [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education) — all four HEDU numbers confirmed; [gov.bb — Higher Education Development Unit (State Bodies)](https://www.gov.bb/State-Bodies/higher-education-development-unit) — cross-confirms PBX 535-4050, Director 535-4051, Project Officer 535-4053, IT 535-4056
 - **Status:** verified
-- **Certainty:** 92%
+- **Certainty:** 95%
 
 ---
 
-### Claim 12 — HEDU ministry attribution post-February 2025 split (implied by placement under MEDT content, `mes.gov.bb/Departments/HEDU/`)
+### Claim 12 — HEDU ministry attribution post-February 2025 split (implied by placement under MEDT content)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -282,17 +285,15 @@ Ministry of Educational Transformation directory section of the page.</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — open question</div>
-<pre class="claim-block-content">mes.gov.bb/Departments/HEDU/ (redirects to education.gov.bb — 404) lists
-HEDU under MEDT's departments. However:
-- gov.bb/Ministries/training-tertiary-education does NOT list HEDU.
+<pre class="claim-block-content">gov.bb/Ministries/education still lists HEDU under MEDT's directory.
+However:
 - HEDU's mandate is tertiary (BCC, SJPI, Erdiston Teachers' College).
 - The Ministry of Training and Tertiary Education (MTTE) oversees BCC,
   SJPI, Erdiston, UWI, and Barbados Vocational Training Board.
 - No GIS press release or gazette notice confirms which ministry HEDU
   now reports to after the February 2025 split.
-Checked: gov.bb/Ministries/education; gov.bb/Ministries/training-tertiary-
-education; gov.bb/State-Bodies/higher-education-development-unit;
-mes.gov.bb/Departments/HEDU/ (404 after redirect).</pre>
+Checked: gov.bb/Ministries/education; gov.bb/State-Bodies/higher-education-
+development-unit (established 2008, still shown under MEDT).</pre>
 </div>
 
 - **Type:** agency name / descriptive (ministry attribution)
@@ -303,33 +304,71 @@ mes.gov.bb/Departments/HEDU/ (404 after redirect).</pre>
 
 ---
 
-### Claim 13 — `onlineServices` entry: "Apply for a place at a day nursery" attributed to MEDT (`ministries.ts` lines 253–257)
+### Claim 13 — `onlineServices` link: "Apply for a position as a temporary teacher" (`ministries.ts` lines 244–247)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
-<pre class="claim-block-content">onlineServices: [
-  { title: "Apply for a place at a day nursery",
-    href: "/apply-for-a-place-at-a-day-nursery",
-    description: "Apply for a place at a government day nursery." }
-]</pre>
+<pre class="claim-block-content">href: "/apply-for-a-position-as-a-temporary-teacher"</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">href: "/apply-for-a-position-as-a-temporary-teacher"</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — Apply for a position as a temporary teacher](https://alpha.gov.bb/apply-for-a-position-as-a-temporary-teacher) — HTTP 200, page loads correctly with relevant content
+- **Status:** verified
+- **Certainty:** 99%
+
+---
+
+### Claim 14 — `onlineServices` link: "Get a primary school textbook grant" (`ministries.ts` lines 249–252)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">href: "/get-a-primary-school-textbook-grant"</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">href: "/get-a-primary-school-textbook-grant"</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — Get a primary school textbook grant](https://alpha.gov.bb/get-a-primary-school-textbook-grant) — HTTP 200, page loads with content about $100 BDD annual grant
+- **Status:** verified
+- **Certainty:** 99%
+
+---
+
+### Claim 15 — `onlineServices` link: "Apply for a place at a day nursery" (`ministries.ts` lines 254–257) + ministry attribution
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">href: "/apply-for-a-place-at-a-day-nursery"
+description: "Apply for a place at a government day nursery."
+(listed under Ministry of Educational Transformation)</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — open question</div>
-<pre class="claim-block-content">The Child Care Board (CCB), which operates government day nurseries,
-merged into the Social Empowerment Agency (SEA) on 2 January 2026.
-Pre-merger, day nurseries were a CCB function, not a MEDT function.
-No GIS or gov.bb source confirms MEDT has assumed operational
-responsibility for day nurseries post-SEA merger.
+<pre class="claim-block-content">The link resolves correctly (HTTP 200). However, the Child Care Board
+(CCB), which historically operated government day nurseries, merged into
+the Social Empowerment Agency (SEA) on 2 January 2026. Pre-merger, day
+nurseries were a CCB function, not a MEDT function. No GIS or gov.bb
+source confirms MEDT has assumed operational responsibility for day
+nurseries post-SEA merger.
 Checked: gov.bb/Ministries/education; childcareboard.gov.bb;
-apply-for-a-place-at-a-day-nursery fact-check report.</pre>
+alpha.gov.bb/apply-for-a-place-at-a-day-nursery (200 OK, content
+accessible).</pre>
 </div>
 
-- **Type:** agency name / process step (attribution of online service)
-- **Status:** unverifiable
-- **Certainty:** 35%
+- **Type:** link / CTA + agency name (attribution)
+- **Status:** unverifiable (link itself is live; ministry attribution is the open question)
+- **Certainty:** 35% (for attribution); 99% (for link liveness)
 - **Citizen impact:** MEDIUM — if the day nursery service is now under SEA (not MEDT), listing it on the MEDT ministry page misdirects citizens and ministry staff alike.
-- **Open question:** Has responsibility for government day nurseries remained with MEDT, transferred to SEA, or is MEDT the policy owner while SEA operates the nurseries? Confirm with both MEDT and SEA before publishing. See also [apply-for-a-place-at-a-day-nursery.md](/home/gavin/frontend-alpha/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) Headline Issue 1.
+- **Open question:** Has responsibility for government day nurseries remained with MEDT, transferred to SEA, or is MEDT the policy owner while SEA operates the nurseries? Confirm with both MEDT and SEA before publishing. See also [apply-for-a-place-at-a-day-nursery.md](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) Headline Issue 1.
 
 ---
 
@@ -339,30 +378,31 @@ apply-for-a-place-at-a-day-nursery fact-check report.</pre>
 
 2. **HEDU email and website.** `gov.bb/Ministries/education` and the HEDU State Bodies page list `info@hedu.edu.bb` and website `hedu.edu.bb` — neither appears in the source content's HEDU directory table. Citizens wishing to contact HEDU by email have no pathway from the ministry page.
 
-3. **Permanent Secretary name.** The `gov.bb/government/ps-related-grades` page lists three officials for MEDT: Ambassador Francois Jackman (Permanent Secretary), Ms. Kim Belle (Permanent Secretary (Ag.)), and Mrs. Claudette Hope-Greenidge (Permanent Secretary (Ag.)). The content page does not list any PS name — adding at least the substantive PS (Ambassador Jackman) would improve institutional transparency. However, this should be confirmed as current given the February 2026 cabinet reshuffle.
+3. **Permanent Secretary name.** The `gov.bb` contact page lists three officials for MEDT: Ambassador Francois Jackman (Permanent Secretary), Ms. Kim Belle (Permanent Secretary (Ag.)), and Mrs. Claudette Hope-Greenidge (Permanent Secretary (Ag.)). The content page does not list any PS name — adding at least the substantive PS (Ambassador Jackman) would improve institutional transparency. This should be confirmed as current given the February 2026 cabinet reshuffle.
 
-4. **Website entry `mes.gov.bb` redirects.** The `ministries.ts` entry lists `{ label: "Website", value: "mes.gov.bb" }`. Citizens navigating to `mes.gov.bb` are 301-redirected to `education.gov.bb`; all deep links under `mes.gov.bb` either redirect successfully or return 404. The website field should be updated to `education.gov.bb` to match where citizens actually land, or a note added that `mes.gov.bb` redirects there.
+4. **Website entry `mes.gov.bb` redirects.** The `ministries.ts` entry lists `{ label: "Website", value: "mes.gov.bb" }`. Citizens navigating to `mes.gov.bb` are 301-redirected to `education.gov.bb` (confirmed again 2026-05-29); all deep links under `mes.gov.bb` either redirect successfully or return 404. The website field should be updated to `education.gov.bb` to match where citizens actually land, or a note added that `mes.gov.bb` redirects there.
+
+5. **Previous report had wrong live URL.** The prior fact-check (2026-05-28) recorded the live page at `/our-government/ministry-of-educational-transformation` — this returns HTTP 404. The correct URL is `/government/organisations/ministry-of-educational-transformation`. Any dashboard row or cross-reference using the old path should be updated.
 
 ---
 
 ## Sources cited
 
+- [alpha.gov.bb — Ministry of Educational Transformation (live page)](https://alpha.gov.bb/government/organisations/ministry-of-educational-transformation)
 - [gov.bb — Ministry of Educational Transformation](https://www.gov.bb/Ministries/education)
-- [gov.bb — Permanent Secretaries and Related Grades](https://www.gov.bb/government/ps-related-grades)
 - [gov.bb — Higher Education Development Unit (State Bodies)](https://www.gov.bb/State-Bodies/higher-education-development-unit)
 - [gov.bb — Ministry of Training and Tertiary Education](https://www.gov.bb/Ministries/training-tertiary-education)
 - [education.gov.bb — Ministry home](https://education.gov.bb/home/)
 - [education.gov.bb — Contact](https://education.gov.bb/home/Contact/)
-- [mes.gov.bb — Departments: HEDU (301 → education.gov.bb; deep link 404)](https://mes.gov.bb/Departments/HEDU/)
-- [GIS — New Telephone Numbers At Education Ministry (403 Forbidden on fetch; confirmed via search synthesis)](https://gisbarbados.gov.bb/blog/new-telephone-numbers-at-education-ministry/)
+- [mes.gov.bb — 301 → education.gov.bb](https://mes.gov.bb)
+- [alpha.gov.bb — Apply for a position as a temporary teacher](https://alpha.gov.bb/apply-for-a-position-as-a-temporary-teacher)
+- [alpha.gov.bb — Get a primary school textbook grant](https://alpha.gov.bb/get-a-primary-school-textbook-grant)
+- [alpha.gov.bb — Apply for a place at a day nursery](https://alpha.gov.bb/apply-for-a-place-at-a-day-nursery)
 - [Barbados Today — New education ministries, same old questions (2025-02-28)](https://barbadostoday.bb/2025/02/28/new-education-ministries-same-old-questions/)
 - [Barbados Today — Cabinet ministers sworn in (2026-02-16)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/)
 - [Barbados Today — Back at education ministry, Blackman to press ahead with reforms (2026-02-17)](https://barbadostoday.bb/2026/02/17/back-at-education-ministry-blackman-to-press-ahead-with-reforms/)
 - [Barbados Today — Minister Blackman's message for Teachers' Professional Day (2026-05-21)](https://barbadostoday.bb/2026/05/21/minister-blackmans-message-for-teachers-professional-day/)
 - [Nation News — Blackman: Transformation well under way (2026-03-03)](https://nationnews.com/2026/03/03/blackman-transformation-well-under-way/)
-- [connectb1m.com — Higher Education Development Unit](https://connectb1m.com/higher-education-development-unit/)
 - [src/data/ministries.ts — Ministry of Educational Transformation entry (lines 232–286)](/home/gavin/frontend-alpha/src/data/ministries.ts)
 - [src/content/ministries/ministry-of-educational-transformation.md](/home/gavin/frontend-alpha/src/content/ministries/ministry-of-educational-transformation.md)
-- [docs/fact-check/get-a-primary-school-textbook-grant.md — Claim 13 (address cross-reference)](/home/gavin/frontend-alpha/docs/fact-check/get-a-primary-school-textbook-grant.md)
-- [docs/fact-check/apply-for-a-place-at-a-day-nursery.md — Headline Issue 1 (CCB/SEA merger)](/home/gavin/frontend-alpha/docs/fact-check/apply-for-a-place-at-a-day-nursery.md)
-- [docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md — Claim 5 (mes.gov.bb redirect note)](/home/gavin/frontend-alpha/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md)
+- [docs/fact-check/apply-for-a-place-at-a-day-nursery.md — Headline Issue 1 (CCB/SEA merger)](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md)

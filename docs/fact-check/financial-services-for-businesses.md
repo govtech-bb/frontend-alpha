@@ -2,18 +2,18 @@
 
 - **Live page:** <https://alpha.gov.bb/business-trade/financial-services-for-businesses>
 - **Source file:** `src/content/financial-services-for-businesses.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 10 claims reviewed — 7 verified, 2 discrepant, 1 unverifiable. Average certainty: **86%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 13 claims reviewed — 9 verified, 3 discrepant, 1 unverifiable. Average certainty: **88%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Second phone number is the fax, not a voice line.** Line 26 lists `(246) 421-2146` as a second telephone number. The FSC's own Contact Us page lists only one phone number — `+1 (246) 421 2142` — and multiple search results identify 421-2146 as the fax. Presenting it as a phone will waste a citizen's time.
+1. **Second phone number is the fax, not a voice line.** Line 26 lists `(246) 421-2146` as a second telephone number alongside `(246) 421-2142`. The FSC's own Contact Us page lists only one phone number — `+1 (246) 421 2142` — and does not list 421-2146 at all. Multiple web search results identify 421-2146 as the FSC fax number. Presenting it without a label will cause citizens to dial a fax machine.
 
-2. **"Co-operatives Societies Act" is mis-spelled.** Line 18 writes "Co-operatives Societies Act" (with a spurious plural 's' on "Co-operatives"). Both the Barbados Law Courts statute file and the FSC's own legislation page use "Co-operative Societies Act, Cap. 378A".
+2. **"Co-operatives Societies Act" is mis-spelled.** Line 18 writes "Co-operatives Societies Act" (spurious plural on "Co-operatives"). The FSC's Legislation page, the Barbados Law Courts statute repository, and the ILO NATLEX catalogue all use "Co-operative Societies Act, Cap. 378A". The FSC's own Credit Unions Division page inconsistently uses the plural form, but the definitive spelling is singular.
 
-3. **Website URL uses HTTP, not HTTPS.** Line 30 links to `http://www.fsc.gov.bb/` — the FSC site runs on HTTPS. The bare `http://` link may generate a browser security warning or silently redirect. Replace with `https://www.fsc.gov.bb/`.
+3. **Website link uses HTTP instead of HTTPS.** Line 30 links to `http://www.fsc.gov.bb/`. The FSC site serves pages over HTTPS (`https://www.fsc.gov.bb/`). The HTTP link may generate browser security warnings on strict clients. Best practice and all Tier 1 citations use `https://`.
 
 ---
 
@@ -89,7 +89,7 @@
 </div>
 
 - **Type:** legal reference
-- **Sources:** [FSC — Insurance Act CAP 310 (PDF)](https://www.fsc.gov.bb/viewPDF/documents/2022-11-16-07-03-46-Insurance-Act---CAP310.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation); [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission)
+- **Sources:** [FSC — Insurance Act CAP 310 (PDF)](https://www.fsc.gov.bb/viewPDF/documents/2022-11-16-07-03-46-Insurance-Act---CAP310.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation) — "Insurance Act Cap. 310" listed
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -108,7 +108,7 @@
 </div>
 
 - **Type:** legal reference
-- **Sources:** [Barbados Law Courts — Cap. 350B Occupational Pension Benefits (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/OccupationalPensionBenefitsCAP350B.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation)
+- **Sources:** [Barbados Law Courts — Cap. 350B Occupational Pension Benefits (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/OccupationalPensionBenefitsCAP350B.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation) — "Occupational Pension Benefits Act Cap. 350B" listed
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -127,7 +127,7 @@
 </div>
 
 - **Type:** legal reference
-- **Sources:** [Barbados Law Courts — Securities Act CAP 318A (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SecuritiesCAP318A.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation)
+- **Sources:** [Barbados Law Courts — Securities Act CAP 318A (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/SecuritiesCAP318A.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation) — "Securities Act Cap. 318A" listed
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -146,7 +146,7 @@
 </div>
 
 - **Type:** legal reference
-- **Sources:** [FSC — Mutual Funds Act CAP 320B (PDF)](https://www.fsc.gov.bb/viewPDF/documents/2022-11-16-07-04-04-Mutual-Funds-Act----CAP320B.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation)
+- **Sources:** [FSC — Mutual Funds Act CAP 320B (PDF)](https://www.fsc.gov.bb/viewPDF/documents/2022-11-16-07-04-04-Mutual-Funds-Act----CAP320B.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation) — "Mutual Funds Act Cap. 320B" listed
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -165,12 +165,12 @@
 </div>
 
 - **Type:** legal reference
-- **Sources:** [Barbados Law Courts — Co-operativeSocietiesCAP378A (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/Co-operativeSocietiesCAP378A.pdf) — the statute PDF filename itself uses "Co-operative" (singular); [FSC — Legislation](https://www.fsc.gov.bb/legislation) — lists "Co-operative Societies Act Cap. 378A"; [FSC — Credit Unions Division](https://www.fsc.gov.bb/credit-unions-division) — the FSC's own Credit Unions page uses both forms inconsistently, but the law courts statutory repository is the authoritative spelling; [ILO NATLEX](https://natlex.ilo.org/dyn/natlex2/r/natlex/fe/details?p3_isn=20296) — catalogued as "Co-operative Societies Act. No. 23 (Cap. 378A)"
-- **Status:** discrepant — "Co-operatives" (plural) is a typo; correct form is "Co-operative" (singular)
+- **Sources:** [FSC — Legislation](https://www.fsc.gov.bb/legislation) — lists "Co-operative Societies Act Cap. 378A" and "Co-operative Societies Regulations, 2008" (both singular); [Barbados Law Courts — Co-operative Societies Act, Cap. 378A (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/Co-operativeSocietiesCAP378A.pdf) — the statute file itself uses the singular form; [ILO NATLEX](https://natlex.ilo.org/dyn/natlex2/r/natlex/fe/details?p3_isn=20296) — catalogued as "Co-operative Societies Act"
+- **Status:** discrepant — "Co-operatives" (plural) is incorrect; correct statutory title is "Co-operative Societies Act" (singular)
 - **Certainty:** 85%
 - **Confidence it's wrong:** 90%
-- **Citizen impact:** LOW — a business user searching for the Act by name may not find it; misleads about the statute title
-- **Note:** Even the FSC's own Credit Unions Division page inconsistently uses "Co-operatives Societies Act" at points. The definitive form is the statute's own title as reflected in the Barbados Law Courts repository URL and the FSC Legislation page.
+- **Citizen impact:** LOW — a business user searching for the Act by its exact statutory name may not find it; incorrectly names a legislative instrument
+- **Note:** The FSC's Credit Unions Division page also uses the plural form inconsistently, but the FSC Legislation page and the Barbados Law Courts statutory repository are the authoritative references and both use the singular "Co-operative".
 
 ---
 
@@ -193,10 +193,10 @@ BB14038</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [FSC — Contact Us](https://www.fsc.gov.bb/contact-us) — "Bay Corporate Building, Bay Street, St. Michael, Barbados, BB14038"; [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission) — same; [GIS — Relocation Of Financial Services Commission](https://gisbarbados.gov.bb/blog/relocation-of-financial-services-commission/) — confirmed the FSC moved to Bay Corporate Building, Bay Street as of December 2020
+- **Sources:** [FSC — Contact Us](https://www.fsc.gov.bb/contact-us) — "Bay Corporate Building, Bay Street, St. Michael, Barbados, BB14038"; [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission) — same; [GIS — Relocation Of Financial Services Commission](https://gisbarbados.gov.bb/blog/relocation-of-financial-services-commission/) — confirmed the FSC moved to Bay Corporate Building, Bay Street
 - **Status:** verified
 - **Certainty:** 99%
-- **Note:** GIS reported the FSC relocated to Bay Corporate Building in December 2020. The current address is current and matches all Tier 1 sources.
+- **Note:** GIS reported the FSC relocated to Bay Corporate Building in December 2020. The address matches all Tier 1 sources.
 
 ---
 
@@ -215,8 +215,8 @@ Fax: (246) 421-2146</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [FSC — Contact Us](https://www.fsc.gov.bb/contact-us) — lists only one phone number: "+1 (246) 421 2142"; [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission) — lists both 421-2142 and 421-2146 without labelling either as fax; [gov.bb — Statutory Boards — Financial Services Commission](https://www.gov.bb/government-main/statutory-boards/financial-services-commission) — same; web search results consistently identify 421-2146 as the FSC fax number
-- **Status:** discrepant — 421-2142 is the voice phone (verified); 421-2146 is the fax number, not a second voice line. The page presents both as telephone numbers with no distinction.
+- **Sources:** [FSC — Contact Us](https://www.fsc.gov.bb/contact-us) — lists only one telephone number: "+1 (246) 421 2142"; 421-2146 does not appear on the FSC Contact Us page at all; [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission) — lists both 421-2142 and 421-2146 without labelling either as fax; web search results consistently identify 421-2146 as the FSC fax number
+- **Status:** discrepant — 421-2142 is the verified voice line; 421-2146 is the fax number and is absent from the FSC's own contact page. The alpha page presents both as telephone numbers with no distinction.
 - **Certainty (421-2142 as phone):** 99%
 - **Certainty (421-2146 as fax, not phone):** 85%
 - **Confidence it's wrong:** 85%
@@ -256,27 +256,27 @@ Fax: (246) 421-2146</pre>
 </div>
 
 - **Type:** URL
-- **Sources:** [FSC — Home](https://www.fsc.gov.bb/) — live; all current search engine listings index the site at `https://www.fsc.gov.bb/`
-- **Status:** unverifiable as strictly broken (the `http://` URL likely redirects to `https://`), but the protocol should be updated to `https://` for correctness and to avoid browser security warnings on stricter clients
+- **Sources:** [FSC — Home](https://www.fsc.gov.bb/) — confirmed live and served over HTTPS; all search engine listings index the site at `https://www.fsc.gov.bb/`
+- **Status:** unverifiable as strictly broken (the `http://` link likely redirects to `https://` silently), but the protocol must be updated to `https://` for correctness. The FSC site is confirmed HTTPS.
 - **Certainty:** 80%
-- **Open question:** Confirm whether `http://www.fsc.gov.bb/` enforces an HTTP-to-HTTPS redirect (most modern servers do). Either way, updating to `https://` is best practice and matches all Tier 1 citations.
+- **Open question:** Confirm whether `http://www.fsc.gov.bb/` performs a server-side redirect to HTTPS. Either way, the alpha page should use `https://` to avoid browser security warnings on strict clients.
 
 ---
 
-### Claim 13 — Declared `source_url` in `content-directory.ts` (line 554)
+### Claim 13 — Declared `source_url` in frontmatter (line 4 of source file)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently in src/data/content-directory.ts (line 554)</div>
-<pre class="claim-block-content">source_url: "https://www.gov.bb/State-Bodies/financial-services-commission"</pre>
+<div class="claim-block-label">Currently in src/content/financial-services-for-businesses.md (frontmatter)</div>
+<pre class="claim-block-content">source_url: https://www.gov.bb/State-Bodies/financial-services-commission</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">source_url: "https://www.gov.bb/State-Bodies/financial-services-commission"</pre>
+<pre class="claim-block-content">source_url: https://www.gov.bb/State-Bodies/financial-services-commission</pre>
 </div>
 
 - **Type:** URL
-- **Sources:** [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission) — confirmed live, page loads and contains matching address, phone, email, and Acts list
+- **Sources:** [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission) — confirmed live; page contains matching address, phone numbers, email, and Acts list
 - **Status:** verified — source URL resolves and content matches the alpha.gov.bb page
 - **Certainty:** 99%
 
@@ -284,9 +284,9 @@ Fax: (246) 421-2146</pre>
 
 ## Additional findings (not on the page but should be)
 
-- **Sector-specific contact emails** — the FSC publishes dedicated email addresses for each regulated sector (credit unions: `creditunions@fsc.gov.bb`; insurance: `insurance@fsc.gov.bb`; pensions: `pensions@fsc.gov.bb`; securities: `securities@fsc.gov.bb`; new applications: `newapplications@fsc.gov.bb`; registration and licensing: `registration.licensing@fsc.gov.bb`). A business seeking to licence a fund, for example, would benefit from knowing to use `newapplications@fsc.gov.bb` rather than the general inbox. These are published on [FSC — Contact Us](https://www.fsc.gov.bb/contact-us).
+- **Sector-specific contact emails.** The FSC publishes dedicated email addresses per regulated sector: credit unions: `creditunions@fsc.gov.bb`; insurance: `insurance@fsc.gov.bb`; pensions: `pensions@fsc.gov.bb`; securities: `securities@fsc.gov.bb`; tips/complaints: `tcr@fsc.gov.bb`; new applications: `newapplications@fsc.gov.bb`. A business seeking to licence a fund would benefit from knowing to use `newapplications@fsc.gov.bb` rather than the general inbox. Source: [FSC — Contact Us](https://www.fsc.gov.bb/contact-us).
 
-- **FSC was established under the Financial Services Commission Act, 2010-21** and became operational on 1 April 2011. A brief note stating when the FSC was established would help citizens understand its authority. This is documented on [FSC — About Us](https://www.fsc.gov.bb/about-us).
+- **FSC establishment date.** The FSC was established under the Financial Services Commission Act, 2010-21 and became operational on 1 April 2011. A brief note stating this would help citizens understand the commission's authority. Source: [FSC — About Us](https://www.fsc.gov.bb/about-us).
 
 ---
 
@@ -299,7 +299,6 @@ Fax: (246) 421-2146</pre>
 - [Financial Services Commission — Legislation](https://www.fsc.gov.bb/legislation)
 - [Financial Services Commission — Credit Unions Division](https://www.fsc.gov.bb/credit-unions-division)
 - [gov.bb — Financial Services Commission (State Bodies)](https://www.gov.bb/State-Bodies/financial-services-commission)
-- [gov.bb — Financial Services Commission (Statutory Boards)](https://www.gov.bb/government-main/statutory-boards/financial-services-commission)
 - [GIS — Relocation Of Financial Services Commission](https://gisbarbados.gov.bb/blog/relocation-of-financial-services-commission/)
 - [Barbados Law Courts — Exempt Insurance Act, Cap. 308A (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/ExemptInsuranceCAP308A.pdf)
 - [FSC — Insurance Act, CAP 310 (PDF)](https://www.fsc.gov.bb/viewPDF/documents/2022-11-16-07-03-46-Insurance-Act---CAP310.pdf)
@@ -308,3 +307,5 @@ Fax: (246) 421-2146</pre>
 - [FSC — Mutual Funds Act, CAP 320B (PDF)](https://www.fsc.gov.bb/viewPDF/documents/2022-11-16-07-04-04-Mutual-Funds-Act----CAP320B.pdf)
 - [Barbados Law Courts — Co-operative Societies Act, Cap. 378A (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/Co-operativeSocietiesCAP378A.pdf)
 - [CAIPO — Exempt Insurance Act, Cap. 308A](https://caipo.gov.bb/legislation/exempt-insurance-act-cap-308a/)
+- [ILO NATLEX — Co-operative Societies Act, No. 23 (Cap. 378A)](https://natlex.ilo.org/dyn/natlex2/r/natlex/fe/details?p3_isn=20296)
+- [alpha.gov.bb — Financial services for businesses](https://alpha.gov.bb/business-trade/financial-services-for-businesses)

@@ -3,20 +3,20 @@
 - **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-home-affairs-and-information>
 - **Source file:** `src/content/ministries/ministry-of-home-affairs-and-information.md`
 - **Data file:** `src/data/ministries.ts` (lines 551–676)
-- **Last checked:** 2026-05-28
-- **Summary:** 17 claims reviewed — 13 verified, 2 discrepant, 2 unverifiable. Average certainty: **85%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 20 claims reviewed — 16 verified, 2 discrepant, 2 unverifiable. Average certainty: **87%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **Address uses "Webster Business Park" — official spelling is "Webster's Business Park".** The source content (line 7) and the gov.bb MHAI page both omit the possessive apostrophe. The OAG — co-located in the same building — uses "Webster's Business Park" on its official contact page, as does the gov.bb AG entry in `ministries.ts` (line 139). The building name should be standardised to the possessive form across all ministry entries. Citizen impact is LOW (the address is still findable), but inconsistency erodes trust.
+1. **Intro sentence uses "license" (American spelling) and truncates the ministry name.** Line 1 of the source markdown says "marriage license" and "Ministry of Home Affairs" (without "and Information"). All Barbados official sources use the British spelling "licence" and the full ministry name "Ministry of Home Affairs and Information". This is a Tier-B discrepancy with low citizen impact (functionally correct referral) but material inconsistency with official usage.
 
-2. **Meteorological Office ministry attribution is contested.** The source content does not mention the Met Office directly, but `ministries.ts` (line 658) lists "The Meteorological Office" as a Home Affairs associated department. The gov.bb Departments page attributes the Meteorological Office to MIST; the agriculture.gov.bb subdomain hosts a "Barbados Meteorological Services" page under Agriculture. However, the 2025–2026 Barbados Estimates of Expenditure (Parliament document) places Meteorological Services under Head 33 — Ministry of Home Affairs and Information. This conflicts across official sources and should be resolved by the GovBB team with the relevant ministry.
+2. **Address uses "Webster Business Park" — official spelling may be "Webster's Business Park".** The source content (line 7) and the gov.bb MHAI page both omit the possessive apostrophe. The OAG — co-located in the same building — uses "Webster's Business Park" on its official contact page. Confidence this is wrong is moderate (70%) because gov.bb itself also uses the non-possessive form, suggesting the inconsistency may be systemic. The GovBB team should standardise.
 
-3. **Fire Service headquarters address on gov.bb is stale.** `ministries.ts` lists "The Fire Service Department" as a Home Affairs associated body (line 659). The canonical fireservice.gov.bb now shows the headquarters as the CMM Emergency Services Complex, Prince Road, Pine Plantation Road, St. Michael — NOT the Level 5 GPO Building, Cheapside that appears on gov.bb/Departments/fire-service. This is a stale gov.bb Departments page; the alpha.gov.bb ministries page itself does not name the Fire Service's address, so no direct correction is needed to this page, but the wider data may mislead citizens searching for Fire Service contact details from the ministry listing.
+3. **Meteorological Office ministry attribution is contested.** The ministries.ts data (line 658) lists "The Meteorological Office" under Home Affairs. The gov.bb Departments page attributes it to MIST; the 2025–2026 Barbados Estimates of Expenditure places it under Head 33 — Ministry of Home Affairs and Information; and agriculture.gov.bb hosts "Barbados Meteorological Services" under Agriculture. Conflicting across official sources — needs resolution by the GovBB team with the relevant ministry.
 
-4. **Intro sentence says "marriage license" (American spelling).** The Government of Barbados uses "marriage licence" (British spelling) throughout all official sources including gov.bb, barbadoslawcourts.gov.bb, and the relevant legislation. The alpha.gov.bb intro sentence on line 1 should be corrected.
+4. **All 15 online-service CTAs resolve correctly.** This pass live-checked all 15 internal links listed in ministries.ts onlineServices (passport, national registration, register a birth/death/marriage, certificates, marriage licences, notarised, loud music permit, beach park vendor, three post-office-redirection pages). All return HTTP 200 with correct content. No broken CTAs found — no issue needed.
 
 ---
 
@@ -36,7 +36,7 @@
 
 - **Type:** descriptive / agency name
 - **Sources:** [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence); [gov.bb — MHAI](https://www.gov.bb/Ministries/home-affairs); [barbadoslawcourts.gov.bb — Getting Married](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages)
-- **Status:** discrepant — two issues: (a) "license" is the American spelling; the British spelling "licence" is used throughout all official Barbados government sources; (b) the full ministry name is "Ministry of Home Affairs and Information", not "Ministry of Home Affairs".
+- **Status:** discrepant — two issues: (a) "license" is the American spelling; "licence" (British) is used throughout all official Barbados government sources; (b) the full ministry name is "Ministry of Home Affairs and Information", not "Ministry of Home Affairs".
 - **Certainty:** 99%
 - **Confidence it's wrong:** 97%
 - **Citizen impact:** LOW — the referral is functionally correct; the spelling error and truncated name are minor but inconsistent with official usage.
@@ -72,7 +72,7 @@ Wildey, St. Michael</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
+<div class="claim-block-label">Should say (probable correction)</div>
 <pre class="claim-block-content">Jones Building
 Webster's Business Park
 Wildey, St. Michael</pre>
@@ -80,7 +80,7 @@ Wildey, St. Michael</pre>
 
 - **Type:** address
 - **Sources:** [gov.bb — MHAI](https://www.gov.bb/Ministries/home-affairs) (uses "Webster Business Park" without apostrophe); [oag.gov.bb — Contact](https://oag.gov.bb/contact) (uses "Webster's Business Park" with apostrophe for the same building); [gov.bb — Attorney General](https://www.gov.bb/Ministries/attorney-general) (uses "Webster's Business Park")
-- **Status:** discrepant — the possessive form "Webster's Business Park" is used by the OAG (co-tenant) and the gov.bb AG listing. The gov.bb MHAI page itself also omits the apostrophe, which suggests the inconsistency is systemic across gov.bb, not just on alpha.gov.bb. The alpha.gov.bb page reproduces the form found on gov.bb/Ministries/home-affairs but the OAG's own site (a higher-confidence source for the building name) uses the apostrophe. Recommend standardising on "Webster's Business Park".
+- **Status:** discrepant — the possessive form "Webster's Business Park" is used by the OAG (co-tenant) and the gov.bb AG listing. The gov.bb MHAI page itself also omits the apostrophe, which suggests the inconsistency is systemic across gov.bb. The OAG's own site (a higher-confidence source for the building name) uses the apostrophe. Recommend standardising on "Webster's Business Park".
 - **Certainty:** 85%
 - **Confidence it's wrong:** 70%
 - **Citizen impact:** LOW — the address is findable under either spelling.
@@ -120,9 +120,8 @@ Wildey, St. Michael</pre>
 
 - **Type:** phone
 - **Sources:** [gov.bb — MHAI](https://www.gov.bb/Ministries/home-affairs)
-- **Status:** verified — matches gov.bb exactly.
+- **Status:** verified — matches gov.bb exactly. This is the ministerial line at the ministry building; it should remain correct regardless of the current minister.
 - **Certainty:** 90%
-- **Note:** This line directly superseded when minister changed from Wilfred Abrahams to Gregory Nicholls in February 2026. The number is the minister's line at the ministry, not personal — it should remain correct regardless of who holds the portfolio.
 
 ---
 
@@ -275,7 +274,7 @@ Minister of Home Affairs and Information</pre>
 
 - **Type:** agency name / statistic
 - **Sources:** [barbadosparliament.com — Cabinet Ministers](https://www.barbadosparliament.com/page_content/show_content/8); [Barbados Today — Cabinet ministers sworn in, 16 Feb 2026](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/)
-- **Status:** verified — confirmed sworn in 16 February 2026 with this portfolio.
+- **Status:** verified — confirmed sworn in 16 February 2026 with this portfolio. Still listed on barbadosparliament.com as of 2026-05-29.
 - **Certainty:** 99%
 
 ---
@@ -334,8 +333,9 @@ Contested / needs resolution:
   Head 33 — Ministry of Home Affairs and Information. The agriculture.gov.bb subdomain
   hosts a separate "Barbados Meteorological Services" under Agriculture.
 - The Fire Service Department: the official name on gov.bb is "Fire Service Department";
-  correct. However the headquarters listed on gov.bb is the stale GPO Building address
-  (the BFS actually moved to the CMM Complex, Prince Road in Oct 2025).</pre>
+  correct. However the headquarters listed on gov.bb is stale (the BFS has moved to
+  the CMM Emergency Services Complex, Prince Road, Pine Plantation Road, St. Michael).
+  No address is claimed for the Fire Service on this ministry page itself.</pre>
 </div>
 
 - **Type:** agency name
@@ -396,13 +396,94 @@ Checked: [gov.bb — MHAI](https://www.gov.bb/Ministries/home-affairs),
 
 ---
 
+### Claim 18 — Online service CTA: Apply for a passport (ministries.ts line 567)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">Apply for a passport → /apply-for-a-passport</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">Apply for a passport → /apply-for-a-passport</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — Apply for a passport](https://alpha.gov.bb/apply-for-a-passport) — page loads with correct content.
+- **Status:** verified
+- **Certainty:** 99%
+
+---
+
+### Claim 19 — Online service CTAs: Registration and certificate pages (ministries.ts lines 572–638)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">National registration → /national-registration
+Register a birth → /register-a-birth
+Register a death → /register-a-death
+Register a marriage → /register-a-marriage
+Get a birth certificate → /get-birth-certificate
+Get a death certificate → /get-death-certificate
+Get a marriage certificate → /get-marriage-certificate
+Marriage licences → /marriage-licences
+Get a document notarised → /get-a-document-notarised</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">National registration → /national-registration
+Register a birth → /register-a-birth
+Register a death → /register-a-death
+Register a marriage → /register-a-marriage
+Get a birth certificate → /get-birth-certificate
+Get a death certificate → /get-death-certificate
+Get a marriage certificate → /get-marriage-certificate
+Marriage licences → /marriage-licences
+Get a document notarised → /get-a-document-notarised</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** All nine pages live-checked on 2026-05-29; each loads with correct relevant content: [/national-registration](https://alpha.gov.bb/national-registration); [/register-a-birth](https://alpha.gov.bb/register-a-birth); [/register-a-death](https://alpha.gov.bb/register-a-death); [/register-a-marriage](https://alpha.gov.bb/register-a-marriage); [/get-birth-certificate](https://alpha.gov.bb/get-birth-certificate); [/get-death-certificate](https://alpha.gov.bb/get-death-certificate); [/get-marriage-certificate](https://alpha.gov.bb/get-marriage-certificate); [/marriage-licences](https://alpha.gov.bb/marriage-licences); [/get-a-document-notarised](https://alpha.gov.bb/get-a-document-notarised)
+- **Status:** verified — all nine pages resolve with correct content.
+- **Certainty:** 99%
+
+---
+
+### Claim 20 — Online service CTAs: Permits and Post Office pages (ministries.ts lines 615–639)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page</div>
+<pre class="claim-block-content">Loud music permit → /loud-music-permit
+Sell goods or services in a beach park → /sell-goods-services-beach-park
+Post Office redirection (individual) → /post-office-redirection-individual
+Post Office redirection (business) → /post-office-redirection-business
+Post Office redirection (deceased) → /post-office-redirection-deceased</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">Loud music permit → /loud-music-permit
+Sell goods or services in a beach park → /sell-goods-services-beach-park
+Post Office redirection (individual) → /post-office-redirection-individual
+Post Office redirection (business) → /post-office-redirection-business
+Post Office redirection (deceased) → /post-office-redirection-deceased</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** All five pages live-checked on 2026-05-29: [/loud-music-permit](https://alpha.gov.bb/loud-music-permit); [/sell-goods-services-beach-park](https://alpha.gov.bb/sell-goods-services-beach-park); [/post-office-redirection-individual](https://alpha.gov.bb/post-office-redirection-individual); [/post-office-redirection-business](https://alpha.gov.bb/post-office-redirection-business); [/post-office-redirection-deceased](https://alpha.gov.bb/post-office-redirection-deceased)
+- **Status:** verified — all five pages resolve with correct content.
+- **Certainty:** 99%
+
+---
+
 ## Additional findings (not on the page but should be)
 
-**Marriage Licence additional contact numbers.** The gov.bb marriage licence page lists two additional direct-dial numbers not shown in the MHAI directory table: (246) 535-7285 (Marriage Licence Desk) and (246) 535-7267 (general line). Citizens searching for the Marriage Licence Office may benefit from having these on the ministry page or on a dedicated marriage-licence page. The gov.bb page also notes appointments are available through govtbarbadosapointmentsystem.as.me/MarriageLicense.
+**Marriage Licence additional contact numbers.** The gov.bb marriage licence page lists two direct-dial numbers not shown in the MHAI directory table: (246) 535-7285 (Marriage Licence Desk) and (246) 535-7267 (general line). Citizens searching for the Marriage Licence Office may benefit from having these on the ministry page or on a dedicated marriage-licence page. The gov.bb page also notes appointments are available through govtbarbadosapointmentsystem.as.me/MarriageLicense.
 
-**Temporary relocation (historical note for awareness).** In May 2024, the Ministry temporarily relocated management staff to Worthing Corporate Centre, Worthing Main Road, Christ Church, and the Marriage Licence Office moved to the 4th Floor, Barbados Postal Service, Cheapside, Bridgetown. The renovation period ran approximately 21 May – 14 July 2024. All evidence from gov.bb and GIS Facebook posts in 2024 confirms the ministry has since returned to Jones Building. The alpha.gov.bb page correctly shows the Jones Building address. No correction needed, but the team should note this in case a future renovation triggers a similar relocation.
+**Temporary relocation (historical note for awareness).** In May 2024, the Ministry temporarily relocated to Worthing Corporate Centre and the Marriage Licence Office moved to the 4th Floor, Barbados Postal Service, Cheapside, Bridgetown. The renovation ran approximately 21 May – 14 July 2024. All evidence confirms the ministry has since returned to Jones Building. The alpha.gov.bb page correctly shows the Jones Building address. No correction needed, but this should be noted in case a future renovation triggers a similar relocation.
 
-**Fire Service — new HQ address.** Although no fire service address appears on this ministry page, the associated department listing references "The Fire Service Department". The fireservice.gov.bb website now shows the Cadogan, Mayers, Marshall (CMM) Emergency Services Complex, Prince Road, Pine Plantation Road, St. Michael as the current headquarters (the gov.bb Departments page still shows the old GPO Building address). The alpha.gov.bb Fire Service page (if one exists) should be updated separately; this finding is noted here for cross-reference.
+**Fire Service — new HQ address.** Although no fire service address appears on this ministry page, the associated department listing references "The Fire Service Department". The fireservice.gov.bb website now shows the CMM Emergency Services Complex, Prince Road, Pine Plantation Road, St. Michael as the current headquarters (the gov.bb Departments page still shows the old GPO Building address). The alpha.gov.bb Fire Service page (if one exists) should be updated separately; this finding is noted here for cross-reference.
 
 ---
 
@@ -430,3 +511,18 @@ Checked: [gov.bb — MHAI](https://www.gov.bb/Ministries/home-affairs),
 - [fireservice.gov.bb — Contact](https://fireservice.gov.bb/contact/)
 - [barbadosparliament.com — Estimates 2025–2026 (PDF)](https://www.barbadosparliament.com/uploads/document/6f738df0c1421b4c87131990813a6093.pdf)
 - [gisbarbados.gov.bb — MHAI tag](https://gisbarbados.gov.bb/blog/tag/ministry-of-home-affairs/)
+- [alpha.gov.bb — apply-for-a-passport](https://alpha.gov.bb/apply-for-a-passport)
+- [alpha.gov.bb — national-registration](https://alpha.gov.bb/national-registration)
+- [alpha.gov.bb — register-a-birth](https://alpha.gov.bb/register-a-birth)
+- [alpha.gov.bb — register-a-death](https://alpha.gov.bb/register-a-death)
+- [alpha.gov.bb — register-a-marriage](https://alpha.gov.bb/register-a-marriage)
+- [alpha.gov.bb — get-birth-certificate](https://alpha.gov.bb/get-birth-certificate)
+- [alpha.gov.bb — get-death-certificate](https://alpha.gov.bb/get-death-certificate)
+- [alpha.gov.bb — get-marriage-certificate](https://alpha.gov.bb/get-marriage-certificate)
+- [alpha.gov.bb — marriage-licences](https://alpha.gov.bb/marriage-licences)
+- [alpha.gov.bb — get-a-document-notarised](https://alpha.gov.bb/get-a-document-notarised)
+- [alpha.gov.bb — loud-music-permit](https://alpha.gov.bb/loud-music-permit)
+- [alpha.gov.bb — sell-goods-services-beach-park](https://alpha.gov.bb/sell-goods-services-beach-park)
+- [alpha.gov.bb — post-office-redirection-individual](https://alpha.gov.bb/post-office-redirection-individual)
+- [alpha.gov.bb — post-office-redirection-business](https://alpha.gov.bb/post-office-redirection-business)
+- [alpha.gov.bb — post-office-redirection-deceased](https://alpha.gov.bb/post-office-redirection-deceased)

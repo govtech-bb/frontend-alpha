@@ -2,22 +2,22 @@
 
 - **Live page:** <https://alpha.gov.bb/work-employment/apply-to-volunteer-at-a-sports-camp>
 - **Source file:** `src/content/apply-to-volunteer-at-a-sports-camp.md`
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 13 claims reviewed — 6 verified, 2 discrepant, 5 unverifiable. Average certainty: **68%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **"National Sports Council office / My Lords Hill" is the former address.** The NSC relocated its headquarters from Blenheim, My Lord's Hill to the Garfield Sobers Sports Complex, Wildey, St. Michael. This is the current Tier 1-confirmed address on both `gov.bb/Departments/sports-council` and `nsc.gov.bb`. Sending a citizen to My Lords Hill risks wasted journeys, but the picture is complicated: search evidence and the NSC's own 2026 camp materials refer to a "Blenheim Location" as still active for application drop-off. Without a clear resolution from the NSC this should be escalated rather than silently corrected.
+1. **"National Sports Council office / My Lords Hill" is the former address.** The NSC relocated its headquarters from Blenheim, My Lord's Hill to the Garfield Sobers Sports Complex, Wildey, St. Michael. This is the current Tier 1-confirmed address on both `gov.bb/Departments/sports-council` and `nsc.gov.bb`. Sending a citizen to My Lords Hill risks wasted journeys, but the picture is complicated: search evidence and the NSC's own 2026 camp materials refer to a "Blenheim Location" as still active for application drop-off. Without a clear resolution from the NSC this should be escalated rather than silently corrected. **Re-check 2026-05-29: situation unchanged — gov.bb still lists Wildey as the official address, but My Lords Hill status as active satellite is unresolved.**
 
-2. **"Recruitment usually begins around April" is contradicted by the sister register-summer-camp page finding.** The register-summer-camp fact-check (2026-05-28) established that the Division of Youth Affairs volunteer recruitment for 2025 was announced on 28 June 2025, not April. The NSC also opened its 2026 Coach Assistant application after the summer season began. No authoritative source places NSC volunteer recruitment in April. This claim appears to be inherited from the Division of Youth Affairs page rather than being NSC-specific, and is likely wrong.
+2. **"Recruitment usually begins around April" is contradicted by the sister register-summer-camp page finding.** The register-summer-camp fact-check (2026-05-28) established that the Division of Youth Affairs volunteer recruitment for 2025 was announced on 28 June 2025, not April. The NSC also opened its 2026 Coach Assistant application after May 2026 — not in April. No authoritative source places NSC volunteer recruitment in April. This claim appears to be inherited from the Division of Youth Affairs page rather than being NSC-specific, and is likely wrong.
 
-3. **"Garfield Sobers Complex" is a truncated version of the official name.** The facility is officially called the "Sir Garfield Sobers Sports Complex" (gov.bb State Bodies page) and the building used by the NSC is the "Wildey Gymnasium" (or "Garfield Sobers Gymnasium") within that complex. The content uses "Garfield Sobers Complex" — not technically wrong but inconsistent with official nomenclature.
+3. **"Garfield Sobers Complex" is a truncated version of the official name.** The facility is officially called the "Sir Garfield Sobers Sports Complex" (gov.bb State Bodies page) and the building used by the NSC is the "Wildey Gymnasium" within that complex. The content uses "Garfield Sobers Complex" — the omission of "Sir" is a formal error and the omission of "Sports" is an inconsistency with official nomenclature. **Re-check 2026-05-29: confirmed, both gov.bb State Bodies and gov.bb Departments list "Garfield Sobers Sports Complex" as the standard short form; "Sir Garfield Sobers Sports Complex" is the full official name.**
 
 4. **Volunteer age eligibility (19+) cannot be corroborated from any public NSC source.** The NSC's own 2026 materials describe the role as "Coach Assistant" with no age floor specified on the public web. The sister programme (Division of Youth Affairs / National Summer Camp) uses 16+. This claim requires agency confirmation. The page may have applied the wrong minimum age.
 
-5. **The Police Certificate of Character link is live and the fee ($20) is confirmed.** `forms.gov.bb/CertificateOfCharacter` resolves correctly; fee is BBD $20, consistent with `_inventory.md`. No corrections needed here.
+5. **The Police Certificate of Character link is live and the fee ($20) is confirmed.** `forms.gov.bb/CertificateOfCharacter` resolves correctly; fee is BBD $20, consistent with `_inventory.md`. No corrections needed here. **Re-check 2026-05-29: re-verified, still live, fee BBD $20.**
 
 ---
 
@@ -32,11 +32,11 @@
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot verify — NSC public web does not state a minimum age</div>
-<pre class="claim-block-content">The NSC's own 2026 summer camp page describes the open role as "NSC Summer Camp 2026 Coach Assistant Applications Now Open" with no minimum age specified in accessible copy. The sister National Summer Camp Programme (Division of Youth Affairs) sets 16 as the minimum. No public source confirms 19 as the NSC-specific floor. This claim requires confirmation from the NSC directly.</pre>
+<pre class="claim-block-content">The NSC's own 2026 summer camp page describes the open role as "NSC Summer Camp 2026 Coach Assistant Applications Now Open" with no minimum age specified in accessible page text. The sister National Summer Camp Programme (Division of Youth Affairs) sets 16 as the minimum. No public source confirms 19 as the NSC-specific floor. This claim requires confirmation from the NSC directly.</pre>
 </div>
 
 - **Type:** eligibility
-- **Checked:** [National Sports Council — nsc.gov.bb (2026 camp page)](https://nsc.gov.bb/) — "NSC Summer Camp 2026 Coach Assistant Applications Now Open"; no age requirement in accessible page text; [Division of Youth Affairs Facebook — 2025 volunteer post (28 Jun 2025)](https://www.facebook.com/divisionofyouthbarbados/posts/-are-you-16-or-older-and-ready-to-make-a-difference-this-summer-join-the-nationa/1032260372412299/) — this is the Ministry of Youth / Division of Youth Affairs programme, which sets 16+ (a different programme from the NSC sports camp); [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — no volunteer age information; [NSC loop news article](https://barbados.loopnews.com/content/nsc-launches-annual-summer-sports-camps) — TLS error, inaccessible.
+- **Checked:** [National Sports Council — nsc.gov.bb (2026 camp page)](https://nsc.gov.bb/) — "NSC Summer Camp 2026 Coach Assistant Applications Now Open"; no age requirement in accessible page text; [Division of Youth Affairs Facebook — 2025 volunteer post (28 Jun 2025)](https://www.facebook.com/divisionofyouthbarbados/posts/-are-you-16-or-older-and-ready-to-make-a-difference-this-summer-join-the-nationa/1032260372412299/) — this is the Ministry of Youth / Division of Youth Affairs programme, which sets 16+ (a different programme from the NSC sports camp); [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — no volunteer age information.
 - **Status:** unverifiable — no public source confirms or contradicts 19+
 - **Certainty:** 40%
 - **Open question:** confirm with the National Sports Council the minimum age for coach assistant / volunteer applications. The figure "19" may be correct (distinguishing the NSC sports camp from the Division of Youth Affairs' 16+ programme) but is not documented publicly.
@@ -56,8 +56,8 @@
 </div>
 
 - **Type:** descriptive
-- **Sources:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — "NSC Summer Camp 2026 Coach Assistant Applications Now Open"; [Barbados Today — NSC summer camp in full flow (17 Jul 2025)](https://barbadostoday.bb/2025/07/17/nsc-summer-camp-in-full-flow/) — 2025 camp ran July to August 22; [GIS — Register For NSC Summer Sports Camp](https://gisbarbados.gov.bb/blog/register-for-nsc-summer-sports-camp/) (HTTP 403, confirmed via search)
-- **Status:** verified — NSC runs its annual summer sports camp in July–August each year; 2025 was the 39th year.
+- **Sources:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — "NSC Summer Camp 2026 Coach Assistant Applications Now Open"; [Barbados Today — NSC summer camp in full flow (17 Jul 2025)](https://barbadostoday.bb/2025/07/17/nsc-summer-camp-in-full-flow/) — 2025 camp ran July to August 22, 39th year.
+- **Status:** verified — NSC runs its annual summer sports camp in July–August each year.
 - **Certainty:** 95%
 
 ---
@@ -75,7 +75,7 @@
 </div>
 
 - **Type:** process step
-- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — "NSC Summer Camp 2026 Coach Assistant Applications Now Open. ALL completed forms must be returned to the Garfield Sobers Gymnasium." No year-round window mentioned; [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — no application-window information; [GIS — National Sports Council tag](https://gisbarbados.gov.bb/blog/tag/national-sports-council/) (HTTP 403)
+- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — "NSC Summer Camp 2026 Coach Assistant Applications Now Open. ALL completed forms must be returned to the Garfield Sobers Gymnasium." No year-round window mentioned; [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — no application-window information; [GIS — National Sports Council tag](https://gisbarbados.gov.bb/blog/tag/national-sports-council/) (HTTP 403).
 - **Status:** unverifiable — the "apply all year round" claim is not corroborated by any source reviewed
 - **Certainty:** 40%
 - **Open question:** confirm with the NSC whether applications are genuinely accepted year-round or only during a specific window ahead of summer camps.
@@ -95,8 +95,8 @@
 </div>
 
 - **Type:** timeline
-- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — 2026 coach assistant application announced as "Now Open" as of 2026-05-28, but no April-start date given; [GIS — NSC Summer Sports Camp tag](https://gisbarbados.gov.bb/blog/tag/national-sports-council/) (HTTP 403); [Division of Youth Affairs Facebook — 2025 volunteer post (28 Jun 2025)](https://www.facebook.com/divisionofyouthbarbados/posts/-are-you-16-or-older-and-ready-to-make-a-difference-this-summer-join-the-nationa/1032260372412299/) — the sister Ministry of Youth programme opened volunteer recruitment on 28 June 2025, not April; [register-summer-camp fact-check](/docs/fact-check/register-summer-camp.md) Claim 12 — established 70% confidence that "around April" is wrong for the Division of Youth Affairs programme.
-- **Status:** discrepant — no authoritative source places NSC volunteer recruitment in April; evidence from the sister programme contradicts it (late June, not April)
+- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — 2026 coach assistant application announced as "Now Open" as of 2026-05-29, but no April-start date given; [GIS — NSC Summer Sports Camp tag](https://gisbarbados.gov.bb/blog/tag/national-sports-council/) (HTTP 403); [Division of Youth Affairs Facebook — 2025 volunteer post (28 Jun 2025)](https://www.facebook.com/divisionofyouthbarbados/posts/-are-you-16-or-older-and-ready-to-make-a-difference-this-summer-join-the-nationa/1032260372412299/) — the sister Ministry of Youth programme opened volunteer recruitment on 28 June 2025, not April; [register-summer-camp fact-check](/docs/fact-check/register-summer-camp.md) Claim 12 — established 70% confidence that "around April" is wrong for the Division of Youth Affairs programme.
+- **Status:** discrepant — no authoritative source places NSC volunteer recruitment in April; evidence from the sister programme contradicts it (late June, not April); 2026 NSC application open well after April
 - **Confidence it's wrong:** 70%
 - **Citizen impact:** MEDIUM — a prospective volunteer who expects to find the application in April may miss it; the NSC 2026 application appears to have opened around May/June.
 
@@ -123,7 +123,7 @@ St. Michael BB 22026</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — "The National Sports Complex, Wildey Gymnasium, Garfield Sobers Sports Complex, Wildey, St Michael BB 22026"; `src/data/departments.ts` (slug: `sports-council`) — identical address, confirmed as matching; [nsc.gov.bb — about / contact](https://nsc.gov.bb/) — "ALL completed forms must be returned to the Garfield Sobers Gymnasium" (2026 camp); [Carib Guide (review circa 2020)](https://carib.guide/place/national-sports-council?c=barbados) — user review: "the offices of The National Sports Council is now at The Gymnasium @ The Garfield Sobers Sports Complex Wildey st. Michael"
+- **Sources:** [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — "The National Sports Complex, Wildey Gymnasium, Garfield Sobers Sports Complex, Wildey, St Michael BB 22026"; `src/data/departments.ts` (slug: `sports-council`) — identical address, confirmed as matching; [nsc.gov.bb — 2026 camp](https://nsc.gov.bb/) — "ALL completed forms must be returned to the Garfield Sobers Gymnasium" (2026 camp); [Carib Guide (review circa 2020)](https://carib.guide/place/national-sports-council?c=barbados) — user review: "the offices of The National Sports Council is now at The Gymnasium @ The Garfield Sobers Sports Complex Wildey st. Michael".
 - **Status:** discrepant — My Lords Hill (Blenheim) is the former HQ. The Tier 1 canonical address on gov.bb is Wildey/Garfield Sobers Sports Complex. Search-snippet evidence suggests applications for the 2026 camp are also directed to "Blenheim Location", suggesting My Lords Hill may still be used for some functions, but the official registered address is Wildey.
 - **Confidence it's wrong:** 80%
 - **Citizen impact:** HIGH — a citizen directed to My Lords Hill may not find the NSC. Wildey/Garfield Sobers Complex is the current official address.
@@ -150,7 +150,7 @@ St. Michael</pre>
 </div>
 
 - **Type:** address / facility name
-- **Sources:** [gov.bb — Sir Garfield Sobers Sports Complex Gymnasium Ltd.](https://www.gov.bb/State-Bodies/sports-gymnasium) — "Sir Garfield Sobers Sports Complex Gymnasium Ltd."; [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — "Garfield Sobers Sports Complex"; [GIS — Garfield Sobers Gymnasium location](https://gisbarbados.gov.bb/locations/garfield-sobers-gymnasium/) — "Garfield Sobers Gymnasium" (short form)
+- **Sources:** [gov.bb — Sir Garfield Sobers Sports Complex Gymnasium Ltd.](https://www.gov.bb/State-Bodies/sports-gymnasium) — "Sir Garfield Sobers Sports Complex Gymnasium Ltd." (confirmed 2026-05-29: "Official Full Name: Sir Garfield Sobers Sports Complex Gymnasium Ltd."); [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council) — "Garfield Sobers Sports Complex" (standard short form with "Sports" included); [GIS — Garfield Sobers Gymnasium location](https://gisbarbados.gov.bb/locations/garfield-sobers-gymnasium/) (HTTP 403 on 2026-05-29).
 - **Status:** discrepant (minor) — the page uses "Garfield Sobers Complex" (dropping both "Sir" and "Sports"). Gov.bb uses "Garfield Sobers Sports Complex" as the standard short form. The full official name is "Sir Garfield Sobers Sports Complex." The omission of "Sports" is an inconsistency with official naming; the omission of "Sir" is a more significant error in formal usage.
 - **Confidence it's wrong:** 85%
 - **Citizen impact:** LOW — the address itself (Wildey, St. Michael) is sufficient for navigation; the naming error would not strand a citizen.
@@ -176,7 +176,7 @@ St. Michael</pre>
 </div>
 
 - **Type:** document requirement / process
-- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — PDF application form linked but not fetchable; [GIS — NSC Summer Sports Camp is Back](https://gisbarbados.gov.bb/blog/national-sports-council-summer-sports-camp-is-back/) (HTTP 403); Source: testable against the live application form PDF at [nsc.gov.bb](https://nsc.gov.bb/) (download Coach Assistant Application).
+- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — PDF application form linked but not fetchable; [GIS — NSC Summer Sports Camp is Back](https://gisbarbados.gov.bb/blog/national-sports-council-summer-sports-camp-is-back/) (HTTP 403). Source: testable against the live application form PDF at [nsc.gov.bb](https://nsc.gov.bb/) (download Coach Assistant Application).
 - **Status:** unverifiable from public web
 - **Certainty:** 55%
 - **Open question:** confirm with NSC that these six fields (qualifications, sports interests, camp experience, employment, education, health) are present on the current application form.
@@ -196,7 +196,7 @@ St. Michael</pre>
 </div>
 
 - **Type:** document requirement
-- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — form downloadable but PDF not fetchable; [forms.gov.bb — Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter) — National Registration number is requested there, consistent with standard government application practice.
+- **Checked:** [National Sports Council — nsc.gov.bb](https://nsc.gov.bb/) — form downloadable but PDF not fetchable; [forms.gov.bb — Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter) — National Registration number is requested there (confirmed 2026-05-29: "Your national registration number (if applicable)"), consistent with standard government application practice.
 - **Status:** unverifiable from public web; plausible from standard government practice
 - **Certainty:** 60%
 - **Open question:** confirm with NSC that the National Registration number is a required field on the application form.
@@ -294,14 +294,14 @@ St. Michael</pre>
 <div class="claim-block-label">Verified correct</div>
 <pre class="claim-block-content">Share a Police Certificate of Character – you can apply for one here (link: https://forms.gov.bb/CertificateOfCharacter)
 
-Fee: BBD $20. Certificate valid for 6 months. Delivered within 24–48 hours after payment (direct debit: 3 working days). Contact: 1 (246) 430-7677 or 1 (246) 228-0131.</pre>
+Fee: BBD $20. Certificate valid for 6 months. Delivered within 24–48 hours after payment (direct debit: 5 business days). Contact: 1 (246) 430-7677 or 1 (246) 228-0131.</pre>
 </div>
 
 - **Type:** URL / fee / document requirement
-- **Sources:** [forms.gov.bb — Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter) — URL live; fee confirmed BBD $20; payment via EZPAY+ or post office; certificate valid 6 months; [GIS — Police Certificate Of Character Form Now Online](https://gisbarbados.gov.bb/blog/police-certificate-of-character-now-online/) (HTTP 403 on direct fetch; confirmed via search snippet that $20 fee and online application are documented); [Treasury PDF notice](https://www.treasury.gov.bb/sites/default/files/PCoC.pdf) — confirms online form at forms.gov.bb; [_inventory.md line 172–176](/docs/fact-check/_inventory.md) — canonical BBD $20, status "pending external verification" — this verification upgrades that to 95%.
+- **Sources:** [forms.gov.bb — Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter) — URL live (confirmed 2026-05-29); fee confirmed BBD $20; "approximately 10 minutes to complete"; payment via EZPAY+ or post office; [_inventory.md line 172–176](/docs/fact-check/_inventory.md) — canonical BBD $20.
 - **Status:** verified — URL is live and resolves to the correct form; fee is BBD $20.
 - **Certainty:** 95%
-- **Citizen impact:** HIGH — correctly directs citizens to the online form; confirmed working as of 2026-05-28.
+- **Citizen impact:** HIGH — correctly directs citizens to the online form; confirmed working as of 2026-05-29.
 
 ---
 
@@ -309,6 +309,7 @@ Fee: BBD $20. Certificate valid for 6 months. Delivered within 24–48 hours aft
 
 - **NSC contact details are absent from the page.** Citizens who want to call ahead or confirm their application are not given any contact information. The NSC's official details from `gov.bb` and `departments.ts` are:
   - Phone: (246) 535-9601 / (246) 535-9602
+  - Fax: (246) 535-9659
   - Email: nsc.bdos@barbados.gov.bb
   - Website: http://www.nsc.gov.bb
   - Source: [gov.bb — National Sports Council](https://www.gov.bb/Departments/sports-council)
@@ -326,19 +327,17 @@ Fee: BBD $20. Certificate valid for 6 months. Delivered within 24–48 hours aft
 - [National Sports Council — nsc.gov.bb (main/2026 camp)](https://nsc.gov.bb/)
 - [gov.bb — National Sports Council (Departments)](https://www.gov.bb/Departments/sports-council)
 - [gov.bb — Sir Garfield Sobers Sports Complex Gymnasium Ltd. (State Bodies)](https://www.gov.bb/State-Bodies/sports-gymnasium)
-- [MYSCE — National Sports Council (Division detail)](https://www.mysce.gov.bb/division_detail/11) (HTTP 403)
 - [GIS — Register For NSC Summer Sports Camp](https://gisbarbados.gov.bb/blog/register-for-nsc-summer-sports-camp/) (HTTP 403)
 - [GIS — National Sports Council Summer Sports Camp Is Back](https://gisbarbados.gov.bb/blog/national-sports-council-summer-sports-camp-is-back/) (HTTP 403)
 - [GIS — National Sports Council tag](https://gisbarbados.gov.bb/blog/tag/national-sports-council/) (HTTP 403)
 - [GIS — Police Certificate Of Character Form Now Online](https://gisbarbados.gov.bb/blog/police-certificate-of-character-now-online/) (HTTP 403)
-- [GIS — Garfield Sobers Gymnasium location](https://gisbarbados.gov.bb/locations/garfield-sobers-gymnasium/)
+- [GIS — Garfield Sobers Gymnasium location](https://gisbarbados.gov.bb/locations/garfield-sobers-gymnasium/) (HTTP 403)
 - [forms.gov.bb — Police Certificate of Character](https://forms.gov.bb/CertificateOfCharacter)
 - [Barbados Today — NSC summer camp in full flow (17 Jul 2025)](https://barbadostoday.bb/2025/07/17/nsc-summer-camp-in-full-flow/)
 - [Division of Youth Affairs Facebook — 2025 volunteer recruitment post (28 Jun 2025)](https://www.facebook.com/divisionofyouthbarbados/posts/-are-you-16-or-older-and-ready-to-make-a-difference-this-summer-join-the-nationa/1032260372412299/)
 - [Ministry of Youth — About the National Summer Camp Programme](https://youthaffairs.gov.bb/about-national-summer-camps/)
 - [Carib Guide Barbados — National Sports Council](https://carib.guide/place/national-sports-council?c=barbados)
-- [Treasury — PCoC PDF notice](https://www.treasury.gov.bb/sites/default/files/PCoC.pdf)
 - `src/data/departments.ts` — NSC entry (slug: `sports-council`) — cross-checked address
-- `src/data/ministries.ts` — MYSCE entry (slug: `ministry-of-youth-sports-and-community-empowerment`) — cross-checked ministry name
+- `src/data/ministries.ts` — MYSCE entry — cross-checked ministry name
 - [register-summer-camp fact-check](/docs/fact-check/register-summer-camp.md) — cross-referenced Claims 12, 13 (April recruitment / June training findings)
-- [_inventory.md](/docs/fact-check/_inventory.md) — Police Certificate of Character BBD $20 (line 172)
+- [_inventory.md](/docs/fact-check/_inventory.md) — Police Certificate of Character BBD $20

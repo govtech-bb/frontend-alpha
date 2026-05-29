@@ -2,7 +2,7 @@
 
 - **Live page:** <https://alpha.gov.bb/public-safety/report-elderly-abuse>
 - **Source file:** `src/content/report-elderly-abuse.md`
-- **Last checked:** 2026-05-28
+- **Last checked:** 2026-05-29
 - **Summary:** 14 claims reviewed — 7 verified, 3 discrepant, 4 unverifiable. Average certainty: **65%**.
 
 > **Crisis service — accuracy is critical.** Phone numbers and agency names on this page are life-safety claims. An elderly victim or their carer who reaches a wrong number or a dissolved agency is left without help. Every phone, address, and agency name below has been individually checked.
@@ -11,15 +11,15 @@
 
 ## Headline issues for triage
 
-1. **The National Assistance Board was dissolved into the Social Empowerment Agency on 2 January 2026 — but the page still directs citizens there.** The NAB was one of five bodies merged into the Social Empowerment Agency (SEA) on 2 January 2026. A citizen who calls the NAB office or physically visits the old address expecting the "National Assistance Board" will encounter an organisation that no longer exists under that name. The phone number (246) 535-3131 still maps to the Murrell House building and may reach SEA staff, but citizens deserve to know the agency they are contacting. The content must be updated to refer to the Social Empowerment Agency (SEA), not the National Assistance Board.
+1. **The National Assistance Board was dissolved into the Social Empowerment Agency on 2 January 2026 — but the page still directs citizens there.** The NAB was merged into the Social Empowerment Agency (SEA) on 2 January 2026. A citizen who calls the NAB office or physically visits the old address expecting the "National Assistance Board" will encounter an organisation that no longer exists under that name. The phone number (246) 535-3131 still maps to the Murrell House building and may reach SEA staff, but citizens deserve to know the agency they are contacting. The content must be updated to refer to the Social Empowerment Agency (SEA), not the National Assistance Board.
 
 2. **The page lists no building name for the address, omitting "Murrell House."** Every authoritative source — gov.bb, connectb1m.com, centenariansofbarbados.com — gives the address as "Murrell House, Country Road, St. Michael." The page omits "Murrell House," making it harder for a citizen to locate the correct office on a map or by asking directions.
 
 3. **The email address `nab.department@barbados.gov.bb` cannot be corroborated from any authoritative source.** Neither gov.bb's NAB page, the NAB Facebook page, GIS releases, nor any third-party directory publishes this email address. The gov.bb State-Bodies page for the NAB lists no email. This is a life-safety claim; if the email bounces, a citizen in distress is cut off.
 
-4. **Newer legislation (Older Persons (Care and Protection) Act, 2026) may require content updates.** The Older Persons (Care and Protection) Act, 2026 was debated in Parliament in April–May 2026 and was reported to have won Senate backing. Under that Act the Social Empowerment Agency (SEA) becomes the statutory body for managing elder abuse reports, maintaining a register, and removing older persons from danger. Once the Act is commenced, the page's advice to contact "the National Assistance Board" — already stale since the SEA merger — will also fail to reflect the new statutory framework. The page should be reviewed once the Act receives assent and a commencement date is set.
+4. **Newer legislation (Older Persons (Care and Protection) Act, 2026) may require content updates.** The Older Persons (Care and Protection) Bill, 2026 was debated in the House of Assembly in April 2026 and won Senate backing in May 2026. Under that Bill the Social Empowerment Agency (SEA) becomes the statutory body for managing elder abuse reports, maintaining a register, and removing older persons from danger. The bill's enactment status as of 2026-05-29 is not yet confirmed (Senate backed; Royal Assent not confirmed). Once commenced, the page's advice to contact "the National Assistance Board" — already stale since the SEA merger — will also fail to reflect the new statutory framework. The page should be reviewed once the Act receives assent and a commencement date is set.
 
-5. **The WHO definition of elder abuse is quoted accurately but is an abridged version of the full WHO text.** The page omits the preceding sentence from the WHO fact sheet ("The abuse of older people, also known as elder abuse, is…") and starts mid-definition. This is not strictly wrong — the quoted passage is verbatim — but citizens reading the page in isolation will not see that "A single or repeated act…" is the continuation of a longer definition. Low citizen impact but worth noting.
+5. **The WHO definition of elder abuse is quoted accurately but is an abridged version of the full WHO text.** The page omits the preceding sentence from the WHO fact sheet and starts mid-definition. This is not strictly wrong — the quoted passage is verbatim — but citizens reading the page in isolation will not see that "A single or repeated act…" is the continuation of a longer definition. Low citizen impact but worth noting.
 
 ---
 
@@ -58,8 +58,8 @@
 </div>
 
 - **Type:** agency name
-- **Sources:** [Barbados Today — SEA launched: Islandwide overhaul of social services begins (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/) — "The Social Empowerment Agency was established on 2 January [2026], merging the former Child Care Board, Welfare Department, National Assistance Board, National Disabilities Unit, and the Resilience and Reintegration Unit"; [socialempowermentbb.org — SEA](https://socialempowermentbb.org/sea/) (connection refused as of 2026-05-28; SEA website intermittently unreachable); [gov.bb — Ministry of People Empowerment and Elder Affairs](https://www.gov.bb/Ministries/social-care) — still lists NAB as a department (stale page, not yet updated to reflect the merger)
-- **Status:** discrepant — the National Assistance Board was dissolved 2 January 2026 and merged into the Social Empowerment Agency (SEA). Citizens directed to the "National Assistance Board" after January 2026 are directed to an agency that no longer exists under that name.
+- **Sources:** [Barbados Today — SEA launched: Islandwide overhaul of social services begins (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/) — "an amalgamation of the island's social services" launched 2 January 2026; [gov.bb — National Assistance Board](https://www.gov.bb/State-Bodies/national-assistance) — still shows legacy NAB page (not updated to reflect merger); [Barbados Today — Abusing elderly could bring $100K fine, jail under new bill (21 Apr 2026)](https://barbadostoday.bb/2026/04/21/abusing-elderly-could-bring-100k-fine-jail-under-new-bill/) — identifies the Social Empowerment Agency (SEA) as the body managing elder abuse reports
+- **Status:** discrepant — the National Assistance Board was merged into the Social Empowerment Agency (SEA) effective January 2026. Citizens directed to the "National Assistance Board" are directed to an agency that no longer exists under that name.
 - **Certainty:** 90%
 - **Confidence it's wrong:** 90%
 - **Citizen impact:** HIGH — a carer or victim who contacts the "National Assistance Board" after 2 January 2026 is calling a dissolved body. The 535-3131 number still physically rings at Murrell House (now an SEA location), but the wrong agency name undermines trust and may result in a citizen giving up if a call is answered unexpectedly.
@@ -85,7 +85,7 @@ St. Michael</pre>
 
 - **Type:** address
 - **Sources:** [gov.bb — The National Assistance Board](https://www.gov.bb/State-Bodies/national-assistance) — "Murrell House, Country Road, St. Michael"; [connectb1m.com — National Assistance Board](https://connectb1m.com/national-assistance-board/) — "Murrell House, Country Road, St. Michael"; [centenariansofbarbados.com — Services Directory](https://centenariansofbarbados.com/services-directory/) — "Murrell House, Country Road, St. Michael"
-- **Status:** discrepant — two issues: (1) the building name "Murrell House" is omitted from the page; (2) the ordering puts "Country Rd" before the organisation name, which is non-standard and makes the address hard to use for directions or mapping. Three independent authoritative sources all lead with "Murrell House" as the building name. "Bridgetown" is also absent from all three authoritative sources (the correct address ends at "St. Michael"). The page also abbreviates "Road" as "Rd" — authoritative sources use "Country Road" in full. Note: the applicable agency name is now SEA (see Claim 2).
+- **Status:** discrepant — two issues: (1) the building name "Murrell House" is omitted from the page; (2) "Bridgetown" is absent from all three authoritative sources (the correct address ends at "St. Michael"). The page also abbreviates "Road" as "Rd" — authoritative sources use "Country Road" in full. Note: the applicable agency name is now SEA (see Claim 2).
 - **Certainty:** 92%
 - **Confidence it's wrong:** 85% (omission of building name is near-certain; "Bridgetown" addition may be harmless but is unattested)
 - **Citizen impact:** MEDIUM — "Country Road, St. Michael" is sufficient to find the building, but omitting "Murrell House" makes navigation and directory searches harder.
@@ -101,7 +101,7 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct (as PBX for the Murrell House building)</div>
-<pre class="claim-block-content">(246) 535-3131 is the PBX for the National Assistance Board at Murrell House, Country Road, St. Michael. The building has been absorbed into the Social Empowerment Agency (SEA) as of 2 January 2026 but this physical location and number remain in use. Confirmed by three independent sources.</pre>
+<pre class="claim-block-content">(246) 535-3131 is the PBX for the National Assistance Board at Murrell House, Country Road, St. Michael. The building has been absorbed into the Social Empowerment Agency (SEA) as of January 2026 but this physical location and number remain in use. Confirmed by three independent sources.</pre>
 </div>
 
 - **Type:** phone
@@ -121,14 +121,14 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Cannot verify — no authoritative source found</div>
-<pre class="claim-block-content">This email address does not appear on gov.bb's National Assistance Board page, any GIS release, the NAB Facebook page, or any third-party directory consulted. The gov.bb State-Bodies page for the NAB lists no email address. The address uses the standard barbados.gov.bb domain pattern and the "nab.department" slug is plausible but unconfirmed.</pre>
+<pre class="claim-block-content">This email address does not appear on gov.bb's National Assistance Board page, any GIS release, the NAB Facebook page, or any third-party directory consulted. The gov.bb State-Bodies page for the NAB lists no email address. The address uses the standard barbados.gov.bb domain pattern and the "nab.department" slug is plausible but unconfirmed. Post-merger (January 2026), the email inbox owner is now the Social Empowerment Agency — whether it monitors this address is unknown.</pre>
 </div>
 
 - **Type:** email
-- **Sources consulted:** [gov.bb — The National Assistance Board](https://www.gov.bb/State-Bodies/national-assistance) — no email listed; [gisbarbados.gov.bb — NAB tag](https://gisbarbados.gov.bb/blog/tag/national-assistance-board/) — no email in releases found; [facebook.com/nabbarbados2](https://www.facebook.com/nabbarbados2/) — NAB Facebook page, no email; [centenariansofbarbados.com](https://centenariansofbarbados.com/services-directory/) — no email listed; [connectb1m.com](https://connectb1m.com/national-assistance-board/) — no email listed
+- **Sources consulted:** [gov.bb — The National Assistance Board](https://www.gov.bb/State-Bodies/national-assistance) — no email listed; [gisbarbados.gov.bb — NAB tag](https://gisbarbados.gov.bb/blog/tag/national-assistance-board/) — HTTP 403, no email in available releases; [centenariansofbarbados.com](https://centenariansofbarbados.com/services-directory/) — no email listed; [connectb1m.com](https://connectb1m.com/national-assistance-board/) — no email listed; [socialempowermentbb.org](https://socialempowermentbb.org/) — connection refused
 - **Status:** unverifiable — no public-web source confirms this email address exists and is active
 - **Certainty:** 28%
-- **Open question:** Confirm with the Social Empowerment Agency (SEA) whether `nab.department@barbados.gov.bb` is a live, monitored inbox or whether it has been replaced by an SEA contact email since the 2 January 2026 merger. If unconfirmed, replace with a phone-only contact block until the correct SEA email is established.
+- **Open question:** Confirm with the Social Empowerment Agency (SEA) whether `nab.department@barbados.gov.bb` is a live, monitored inbox or whether it has been replaced by an SEA contact email since the January 2026 merger. If unconfirmed, replace with a phone-only contact block until the correct SEA email is established.
 - **Citizen impact:** HIGH — if the email bounces or goes unmonitored, a carer or victim reporting abuse via email receives no response.
 
 ---
@@ -142,11 +142,11 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Plausible but unverifiable post-SEA merger</div>
-<pre class="claim-block-content">The National Assistance Board historically employed welfare officers and worked with community police officers to investigate elder abuse. Whether the Social Empowerment Agency (SEA) continues to use the title "welfare officer" or has adopted new role titles (e.g. "social worker", "empowerment officer") cannot be confirmed from the public web after the 2 January 2026 merger.</pre>
+<pre class="claim-block-content">The National Assistance Board historically employed welfare officers and worked with community police officers to investigate elder abuse. Whether the Social Empowerment Agency (SEA) continues to use the title "welfare officer" or has adopted new role titles (e.g. "social worker", "empowerment officer") cannot be confirmed from the public web after the January 2026 merger.</pre>
 </div>
 
 - **Type:** process step
-- **Sources consulted:** [GIS — Protecting Our Senior Citizens: The Role Of Community Police Officers](https://gisbarbados.gov.bb/blog/protecting-our-senior-citizens-the-role-of-community-police-officers/) — HTTP 403, could not confirm content; [gov.bb — Welfare Department](https://www.gov.bb/Departments/welfare) — references "Chief Welfare Officer" title; [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/) — no mention of "welfare officer" title post-merger
+- **Sources consulted:** [gov.bb — Welfare Department](https://www.gov.bb/Departments/welfare) — references "Chief Welfare Officer" title pre-merger; [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/) — no mention of "welfare officer" title post-merger; [socialempowermentbb.org](https://socialempowermentbb.org/) — connection refused
 - **Status:** unverifiable — pre-SEA the NAB did use the welfare-officer role structure; whether this title continues under the SEA cannot be confirmed from public sources
 - **Certainty:** 45%
 - **Open question:** Confirm with the SEA what the correct job title is for the officer a citizen should expect to speak to when reporting elder abuse. Update the page with the SEA's preferred terminology.
@@ -162,11 +162,11 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">This passage is verbatim from the WHO fact sheet on "Abuse of older people" (who.int). The abuse categories are listed in the correct order. The "violation of human rights" phrase is present. The page omits the opening sentence of the WHO definition ("The abuse of older people, also known as elder abuse, is…") and begins mid-definition, but the quoted passage is accurate.</pre>
+<pre class="claim-block-content">This passage is verbatim from the WHO fact sheet on "Abuse of older people" (who.int). The abuse categories are listed in the correct order. The "violation of human rights" phrase is present. The page omits the opening sentence of the WHO definition and begins mid-definition, but the quoted passage is accurate.</pre>
 </div>
 
 - **Type:** descriptive + legal reference
-- **Sources:** [WHO — Abuse of older people (fact sheet)](https://www.who.int/news-room/fact-sheets/detail/abuse-of-older-people) — verbatim match confirmed
+- **Sources:** [WHO — Abuse of older people (fact sheet)](https://www.who.int/news-room/fact-sheets/detail/abuse-of-older-people) — verbatim match confirmed on 2026-05-29
 - **Status:** verified
 - **Certainty:** 99%
 
@@ -181,11 +181,11 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct (consistent with the Older Persons (Care and Protection) Bill, 2026)</div>
-<pre class="claim-block-content">The Older Persons (Care and Protection) Bill, 2026 establishes mandatory reporting obligations for specified professionals and allows any person to report. Any person may report anonymously. The bill was before the Senate as of May 2026 and had won backing there.</pre>
+<pre class="claim-block-content">The Older Persons (Care and Protection) Bill, 2026 establishes mandatory reporting obligations for specified professionals and allows any person to report. Any person may report anonymously. The bill won Senate backing in May 2026 (Royal Assent not yet confirmed as of 2026-05-29).</pre>
 </div>
 
 - **Type:** eligibility + process step
-- **Sources:** [Barbados Today — Abusing elderly could bring $100K fine, jail under new bill (21 Apr 2026)](https://barbadostoday.bb/2026/04/21/abusing-elderly-could-bring-100k-fine-jail-under-new-bill/); [CBC — Tough penalties proposed for elder abuse under new legislation](https://www.cbc.bb/news/local-news/tough-penalties-proposed-for-elder-abuse-under-new-legislation/)
+- **Sources:** [Barbados Today — Abusing elderly could bring $100K fine, jail under new bill (21 Apr 2026)](https://barbadostoday.bb/2026/04/21/abusing-elderly-could-bring-100k-fine-jail-under-new-bill/); [CBC — Tough penalties proposed for elder abuse under new legislation](https://www.cbc.bb/news/local-news/tough-penalties-proposed-for-elder-abuse-under-new-legislation/); [Barbados Today — Independent senators warn of gaps in elder care reforms (7 May 2026)](https://barbadostoday.bb/2026/05/07/independent-senators-warn-of-gaps-in-elder-care-reforms/)
 - **Status:** verified
 - **Certainty:** 85%
 
@@ -200,7 +200,7 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Plausible but cannot confirm no online channel now exists</div>
-<pre class="claim-block-content">As of 2026-05-28, no online elder-abuse reporting portal has been identified on gov.bb, socialempowermentbb.org (unreachable), or any other Barbados government domain. The Older Persons (Care and Protection) Bill, 2026 establishes a Register of Abuse managed by the SEA but does not describe an online public reporting channel. "Cannot report online yet" is likely still accurate but cannot be confirmed or contradicted.</pre>
+<pre class="claim-block-content">As of 2026-05-29, no online elder-abuse reporting portal has been identified on gov.bb, socialempowermentbb.org (unreachable — connection refused), or any other Barbados government domain. The Older Persons (Care and Protection) Bill, 2026 establishes a Register of Abuse managed by the SEA but does not describe an online public reporting channel. "Cannot report online yet" is likely still accurate but cannot be confirmed or contradicted.</pre>
 </div>
 
 - **Type:** process step
@@ -265,7 +265,7 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Partially correct — agency name requires update</div>
-<pre class="claim-block-content">The police continue to have a role. The National Assistance Board has been replaced by the Social Empowerment Agency (SEA) as of 2 January 2026. Under the Older Persons (Care and Protection) Bill, 2026, the SEA has powers to assess, investigate, and intervene including emergency removal. "As soon as possible" is consistent with the bill's provisions but no specific turnaround standard is published.</pre>
+<pre class="claim-block-content">The police continue to have a role. The National Assistance Board has been replaced by the Social Empowerment Agency (SEA) as of January 2026. Under the Older Persons (Care and Protection) Bill, 2026, the SEA has powers to assess, investigate, and intervene including emergency removal. "As soon as possible" is consistent with the bill's provisions but no specific turnaround standard is published.</pre>
 </div>
 
 - **Type:** agency name + process step
@@ -305,7 +305,7 @@ St. Michael</pre>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Verified correct</div>
-<pre class="claim-block-content">The Older Persons (Care and Protection) Bill, 2026 explicitly states "a report made under the reporting requirements may be made anonymously." Anonymous reports receive the same attention as named reports.</pre>
+<pre class="claim-block-content">The Older Persons (Care and Protection) Bill, 2026 explicitly states that reports may be made anonymously. Anonymous reports receive the same attention as named reports.</pre>
 </div>
 
 - **Type:** process step
@@ -319,7 +319,7 @@ St. Michael</pre>
 
 ### A — No reference to the Older Persons (Care and Protection) Act, 2026
 
-The Older Persons (Care and Protection) Act, 2026 was debated in the House of Assembly in April 2026 and received Senate backing in May 2026. It is the first Barbados statute to define and criminalise elder abuse, establish mandatory reporting, and vest investigation powers in the Social Empowerment Agency. Once commenced, it becomes the governing legal framework for this page. The page should reference the Act once it receives Royal Assent and a commencement date is set.
+The Older Persons (Care and Protection) Bill, 2026 was debated in the House of Assembly in April 2026 and won Senate backing in May 2026. It is the first Barbados statute to define and criminalise elder abuse, establish mandatory reporting, and vest investigation powers in the Social Empowerment Agency. The bill's Senate stage was confirmed as of 7 May 2026; Royal Assent had not been confirmed as of 2026-05-29. Once commenced, it becomes the governing legal framework for this page. The page should reference the Act once it receives Royal Assent and a commencement date is set.
 
 Sources: [Barbados Today — Abusing elderly (21 Apr 2026)](https://barbadostoday.bb/2026/04/21/abusing-elderly-could-bring-100k-fine-jail-under-new-bill/); [CBC — Tough penalties](https://www.cbc.bb/news/local-news/tough-penalties-proposed-for-elder-abuse-under-new-legislation/); [Barbados Today — Independent senators warn of gaps in elder care reforms (7 May 2026)](https://barbadostoday.bb/2026/05/07/independent-senators-warn-of-gaps-in-elder-care-reforms/)
 
@@ -353,3 +353,4 @@ Source: [gov.bb — Ministry of People Empowerment and Elder Affairs](https://ww
 - [Barbados Today — Minister condemns violent act against elderly man (26 Feb 2026)](http://barbadostoday.bb/2026/02/26/minister-condemns-violent-act-against-elderly-man/)
 - [gisbarbados.gov.bb — National Assistance Board tag](https://gisbarbados.gov.bb/blog/tag/national-assistance-board/)
 - [gov.bb — Welfare Department](https://www.gov.bb/Departments/welfare)
+- [socialempowermentbb.org](https://socialempowermentbb.org/) — connection refused as of 2026-05-29

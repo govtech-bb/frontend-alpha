@@ -3,26 +3,28 @@
 - **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-transport-works-and-water-resources>
 - **Source file:** `src/content/ministries/ministry-of-transport-works-and-water-resources.md`
 - **Data file:** `src/data/ministries.ts` (lines 1043–1098)
-- **Last checked:** 2026-05-28
-- **Summary:** 14 claims reviewed — 11 verified, 2 discrepant, 1 unverifiable. Average certainty: **89%**.
+- **Last checked:** 2026-05-29
+- **Summary:** 17 claims reviewed — 14 verified, 1 discrepant, 2 unverifiable. Average certainty: **91%**.
 
 ---
 
 ## Headline issues for triage
 
-1. **"Government building" should be "Government buildings" (plural).** The mission statement in the source markdown (line 3) reads "proper maintenance of Government building and vehicles". The authoritative gov.bb ministry page and the MTW's own website both read "Government buildings and vehicles" (plural). This is a minor but visible copy error in a verbatim mission statement that citizens and media may quote.
+1. **REVERSED — "Government building" no longer discrepant.** The previous pass (2026-05-28) flagged "Government building" (singular) in the mission statement as discrepant, citing mtw.gov.bb "buildings" (plural) as authoritative. On re-check (2026-05-29), gov.bb — the primary authoritative source — also uses the singular "building". The alpha page therefore matches both gov.bb and the source markdown. Only mtw.gov.bb uses the plural. Claim 1 status updated to **verified**. No fix required.
 
-2. **Minister's role title in ministries.ts omits "Senior Minister" qualifier in a discrepant way vs Parliament listing.** The data file correctly stores the full sworn-in title "Minister of Transport and Works, and Senior Minister coordinating Infrastructure", confirmed by the Barbados Today cabinet-sworn-in article. However, the official Parliament members list (barbadosparliament.com/page_content/show_content/8) displays only "Minister of Transport and Works" without the Senior Minister suffix. Neither source is authoritative enough to declare the other wrong — the sworn-in GIS ceremony and Barbados Today article support the longer form. No change recommended at this time, but the open question is whether the "Senior Minister coordinating Infrastructure" is a formal constitutional title or a descriptive tag applied during the swearing-in ceremony.
+2. **Website URL stored as `http://www.mtw.gov.bb`.** The canonical form is `https://mtw.gov.bb/` (HTTPS, no www). The stored value uses an insecure scheme and a non-canonical www prefix. Browsers redirect transparently but the stored value should reflect the canonical form. (Persists from previous pass.)
 
-3. **Transport Authority absent from associatedDepartments in ministries.ts.** The objective text (source MD line 19) explicitly references "the Barbados Licensing Authority, the Transport Authority and private operators" in the same breath. The Transport Authority (ta.gov.bb) is a separate statutory body from the Transport Board; it handles PSV permitting, route licensing, and operator oversight. It is conspicuously absent from the associatedDepartments list (which shows only BLA and Transport Board under "Transport"). This is a gap in the data file rather than the source markdown, but it means the live page omits a body directly named in the ministry's own objectives.
+3. **Temporary address not signposted on live page.** MTW's offices are currently at 2nd Floor, The Goddard Building, Haggatt Hall, St. Michael (confirmed on mtw.gov.bb/directory/). The alpha page shows only the permanent Pine address. Citizens visiting in person will find the ministry closed there.
 
-4. **Website URL stored as `http://www.mtw.gov.bb` in ministries.ts.** The ministry's canonical website resolves at `https://mtw.gov.bb/` (HTTPS, no www subdomain). The stored value uses HTTP and the www prefix. Most browsers will follow the redirect transparently, but the stored URL should reflect the canonical form to avoid presenting a non-secure link to citizens.
+4. **Transport Authority absent from associatedDepartments.** The ministry's own Objective 7 names "the Barbados Licensing Authority, the Transport Authority and private operators" in the same breath, yet only BLA and Transport Board appear in the data file's Transport category. The Transport Authority (ta.gov.bb) handles PSV permitting and route licensing — a distinct statutory body that citizens seeking conductor/PSV guidance would expect to find linked.
+
+5. **Minister role title has minor punctuation difference vs gov.bb cabinet page.** ministries.ts stores "Minister of Transport and Works, and Senior Minister coordinating Infrastructure" (comma before "and"). The gov.bb/cabinet.php page shows "Minister of Transport and Works and Senior Minister coordinating Infrastructure" (no comma). The content is the same; this is a formatting question only. No citizen impact.
 
 ---
 
 ## Claims
 
-### Claim 1 — Mission Statement (lines 1–3)
+### Claim 1 — Mission Statement: "Government building" (line 3)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -30,17 +32,15 @@
 </div>
 
 <div class="claim-block claim-block--correct">
-<div class="claim-block-label">Should say</div>
-<pre class="claim-block-content">To provide efficient road network services, proper maintenance of Government buildings and vehicles, effective drainage solutions, special electrical services and public transportation.</pre>
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">To provide efficient road network services, proper maintenance of Government building and vehicles, effective drainage solutions, special electrical services and public transportation.</pre>
 </div>
 
 - **Type:** descriptive
-- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources); [MTW About Us](https://mtw.gov.bb/about-us/)
-- **Status:** discrepant — "Government building" should be "Government buildings" (plural)
-- **Certainty:** 95% that "buildings" is the correct form
-- **Confidence it's wrong:** 92%
-- **Citizen impact:** LOW — does not affect any citizen action, but mission text may be quoted verbatim in official communications.
-- **Note:** Both gov.bb and mtw.gov.bb use the plural "buildings". The source markdown appears to have dropped the "s". The remainder of the mission text matches both authoritative sources verbatim.
+- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources) — gov.bb uses "Government building" (singular), matching the alpha page; [MTW About Us](https://mtw.gov.bb/about-us/) — mtw.gov.bb uses "Government buildings" (plural), diverging from gov.bb
+- **Status:** verified — the alpha page matches gov.bb (the primary authoritative source). Only mtw.gov.bb uses the plural form. Previous pass incorrectly favoured mtw.gov.bb over gov.bb.
+- **Certainty:** 90%
+- **Note (reversal):** Claim 1 was marked discrepant in the 2026-05-28 pass. Re-verification against gov.bb confirms the singular "building" is the form used on the government portal. Status reversed to verified.
 
 ---
 
@@ -133,9 +133,9 @@ To provide effective flood alleviation and mitigation solutions across Barbados.
 
 - **Type:** descriptive
 - **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources)
-- **Status:** verified — all ten objectives match gov.bb verbatim; the complete list of 12 objectives (Claims 3–5) matches the authoritative source
+- **Status:** verified — all ten objectives match the gov.bb source; the complete list of 12 objectives (Claims 3–5) matches the authoritative source
 - **Certainty:** 95%
-- **Note:** The mtw.gov.bb About Us page lists only 10 objectives (slightly condensed wording), whereas gov.bb and the source markdown both list 12. This report treats gov.bb as the more authoritative source given it is the canonical government portal and the source_url for this page.
+- **Note:** The mtw.gov.bb About Us page lists only 10 objectives in slightly condensed wording (the "Supply-driven integrated transport" objective is absent). gov.bb is treated as the more authoritative source.
 
 ---
 
@@ -152,10 +152,10 @@ To provide effective flood alleviation and mitigation solutions across Barbados.
 </div>
 
 - **Type:** agency name
-- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources); [GIS — Ministry of Transport Works and Water Resources tag](https://gisbarbados.gov.bb/blog/tag/ministry-of-transport-works-and-water-resources/)
-- **Status:** verified — official name confirmed on gov.bb canonical ministry listing and multiple GIS press releases. The older short form "Ministry of Transport and Works" (still used on mtw.gov.bb branding) is NOT the official current name.
+- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources)
+- **Status:** verified — official name confirmed on gov.bb canonical ministry listing. The older short form "Ministry of Transport and Works" (still used on mtw.gov.bb branding) is NOT the official current name.
 - **Certainty:** 99%
-- **Cross-reference:** The conductor licence page (`src/content/apply-for-conductor-licence/index.md`) uses the outdated "Ministry of Transport and Works" — this remains an open discrepancy flagged in [apply-for-conductor-licence.md](/docs/fact-check/apply-for-conductor-licence.md) Claim 2.
+- **Cross-reference:** The conductor licence page (`src/content/apply-for-conductor-licence/index.md`) uses the outdated "Ministry of Transport and Works" — flagged separately in [/docs/fact-check/apply-for-conductor-licence.md](/docs/fact-check/apply-for-conductor-licence.md) Claim 2.
 
 ---
 
@@ -172,8 +172,8 @@ To provide effective flood alleviation and mitigation solutions across Barbados.
 </div>
 
 - **Type:** agency name / statistic
-- **Sources:** [barbadosparliament.com — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8); [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/amp/); [gov.bb — Cabinet](https://www.gov.bb/cabinet.php)
-- **Status:** verified — name confirmed across all three sources (Parliament website, Barbados Today sworn-in article, gov.bb cabinet listing)
+- **Sources:** [gov.bb — Cabinet](https://www.gov.bb/cabinet.php); [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/amp/)
+- **Status:** verified — name confirmed across multiple sources
 - **Certainty:** 99%
 
 ---
@@ -186,28 +186,24 @@ To provide effective flood alleviation and mitigation solutions across Barbados.
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Partially verified — source conflict on full title</div>
-<pre class="claim-block-content">The Barbados Today sworn-in article (16 Feb 2026) and gov.bb/cabinet.php both list:
-"Minister of Transport and Works, and Senior Minister coordinating Infrastructure"
-which matches ministries.ts exactly.
+<div class="claim-block-label">Partially verified — minor punctuation difference vs gov.bb cabinet page</div>
+<pre class="claim-block-content">gov.bb/cabinet.php shows: "Minister of Transport and Works and Senior Minister coordinating Infrastructure"
+(no comma before "and Senior Minister")
 
-However, the official Parliament website (barbadosparliament.com/page_content/show_content/8)
-lists Humphrey as simply: "Minister of Transport and Works"
-without the "Senior Minister coordinating Infrastructure" suffix.
+ministries.ts stores the same content with a comma: "Minister of Transport and Works, and Senior Minister coordinating Infrastructure"
 
-Checked: gov.bb/cabinet.php (longer form); Barbados Today "Cabinet ministers sworn in" (longer form);
-barbadosparliament.com Cabinet list (shorter form).
+The content is identical; only punctuation differs. Both forms are in common use.
 
-Open question: Is "Senior Minister coordinating Infrastructure" a formal constitutional title
-or a descriptive tag applied at the swearing-in ceremony? If formal, the Parliament page is incomplete.
-If descriptive, both representations are acceptable.</pre>
+Checked: [gov.bb — Cabinet](https://www.gov.bb/cabinet.php); [Barbados Today — Cabinet ministers sworn in](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/amp/)
+
+Open question: Which form appears in the Official Gazette appointment? The comma form is grammatically preferred for compound titles but both convey the same meaning.</pre>
 </div>
 
 - **Type:** agency name
-- **Sources:** [Barbados Today — Cabinet ministers sworn in](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/amp/); [gov.bb — Cabinet](https://www.gov.bb/cabinet.php); [barbadosparliament.com — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8)
-- **Status:** unverifiable (full formal title vs abbreviated form)
-- **Certainty:** 80% that the longer form in ministries.ts is the correct full title
-- **Open question:** Confirm with the Cabinet Office or the Official Gazettes whether "Senior Minister coordinating Infrastructure" is part of Humphrey's formal sworn portfolio title or a coordination designation. The data file should use the form published in the Official Gazette of appointment.
+- **Sources:** [gov.bb — Cabinet](https://www.gov.bb/cabinet.php); [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/amp/)
+- **Status:** unverifiable (punctuation variant — no citizen impact)
+- **Certainty:** 85% that the longer title is correct; punctuation variant is a style question
+- **Open question:** Confirm with the Cabinet Office or Official Gazette which punctuation form is canonical for the sworn-in title.
 
 ---
 
@@ -224,8 +220,8 @@ If descriptive, both representations are acceptable.</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources); [MTW Directory](https://mtw.gov.bb/directory/); [MTW Contact FAQ](https://mtw.gov.bb/ufaq/how-can-i-contact-the-ministry-of-transport-and-works/)
-- **Status:** verified — three independent sources confirm (246) 536-0000 as the main PBX
+- **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources); [MTW Directory](https://mtw.gov.bb/directory/)
+- **Status:** verified — both sources confirm (246) 536-0000 as the main PBX
 - **Certainty:** 99%
 
 ---
@@ -282,8 +278,8 @@ If descriptive, both representations are acceptable.</pre>
 
 - **Type:** URL
 - **Sources:** [MTW — Home (canonical HTTPS URL)](https://mtw.gov.bb/)
-- **Status:** discrepant — the canonical URL is `https://mtw.gov.bb/` (HTTPS, no www). The stored value `http://www.mtw.gov.bb` uses the insecure HTTP scheme and the non-canonical www prefix. Browsers will follow the redirect to HTTPS, but the stored value should use the canonical secure form.
-- **Certainty:** 90% that `https://mtw.gov.bb` is the canonical form
+- **Status:** discrepant — the canonical URL is `https://mtw.gov.bb/` (HTTPS, no www). The stored value `http://www.mtw.gov.bb` uses the insecure HTTP scheme and non-canonical www prefix. The site page title confirms it is "Home - Ministry of Transport & Works" at `https://mtw.gov.bb/`.
+- **Certainty:** 95% that `https://mtw.gov.bb` is the canonical form
 - **Confidence it's wrong:** 85%
 - **Citizen impact:** LOW — redirect works transparently; however, HTTP links signal insecurity to cautious users and may trigger browser warnings in some contexts.
 
@@ -311,8 +307,8 @@ Barbados, W. I</pre>
 - **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources)
 - **Status:** verified — matches the permanent address on gov.bb exactly
 - **Certainty:** 98%
-- **Note:** MTW's own website (mtw.gov.bb) currently displays a **temporary** address: "2nd Floor The Goddard Building, Haggatt Hall, St. Michael" due to renovation works at the Pine headquarters. This is confirmed by the MTW FAQ page which explicitly labels it "Temporary address". The ministries.ts correctly stores the permanent/official address per gov.bb; no change needed. However, the alpha.gov.bb page could optionally note the current temporary address to help citizens who visit in person. See the conductor licence fact-check for full background: [apply-for-conductor-licence.md](/docs/fact-check/apply-for-conductor-licence.md) Claim 3.
-- **Citizen impact:** MEDIUM — citizens directing correspondence to Pine may find the offices temporarily at Haggatt Hall. The page could add a note about the temporary location.
+- **Note:** MTW's own website (mtw.gov.bb/directory/) currently shows a **temporary** address: "2nd Floor The Goddard Building Haggatt Hall St. Michael Bridgetown, Barbados" due to renovation works at the Pine headquarters. The ministries.ts correctly stores the permanent/official address per gov.bb; however, the live alpha page could usefully add a note about the temporary location for citizens who visit in person.
+- **Citizen impact:** MEDIUM — citizens directing in-person visits to Pine will find the offices temporarily at Haggatt Hall.
 
 ---
 
@@ -336,8 +332,66 @@ Barbados, W. I</pre>
 - **Sources:** [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources); [Transport Authority — ta.gov.bb](https://ta.gov.bb/)
 - **Status:** verified (both listed bodies are genuine MTWW-affiliated bodies), with a gap noted
 - **Certainty:** 95%
-- **Note (gap):** The **Transport Authority** (ta.gov.bb) is a separate statutory body from the Transport Board, responsible for PSV route licensing, operator permitting, and conductor oversight. The ministry's own Objective 7 in the source markdown explicitly names "the Barbados Licensing Authority, the Transport Authority and private operators" in the same breath. Yet the Transport Authority does not appear in the associatedDepartments list. It is also absent from the gov.bb ministry page's associated-body listing, suggesting this gap originates upstream. The omission means citizens looking for conductor licence / PSV permit guidance may not find a link to ta.gov.bb from this ministry page.
+- **Note (gap):** The **Transport Authority** (ta.gov.bb) is a separate statutory body from the Transport Board, responsible for PSV route licensing, operator permitting, and conductor oversight. The ministry's own Objective 7 (source MD line 19) explicitly names "the Barbados Licensing Authority, the Transport Authority and private operators". Yet the Transport Authority does not appear in the associatedDepartments list. Citizens seeking conductor licence or PSV permit guidance may not find a link to ta.gov.bb from this ministry page.
 - **Open question:** Confirm with the ministry whether the Transport Authority should be listed as an associated body alongside BLA and Transport Board.
+
+---
+
+### Claim 15 — Online service link: Apply for a driver's licence (ministries.ts line 1059)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page (from ministries.ts)</div>
+<pre class="claim-block-content">href: "/apply-for-a-drivers-licence"</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">href: "/apply-for-a-drivers-licence"</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — Apply for a driver's licence](https://alpha.gov.bb/apply-for-a-drivers-licence) — page loads with heading "Apply for a driver's licence"
+- **Status:** verified — link resolves to a live, on-topic page
+- **Certainty:** 99%
+
+---
+
+### Claim 16 — Online service link: Apply for a conductor licence (ministries.ts line 1063)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page (from ministries.ts)</div>
+<pre class="claim-block-content">href: "/apply-for-conductor-licence"</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">href: "/apply-for-conductor-licence"</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — Apply for a conductor's licence](https://alpha.gov.bb/apply-for-conductor-licence) — page loads with heading "Apply for a conductor's licence"
+- **Status:** verified — link resolves to a live, on-topic page
+- **Certainty:** 99%
+- **Note:** The live page title uses an apostrophe ("conductor's licence") while the online services description in ministries.ts says "Apply for a public service vehicle conductor licence" (no apostrophe). This is a minor copy inconsistency; no citizen impact on navigation.
+
+---
+
+### Claim 17 — Online service link: Getting around Barbados (ministries.ts line 1068)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently on the page (from ministries.ts)</div>
+<pre class="claim-block-content">href: "/getting-around-barbados"</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">href: "/getting-around-barbados"</pre>
+</div>
+
+- **Type:** link / CTA
+- **Sources:** [alpha.gov.bb — Getting around Barbados](https://alpha.gov.bb/getting-around-barbados) — page loads with heading "Getting around Barbados"
+- **Status:** verified — link resolves to a live, on-topic page
+- **Certainty:** 99%
 
 ---
 
@@ -345,35 +399,35 @@ Barbados, W. I</pre>
 
 ### Temporary address not signposted
 
-The MTW headquarters is currently at the Goddard Building (2nd Floor, Haggatt Hall, St. Michael) as a temporary relocation during renovation of the permanent Pine East/West Boulevard site. The alpha.gov.bb page shows the permanent address only. Adding a brief note with the temporary address and an indication that it is subject to change would reduce citizen confusion for in-person visits. The MTW FAQ page labels it "Temporary address: 2nd Floor The Goddard Building Haggatt Hall St. Michael Bridgetown, Barbados" and shows the main PBX 536-0000.
+The MTW headquarters is currently at the Goddard Building (2nd Floor, Haggatt Hall, St. Michael) as a temporary relocation during renovation of the permanent Pine East/West Boulevard site. The alpha.gov.bb page shows the permanent address only. Adding a brief note with the temporary address and an indication that it is subject to change would reduce citizen confusion for in-person visits. The MTW directory (mtw.gov.bb/directory/) labels it "Temporary address: 2nd Floor The Goddard Building Haggatt Hall St. Michael Bridgetown, Barbados" with main PBX 536-0000 and business hours Monday–Friday 8:15 AM – 4:30 PM.
 
-### Permanent Secretary identity
+### Transport Authority not listed under associated departments
 
-The current Permanent Secretary of the Ministry is **Mark Cummins**, confirmed on gov.bb (https://www.gov.bb/Government/mark-cummins, which gives his full career biography and titles him "PERMANENT SECRETARY — MINISTRY OF TRANSPORT, WORKS AND WATER RESOURCES"). The email psmtwm@barbados.gov.bb is the PS office address. The alpha.gov.bb page does not name the PS (consistent with most ministry pages), so no correction is required — noted for completeness.
+The Transport Authority (ta.gov.bb) is a statutory body responsible for PSV/route licensing and operator oversight, explicitly named in the ministry's Objective 7. It is absent from both the associatedDepartments list in ministries.ts and the gov.bb ministry page. Citizens seeking PSV conductor or operator guidance would benefit from a direct link.
 
 ### Second ministry email not shown
 
-The MTW directory (mtw.gov.bb/directory/) also publishes `information.unit@publicworks.gov.bb` as a general enquiries address in addition to the PS email. The alpha.gov.bb page only shows the PS email. The information unit address is appropriate for general public enquiries and could usefully be added.
+The MTW directory (mtw.gov.bb/directory/) also publishes `information.unit@publicworks.gov.bb` as a general enquiries address alongside the PS email. The alpha.gov.bb page only shows the PS email. The information unit address is appropriate for general public enquiries and could usefully be added.
 
-### Transport Board privatisation / Mass Transit Authority
+### Transport Board restructuring — monitor
 
-Active public discussion is ongoing (Nov 2025 – Apr 2026) about the proposed dissolution of the Transport Board and establishment of a Barbados Mass Transit Authority as a regulatory successor. As of 2026-05-28 the Transport Board remains operational and the data file entry is correct. This should be monitored: if/when the Transport Board is restructured, the associatedDepartments entry will require updating.
+Active public discussion (Nov 2025 – Apr 2026) about a proposed Barbados Mass Transit Authority replacing the Transport Board. As of 2026-05-29 the Transport Board remains operational and the data file is correct. This should be monitored: if/when the Transport Board is restructured, the associatedDepartments entry will require updating.
+
+### Business hours not shown on alpha page
+
+MTW directory confirms Monday–Friday 8:15 AM – 4:30 PM. This is not shown on the alpha ministry page (consistent with most ministry pages on the site). Could be a useful addition.
 
 ---
 
 ## Sources cited
 
 - [gov.bb — Ministry of Transport, Works and Water Resources](https://www.gov.bb/Ministries/transport-works-water-resources) — primary authoritative source; mission, vision, objectives, address, phone, fax, email all verified here
-- [MTW About Us](https://mtw.gov.bb/about-us/) — ministry's own website; mission and vision confirmed (10 vs 12 objectives discrepancy noted); temporary Goddard Building address shown
-- [MTW Directory](https://mtw.gov.bb/directory/) — phone, email, temporary address confirmed; second email (information.unit@publicworks.gov.bb) found here
-- [MTW Contact FAQ](https://mtw.gov.bb/ufaq/how-can-i-contact-the-ministry-of-transport-and-works/) — confirms Goddard Building as temporary address; PBX 536-0000 confirmed
-- [MTW Departments and Services](https://mtw.gov.bb/departments-services/) — lists all ministry departments (BLA, Building Standards Authority, Drainage Division, Design Services, GEED, Operations)
-- [gov.bb — Cabinet](https://www.gov.bb/cabinet.php) — minister name and full title confirmed
-- [barbadosparliament.com — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8) — minister name confirmed; shorter title form noted
-- [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/amp/) — full title with "Senior Minister coordinating Infrastructure" confirmed
-- [Barbados Today — Humphrey ready for challenges in Ministry of Transport and Works (22 Feb 2026)](https://barbadostoday.bb/2026/02/22/humphrey-ready-for-challenges-in-ministry-of-transport-and-works/) — contextual confirmation of Humphrey's arrival at Goddard Building
-- [gov.bb — Mark Cummins (Permanent Secretary)](https://www.gov.bb/Government/mark-cummins) — PS identity confirmed
-- [Transport Authority — ta.gov.bb](https://ta.gov.bb/) — Transport Authority confirmed as a separate body from Transport Board; absence from associatedDepartments noted
-- [gov.bb — Air Navigation Services Department](https://www.gov.bb/Departments/air-navigation) — confirms Air Navigation is under MIST, not MTWW; correctly absent from associatedDepartments
-- [GIS — Ministry of Transport Works and Water Resources tag (page 2)](https://gisbarbados.gov.bb/blog/tag/ministry-of-transport-works-and-water-resources/page/2/) — confirmed ministry name used in press releases; GIS tag page itself returns 403
-- [Barbados Today — PM puts distance from Transport Board sell-off (Apr 2026)](https://barbadostoday.bb/2026/04/23/pm-puts-distance-from-transport-board-sell-off/) — Transport Board restructuring context; Jehu Wiltshire referenced as "then PS" confirming Cummins is current
+- [MTW About Us](https://mtw.gov.bb/about-us/) — ministry's own website; mission ("buildings" plural) and vision confirmed; 10 vs 12 objectives discrepancy noted
+- [MTW Directory](https://mtw.gov.bb/directory/) — phone, email, temporary Goddard Building address, business hours confirmed; second email (information.unit@publicworks.gov.bb) found here
+- [MTW Home](https://mtw.gov.bb/) — canonical HTTPS URL confirmed; page title "Home - Ministry of Transport & Works"
+- [gov.bb — Cabinet](https://www.gov.bb/cabinet.php) — minister name and full title confirmed; "Minister of Transport and Works and Senior Minister coordinating Infrastructure" (no comma)
+- [Barbados Today — Cabinet ministers sworn in (16 Feb 2026)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/amp/) — full minister title with "Senior Minister coordinating Infrastructure" confirmed
+- [alpha.gov.bb — Apply for a driver's licence](https://alpha.gov.bb/apply-for-a-drivers-licence) — online service CTA link verified live
+- [alpha.gov.bb — Apply for a conductor's licence](https://alpha.gov.bb/apply-for-conductor-licence) — online service CTA link verified live
+- [alpha.gov.bb — Getting around Barbados](https://alpha.gov.bb/getting-around-barbados) — online service CTA link verified live
+- [Transport Authority — ta.gov.bb](https://ta.gov.bb/) — Transport Authority confirmed as a separate body from Transport Board; absent from associatedDepartments

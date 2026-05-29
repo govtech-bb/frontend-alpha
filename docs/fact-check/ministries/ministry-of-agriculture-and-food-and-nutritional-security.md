@@ -1,23 +1,23 @@
 # Fact-check: Ministry of Agriculture and Food and Nutritional Security
 
-- **Live page:** <https://alpha.gov.bb/ministries/ministry-of-agriculture-and-food-and-nutritional-security>
+- **Live page:** <https://alpha.gov.bb/government/organisations/ministry-of-agriculture-and-food-and-nutritional-security>
 - **Source file:** `src/content/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md`
-- **Last checked:** 2026-05-28
-- **Summary:** 16 claims reviewed — 9 verified, 4 discrepant, 3 unverifiable. Average certainty: 71%.
+- **Last checked:** 2026-05-29
+- **Summary:** 18 claims reviewed — 10 verified, 4 discrepant, 4 unverifiable. Average certainty: 73%.
 
 ---
 
 ## Headline issues for triage
 
-1. **Chief Agricultural Officer name is stale.** The source content (and the ministry's own Senior Staff Directory) lists Lennox Chandler as Chief Agricultural Officer. GIS Facebook posts (May 2026) and Barbados Today reporting confirm Paul Lucas is now the CAO. The Senior Staff Directory at agriculture.gov.bb has not yet been updated, creating a discrepancy between two government sources; the GIS/news evidence clearly post-dates the directory.
+1. **NAHFCP programme name is truncated on the page (still unresolved).** The source content heading reads "Agricultural Health And Food Control Programme" but the official programme name on agriculture.gov.bb is "National Agricultural Health and Food Control Programme (NAHFCP)". This was flagged on the previous pass (2026-05-28) and has not been corrected. Dropping "National" is a verifiable error against the ministry's own website.
 
-2. **Permanent Secretary is disputed between two government sources.** agriculture.gov.bb Senior Staff Directory names Janet Phillips as Permanent Secretary. gov.bb/government/ps-related-grades still names Terry Bascombe. These are two Tier 1 sources in conflict. The directory is more granular and likely more current; the ps-related-grades page may be stale. This needs agency confirmation before the page can be updated with confidence.
+2. **Permanent Secretary is disputed between two government sources (still unresolved).** agriculture.gov.bb Senior Staff Directory (fetched 2026-05-29) names Janet Phillips as Permanent Secretary at 535-5115. gov.bb/government/ps-related-grades (fetched 2026-05-29) still names Terry Bascombe. These two Tier-1 sources remain in direct conflict. Agency confirmation required before the page can be updated.
 
-3. **NAHFCP programme name is truncated on the page.** The page heading says "Agricultural Health And Food Control Programme" but the official programme name on agriculture.gov.bb is "National Agricultural Health and Food Control Programme (NAHFCP)". Dropping "National" is a minor but verifiable error.
+3. **Chief Agricultural Officer incumbent name: agriculture.gov.bb directory still stale.** The Senior Staff Directory (fetched 2026-05-29) continues to list Lennox Chandler as CAO at 535-5118. GIS Facebook posts and Barbados Today (May 2026) identified Paul Lucas as the new CAO. The directory has not been updated. The alpha page does not display the CAO's name (only the phone number), so this does not directly affect citizens using the alpha page; however, it warrants a flag until the directory is corrected.
 
-4. **Minister role title wording inconsistency between page and ministries.ts.** The minister's role in `src/data/ministries.ts` reads "Minister of Agriculture, Food and Nutritional Security" (without "and" before "Food"), while the full ministry name and gov.bb use "Ministry of Agriculture and Food and Nutritional Security". Parliament's official record gives Dr Munro-Knight's portfolio as "Minister of Agriculture, Food and Nutritional Security" — this shortened form is standard for the role title and is consistent with gov.bb usage.
+4. **Associated departments list on alpha page diverges from ministry's own affiliated agencies page.** The live alpha page lists five associated bodies including "Southern Meats Inc." and "Barbados Medicinal Cannabis Licencing Authority". The ministry's own Affiliated Agencies page (fetched 2026-05-29) lists only four bodies: Barbados Agricultural Credit Trust, BADMC, Barbados Agricultural Management Company, and Barbados Cane Industry Corporation. The alpha page omits the Cane Industry Corporation and includes two bodies not on the ministry's page. Medium citizen impact — citizens consulting the alpha page for affiliated bodies will get a partially incorrect list.
 
-5. **Several associated bodies listed in ministries.ts are not confirmed on agriculture.gov.bb.** The `associatedDepartments` array in ministries.ts includes "Barbados Medicinal Cannabis Licencing Authority" and "Barbados Agricultural Management Company" but the ministry's own affiliated agencies page lists only four bodies (BACT, BADMC, BAMC, and Barbados Cane Industry Corporation). The BMCLA has its own website (bmcla.bb) and is not listed as an affiliated agency by the ministry itself.
+5. **NAHFCP Project Coordinator telephone uses non-standard prefix (still unverifiable).** The number (246) 310-2861 listed for the Project Coordinator has not been independently confirmed on any government source. All other ministry extensions use the 535-xxxx prefix. This is an unverified number that citizens may act on.
 
 ---
 
@@ -36,13 +36,13 @@
 </div>
 
 - **Type:** descriptive
-- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture); [agriculture.gov.bb — About](https://agriculture.gov.bb/)
+- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture); [agriculture.gov.bb — Home](https://agriculture.gov.bb/)
 - **Status:** verified — verbatim match with gov.bb Ministries/agriculture page which reproduces this mandate text.
 - **Certainty:** 95%
 
 ---
 
-### Claim 2 — Ministry name (lines 5)
+### Claim 2 — Ministry name (line 5)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -114,7 +114,7 @@ Fax: (246) 535-5258</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture)
+- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture); [agriculture.gov.bb — NAHFCP](https://agriculture.gov.bb/Departments/NAHFCP) (confirms 535-5257 as fax)
 - **Status:** verified — both fax numbers confirmed on gov.bb.
 - **Certainty:** 90%
 
@@ -133,8 +133,8 @@ Fax: (246) 535-5258</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture); [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory)
-- **Status:** verified — number confirmed on both gov.bb and agriculture.gov.bb Senior Staff Directory (for Janet Phillips).
+- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture); [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory) (Janet Phillips at 535-5115); [agriculture.gov.bb — NAHFCP](https://agriculture.gov.bb/Departments/NAHFCP) (lists 535-5115 as PS contact)
+- **Status:** verified — phone number 535-5115 confirmed on three independent sources for the Permanent Secretary role. The PS incumbent name is disputed between sources (see Claim 14).
 - **Certainty:** 97%
 
 ---
@@ -152,8 +152,8 @@ Fax: (246) 535-5258</pre>
 </div>
 
 - **Type:** phone
-- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture); [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory)
-- **Status:** verified — phone number 535-5118 confirmed at both sources for the CAO role. The incumbent name listed in the Senior Staff Directory (Lennox Chandler) appears stale; see Claim 8.
+- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture); [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory) (Lennox Chandler at 535-5118)
+- **Status:** verified — phone number 535-5118 confirmed at both sources for the CAO role. The incumbent name listed in the Senior Staff Directory (Lennox Chandler) appears stale; see Claim 13. The phone number itself is verified and likely routes correctly regardless of incumbent.
 - **Certainty:** 92%
 
 ---
@@ -192,15 +192,15 @@ Dep CAO (Crops): (246) 535-5120</pre>
 </div>
 
 - **Type:** agency name
-- **Sources:** [agriculture.gov.bb — NAHFCP department page](https://agriculture.gov.bb/Departments/NAHFCP); [WebSearch results — agriculture.gov.bb NAHFCP]
-- **Status:** discrepant — the page drops "National" from the official programme name. agriculture.gov.bb consistently uses "National Agricultural Health and Food Control Programme (NAHFCP)".
+- **Sources:** [agriculture.gov.bb — NAHFCP department page](https://agriculture.gov.bb/Departments/NAHFCP) (full official name confirmed as "National Agricultural Health and Food Control Programme (NAHFCP)")
+- **Status:** discrepant — the page drops "National" from the official programme name. agriculture.gov.bb consistently uses "National Agricultural Health and Food Control Programme (NAHFCP)". This was flagged on the previous pass (2026-05-28) and remains uncorrected.
 - **Certainty:** 85%
 - **Confidence it's wrong:** 90%
 - **Citizen impact:** LOW — directional label issue, not a number or procedure citizens act on directly.
 
 ---
 
-### Claim 10 — NAHFCP Project Coordinator telephone (line 71)
+### Claim 10 — NAHFCP Project Coordinator telephone (line 72)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently on the page</div>
@@ -209,14 +209,14 @@ Dep CAO (Crops): (246) 535-5120</pre>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Unverifiable — checked but not confirmed</div>
-<pre class="claim-block-content">The NAHFCP page at agriculture.gov.bb does not list a specific Project Coordinator or their direct-dial number. The Senior Staff Directory does not include an NAHFCP Project Coordinator entry. gov.bb and GIS have no press releases naming this number.</pre>
+<pre class="claim-block-content">The NAHFCP page at agriculture.gov.bb does not list a Project Coordinator or their direct-dial number. The Senior Staff Directory does not include an NAHFCP Project Coordinator entry. gov.bb and GIS have no press releases naming this number. All other ministry extensions use the 535-xxxx prefix; 310-xxxx is non-standard for ministry direct-dials.</pre>
 </div>
 
 - **Type:** phone
 - **Checked:** [agriculture.gov.bb — NAHFCP](https://agriculture.gov.bb/Departments/NAHFCP); [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory); [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture) — none of these sources list a Project Coordinator phone for NAHFCP.
 - **Status:** unverifiable
 - **Certainty:** 35%
-- **Open question:** Is (246) 310-2861 a current direct-dial for the NAHFCP Project Coordinator? The ministry should confirm whether this number is still active and who currently holds the Project Coordinator role. Note that the prefix 310 is unusual for government ministry lines (most ministry extensions use 535-xxxx).
+- **Open question:** Is (246) 310-2861 a current direct-dial for the NAHFCP Project Coordinator? The ministry should confirm whether this number is still active and who currently holds the Project Coordinator role. The 310 prefix is unusual for government ministry lines (most use 535-xxxx).
 
 ---
 
@@ -230,19 +230,19 @@ Workshop: (246) 535-5215</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
-<div class="claim-block-label">Unverifiable — checked but not confirmed</div>
-<pre class="claim-block-content">The Senior Staff Directory lists Peter Bell (Agricultural Officer, Cotton Project) at 535-5210 and a Workshop listed on the ministry Departments page, but does not separately list the CARS general line (535-5196/99) or the Workshop line (535-5215). Neither gov.bb nor GIS independently corroborate these numbers.</pre>
+<div class="claim-block-label">Unverifiable — partially checked</div>
+<pre class="claim-block-content">The Senior Staff Directory lists Peter Bell (Agricultural Officer, Cotton Project) at 535-5210, and Bret Taylor (Senior Agricultural Officer) at 535-5199 — partially corroborating the CARS main line range (5196/99). The Workshop direct-dial (535-5215) is not independently published. gov.bb does not break out CARS sub-extensions separately.</pre>
 </div>
 
 - **Type:** phone
-- **Checked:** [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory); [agriculture.gov.bb — Departments](https://agriculture.gov.bb/Departments/); [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture) — Cotton number (535-5210) is corroborated; CARS main line and Workshop are not independently published.
+- **Checked:** [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory); [agriculture.gov.bb — Departments](https://agriculture.gov.bb/Departments/); [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture) — Cotton number (535-5210) is corroborated via Peter Bell; Bret Taylor at 535-5199 partially corroborates the CARS main range; Workshop 535-5215 is not independently confirmed.
 - **Status:** unverifiable (partially)
-- **Certainty:** 60% for Cotton line (535-5210, corroborated via Senior Staff Directory); 35% for 535-5196/99 and 535-5215.
+- **Certainty:** 65% for Cotton line (535-5210, corroborated via Senior Staff Directory); 50% for 535-5196/99 (partial corroboration via 5199); 35% for 535-5215.
 - **Open question:** Confirm current CARS main telephone and Workshop direct-dial with the ministry.
 
 ---
 
-### Claim 12 — Minister name in ministries.ts (cross-check)
+### Claim 12 — Minister name and role (ministries.ts line 191)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently in src/data/ministries.ts (line 191)</div>
@@ -257,58 +257,58 @@ Minister of Agriculture, Food and Nutritional Security</pre>
 </div>
 
 - **Type:** agency name / statistic
-- **Sources:** [Barbados Parliament — Cabinet Ministers](https://www.barbadosparliament.com/page_content/show_content/8); [Barbados Today — Cabinet ministers sworn in (2026-02-16)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/); [Barbados Today — BAS welcomes first female agriculture minister (2026-02-17)](https://barbadostoday.bb/2026/02/17/bas-welcomes-first-female-agriculture-minister/)
-- **Status:** verified — Dr Shantal Munro-Knight was sworn in as Minister of Agriculture on 16–17 February 2026, replacing Indar Weir (who served since 2018). Parliament's official cabinet page confirms her name and portfolio.
+- **Sources:** [Barbados Parliament — Cabinet Ministers](https://www.barbadosparliament.com/page_content/show_content/8); [Barbados Today — Cabinet ministers sworn in (2026-02-16)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/)
+- **Status:** verified — Dr Shantal Munro-Knight confirmed as Minister of Agriculture, Food and Nutritional Security by Parliament's official cabinet page and sworn-in press coverage.
 - **Certainty:** 97%
 
 ---
 
-### Claim 13 — Chief Agricultural Officer name (implicit via phone table, cross-check with Senior Staff Directory)
+### Claim 13 — Chief Agricultural Officer incumbent (cross-check with Senior Staff Directory)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">Currently in agriculture.gov.bb Senior Staff Directory (and implicitly on the page via the CAO phone line)</div>
+<div class="claim-block-label">agriculture.gov.bb Senior Staff Directory (fetched 2026-05-29)</div>
 <pre class="claim-block-content">Lennox Chandler — Chief Agricultural Officer — 535-5118</pre>
 </div>
 
 <div class="claim-block claim-block--correct">
 <div class="claim-block-label">Should say (based on GIS and Barbados Today May 2026 reporting)</div>
-<pre class="claim-block-content">Paul Lucas — Chief Agricultural Officer — 535-5118 (phone unconfirmed for Lucas)</pre>
+<pre class="claim-block-content">Paul Lucas — Chief Agricultural Officer — 535-5118 (phone unchanged; incumbent updated)</pre>
 </div>
 
 - **Type:** agency name / statistic
-- **Sources:** [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory) (lists Lennox Chandler); [GIS Facebook — Paul Lucas new CAO](https://www.facebook.com/gisbarbados/posts/barbados-new-chief-agricultural-officer-paul-lucas-is-encouraging-young-people-t/1428862629280149/) (names Paul Lucas as "new Chief Agricultural Officer"); [Barbados Today — BADMC data platform (2026-05-27)](https://barbadostoday.bb/2026/05/27/badmc-launches-data-platform-to-boost-farming/) (names Paul Lucas as CAO in current context)
-- **Status:** discrepant — the ministry's Senior Staff Directory has not been updated to reflect the appointment of Paul Lucas as CAO. GIS (a Tier 2 source) and two Barbados Today articles from May 2026 (Tier 3) confirm Lucas in post. The source content file does not name the CAO individual, so this discrepancy affects agriculture.gov.bb's own directory rather than the alpha.gov.bb page directly. However, if the page ever displays incumbent names, it should reflect Paul Lucas.
+- **Sources:** [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory) (still lists Lennox Chandler as of 2026-05-29); [GIS Facebook — Paul Lucas new CAO](https://www.facebook.com/gisbarbados/posts/barbados-new-chief-agricultural-officer-paul-lucas-is-encouraging-young-people-t/1428862629280149/) (names Paul Lucas as "new Chief Agricultural Officer"); [Barbados Today — BADMC data platform (2026-05-27)](https://barbadostoday.bb/2026/05/27/badmc-launches-data-platform-to-boost-farming/) (names Paul Lucas as CAO in current context)
+- **Status:** discrepant — the ministry's Senior Staff Directory has not been updated to reflect the appointment of Paul Lucas as CAO. GIS (Tier-2) and two Barbados Today articles from May 2026 confirm Lucas in post. The alpha page does not display the CAO's name (only the phone number), so citizens using the phone table are not directly misled. The issue is on agriculture.gov.bb's own directory.
 - **Certainty of Lucas appointment:** 80%
 - **Confidence Chandler listing is stale:** 75%
-- **Citizen impact:** LOW for the phone table (no name shown); MEDIUM if the ministry ever publishes the CAO's name on-page.
-- **Open question:** Confirm with the ministry that Paul Lucas has been formally appointed CAO and obtain his direct-dial number (535-5118 may still route correctly regardless of incumbent).
+- **Citizen impact:** LOW for the phone table (no name shown on alpha page); MEDIUM if the ministry ever publishes the CAO's name on-page.
+- **Open question:** Confirm with the ministry that Paul Lucas has been formally appointed CAO and obtain his direct-dial number.
 
 ---
 
-### Claim 14 — Permanent Secretary name (cross-check between sources)
+### Claim 14 — Permanent Secretary incumbent (cross-check between sources)
 
 <div class="claim-block claim-block--current">
-<div class="claim-block-label">agriculture.gov.bb Senior Staff Directory says</div>
+<div class="claim-block-label">agriculture.gov.bb Senior Staff Directory (fetched 2026-05-29) says</div>
 <pre class="claim-block-content">Janet Phillips — Permanent Secretary — 535-5115</pre>
 </div>
 
 <div class="claim-block claim-block--pending">
 <div class="claim-block-label">Conflicting government source — needs adjudication</div>
-<pre class="claim-block-content">gov.bb/government/ps-related-grades still lists:
+<pre class="claim-block-content">gov.bb/government/ps-related-grades (fetched 2026-05-29) still lists:
 "MR. TERRY BASCOMBE — PERMANENT SECRETARY — MINISTRY OF AGRICULTURE, FOOD AND NUTRITIONAL SECURITY"
 
-The Senior Staff Directory at agriculture.gov.bb names Janet Phillips. These are two Tier 1 sources in direct conflict.</pre>
+The Senior Staff Directory at agriculture.gov.bb names Janet Phillips. These are two Tier-1 sources in direct conflict as of 2026-05-29.</pre>
 </div>
 
 - **Type:** agency name
 - **Sources:** [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory) (Janet Phillips); [gov.bb — Permanent Secretaries and Related Grades](https://www.gov.bb/government/ps-related-grades) (Terry Bascombe)
-- **Status:** unverifiable — two authoritative government sources disagree. The Senior Staff Directory is typically more granular and frequently updated; the ps-related-grades page may carry a stale entry. Neither source carries a "last updated" date. Cannot adjudicate between official sources without agency confirmation.
+- **Status:** unverifiable — two authoritative government sources disagree. The Senior Staff Directory is typically more granular and frequently updated; the ps-related-grades page may carry a stale entry. Neither source carries a "last updated" date. Both fetched 2026-05-29. Cannot adjudicate without agency confirmation.
 - **Certainty:** 50%
 - **Open question:** Is Janet Phillips or Terry Bascombe the current Permanent Secretary of the Ministry of Agriculture? The Ministry's HR department or Head of Public Service should confirm. If Bascombe was transferred or retired, the ps-related-grades page needs updating.
 
 ---
 
-### Claim 15 — Ministry address (in ministries.ts lines 207–212)
+### Claim 15 — Ministry address (ministries.ts lines 207–212)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently in src/data/ministries.ts</div>
@@ -327,14 +327,14 @@ Barbados, W. I.</pre>
 </div>
 
 - **Type:** address
-- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture) ("Graeme Hall, Christ Church, Barbados, W. I."); [agriculture.gov.bb — Contact](https://agriculture.gov.bb/) ("Graeme Hall, Christ Church, BB 15003, Barbados"); [agriculture.gov.bb — NAHFCP](https://agriculture.gov.bb/Departments/NAHFCP) ("Graeme Hall, Christ Church, BB 15003, Barbados")
+- **Sources:** [gov.bb — Ministry of Agriculture](https://www.gov.bb/Ministries/agriculture) ("Graeme Hall, Christ Church, Barbados, W. I."); [agriculture.gov.bb — Contact](https://agriculture.gov.bb/) ("Graeme Hall, Christ Church, BB 15003, Barbados"); [agriculture.gov.bb — NAHFCP](https://agriculture.gov.bb/Departments/NAHFCP)
 - **Status:** verified — address consistent across three independent sources.
 - **Certainty:** 99%
-- **Note:** agriculture.gov.bb includes the postal code "BB 15003" which is absent from the ministries.ts entry. This is not an error but adding the postal code would improve precision.
+- **Note:** agriculture.gov.bb includes postal code "BB 15003" which is absent from the ministries.ts entry. Not an error, but adding the postal code would improve precision.
 
 ---
 
-### Claim 16 — Ministry emails (in ministries.ts lines 195–196)
+### Claim 16 — Ministry emails (ministries.ts lines 195–196)
 
 <div class="claim-block claim-block--current">
 <div class="claim-block-label">Currently in src/data/ministries.ts</div>
@@ -355,6 +355,63 @@ ps@agriculture.gov.bb</pre>
 
 ---
 
+### Claim 17 — Associated departments list on live alpha page
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently in src/data/ministries.ts associatedDepartments</div>
+<pre class="claim-block-content">The Public Markets
+Analytical Services
+The Barbados Agricultural Management Company
+The Barbados Agricultural Development and Marketing Corporation (BADMC)
+Veterinary Services
+Soil Conservation
+Southern Meats Inc.
+The Barbados Agricultural Credit Trust Limited
+Barbados Medicinal Cannabis Licencing Authority</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Should include / exclude (per agriculture.gov.bb Affiliated Agencies)</div>
+<pre class="claim-block-content">Affiliated agencies per agriculture.gov.bb (fetched 2026-05-29):
+1. Barbados Agricultural Credit Trust
+2. Barbados Agricultural Development & Marketing Corporation (BADMC)
+3. Barbados Agricultural Management Company
+4. Barbados Cane Industry Corporation
+
+Missing from ministries.ts: Barbados Cane Industry Corporation
+Listed in ministries.ts but not on ministry's affiliated agencies page:
+- Southern Meats Inc.
+- Barbados Medicinal Cannabis Licencing Authority</pre>
+</div>
+
+- **Type:** agency name
+- **Sources:** [agriculture.gov.bb — Affiliated Agencies](https://agriculture.gov.bb/About/Affiliated-Agencies) (four bodies: BACT, BADMC, BAMC, Barbados Cane Industry Corporation)
+- **Status:** discrepant — the associated departments list includes two bodies not listed as affiliated agencies on agriculture.gov.bb (Southern Meats Inc. and BMCLA) and omits one body that is listed (Barbados Cane Industry Corporation).
+- **Certainty:** 80%
+- **Confidence it's wrong:** 80%
+- **Citizen impact:** MEDIUM — citizens consulting the alpha page for affiliated bodies will get a partially incorrect list.
+
+---
+
+### Claim 18 — Ministry website link (ministries.ts line 203)
+
+<div class="claim-block claim-block--current">
+<div class="claim-block-label">Currently in src/data/ministries.ts</div>
+<pre class="claim-block-content">https://agriculture.gov.bb/</pre>
+</div>
+
+<div class="claim-block claim-block--correct">
+<div class="claim-block-label">Verified correct</div>
+<pre class="claim-block-content">https://agriculture.gov.bb/</pre>
+</div>
+
+- **Type:** URL
+- **Sources:** [agriculture.gov.bb — Home](https://agriculture.gov.bb/) — page loads successfully, is on-topic, active ministry website.
+- **Status:** verified — URL resolves correctly to the active ministry website.
+- **Certainty:** 99%
+
+---
+
 ## Additional findings (not on the page but should be)
 
 ### A. Ministry website URL missing from source content
@@ -363,19 +420,19 @@ The source content page (`src/content/ministries/ministry-of-agriculture-and-foo
 
 ### B. Office hours
 
-agriculture.gov.bb states office hours are "Monday - Friday, 9:00am - 4:30pm." This is not included in the source content or in ministries.ts. Consider adding for citizen utility.
+agriculture.gov.bb states office hours are "Monday – Friday, 9:00 am – 4:30 pm." This is not included in the source content or in ministries.ts. Consider adding for citizen utility.
 
 ### C. NAHFCP acronym and proper name
 
-The heading "Agricultural Health And Food Control Programme" on line 68 should be corrected to "National Agricultural Health and Food Control Programme (NAHFCP)" to match the official programme name used on agriculture.gov.bb.
+The heading "Agricultural Health And Food Control Programme" on line 68 should be corrected to "National Agricultural Health and Food Control Programme (NAHFCP)" to match the official programme name used on agriculture.gov.bb. Still uncorrected since 2026-05-28 pass.
 
 ### D. Barbados Cane Industry Corporation missing from associatedDepartments
 
-agriculture.gov.bb Affiliated Agencies lists four bodies: Barbados Agricultural Credit Trust, BADMC, Barbados Agricultural Management Company, and Barbados Cane Industry Corporation. ministries.ts omits the Barbados Cane Industry Corporation but includes "Southern Meats Inc." and "Barbados Medicinal Cannabis Licencing Authority" which do not appear on the affiliated agencies page. If the intent is to mirror that page, two entries need removing (Southern Meats, BMCLA) and one needs adding (Barbados Cane Industry Corporation).
+agriculture.gov.bb Affiliated Agencies lists four bodies including the Barbados Cane Industry Corporation. ministries.ts omits the Cane Industry Corporation but includes "Southern Meats Inc." and "Barbados Medicinal Cannabis Licencing Authority" which do not appear on the affiliated agencies page. If the intent is to mirror that page, two entries need removing and one needs adding.
 
-### E. Discrepancy in Senior Staff Directory: Lennox Chandler vs Paul Lucas (CAO)
+### E. CAO incumbent discrepancy at agriculture.gov.bb
 
-Noted under Claim 13. The ministry's own Senior Staff Directory is stale; it still names Lennox Chandler as CAO. GIS and Barbados Today (May 2026) confirm Paul Lucas is now in post. The ministry should update its directory.
+The ministry's own Senior Staff Directory (fetched 2026-05-29) still lists Lennox Chandler as CAO. GIS and Barbados Today (May 2026) confirm Paul Lucas is now in post. The ministry should update its directory; no change needed on the alpha page (which does not display incumbent names in the phone table).
 
 ---
 
@@ -383,7 +440,6 @@ Noted under Claim 13. The ministry's own Senior Staff Directory is stale; it sti
 
 - [gov.bb — Ministry of Agriculture and Food and Nutritional Security](https://www.gov.bb/Ministries/agriculture)
 - [agriculture.gov.bb — Home](https://agriculture.gov.bb/)
-- [agriculture.gov.bb — Mission and Vision](https://agriculture.gov.bb/About/Mission-Vision/)
 - [agriculture.gov.bb — Senior Staff Directory](https://agriculture.gov.bb/Contact/Senior-Staff-Directory)
 - [agriculture.gov.bb — Departments](https://agriculture.gov.bb/Departments/)
 - [agriculture.gov.bb — National Agricultural Health and Food Control Programme](https://agriculture.gov.bb/Departments/NAHFCP)
@@ -391,7 +447,6 @@ Noted under Claim 13. The ministry's own Senior Staff Directory is stale; it sti
 - [gov.bb — Permanent Secretaries and Related Grades](https://www.gov.bb/government/ps-related-grades)
 - [Barbados Parliament — Cabinet Ministers and Ministers of State](https://www.barbadosparliament.com/page_content/show_content/8)
 - [Barbados Today — Cabinet ministers sworn in (2026-02-16)](https://barbadostoday.bb/2026/02/16/cabinet-ministers-sworn-in/)
-- [Barbados Today — BAS welcomes first female agriculture minister (2026-02-17)](https://barbadostoday.bb/2026/02/17/bas-welcomes-first-female-agriculture-minister/)
 - [Barbados Today — BADMC launches data platform to boost farming (2026-05-27)](https://barbadostoday.bb/2026/05/27/badmc-launches-data-platform-to-boost-farming/)
 - [GIS Facebook — Paul Lucas new Chief Agricultural Officer](https://www.facebook.com/gisbarbados/posts/barbados-new-chief-agricultural-officer-paul-lucas-is-encouraging-young-people-t/1428862629280149/)
 - [gisbarbados.gov.bb — Chief Agricultural Officer tag](https://gisbarbados.gov.bb/blog/tag/chief-agricultural-officer/)

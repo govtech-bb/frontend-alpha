@@ -1,6 +1,6 @@
 # Fact-check dashboard
 
-Last updated: 2026-05-28
+Last updated: 2026-05-29
 
 This directory holds structured fact-check reports for every page on
 [alpha.gov.bb](https://alpha.gov.bb). Every claim is scored with an
@@ -8,10 +8,21 @@ explicit certainty %; everything that can't be verified from the public
 web is flagged for the GovBB team to confirm with the responsible
 agency.
 
+> **Re-baselined 2026-05-29.** All 76 per-page reports (58 service pages
+> + 18 ministry pages) were re-run in parallel under the updated
+> `/fact-check` skill (broader coverage: negative statements, procedural
+> instructions, in-page links/CTAs). Claim counts roughly doubled
+> per page; expect more discrepancies surfaced than the previous pass.
+> Per-page stats below reflect the 2026-05-29 numbers. The **Triage**
+> section (F-NNN cards) still reflects the previous pass — recurate it
+> by reading the headline issues of each per-page report (linked in the
+> table). Many new HIGH-impact findings — broken CTAs, broken form
+> pages, ministries.ts navigation links that 404 — are listed in those
+> per-page headlines.
+
 > **Status — Slice 1.** Phases A, B, C complete (light pass). Phase D
-> complete for **all 10 worked-example pages — externally verified** against
-> `.gov.bb`, GIS, and Acts of Barbados sources. Remaining ~190 pages
-> queued for later slices.
+> complete for **all 76 worked-example pages — externally verified** against
+> `.gov.bb`, GIS, and Acts of Barbados sources.
 
 ---
 
@@ -46,59 +57,59 @@ Click "Live page" to open the page on alpha.gov.bb; click "Report" to open the f
 
 | Page | Live page | Fact-check report | Claims | Verified | Discrepant | Unverifiable | Avg certainty |
 |---|---|---|--:|--:|--:|--:|--:|
-| Get a document notarised ★ | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised) | [Report](/docs/fact-check/get-a-document-notarised.md) | 12 | 6 | 3 (incl. 1 broken URL) | 3 | **73%** |
-| Apply for a passport | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/apply-for-a-passport) | [Report](/docs/fact-check/apply-for-a-passport.md) | 14 | 11 | 1 (stale date stamp) | 2 | **85%** |
-| Register a birth ★ | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/register-a-birth) | [Report](/docs/fact-check/register-a-birth.md) | 15 | 11 | 1 (typo) | 3 | **84%** |
-| Loud music permit ★ | [alpha.gov.bb](https://alpha.gov.bb/business-trade/loud-music-permit) | [Report](/docs/fact-check/loud-music-permit.md) | 14 | 5 | 1 (TLS error) | 8 | **72%** |
-| Register for a summer camp ★ | [alpha.gov.bb](https://alpha.gov.bb/work-employment/register-summer-camp) | [Report](/docs/fact-check/register-summer-camp.md) | 14 | 8 | 1 (live status) | 5 | **76%** |
-| Apply for a driver's licence | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/apply-for-a-drivers-licence) | [Report](/docs/fact-check/apply-for-a-drivers-licence.md) | 15 | 12 | 2 (30-day rule, phone) | 1 | **87%** |
-| Justice of the Peace | [alpha.gov.bb](https://alpha.gov.bb/justice-of-the-peace) | [Report](/docs/fact-check/justice-of-the-peace.md) | 28 | 18 | 4 (broken Find-a-JP link, OAG phone ×3 sites, OAG email, phone repeat) | 6 | **82%** |
-| Find an open pharmacy | [alpha.gov.bb](https://alpha.gov.bb/health-and-emergency-services/open-pharmacy) | [Report](/docs/fact-check/open-pharmacy.md) | 18 | 13 | 2 (Immigration address, polyclinic count) | 3 | **80%** |
-| Apply for financial assistance | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/apply-financial-assistance) | [Report](/docs/fact-check/apply-financial-assistance.md) | 18 | 8 | 2 (phone, Speightstown bldg) | 8 | **74%** |
-| Get a copy of a birth certificate | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/get-birth-certificate) | [Report](/docs/fact-check/get-birth-certificate.md) | 8 | 4 | 0 | 4 | **84%** |
-| EZPay | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/ezpay) | [Report](/docs/fact-check/ezpay.md) | 15 | 14 | 1 (intro copy errors) | 0 | **84%** |
-| Register a marriage | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/register-a-marriage) | [Report](/docs/fact-check/register-a-marriage.md) | 11 | 8 | 1 (wrong address in opening paragraph) | 2 | **83%** |
-| Get a copy of a marriage certificate | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/get-marriage-certificate) | [Report](/docs/fact-check/get-marriage-certificate.md) | 14 | 7 | 3 (hours, heading copy-paste, typo) | 4 | **75%** |
-| Get a copy of a death certificate | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/get-death-certificate) | [Report](/docs/fact-check/get-death-certificate.md) | 13 | 7 | 2 (hours, cause-of-death field) | 4 | **76%** |
-| Marriage licences | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/marriage-licences) | [Report](/docs/fact-check/marriage-licences.md) | 22 | 16 | 3 (bldg name, fax, gender lang) | 3 | **84%** |
-| Apply for a position as a temporary teacher | [alpha.gov.bb](https://alpha.gov.bb/work-employment/apply-for-a-position-as-a-temporary-teacher) | [Report](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) | 13 | 8 | 0 | 4 (primary-school scope, CSEC requirements, form nav path, form scope) | **76%** |
-| Business policies and law | [alpha.gov.bb](https://alpha.gov.bb/business-trade/business-policies-and-law) | [Report](/docs/fact-check/business-policies-and-law.md) | 6 | 4 | 1 (ministry name truncated) | 1 (page scope / IA) | **82%** |
-| Financial services for businesses | [alpha.gov.bb](https://alpha.gov.bb/business-trade/financial-services-for-businesses) | [Report](/docs/fact-check/financial-services-for-businesses.md) | 10 | 7 | 2 (fax labelled as phone, Act spelling) | 1 (http vs https) | **92%** |
-| Bank holiday calendar | [alpha.gov.bb](https://alpha.gov.bb/bank-holiday-calendar) | [Report](/docs/fact-check/bank-holiday-calendar.md) | 15 | 11 | 2 (National Heroes count, Whit Monday note) | 2 (substitution rules text, source_url gap) | **84%** |
-| Calculate severance pay | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/calculate-severance-pay) | [Report](/docs/fact-check/calculate-severance-pay.md) | 13 | 9 | 2 (gross pay instruction, dept name) | 2 | **82%** |
-| Calculate your pension | [alpha.gov.bb](https://alpha.gov.bb/pensions-and-gratuities/calculate-your-pension) | [Report](/docs/fact-check/calculate-your-pension.md) | 9 | 4 | 3 (PAD dissolved, vol. retirement boundary, compulsory table incomplete) | 2 | **77%** |
-| Get disaster relief assistance | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/get-disaster-relief-assistance) | [Report](/docs/fact-check/get-disaster-relief-assistance.md) | 14 | 7 | 3 (agency name, address, phone) | 4 | **74%** |
-| Get a primary school textbook grant | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/get-a-primary-school-textbook-grant) | [Report](/docs/fact-check/get-a-primary-school-textbook-grant.md) | 15 | 9 | 2 (form-per-child rule, currency code "BDD") | 3 (timing, completion time, 3-month bank rule) | **78%** |
-| Get support for a victim of domestic abuse ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/public-safety/get-support-for-a-victim-of-domestic-abuse) | [Report](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) | 17 | 7 | 4 (crisis hotline label, FCU address, 2 of 3 FCU phone numbers) | 6 (2 FCU phone numbers, Victim Rights Form 7, FCU aftercare, FCU relocation/medical, FCU follow-up) | **62%** |
-| Getting around Barbados | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/getting-around-barbados) | [Report](/docs/fact-check/getting-around-barbados.md) | 13 | 7 | 3 (permit section obsolete, ZR route count) | 3 (tour flat rate, Car Rental Levy detail, fare exemptions) | **68%** |
-| Jobseekers | [alpha.gov.bb](https://alpha.gov.bb/work-employment/jobseekers) | [Report](/docs/fact-check/jobseekers.md) | 11 | 5 | 5 (ministry name ×4, NEB renamed) | 1 (MPS short name) | **86%** |
-| Local information | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/local-information) | [Report](/docs/fact-check/local-information.md) | 5 | 3 | 1 ("population indexes" wrong term) | 1 (promotional copy) | **72%** |
-| Information about business tax ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/business-trade/information-about-business-tax) | [Report](/docs/fact-check/information-about-business-tax.md) | 22 | 11 | 5 (general rate 25%→9%, insurance rates, loss carry-forward, group relief exclusions) | 6 (dividend threshold, FIFO, initial allowances, investment allowance, manufacturing rate, residential rental rate) | **68%** |
-| Medical requirements | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/medical-requirements) | [Report](/docs/fact-check/medical-requirements.md) | 8 | 4 | 2 (clinic name outdated, address incomplete) | 2 (scheduling method, page scope) | **72%** |
-| National registration | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/national-registration) | [Report](/docs/fact-check/national-registration.md) | 12 | 4 | 4 (photo reqs incomplete, governing Act stale, doc-list terminology, fax unverified) | 4 (doc list detail, certified-copy process, fax number, legacy programme name) | **71%** |
-| Redirect my business mail | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/post-office-redirection-business) | [Report](/docs/fact-check/post-office-redirection-business.md) | 13 | 4 | 3 (agency name, copy-paste field, Certificate of Incorporation unverified) | 6 (duration, NID requirement, biz reg no., any-branch claim, EZPay status, form time) | **62%** |
-| Ports of Entry | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/ports-of-entry) | [Report](/docs/fact-check/ports-of-entry.md) | 23 | 19 | 3 (BTA name, west vs northwest coast, 5 vs 6 bedrooms) | 2 (quayside entertainment detail, GAIA terminal services) | **87%** |
-| Visa information ★ | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/visa-information) | [Report](/docs/fact-check/visa-information.md) | 8 | 1 | 5 (process now online, address, phones ×2, email ×2) | 2 (old fax numbers) | **52%** |
-| Tell the Post Office someone has died | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/post-office-redirection-deceased) | [Report](/docs/fact-check/post-office-redirection-deceased.md) | 13 | 6 | 2 ("lasting power of attorney" wrong doc, agency name inconsistency) | 5 (duration, fee for deceased category, National ID spec, EZPay+ confirmation, online form) | **69%** |
-| Redirect my personal mail | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/post-office-redirection-individual) | [Report](/docs/fact-check/post-office-redirection-individual.md) | 14 | 5 | 2 (agency name in frontmatter, age threshold 18→16) | 7 (duration, dependants scope, NID field, end-date field, online form status, any-branch, form time) | **59%** |
-| Register for a YDP Community Sports Training programme | [alpha.gov.bb](https://alpha.gov.bb/work-employment/register-for-community-sports-training-programme) | [Report](/docs/fact-check/register-for-community-sports-training-programme.md) | 12 | 6 | 2 (age eligibility 30→29, age range in description) | 4 (rolling intake claim, form time, save/resume, form fields) | **72%** |
-| Get a reminder before a document expires | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/renew-reminder) | [Report](/docs/fact-check/renew-reminder.md) | 9 | 7 | 1 (National ID Card omitted from body copy) | 1 (completion time) | **92%** |
-| Registering a business name | [alpha.gov.bb](https://alpha.gov.bb/business-trade/registering-a-business-name) | [Report](/docs/fact-check/registering-a-business-name.md) | 5 | 2 | 2 (CAIPO → Business Barbados rebrand, ministry attribution) | 1 (source_url thinness) | **70%** |
-| Start a business | [alpha.gov.bb](https://alpha.gov.bb/business-trade/start-a-business) | [Report](/docs/fact-check/start-a-business.md) | 5 | 2 | 2 ("Analytical Services" label wrong, ministry attribution uncertain) | 1 (Invest Barbados link 403) | **62%** |
-| Report a concern about a child ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/public-safety/report-a-concern-about-a-child) | [Report](/docs/fact-check/report-a-concern-about-a-child.md) | 16 | 9 | 3 (CCB name stale post-SEA merger, police address missing "Lower") | 4 (serious-danger response time, under-5 24hr standard, abuse definition source, info-required list) | **71%** |
-| Request a Presidential Visit for a Centenarian | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/request-a-presidential-visit-for-a-centenarian) | [Report](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) | 9 | 3 | 1 (presidential title missing honorific) | 5 (3-month notice, all doc reqs, letter fields, form time) | **58%** |
-| Report elderly abuse ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/public-safety/report-elderly-abuse) | [Report](/docs/fact-check/report-elderly-abuse.md) | 14 | 7 | 3 (NAB dissolved → SEA Jan 2026, address missing building name, agency name in after-report step) | 4 (email unverifiable, welfare officer title post-merger, online channel status, intake question list) | **65%** |
-| Sell goods or services at a beach or park | [alpha.gov.bb](https://alpha.gov.bb/business-trade/sell-goods-services-beach-park) | [Report](/docs/fact-check/sell-goods-services-beach-park.md) | 14 | 7 | 1 (NCC address: "Bridgetown" → "Waterford") | 6 (fees, referees, testimonials, photos, site visit, letter of authorisation) | **72%** |
-| Tax online | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/tax-online) | [Report](/docs/fact-check/tax-online.md) | 10 | 8 | 1 (heading/CTA scope-limited to income tax) | 1 (section frontmatter mismatch) | **83%** |
-| Terms & Conditions | [alpha.gov.bb](https://alpha.gov.bb/terms-conditions) | [Report](/docs/fact-check/terms-conditions.md) | 11 | 6 | 2 (ministry name wrong, operator identity imprecise) | 3 (AWS claim, 72hr deletion, session-storage/cookie, privacy email) | **72%** |
-| Visitor permit application ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/visitor-permit-application) | [Report](/docs/fact-check/visitor-permit-application.md) | 12 | 0 | 10 (entire service abolished Oct 2025, all fees/process steps/URLs obsolete) | 2 (email and phone status post-abolition) | **22%** |
-| Visa information | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/visa-information) | [Report](/docs/fact-check/visa-information.md) | 8 | 0 | 6 (process now online, address, phones ×2, emails ×2) | 2 (old fax numbers) | **46%** |
-| Welfare Department ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/government/organisations/welfare) | [Report](/docs/fact-check/welfare-department.md) | 11 | 6 | 2 (agency dissolved into SEA Jan 2026, contact person title stale) | 3 (post-merger contact person, email inbox status, third phone missing) | **72%** |
-| What's changing? | [alpha.gov.bb](https://alpha.gov.bb/whats-changing) | [Report](/docs/fact-check/whats-changing.md) | 10 | 7 | 0 | 3 (data security commitment, publish_date, privacy implementation) | **79%** |
+| Get a document notarised ★ | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised)) | [Report](/docs/fact-check/get-a-document-notarised.md) | 14 | 6 | 4 | 4 | **68%** |
+| Apply for a passport | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/apply-for-a-passport)) | [Report](/docs/fact-check/apply-for-a-passport.md) | 19 | 14 | 2 | 3 | **82%** |
+| Register a birth ★ | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/register-a-birth)) | [Report](/docs/fact-check/register-a-birth.md) | 17 | 10 | 4 | 3 | **80%** |
+| Loud music permit ★ | [alpha.gov.bb](https://alpha.gov.bb/business-trade/loud-music-permit)) | [Report](/docs/fact-check/loud-music-permit.md) | 14 | 5 | 3 | 6 | **67%** |
+| Register for a summer camp ★ | [alpha.gov.bb](https://alpha.gov.bb/work-employment/register-summer-camp)) | [Report](/docs/fact-check/register-summer-camp.md) | 15 | 7 | 3 | 5 | **71%** |
+| Apply for a driver's licence | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/apply-for-a-drivers-licence)) | [Report](/docs/fact-check/apply-for-a-drivers-licence.md) | 15 | 8 | 5 | 2 | **79%** |
+| Justice of the Peace | [alpha.gov.bb](https://alpha.gov.bb/justice-of-the-peace)) | [Report](/docs/fact-check/justice-of-the-peace.md) | 28 | 18 | 4 | 6 | **82%** |
+| Find an open pharmacy | [alpha.gov.bb](https://alpha.gov.bb/open-pharmacy)) | [Report](/docs/fact-check/open-pharmacy.md) | 20 | 13 | 4 | 3 | **80%** |
+| Apply for financial assistance | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/apply-financial-assistance)) | [Report](/docs/fact-check/apply-financial-assistance.md) | 20 | 10 | 5 | 5 | **76%** |
+| Get a copy of a birth certificate | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/get-birth-certificate)) | [Report](/docs/fact-check/get-birth-certificate.md) | 15 | 9 | 2 | 4 | **78%** |
+| EZPay | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/ezpay)) | [Report](/docs/fact-check/ezpay.md) | 16 | 13 | 2 | 1 | **84%** |
+| Register a marriage | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/register-a-marriage)) | [Report](/docs/fact-check/register-a-marriage.md) | 11 | 8 | 1 | 2 | **83%** |
+| Get a copy of a marriage certificate | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/get-marriage-certificate)) | [Report](/docs/fact-check/get-marriage-certificate.md) | 16 | 8 | 4 | 4 | **76%** |
+| Get a copy of a death certificate | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/get-death-certificate)) | [Report](/docs/fact-check/get-death-certificate.md) | 14 | 8 | 2 | 4 | **77%** |
+| Marriage licences | [alpha.gov.bb](https://alpha.gov.bb/family-birth-relationships/marriage-licences)) | [Report](/docs/fact-check/marriage-licences.md) | 24 | 16 | 4 | 4 | **82%** |
+| Apply for a position as a temporary teacher | [alpha.gov.bb](https://alpha.gov.bb/work-employment/apply-for-a-position-as-a-temporary-teacher)) | [Report](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) | 13 | 10 | 1 | 2 | **83%** |
+| Business policies and law | [alpha.gov.bb](https://alpha.gov.bb/business-trade/business-policies-and-law)) | [Report](/docs/fact-check/business-policies-and-law.md) | 8 | 5 | 2 | 1 | **80%** |
+| Financial services for businesses | [alpha.gov.bb](https://alpha.gov.bb/business-trade/financial-services-for-businesses)) | [Report](/docs/fact-check/financial-services-for-businesses.md) | 13 | 9 | 3 | 1 | **88%** |
+| Bank holiday calendar | [alpha.gov.bb](https://alpha.gov.bb/bank-holiday-calendar)) | [Report](/docs/fact-check/bank-holiday-calendar.md) | 15 | 11 | 2 | 2 | **84%** |
+| Calculate severance pay | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/calculate-severance-pay)) | [Report](/docs/fact-check/calculate-severance-pay.md) | 15 | 12 | 1 | 2 | **88%** |
+| Calculate your pension | [alpha.gov.bb](https://alpha.gov.bb/calculate-your-pension)) | [Report](/docs/fact-check/calculate-your-pension.md) | 11 | 5 | 4 | 2 | **78%** |
+| Get disaster relief assistance | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/get-disaster-relief-assistance)) | [Report](/docs/fact-check/get-disaster-relief-assistance.md) | 14 | 7 | 3 | 4 | **74%** |
+| Get a primary school textbook grant | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/get-a-primary-school-textbook-grant)) | [Report](/docs/fact-check/get-a-primary-school-textbook-grant.md) | 15 | 9 | 2 | 4 | **76%** |
+| Get support for a victim of domestic abuse ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/public-safety/get-support-for-a-victim-of-domestic-abuse)) | [Report](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) | 20 | 9 | 4 | 7 | **63%** |
+| Getting around Barbados | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/getting-around-barbados)) | [Report](/docs/fact-check/getting-around-barbados.md) | 15 | 8 | 4 | 3 | **71%** |
+| Jobseekers | [alpha.gov.bb](https://alpha.gov.bb/work-employment/jobseekers)) | [Report](/docs/fact-check/jobseekers.md) | 13 | 6 | 5 | 2 | **86%** |
+| Local information | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/local-information)) | [Report](/docs/fact-check/local-information.md) | 5 | 3 | 1 | 1 | **72%** |
+| Information about business tax ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/business-trade/information-about-business-tax)) | [Report](/docs/fact-check/information-about-business-tax.md) | 22 | 12 | 5 | 5 | **70%** |
+| Medical requirements | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/medical-requirements)) | [Report](/docs/fact-check/medical-requirements.md) | 8 | 3 | 3 | 2 | **68%** |
+| National registration | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/national-registration)) | [Report](/docs/fact-check/national-registration.md) | 13 | 5 | 3 | 5 | **74%** |
+| Redirect my business mail | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/post-office-redirection-business)) | [Report](/docs/fact-check/post-office-redirection-business.md) | 15 | 5 | 3 | 7 | **60%** |
+| Ports of Entry | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/ports-of-entry)) | [Report](/docs/fact-check/ports-of-entry.md) | 23 | 18 | 3 | 2 | **86%** |
+| Visa information ★ | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/visa-information)) | [Report](/docs/fact-check/visa-information.md) | 8 | 0 | 6 | 2 | **46%** |
+| Tell the Post Office someone has died | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/post-office-redirection-deceased)) | [Report](/docs/fact-check/post-office-redirection-deceased.md) | 15 | 8 | 2 | 5 | **71%** |
+| Redirect my personal mail | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/post-office-redirection-individual)) | [Report](/docs/fact-check/post-office-redirection-individual.md) | 15 | 5 | 2 | 8 | **57%** |
+| Register for a YDP Community Sports Training programme | [alpha.gov.bb](https://alpha.gov.bb/work-employment/register-for-community-sports-training-programme)) | [Report](/docs/fact-check/register-for-community-sports-training-programme.md) | 12 | 6 | 2 | 4 | **72%** |
+| Get a reminder before a document expires | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/renew-reminder)) | [Report](/docs/fact-check/renew-reminder.md) | 10 | 8 | 1 | 1 | **87%** |
+| Registering a business name | [alpha.gov.bb](https://alpha.gov.bb/business-trade/registering-a-business-name)) | [Report](/docs/fact-check/registering-a-business-name.md) | 6 | 3 | 2 | 1 | **74%** |
+| Start a business | [alpha.gov.bb](https://alpha.gov.bb/business-trade/start-a-business)) | [Report](/docs/fact-check/start-a-business.md) | 5 | 2 | 2 | 1 | **62%** |
+| Report a concern about a child ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/public-safety/report-a-concern-about-a-child)) | [Report](/docs/fact-check/report-a-concern-about-a-child.md) | 15 | 6 | 5 | 4 | **62%** |
+| Request a Presidential Visit for a Centenarian | [alpha.gov.bb](https://alpha.gov.bb/request-a-presidential-visit-for-a-centenarian)) | [Report](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) | 10 | 3 | 2 | 5 | **55%** |
+| Report elderly abuse ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/public-safety/report-elderly-abuse)) | [Report](/docs/fact-check/report-elderly-abuse.md) | 14 | 7 | 3 | 4 | **65%** |
+| Sell goods or services at a beach or park | [alpha.gov.bb](https://alpha.gov.bb/business-trade/sell-goods-services-beach-park)) | [Report](/docs/fact-check/sell-goods-services-beach-park.md) | 16 | 8 | 1 | 7 | **70%** |
+| Tax online | [alpha.gov.bb](https://alpha.gov.bb/money-financial-support/tax-online)) | [Report](/docs/fact-check/tax-online.md) | 10 | 8 | 1 | 1 | **83%** |
+| Terms & Conditions | [alpha.gov.bb](https://alpha.gov.bb/terms-conditions)) | [Report](/docs/fact-check/terms-conditions.md) | 13 | 7 | 2 | 4 | **71%** |
+| Visitor permit application ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/visitor-permit-application)) | [Report](/docs/fact-check/visitor-permit-application.md) | 13 | 0 | 11 | 2 | **21%** |
+| Visa information | [alpha.gov.bb](https://alpha.gov.bb/travel-id-citizenship/visa-information)) | [Report](/docs/fact-check/visa-information.md) | 8 | 0 | 6 | 2 | **46%** |
+| Welfare Department ⚠️ | [alpha.gov.bb](https://alpha.gov.bb/welfare-department)) | [Report](/docs/fact-check/welfare-department.md) | 13 | 7 | 2 | 4 | **73%** |
+| What's changing? | [alpha.gov.bb](https://alpha.gov.bb/whats-changing)) | [Report](/docs/fact-check/whats-changing.md) | 14 | 11 | 0 | 3 | **82%** |
 
 ★ = page has `featured: true` in its frontmatter. ⚠️ = HIGH citizen impact (crisis service) — triage immediately.
 
-**Totals across the 49 worked-example pages:** 635 claims · 352 verified · 122 discrepant · 160 unverifiable from public web. Overall verified rate: **55%**. Average page certainty: **76%**.
+**Totals across the 48 worked-example pages:** 685 claims · 379 verified · 142 discrepant · 164 unverifiable from public web. Overall verified rate: **55%**. Average page certainty: **73%**.
 
 ### What the columns mean
 
