@@ -150,6 +150,74 @@ function annotateFindings(html, slugToLive, pageTiersMap, tierCounts) {
   );
 }
 
+const CLAIM_STATUS_PRIORITY = {
+  discrepant: 0,
+  missing: 0,
+  broken: 0,
+  partial: 1,
+  partially: 1,
+  pending: 1,
+  plausible: 1,
+  internally: 1,
+  unverifiable: 2,
+  verified: 3,
+};
+
+const CLAIM_STATUS_BADGES = {
+  discrepant: { cls: "claim-status--bad", text: "Discrepant" },
+  missing: { cls: "claim-status--bad", text: "Missing" },
+  broken: { cls: "claim-status--bad", text: "Broken" },
+  partial: { cls: "claim-status--warn", text: "Partial" },
+  partially: { cls: "claim-status--warn", text: "Partially verified" },
+  pending: { cls: "claim-status--warn", text: "Pending" },
+  plausible: { cls: "claim-status--warn", text: "Plausible" },
+  internally: { cls: "claim-status--warn", text: "Internal check" },
+  unverifiable: { cls: "claim-status--neutral", text: "Unverifiable" },
+  verified: { cls: "claim-status--good", text: "Verified" },
+};
+
+function addClaimStatusBadge(claimHtml, status) {
+  const meta = CLAIM_STATUS_BADGES[status];
+  if (!meta) return claimHtml;
+  const badge = `<span class="claim-status ${meta.cls}">${meta.text}</span>`;
+  return claimHtml.replace(/<\/h3>/, `${badge}</h3>`);
+}
+
+function reorderClaimsByStatus(html) {
+  // Within the "## Claims" section of a per-page report, sort claim subsections
+  // so things that are wrong (discrepant/missing/broken) come first.
+  return html.replace(
+    /(<h2[^>]*>Claims<\/h2>\s*)([\s\S]*?)(?=<h2[^>]*>|$)/,
+    (_match, claimsHeader, claimsBody) => {
+      const claimRe =
+        /<h3([^>]*)>(Claim\s+\d+[\s\S]*?)<\/h3>([\s\S]*?)(?=<h3[^>]*>Claim\s+\d+|$)/g;
+      const claims = [];
+      let firstStart = -1;
+      let m = claimRe.exec(claimsBody);
+      while (m !== null) {
+        if (firstStart === -1) firstStart = m.index;
+        const statusMatch = m[3].match(
+          /<strong>Status:<\/strong>\s*([a-z-]+)/i
+        );
+        const status = statusMatch ? statusMatch[1].toLowerCase() : "unknown";
+        claims.push({ full: m[0], status, idx: claims.length });
+        m = claimRe.exec(claimsBody);
+      }
+      if (claims.length === 0) return claimsHeader + claimsBody;
+      claims.sort((a, b) => {
+        const pa = CLAIM_STATUS_PRIORITY[a.status] ?? 99;
+        const pb = CLAIM_STATUS_PRIORITY[b.status] ?? 99;
+        return pa === pb ? a.idx - b.idx : pa - pb;
+      });
+      const reordered = claims
+        .map((c) => addClaimStatusBadge(c.full, c.status))
+        .join("");
+      const prefix = claimsBody.slice(0, firstStart);
+      return claimsHeader + prefix + reordered;
+    }
+  );
+}
+
 function annotateTableRows(html, pageTiersMap) {
   // Tag each Slice 1 table row with the tiers of findings that reference its page,
   // so the tier chips can filter the table in sync with the findings list.
@@ -641,6 +709,22 @@ em { color: var(--muted); }
   margin: 6px 0 14px;
 }
 
+.claim-status {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+.claim-status--bad { background: var(--bad-bg); color: var(--bad); }
+.claim-status--warn { background: var(--warn-bg); color: var(--warn); }
+.claim-status--neutral { background: var(--border); color: var(--muted); }
+.claim-status--good { background: var(--good-bg); color: var(--good); }
+
 .claim-block-content {
   font-family: inherit;
   font-size: 15px;
@@ -791,6 +875,7 @@ function build() {
     let html = marked.parse(r.src);
     html = transformInternalLinks(html);
     html = collapseRedundantClaimBlocks(html);
+    html = reorderClaimsByStatus(html);
     const isDashboard = r.file === "README.md";
     const tierCounts = { A: 0, B: 0, C: 0 };
     if (isDashboard) {
