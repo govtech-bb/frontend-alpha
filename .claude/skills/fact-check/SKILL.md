@@ -28,9 +28,17 @@ For each target page:
 
 1. Read `src/content/<slug>.md` (or `src/content/<slug>/index.md`).
 2. Derive the live URL from `INFORMATION_ARCHITECTURE` in
-   `src/data/content-directory.ts`: pattern is
-   `https://alpha.gov.bb/<category-slug>/<page-slug>` (base from
-   `src/lib/site-url.ts`). Sub-pages append `/<subpage-slug>`.
+   `src/data/content-directory.ts`. Two routing patterns to know:
+   - **Default pages** are served at
+     `https://alpha.gov.bb/<category-slug>/<page-slug>` (base from
+     `src/lib/site-url.ts`).
+   - **`protected: true` pages** are served at
+     `https://alpha.gov.bb/<page-slug>` — no category prefix. The
+     category-prefixed URL returns HTTP 404 for protected pages.
+   - Sub-pages append `/<subpage-slug>` to the parent's URL.
+   Always live-check the URL with WebFetch before recording it in the
+   report header. Getting it wrong propagates a 404 link through the
+   dashboard.
 3. Note any `source_url` declared in `content-directory.ts` — verify it's
    live as part of the audit.
 
@@ -53,8 +61,40 @@ each as one of:
   against `src/data/ministries.ts` and `src/data/departments.ts`)
 - **statistic** — counts, percentages, dates
 - **descriptive** — general copy that's still verifiable
+- **link / CTA** — every `<a href>` in the source markdown, including
+  button-style CTAs (`<a data-start-link>`), in-page anchors, links to
+  sibling pages, PDFs, and external sites. A broken CTA is usually the
+  worst bug on a page.
+- **negative statement** — "the JP cannot…", "we do not show…",
+  "you are not eligible if…" — restrictions and policy claims verify
+  the same way as positive ones.
+- **procedural instruction** — "do not sign before you arrive", "bring
+  the original" — direct instructions to the citizen, verifiable against
+  standard practice or agency-published guidance.
 
 Include line numbers from the source markdown.
+
+### Coverage discipline
+
+Walk the page bullet-by-bullet, sentence-by-sentence. Categories that get
+overlooked when the audit drifts toward "phones and emails":
+
+- **"What the service cannot do" bullets** — negative statements verify
+  the same way as positive ones; don't skip them because they're
+  restrictions.
+- **Procedural instructions** — verifiable against standard practice or
+  the agency's published guidance.
+- **Policy claims about the page itself** ("we do not show personal
+  contact details online") — testable by inspecting what the page
+  actually renders for an end user.
+- **In-page links and CTAs** — every `<a href>` is a claim that the link
+  resolves; capture each one and live-check it (see §3).
+- **Frontmatter that affects citizens** — `publish_date`, `source_url`,
+  category placement, `protected: true`.
+
+If the source markdown has N distinct factual statements and the report
+has fewer than ~80% of N claims, re-read the source end-to-end before
+writing — you've probably skipped a section.
 
 ## 3. Verify each claim
 
@@ -102,6 +142,25 @@ through and verify the fact-check.
 Never write a bare "Source: not publicly documented." Either provide
 the URLs you searched (so the reader can repeat), or escalate the claim
 to the Open Question section for agency confirmation.
+
+### Verifying in-page links
+
+Every `<a href>` extracted in §2 must be live-checked. For each:
+
+- **Internal links** (`/some/path`) — WebFetch the full URL using the
+  live base. Pay attention to the protected-pages routing rule in §1:
+  a link that hard-codes `/<category>/<protected-slug>` will 404 even
+  though the page exists at `/<protected-slug>`. A broken CTA is at
+  least Tier B, usually Tier A if it's the primary citizen action.
+- **External links** (`https://…`) — WebFetch and confirm the page
+  loads and is on-topic. Note URL paths that have moved (site reorgs
+  are common).
+- **Asset links** (PDFs, images) — confirm the file downloads. For
+  PDFs the page makes claims about (e.g. "PDF, 436 names"), note size
+  and page count; flag the row count as unverifiable from public web
+  if it can only be confirmed by counting locally.
+- **In-page anchors** (`#section`) — verify the target heading exists
+  on the current page.
 
 ## 4. Score certainty
 
@@ -224,8 +283,11 @@ After writing the per-page report, update `docs/fact-check/README.md`:
    all pages with reports.
 
 3. **Triage section** — for each *new* discrepant claim, add an
-   issue-ready card. Use the next free F-XXX number (existing range:
-   F-000 through F-018 plus F-00A through F-00F). Each card:
+   issue-ready card. Pick the next free finding ID by running
+   `grep -oE '### F-[0-9A-F]+' docs/fact-check/README.md | sort -u`
+   and choosing the first gap (or one past the highest existing
+   number). Gaps from earlier removed findings are fine to fill.
+   Each card:
 
    ```markdown
    ### F-NNN · Tier <A|B|C> · <short imperative title>
@@ -247,6 +309,20 @@ After writing the per-page report, update `docs/fact-check/README.md`:
 4. **Highest-priority findings list** at the top of the README is
    curated by hand — only update it if a new finding belongs in the
    top 10 by citizen impact.
+
+5. **Resolve stale findings.** If this pass re-verifies a claim that an
+   earlier pass flagged as discrepant and the new evidence shows the
+   page is now correct (or was correct all along), **remove** the
+   corresponding F-NNN card from the Triage section and note the
+   reversal in the per-page report's "Headline issues" section. Don't
+   leave outdated findings on the dashboard — they cause teams to file
+   issues against text that is actually correct.
+
+   If a finding was correct but its scope has narrowed (e.g. one of
+   three sub-claims now verified, two still open), edit the card to
+   reflect the reduced scope rather than removing it entirely. Bump
+   the `Confidence it's wrong:` figure to reflect the re-verified
+   evidence.
 
 ## Link format rule
 
