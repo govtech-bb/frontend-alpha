@@ -137,1369 +137,2713 @@ Click "Live page" to open the page on alpha.gov.bb; click "Report" to open the f
 
 ## Triage — what's probably wrong, fix these first
 
-Opinionated read on what's most likely broken, ordered by my confidence that it's wrong AND how much it'll cost a citizen who acts on it.
+Each finding below is sourced from a per-page report's "Headline issues" section. Click the page name in **Where:** for the full claims list, source citations, and proposed fixes.
 
-Each finding below is formatted as a stand-alone issue-ready card. Copy the title + body into `gh issue create` to file. A bulk-create snippet is at the bottom of this section.
+> **Tiers:** **A** = broken CTAs, dissolved agencies, contact info that won't reach the citizen, or other 90%+ confidence wrongness. **B** = probably wrong, verify against the agency before shipping a fix. **C** = unverifiable from the public web — needs agency confirmation.
 
-> **Tiers:** **A** = almost certainly wrong, fix today (confidence ≥ 90%). **B** = probably wrong, verify before publishing more (60–89%). **C** = unverifiable from public web — needs agency confirmation (< 60%).
+---
+
+### F-100 · Tier A · Ministry Download Forms page is still 404 — navigation instruction is broken
+
+- **Where:** [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) — see headline issue #1 in that report
+- **What's wrong:** The page tells citizens to find the application form "on the Ministry of Educational Transformation website under the 'resources' tab in the menu, and then the 'download forms' option." The Download Forms sub-page (`education.gov.bb/home/Resources/Download-Forms/` and without trailing slash) returns
+- **Source:** see [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry Download Forms page is still 404 — navigation instruction is broken`
+
+---
+### F-101 · Tier A · Ministry of Labour miscategorisation with a broken href
+
+- **Where:** [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) — see headline issue #1 in that report
+- **What's wrong:** `src/data/ministries.ts` lines 806–809 list "Apply to be a Project Protégé Mentor" under the `onlineServices` block for the *Ministry of Labour, Social Security and Third Sector*. The service is run by the Ministry of Youth, Sports and Community Empowerment. Additionally, the href value is `/apply-t
+- **Source:** see [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry of Labour miscategorisation with a broken href`
+
+---
+### F-102 · Tier A · Primary form CTA renders "Loading form..." — the application form may be broken for citizens
+
+- **Where:** [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) — see headline issue #1 in that report
+- **What's wrong:** The `/work-employment/apply-to-jobstart-plus-programme/form` page (linked from both the index and start pages) renders "Loading form..." with no actual form content. If this is a persistent rendering failure, citizens cannot complete the online application. Tier A.
+- **Source:** see [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Primary form CTA renders "Loading form..." — the application form may be broken for citizens`
+
+---
+### F-103 · Tier A · Police Certificate of Character link is missing — "here" has no href
+
+- **Where:** [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) — see headline issue #1 in that report
+- **What's wrong:** Line 67 of the source reads "a Police Certificate of Character – you can apply for one here" but no hyperlink exists (no markdown link syntax). On the live page the word "here" is plain text, not a link. Citizens cannot click through to `https://forms.gov.bb/CertificateOfCharacter`. This is a broken
+- **Source:** see [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Police Certificate of Character link is missing — "here" has no href`
+
+---
+### F-104 · Tier A · "Start now" CTA is broken (404)
+
+- **Where:** [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) — see headline issue #1 in that report
+- **What's wrong:** The primary citizen action — the "Start now" button linking to `/pensions-and-gratuities/calculate-your-pension/form` — returns HTTP 404. Because the parent page is `protected: true`, the form sub-page must also be reached at `/calculate-your-pension/form`, not the category-prefixed path. This is th
+- **Source:** see [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Start now" CTA is broken (404)`
+
+---
+### F-105 · Tier A · BPS website link is wrong/broken domain (unchanged)
+
+- **Where:** [crop-over-permits](/docs/fact-check/crop-over-permits.md) — see headline issue #2 in that report
+- **What's wrong:** Both BPS permit cards link to `https://police.gov.bb`. The official Barbados Police Service website is `https://tbps.gov.bb`. `police.gov.bb` returns ECONNREFUSED (re-confirmed 2026-05-29). **Citizen impact: MEDIUM.**
+- **Source:** see [crop-over-permits](/docs/fact-check/crop-over-permits.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `BPS website link is wrong/broken domain (unchanged)`
+
+---
+### F-106 · Tier A · NCC venue permit links to `ncc.gov.bb` — that domain times out (new finding)
+
+- **Where:** [crop-over-permits](/docs/fact-check/crop-over-permits.md) — see headline issue #3 in that report
+- **What's wrong:** The data file sets `link: "https://ncc.gov.bb"` for the NCC venue permit card. On fetch (2026-05-29) `ncc.gov.bb` times out. The correct NCC website is `https://www.nccbarbados.com`. **Citizen impact: MEDIUM** — a citizen clicking the NCC card link would reach a broken destination.
+- **Source:** see [crop-over-permits](/docs/fact-check/crop-over-permits.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `NCC venue permit links to `ncc.gov.bb` — that domain times out (new finding)`
+
+---
+### F-107 · Tier A · `bfs.gov.bb` still ECONNREFUSED (confirmed again)
+
+- **Where:** [crop-over-permits](/docs/fact-check/crop-over-permits.md) — see headline issue #4 in that report
+- **What's wrong:** The BFS fire safety card links to `https://bfs.gov.bb`. This domain returns ECONNREFUSED (re-confirmed 2026-05-29). The canonical BFS domain is `https://fireservice.gov.bb`. **Citizen impact: MEDIUM** — a citizen clicking the BFS card link would reach a broken destination.
+- **Source:** see [crop-over-permits](/docs/fact-check/crop-over-permits.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``bfs.gov.bb` still ECONNREFUSED (confirmed again)`
+
+---
+### F-108 · Tier A · Broken declared source URL
+
+- **Where:** [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) — see headline issue #4 in that report
+- **What's wrong:** `https://www.gov.bb/Citizens/notarize-document` (in `src/data/content-directory.ts`) returns HTTP 404. The correct live source is the Barbados Judicial System's notarising page.
+- **Source:** see [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Broken declared source URL`
+
+---
+### F-109 · Tier A · "5 to 7 business days" turnaround is unverifiable from authoritative sources
+
+- **Where:** [get-death-certificate](/docs/fact-check/get-death-certificate.md) — see headline issue #2 in that report
+- **What's wrong:** No Tier 1 source (barbadoslawcourts.gov.bb, gov.bb, GIS) publishes a "5 to 7 business days" standard for death certificate copies. The birth certificate fact-check flagged this identical phrasing as potentially having been copied between pages. The GIS article that might confirm this returns HTTP 40
+- **Source:** see [get-death-certificate](/docs/fact-check/get-death-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"5 to 7 business days" turnaround is unverifiable from authoritative sources`
+
+---
+### F-110 · Tier A · "Find a JP" button is broken — citizens clicking it land on a 404
+
+- **Where:** [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) — see headline issue #1 in that report
+- **What's wrong:** Source line 53 links to `/travel-id-citizenship/justice-of-the-peace/find`. That URL returns HTTP 404 on the live site, as does the IA-consistent path `/justice-of-the-peace/find`. The live JP page itself is served at `/justice-of-the-peace` (no category prefix) because it is marked `protected: true
+- **Source:** see [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Find a JP" button is broken — citizens clicking it land on a 404`
+
+---
+### F-111 · Tier A · Office of the Attorney General phone is wrong (three places)
+
+- **Where:** [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) — see headline issue #2 in that report
+- **What's wrong:** Page lists `(246) 467-7370` at lines 61, 71, 75. Authoritative sources publish `(246) 535-0467` (`oag.gov.bb/contact` and `gov.bb/Ministries/attorney-general`). `467-7370` does not appear in either. **HIGH** impact — citizens calling that number will not reach the AG.
+- **Source:** see [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Office of the Attorney General phone is wrong (three places)`
+
+---
+### F-112 · Tier A · Gazette link path unverifiable
+
+- **Where:** [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) — see headline issue #4 in that report
+- **What's wrong:** The page links to `https://governmentprintery.gov.bb/gazette/` but search indices surface `/official-gazette/` as the published path. Both return HTTP 403 to automated fetch; manual browser check needed to confirm if `/gazette/` resolves or 404s.
+- **Source:** see [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Gazette link path unverifiable`
+
+---
+### F-113 · Tier A · `gisbarbados.gov.bb/faqs` link is broken (HTTP 403)
+
+- **Where:** [marriage-licences](/docs/fact-check/marriage-licences.md) — see headline issue #1 in that report
+- **What's wrong:** Line 100 directs citizens to the GIS FAQs page for appointment booking. That URL returns HTTP 403 Forbidden as of 2026-05-29. The direct appointment link (`govtbarbadosapointmentsystem.as.me/MarriageLicense`) resolves and is functional. The broken GIS link should be removed or replaced with the dire
+- **Source:** see [marriage-licences](/docs/fact-check/marriage-licences.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``gisbarbados.gov.bb/faqs` link is broken (HTTP 403)`
+
+---
+### F-114 · Tier A · Breadcrumb "Government" link is broken (404)
+
+- **Where:** [ministries/cabinet-office](/docs/fact-check/ministries/cabinet-office.md) — see headline issue #1 in that report
+- **What's wrong:** The page renders a breadcrumb trail: Home → Government → Organisations → Cabinet Office. The "Government" step links to `/government`, which returns HTTP 404. Citizens clicking this breadcrumb hit a dead end. All other navigation links on the page work correctly. This is a Tier-B defect — it disrupt
+- **Source:** see [ministries/cabinet-office](/docs/fact-check/ministries/cabinet-office.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Breadcrumb "Government" link is broken (404)`
+
+---
+### F-115 · Tier A · Live URL in previous report was wrong (now corrected)
+
+- **Where:** [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) — see headline issue #1 in that report
+- **What's wrong:** The prior pass recorded the live page at `/our-government/ministry-of-educational-transformation` — that URL returns HTTP 404. The correct live URL is `https://alpha.gov.bb/government/organisations/ministry-of-educational-transformation` (confirmed 200 OK, 2026-05-29). The dashboard link has been up
+- **Source:** see [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Live URL in previous report was wrong (now corrected)`
+
+---
+### F-116 · Tier A · "Natural Beautification" typo on line 1 — misspells the ministry name
+
+- **Where:** [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) — see headline issue #1 in that report
+- **What's wrong:** The very first sentence reads "The Ministry of Environment and *Natural* Beautification." Every authoritative source — `gov.bb/Ministries/environment`, `ozone.gov.bb/the-ministry/`, Parliament — uses **National** Beautification. The same source file correctly uses "National Beautification" at lines
+- **Source:** see [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Natural Beautification" typo on line 1 — misspells the ministry name`
+
+---
+### F-117 · Tier A · nhdbdos.com link is broken (line 119)
+
+- **Where:** [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) — see headline issue #3 in that report
+- **What's wrong:** The Natural Heritage section links to `http://www.nhdbdos.com/` which returns connection refused as of 2026-05-29 (re-confirmed on this pass). The authoritative replacement is `https://www.gov.bb/Departments/natural-heritage` or `https://biodiversity.gov.bb/ministry/natural-heritage-department/`.
+- **Source:** see [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `nhdbdos.com link is broken (line 119)`
+
+---
+### F-118 · Tier A · weplantin.org link is broken (line 202)
+
+- **Where:** [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) — see headline issue #4 in that report
+- **What's wrong:** The We Plantin' section links to `http://www.weplantin.org/` which also returns connection refused as of 2026-05-29 (re-confirmed on this pass). The programme is confirmed active (NCC, hotline 536-TREE / (246) 536-8733); the live page is `https://www.nccbarbados.com/a-million-trees/`.
+- **Source:** see [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `weplantin.org link is broken (line 202)`
+
+---
+### F-119 · Tier A · bdsfinance.gov.bb and economicaffairs.gov.bb both return ECONNREFUSED (Claim 14)
+
+- **Where:** [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) — see headline issue #1 in that report
+- **What's wrong:** Both outbound URLs — the CTA button linking to `https://www.economicaffairs.gov.bb` and the `ministries.ts` website entry `https://bdsfinance.gov.bb/` — are unreachable as at 2026-05-29 (re-confirmed from 2026-05-28). Citizens clicking either link receive a browser error. **Tier A — citizen-facing b
+- **Source:** see [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `bdsfinance.gov.bb and economicaffairs.gov.bb both return ECONNREFUSED (Claim 14)`
+
+---
+### F-120 · Tier A · PS Economic Affairs is listed as Annette Weekes; current PS is Jennifer Hunte (Claim 7)
+
+- **Where:** [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) — see headline issue #3 in that report
+- **What's wrong:** The Administration table names "Mrs. Annette Weekes Ag." at line 95. The gov.bb PS grades page (re-confirmed 2026-05-29) lists "Mrs. Jennifer Hunte — Permanent Secretary (Economic Affairs and Investment) (AG)". Annette Weekes is absent from the current PS grades list. **Tier A — fix immediately.**
+- **Source:** see [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `PS Economic Affairs is listed as Annette Weekes; current PS is Jennifer Hunte (Claim 7)`
+
+---
+### F-121 · Tier A · Director of Research Patrick McCaskie has moved to a different ministry (Claim 10)
+
+- **Where:** [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) — see headline issue #4 in that report
+- **What's wrong:** Line 113 lists McCaskie as Director of Research for Economic Affairs at ext. 535-1306. The PS grades page (re-confirmed 2026-05-29) shows McCaskie as "Permanent Secretary (AG), Ministry of Training and Tertiary Education". He was promoted and moved; the Research Unit listing is outdated. **Tier A —
+- **Source:** see [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Director of Research Patrick McCaskie has moved to a different ministry (Claim 10)`
+
+---
+### F-122 · Tier A · Previous report used a 404 URL — now corrected
+
+- **Where:** [ministries/ministry-of-housing-lands-and-maintenance](/docs/fact-check/ministries/ministry-of-housing-lands-and-maintenance.md) — see headline issue #1 in that report
+- **What's wrong:** The prior report recorded the live page as `https://alpha.gov.bb/ministries/ministry-of-housing-lands-and-maintenance`. That URL returns HTTP 404. The actual live URL is `https://alpha.gov.bb/government/organisations/ministry-of-housing-lands-and-maintenance` (confirmed by WebFetch 2026-05-29). The
+- **Source:** see [ministries/ministry-of-housing-lands-and-maintenance](/docs/fact-check/ministries/ministry-of-housing-lands-and-maintenance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Previous report used a 404 URL — now corrected`
+
+---
+### F-123 · Tier A · socialcare.gov.bb website is non-functional
+
+- **Where:** [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) — see headline issue #3 in that report
+- **What's wrong:** The data file lists `http://www.socialcare.gov.bb/` as the ministry's website. The domain returns ECONNREFUSED on direct fetch (confirmed again on 2026-05-29). Citizens who click the link reach a dead end. The SEA now operates its own website at `socialempowermentbb.org` (currently also ECONNREFUSED
+- **Source:** see [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `socialcare.gov.bb website is non-functional`
+
+---
+### F-124 · Tier A · All three online service links resolve correctly
+
+- **Where:** [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) — see headline issue #5 in that report
+- **What's wrong:** `/visa-information`, `/visitor-permit-application`, and `/ports-of-entry` all load successfully with relevant, on-topic content. No broken CTAs.
+- **Source:** see [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `All three online service links resolve correctly`
+
+---
+### F-125 · Tier A · Previous report had a wrong live URL
+
+- **Where:** [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) — see headline issue #2 in that report
+- **What's wrong:** The prior pass recorded the live URL as `https://alpha.gov.bb/our-government/ministry-of-training-and-tertiary-education` — this returns HTTP 404. The correct live URL is `https://alpha.gov.bb/government/organisations/ministry-of-training-and-tertiary-education` (confirmed live). This is corrected i
+- **Source:** see [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Previous report had a wrong live URL`
+
+---
+### F-126 · Tier A · Live page URL is wrong in the previous report
+
+- **Where:** [open-pharmacy](/docs/fact-check/open-pharmacy.md) — see headline issue #1 in that report
+- **What's wrong:** The page has `protected: true` in `src/data/content-directory.ts`, so its canonical URL is `https://alpha.gov.bb/open-pharmacy` (no category prefix). The category-prefixed URL `https://alpha.gov.bb/health-and-emergency-services/open-pharmacy` returns HTTP 404. The previous report recorded the wrong
+- **Source:** see [open-pharmacy](/docs/fact-check/open-pharmacy.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Live page URL is wrong in the previous report`
+
+---
+### F-127 · Tier A · Primary CTA links are broken for public users
+
+- **Where:** [open-pharmacy](/docs/fact-check/open-pharmacy.md) — see headline issue #2 in that report
+- **What's wrong:** Both `<a data-start-link>` buttons on the page link to `/health-and-emergency-services/open-pharmacy/find` (lines 20 and 85). That URL hits the 3-slug routing handler, which checks `page.protected` and returns `notFound()` for users without research access. Citizens clicking "Find an open pharmacy"
+- **Source:** see [open-pharmacy](/docs/fact-check/open-pharmacy.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Primary CTA links are broken for public users`
+
+---
+### F-128 · Tier A · "Start now" CTA is broken — primary citizen action fails with HTTP 404
+
+- **Where:** [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) — see headline issue #1 in that report
+- **What's wrong:** The "Start now" link in the source markdown (`/family-birth-relationships/request-a-presidential-visit-for-a-centenarian/form`) uses the category-prefixed path. Because this page is `protected: true` in `content-directory.ts`, it is served at `/request-a-presidential-visit-for-a-centenarian` (no cat
+- **Source:** see [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Start now" CTA is broken — primary citizen action fails with HTTP 404`
+
+---
+### F-129 · Tier A · Live URL in earlier report was wrong — now corrected
+
+- **Where:** [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) — see headline issue #2 in that report
+- **What's wrong:** The previous pass recorded the live URL as `https://alpha.gov.bb/family-birth-relationships/request-a-presidential-visit-for-a-centenarian`. That URL returns HTTP 404. The correct live URL, confirmed on 2026-05-29, is `https://alpha.gov.bb/request-a-presidential-visit-for-a-centenarian` (no category
+- **Source:** see [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Live URL in earlier report was wrong — now corrected`
+
+---
+### F-130 · Tier A · Page is extremely thin — contains almost no actionable information
+
+- **Where:** [start-a-business](/docs/fact-check/start-a-business.md) — see headline issue #4 in that report
+- **What's wrong:** The entire page is one sentence plus a link. Citizens cannot learn from this page what the process for starting a business is, what it costs, which agencies are involved, what documents are required, or what legal obligations apply. This is a content-gap problem rather than a factual error, but it i
+- **Source:** see [start-a-business](/docs/fact-check/start-a-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Page is extremely thin — contains almost no actionable information`
+
+---
+### F-131 · Tier A · privacy@govtech.bb is unverifiable from any Tier-1 or Tier-2 source
+
+- **Where:** [terms-conditions](/docs/fact-check/terms-conditions.md) — see headline issue #3 in that report
+- **What's wrong:** This is the sole contact point for data-subject rights under the Data Protection Act 2019. It does not appear on govtech.bb, gisbarbados.gov.bb, or gov.bb. Citizens cannot independently confirm the mailbox is monitored. (Claim 9)
+- **Source:** see [terms-conditions](/docs/fact-check/terms-conditions.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `privacy@govtech.bb is unverifiable from any Tier-1 or Tier-2 source`
+
+---
+### F-132 · Tier A · Phone numbers are stale (both offices)
+
+- **Where:** [visa-information](/docs/fact-check/visa-information.md) — see headline issue #2 in that report
+- **What's wrong:** The page lists (246) 434-4100 for the head office and (246) 418-4180 for GAIA. A 2017 GIS announcement confirmed all Immigration numbers changed to the 535-xxxx series. Current numbers: main PBX 535-4100, GAIA primary 535-4180. Citizens dialling the listed numbers will not reach Immigration.
+- **Source:** see [visa-information](/docs/fact-check/visa-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Phone numbers are stale (both offices)`
+
+---
+### F-133 · Tier A · The live URL in the previous report was wrong (now corrected)
+
+- **Where:** [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) — see headline issue #2 in that report
+- **What's wrong:** The page has `protected: true` in `src/data/content-directory.ts`, so it is served at `https://alpha.gov.bb/visitor-permit-application` — no category prefix. The category-prefixed URL `https://alpha.gov.bb/travel-id-citizenship/visitor-permit-application` returns HTTP 404. This report corrects the l
+- **Source:** see [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The live URL in the previous report was wrong (now corrected)`
+
+---
+### F-134 · Tier A · The SurePay payment URL does not resolve
+
+- **Where:** [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) — see headline issue #4 in that report
+- **What's wrong:** The page gives `https://bb.surepaybillsonline.com/cc` as the SurePay payment link. That URL issues a 301 redirect to `http://bb.surepaybillsonline.com/cc/` which returns no content. SurePay's own site states the correct URL for online payments is `https://app.surepayonline.com`. This link is broken
+- **Source:** see [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The SurePay payment URL does not resolve`
+
+---
+### F-135 · Tier B · "Electronic transfer of funds is not available yet" is false
+
+- **Where:** [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) — see headline issue #1 in that report
+- **What's wrong:** The Welfare Department's direct deposit / EFT system for National Assistance Grants went live on 21 May 2024 (GIS press release confirmed by web search). The page still tells citizens EFT is pending. This is the highest-priority correction: citizens may avoid providing bank details unnecessarily. Ad
+- **Source:** see [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Electronic transfer of funds is not available yet" is false`
+
+---
+### F-136 · Tier B · Speightstown office building name is wrong
+
+- **Where:** [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) — see headline issue #2 in that report
+- **What's wrong:** The page says "Republic Bank Building, Chapel St." — every government and GIS source calls it the "BNB Building" in Speightstown. The GIS 2017 telephone directory explicitly names the Speightstown welfare office at "BNB Building". Update to "BNB Building, Chapel Street, Speightstown, Saint Peter".
+- **Source:** see [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Speightstown office building name is wrong`
+
+---
+### F-137 · Tier B · Phone number format `+1 246-535-1000/16/23` is non-standard and partially wrong
+
+- **Where:** [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) — see headline issue #3 in that report
+- **What's wrong:** The two PBX numbers confirmed by gov.bb are `(246) 535-1000` and `(246) 535-1023`. The notation `/16/` appears nowhere in any official source — "16" is not a recognisable extension format. The GIS May 2024 direct deposit press release also lists a third number: `535-1005`. Rewrite as `(246) 535-1000
+- **Source:** see [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Phone number format `+1 246-535-1000/16/23` is non-standard and partially wrong`
+
+---
+### F-138 · Tier B · Typo in section heading
+
+- **Where:** [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) — see headline issue #4 in that report
+- **What's wrong:** Line 33 reads "How to apply for financial **assitance**" — "assitance" is misspelled (should be "assistance").
+- **Source:** see [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Typo in section heading`
+
+---
+### F-139 · Tier B · Post Office cheque arrangement may be obsolete
+
+- **Where:** [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) — see headline issue #5 in that report
+- **What's wrong:** The page still says citizens without a fixed address can "make arrangements through the Post Office to receive your cheque." With EFT live since May 2024 and the Cost of Living Cash Credit paying via direct bank deposit from April 2026, the cheque-via-Post-Office option may no longer be current. Nee
+- **Source:** see [apply-financial-assistance](/docs/fact-check/apply-financial-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Post Office cheque arrangement may be obsolete`
+
+---
+### F-140 · Tier B · "Motor Vehicles Act, 1988" is the wrong legislation
+
+- **Where:** [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) — see headline issue #1 in that report
+- **What's wrong:** No Barbados statute by that name exists. The actual governing law is the **Road Traffic Act, CAP 295**, most recently consolidated to 2022. The "Motor Vehicles Act, 1988" is India's motor vehicle legislation. Both gov.bb and the alpha.gov.bb page appear to have copied this phrase from a non-Barbadia
+- **Source:** see [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Motor Vehicles Act, 1988" is the wrong legislation`
+
+---
+### F-141 · Tier B · "Apply after 30 days" conflicts with BLA's own requirement of 3 months
+
+- **Where:** [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) — see headline issue #2 in that report
+- **What's wrong:** The BLA's Learner Permit service page states first-time permit holders must "practice for a minimum three (3) months before applying for the driving examination." The alpha.gov.bb page (mirroring gov.bb) says 30 days. A citizen who follows the page and books a driving test at 30 days will be turned
+- **Source:** see [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Apply after 30 days" conflicts with BLA's own requirement of 3 months`
+
+---
+### F-142 · Tier B · International Permit documents list includes two items not on the BLA's page
+
+- **Where:** [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) — see headline issue #3 in that report
+- **What's wrong:** "Attested copy of address proof" and "Attested copy of Birth Certificate" do not appear on the BLA's official International Permit page, which lists: valid driver licence, proof of identity, valid passport, itinerary, and two passport photos. The extra items appear to be Indian template artefacts. S
+- **Source:** see [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `International Permit documents list includes two items not on the BLA's page`
+
+---
+### F-143 · Tier B · Phone number `0264` is no longer published on the current BLA homepage
+
+- **Where:** [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) — see headline issue #4 in that report
+- **What's wrong:** The BLA homepage (verified 2026-05-29) lists only `+1 (246) 536-0265 / 0267 / 0278`. The number `0264` appears on the alpha.gov.bb page but is absent from both the current BLA homepage and the BLA Learner Permit service page. The page omits the confirmed numbers `0267` and `0278`. Citizen impact: LO
+- **Source:** see [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Phone number `0264` is no longer published on the current BLA homepage`
+
+---
+### F-144 · Tier B · No physical address for the BLA on the page
+
+- **Where:** [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) — see headline issue #5 in that report
+- **What's wrong:** BLA's address — Pine East–West Boulevard, Bridgetown, St. Michael — is not mentioned anywhere. Citizens needing in-person service have no address to follow.
+- **Source:** see [apply-for-a-drivers-licence](/docs/fact-check/apply-for-a-drivers-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No physical address for the BLA on the page`
+
+---
+### F-145 · Tier B · "Special circumstances" collection is undefined — and the eligibility restriction is missing
+
+- **Where:** [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) — see headline issue #1 in that report
+- **What's wrong:** The content page says passports may be collected by someone else "in special circumstances" without specifying what those are. The authoritative [immigration.gov.bb](https://immigration.gov.bb/pages/passport.aspx) page restricts this specifically to: elderly applicants, incapacitated applicants, tho
+- **Source:** see [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Special circumstances" collection is undefined — and the eligibility restriction is missing`
+
+---
+### F-146 · Tier B · "White Park Road" should be "Whitepark Road" (one word)
+
+- **Where:** [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) — see headline issue #2 in that report
+- **What's wrong:** The Supreme Court Complex address on line 41 uses two words; [barbadoslawcourts.gov.bb](https://www.barbadoslawcourts.gov.bb/court-administration/supreme-court-registry/) and the authoritative immigration.gov.bb page both use the one-word form "Whitepark Road". This is consistent with the discrepanc
+- **Source:** see [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"White Park Road" should be "Whitepark Road" (one word)`
+
+---
+### F-147 · Tier B · Fee table dated "Effective December 01, 2010" — 16-year-old date erodes citizen trust
+
+- **Where:** [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) — see headline issue #3 in that report
+- **What's wrong:** Every fee matches immigration.gov.bb exactly, so the fees are correct, but the 2010 effective date makes citizens doubt the page's currency. Recommend replacing with "Passport fees (current as at 2026)" or simply removing the effective-date line.
+- **Source:** see [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Fee table dated "Effective December 01, 2010" — 16-year-old date erodes citizen trust`
+
+---
+### F-148 · Tier B · All PDF form links use HTTP, not HTTPS
+
+- **Where:** [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) — see headline issue #4 in that report
+- **What's wrong:** Links to Form A, Form B, signature specimen, and form specimens all use `http://www.immigration.gov.bb/...`. While the PDFs resolve, HTTP links expose citizens to potential MITM interception of government documents. Low immediacy but worth updating.
+- **Source:** see [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `All PDF form links use HTTP, not HTTPS`
+
+---
+### F-149 · Tier B · Stray triple-backtick on line 59
+
+- **Where:** [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) — see headline issue #5 in that report
+- **What's wrong:** renders as an unclosed code fence in Markdown. Not a factual error but a rendering bug that produces a code block on the live page.
+- **Source:** see [apply-for-a-passport](/docs/fact-check/apply-for-a-passport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Stray triple-backtick on line 59`
+
+---
+### F-150 · Tier B · Responsible body may now be the Social Empowerment Agency (SEA), not the Child Care Board
+
+- **Where:** [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) — see headline issue #1 in that report
+- **What's wrong:** A January 2026 Barbados Today article reports the SEA was launched on 7 January 2026 as "an amalgamation of the island's social services." However, that article does not name the Child Care Board specifically as a merged entity. The childcareboard.gov.bb website continues to operate independently, g
+- **Source:** see [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Responsible body may now be the Social Empowerment Agency (SEA), not the Child Care Board`
+
+---
+### F-151 · Tier B · The page is missing the responsible agency's contact details
+
+- **Where:** [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) — see headline issue #5 in that report
+- **What's wrong:** The Child Care Board contact information (Fred Edghill Building, Cheapside, Bridgetown; (246) 535-2800; childcareboard@barbados.gov.bb; Mon–Fri 8:30 AM–4:30 PM) is not on the page. Citizens who need to follow up have no contact point.
+- **Source:** see [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The page is missing the responsible agency's contact details`
+
+---
+### F-152 · Tier B · CSEC requirements now fully verified (reversed finding from prior pass)
+
+- **Where:** [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) — see headline issue #2 in that report
+- **What's wrong:** The MPS Circular NP7/2025 (dated 2025-06-03, machine-readable in this pass) explicitly states for the "Teacher" grade: "At least five subjects at CSEC General Proficiency Level including English Language, Mathematics and a Science subject." This matches the page word-for-word. The prior pass marked
+- **Source:** see [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `CSEC requirements now fully verified (reversed finding from prior pass)`
+
+---
+### F-153 · Tier B · "Primary school only" scope now confirmed (reversed finding from prior pass)
+
+- **Where:** [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) — see headline issue #3 in that report
+- **What's wrong:** The same MPS Circular NP7/2025 is addressed to "Principals, Public Nursery and Primary Schools" and its subject line specifies "Post of Graduate Teacher/Special Grade Teacher/Qualified Teacher/Teacher, **Primary Schools**." This confirms the page's restriction to government-funded primary schools is
+- **Source:** see [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Primary school only" scope now confirmed (reversed finding from prior pass)`
+
+---
+### F-154 · Tier B · No contact details for citizens with eligibility questions
+
+- **Where:** [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) — see headline issue #4 in that report
+- **What's wrong:** The page still has no email, phone, or contact point for applicants who want to confirm eligibility or check vacancy status. The MPS circular includes teachervacancy@mes.gov.bb. Adding this would meaningfully reduce friction.
+- **Source:** see [apply-for-a-position-as-a-temporary-teacher](/docs/fact-check/apply-for-a-position-as-a-temporary-teacher.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No contact details for citizens with eligibility questions`
+
+---
+### F-155 · Tier B · Ministry name is out of date
+
+- **Where:** [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) — see headline issue #1 in that report
+- **What's wrong:** The page calls the issuing body "Ministry of Transport and Works" but the current official name — confirmed on gov.bb, the ministry's own homepage, and all GIS press releases — is the **Ministry of Transport, Works and Water Resources (MTWW)**. The older short form survives on the ministry's own web
+- **Source:** see [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry name is out of date`
+
+---
+### F-156 · Tier B · The ministry address shown (2nd Floor, The Goddard Building, Haggatt Hall) is a temporary relocation
+
+- **Where:** [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) — see headline issue #3 in that report
+- **What's wrong:** The MTW's official permanent address is Pine East–West Boulevard, The Pine, St. Michael. The MTW Contact FAQ explicitly labels the Goddard Building address as a "Temporary address" — this is confirmed on direct fetch (2026-05-29). The page presents this as the standard address without any caveat abo
+- **Source:** see [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The ministry address shown (2nd Floor, The Goddard Building, Haggatt Hall) is a temporary relocation`
+
+---
+### F-157 · Tier B · Police Certificate of Character link resolves correctly, and the fee is confirmed at BBD $20
+
+- **Where:** [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) — see headline issue #5 in that report
+- **What's wrong:** No correction needed here; the URL and fee align with the authoritative forms.gov.bb source (confirmed live 2026-05-29).
+- **Source:** see [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Police Certificate of Character link resolves correctly, and the fee is confirmed at BBD $20`
+
+---
+### F-158 · Tier B · YDP email address cannot be confirmed as an active inbox via a live web page
+
+- **Where:** [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) — see headline issue #2 in that report
+- **What's wrong:** The page states paper applications can be emailed to `YDP@barbados.gov.bb`. The youthaffairs.gov.bb contact page does not list any email address for the programme. The address appears in a gov.bb PDF document but the PDF could not be rendered for full text extraction. If this inbox is no longer moni
+- **Source:** see [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `YDP email address cannot be confirmed as an active inbox via a live web page`
+
+---
+### F-159 · Tier B · No `source_url` is declared in `content-directory.ts` for this page
+
+- **Where:** [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) — see headline issue #4 in that report
+- **What's wrong:** There is no linked authoritative source for this page. The canonical authority is `youthaffairs.gov.bb/youth-ministry-launches-mentorship-programme-project-protege/`, which should be added.
+- **Source:** see [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No `source_url` is declared in `content-directory.ts` for this page`
+
+---
+### F-160 · Tier B · `/work-employment/apply-to-be-a-project-protege-mentor/form` shows "Loading form…"
+
+- **Where:** [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) — see headline issue #5 in that report
+- **What's wrong:** The form endpoint (`start.md` links to `/form`) returned HTTP 200 but the page body shows only "Loading form…" — the form does not render for web crawlers. This may be expected (client-side JS rendering) but cannot be confirmed as fully functional without a browser. The start page CTA links correctl
+- **Source:** see [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``/work-employment/apply-to-be-a-project-protege-mentor/form` shows "Loading form…"`
+
+---
+### F-161 · Tier B · Ministry address contains "Warrens Close" — a street name that does not exist in any official source
+
+- **Where:** [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) — see headline issue #2 in that report
+- **What's wrong:** All authoritative sources (gov.bb, labour.gov.bb, `src/data/ministries.ts`) use "Warrens" (the district/locality), not "Warrens Close". Additionally "3rd Floor West" should be "3rd Floor West Wing" per gov.bb and ministries.ts. Citizens submitting paper forms to this address risk mail going astray o
+- **Source:** see [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry address contains "Warrens Close" — a street name that does not exist in any official source`
+
+---
+### F-162 · Tier B · "Registration is open throughout the year" contradicts the official programme page
+
+- **Where:** [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) — see headline issue #3 in that report
+- **What's wrong:** The labour.gov.bb/jobstartplus/ page shows cohort-specific registration deadlines (e.g. "deadline Friday 11 April 2025 for May 2025 cohort"). Describing registration as year-round could cause citizens to miss the active cohort window and wait months for the next one.
+- **Source:** see [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Registration is open throughout the year" contradicts the official programme page`
+
+---
+### F-163 · Tier B · Training duration conflict: alpha.gov.bb says "3 weeks", labour.gov.bb still says "two-week"
+
+- **Where:** [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) — see headline issue #4 in that report
+- **What's wrong:** The March 2026 Barbados Today article quotes programme manager Erika Watson confirming expansion to 3 weeks, so alpha.gov.bb is likely more current — but the two official sources remain in conflict and need reconciliation.
+- **Source:** see [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Training duration conflict: alpha.gov.bb says "3 weeks", labour.gov.bb still says "two-week"`
+
+---
+### F-164 · Tier B · Two typographical errors in the source file
+
+- **Where:** [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) — see headline issue #5 in that report
+- **What's wrong:** "suitablity" (index.md line 65) and "trainingg" (index.md line 68) are published to the live page and erode trust in the service.
+- **Source:** see [apply-to-jobstart-plus-programme](/docs/fact-check/apply-to-jobstart-plus-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Two typographical errors in the source file`
+
+---
+### F-165 · Tier B · Ministry name is wrong throughout the page
+
+- **Where:** [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) — see headline issue #2 in that report
+- **What's wrong:** Lines 28 and 82 use "Ministry of Youth and Community Empowerment." The correct current name is "Ministry of Youth, Sports and Community Empowerment," confirmed in `src/data/ministries.ts`, on `youthaffairs.gov.bb`, `byac.gov.bb`, and `gisbarbados.gov.bb`. Both occurrences need correcting.
+- **Source:** see [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry name is wrong throughout the page`
+
+---
+### F-166 · Tier B · Residential programme duration is contradicted by multiple authoritative sources
+
+- **Where:** [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) — see headline issue #3 in that report
+- **What's wrong:** Line 101 states "a 6-week residential programme." Three Tier-1 sources (Division of Youth Affairs programme page, BYAC's own programme page, and youthaffairs.gov.bb programme channels) state "Residential Training (10 weeks)." A single byac.gov.bb sub-page also states 6 weeks — creating an internal B
+- **Source:** see [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Residential programme duration is contradicted by multiple authoritative sources`
+
+---
+### F-167 · Tier B · "National Insurance Scheme" is an outdated name
+
+- **Where:** [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) — see headline issue #4 in that report
+- **What's wrong:** Line 49 describes the application form as asking about "your National Insurance Scheme." The NIS was formally renamed the National Insurance and Social Security Service (NISSS) on 1 December 2023. The old name has been superseded for over two years.
+- **Source:** see [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"National Insurance Scheme" is an outdated name`
+
+---
+### F-168 · Tier B · The $600/month stipend figure has not been confirmed in any current Tier-1 source
+
+- **Where:** [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) — see headline issue #5 in that report
+- **What's wrong:** The only publicly documented source for this figure is a 2019 Barbados Today article — before the programme launched. No current official page (youthaffairs.gov.bb, byac.gov.bb, gov.bb) publishes the current stipend amount. The figure may have changed.
+- **Source:** see [apply-to-the-barbados-youthadvance-corps](/docs/fact-check/apply-to-the-barbados-youthadvance-corps.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The $600/month stipend figure has not been confirmed in any current Tier-1 source`
+
+---
+### F-169 · Tier B · "National Sports Council office / My Lords Hill" is the former address
+
+- **Where:** [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) — see headline issue #1 in that report
+- **What's wrong:** The NSC relocated its headquarters from Blenheim, My Lord's Hill to the Garfield Sobers Sports Complex, Wildey, St. Michael. This is the current Tier 1-confirmed address on both `gov.bb/Departments/sports-council` and `nsc.gov.bb`. Sending a citizen to My Lords Hill risks wasted journeys, but the pi
+- **Source:** see [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"National Sports Council office / My Lords Hill" is the former address`
+
+---
+### F-170 · Tier B · "Recruitment usually begins around April" is contradicted by the sister register-summer-camp page fi…
+
+- **Where:** [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) — see headline issue #2 in that report
+- **What's wrong:** The register-summer-camp fact-check (2026-05-28) established that the Division of Youth Affairs volunteer recruitment for 2025 was announced on 28 June 2025, not April. The NSC also opened its 2026 Coach Assistant application after May 2026 — not in April. No authoritative source places NSC voluntee
+- **Source:** see [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Recruitment usually begins around April" is contradicted by the sister register-summer-camp page fi…`
+
+---
+### F-171 · Tier B · "Garfield Sobers Complex" is a truncated version of the official name
+
+- **Where:** [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) — see headline issue #3 in that report
+- **What's wrong:** The facility is officially called the "Sir Garfield Sobers Sports Complex" (gov.bb State Bodies page) and the building used by the NSC is the "Wildey Gymnasium" within that complex. The content uses "Garfield Sobers Complex" — the omission of "Sir" is a formal error and the omission of "Sports" is a
+- **Source:** see [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Garfield Sobers Complex" is a truncated version of the official name`
+
+---
+### F-172 · Tier B · The Police Certificate of Character link is live and the fee ($20) is confirmed
+
+- **Where:** [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) — see headline issue #5 in that report
+- **What's wrong:** `forms.gov.bb/CertificateOfCharacter` resolves correctly; fee is BBD $20, consistent with `_inventory.md`. No corrections needed here. **Re-check 2026-05-29: re-verified, still live, fee BBD $20.**
+- **Source:** see [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The Police Certificate of Character link is live and the fee ($20) is confirmed`
+
+---
+### F-173 · Tier B · "ten official National Heroes" is wrong — there are eleven
+
+- **Where:** [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) — see headline issue #1 in that report
+- **What's wrong:** Rihanna was named the 11th National Hero on 30 November 2021 at the investiture ceremony marking Barbados becoming a republic. The note on National Heroes Day reads "Honouring Barbados's ten official National Heroes" — it needs updating to eleven. Citizen impact: medium (historical accuracy, public
+- **Source:** see [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"ten official National Heroes" is wrong — there are eleven`
+
+---
+### F-174 · Tier B · "7th Monday after Easter" is wrong — Whit Monday is the 8th Monday after Easter
+
+- **Where:** [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) — see headline issue #2 in that report
+- **What's wrong:** The component annotates Whit Monday as `"7th Monday after Easter"`. Computing the Gregorian calendar for 2024–2028 and counting Mondays (inclusive of Easter Monday as the 1st) gives eight Mondays to Whit Monday every year. The correct standard description is "day after Pentecost" (Pentecost Sunday i
+- **Source:** see [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"7th Monday after Easter" is wrong — Whit Monday is the 8th Monday after Easter`
+
+---
+### F-175 · Tier B · "Emancipation Day" note says "abolition of slavery in 1834"
+
+- **Where:** [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) — see headline issue #3 in that report
+- **What's wrong:** — this is defensible but incomplete. The Slavery Abolition Act took effect on 1 August 1834 (end of legal slavery across the British Empire). Full freedom — end of the apprenticeship system — came on 1 August 1838. Caribbean Emancipation Day commemorates both dates. The note is not incorrect, but it
+- **Source:** see [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Emancipation Day" note says "abolition of slavery in 1834"`
+
+---
+### F-176 · Tier B · The `source_url` field in `content-directory.ts` is blank for this page
+
+- **Where:** [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) — see headline issue #4 in that report
+- **What's wrong:** No source URL was set. The "About this list" section on the page links to `labour.gov.bb/library/library-publications/holidays/` — that URL is live and appropriate, but it should be populated in `content-directory.ts` as `source_url`.
+- **Source:** see [bank-holiday-calendar](/docs/fact-check/bank-holiday-calendar.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The `source_url` field in `content-directory.ts` is blank for this page`
+
+---
+### F-177 · Tier B · Ministry name is truncated (F-006)
+
+- **Where:** [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) — see headline issue #1 in that report
+- **What's wrong:** The page uses "The Ministry of Labour" but the canonical official name is "Ministry of Labour, Social Security and Third Sector". This appears on both `gov.bb` and `src/data/ministries.ts`. No change since last pass — still open.
+- **Source:** see [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry name is truncated (F-006)`
+
+---
+### F-178 · Tier B · Page miscategorised in `ministries.ts`
+
+- **Where:** [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) — see headline issue #3 in that report
+- **What's wrong:** The `business-policies-and-law` page is listed under `ministry-of-industry-innovation-science-and-technology` (`ministries.ts` line 743), but its entire content covers the Ministry of Labour's mandate. Citizens navigating via the MIIST ministry page see a misleading "Business policies and law" servi
+- **Source:** see [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Page miscategorised in `ministries.ts``
+
+---
+### F-179 · Tier B · Page title vs. content scope mismatch (unresolved)
+
+- **Where:** [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) — see headline issue #4 in that report
+- **What's wrong:** The title "Business policies and law" implies broad coverage of business legislation but the content is exclusively a two-paragraph Ministry of Labour overview. The GOV.BB source page uses the narrower title "Labour Laws and Regulations". This remains an editorial IA decision for the GovBB team.
+- **Source:** see [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Page title vs. content scope mismatch (unresolved)`
+
+---
+### F-180 · Tier B · Source page title mismatch
+
+- **Where:** [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) — see headline issue #5 in that report
+- **What's wrong:** `source_url` (`https://www.gov.bb/Business/policies-laws`) is live and breadcrumbs as "Home > Business > Labour Laws and Regulations" — title differs from the alpha.gov.bb page title "Business policies and law". Still open, same as last pass.
+- **Source:** see [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Source page title mismatch`
+
+---
+### F-181 · Tier B · REVERSED — Claim 12 (gross pay / overtime) is now verified
+
+- **Where:** [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) — see headline issue #1 in that report
+- **What's wrong:** The previous pass flagged "your usual gross pay — include overtime or bonuses" (start.md) as discrepant, arguing severance is calculated on *basic pay* which excludes overtime. On re-verification, the NIS's own severance page defines "Basic Average Pay" as "(Total Earnings within the last 104 weeks
+- **Source:** see [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `REVERSED — Claim 12 (gross pay / overtime) is now verified`
+
+---
+### F-182 · Tier B · "Death of employer" trigger absent from NIS qualifying-events list (Claim 4 / Claim 13)
+
+- **Where:** [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) — see headline issue #3 in that report
+- **What's wrong:** The alpha.gov.bb page lists "your employer died" as a qualifying reason. The NIS's own /severance/ page only lists four triggers (redundancy, laid-off, short-time, natural disaster) and does not include death of employer. The Act (Cap. 355A) does contain provisions on death of employer, so the claim
+- **Source:** see [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Death of employer" trigger absent from NIS qualifying-events list (Claim 4 / Claim 13)`
+
+---
+### F-183 · Tier B · Hours-per-week eligibility threshold missing from page (additional finding)
+
+- **Where:** [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) — see headline issue #4 in that report
+- **What's wrong:** The NIS page requires employees to "be contracted to work for no less than 21 hours a week" to be eligible. The alpha.gov.bb page does not mention this threshold. A part-time worker on fewer than 21 contracted hours would not be eligible but would not know from this page.
+- **Source:** see [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Hours-per-week eligibility threshold missing from page (additional finding)`
+
+---
+### F-184 · Tier B · PAD is a dissolved entity (two occurrences)
+
+- **Where:** [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) — see headline issue #2 in that report
+- **What's wrong:** The page refers to "the Personnel Administration Division (PAD)" in both the introductory disclaimer (line 16) and the "What you'll need" section (line 23). The PAD was absorbed into the Ministry of Public Service in January 2019. Citizens contacting "the PAD" will be unable to locate the successor.
+- **Source:** see [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `PAD is a dissolved entity (two occurrences)`
+
+---
+### F-185 · Tier B · Voluntary retirement age table has a boundary error
+
+- **Where:** [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) — see headline issue #3 in that report
+- **What's wrong:** The table assigns persons appointed "On or after 15 July 1985" to the age-60 group. Both MPS sources use "on or before 15th July 1985 → 55" and "after 15th July 1985 → 60". A person appointed on exactly 15 July 1985 is entitled to voluntary retirement at 55, not 60.
+- **Source:** see [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Voluntary retirement age table has a boundary error`
+
+---
+### F-186 · Tier B · Compulsory retirement table omits the 2006–2009 row
+
+- **Where:** [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) — see headline issue #4 in that report
+- **What's wrong:** The MPS authoritative table lists four rows beginning with "1 January 2006 to 31 December 2009 → 65½". The alpha page starts at 2010, so officers in that earlier window have no guidance.
+- **Source:** see [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Compulsory retirement table omits the 2006–2009 row`
+
+---
+### F-187 · Tier B · NIS/government pension rule stated without its qualifying scope
+
+- **Where:** [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) — see headline issue #5 in that report
+- **What's wrong:** The abatement rule ("only the higher of the two") only applies to officers who entered service after 1 September 1975 per the Pensions (Miscellaneous Provisions) Act, 1975-31. The page presents it as universal. Low practical impact today but is a legal inaccuracy.
+- **Source:** see [calculate-your-pension](/docs/fact-check/calculate-your-pension.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `NIS/government pension rule stated without its qualifying scope`
+
+---
+### F-188 · Tier B · BRA address has wrong road name (unchanged)
+
+- **Where:** [crop-over-permits](/docs/fact-check/crop-over-permits.md) — see headline issue #1 in that report
+- **What's wrong:** Both BRA permit cards state "Weymouth Corporate Centre, **Spring Garden Highway**, St. Michael." All authoritative BRA sources give the address as "Weymouth Corporate Centre, **Roebuck Street**, St. Michael." A citizen attending in person would go to the wrong road (~4 km away). **Citizen impact: ME
+- **Source:** see [crop-over-permits](/docs/fact-check/crop-over-permits.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `BRA address has wrong road name (unchanged)`
+
+---
+### F-189 · Tier B · "Public gathering licence" has no confirmed statutory basis (unchanged)
+
+- **Where:** [crop-over-permits](/docs/fact-check/crop-over-permits.md) — see headline issue #5 in that report
+- **What's wrong:** The form presents a "Public Gathering Licence from the Barbados Police Service" as universal (conditions: none — appears in every checklist). No public BPS page, gov.bb page, or Act uses this phrase for a distinct Barbados permit. **Citizen impact: HIGH** — every single checklist user is told to app
+- **Source:** see [crop-over-permits](/docs/fact-check/crop-over-permits.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Public gathering licence" has no confirmed statutory basis (unchanged)`
+
+---
+### F-190 · Tier B · BPS lead time 6 weeks vs BPS-published 4 weeks (unchanged)
+
+- **Where:** [crop-over-permits](/docs/fact-check/crop-over-permits.md) — see headline issue #6 in that report
+- **What's wrong:** Both BPS cards say "6 weeks." The only BPS-published timeframe (official BPS Facebook) says "4 weeks before the date of the event." **Citizen impact: LOW-MEDIUM.**
+- **Source:** see [crop-over-permits](/docs/fact-check/crop-over-permits.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `BPS lead time 6 weeks vs BPS-published 4 weeks (unchanged)`
+
+---
+### F-191 · Tier B · Intro copy error: "Visa Debit Cards" omits Mastercard (line 11) — unfixed since prior pass
+
+- **Where:** [ezpay](/docs/fact-check/ezpay.md) — see headline issue #1 in that report
+- **What's wrong:** The intro paragraph lists "Visa Debit Cards" while the body of the same page (line 25) correctly says "Visa or Mastercard Debit Cards". bra.gov.bb independently confirms "VISA or Mastercard debit or credit cards". A citizen with only a Mastercard Debit card reading only the intro could incorrectly c
+- **Source:** see [ezpay](/docs/fact-check/ezpay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Intro copy error: "Visa Debit Cards" omits Mastercard (line 11) — unfixed since prior pass`
+
+---
+### F-192 · Tier B · Intro copy error: "Barbados Post Office" is the wrong official name (line 11) — unfixed since prior …
+
+- **Where:** [ezpay](/docs/fact-check/ezpay.md) — see headline issue #2 in that report
+- **What's wrong:** The intro uses "Barbados Post Office" while the official name is "Barbados Postal Service" (confirmed by bps.gov.bb). The body of the page (line 31) correctly uses "Barbados Postal Service". gov.bb's own intro paragraph also uses "Barbados Post Office", but alpha.gov.bb should lead with the correct
+- **Source:** see [ezpay](/docs/fact-check/ezpay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Intro copy error: "Barbados Post Office" is the wrong official name (line 11) — unfixed since prior …`
+
+---
+### F-193 · Tier B · Frontmatter `section` field mismatch
+
+- **Where:** [ezpay](/docs/fact-check/ezpay.md) — see headline issue #3 in that report
+- **What's wrong:** `src/content/ezpay.md` line 6 reads `section: "Work and Employment"` but the page lives under the `money-financial-support` category in content-directory.ts (title: "Money and financial support"). If the `section` field drives breadcrumbs or navigation, citizens will see the wrong category label.
+- **Source:** see [ezpay](/docs/fact-check/ezpay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Frontmatter `section` field mismatch`
+
+---
+### F-194 · Tier B · Portal carries "EZ123" branding, not "EZpay+"
+
+- **Where:** [ezpay](/docs/fact-check/ezpay.md) — see headline issue #4 in that report
+- **What's wrong:** Every page under ezpay.gov.bb (login, homepage) displays the title "EZ123" rather than "EZpay+". No formal rebrand announcement was found on gisbarbados.gov.bb or gov.bb. The GovBB team should confirm whether a rebrand is in progress. If so, all "EZpay+" references on alpha.gov.bb would need updatin
+- **Source:** see [ezpay](/docs/fact-check/ezpay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Portal carries "EZ123" branding, not "EZpay+"`
+
+---
+### F-195 · Tier B · Second phone number is the fax, not a voice line
+
+- **Where:** [financial-services-for-businesses](/docs/fact-check/financial-services-for-businesses.md) — see headline issue #1 in that report
+- **What's wrong:** Line 26 lists `(246) 421-2146` as a second telephone number alongside `(246) 421-2142`. The FSC's own Contact Us page lists only one phone number — `+1 (246) 421 2142` — and does not list 421-2146 at all. Multiple web search results identify 421-2146 as the FSC fax number. Presenting it without a la
+- **Source:** see [financial-services-for-businesses](/docs/fact-check/financial-services-for-businesses.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Second phone number is the fax, not a voice line`
+
+---
+### F-196 · Tier B · "Co-operatives Societies Act" is mis-spelled
+
+- **Where:** [financial-services-for-businesses](/docs/fact-check/financial-services-for-businesses.md) — see headline issue #2 in that report
+- **What's wrong:** Line 18 writes "Co-operatives Societies Act" (spurious plural on "Co-operatives"). The FSC's Legislation page, the Barbados Law Courts statute repository, and the ILO NATLEX catalogue all use "Co-operative Societies Act, Cap. 378A". The FSC's own Credit Unions Division page inconsistently uses the p
+- **Source:** see [financial-services-for-businesses](/docs/fact-check/financial-services-for-businesses.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Co-operatives Societies Act" is mis-spelled`
+
+---
+### F-197 · Tier B · Website link uses HTTP instead of HTTPS
+
+- **Where:** [financial-services-for-businesses](/docs/fact-check/financial-services-for-businesses.md) — see headline issue #3 in that report
+- **What's wrong:** Line 30 links to `http://www.fsc.gov.bb/`. The FSC site serves pages over HTTPS (`https://www.fsc.gov.bb/`). The HTTP link may generate browser security warnings on strict clients. Best practice and all Tier 1 citations use `https://`.
+- **Source:** see [financial-services-for-businesses](/docs/fact-check/financial-services-for-businesses.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Website link uses HTTP instead of HTTPS`
+
+---
+### F-198 · Tier B · Notarial seal fee conflict — $50 vs $20
+
+- **Where:** [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) — see headline issue #1 in that report
+- **What's wrong:** The page says "Notarial seal — BBD $50". The official Barbados Judicial System site currently states "The fee for affixing a notarial seal is BDS$20.00 for each notarial act." A GIS press release from April 2017 announced a change *to* $50. The 2024 Notaries Public Act says "no change in fees from t
+- **Source:** see [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Notarial seal fee conflict — $50 vs $20`
+
+---
+### F-199 · Tier B · CAIPO / Intellectual Property Office address is wrong
+
+- **Where:** [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) — see headline issue #2 in that report
+- **What's wrong:** Page says "Baobab Tower, Highway 2, Saint Michael." Authoritative sources (CAIPO website and gov.bb State Bodies page) confirm the address is "Ground Floor, Baobab Towers, Warrens, St. Michael." Building name is plural (Towers), and location is Warrens, not Highway 2.
+- **Source:** see [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `CAIPO / Intellectual Property Office address is wrong`
 
 ---
+### F-200 · Tier B · Missing citizen requirement: $10 adhesive postage stamp
 
-### F-000 · Tier A · Fix Office of the Attorney General contact info on JP page
+- **Where:** [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) — see headline issue #3 in that report
+- **What's wrong:** The Barbados Judicial System site explicitly states "Persons desirous of having a document notarized are required to bring a $10.00 adhesive postage stamp which will be affixed to the document and cancelled by the registrar." This is omitted from the page's "What to take" section — a citizen arrivin
+- **Source:** see [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Missing citizen requirement: $10 adhesive postage stamp`
 
-- **Where:** `src/content/justice-of-the-peace.md` lines 61, 71, 75
-- **Confidence it's wrong:** 95% (re-verified 29 May 2026 against two independent Tier-1 sources)
-- **Citizen impact:** **HIGH** — citizens calling the wrong number won't reach the AG.
-- **What's wrong:** Page lists phone `(246) 467-7370` and email `agoffice@barbados.gov.bb`. Both [gov.bb — Attorney General](https://www.gov.bb/Ministries/attorney-general) and [oag.gov.bb — Contact Us](https://oag.gov.bb/contact) publish:
-  - Phone: `(246) 535-0467` (PBX); `(246) 535-0434` (AG direct); `(246) 535-0437` (Permanent Secretary)
-  - Email: `ps.oag@barbados.gov.bb` (oag.gov.bb) / `ps@oag.gov.bb` (gov.bb)
-  - Address: Jones Building, Webster's Business Park, Wildey, St. Michael
-- **Fix:** replace both the phone and email at all three occurrences (lines 61, 71, 75); for the "check whether someone is a JP" use case at line 75, consider the Permanent Secretary direct line `(246) 535-0437`.
-- **Suggested issue title:** `Fix Office of the Attorney General contact details on Justice of the Peace page`
+---
+### F-201 · Tier B · New Notaries Public Act 2024 in effect since 1 September 2024
+
+- **Where:** [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) — see headline issue #5 in that report
+- **What's wrong:** The 2024 Act replaced the 2017 Act and expanded who can be a notary (attorneys-at-law, chartered accountants, qualified professionals with 15+ years experience). The page's description — which implies notarisation is only available at three specific government offices — may now be incomplete, since
+- **Source:** see [get-a-document-notarised](/docs/fact-check/get-a-document-notarised.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `New Notaries Public Act 2024 in effect since 1 September 2024`
+
+---
+### F-202 · Tier B · "One form covers multiple children at the same school" is wrong
+
+- **Where:** [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) — see headline issue #1 in that report
+- **What's wrong:** The page states parents with more than one child at the same school need only complete one form on behalf of all those children. The Ministry of Educational Transformation's own announcement (mes.gov.bb) states explicitly: "You are required to complete one form per student, and upload the receipt on
+- **Source:** see [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"One form covers multiple children at the same school" is wrong`
+
+---
+### F-203 · Tier B · Currency code "BDD" is a typo
+
+- **Where:** [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) — see headline issue #2 in that report
+- **What's wrong:** The page description in `src/content/get-a-primary-school-textbook-grant/index.md` line 3 and line 8 use "BDD" for the grant amount. The correct abbreviation used by the Government of Barbados is BDS$ (common local usage) or ISO 4217 code BBD. "BDD" does not correspond to any recognised Barbados cur
+- **Source:** see [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Currency code "BDD" is a typo`
+
+---
+### F-204 · Tier B · Opening hours are wrong (8:30am–3:15pm stated; 8:30am–3:30pm correct) — not yet fixed
+
+- **Where:** [get-birth-certificate](/docs/fact-check/get-birth-certificate.md) — see headline issue #1 in that report
+- **What's wrong:** The page lists the Registration Department as open until 3:15pm Monday to Friday. Both gov.bb/register-birth and gov.bb/Citizens/register-birth state the hours as "between the hours of 8:30 am and 3:30 pm Monday to Friday". The 3:15pm figure is a COVID-era temporary measure from 2020, not the curren
+- **Source:** see [get-birth-certificate](/docs/fact-check/get-birth-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Opening hours are wrong (8:30am–3:15pm stated; 8:30am–3:30pm correct) — not yet fixed`
+
+---
+### F-205 · Tier B · Overseas phone number +1 (246) 535-9751 not corroborated on any Tier 1 source
+
+- **Where:** [get-birth-certificate](/docs/fact-check/get-birth-certificate.md) — see headline issue #3 in that report
+- **What's wrong:** barbadoslawcourts.gov.bb lists only 1-246-535-9700 and fax 1-246-426-2405 for the Registration Department. The 535-9751 number also appears on the alpha death certificate page but has not been found on barbadoslawcourts.gov.bb or gov.bb specifically for birth certificate enquiries.
+- **Source:** see [get-birth-certificate](/docs/fact-check/get-birth-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Overseas phone number +1 (246) 535-9751 not corroborated on any Tier 1 source`
+
+---
+### F-206 · Tier B · Opening hours are wrong (3:15pm stated; 3:30pm correct)
+
+- **Where:** [get-death-certificate](/docs/fact-check/get-death-certificate.md) — see headline issue #1 in that report
+- **What's wrong:** The page lists the Registration Department as open until 3:15pm Monday to Friday (index.md line 48). Two independent gov.bb sources (gov.bb/register-birth and gov.bb/Citizens/register-birth) confirm the hours as 8:30am to 3:30pm. This is the same discrepancy flagged on the sibling get-birth-certific
+- **Source:** see [get-death-certificate](/docs/fact-check/get-death-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Opening hours are wrong (3:15pm stated; 3:30pm correct)`
+
+---
+### F-207 · Tier B · Overseas direct-dial number +1 (246) 535-9751 not confirmed on any Tier 1 source
+
+- **Where:** [get-death-certificate](/docs/fact-check/get-death-certificate.md) — see headline issue #3 in that report
+- **What's wrong:** The same number appears on the sibling birth certificate page. barbadoslawcourts.gov.bb and gov.bb/Departments/registration both list only 535-9700 (PBX) and fax numbers. A third-party directory (GiveBackBarbados) associates 535-9751 with the Registrar's Secretary, which is consistent with it being
+- **Source:** see [get-death-certificate](/docs/fact-check/get-death-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Overseas direct-dial number +1 (246) 535-9751 not confirmed on any Tier 1 source`
+
+---
+### F-208 · Tier B · Start.md asks for "cause of death" as a form field — but the page itself says cause-of-death certifi…
+
+- **Where:** [get-death-certificate](/docs/fact-check/get-death-certificate.md) — see headline issue #4 in that report
+- **What's wrong:** index.md line 29 states you must go in person; start.md line 29 lists "the cause of death" as a mandatory form field. The distinction between "cause of death as a search identifier" vs. "applying for a cause-of-death certificate" is not drawn on the page, which could confuse applicants.
+- **Source:** see [get-death-certificate](/docs/fact-check/get-death-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Start.md asks for "cause of death" as a form field — but the page itself says cause-of-death certifi…`
+
+---
+### F-209 · Tier B · "Welfare Department" is the wrong agency name
+
+- **Where:** [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) — see headline issue #1 in that report
+- **What's wrong:** The Welfare Department was dissolved on 2 January 2026 and merged into the **Social Empowerment Agency (SEA)**, together with the Child Care Board, National Assistance Board, National Disabilities Unit, and the Resilience and Reintegration Unit. Every occurrence of "Welfare Department" on this page
+- **Source:** see [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Welfare Department" is the wrong agency name`
+
+---
+### F-210 · Tier B · Both the agency name and address are wrong — citizens will go to the wrong building
+
+- **Where:** [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) — see headline issue #2 in that report
+- **What's wrong:** The page lists "Welfare Department, Perry Gap, Bridgetown" (lines 22–24 and 40–43). The agency is now the **Social Empowerment Agency (SEA)**, and its confirmed main office is at **4th Floor, Warrens Office Complex, Warrens, St. Michael** (phone: (246) 310-1600/01/02). The old Welfare Department was
+- **Source:** see [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Both the agency name and address are wrong — citizens will go to the wrong building`
+
+---
+### F-211 · Tier B · Welfare Department phone number is wrong
+
+- **Where:** [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) — see headline issue #3 in that report
+- **What's wrong:** Lines 25 and 44 list `+1 246-535-1000`, which is the former Welfare Department's PBX. The SEA's published number is **(246) 310-1600/01/02**. Citizens who dial 535-1000 may still reach legacy staff, but this number is now the old department. The page should be updated to the SEA contact.
+- **Source:** see [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Welfare Department phone number is wrong`
 
 ---
+### F-212 · Tier B · Missing DEM phone number
 
-### F-00A · Tier A · Update Immigration Department address (moved from Careenage House)
+- **Where:** [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) — see headline issue #4 in that report
+- **What's wrong:** The DEM address appears on the page (lines 80–84) but no phone number is given. The confirmed DEM contact is **(246) 438-7575** (confirmed on both dem.gov.bb and gov.bb). For a disaster-related page, this is a significant omission — citizens in a crisis need to be able to call the DEM directly.
+- **Source:** see [get-disaster-relief-assistance](/docs/fact-check/get-disaster-relief-assistance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Missing DEM phone number`
 
-- **Where:** `src/content/open-pharmacy.md` lines 53, 99 (and likely other pages — sweep needed)
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** **HIGH** — citizens go to the wrong building.
-- **What's wrong:** Page says Immigration is at "Careenage House, The Wharf, Bridgetown". Department has relocated (per [GIS — New HQ For Immigration Department](https://gisbarbados.gov.bb/blog/new-hq-for-immigration-department/)).
-- **Fix:** update to "BTI Corporate Centre, Princess Alice Highway, Bridgetown, BB11093, St. Michael". Then search the rest of `src/content/` for any other "Careenage House" mention.
-- **Suggested issue title:** `Update Immigration Department address (moved from Careenage House to BTI Corporate Centre)`
+---
+### F-213 · Tier B · Opening hours are wrong (3:15pm stated; 3:30pm correct)
+
+- **Where:** [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) — see headline issue #1 in that report
+- **What's wrong:** The page states the Registration Department is open until 3:15pm Monday to Friday. Both `gov.bb/register-birth` and `gov.bb/Citizens/register-birth` state the hours as "between the hours of 8:30 am and 3:30 pm Monday to Friday." This is the same discrepancy confirmed on the birth certificate page (s
+- **Source:** see [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Opening hours are wrong (3:15pm stated; 3:30pm correct)`
+
+---
+### F-214 · Tier B · Overseas section heading names the wrong certificate type
 
+- **Where:** [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) — see headline issue #2 in that report
+- **What's wrong:** index.md line 61 reads "## Get a copy of a birth certificate if you live overseas" — but the page is about marriage certificates. Confirmed present on the live page. This is a copy-paste error from the birth certificate page. Citizens reading this section would see a heading that does not match the
+- **Source:** see [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Overseas section heading names the wrong certificate type`
+
 ---
+### F-215 · Tier B · Heading typo "unknwon" (index.md line 57)
+
+- **Where:** [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) — see headline issue #3 in that report
+- **What's wrong:** The heading reads "If basic information is unknwon" — a clear spelling error visible to citizens on the live page. High confidence this should be "unknown".
+- **Source:** see [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Heading typo "unknwon" (index.md line 57)`
 
-### F-00B · Tier A · Fix "12 polyclinic locations" — actual is 9 polyclinics + 2 satellites
+---
+### F-216 · Tier B · "Crisis Hotline on 435-8222" is the BPW Crisis Centre, not a government hotline
 
-- **Where:** `src/content/open-pharmacy.md` line 72
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** Low (descriptive copy), but a credibility signal.
-- **What's wrong:** Page says "12 locations across the island". Ministry of Health publishes 9 polyclinics + 2 satellite clinics = 11.
-- **Fix:** change to "9 polyclinics plus 2 satellite clinics across the island". Verify via [Ministry of Health — Primary Health Care](https://www.health.gov.bb/For-Public/Primary-Health-Care).
-- **Suggested issue title:** `Fix polyclinic count on Find an open pharmacy page (12 → 9 polyclinics + 2 satellites)`
+- **Where:** [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) — see headline issue #1 in that report
+- **What's wrong:** The page presents 435-8222 under "Urgent assistance" as if it were a named government crisis line. In fact this number belongs to the Barbados Professional Women (BPW) Crisis Centre and Shelter — a non-governmental organisation. The label should say "BPW Crisis Centre" so a citizen in crisis knows w
+- **Source:** see [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Crisis Hotline on 435-8222" is the BPW Crisis Centre, not a government hotline`
 
 ---
+### F-217 · Tier B · Two of the three FCU phone numbers cannot be corroborated
+
+- **Where:** [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) — see headline issue #2 in that report
+- **What's wrong:** The page lists three FCU numbers: 435-8222, 845-0623, and 836-5070. 435-8222 is the BPW hotline (not the FCU). 845-0623 appears as a BPW WhatsApp/calls number (not FCU). 836-5070 cannot be found in any authoritative source consulted. The official FCU/FCIU number confirmed by the BPW Crisis Centre pa
+- **Source:** see [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Two of the three FCU phone numbers cannot be corroborated`
 
-### F-097 · Tier A · Fix broken "Find a JP" link on Justice of the Peace page
+---
+### F-218 · Tier B · "Black Rock Police Station Annex" — "Annex" is not corroborated
 
-- **Where:** `src/content/justice-of-the-peace.md` line 53
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** HIGH — "Find a JP" is the primary CTA on the page. Clicking it lands citizens on a 404, breaking the page's main task.
-- **What's wrong:** The link `href="/travel-id-citizenship/justice-of-the-peace/find"` returns HTTP 404 on the live site. The JP page itself loads at `/justice-of-the-peace` (no category prefix) because it is `protected: true` in `src/data/content-directory.ts`. The find subpage at either candidate path (`/justice-of-the-peace/find` or the prefixed path) currently 404s to anonymous fetch.
-- **Fix:** Update the link to whichever path serves the find component once it is reachable. Confirm by deploying and clicking the link as an anonymous citizen — and verify protected-page routing doesn't lock out the find subpage.
-- **Source:** Live check 29 May 2026 — both candidate URLs return HTTP 404; see also [/docs/fact-check/justice-of-the-peace.md](/docs/fact-check/justice-of-the-peace.md) Claim 17.
-- **Suggested issue title:** `Fix broken "Find a JP" link on Justice of the Peace page`
+- **Where:** [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) — see headline issue #3 in that report
+- **What's wrong:** Every authoritative source names the location as "Old Black Rock Police Station, Black Rock, St. Michael." No source uses the word "Annex." A citizen searching a map or asking for directions to the "Annex" may not find it.
+- **Source:** see [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Black Rock Police Station Annex" — "Annex" is not corroborated`
 
 ---
+### F-219 · Tier B · "Victim Rights Form 7" has no authoritative source
+
+- **Where:** [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) — see headline issue #4 in that report
+- **What's wrong:** The page states the FCU "may also help victims apply for additional trauma-related support through the Victim Rights Form 7." No authoritative Barbados source — not the Domestic Violence (Protection Orders) Act, not the 2016 Amendment, not the Baker McKenzie survey, not gov.bb, not GIS — names a for
+- **Source:** see [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Victim Rights Form 7" has no authoritative source`
 
-### F-00D · Tier A · Fix Barbados Licensing Authority phone
+---
+### F-220 · Tier B · No legal reference given
 
-- **Where:** `src/content/apply-for-a-drivers-licence.md` line 67
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** Medium — citizens may dial a wrong number.
-- **What's wrong:** Page lists `1-246-536-0264 / 1-246-536-0265`. BLA publishes `+1 (246) 536-0265 / 0267 / 0278`. `0264` is not on the BLA's list; `0267` and `0278` are missing from the page.
-- **Fix:** update to `(246) 536-0265 / 0267 / 0278` per the BLA website.
-- **Source:** [bla.gov.bb](https://bla.gov.bb)
-- **Suggested issue title:** `Fix BLA phone numbers on Apply for driver's licence page`
+- **Where:** [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) — see headline issue #5 in that report
+- **What's wrong:** The page describes protection orders extensively but never names the governing legislation — the Domestic Violence (Protection Orders) Act, CAP. 130A (as amended 2016-2). Citizens and advocates looking to understand their legal rights cannot do so from this page alone.
+- **Source:** see [get-support-for-a-victim-of-domestic-abuse](/docs/fact-check/get-support-for-a-victim-of-domestic-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No legal reference given`
 
 ---
+### F-221 · Tier B · Entire visitor driving permit section is obsolete
+
+- **Where:** [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) — see headline issue #1 in that report
+- **What's wrong:** The Barbados Revenue Authority abolished visitor driving permits effective 15 October 2025. Visitors may now drive in Barbados on a valid home-country licence without any permit or fee. The Car Rental Levy (BBD $5/day, max $35 per rental contract) is collected by rental companies directly — it is no
+- **Source:** see [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Entire visitor driving permit section is obsolete`
 
-### F-00E · Tier A · Fix Welfare Department phone format
+---
+### F-222 · Tier B · A sibling page `visitor-permit-application` on alpha.gov.bb is also obsolete and still live
 
-- **Where:** `src/content/apply-financial-assistance.md` line 103
-- **Confidence it's wrong:** 75%
-- **Citizen impact:** Medium — citizens can't parse what to dial.
-- **What's wrong:** Page lists `+1 246-535-1000/16/23`. The Welfare Department publishes `1 (246) 535-1000` and `1 (246) 535-1023`. The `/16/` extension is not on the official list.
-- **Fix:** rewrite as `(246) 535-1000` and `(246) 535-1023`. If `1016` is a real extension, list it as such.
-- **Source:** [Welfare Department — gov.bb](https://www.gov.bb/Departments/welfare)
-- **Suggested issue title:** `Fix Welfare Department phone format on Apply for financial assistance page`
+- **Where:** [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) — see headline issue #2 in that report
+- **What's wrong:** The protected page at `https://alpha.gov.bb/visitor-permit-application` still presents the full online application for a Visitor's Driving Permit, including the $10/$100 fee tiers and SurePay payment instructions. Two pages on the same alpha site now contradict the BRA policy. The sibling page is a
+- **Source:** see [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `A sibling page `visitor-permit-application` on alpha.gov.bb is also obsolete and still live`
 
 ---
+### F-223 · Tier B · ZR routes are not "numbered one through eleven."
+
+- **Where:** [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) — see headline issue #3 in that report
+- **What's wrong:** The Transport Authority's official route list at ta.gov.bb now shows 42 route-taxi routes (updated from 31 noted in prior pass), including numbered routes up to Route 61 and 16 lettered sub-routes (1A, 1B, 1D, 3C, 3D, 3E, 3L, 3M, 3N, 3O, 3Q, 3R, 3V, 3W, 8B). The "1 through 11" description is an outd
+- **Source:** see [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `ZR routes are not "numbered one through eleven."`
 
-### F-00F · Tier B · Fix Driving Test eligibility: "30 days" should be "3 months"
+---
+### F-224 · Tier B · The `source_url` page (`gov.bb/Visit-Barbados/getting-around-barbados`) is live but itself carries t…
 
-- **Where:** `src/content/apply-for-a-drivers-licence.md` line 35
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** **HIGH** — a citizen applying at day 31 will be told to wait.
-- **What's wrong:** Page says "must apply after 30 days and within 180 days of issue of the Learner's Permit". The BLA states first-time permit holders must "**practice for a minimum three (3) months** before applying for the driving examination".
-- **Fix:** change "30 days" to "3 months (90 days)". Verify the 180-day upper bound with BLA.
-- **Source:** [BLA — Learner Permit](https://bla.gov.bb/servicedetails/TGVhcm5lciBQZXJtaXQ=)
-- **Suggested issue title:** `Fix driving-test eligibility timeline (30 days → 3 months) on Apply for driver's licence page`
+- **Where:** [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) — see headline issue #4 in that report
+- **What's wrong:** , so it cannot be used to justify retaining the permit section. Both the alpha page and its declared source are simultaneously wrong on the same facts.
+- **Source:** see [getting-around-barbados](/docs/fact-check/getting-around-barbados.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The `source_url` page (`gov.bb/Visit-Barbados/getting-around-barbados`) is live but itself carries t…`
 
 ---
+### F-225 · Tier B · Entire page describes a repealed regulatory regime
+
+- **Where:** [government-requirements](/docs/fact-check/government-requirements.md) — see headline issue #1 in that report
+- **What's wrong:** The International Financial Services Act, Cap 325 (IFSA) — the implicit statutory basis for every claim on this page — was repealed effective 1 January 2019. Former IFSC licensees are now "foreign currency earning banks" (FCBs) regulated under Part IIIB of the Financial Institutions (Amendment) Act,
+- **Source:** see [government-requirements](/docs/fact-check/government-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Entire page describes a repealed regulatory regime`
 
-### F-001 · Tier A · Fix CAIPO/Intellectual Property Office address
+---
+### F-226 · Tier B · "Annual returns to be filed by January 31" is discrepant
 
-- **Where:** `src/content/get-a-document-notarised.md` lines 31–35
-- **Live page:** <https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised>
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** **High** — a citizen could turn up to the wrong place.
-- **What's wrong:** Page says "Baobab Tower / Highway 2 / Saint Michael". Building name is singular; location is "Highway 2".
-- **Fix:** change to "Ground Floor / Baobab Towers / Warrens / St. Michael". Building is **Towers** plural; address is **Warrens**, not Highway 2.
-- **Sources:** [CAIPO](https://caipo.gov.bb/) · [gov.bb — Corporate Affairs and Intellectual Property](https://www.gov.bb/State-Bodies/corporate-affairs-intellectual-property)
-- **Suggested issue title:** `Fix CAIPO address on Get a document notarised page (Baobab Tower → Baobab Towers, Warrens)`
+- **Where:** [government-requirements](/docs/fact-check/government-requirements.md) — see headline issue #2 in that report
+- **What's wrong:** The previous audit pass marked this as verified at 88%, but CAIPO's official website and the Companies Act, Cap. 308 s.15A show the annual return deadline is **not** January 31. It depends on incorporation date: companies incorporated January–June must file by **June 30**; those incorporated July–De
+- **Source:** see [government-requirements](/docs/fact-check/government-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Annual returns to be filed by January 31" is discrepant`
 
 ---
+### F-227 · Tier B · "Licence renewed annually by January 1" — partially corroborated but under repealed law
+
+- **Where:** [government-requirements](/docs/fact-check/government-requirements.md) — see headline issue #3 in that report
+- **What's wrong:** The Central Bank of Barbados confirms the licence fee is "statutorily due on January 1" — this supports the claim's January 1 date. However, the CBB's confirmation uses IFSA-era language. The operative renewal requirement under the current FIA Part IIIB has not been confirmed in a publicly accessibl
+- **Source:** see [government-requirements](/docs/fact-check/government-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Licence renewed annually by January 1" — partially corroborated but under repealed law`
 
-### F-002 · Tier A · Replace broken `source_url` for the notarisation page
+---
+### F-228 · Tier B · No enabling legislation cited anywhere on the page
 
-- **Where:** `src/data/content-directory.ts` line 431
-- **Confidence it's wrong:** 100% (directly verified — HTTP 404)
-- **Citizen impact:** Low (it's a metadata field), but indicates the underlying source has moved.
-- **What's wrong:** `source_url` is set to `https://www.gov.bb/Citizens/notarize-document`, which returns 404. Other `gov.bb/Citizens/*` URLs are live, so this one's been renamed or removed.
-- **Fix:** point to [Barbados Judicial System — Notarizing Documents and Issuing Notarial Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates).
-- **Suggested issue title:** `Replace broken source_url for Get a document notarised`
+- **Where:** [government-requirements](/docs/fact-check/government-requirements.md) — see headline issue #4 in that report
+- **What's wrong:** The page never names the governing Act. Given the IFSA's repeal and replacement by the FIA, naming the current legislation is essential for compliance. The omission is now materially misleading.
+- **Source:** see [government-requirements](/docs/fact-check/government-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No enabling legislation cited anywhere on the page`
 
 ---
+### F-229 · Tier B · Capital thresholds: USD denomination unconfirmed under current law
+
+- **Where:** [government-requirements](/docs/fact-check/government-requirements.md) — see headline issue #5 in that report
+- **What's wrong:** The US$2,000,000 / US$500,000 figures are consistently cited in pre-2019 sources and CBB transition materials. No publicly accessible text of Part IIIB of the current FIA has been confirmed to retain the USD denomination.
+- **Source:** see [government-requirements](/docs/fact-check/government-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Capital thresholds: USD denomination unconfirmed under current law`
 
-### F-003 · Tier A · Fix typo "Cane Carden" → "Cane Garden"
+---
+### F-230 · Tier B · Tax rates table is entirely obsolete (lines 57–65)
 
-- **Where:** `src/content/register-a-birth/index.md` line 120
-- **Confidence it's wrong:** 95% (no place called "Cane Carden" in St. Thomas exists; "Cane Garden" does)
-- **Citizen impact:** Medium — citizens searching for the district court won't find it on a map.
-- **What's wrong:** "District D Magistrate's Court, **Cane Carden** St. Thomas"
-- **Fix:** change to "Cane Garden, St. Thomas"
-- **Suggested issue title:** `Typo: "Cane Carden" → "Cane Garden" on Register a birth page`
+- **Where:** [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) — see headline issue #1 in that report
+- **What's wrong:** The page states the general corporation tax rate is 25%. Barbados enacted the Income Tax (Amendment and Validation) Act, 2024-15 (gazetted 24 May 2024, effective 1 January 2024), which replaced the 25% flat rate with a tiered structure — for income year 2024, the rates are 5.5% (income ≤ BBD $1M), 3
+- **Source:** see [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Tax rates table is entirely obsolete (lines 57–65)`
 
 ---
+### F-231 · Tier B · Loss carry-forward period is wrong (lines 39–41)
+
+- **Where:** [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) — see headline issue #2 in that report
+- **What's wrong:** The page says trading losses can be carried forward for nine years. BRA's own guidance also currently says nine years, but the BRA page appears not to have been updated to reflect the Income Tax (Amendment and Validation) Act, 2024-15 amendments. PwC (cited in previous pass, currently unavailable) c
+- **Source:** see [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Loss carry-forward period is wrong (lines 39–41)`
 
-### F-004 · Tier A · Fix typo "assitance" → "assistance"
+---
+### F-232 · Tier B · Group relief exclusions list is outdated (line 53)
 
-- **Where:** `src/content/apply-financial-assistance.md` line 33
-- **Confidence it's wrong:** 100%
-- **Citizen impact:** Low (trust signal), but visible heading on a welfare page.
-- **What's wrong:** Heading reads "How to apply for financial **assitance**".
-- **Fix:** "How to apply for financial assistance".
-- **Suggested issue title:** `Typo: "assitance" → "assistance" on Apply for financial assistance page`
+- **Where:** [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) — see headline issue #3 in that report
+- **What's wrong:** The page lists "international business companies, exempt insurance companies, societies with restricted liability, offshore banks and other companies granted special tax concessions" as excluded from group relief. These regime categories were abolished or frozen for new entrants as of 31 December 20
+- **Source:** see [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Group relief exclusions list is outdated (line 53)`
 
 ---
+### F-233 · Tier B · Declared `source_url` resolves but content is itself outdated
+
+- **Where:** [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) — see headline issue #4 in that report
+- **What's wrong:** The `source_url` (`https://www.gov.bb/tax-information`) is live and returns content — but the upstream gov.bb page has identical rate information to alpha.gov.bb (also quoting 25%). Both are sourcing from the same pre-reform text. The authoritative current source for rates is `bra.gov.bb/About/Tax-T
+- **Source:** see [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Declared `source_url` resolves but content is itself outdated`
 
-### F-005 · Tier A · Remove stray ` ``` ` markdown blocks (2 pages)
+---
+### F-234 · Tier B · Ministry name is wrong throughout the page (4 occurrences)
 
-- **Where:** `src/content/apply-for-a-passport.md` line 59 AND `src/content/apply-for-a-drivers-licence.md` line 68
-- **Confidence it's wrong:** 100%
-- **Citizen impact:** Medium — renders an unclosed code block, breaking page layout below it.
-- **What's wrong:** Stray triple-backtick at the end of the file with no opening fence above. Markdown renders everything after it as a code block.
-- **Fix:** delete the trailing ` ``` ` line on both files.
-- **Suggested issue title:** `Remove stray ``` markdown on Apply for passport and Apply for driver's licence pages`
+- **Where:** [jobseekers](/docs/fact-check/jobseekers.md) — see headline issue #1 in that report
+- **What's wrong:** The page uses "Ministry of Labour and Social Partnership Relations" in every reference. The canonical current name, confirmed on gov.bb/ministries, labour.gov.bb, and in `src/data/ministries.ts` line 783, is "Ministry of Labour, Social Security and Third Sector". The `source_url` page at `gov.bb/Cit
+- **Source:** see [jobseekers](/docs/fact-check/jobseekers.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry name is wrong throughout the page (4 occurrences)`
 
 ---
+### F-235 · Tier B · "National Employment Bureau" no longer exists under that name
+
+- **Where:** [jobseekers](/docs/fact-check/jobseekers.md) — see headline issue #2 in that report
+- **What's wrong:** The One Stop Resource Centre page on labour.gov.bb, and the Employment Services overview, both reference BECCS (Barbados Employment and Career Counselling Service) exclusively — "National Employment Bureau" does not appear on either page. Citizens searching for the "National Employment Bureau" may h
+- **Source:** see [jobseekers](/docs/fact-check/jobseekers.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"National Employment Bureau" no longer exists under that name`
 
-### F-006 · Tier A · Update ministry names to canonical forms
+---
+### F-236 · Tier B · "Applying for Jobs Online (Coming Soon)" — likely stale
 
-- **Where:** 4 content files + 1 ministry page
-- **Confidence it's wrong:** 95% (canonical names verified in `src/data/ministries.ts`)
-- **Citizen impact:** Medium — outdated ministry names undermine trust and search.
-- **What's wrong (5 sub-fixes):**
-  - `src/content/jobseekers.md` lines 3, 11, 19, 30: "Ministry of Labour and Social Partnership Relations" → **"Ministry of Labour, Social Security and Third Sector"**
-  - `src/content/business-policies-and-law.md` lines 3, 11, 13: bare "Ministry of Labour" → **"Ministry of Labour, Social Security and Third Sector"**
-  - `src/content/apply-for-conductor-licence/index.md` lines 22, 27: "Ministry of Transport and Works" → **"Ministry of Transport, Works and Water Resources"**
-  - `src/content/apply-to-the-barbados-youthadvance-corps.md` lines 28, 82: "Ministry of Youth and Community Empowerment" → **"Ministry of Youth, Sports and Community Empowerment"**
-  - `src/content/ministries/ministry-of-environment-and-national-beautification.md` line 1: "Natural Beautification" → **"National Beautification"**
-- **Sources:** `src/data/ministries.ts` (canonical list)
-- **Suggested issue title:** `Update ministry names to canonical forms (5 places across 5 files)`
+- **Where:** [jobseekers](/docs/fact-check/jobseekers.md) — see headline issue #3 in that report
+- **What's wrong:** The page lists an online job application feature as "Coming Soon" with no link. The Barbados Job Register (`barbadosjobregister.gov.bb`) has existed as a live job portal for some time; however the domain returned HTTP 403 during this check so its current operational status cannot be independently co
+- **Source:** see [jobseekers](/docs/fact-check/jobseekers.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Applying for Jobs Online (Coming Soon)" — likely stale`
 
 ---
+### F-237 · Tier B · "Ministry of the Public Service" omits "and Talent Development"
+
+- **Where:** [jobseekers](/docs/fact-check/jobseekers.md) — see headline issue #4 in that report
+- **What's wrong:** The canonical name per gov.bb/ministries is "Ministry of the Public Service and Talent Development". The page drops the full suffix. Lower-priority than the Labour ministry error but still inconsistent with canonical naming.
+- **Source:** see [jobseekers](/docs/fact-check/jobseekers.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Ministry of the Public Service" omits "and Talent Development"`
 
-### F-007 · Tier B · "Documents that can be notarised" list looks UK-template-derived
+---
+### F-238 · Tier B · No Guidance and Counseling or Education and Training links
 
-- **Where:** `src/content/get-a-document-notarised.md` lines 64–71
-- **Confidence it's wrong:** 65%
-- **Citizen impact:** Medium — citizens may bring wrong documents or assume notarisation does something it doesn't.
-- **What's wrong:** The list (passports, photocard driving licences, letters from a Ministry, bank statements, gas or electricity bills, letters from a hospital or doctor) is the canonical UK Home Office proof-of-address checklist. Barbadian notarisation is dominated by overseas-use authentication (per [GIS](https://gisbarbados.gov.bb/blog/notarisation-of-documents-affixing-of-apostilles/)), not address verification.
-- **Fix:** confirm with the Registrar's office what documents are actually presented for notarisation; replace this list with the Barbados-specific one.
-- **Suggested issue title:** `Verify "Documents that can be notarised" list matches Barbados practice`
+- **Where:** [jobseekers](/docs/fact-check/jobseekers.md) — see headline issue #5 in that report
+- **What's wrong:** Both sections are mentioned by name but provide no hyperlink to the relevant labour.gov.bb pages, leaving citizens with no direct navigation path.
+- **Source:** see [jobseekers](/docs/fact-check/jobseekers.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No Guidance and Counseling or Education and Training links`
 
 ---
+### F-239 · Tier B · Office of the Attorney General email is wrong
+
+- **Where:** [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) — see headline issue #3 in that report
+- **What's wrong:** Page lists `agoffice@barbados.gov.bb` (line 61). `oag.gov.bb/contact` publishes `ps.oag@barbados.gov.bb`; `gov.bb/Ministries/attorney-general` publishes `ps@oag.gov.bb`. The page's address is unattested in any authoritative source. **HIGH** impact.
+- **Source:** see [justice-of-the-peace](/docs/fact-check/justice-of-the-peace.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Office of the Attorney General email is wrong`
 
-### F-008 · Tier B · "Execution of a document $20" notary fee has no authoritative source
+---
+### F-240 · Tier B · "Global population indexes" is the wrong term
 
-- **Where:** `src/content/get-a-document-notarised.md` line 83
-- **Confidence it's wrong:** 60%
-- **Citizen impact:** Medium — wrong fee leads to either underpayment (rejected) or overpayment.
-- **What's wrong:** Neither the [GIS fee update](https://gisbarbados.gov.bb/blog/change-in-notary-fees/), the [Barbados Judicial System notarisation page](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/other-services-and-registrations/notarizing-documents-and-issuing-notarial-certificates), nor the [Notaries Public Act 2017-09](https://caipo.gov.bb/wp-content/uploads/2021/08/notariespublicact2017.pdf) lists "execution of a document" as a fee category. My read: someone took the pre-April-2017 notarial seal fee ($20) and mislabelled it as a separate "execution" fee, distinct from the current $50 notarial seal.
-- **Fix:** confirm with the Registrar's office whether "execution" is a distinct fee; if not, remove the line.
-- **Suggested issue title:** `Verify "Execution of a document $20" notary fee or remove`
+- **Where:** [local-information](/docs/fact-check/local-information.md) — see headline issue #1 in that report
+- **What's wrong:** The page says Barbados is "ranked highly in most global population indexes." "Population indexes" typically measure population size or growth — Barbados ranks approximately 186th–187th in the world by population (a very small country). The intended meaning is almost certainly quality-of-life or inte
+- **Source:** see [local-information](/docs/fact-check/local-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Global population indexes" is the wrong term`
 
 ---
+### F-241 · Tier B · Page body is thin and largely promotional
+
+- **Where:** [local-information](/docs/fact-check/local-information.md) — see headline issue #2 in that report
+- **What's wrong:** The two-paragraph body contains only a handful of verifiable factual assertions; the rest is promotional copy. No specific statistics, contacts, or procedural information are provided that could mislead citizens in a transactional way. The main risk is reputational (inaccurate claim about ranking po
+- **Source:** see [local-information](/docs/fact-check/local-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Page body is thin and largely promotional`
 
-### F-009 · Tier B · Update "Registration opens in May 2026" — date is now
+---
+### F-242 · Tier B · No major issues found for citizen-action claims
 
-- **Where:** `src/content/register-summer-camp.md` line 13
-- **Confidence it's wrong:** 80% (operational status; today is 2026-05-27 so registration has either just opened or is about to)
-- **Citizen impact:** **High** — parents acting on this page need accurate current status.
-- **What's wrong:** The page says "**Registration opens in May 2026.**" in bold. Today is 2026-05-27. Either registration is now open (and the message should change to "Registration is open — register by X") or it's slipping (and the date is wrong).
-- **Fix:** check with Ministry of Youth, Sports and Community Empowerment for live status; rewrite the line to reflect current state, not future tense.
-- **Suggested issue title:** `Update Summer Camp registration status — "opens in May 2026" needs live status`
+- **Where:** [local-information](/docs/fact-check/local-information.md) — see headline issue #3 in that report
+- **What's wrong:** — this page carries no fees, procedures, contact details, or eligibility rules that could misdirect a citizen trying to use a government service. The sole discrepant claim is a terminology error in descriptive copy.
+- **Source:** see [local-information](/docs/fact-check/local-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No major issues found for citizen-action claims`
 
 ---
+### F-243 · Tier B · Liquor licence application route is wrong
+
+- **Where:** [loud-music-permit](/docs/fact-check/loud-music-permit.md) — see headline issue #1 in that report
+- **What's wrong:** The page tells citizens to "apply for a liquor license from the police." Under the Liquor Licence Act, 2021 (in force from April 2022), applications go to the Liquor Licensing Authority at liquorlicence.gov.bb — not through the police. The Commissioner of Police is notified of applications and may a
+- **Source:** see [loud-music-permit](/docs/fact-check/loud-music-permit.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Liquor licence application route is wrong`
 
-### F-010 · Tier B · Reword passport page "Effective December 01, 2010" header
+---
+### F-244 · Tier B · Exemptions list is incomplete and uses informal language
 
-- **Where:** `src/content/apply-for-a-passport.md` line 47
-- **Confidence it's wrong:** 0% on the facts (fees match `immigration.gov.bb` exactly), 95% on the framing
-- **Citizen impact:** Medium — undermines citizen trust in the page's freshness; not a fact error.
-- **What's wrong:** Header reads "New Passport Fees Effective December 01, 2010". Fees are still right but the 2010 stamp suggests the page hasn't been updated in 16 years.
-- **Fix:** change to "Passport fees" or "Passport fees (current as of 2026)". The information is fine; only the framing is bad.
-- **Suggested issue title:** `Reword passport fee header to remove "Effective December 01, 2010"`
+- **Where:** [loud-music-permit](/docs/fact-check/loud-music-permit.md) — see headline issue #2 in that report
+- **What's wrong:** The BRA lists four statutory exemptions from the promoter's authorisation requirement; the page states only two ("educational institutions" and "religious groups"). Two exemptions are missing: persons who provide entertainment on a daily or weekly basis, and churches registered under the Charities A
+- **Source:** see [loud-music-permit](/docs/fact-check/loud-music-permit.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Exemptions list is incomplete and uses informal language`
 
 ---
+### F-245 · Tier B · The 1,000 / 1,500 attendee thresholds for police and fire presence cannot be confirmed from any publ…
+
+- **Where:** [loud-music-permit](/docs/fact-check/loud-music-permit.md) — see headline issue #3 in that report
+- **What's wrong:** The BRA and the Public Entertainments Act require certificates from the Commissioner of Police and Chief Fire Officer for venue licences — but these are "fit and proper person" / "sufficient fire exits" certificates, not attendance-triggered requirements. No public source specifies 1,000 or 1,500 as
+- **Source:** see [loud-music-permit](/docs/fact-check/loud-music-permit.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The 1,000 / 1,500 attendee thresholds for police and fire presence cannot be confirmed from any publ…`
 
-### F-011 · Tier B · Verify loud-music attendance thresholds (1,000 / 1,500)
+---
+### F-246 · Tier B · TLS certificate error on `publicentertainment.bra.gov.bb` persists (re-tested 2026-05-29)
 
-- **Where:** `src/content/loud-music-permit.md` lines 19, 21
-- **Confidence it's wrong:** 50% — could be right; could be off-by-one-zero or out of date.
-- **Citizen impact:** **High** — event organisers act on these thresholds; wrong numbers = wrong police/fire presence at events.
-- **What's wrong:** Page asserts ">1,000 attendees needs police presence" and ">1,500 needs fire service presence" with no citation. Specific numbers but no source.
-- **Fix:** confirm with Barbados Police Service and Barbados Fire Service in writing; add a citation to whatever public source confirms it.
-- **Suggested issue title:** `Verify attendance thresholds (1,000 police / 1,500 fire) on Loud music permit page`
+- **Where:** [loud-music-permit](/docs/fact-check/loud-music-permit.md) — see headline issue #4 in that report
+- **What's wrong:** The portal continues to return an "unable to verify the first certificate" TLS error. Citizens following the annual-permit link will receive a browser security warning and most will abandon. **Citizen impact: HIGH** — the link is effectively inaccessible for ordinary citizens.
+- **Source:** see [loud-music-permit](/docs/fact-check/loud-music-permit.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `TLS certificate error on `publicentertainment.bra.gov.bb` persists (re-tested 2026-05-29)`
 
 ---
+### F-247 · Tier B · "Definition of loud music" has no statutory basis
+
+- **Where:** [loud-music-permit](/docs/fact-check/loud-music-permit.md) — see headline issue #5 in that report
+- **What's wrong:** The Environmental Protection Department explicitly states there is no noise legislation in Barbados (re-confirmed 2026-05-29: "There is no noise legislation in Barbados however the Cabinet of Barbados acceded to the Barbados Noise Policy which basically adopted the World Health Organisation Communit
+- **Source:** see [loud-music-permit](/docs/fact-check/loud-music-permit.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Definition of loud music" has no statutory basis`
 
-### F-012 · Tier B · Fix broken-English sentence on driver's licence page
+---
+### F-248 · Tier B · "Male and female" applicant language is legally out of step
 
-- **Where:** `src/content/apply-for-a-drivers-licence.md` line 14
-- **Confidence it's wrong:** 100% (text is structurally broken)
-- **Citizen impact:** Medium — citizens can't parse the eligibility rules.
-- **What's wrong:** Sentence reads: "If you are at least 16 years old you may be obtaining a Learner's License for a private motor vehicle **for a vehicle is 16 years** (if the applicant's parents or guardians give their consent)." Conflates applicant age with vehicle age; structurally broken.
-- **Fix:** rewrite to clarify the age-16-with-parental-consent rule for a Learner's Licence.
-- **Suggested issue title:** `Rewrite broken sentence on Apply for driver's licence page (line 14)`
+- **Where:** [marriage-licences](/docs/fact-check/marriage-licences.md) — see headline issue #2 in that report
+- **What's wrong:** Line 13 states applications must be made by "both (male and female) persons". The Marriage Act CAP 218A uses gender-neutral language ("two persons"), and the Sexual Offences Act sections criminalising same-sex relations were struck down in December 2022. The explicit "male and female" restriction wa
+- **Source:** see [marriage-licences](/docs/fact-check/marriage-licences.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Male and female" applicant language is legally out of step`
 
 ---
+### F-249 · Tier B · Registration Department building name is wrong
 
-### F-013 · Tier B · Verify open-pharmacy operational details
+- **Where:** [marriage-licences](/docs/fact-check/marriage-licences.md) — see headline issue #3 in that report
+- **What's wrong:** Lines 116–122 say "Judicial Centre" as the building name. Authoritative sources — `gov.bb/Departments/registration` and `barbadoslawcourts.gov.bb` — consistently use "Supreme Court Complex, Whitepark Road, St. Michael". Note: the source `gov.bb/Citizens/marriage-licence` also uses "Judicial Centre",
+- **Source:** see [marriage-licences](/docs/fact-check/marriage-licences.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Registration Department building name is wrong`
 
-Three related claims on the same page — group as one issue or split into three.
+---
+### F-250 · Tier B · Registration Department email address has a typo
 
-- **Where:** `src/content/open-pharmacy.md` lines 36, 64–66, 72
-- **Confidence it's wrong:** 30–40% per item; medium-high probability that at least one is stale.
-- **Citizen impact:** **High** — citizens act on this to collect prescriptions.
-- **What's wrong (3 sub-fixes):**
-  - **Line 72:** "12 government polyclinic locations" — specific number; verify against Ministry of Health.
-  - **Lines 64–66:** prescription colour scheme (blue/pink/yellow/green) — operational detail that changes; verify with BDS.
-  - **Line 36:** chronic conditions list (asthma, cancer, diabetes, epilepsy, glaucoma, hypertension) — may be incomplete if new conditions have been added; verify with BDS.
-- **Fix:** Barbados Drug Service (246) 535-4300 or <director@drugservice.gov.bb> to confirm all three.
-- **Suggested issue title:** `Verify open-pharmacy operational details (polyclinic count, prescription colours, conditions list)`
+- **Where:** [marriage-licences](/docs/fact-check/marriage-licences.md) — see headline issue #4 in that report
+- **What's wrong:** Line 132 lists `registrar@lawcourt.gov.bb` (singular "lawcourt"). The `gov.bb/Departments/registration` page lists `registrar@lawcourts.gov.bb` (plural "lawcourts"). The `barbadoslawcourts.gov.bb/Certificates` page lists a third variant: `registrarsupremecourt@barbados.gov.bb`. Three official source
+- **Source:** see [marriage-licences](/docs/fact-check/marriage-licences.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Registration Department email address has a typo`
 
 ---
+### F-251 · Tier B · Clinic name is wrong — the authorised facility is now MedPlus Management Services, Inc. at Wildey, n…
 
-### F-014 · Tier C · Welfare Department phone format is unparseable
+- **Where:** [medical-requirements](/docs/fact-check/medical-requirements.md) — see headline issue #1 in that report
+- **What's wrong:** The US State Department's BGN Bridgetown supplement (the sole authoritative source for panel physician listings in Barbados) now lists one authorised facility: MedPlus Management Services, Inc., Clapham Court, Wildey Main Road, St. Michael, BB14007. "The Diagnostic Clinic" does not appear anywhere i
+- **Source:** see [medical-requirements](/docs/fact-check/medical-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Clinic name is wrong — the authorised facility is now MedPlus Management Services, Inc. at Wildey, n…`
 
-- **Where:** `src/content/apply-financial-assistance.md` line 103
-- **Confidence it's wrong:** 60% (something is wrong, unclear what)
-- **Citizen impact:** Medium — citizens can't tell what to dial.
-- **What's wrong:** Phone is written as `+1 246-535-1000/16/23`. The `/16/23` is presumably extensions or alternate line endings, but isn't formatted in any standard way.
-- **Fix:** ask the Welfare Department; rewrite as e.g. `(246) 535-1000`, `(246) 535-1016`, `(246) 535-1023` if those are the actual numbers.
-- **Suggested issue title:** `Clarify Welfare Department phone format on Apply for financial assistance`
+---
+### F-252 · Tier B · Citizen impact: HIGH — address and clinic name are both wrong
+
+- **Where:** [medical-requirements](/docs/fact-check/medical-requirements.md) — see headline issue #2 in that report
+- **What's wrong:** The page gives "Beckles Road, St Michael" and the name "Diagnostic Clinic". The authorised facility is at Clapham Court, Wildey Main Road. These are different streets and neighbourhoods in St. Michael. A citizen who goes to Beckles Road will not find an authorised panel physician. This is the highes
+- **Source:** see [medical-requirements](/docs/fact-check/medical-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Citizen impact: HIGH — address and clinic name are both wrong`
 
 ---
+### F-253 · Tier B · Critical practical information is missing
 
-### F-015 · Tier C · Welfare Department "Country Road" address is incomplete
+- **Where:** [medical-requirements](/docs/fact-check/medical-requirements.md) — see headline issue #3 in that report
+- **What's wrong:** The State Department supplement specifies: (a) the facility is walk-in — arrive by 7:00 a.m. Monday–Friday, no appointment needed; (b) exam fees are USD $200 (age 15+) / USD $120 (under 15); (c) results take at least 72 hours, so travel to Barbados must be planned around a minimum 3-day stay; (d) a
+- **Source:** see [medical-requirements](/docs/fact-check/medical-requirements.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Critical practical information is missing`
+
+---
+### F-254 · Tier B · Open question: current Cabinet Secretary postholder name
 
-- **Where:** `src/content/apply-financial-assistance.md` lines 51–53
-- **Confidence it's wrong:** 50%
-- **Citizen impact:** Medium — citizens can't find the office.
-- **What's wrong:** Listed as just "Country Road / Bridgetown / St. Michael" — no building name, no number. Unusually sparse compared to the other two welfare office addresses on the same page.
-- **Fix:** ask Welfare for the full address; complete the entry.
-- **Suggested issue title:** `Complete "Country Road" welfare office address on Apply for financial assistance`
+- **Where:** [ministries/cabinet-office](/docs/fact-check/ministries/cabinet-office.md) — see headline issue #2 in that report
+- **What's wrong:** The page does not name the current Cabinet Secretary (consistent with gov.bb), so no correction is needed. However, no authoritative Tier 1 source from 2025–2026 has been found to confirm who currently holds the post. Noted for any future page enhancement. Mrs. Donna Cadogan was confirmed appointed
+- **Source:** see [ministries/cabinet-office](/docs/fact-check/ministries/cabinet-office.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Open question: current Cabinet Secretary postholder name`
 
 ---
+### F-255 · Tier B · NAHFCP programme name is truncated on the page (still unresolved)
 
-### F-016 · Tier C · "Electronic transfer of funds is not available yet" — verify current
+- **Where:** [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) — see headline issue #1 in that report
+- **What's wrong:** The source content heading reads "Agricultural Health And Food Control Programme" but the official programme name on agriculture.gov.bb is "National Agricultural Health and Food Control Programme (NAHFCP)". This was flagged on the previous pass (2026-05-28) and has not been corrected. Dropping "Nati
+- **Source:** see [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `NAHFCP programme name is truncated on the page (still unresolved)`
 
-- **Where:** `src/content/apply-financial-assistance.md` line 68
-- **Confidence it's wrong:** unknown; flagged because it's a time-bound operational claim that shouldn't live in static content.
-- **Citizen impact:** Low/medium — citizens may give bank details that are then unused.
-- **What's wrong:** Sentence "The electronic transfer of funds is not available yet but details are being taken in preparation" is an operational status that may have changed since publication.
-- **Fix:** confirm with the Welfare Department whether EFT is now available; if yes, rewrite; if no, add a "as of [date]" stamp.
-- **Suggested issue title:** `Verify "electronic transfer of funds not available" claim on Apply for financial assistance`
+---
+### F-256 · Tier B · Chief Agricultural Officer incumbent name: agriculture.gov.bb directory still stale
+
+- **Where:** [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) — see headline issue #3 in that report
+- **What's wrong:** The Senior Staff Directory (fetched 2026-05-29) continues to list Lennox Chandler as CAO at 535-5118. GIS Facebook posts and Barbados Today (May 2026) identified Paul Lucas as the new CAO. The directory has not been updated. The alpha page does not display the CAO's name (only the phone number), so
+- **Source:** see [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Chief Agricultural Officer incumbent name: agriculture.gov.bb directory still stale`
 
 ---
+### F-257 · Tier B · Associated departments list on alpha page diverges from ministry's own affiliated agencies page
 
-### F-017 · Tier C · Confirm "436 names" count on the JP 2024 PDF
+- **Where:** [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) — see headline issue #4 in that report
+- **What's wrong:** The live alpha page lists five associated bodies including "Southern Meats Inc." and "Barbados Medicinal Cannabis Licencing Authority". The ministry's own Affiliated Agencies page (fetched 2026-05-29) lists only four bodies: Barbados Agricultural Credit Trust, BADMC, Barbados Agricultural Management
+- **Source:** see [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Associated departments list on alpha page diverges from ministry's own affiliated agencies page`
+
+---
+### F-258 · Tier B · Minister field is blank in `ministries.ts`
 
-- **Where:** `src/content/justice-of-the-peace.md` line 75
-- **Confidence it's wrong:** unknown — public web doesn't enumerate the PDF row count.
-- **Citizen impact:** Low (provenance text), but a credibility signal.
-- **What's wrong:** Page asserts "the official 2024 list (PDF, 436 names)". The PDF at `public/justices-of-the-peace-2024.pdf` (322 KB, 15 pages) downloads successfully but no external source publishes the row count. The other two stats on line 75 are now verified — "30 April 2023" matches the GIS listing title; "563 JPs appointed in January 2026" matches Barbados Today's post-ceremony report (which used the PM's own figure).
-- **Fix:** Run a row count on `public/justices-of-the-peace-2024.pdf`. If it differs from 436, update the page. If it matches, mark this finding resolved.
-- **Suggested issue title:** `Confirm "436 names" count on the JP 2024 PDF`
+- **Where:** [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) — see headline issue #2 in that report
+- **What's wrong:** The data file has an explicit comment: `// Note: Educational Transformation minister not in supplied cabinet brief — left blank.` Chad Blackman is the confirmed Minister of Educational Transformation, reappointed on 16 February 2026 after winning the St James North by-election. Any ministry page tha
+- **Source:** see [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister field is blank in `ministries.ts``
 
 ---
+### F-259 · Tier B · HEDU building name is incomplete
 
-### F-019 · Tier B · Fix intro line on EZPay page (missing Mastercard, wrong postal service name)
+- **Where:** [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) — see headline issue #3 in that report
+- **What's wrong:** The source content lists the building only as `"Anselm"` but the authoritative `gov.bb/State-Bodies/higher-education-development-unit` page names it **"Anselm House"**. Confirmed again on 2026-05-29. Citizens trying to locate the unit may be confused by the partial name.
+- **Source:** see [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `HEDU building name is incomplete`
 
-- **Where:** `src/content/ezpay.md` line 11
-- **Confidence it's wrong:** 90% (Mastercard omission); 95% (postal service name)
-- **Citizen impact:** LOW — a citizen with only a Mastercard Debit card might hesitate to use the platform, but the body text (line 25) does correctly list Mastercard.
-- **What's wrong:** Intro lists "Visa Debit Cards" (Mastercard Debit is also accepted per line 25 and gov.bb source) and "Barbados Post Office" (the official name is "Barbados Postal Service" per bps.gov.bb; line 31 of the same page uses the correct name).
-- **Fix:** Change line 11 to read "Credit Cards, Visa or Mastercard Debit Cards, Direct Debit, Payce Digital and the Barbados Postal Service."
-- **Source:** [gov.bb — EZpay+](https://www.gov.bb/Citizens/ezpay) · [bps.gov.bb](https://bps.gov.bb/)
-- **Suggested issue title:** `Fix EZPay intro: add Mastercard Debit and correct postal service name`
+---
+### F-260 · Tier B · PS direct phone number absent; only Secretary-to-PS line is published
+
+- **Where:** [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) — see headline issue #4 in that report
+- **What's wrong:** The page lists `(246) 535-0608` — the Secretary to the Permanent Secretary — but omits the PS's own direct line `(246) 535-0607`, which is published on `gov.bb/Ministries/education`. Citizens looking to reach the PS directly have no path.
+- **Source:** see [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `PS direct phone number absent; only Secretary-to-PS line is published`
 
 ---
+### F-261 · Tier B · HEDU's ministry attribution is uncertain post-February 2025 split
 
-### F-018 · Tier C · Flag TLS certificate error on `publicentertainment.bra.gov.bb`
+- **Where:** [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) — see headline issue #5 in that report
+- **What's wrong:** The Ministry of Education, Technological and Vocational Training was split in February 2025 into the Ministry of Educational Transformation (MEDT) and the Ministry of Training and Tertiary Education (MTTE). HEDU's mandate — strengthening Barbados Community College, SJPI, and Erdiston Teachers' Colle
+- **Source:** see [ministries/ministry-of-educational-transformation](/docs/fact-check/ministries/ministry-of-educational-transformation.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `HEDU's ministry attribution is uncertain post-February 2025 split`
+
+---
+### F-262 · Tier B · Chief Project Analyst phone number is wrong
 
-- **Where:** linked from `src/content/loud-music-permit.md` line 45
-- **Confidence it's wrong:** 100% (verified — TLS cert validation error)
-- **Citizen impact:** **High** — citizens clicking the "apply for an annual permit" link see a browser security warning.
-- **What's wrong:** The destination site has an invalid/unverifiable SSL certificate.
-- **Fix:** flag to the Barbados Revenue Authority's IT team to renew the cert. Not a content fix but a citizen-facing bug.
-- **Suggested issue title:** `Flag TLS cert error on publicentertainment.bra.gov.bb (linked from Loud music permit)`
+- **Where:** [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) — see headline issue #1 in that report
+- **What's wrong:** The directory on the page lists `(246) 535-2506` for the Chief Project Analyst role. The energy.gov.bb Our Team page (Tier 1, re-confirmed 2026-05-29) still lists the Chief Project Analyst (Mrs. Claire Corbin) at `+1246 535-2536`. The conflict persists: gov.bb Ministries directory shows 535-2506; en
+- **Source:** see [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Chief Project Analyst phone number is wrong`
 
 ---
+### F-263 · Tier B · Both Facebook URLs on the page point to non-canonical slugs
 
-### F-020 · Tier A · Fix Registration Department address on Register a marriage page
+- **Where:** [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) — see headline issue #2 in that report
+- **What's wrong:** The page lists `facebook.com/energydivisionbarbados` and `facebook.com/energydivision-barbados` as two separate Facebook entries. The actual canonical Facebook page for the Energy Division is `facebook.com/EnergyBarbados/` — confirmed by Facebook search results, GIS Barbados's own Facebook posts lin
+- **Source:** see [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Both Facebook URLs on the page point to non-canonical slugs`
 
-- **Where:** `src/content/register-a-marriage.md` line 11
-- **Confidence it's wrong:** 99%
-- **Citizen impact:** HIGH — citizens directed to "Coleridge Street, Bridgetown" will go to the wrong building (Henry Forde and David Simmons Judicial Complex, where courts relocated in 2023). The Registration Department is at Level 1, Supreme Court Complex, Whitepark Road, St. Michael.
-- **What's wrong:** Opening paragraph says "Registration Department, Coleridge Street, Bridgetown". Every primary source (barbadoslawcourts.gov.bb, gov.bb/Departments/registration, GIS Facebook, gov.bb news 2019) confirms the address is Supreme Court Complex, Whitepark Road.
-- **Fix:** Change "Registration Department, Coleridge Street, Bridgetown" to "Registration Department, Level 1, Supreme Court Complex, Whitepark Road, St. Michael".
-- **Source:** [Barbados Judicial System — Getting Married and Registration of Marriages](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/services/vital-statistics-registration/getting-married-and-registration-of-marriages); [gov.bb — Registration Department](https://www.gov.bb/Departments/registration)
-- **Suggested issue title:** `Fix Registration Department address on Register a marriage page (Coleridge Street → Whitepark Road)`
+---
+### F-264 · Tier B · `ministries.ts` minister role title omits "Commerce"
+
+- **Where:** [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) — see headline issue #3 in that report
+- **What's wrong:** The `ministries.ts` data file (line 294) records the minister's role as "Minister of Energy, Business Development and Commerce, and Senior Minister coordinating Productive Sector" — this is **correct**. However, the ministry slug name "Ministry of Energy and Business Development" does not include "C
+- **Source:** see [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``ministries.ts` minister role title omits "Commerce"`
 
 ---
+### F-265 · Tier B · Renewable Energy Licence link resolves to a raw PDF with no context
 
-### F-020 · Tier A · Fix opening hours on marriage certificate page (3:15pm → 3:30pm)
+- **Where:** [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) — see headline issue #4 in that report
+- **What's wrong:** The inline hyperlink on line 5 (`?wpdmdl=1885&ind=1616784951507`) downloads a PDF directly from energy.gov.bb with no landing page. The PDF was created in Adobe InDesign CS6 in November 2017 and is 430 KB. There is no way to verify from public sources that this is the current, in-force version of th
+- **Source:** see [ministries/ministry-of-energy-and-business-development](/docs/fact-check/ministries/ministry-of-energy-and-business-development.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Renewable Energy Licence link resolves to a raw PDF with no context`
+
+---
+### F-266 · Tier B · Ministry name is incomplete — "Fisheries" is missing
 
-- **Where:** `src/content/get-marriage-certificate/index.md` line 43
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — citizen arriving at 3:20pm could be turned away.
-- **What's wrong:** Page states "Open Monday to Friday: 8:30am to 3:15pm". Both `gov.bb/register-birth` and `gov.bb/Citizens/register-birth` state the hours as "8:30 am and 3:30 pm Monday to Friday". The 3:15pm figure originates from a May 2020 Barbados Today article about a temporary COVID-era schedule. The same error is present on the death certificate page and was already confirmed discrepant on the birth certificate page (F-number not yet filed for that page).
-- **Fix:** Change "3:15pm" to "3:30pm". Apply the same fix to `src/content/get-birth-certificate/index.md` and `src/content/get-death-certificate/index.md` (same error on all three pages).
-- **Source:** [gov.bb — Register a Birth](https://www.gov.bb/register-birth)
-- **Suggested issue title:** `Fix Registration Department hours on certificate pages (3:15pm → 3:30pm; affects marriage, birth, death cert pages)`
+- **Where:** [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) — see headline issue #2 in that report
+- **What's wrong:** Since the 2022 cabinet appointment (reconfirmed February 2026), the full official name is **"Ministry of the Environment, National Beautification and Fisheries."** The `ozone.gov.bb` ministry site, Parliament, and Barbados Today all use this expanded name. The alpha.gov.bb page and `ministries.ts` n
+- **Source:** see [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry name is incomplete — "Fisheries" is missing`
 
 ---
+### F-267 · Tier B · Permanent Secretary direct line (535-4354) is absent from the directory table
 
-### F-021 · Tier A · Fix heading copy-paste error: "birth certificate" → "marriage certificate" in overseas section
+- **Where:** [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) — see headline issue #5 in that report
+- **What's wrong:** Gov.bb lists five contact lines for this ministry; the alpha.gov.bb source markdown includes only three, omitting the PS direct number. The main PBX (535-4350) is stored in `ministries.ts` and renders on the live page, but the PS direct line 535-4354 is absent entirely.
+- **Source:** see [ministries/ministry-of-environment-and-national-beautification](/docs/fact-check/ministries/ministry-of-environment-and-national-beautification.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Permanent Secretary direct line (535-4354) is absent from the directory table`
 
-- **Where:** `src/content/get-marriage-certificate/index.md` line 61
-- **Confidence it's wrong:** 100%
-- **Citizen impact:** MEDIUM — heading reads "Get a copy of a birth certificate if you live overseas" on the marriage certificate page. A citizen would be confused and might navigate away.
-- **What's wrong:** The heading "Get a copy of a birth certificate if you live overseas" was copied from the birth certificate page and not updated.
-- **Fix:** Change to "Get a copy of a marriage certificate if you live overseas".
-- **Source:** Content file: `src/content/get-marriage-certificate/index.md`
-- **Suggested issue title:** `Fix copy-paste heading error on marriage certificate page ("birth certificate" → "marriage certificate" in overseas section)`
+---
+### F-268 · Tier B · Parliamentary Secretary Senator Jepter Ince is not in the 2026–2031 Senate (Claims 9, 22)
+
+- **Where:** [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) — see headline issue #2 in that report
+- **What's wrong:** The page lists "Senator Jepter Ince" as Parliamentary Secretary for Economic Affairs at two locations (lines 80, 142). The Barbados Parliament website confirms Ince is not among the 23 senators for the current 2026–2031 term. The number (535-1304) may still be a live office line, but the name is wro
+- **Source:** see [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Parliamentary Secretary Senator Jepter Ince is not in the 2026–2031 Senate (Claims 9, 22)`
 
 ---
+### F-269 · Tier B · Truncated phone number for Secretary (ag) Heather Alleyne-Prescott (Claim 8)
 
-### F-023 · Tier B · Clarify "cause of death" field in online death certificate form
+- **Where:** [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) — see headline issue #5 in that report
+- **What's wrong:** The number "535-131" at line 96 is a 6-digit fragment — a valid Barbados extension is 7 digits. The number is undialable. **Tier B — correct the typo.**
+- **Source:** see [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Truncated phone number for Secretary (ag) Heather Alleyne-Prescott (Claim 8)`
+
+---
+### F-270 · Tier B · New finding: PM Mottley holds "Economic Affairs and Development" in 2026–2031 cabinet (Claim 23)
 
-- **Where:** `src/content/get-death-certificate/start.md` line 29
-- **Confidence it's wrong:** 65%
-- **Citizen impact:** MEDIUM — index.md line 29 explicitly states cause-of-death certificates cannot be obtained online; but start.md line 29 lists "the cause of death" as a mandatory form field in the online application. A citizen who needs a cause-of-death certificate (not just a standard death certificate) may attempt the online form, then be turned away.
-- **What's wrong:** There is no editorial note explaining whether "cause of death" is a search/identification field (used to locate the death register entry) or an application field for a cause-of-death certificate. The two interpretations lead to opposite citizen journeys.
-- **Fix:** Add a bracketed note to the start.md field description, e.g. "the cause of death (used to identify the record — this is not an application for a cause-of-death certificate)". Also confirm the field is present in the online form and serves the search-identifier function, not the certificate-type-selection function.
-- **Source:** [get-death-certificate.md](/home/gavin/frontend-alpha/docs/fact-check/get-death-certificate.md) Claim 13; [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates)
-- **Suggested issue title:** `Clarify "cause of death" field in online death certificate form (distinguish from cause-of-death certificate application)`
+- **Where:** [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) — see headline issue #6 in that report
+- **What's wrong:** The current cabinet (gov.bb/cabinet.php, re-confirmed 2026-05-29) shows PM Mottley as "Minister of Economic Affairs and Development" while Straughn is "Minister of Finance". The content page treats Economic Affairs as Straughn's portfolio. The ministry's institutional name is unchanged, but the poli
+- **Source:** see [ministries/ministry-of-finance-economic-affairs-and-investment](/docs/fact-check/ministries/ministry-of-finance-economic-affairs-and-investment.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `New finding: PM Mottley holds "Economic Affairs and Development" in 2026–2031 cabinet (Claim 23)`
 
 ---
+### F-271 · Tier B · The source markdown's contact tables are entirely blank — no phone numbers are stored in the content…
 
-### F-022 · Tier A · Fix typo "unknwon" → "unknown" on marriage certificate page
+- **Where:** [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) — see headline issue #1 in that report
+- **What's wrong:** The Foreign Affairs contact table lists PBX, PS Secretary, and FAX rows with empty telephone cells (lines 9–14). The Foreign Trade table lists a FAX row with an empty cell (line 19). All actual contact data is carried in `src/data/ministries.ts`. This means the markdown file adds no independently ve
+- **Source:** see [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The source markdown's contact tables are entirely blank — no phone numbers are stored in the content…`
 
-- **Where:** `src/content/get-marriage-certificate/index.md` line 57
-- **Confidence it's wrong:** 100%
-- **Citizen impact:** LOW — trust signal.
-- **What's wrong:** Section heading reads "If basic information is unknwon".
-- **Fix:** Change to "If basic information is unknown".
-- **Source:** Content file: `src/content/get-marriage-certificate/index.md`
-- **Suggested issue title:** `Typo: "unknwon" → "unknown" on Get a copy of a marriage certificate page`
+---
+### F-272 · Tier B · The minister's title ("Senior Minister of Foreign Affairs and Foreign Trade") is correct
+
+- **Where:** [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) — see headline issue #2 in that report
+- **What's wrong:** Christopher P. Sinckler was sworn in on 16–18 February 2026. The Barbados Parliament website re-confirmed this status as of 2026-05-29.
+- **Source:** see [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The minister's title ("Senior Minister of Foreign Affairs and Foreign Trade") is correct`
 
 ---
+### F-273 · Tier B · The `shortDescription` and `intro` fields in `ministries.ts` are not derived from the source markdow…
 
-### F-024 · Tier A · Fix Registration Department building name on marriage licences page ("Judicial Centre" → "Supreme Court Complex")
+- **Where:** [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) — see headline issue #3 in that report
+- **What's wrong:** The `shortDescription` reads "Advances Barbados' interests globally through diplomacy, trade advocacy, and protection of citizens abroad." The `intro` reads "To advance Barbados' interests globally through diplomacy, trade advocacy, and the protection of citizens abroad." These are consistent paraph
+- **Source:** see [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The `shortDescription` and `intro` fields in `ministries.ts` are not derived from the source markdow…`
+
+---
+### F-274 · Tier B · The `/visa-information` online service link is live and on-topic
 
-- **Where:** `src/content/marriage-licences.md` lines 114–115
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** MEDIUM — a citizen using this page to obtain their marriage certificate after the ceremony could have difficulty finding the building. "Judicial Centre" does not appear on any authoritative source checked.
-- **What's wrong:** Page says "Judicial Centre" as the Registration Department building name. All authoritative sources — gov.bb/Departments/registration, barbadoslawcourts.gov.bb/Certificates, and the Supreme Court Registry page — consistently use "Supreme Court Complex". Additionally, the road name "White Park Road" (two words) should be "Whitepark Road" (one word).
-- **Fix:** Change "Judicial Centre" to "Supreme Court Complex" and "White Park Road" to "Whitepark Road".
-- **Source:** [gov.bb — Registration Department](https://www.gov.bb/Departments/registration); [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates)
-- **Suggested issue title:** `Fix Registration Department building name on marriage licences page ("Judicial Centre" → "Supreme Court Complex")`
+- **Where:** [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) — see headline issue #4 in that report
+- **What's wrong:** The page at `https://alpha.gov.bb/visa-information` loads correctly and provides Barbados visa requirements, confirming the CTA is valid.
+- **Source:** see [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The `/visa-information` online service link is live and on-topic`
 
 ---
+### F-275 · Tier B · No major issues found
 
-### F-025 · Tier B · Review "male and female" language on marriage licences page (legal review required)
+- **Where:** [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) — see headline issue #5 in that report
+- **What's wrong:** All contact data (address, phone, fax, email) is verified against gov.bb and foreign.gov.bb. No new discrepancies identified on this pass.
+- **Source:** see [ministries/ministry-of-foreign-affairs-and-foreign-trade](/docs/fact-check/ministries/ministry-of-foreign-affairs-and-foreign-trade.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No major issues found`
 
-- **Where:** `src/content/marriage-licences.md` line 13
-- **Confidence it's wrong:** 65%
-- **Citizen impact:** HIGH — if same-sex couples are not legally barred from marrying in Barbados (a live question after the December 2022 Sexual Offences Act ruling), this language either misstates the law or incorrectly signals that same-sex couples cannot apply.
-- **What's wrong:** Page states "Application for a marriage licence must be made by both (male and female) persons". The Marriage Act CAP 218A uses predominantly gender-neutral language ("two persons" in most sections). The source gov.bb page uses the same "male and female" phrasing, which appears to reflect administrative practice rather than clear statutory language.
-- **Fix:** Seek a written opinion from the Office of the Attorney General on whether the Marriage Act restricts licences to opposite-sex couples. If yes, the language can stay (with a statutory citation). If the legal position is contested or unclear, replace with "both persons" and note the statutory authority.
-- **Source:** [Marriage Act CAP 218A — LII/Gender Justice](https://www.law.cornell.edu/gender-justice/resource/Marriage_Act_1978-40_Cap_218A_Barbados); [gov.bb — Get a Marriage Licence](https://www.gov.bb/marriage-licence)
-- **Suggested issue title:** `Legal review: "male and female" language on marriage licences page — confirm statutory basis or replace`
+---
+### F-276 · Tier B · Minister of Health and Wellness missing from data file
+
+- **Where:** [ministries/ministry-of-health-and-wellness](/docs/fact-check/ministries/ministry-of-health-and-wellness.md) — see headline issue #1 in that report
+- **What's wrong:** `src/data/ministries.ts` lists only Davidson Ishmael with the role "Minister of State, Ministry of Health and Wellness". The full Minister — **Senator the Honourable Lisa R. Cummins** — is entirely absent from the data file. She was sworn in on 16 February 2026 and confirmed still in post as of 2026
+- **Source:** see [ministries/ministry-of-health-and-wellness](/docs/fact-check/ministries/ministry-of-health-and-wellness.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister of Health and Wellness missing from data file`
 
 ---
+### F-277 · Tier B · Senior Health Promotion Officer telephone number discrepancy
 
-### F-026 · Tier C · Confirm Registration Department fax number on marriage licences page
+- **Where:** [ministries/ministry-of-health-and-wellness](/docs/fact-check/ministries/ministry-of-health-and-wellness.md) — see headline issue #2 in that report
+- **What's wrong:** The alpha.gov.bb page (and gov.bb/Ministries/health) lists this number as **(246) 536-3867**. The Ministry's own contact directory at health.gov.bb/Contact lists it as **(246) 536-3868**. Both sources confirmed live as of 2026-05-29. The two most authoritative Tier 1 sources disagree. A citizen dial
+- **Source:** see [ministries/ministry-of-health-and-wellness](/docs/fact-check/ministries/ministry-of-health-and-wellness.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Senior Health Promotion Officer telephone number discrepancy`
+
+---
+### F-278 · Tier B · Permanent Secretary identity conflict across Tier 1 sources
 
-- **Where:** `src/content/marriage-licences.md` line 126
-- **Confidence it's wrong:** 65%
-- **Citizen impact:** LOW — fax is rarely the primary contact method for citizens.
-- **What's wrong:** Page lists fax `(246) 426-2405`. gov.bb/Departments/registration (likely the more recently maintained page, as it names the current Acting Registrar) lists fax `1 (246) 427-8917`. Both appear in authoritative sources; neither can be dismissed.
-- **Fix:** contact the Registration Department to confirm the current fax number. Also confirm whether the `registrar@lawcourt.gov.bb` email (page) or `registrar@lawcourts.gov.bb` (gov.bb departments) or `registrarsupremecourt@barbados.gov.bb` (barbadoslawcourts.gov.bb) is current — three variants appear across Tier 1 sources.
-- **Source:** [gov.bb — Registration Department](https://www.gov.bb/Departments/registration); [Barbados Judicial System — Certificates](https://www.barbadoslawcourts.gov.bb/useful-links/for-public/how-to-order/certificates)
-- **Suggested issue title:** `Confirm Registration Department fax and email on marriage licences page (conflicting sources)`
+- **Where:** [ministries/ministry-of-health-and-wellness](/docs/fact-check/ministries/ministry-of-health-and-wellness.md) — see headline issue #3 in that report
+- **What's wrong:** health.gov.bb/About/Meet-our-Executive-Team lists **Mr. Wayne Webster** as Permanent Secretary. gov.bb's PS grades page lists **Mr. Wayne Marshall**. This personnel discrepancy is not visible in the alpha.gov.bb content file (which lists the position only, not the person), but is recorded for comple
+- **Source:** see [ministries/ministry-of-health-and-wellness](/docs/fact-check/ministries/ministry-of-health-and-wellness.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Permanent Secretary identity conflict across Tier 1 sources`
 
 ---
+### F-279 · Tier B · Address uses "Webster Business Park" — official spelling may be "Webster's Business Park"
 
-### F-027 · Tier C · Verify CSEC eligibility threshold (5 subjects including maths and science) for temporary teachers
+- **Where:** [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) — see headline issue #2 in that report
+- **What's wrong:** The source content (line 7) and the gov.bb MHAI page both omit the possessive apostrophe. The OAG — co-located in the same building — uses "Webster's Business Park" on its official contact page. Confidence this is wrong is moderate (70%) because gov.bb itself also uses the non-possessive form, sugge
+- **Source:** see [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Address uses "Webster Business Park" — official spelling may be "Webster's Business Park"`
 
-- **Where:** `src/content/apply-for-a-position-as-a-temporary-teacher.md` line 17
-- **Confidence it's wrong:** unknown — MPS circular PDF not machine-readable; secondary summary cited 4 subjects (not 5), English only (not maths/science)
-- **Citizen impact:** HIGH — if the real threshold is 4 subjects (or if maths/science are not mandatory), qualified candidates may incorrectly self-screen out.
-- **What's wrong:** Page states "at least 5 CXC subjects at CSEC general proficiency level, including English language, maths and a science subject." The Ministry of Public Service circular for teacher appointments (June 2025) was located but its PDF was not machine-readable. A secondary description of the circular referenced 4 subjects and English Language for the Teacher Special Grade, with no mention of maths or science.
-- **Fix:** Request the current eligibility criteria directly from the Ministry of Educational Transformation (teachervacancy@mes.gov.bb or (246) 535-0600). If the requirements differ from what the page states, update accordingly.
-- **Source:** [MPS — Circular Application for the Post of Teacher (PDF, June 2025)](https://mps.gov.bb/People_Resourcing/post_docs/Circular-%20Application%20for%20the%20Post%20of%20Teacher.pdf)
-- **Suggested issue title:** `Verify CSEC subject threshold for temporary teachers (5 subjects with maths + science vs. 4 subjects with English)`
+---
+### F-280 · Tier B · Meteorological Office ministry attribution is contested
+
+- **Where:** [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) — see headline issue #3 in that report
+- **What's wrong:** The ministries.ts data (line 658) lists "The Meteorological Office" under Home Affairs. The gov.bb Departments page attributes it to MIST; the 2025–2026 Barbados Estimates of Expenditure places it under Head 33 — Ministry of Home Affairs and Information; and agriculture.gov.bb hosts "Barbados Meteor
+- **Source:** see [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Meteorological Office ministry attribution is contested`
 
 ---
+### F-281 · Tier B · All 15 online-service CTAs resolve correctly
 
-### F-029 · Tier A · Fix `ministries.ts` categorisation of "Business policies and law" (belongs under Labour, not MIIST)
+- **Where:** [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) — see headline issue #4 in that report
+- **What's wrong:** This pass live-checked all 15 internal links listed in ministries.ts onlineServices (passport, national registration, register a birth/death/marriage, certificates, marriage licences, notarised, loud music permit, beach park vendor, three post-office-redirection pages). All return HTTP 200 with corr
+- **Source:** see [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `All 15 online-service CTAs resolve correctly`
+
+---
+### F-282 · Tier B · Land Registration Department ministry attribution conflict persists
 
-- **Where:** `src/data/ministries.ts` lines 741–745
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** MEDIUM — the Ministry of Industry, Innovation, Science and Technology currently lists this page in its "Online services" section; the content is entirely about the Ministry of Labour's mandate, so citizens arriving via MIIST's ministry page are misled.
-- **What's wrong:** The `business-policies-and-law` page is listed as an `onlineServices` entry under `ministry-of-industry-innovation-science-and-technology`. The page content describes only the Ministry of Labour's mandate and links to `labour.gov.bb`. It should be associated with `ministry-of-labour-social-security-and-third-sector`.
-- **Fix:** Remove the `business-policies-and-law` entry from MIIST's `onlineServices` array and add it to the `ministry-of-labour-social-security-and-third-sector` `onlineServices` array instead.
-- **Source:** [`src/data/ministries.ts`](/home/gavin/frontend-alpha/src/data/ministries.ts); [Report: business-policies-and-law.md](/docs/fact-check/business-policies-and-law.md)
-- **Suggested issue title:** `Fix ministries.ts: move "Business policies and law" from MIIST to Ministry of Labour`
+- **Where:** [ministries/ministry-of-housing-lands-and-maintenance](/docs/fact-check/ministries/ministry-of-housing-lands-and-maintenance.md) — see headline issue #2 in that report
+- **What's wrong:** `ministries.ts` and `gov.bb/Ministries/housing` list the Land Registration Department under this ministry's Lands division, but `gov.bb/Departments/land-registry` renders with a MIST (Ministry of Industry, Innovation, Science and Technology) footer. Two Tier-1 gov.bb sources remain in conflict. No r
+- **Source:** see [ministries/ministry-of-housing-lands-and-maintenance](/docs/fact-check/ministries/ministry-of-housing-lands-and-maintenance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Land Registration Department ministry attribution conflict persists`
 
 ---
+### F-283 · Tier B · Minister initials remain contested across sources
 
-### F-030 · Tier A · Fix "gross pay — include overtime or bonuses" on Calculate severance pay (start.md)
+- **Where:** [ministries/ministry-of-housing-lands-and-maintenance](/docs/fact-check/ministries/ministry-of-housing-lands-and-maintenance.md) — see headline issue #3 in that report
+- **What's wrong:** `ministries.ts` uses "D. L." (matching the Parliament Cabinet Ministers roster and the minister's public Instagram `chrisdlgibbs`). The Parliament member details page uses "G. L." and a February 2026 Barbados Today sworn-in article refers to the minister only by first name without giving initials. T
+- **Source:** see [ministries/ministry-of-housing-lands-and-maintenance](/docs/fact-check/ministries/ministry-of-housing-lands-and-maintenance.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister initials remain contested across sources`
 
-- **Where:** `src/content/calculate-severance-pay/start.md` line 22
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** HIGH — the calculator will produce an inflated estimate for any worker who regularly earns overtime, commissions, or bonuses. Severance is computed on *basic pay*, not gross pay. A newly redundant worker who over-estimates their entitlement could face real financial hardship when the actual payment is lower.
-- **What's wrong:** Page instructs citizens to enter "your usual gross pay (weekly or monthly) — include overtime or bonuses". The NIS calculates severance on **basic average weekly pay** (total basic earnings over the last 104 weeks divided by 104). The NIS explicitly distinguishes basic pay from insurable earnings: "Insurable earnings include … Overtime payments, Commission on sales or profits on sales, Service charge, Production bonus" — these are excluded from basic pay for severance computation.
-- **Fix:** Change to "your usual basic pay (weekly or monthly) — do not include overtime, commissions, service charges, or bonuses". Add a note that the estimate is capped at the NIS maximum insurable earnings ceiling ($1,201 weekly as of January 2024).
-- **Source:** [NIS — Severance](https://www.nis.gov.bb/severance/)
-- **Suggested issue title:** `Fix severance calculator pay instruction: "gross pay / include overtime" → "basic pay / exclude overtime and bonuses"`
+---
+### F-284 · Tier B · Minister role title has wrong word order (F-096)
+
+- **Where:** [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) — see headline issue #1 in that report
+- **What's wrong:** `ministries.ts` line 727 records the minister's role as "Minister of **Innovation**, Industry, Science and Technology." The canonical order — confirmed by gov.bb/Ministries, the GIS official tag, and Barbados Today's budget coverage — is "Minister of **Industry**, Innovation, Science and Technology.
+- **Source:** see [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister role title has wrong word order (F-096)`
 
 ---
+### F-285 · Tier B · Primary phone number is incomplete — only one line of a three-line PBX published (F-097)
 
-### F-031 · Tier B · Correct NIS department name on Calculate severance pay page
+- **Where:** [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) — see headline issue #2 in that report
+- **What's wrong:** `ministries.ts` lists only `(246) 535-1200`. The gov.bb ministry page publishes the full PBX range as `(246) 535-1200 /1201 /1202`, with `535-1201` as the primary directory number. A citizen calling just 535-1200 may reach a busy line with no indication that 535-1201 or 535-1202 are alternatives.
+- **Source:** see [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Primary phone number is incomplete — only one line of a three-line PBX published (F-097)`
+
+---
+### F-286 · Tier B · `keywords` array uses "MIIST" (two I's); the official abbreviation is "MIST" (one I)
 
-- **Where:** `src/content/calculate-severance-pay/index.md` line 31
-- **Confidence it's wrong:** 75%
-- **Citizen impact:** LOW — citizens will still reach the correct department.
-- **What's wrong:** Page uses "NIS Severance Payment Department". The NIS Contact Us page lists the department as "Severance" and the official email slug is `severancedepartment@bginis.gov.bb` — neither source uses "Payment" as part of the department name.
-- **Fix:** Change to "NIS Severance Department". Optionally add the email address: severancedepartment@bginis.gov.bb.
-- **Source:** [NIS — Contact Us](https://www.nis.gov.bb/contact-us/); [NIS — Severance](https://www.nis.gov.bb/severance/)
-- **Suggested issue title:** `Fix NIS department name on Calculate severance pay page ("Severance Payment Department" → "Severance Department")`
+- **Where:** [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) — see headline issue #3 in that report
+- **What's wrong:** `ministries.ts` line 719 includes `"MIIST"` as a keyword/abbreviation. Every authoritative source — gov.bb, GIS, Barbados Today budget coverage — uses the four-letter acronym "MIST." "MIIST" appears to be a typographic error that could cause search mismatches on alpha.gov.bb.
+- **Source:** see [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``keywords` array uses "MIIST" (two I's); the official abbreviation is "MIST" (one I)`
 
 ---
+### F-287 · Tier B · `originalSource` URL slug encodes the old ministry name
 
-### F-032 · Tier A · Fix National Heroes count: "ten" → "eleven"
+- **Where:** [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) — see headline issue #4 in that report
+- **What's wrong:** The `originalSource` field (line 756–757) points to `https://www.gov.bb/Ministries/innovation-science-smart-technology`, a slug reflecting the pre-2021 name "Ministry of Innovation, Science and Smart Technology." The URL still resolves correctly; the page title is now correct. This is a stale gov.bb
+- **Source:** see [ministries/ministry-of-industry-innovation-science-and-technology](/docs/fact-check/ministries/ministry-of-industry-innovation-science-and-technology.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``originalSource` URL slug encodes the old ministry name`
 
-- **Where:** `src/app/bank-holiday-calendar/page.tsx` line 166
-- **Confidence it's wrong:** 98%
-- **Citizen impact:** MEDIUM — factually incorrect; Rihanna was named the 11th National Hero on 30 November 2021.
-- **What's wrong:** The National Heroes Day note reads `"Honouring Barbados's ten official National Heroes"`. Barbados has had eleven National Heroes since Robyn Rihanna Fenty was honoured at the republic investiture ceremony on 30 November 2021. GIS confirmed: "Robyn Rihanna Fenty is the 11th National Heroine of Barbados."
-- **Fix:** Change `"Honouring Barbados's ten official National Heroes"` to `"Honouring Barbados's eleven official National Heroes"`.
-- **Source:** [GIS — Rihanna Named Barbados' 11th National Hero](https://gisbarbados.gov.bb/blog/rihanna-named-barbados-11th-national-hero/); [CARICOM Today](https://today.caricom.org/2021/12/01/rihanna-named-barbados-11th-national-hero/)
-- **Suggested issue title:** `Fix National Heroes count on bank holiday calendar: "ten" → "eleven" (Rihanna named 11th in 2021)`
+---
+### F-288 · Tier B · All directory telephone fields are blank
+
+- **Where:** [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) — see headline issue #1 in that report
+- **What's wrong:** The source file (lines 5–20) renders a directory table with 13 role rows but every telephone column is empty. Citizens get no usable direct-dial numbers for the minister, permanent secretary, or any officer. Authoritative values for all roles — including PS Secretary (535-1412, now confirmed from go
+- **Source:** see [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `All directory telephone fields are blank`
 
 ---
+### F-289 · Tier B · "National Insurance Department" is a stale agency name
 
-### F-033 · Tier B · Fix Whit Monday note: "7th Monday after Easter" → "Day after Pentecost"
+- **Where:** [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) — see headline issue #2 in that report
+- **What's wrong:** `ministries.ts` line 830 lists "National Insurance Department". That body was transformed into the **National Insurance and Social Security Service (NISSS)**, a statutory corporation, on 1 December 2023, confirmed by nis.gov.bb and enabling legislation. Alpha.gov.bb should use "National Insurance an
+- **Source:** see [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"National Insurance Department" is a stale agency name`
+
+---
+### F-290 · Tier B · Minister role title has an erroneous capital "The"
 
-- **Where:** `src/app/bank-holiday-calendar/page.tsx` line 177
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** LOW — display-only note, no citizen acts on it. Factual accuracy and public trust.
-- **What's wrong:** The note reads `"7th Monday after Easter"`. Whit Monday = Easter + 50 days. Counting all Mondays from Easter Sunday to Whit Monday inclusive, there are 8 Mondays — not 7. The correct standard description is "day after Pentecost" (Pentecost Sunday = Easter + 49 days; Whit Monday = Easter + 50 days). Confirmed by computation across 2024–2028.
-- **Fix:** Change `note: "7th Monday after Easter"` to `note: "Day after Pentecost"`.
-- **Source:** [Wikipedia — Pentecost](https://en.wikipedia.org/wiki/Pentecost); [PublicHolidays.la — Pentecost Barbados](https://publicholidays.la/barbados/pentecost/)
-- **Suggested issue title:** `Fix Whit Monday note on bank holiday calendar: "7th Monday after Easter" → "Day after Pentecost"`
+- **Where:** [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) — see headline issue #3 in that report
+- **What's wrong:** `ministries.ts` line 792 records "Minister of Labour, Social Security and **The** Third Sector". All authoritative sources (gov.bb, labour.gov.bb, GIS) use lowercase "the" or omit the article. This is a minor but official-styling error.
+- **Source:** see [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister role title has an erroneous capital "The"`
 
 ---
+### F-291 · Tier B · Reversed finding (PS Secretary extension now verified)
 
-### F-028 · Tier C · Confirm whether temporary teacher form covers primary schools only
+- **Where:** [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) — see headline issue #4 in that report
+- **What's wrong:** The 2026-05-28 pass noted PS Secretary as "not published on any consulted source" (open question). On re-check, gov.bb's directory now shows **535-1412** for this role — confirmed. The open question is closed; the number should be entered in the source file.
+- **Source:** see [ministries/ministry-of-labour-social-security-and-third-sector](/docs/fact-check/ministries/ministry-of-labour-social-security-and-third-sector.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Reversed finding (PS Secretary extension now verified)`
 
-- **Where:** `src/content/apply-for-a-position-as-a-temporary-teacher.md` line 9
-- **Confidence it's wrong:** unknown — form itself is untitled by school level; original MET announcement page is inaccessible (404)
-- **Citizen impact:** MEDIUM — secondary-school teacher candidates may incorrectly believe this form does not apply to them.
-- **What's wrong:** Page restricts scope to "a government-funded primary school in Barbados." The seamlessdocs form is titled simply "Application for Temporary Teacher" with no reference to primary schools. The MPS teacher circular covers general teacher appointments. The original MET announcement page (mes.gov.bb/News/Latest/Application-Form-for-Temporary-Teachers.aspx) now redirects to a 404 via education.gov.bb, so the intended scope cannot be confirmed.
-- **Fix:** Confirm with the Ministry of Educational Transformation (teachervacancy@mes.gov.bb) whether the form applies to primary schools only, or also secondary and other government schools. Update the opening sentence accordingly.
-- **Source:** [barbados.seamlessdocs.com — Application for Temporary Teacher form](https://barbados.seamlessdocs.com/f/pvyf07u3v0j2); [MET announcement page (redirects to 404)](https://mes.gov.bb/News/Latest/Application-Form-for-Temporary-Teachers.aspx)
-- **Suggested issue title:** `Confirm temporary teacher form scope: primary only, or also secondary schools?`
+---
+### F-292 · Tier B · Associated departments list names three dissolved agencies
+
+- **Where:** [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) — see headline issue #1 in that report
+- **What's wrong:** The `associatedDepartments` array in `ministries.ts` (lines 905–913) still lists "The National Assistance Board", "The Child Care Board", and "Welfare Department" as separate entities. All three were dissolved on 2 January 2026 and merged — along with the National Disabilities Unit and the Resilienc
+- **Source:** see [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Associated departments list names three dissolved agencies`
 
 ---
+### F-293 · Tier B · Community Development Department is listed under the wrong ministry
 
-### F-034 · Tier A · Update "PAD" references to Ministry of Public Service (pension page)
+- **Where:** [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) — see headline issue #2 in that report
+- **What's wrong:** The content markdown (lines 23–27) includes a "Community Development Department" directory block. The CDD's own website (comdev.gov.bb) and the Ministry of Youth, Sports and Community Empowerment's website confirm the CDD sits under MYSCE, not MPEEA. It appears in MPEEA's content file and in the `mi
+- **Source:** see [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Community Development Department is listed under the wrong ministry`
+
+---
+### F-294 · Tier B · Five direct-line extension numbers are published on gov.bb but absent from the alpha.gov.bb data fil…
 
-- **Where:** `src/content/calculate-your-pension/index.md` lines 15–17 and 23–24
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** MEDIUM — citizens contacting "the PAD" for pensionable service records cannot locate the dissolved division; enquiries may go unanswered.
-- **What's wrong:** Page references "the Personnel Administration Division (PAD)" in two places as the body holding pensionable service records. The PAD was dissolved in January 2019 and absorbed into the Ministry of Public Service (People Resourcing and Compliance Directorate). The MPS FAQ explicitly states the Ministry "was created in January 2019, through the amalgamation of the entities: Ministry of the Civil Service, Personnel Administration Division, and Training Administration Division."
-- **Fix:** Replace both occurrences of "the Personnel Administration Division (PAD)" with "the Ministry of Public Service (People Resourcing and Compliance Directorate)". Add contact: 1st Floor E. Humphrey Walcott Building, Cnr. Collymore Rock & Culloden Road, St. Michael, Tel. (246) 535-4500.
-- **Source:** [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php); [MPS — Pension Processing](https://mps.gov.bb/People_Resourcing/pension_processing)
-- **Suggested issue title:** `Update "PAD" references on Calculate your pension page — PAD dissolved January 2019, now Ministry of Public Service`
+- **Where:** [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) — see headline issue #4 in that report
+- **What's wrong:** The gov.bb source page lists: Minister 535-1604; PS 535-1606; PS Secretary 535-1617; Deputy PS 535-1608; SAO 535-1609; Senior Accountant 535-1613; Executive Officer 535-1605. None of these appear in `ministries.ts` or in the content markdown. The blank directory table adds no value to citizens.
+- **Source:** see [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Five direct-line extension numbers are published on gov.bb but absent from the alpha.gov.bb data fil…`
 
 ---
+### F-295 · Tier B · The Older Persons (Care and Protection) Bill 2026 — Senate debate completed, assent status unconfirm…
 
-### F-035 · Tier A · Fix voluntary retirement age boundary: "Before 15 July 1985" → "On or before 15 July 1985"
+- **Where:** [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) — see headline issue #5 in that report
+- **What's wrong:** The Bill passed through Senate debate in early May 2026 (senators debated 6–7 May 2026). Assent status as of 2026-05-29 is unconfirmed. Once the Act receives assent, the MPEEA page should reference the new statutory framework for elder protection, and the "Report elderly abuse" service page should b
+- **Source:** see [ministries/ministry-of-people-empowerment-and-elder-affairs](/docs/fact-check/ministries/ministry-of-people-empowerment-and-elder-affairs.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The Older Persons (Care and Protection) Bill 2026 — Senate debate completed, assent status unconfirm…`
 
-- **Where:** `src/content/calculate-your-pension/index.md` lines 33–35
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** LOW in aggregate (affects only persons appointed on exactly 15 July 1985), but a factual error in a legal table.
-- **What's wrong:** Row 1 says "Before 15 July 1985 → 55". Row 2 says "On or after 15 July 1985 → 60". Both MPS and Treasury confirm the threshold is "on or before the 15th July 1985 → 55 years" and "after 15th July 1985 → 60 years". A person appointed on exactly 15 July 1985 is assigned to the wrong (age-60) group by the current table.
-- **Fix:** Change row 1 from "Before 15 July 1985" to "On or before 15 July 1985"; change row 2 from "On or after 15 July 1985" to "After 15 July 1985".
-- **Source:** [MPS — Age](https://mps.gov.bb/People_Resourcing/age) — "permanently appointed with effect from 15th July, 1985 and before → age 55"; [MPS — FAQ](https://mps.gov.bb/People_Resourcing/faq.php) — "on or before the 15th July 1985 → 55 years"
-- **Suggested issue title:** `Fix voluntary retirement age table boundary: "Before 15 July 1985" → "On or before 15 July 1985" on Calculate your pension page`
+---
+### F-296 · Tier B · Phone numbers missing from the content page — and `ministries.ts` carries a silent data-gap
+
+- **Where:** [ministries/ministry-of-the-public-service-and-talent-development](/docs/fact-check/ministries/ministry-of-the-public-service-and-talent-development.md) — see headline issue #1 in that report
+- **What's wrong:** The content markdown lists no phone numbers for any directorate. The `ministries.ts` entry supplies a single telephone `(246) 535-4423` (DG's office) and a fax `(246) 535-6728` (Learning and Development). Gov.bb confirms these two numbers, but the HRPS Directorate phone `(246) 535-4400` and the PRC/
+- **Source:** see [ministries/ministry-of-the-public-service-and-talent-development](/docs/fact-check/ministries/ministry-of-the-public-service-and-talent-development.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Phone numbers missing from the content page — and `ministries.ts` carries a silent data-gap`
 
 ---
+### F-297 · Tier B · `ministries.ts` fax `(246) 535-6728` is attributed at ministry level but belongs to the Learning and…
 
-### F-037 · Tier B · Label FSC fax number correctly — currently listed as a second phone line
+- **Where:** [ministries/ministry-of-the-public-service-and-talent-development](/docs/fact-check/ministries/ministry-of-the-public-service-and-talent-development.md) — see headline issue #2 in that report
+- **What's wrong:** Gov.bb lists this fax under the Learning and Development Directorate contact block at Warrens Towers II, not as a ministry-wide fax. The current `ministries.ts` entry lists it as a general `{ label: "Fax" }` under the ministry, which implies it is the ministry's central fax — misleading citizens who
+- **Source:** see [ministries/ministry-of-the-public-service-and-talent-development](/docs/fact-check/ministries/ministry-of-the-public-service-and-talent-development.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``ministries.ts` fax `(246) 535-6728` is attributed at ministry level but belongs to the Learning and…`
+
+---
+### F-298 · Tier B · No contact phone number appears in the content markdown for any directorate
 
-- **Where:** `src/content/financial-services-for-businesses.md` line 26
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — a citizen dialling (246) 421-2146 expecting a voice answer will reach a fax machine
-- **What's wrong:** Page lists `(246) 421-2146` as a second telephone number, with no label. The FSC's own Contact Us page lists only one voice phone (`+1 (246) 421 2142`); multiple authoritative search results identify 421-2146 as the FSC fax number.
-- **Fix:** Either (a) relabel the line as `Fax: (246) 421-2146`, or (b) remove the fax number if alpha.gov.bb's convention is to list only voice telephone numbers. Confirm with FSC if needed.
-- **Source:** [FSC — Contact Us](https://www.fsc.gov.bb/contact-us); [gov.bb — Financial Services Commission](https://www.gov.bb/State-Bodies/financial-services-commission)
-- **Suggested issue title:** `Label FSC fax number on Financial services for businesses page (421-2146 is a fax, not a second phone)`
+- **Where:** [ministries/ministry-of-the-public-service-and-talent-development](/docs/fact-check/ministries/ministry-of-the-public-service-and-talent-development.md) — see headline issue #3 in that report
+- **What's wrong:** The three directorate contact blocks (lines 35–64) each include only an address — no phone, no email. Gov.bb's authoritative directory entry for this ministry lists distinct phone numbers and emails for every directorate. The absence of this information on alpha.gov.bb is a meaningful omission for a
+- **Source:** see [ministries/ministry-of-the-public-service-and-talent-development](/docs/fact-check/ministries/ministry-of-the-public-service-and-talent-development.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No contact phone number appears in the content markdown for any directorate`
 
 ---
+### F-299 · Tier B · Ministry address in ministries.ts is stale — the ministry has moved to One Barbados Place
 
-### F-038 · Tier B · Fix "Co-operatives Societies Act" spelling — should be "Co-operative Societies Act"
+- **Where:** [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) — see headline issue #1 in that report
+- **What's wrong:** The data file lists two addresses: "Lloyd Erskine Sandiford Center, Two Mile Hill, St. Michael" (Tourism) and "8th Floor Baobab Tower, Warrens, St. Michael" (International Transport). The ministry's own contact page at `tourism.gov.bb/contact` gives a single address: "4th and 5th Floors, One Barbado
+- **Source:** see [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry address in ministries.ts is stale — the ministry has moved to One Barbados Place`
 
-- **Where:** `src/content/financial-services-for-businesses.md` line 18
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** LOW — a business user searching for the Act by name using the page text may fail to find it; the typo misrepresents the statute title
-- **What's wrong:** Page writes "Co-operatives Societies Act, Cap. 378A". The correct title is "Co-operative Societies Act, Cap. 378A" (singular "Co-operative"). The Barbados Law Courts statutory repository uses `Co-operativeSocietiesCAP378A.pdf`; the FSC Legislation page lists "Co-operative Societies Act Cap. 378A".
-- **Fix:** Change "Co-operatives Societies Act" to "Co-operative Societies Act".
-- **Source:** [Barbados Law Courts — Co-operative Societies Act, Cap. 378A (PDF)](https://www.barbadoslawcourts.gov.bb/assets/content/pdfs/statutes/Co-operativeSocietiesCAP378A.pdf); [FSC — Legislation](https://www.fsc.gov.bb/legislation)
-- **Suggested issue title:** `Fix "Co-operatives Societies Act" spelling on Financial services for businesses page (should be "Co-operative Societies Act")`
+---
+### F-300 · Tier B · "Barbados Civil Aviation Department (BCAD)" in ministries.ts is an outdated agency name
+
+- **Where:** [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) — see headline issue #2 in that report
+- **What's wrong:** The Civil Aviation Department was replaced by the independent Barbados Civil Aviation Authority (BCAA) when Parliament established the BCAA on 25 October 2022 under the Civil Aviation Act 2022-19. The BCAA has its own governing board, its own website (bcaa.gov.bb), and its own address (Charnocks, Ch
+- **Source:** see [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Barbados Civil Aviation Department (BCAD)" in ministries.ts is an outdated agency name`
 
 ---
+### F-301 · Tier B · Minister's post-nominals and name verified — no discrepancy
 
-### F-037 · Tier A · Replace "Welfare Department" with Social Empowerment Agency on disaster relief page
+- **Where:** [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) — see headline issue #3 in that report
+- **What's wrong:** The parliament.gov.bb Cabinet Ministers page, the barbadosparliament.com member detail page, and tourism.gov.bb all confirm "The Hon. G. P. Ian Gooding-Edghill, J.P., M.P." — which matches ministries.ts exactly. This was initially listed as a potential discrepancy in the first audit pass but was res
+- **Source:** see [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister's post-nominals and name verified — no discrepancy`
+
+---
+### F-302 · Tier B · The International Transport PBX number is absent from ministries.ts contact array
 
-- **Where:** `src/content/get-disaster-relief-assistance.md` lines 21, 38, 44, 75, 76, 96
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** HIGH — the Welfare Department was dissolved 2 January 2026 and merged into the Social Empowerment Agency (SEA). Citizens directed to the "Welfare Department" will encounter an agency that no longer exists under that name; SEA client centres are at new locations (Six Roads, St Philip; Southern Plaza, Oistins).
-- **What's wrong:** Every reference to "Welfare Department" on the page is now outdated. The SEA merged the Child Care Board, Welfare Department, National Assistance Board, National Disabilities Unit, and Resilience and Reintegration Unit on 2 January 2026.
-- **Fix:** Replace all six occurrences of "Welfare Department" with "Social Empowerment Agency (SEA)". Consider adding a note "(formerly the Welfare Department)" on first use. Update addresses to reflect new SEA client centre locations once confirmed with the agency.
-- **Source:** [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/); [socialempowermentbb.org](https://socialempowermentbb.org/)
-- **Suggested issue title:** `Update "Welfare Department" to "Social Empowerment Agency" on disaster relief page (merged Jan 2026)`
+- **Where:** [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) — see headline issue #4 in that report
+- **What's wrong:** Gov.bb lists separate PBX numbers for Tourism (535-7500) and International Transport (535-3300). ministries.ts only records 535-7500 as the single telephone. Citizens trying to reach the International Transport division by phone cannot do so via the alpha.gov.bb page. Tier B finding. **Confirmed sti
+- **Source:** see [ministries/ministry-of-tourism-and-international-transport](/docs/fact-check/ministries/ministry-of-tourism-and-international-transport.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The International Transport PBX number is absent from ministries.ts contact array`
 
 ---
+### F-303 · Tier B · Minister role title is ambiguous — both titles appear in authoritative sources
 
-### F-038 · Tier A · Fix Welfare Department address: "Perry Gap" → "Weymouth Corporate Centre, Roebuck Street"
+- **Where:** [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) — see headline issue #1 in that report
+- **What's wrong:** `ministries.ts` gives Husbands the title "Minister of Technological and Vocational Training." The Barbados Parliament Cabinet Ministers list (Tier 1) uses this same title. However, the Parliament member page for Husbands uses "Minister of Training and Tertiary Education," and GIS Facebook posts (202
+- **Source:** see [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister role title is ambiguous — both titles appear in authoritative sources`
 
-- **Where:** `src/content/get-disaster-relief-assistance.md` lines 22–24, 40–43
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** HIGH — a citizen travelling to "Perry Gap, Bridgetown" during or after a disaster will not find the welfare/SEA office. The correct address, confirmed by gov.bb, GIS, and govserv.org, is Weymouth Corporate Centre, Roebuck Street, Bridgetown, St. Michael.
-- **What's wrong:** Page lists "Perry Gap, Bridgetown, Saint Michael" as the Welfare Department address. No Tier 1 or Tier 2 source places the Welfare Department at Perry Gap. All authoritative sources consistently give Weymouth Corporate Centre, Roebuck Street.
-- **Fix:** Change both address blocks to "Weymouth Corporate Centre, Roebuck Street, Bridgetown, St. Michael" (or to the relevant SEA client centre address once confirmed — see F-037).
-- **Source:** [Welfare Department — gov.bb](https://www.gov.bb/Departments/welfare); [GIS — New Numbers For Welfare Dept.](https://gisbarbados.gov.bb/blog/new-numbers-for-welfare-dept/); [govserv.org — Barbados Welfare Department](https://www.govserv.org/BB/St-Michael/1153517008123538/Barbados-Welfare-Department)
-- **Suggested issue title:** `Fix Welfare Department address on disaster relief page ("Perry Gap" → "Weymouth Corporate Centre, Roebuck Street")`
+---
+### F-304 · Tier B · Erdiston Teachers' Training College may belong under MEDT, not MTTE
+
+- **Where:** [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) — see headline issue #3 in that report
+- **What's wrong:** The May 2026 Barbados Today graduation coverage has Erdiston's Deputy Principal explicitly referencing the "Ministry of Education Transformation" as their ministry partner. The TVET Council's own About page still lists the Permanent Secretary of the legacy "Ministry of Education, Technological and V
+- **Source:** see [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Erdiston Teachers' Training College may belong under MEDT, not MTTE`
 
 ---
+### F-305 · Tier B · No contact details at all for this ministry
 
-### F-039 · Tier B · Add DEM phone number to disaster relief page
+- **Where:** [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) — see headline issue #4 in that report
+- **What's wrong:** Unlike every other ministerial entry in `ministries.ts`, the MTTE entry contains no address, phone, email, fax, or website. The Barbados Parliament member page for Husbands lists `(246) 535-0611` and Elsie Payne Complex as constituency office contacts — these likely relate to the pre-split legacy mi
+- **Source:** see [ministries/ministry-of-training-and-tertiary-education](/docs/fact-check/ministries/ministry-of-training-and-tertiary-education.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No contact details at all for this ministry`
+
+---
+### F-306 · Tier B · REVERSED — "Government building" no longer discrepant
 
-- **Where:** `src/content/get-disaster-relief-assistance.md` lines 80–84
-- **Confidence it's wrong:** 100% (omission, not an error on the content present)
-- **Citizen impact:** MEDIUM — the DEM address is listed but no phone number is given; citizens in a disaster situation need to be able to call DEM directly.
-- **What's wrong:** The DEM block (lines 80–84) lists the building and address but omits the telephone number. DEM's published number is (246) 438-7575.
-- **Fix:** Add `+(246) 438-7575` (or `(246) 438-7575`) after the address block; optionally add email `deminfo@barbados.gov.bb`.
-- **Source:** [DEM — Contact Us](https://dem.gov.bb/contact); [gov.bb — Department of Emergency Management](https://www.gov.bb/Departments/emergency-management)
-- **Suggested issue title:** `Add DEM phone number to disaster relief page ((246) 438-7575)`
+- **Where:** [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) — see headline issue #1 in that report
+- **What's wrong:** The previous pass (2026-05-28) flagged "Government building" (singular) in the mission statement as discrepant, citing mtw.gov.bb "buildings" (plural) as authoritative. On re-check (2026-05-29), gov.bb — the primary authoritative source — also uses the singular "building". The alpha page therefore m
+- **Source:** see [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `REVERSED — "Government building" no longer discrepant`
 
 ---
+### F-307 · Tier B · Website URL stored as `http://www.mtw.gov.bb`
 
-### F-040 · Tier A · Fix form-per-child rule on Get a primary school textbook grant page
+- **Where:** [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) — see headline issue #2 in that report
+- **What's wrong:** The canonical form is `https://mtw.gov.bb/` (HTTPS, no www). The stored value uses an insecure scheme and a non-canonical www prefix. Browsers redirect transparently but the stored value should reflect the canonical form. (Persists from previous pass.)
+- **Source:** see [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Website URL stored as `http://www.mtw.gov.bb``
 
-- **Where:** `src/content/get-a-primary-school-textbook-grant/index.md` lines 16–17
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** HIGH — a parent who submits one form for three children at the same school will have only one child's claim processed; the other children's grants will be missed.
-- **What's wrong:** Page states "If you have more than one child at the same school, you only need to complete one form to claim on behalf of each child." The Ministry of Educational Transformation's own announcement and GIS reporting confirm that one form per child (not one form per family per school) is required: "If you are a parent or guardian of three children, you are required to complete one form per student."
-- **Fix:** Change to "If you have more than one child at the same school, you need to complete a separate form for each child."
-- **Source:** [mes.gov.bb — Textbook Grant 2023 announcement](https://mes.gov.bb/News/Latest/The-Primary-School-100-Textbook-Grant-2023.aspx); [Barbados Today — Education ministry ready to accept claims (2023-09-30)](https://barbadostoday.bb/2023/09/30/education-ministry-ready-to-accept-claims-for-textbook-grants/)
-- **Suggested issue title:** `Fix textbook grant form-per-child rule: one form per child, not one form per family per school`
+---
+### F-308 · Tier B · Temporary address not signposted on live page
+
+- **Where:** [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) — see headline issue #3 in that report
+- **What's wrong:** MTW's offices are currently at 2nd Floor, The Goddard Building, Haggatt Hall, St. Michael (confirmed on mtw.gov.bb/directory/). The alpha page shows only the permanent Pine address. Citizens visiting in person will find the ministry closed there.
+- **Source:** see [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Temporary address not signposted on live page`
 
 ---
+### F-309 · Tier B · Transport Authority absent from associatedDepartments
 
-### F-041 · Tier B · Fix currency code "BDD" → "BDS" on primary school textbook grant page
+- **Where:** [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) — see headline issue #4 in that report
+- **What's wrong:** The ministry's own Objective 7 names "the Barbados Licensing Authority, the Transport Authority and private operators" in the same breath, yet only BLA and Transport Board appear in the data file's Transport category. The Transport Authority (ta.gov.bb) handles PSV permitting and route licensing — a
+- **Source:** see [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Transport Authority absent from associatedDepartments`
+
+---
+### F-310 · Tier B · Minister role title has minor punctuation difference vs gov.bb cabinet page
 
-- **Where:** `src/content/get-a-primary-school-textbook-grant/index.md` line 8
-- **Confidence it's wrong:** 99%
-- **Citizen impact:** LOW — citizens are unlikely to be confused by the dollar amount; trust and accuracy signal.
-- **What's wrong:** Page reads "$100 BDD textbook grant". "BDD" is not a valid ISO 4217 currency code and is not used by any Government of Barbados source. The correct local abbreviation is "BDS$" (or ISO code BBD). Note: `src/data/content-directory.ts` line 280 correctly uses "BDS $100".
-- **Fix:** Change "BDD" to "BDS" to match the currency abbreviation used by the Central Bank of Barbados and Government of Barbados publications.
-- **Source:** [Central Bank of Barbados currency conventions](https://www.centralbank.org.bb); [ISO 4217 — BBD](https://www.xe.com/currency/bbd-barbadian-or-bajan-dollar/)
-- **Suggested issue title:** `Fix currency code typo "BDD" → "BDS" on Get a primary school textbook grant page`
+- **Where:** [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) — see headline issue #5 in that report
+- **What's wrong:** ministries.ts stores "Minister of Transport and Works, and Senior Minister coordinating Infrastructure" (comma before "and"). The gov.bb/cabinet.php page shows "Minister of Transport and Works and Senior Minister coordinating Infrastructure" (no comma). The content is the same; this is a formatting
+- **Source:** see [ministries/ministry-of-transport-works-and-water-resources](/docs/fact-check/ministries/ministry-of-transport-works-and-water-resources.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minister role title has minor punctuation difference vs gov.bb cabinet page`
 
 ---
+### F-311 · Tier B · All four contact tables in the body content have empty phone cells
 
-### F-042 · Tier A · Fix "Crisis Hotline" label — 435-8222 is the BPW Crisis Centre, not a government hotline
+- **Where:** [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) — see headline issue #1 in that report
+- **What's wrong:** The source markdown (`office-of-the-attorney-general.md`) has empty telephone columns across all four sections (OAG main, CPC, SG, DPP). While `ministries.ts` stores the main PBX (246) 535-0467 and fax numbers for sidebar rendering, the direct-dial numbers for individual roles (AG, PS, Deputy PS, Fi
+- **Source:** see [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `All four contact tables in the body content have empty phone cells`
 
-- **Where:** `src/content/get-support-for-a-victim-of-domestic-abuse.md` line 37
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** HIGH — a person in crisis who dials expecting a government crisis line will reach an NGO. The number is still helpful, but the misidentification undermines trust and omits the caller's right to know they are reaching a civil society organisation.
-- **What's wrong:** Page labels 435-8222 as "the Crisis Hotline". This number belongs to the Barbados Professional Women (BPW) Crisis Centre and Shelter, a non-governmental organisation, confirmed by BPW's own website and multiple secondary sources.
-- **Fix:** Change "the Crisis Hotline on 435-8222" to "the BPW (Barbados Professional Women) Crisis Centre on 435-8222". Also consider adding the BPW's secondary number 845-0623 (WhatsApp/calls) for completeness.
-- **Source:** [BPW Crisis Centre (bpwbarbados.wordpress.com)](https://bpwbarbados.wordpress.com/bpw-crisis-centre-and-shelter/); [findahelpline.com — Barbados](https://findahelpline.com/countries/bb/topics/abuse-domestic-violence)
-- **Suggested issue title:** `Fix "Crisis Hotline" label on domestic abuse page — 435-8222 is the BPW Crisis Centre (NGO), not a government hotline`
+---
+### F-312 · Tier B · DPP address is still incomplete
+
+- **Where:** [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) — see headline issue #2 in that report
+- **What's wrong:** The source markdown says "Frank Walcott BLDG / St. Michael". The live page renders "Frank Walcott Building, St. Michael" (the abbreviation is corrected via rendering, but the street address — Culloden Road — and floor (4th Floor) remain absent). The oag.gov.bb DPP page itself now shows the Jones Bui
+- **Source:** see [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `DPP address is still incomplete`
 
 ---
+### F-313 · Tier B · oag.gov.bb still shows the former Attorney General
 
-### F-043 · Tier A · Replace unverified FCU phone numbers with confirmed numbers
+- **Where:** [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) — see headline issue #3 in that report
+- **What's wrong:** oag.gov.bb/About/Meet-the-Attorney-General/ still lists Hon. Dale D. Marshall as Attorney General. The canonical current AG is The Hon. Wilfred A. Abrahams, S.C., M.P. (confirmed by gov.bb/cabinet.php as of Feb 2026 election). This is an oag.gov.bb content problem, not an alpha.gov.bb problem — alph
+- **Source:** see [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `oag.gov.bb still shows the former Attorney General`
+
+---
+### F-314 · Tier B · OAG website URL in ministries.ts uses HTTP
 
-- **Where:** `src/content/get-support-for-a-victim-of-domestic-abuse.md` line 45
-- **Confidence it's wrong:** 80% (845-0623 is a BPW number, not FCU); >80% (836-5070 has no authoritative source)
-- **Citizen impact:** HIGH — crisis service. A victim dialling an incorrect or dead FCU number receives no help.
-- **What's wrong:** The page lists three FCU numbers: 435-8222 (BPW hotline, not FCU), 845-0623 (BPW secondary line, not FCU), and 836-5070 (no authoritative source found). The official FCU numbers — 430-7316/7323 (Mental Health Services Directory) and 430-7328 (Barbados Police Service Facebook) — are absent from the page.
-- **Fix:** Replace the three current numbers with the verified FCU numbers: (246) 430-7316 / (246) 430-7323. Confirm 430-7328 with the RBPF and add if correct. Keep 435-8222 in a separate "Other support" block labelled as BPW. Remove 836-5070 unless the RBPF confirms it is active.
-- **Source:** [Barbados Mental Health Services Directory](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/) — lists FCU as 430-7316/7323 at Old Black Rock Police Station; [Barbados Police Service Facebook — FCU 430-7328](https://www.facebook.com/permalink.php/?story_fbid=979961630833230&id=100064582068302)
-- **Suggested issue title:** `Fix FCU phone numbers on domestic abuse page — replace unverified 845-0623 / 836-5070 with confirmed 430-7316/7323`
+- **Where:** [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) — see headline issue #4 in that report
+- **What's wrong:** `ministries.ts` line 132 stores `http://www.oag.gov.bb/` — HTTP rather than HTTPS. The canonical URL is `https://oag.gov.bb/`. A user clicking this link will be redirected but browsers may warn on HTTP links.
+- **Source:** see [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `OAG website URL in ministries.ts uses HTTP`
 
 ---
+### F-315 · Tier B · Photo requirements are materially incomplete
 
-### F-044 · Tier A · Fix FCU address — "Black Rock Police Station Annex" → "Old Black Rock Police Station, Black Rock, St. Michael"
+- **Where:** [national-registration](/docs/fact-check/national-registration.md) — see headline issue #1 in that report
+- **What's wrong:** The page lists only two dress-code prohibitions (head coverings and tinted glasses). The EBC's current registration guidance — confirmed on both `ebc.gov.bb/registration-information/` and `trident.gov.bb/registering/` — adds two further restrictions: no sleeveless clothing (shoulders must be covered
+- **Source:** see [national-registration](/docs/fact-check/national-registration.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Photo requirements are materially incomplete`
 
-- **Where:** `src/content/get-support-for-a-victim-of-domestic-abuse.md` lines 47–48
-- **Confidence it's wrong:** 75%
-- **Citizen impact:** HIGH — a victim searching Google Maps for the "Black Rock Police Station Annex" will not find a match; "Old Black Rock Police Station" is the correct navigable landmark.
-- **What's wrong:** Page says "Black Rock Police Station Annex, Saint Michael." No authoritative source uses "Annex." The Barbados Mental Health Services Directory and Barbados Advocate reporting both use "Old Black Rock Police Station, Black Rock, St. Michael."
-- **Fix:** Change to "Old Black Rock Police Station, Black Rock, St. Michael".
-- **Source:** [Barbados Mental Health Services Directory](https://fliphtml5.com/yxtji/jgmr/DIRECTORY_OF_MENTAL_HEALTH_SERVICES_IN_BARBADOS/); [Barbados Advocate — Black Rock Police Station opens](https://www.barbadosadvocate.com/news/black-rock-police-station-opens)
-- **Suggested issue title:** `Fix FCU address on domestic abuse page: "Black Rock Police Station Annex" → "Old Black Rock Police Station, Black Rock, St. Michael"`
+---
+### F-316 · Tier B · Governing Act is legally stale
+
+- **Where:** [national-registration](/docs/fact-check/national-registration.md) — see headline issue #2 in that report
+- **What's wrong:** The page uses the term "National Registration Number" and implies the old Statistics Act framework. The Barbados Identity Management Act 2021 replaced that Act and is now the controlling statute. The EBC FAQ page states explicitly: "The Trident ID Card complies with the Barbados Identity Management
+- **Source:** see [national-registration](/docs/fact-check/national-registration.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Governing Act is legally stale`
 
 ---
+### F-317 · Tier B · Replacement card fee correct ($60) but context is thin
 
-### F-045 · Tier C · Verify or remove "Victim Rights Form 7" reference
+- **Where:** [national-registration](/docs/fact-check/national-registration.md) — see headline issue #3 in that report
+- **What's wrong:** The $60 figure is confirmed. The page omits: (a) first-time registration is free; (b) same-day expedited replacement costs $100; (c) persons 65+ are exempt from the replacement fee; (d) persons with qualifying disabilities and 16-year-olds transitioning to adult cards (when the minor card is surrend
+- **Source:** see [national-registration](/docs/fact-check/national-registration.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Replacement card fee correct ($60) but context is thin`
+
+---
+### F-318 · Tier B · Fax number is unverified
 
-- **Where:** `src/content/get-support-for-a-victim-of-domestic-abuse.md` line 84
-- **Confidence it's wrong:** 65% (no authoritative source confirms this form name or number)
-- **Citizen impact:** HIGH — a victim asking police for a non-existent or wrongly-named form risks being dismissed; this is a life-safety concern.
-- **What's wrong:** Page refers to "Victim Rights Form 7" as a form used to apply for trauma-related support. No Barbados government source — not the Domestic Violence (Protection Orders) Act CAP. 130A, not the 2016 Amendment, not gov.bb, not GIS — names a form called "Victim Rights Form 7." The Act's Schedule contains Forms 1–6.
-- **Fix:** Contact the Royal Barbados Police Force and/or Bureau of Gender Affairs to confirm whether this form exists, and if so, what its correct name is. If it does not exist, remove the reference. If confirmed, add a source citation.
-- **Source:** [Domestic Violence (Protection Orders) Act CAP. 130A](https://barbadosparliament-laws.com/en/showdoc/cs/130A); [Baker McKenzie — Topic 4](https://resourcehub.bakermckenzie.com/en/resources/fighting-domestic-violence/north-and-central--america/barbados/topics/4-protection-for-domestic-violence-victims-and-relief-granted) — neither confirms "Form 7"
-- **Suggested issue title:** `Verify or remove "Victim Rights Form 7" reference on domestic abuse page — form name not confirmed by any Barbados source`
+- **Where:** [national-registration](/docs/fact-check/national-registration.md) — see headline issue #4 in that report
+- **What's wrong:** The number (246) 535-4863 does not appear on the EBC's own contact page. The EBC lists only a phone number and email. The fax may have been decommissioned.
+- **Source:** see [national-registration](/docs/fact-check/national-registration.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Fax number is unverified`
 
 ---
+### F-319 · Tier B · Processing time stated in the previous report's additional findings was wrong
 
-### F-036 · Tier B · Add missing 2006–2009 row to compulsory retirement age table
+- **Where:** [national-registration](/docs/fact-check/national-registration.md) — see headline issue #5 in that report
+- **What's wrong:** The prior report noted "within 12 weeks" — the current trident.gov.bb states "within eight weeks after registration." This affected only the additional findings section, not a direct page claim.
+- **Source:** see [national-registration](/docs/fact-check/national-registration.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Processing time stated in the previous report's additional findings was wrong`
 
-- **Where:** `src/content/calculate-your-pension/index.md` lines 38–43
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** MEDIUM — officers compulsorily retired under the 2006–2009 rule (age 65½) are not served by the current table.
-- **What's wrong:** The compulsory retirement age table shows three rows beginning "1 January 2010". The Ministry of Public Service's authoritative table begins one row earlier: "1 January 2006 to 31 December 2009 → 65½". The Treasury Dept "Considerations" page also omits this row, but MPS is the definitive authority for public service conditions. The table is also more readable if each period includes its end-date ("1 January 2010 to 31 December 2013") rather than just the start date.
-- **Fix:** Add a row: "1 January 2006 to 31 December 2009 | 65½" at the top of the table. Also update the remaining rows to show end dates for the bounded periods, matching the MPS format.
-- **Source:** [MPS — Age](https://mps.gov.bb/People_Resourcing/age) — four-row table beginning 1 January 2006
-- **Suggested issue title:** `Add missing 2006–2009 row (age 65½) to compulsory retirement age table on Calculate your pension page`
+---
+### F-320 · Tier B · Immigration Department address is wrong
+
+- **Where:** [open-pharmacy](/docs/fact-check/open-pharmacy.md) — see headline issue #3 in that report
+- **What's wrong:** Lines 53 and 99 still say "Careenage House, The Wharf, Bridgetown". The department fully relocated to BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael — confirmed by `immigration.gov.bb`, `gov.bb`, and GIS press releases. Citizens directed to Careenage House will waste a
+- **Source:** see [open-pharmacy](/docs/fact-check/open-pharmacy.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Immigration Department address is wrong`
 
 ---
+### F-321 · Tier B · "12 government polyclinic locations" is wrong
 
-### F-046 · Tier A · Remove obsolete visitor driving permit section — permits abolished October 2025
+- **Where:** [open-pharmacy](/docs/fact-check/open-pharmacy.md) — see headline issue #4 in that report
+- **What's wrong:** Line 72 says "12 locations". The Ministry of Health's Primary Health Care page states "nine polyclinics and two satellite clinics" (11 total). BDS pharmacy service operates within "nine (9) polyclinics, three (3) out-patient clinics and two (2) of the district hospitals" — still not 12 polyclinics.
+- **Source:** see [open-pharmacy](/docs/fact-check/open-pharmacy.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"12 government polyclinic locations" is wrong`
+
+---
+### F-322 · Tier B · Dispensing fee described only as "small"
 
-- **Where:** `src/content/getting-around-barbados.md` lines 9–17
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** HIGH — a visitor reading this page may attempt to apply for a permit that no longer exists, or mistakenly believe they cannot legally drive without one. The entire section ("Obtaining a Drivers Permit") is obsolete.
-- **What's wrong:** The Barbados Revenue Authority abolished visitor driving permits effective 15 October 2025. Visitors may now drive in Barbados on a valid home-country driving licence for the class of vehicle they intend to drive. A Car Rental Levy (BBD $5/day, max $35 per rental contract) is now collected by rental companies — it is not a citizen-facing application. The BLA service page has not yet been updated to reflect the change, but the BRA policy note is the governing authority.
-- **Fix:** Remove the entire "Obtaining a Drivers Permit" section (lines 9–17). Add a note: "Visitors may drive in Barbados on a valid home-country driving licence. If renting a vehicle, a Car Rental Levy of BBD $5 per day (maximum $35 per rental) is included in your rental rate." Also confirm the position for temporary residents (those staying longer term) and whether the 12-month CARICOM free-movement provision applies.
-- **Source:** [BRA — Car Rental Levy and Discontinuation of Visitor Driving Permits](https://bra.gov.bb/News/Policy-Notes/Car-Rental-Levy-and-Discontinuatio); [BRA — Car Rental Levy Guide and Resources](https://bra.gov.bb/News/Announcements/Car-Rental-Levy-Guide-and-Resources); [barbadosdigital.com — Driving licences](https://barbadosdigital.com/articles/driving-licences)
-- **Suggested issue title:** `Remove obsolete visitor driving permit section — permits abolished 15 October 2025, replaced by Car Rental Levy`
+- **Where:** [open-pharmacy](/docs/fact-check/open-pharmacy.md) — see headline issue #5 in that report
+- **What's wrong:** The fee was a tiered structure increased effective April 1, 2024, from $5/$7/$12 to $7/$10/$14 per item. The page gives no indication of the actual amounts, which affects citizen budget planning.
+- **Source:** see [open-pharmacy](/docs/fact-check/open-pharmacy.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Dispensing fee described only as "small"`
 
 ---
+### F-323 · Tier B · "BTA" is an obsolete acronym — still on the live page
 
-### F-047 · Tier B · Update ZR route description: not "numbered one through eleven"
+- **Where:** [ports-of-entry](/docs/fact-check/ports-of-entry.md) — see headline issue #1 in that report
+- **What's wrong:** The Barbados Tourism Authority (BTA) was restructured in 2014 into two successor bodies: Barbados Tourism Marketing Inc. (BTMI) and the Barbados Tourism Product Authority (BTPA). The acronym "BTA" no longer refers to any official body. The entertainment at the Bridgetown Cruise Terminal is organised
+- **Source:** see [ports-of-entry](/docs/fact-check/ports-of-entry.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"BTA" is an obsolete acronym — still on the live page`
 
-- **Where:** `src/content/getting-around-barbados.md` line 36
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** MEDIUM — a visitor looking for Route 15 (Groves Development), Route 19 (Dash Valley), or Route 3O (Speightstown to Oistins) will not know these routes exist if the page implies routes stop at 11.
-- **What's wrong:** Page says ZRs "run specific routes numbered one through eleven." The Transport Authority (ta.gov.bb) lists 31 route-taxi routes, numbered up to Route 61, plus lettered variants (1A, 1B, 3C, 3D, 3L, 3M, 3N, 3O, 3Q, 3R, 3V, 3W, 8B, and Route 61). Routes 01–11 are the original numbered core routes; the full network is significantly larger.
-- **Fix:** Change "run specific routes numbered one through eleven" to "run specific routes across the island" and add a link to ta.gov.bb/Routes/RouteTaxis/ for the full route list.
-- **Source:** [Transport Authority — Route Taxis](https://ta.gov.bb/Routes/RouteTaxis/)
-- **Suggested issue title:** `Update ZR route description on Getting around Barbados: "one through eleven" is outdated (31 routes now listed by Transport Authority)`
+---
+### F-324 · Tier B · Port Saint Charles is on the northwest coast, not the western coast
+
+- **Where:** [ports-of-entry](/docs/fact-check/ports-of-entry.md) — see headline issue #2 in that report
+- **What's wrong:** The [official Port St. Charles website](https://www.portstcharles.com/) states it is "Located on the beautiful northwest coast of Barbados." The alpha.gov.bb page says "western coast," which is imprecise and inconsistent with the official operator's description.
+- **Source:** see [ports-of-entry](/docs/fact-check/ports-of-entry.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Port Saint Charles is on the northwest coast, not the western coast`
 
 ---
+### F-325 · Tier B · Port Saint Charles offers homes up to six bedrooms, not five
 
-### F-048 · Tier B · Replace "National Employment Bureau" with "BECCS" on Jobseekers page
+- **Where:** [ports-of-entry](/docs/fact-check/ports-of-entry.md) — see headline issue #3 in that report
+- **What's wrong:** The alpha.gov.bb page says "one bedroom to five bedroom homes." The [official portstcharles.com](https://www.portstcharles.com/) lists 1-, 2-, 3-, 4-, and 6-bedroom configurations — no 5-bedroom is listed, and the upper limit is 6, not 5. Multiple independent villa rental aggregators confirm 6-bedro
+- **Source:** see [ports-of-entry](/docs/fact-check/ports-of-entry.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Port Saint Charles offers homes up to six bedrooms, not five`
+
+---
+### F-326 · Tier B · Agency name "Barbados Post Office" in frontmatter is wrong
 
-- **Where:** `src/content/jobseekers.md` line 13
-- **Confidence it's wrong:** 88%
-- **Citizen impact:** MEDIUM — the National Employment Bureau was renamed the Barbados Employment and Career Counselling Service (BECCS) effective 1 April (announced May 2017 per Loop Barbados/GIS). No Tier 1 source now uses "National Employment Bureau". The One Stop Resource Centre page on labour.gov.bb explicitly describes itself as serving BECCS, not the NEB. A citizen searching "National Employment Bureau" may struggle to locate the current service.
-- **What's wrong:** Page says "One Stop Resource Centre under the **National Employment Bureau**". The bureau operating the One Stop Resource Centre is now named the Barbados Employment and Career Counselling Service (BECCS).
-- **Fix:** Change "under the National Employment Bureau" to "under the Barbados Employment and Career Counselling Service (BECCS)".
-- **Source:** [labour.gov.bb — One Stop Resource Centre](https://labour.gov.bb/employment-services/one-stop-resource-centre/) — references BECCS exclusively; [GIS — Name Change For Employment Bureau April 1st](https://gisbarbados.gov.bb/blog/name-change-for-employment-bureau-april-1st/) (HTTP 403 on direct fetch; URL confirmed via search index)
-- **Suggested issue title:** `Update "National Employment Bureau" to "BECCS" on Jobseekers page`
+- **Where:** [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) — see headline issue #1 in that report
+- **What's wrong:** The `description` field in `index.md` (line 3) reads "Tell the Barbados Post Office to redirect your business mail…". The canonical agency name confirmed by the agency's own website (bps.gov.bb) is "Barbados Postal Service". This error propagates into search engine snippets and social previews. Body
+- **Source:** see [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Agency name "Barbados Post Office" in frontmatter is wrong`
 
 ---
+### F-327 · Tier B · start.md contains a copy-paste error from the individual redirection form
 
-### F-049 · Tier C · Confirm preferred form of "Ministry of the Public Service" name on Jobseekers page
+- **Where:** [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) — see headline issue #2 in that report
+- **What's wrong:** Line 21 of `start.md` reads "name(s) of every other person who also wants to redirect their mail". This is lifted verbatim from the personal/individual redirection form and makes no sense in a business context. A business does not have "other persons who want to redirect their mail". This field is n
+- **Source:** see [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `start.md contains a copy-paste error from the individual redirection form`
 
-- **Where:** `src/content/jobseekers.md` line 36
-- **Confidence it's wrong:** 60%
-- **Citizen impact:** LOW — citizens will still reach the correct ministry via the URL; this is a naming precision issue.
-- **What's wrong:** Page says "Visit the Ministry of the Public Service". The canonical gov.bb/ministries name is "Ministry of the Public Service and Talent Development" (MPSTD); `src/data/ministries.ts` line 919 uses the full form. The mps.gov.bb site header itself uses "Ministry of Public Service" (drops "the" as well), creating three variant forms in use.
-- **Fix:** Consider updating to the full canonical form "Ministry of the Public Service and Talent Development" to match gov.bb and the canonical data file. Alternatively, confirm with the Ministry whether the short form is acceptable in running text.
-- **Source:** [gov.bb — Ministries listing](https://www.gov.bb/ministries) — "Ministry of the Public Service and Talent Development"; `src/data/ministries.ts` line 919
-- **Suggested issue title:** `Update "Ministry of the Public Service" to full canonical name on Jobseekers page`
+---
+### F-328 · Tier B · Certificate of Incorporation and National ID requirements have no authoritative basis
+
+- **Where:** [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) — see headline issue #4 in that report
+- **What's wrong:** The page states (index.md lines 57–59) that the applicant must present a Certificate of Incorporation with official stamp and verify identity with a National ID card at the Post Office. The BPS's own published guidance says only that the company name (in capitals) and company stamp (with signature)
+- **Source:** see [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Certificate of Incorporation and National ID requirements have no authoritative basis`
 
 ---
+### F-329 · Tier B · "Lasting power of attorney" is the wrong document — and the concept does not exist in Barbados law
 
-### F-051 · Tier A · Replace obsolete 25% corporation tax rate on Information about business tax page
+- **Where:** [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) — see headline issue #1 in that report
+- **What's wrong:** `start.md` line 20 tells the citizen they need "proof you have lasting power of attorney." A lasting (enduring) power of attorney terminates at death, so it cannot authorise anyone to act on behalf of a deceased person's estate. Barbados has no statutory framework for lasting or enduring powers of a
+- **Source:** see [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Lasting power of attorney" is the wrong document — and the concept does not exist in Barbados law`
+
+---
+### F-330 · Tier B · Fee of $13 BBD: verified for domestic redirections, but not specifically for the deceased-estate ser…
 
-- **Where:** `src/content/information-about-business-tax.md` lines 57–65
-- **Confidence it's wrong:** 98%
-- **Citizen impact:** HIGH — the general corporation tax rate is stated as 25%. The Income Tax (Amendment and Validation) Act, 2024-15 (enacted 24 May 2024, effective 1 January 2024) replaced this with a tiered structure; from income year 2025 the standard rate is a flat 9% for most companies, with 5.5% for approved small businesses and 4.5% for qualifying IP income. The entire tax rates table requires replacement.
-- **What's wrong:** Page states "The rate of tax applicable generally to both resident and non-resident companies in Barbados is 25%." Also wrong: general insurance at 25% (should be 0%–2% under the Class 1/2/3 structure) and life insurance at 5% (also superseded by Class 1/2/3). Manufacturing 15% and residential rental 15% also likely superseded but unconfirmed — flag for BRA confirmation.
-- **Fix:** Replace the entire Tax Rates section with: standard rate 9% (income year 2025+); approved small businesses 5.5%; qualifying IP 4.5%; insurance (Class 1: 0%, Class 2: 2%, Class 3: 2%); confirm manufacturing and residential rental rates with BRA. Remove all references to "25%" and "5%".
-- **Source:** [BRA — Income Tax Corporations (current rate table)](https://bra.gov.bb/About/Tax-Types/Income-Tax/Corporations); [PwC — Barbados Corporate Taxes on Income](https://taxsummaries.pwc.com/barbados/corporate/taxes-on-corporate-income); [Centralis Group — New Tax Rates 2024](https://centralisgroup.com/news-insights/barbados-an-overview-of-new-incentives-and-tax-rates-for-2024/)
-- **Suggested issue title:** `Replace obsolete 25% corporation tax rate on Information about business tax page (new rate: 9% from income year 2025)`
+- **Where:** [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) — see headline issue #3 in that report
+- **What's wrong:** The BPS website confirms BDS$13 for domestic customers. No BPS source publishes a separate (or explicitly identical) fee for the deceased-estate variant. Whether BDS$13 applies here is a reasonable inference but has not been confirmed by any BPS publication.
+- **Source:** see [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Fee of $13 BBD: verified for domestic redirections, but not specifically for the deceased-estate ser…`
 
 ---
+### F-331 · Tier B · Internal inconsistency: "lasting power of attorney" vs. Letters Testamentary
 
-### F-052 · Tier A · Fix loss carry-forward period: "nine years" is doubly stale
+- **Where:** [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) — see headline issue #5 in that report
+- **What's wrong:** The contradiction between `start.md` (incorrect) and `index.md` (correct) is the highest-priority fix. A citizen who begins on `start.md` and never reads `index.md` faces a high-impact misdirection.
+- **Source:** see [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Internal inconsistency: "lasting power of attorney" vs. Letters Testamentary`
 
-- **Where:** `src/content/information-about-business-tax.md` lines 39–41
-- **Confidence it's wrong:** 92%
-- **Citizen impact:** HIGH — a business incorrectly believing it can carry a loss for nine years may fail to claim deductions that expire after five years, resulting in a permanent tax overcharge.
-- **What's wrong:** Page states losses may be carried forward for "nine years". The nine-year period was reduced to seven years for income years 2015–2024, and then further reduced to five years effective income year 2025 under the Income Tax (Amendment and Validation) Act, 2024-15. The page was published October 2025, so it was already wrong on publication (should have said seven years) and is now doubly wrong (should say five years). Also, from income year 2019, carried-forward losses may only offset up to 50% of taxable income in any given year — a utilisation cap not mentioned on the page.
-- **Fix:** Change both nine-year references to "five years (from income year 2025)". Add a note that losses from income years 2015–2024 may be carried forward for seven years from the year incurred. Add a note about the 50% annual utilisation cap (from income year 2019). Separately, confirm insurance company carry-forward: PwC states general insurers are limited to five years; life insurers cannot carry forward losses.
-- **Source:** [PwC — Barbados Corporate Deductions](https://taxsummaries.pwc.com/barbados/corporate/deductions); [PwC — Significant Developments](https://taxsummaries.pwc.com/barbados/corporate/significant-developments)
-- **Suggested issue title:** `Fix loss carry-forward period on Information about business tax page ("nine years" → "five years" from income year 2025)`
+---
+### F-332 · Tier B · Age threshold is wrong: "18 years old" should be "16 years old"
+
+- **Where:** [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) — see headline issue #1 in that report
+- **What's wrong:** The page (index.md lines 12–13 and 60) states that only adults aged 18 and over may complete a redirection form. The Barbados Postal Service's own change-of-address page explicitly states: *"all persons over the age of sixteen years old, residing in the same household must write their names and sign
+- **Source:** see [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Age threshold is wrong: "18 years old" should be "16 years old"`
 
 ---
+### F-333 · Tier B · Missing fee disclosure
 
-### F-053 · Tier B · Update group relief exclusions list — refers to abolished regime categories
+- **Where:** [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) — see headline issue #2 in that report
+- **What's wrong:** The BPS charges BDS $13.00 for domestic/individual customers. Neither `index.md` nor `start.md` mentions any fee. Citizens who arrive at the Post Office without payment will be turned away. The sibling business redirection page correctly discloses its $30 BBD fee; the individual page omits the analo
+- **Source:** see [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Missing fee disclosure`
+
+---
+### F-334 · Tier B · Online form not functional
 
-- **Where:** `src/content/information-about-business-tax.md` line 53
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** HIGH — a business in a group structure could incorrectly apply or waive group relief based on outdated eligibility rules.
-- **What's wrong:** Page excludes "international business companies, exempt insurance companies, societies with restricted liability, offshore banks and other companies granted special tax concessions" from group relief. These regime categories (IBCs, EICs, offshore banks, SRLs) were frozen for new entrants as of 31 December 2018. Under the reformed regime (effective from income years 2024/2025), group relief eligibility turns on whether companies are subject to tax at 9% and meet the 75% subsidiary test. The 50% relief cap (group relief may not exceed 50% of tax otherwise payable) is also missing from the page.
-- **Fix:** Replace the exclusions paragraph with the current eligibility test: both companies must be Barbados-resident, subject to tax at 9%, and meet the 75% subsidiary test. Add that relief is capped at 50% of the tax otherwise payable. Remove the IBC/EIC/SRL/offshore bank exclusions as these entity types no longer exist for new entrants.
-- **Source:** [PwC — Barbados Group Taxation](https://taxsummaries.pwc.com/barbados/corporate/group-taxation); [PwC — Significant Developments](https://taxsummaries.pwc.com/barbados/corporate/significant-developments)
-- **Suggested issue title:** `Update group relief exclusions list on Information about business tax page — IBC/EIC/SRL/offshore-bank categories abolished (2018); current test is 9% tax rate + 75% subsidiary test`
+- **Where:** [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) — see headline issue #3 in that report
+- **What's wrong:** The "Complete online form" CTA (index.md line 39) links to `/travel-id-citizenship/post-office-redirection-individual/form`. Fetching that URL on 2026-05-29 shows only "Loading form..." — no actual form renders. Citizens clicking the primary digital CTA will encounter a non-functional page. The star
+- **Source:** see [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Online form not functional`
 
 ---
+### F-335 · Tier B · District C temporary relocation claim is likely outdated or wrong
 
-### F-050 · Tier B · Fix "global population indexes" — wrong term on Local information page
+- **Where:** [register-a-birth](/docs/fact-check/register-a-birth.md) — see headline issue #1 in that report
+- **What's wrong:** (line 116) — The alpha page says District C is "currently located at the Registration Department, in the Supreme Court Complex". The Barbados Judicial System website now lists District C at St. Matthias Court Complex with no relocation noted. Citizens who need to register a birth for a St. Philip or
+- **Source:** see [register-a-birth](/docs/fact-check/register-a-birth.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `District C temporary relocation claim is likely outdated or wrong`
 
-- **Where:** `src/content/local-information.md` line 11
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** LOW — this is introductory promotional copy; no citizen will act on it. The error is a credibility and accuracy risk, not a citizen-misdirection risk.
-- **What's wrong:** Page says "Ranked highly in most global population indexes." Population indexes rank countries by population size or growth rate — Barbados ranks approximately 186th in the world by population (~282,000 people), which is not a high ranking. The intended meaning is almost certainly quality-of-life, human development, or passport/competitiveness indices in which Barbados does rank highly (HDI rank 69/189 in the UNDP 2025 Human Development Report; Passport Index rank 22/199; Freedom in the World rank 13/210; Gender Development Index rank 12/189). Using "population indexes" is a factual error that misrepresents why Barbados attracts international attention.
-- **Fix:** Replace "global population indexes" with "international development and quality-of-life indexes" (or simply "international indexes"). Optionally, name a specific example for credibility: "including ranking 69th globally in the UNDP Human Development Index."
-- **Source:** [Barbados Statistical Service — International Indices](https://stats.gov.bb/international-indices/); [UNDP 2025 HDR — Statistical Annex Table 1 (PDF)](https://hdr.undp.org/sites/default/files/2025_HDR/HDR25_Statistical_Annex_HDI_Table.pdf); [Worldometer — Barbados Population](https://www.worldometers.info/world-population/barbados-population/)
-- **Suggested issue title:** `Fix "global population indexes" on Local Information page — wrong term; should be "international development/quality-of-life indexes"`
+---
+### F-336 · Tier B · Minor parent JP requirement is wrong
+
+- **Where:** [register-a-birth](/docs/fact-check/register-a-birth.md) — see headline issue #2 in that report
+- **What's wrong:** (lines 76–77) — The page says a minor without a passport must bring "an identification letter signed by a Justice of the Peace". The official gov.bb register-birth page specifies "a passport size picture certified by a Justice of the Peace". These are different documents; a minor parent could be tur
+- **Source:** see [register-a-birth](/docs/fact-check/register-a-birth.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Minor parent JP requirement is wrong`
 
 ---
+### F-337 · Tier B · Typo "Cane Carden" → "Cane Garden"
 
-### F-054 · Tier A · Update clinic name on Medical requirements page ("The Diagnostic Clinic" → "MedPlus Management Services, Inc.")
+- **Where:** [register-a-birth](/docs/fact-check/register-a-birth.md) — see headline issue #3 in that report
+- **What's wrong:** (line 120) — The District D Magistrate's Court is in Cane Garden, St. Thomas. "Cane Carden" does not exist as a place name. A citizen searching for directions could be unable to locate the court.
+- **Source:** see [register-a-birth](/docs/fact-check/register-a-birth.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Typo "Cane Carden" → "Cane Garden"`
+
+---
+### F-338 · Tier B · "Grace period of 1 year" is not corroborated
 
-- **Where:** `src/content/medical-requirements.md` lines 15–18
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** MEDIUM — a citizen arriving at the Beckles Road premises asking for "The Diagnostic Clinic" may be confused if staff identify the practice under the MedPlus brand; the name change also affects any pre-visit confirmation or correspondence.
-- **What's wrong:** Page names the designated US immigrant visa examination facility as "The Diagnostic Clinic". The US State Department's authoritative Bridgetown supplement (BGN, dated April 30, 2025) lists the approved facility exclusively as "MedPlus Management Services, Inc." at two locations. No mention of "The Diagnostic Clinic" appears anywhere in the current State Department supplement. The same phone number (246-426-5051) is associated with the MedPlus Beckles Road location in business directories, confirming the premises were rebranded, not replaced.
-- **Fix:** Replace "Diagnostic Clinic" with "MedPlus Management Services, Inc." Also add the second MedPlus location (Clapham Court, Wildey Main Road — see F-055). The Beckles Road address should also be updated to include the cross-street reference used by the State Department: "Corner of Jessamie Ave., Beckles Road, St. Michael."
-- **Source:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html)
-- **Suggested issue title:** `Update clinic name on Medical requirements page — "The Diagnostic Clinic" is now "MedPlus Management Services, Inc."`
+- **Where:** [register-a-birth](/docs/fact-check/register-a-birth.md) — see headline issue #4 in that report
+- **What's wrong:** (line 9) — Official sources do not publish a 1-year threshold. The claim is consistent with the existence of separate forms for late registration within/after one year, but no authoritative source explicitly states a "1-year grace period".
+- **Source:** see [register-a-birth](/docs/fact-check/register-a-birth.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Grace period of 1 year" is not corroborated`
 
 ---
+### F-339 · Tier B · Turnaround time "2 to 3 days" omits same-day option and "working days" qualifier
 
-### F-055 · Tier B · Add missing MedPlus Wildey location to Medical requirements page
+- **Where:** [register-a-birth](/docs/fact-check/register-a-birth.md) — see headline issue #5 in that report
+- **What's wrong:** (line 23) — Official sources indicate same-day processing (before 11:30 am) is available. "2 to 3 days" is pessimistic and ambiguous about calendar vs. working days.
+- **Source:** see [register-a-birth](/docs/fact-check/register-a-birth.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Turnaround time "2 to 3 days" omits same-day option and "working days" qualifier`
 
-- **Where:** `src/content/medical-requirements.md` (addition — content is entirely absent)
-- **Confidence it's wrong:** 85% (omission verified against State Department BGN supplement April 2025)
-- **Citizen impact:** MEDIUM — US immigrant visa applicants travelling to Barbados for the mandatory medical exam have no knowledge of the primary/walk-in MedPlus location at Wildey. This is particularly important because the Wildey site operates as a walk-in (arrive by 7:00 a.m., Monday–Friday), which may be more convenient than the Beckles Road appointment-based model.
-- **What's wrong:** The current page lists only one clinic location (Beckles Road). The US State Department BGN supplement (April 30, 2025) lists a second, separately staffed MedPlus location: Clapham Court, Wildey Main Road, St. Michael, Barbados, W.I. BB14007 (panel physicians: Dr. Sandra Reece, Dr. Ingrid Durrant). This location is described as the primary listing in the supplement and appears to have been set up specifically for walk-in exam scheduling.
-- **Fix:** Add a second contact block to the page with the Wildey location details. Confirm the phone number and any appointment requirements with MedPlus directly. Also add the exam fees (USD $200 age 15+, USD $120 under 15) and the 72-hour result turnaround advisory — both are on the BGN supplement and directly relevant to citizens planning their travel.
-- **Source:** [US State Department — BGN Bridgetown supplement](https://travel.state.gov/content/travel/en/us-visas/Supplements/Supplements_by_Post/BGN-Bridgetown.html)
-- **Suggested issue title:** `Add missing MedPlus Wildey location to Medical requirements page (second authorised US visa exam clinic)`
+---
+### F-340 · Tier B · Page conflates death registration with death certificate applications — the actual registration proc…
+
+- **Where:** [register-a-death](/docs/fact-check/register-a-death.md) — see headline issue #1 in that report
+- **What's wrong:** The page is titled "Register a death" but its content describes how to apply for a death certificate copy, not how to register a death (i.e., give Notice of Death). Under the Vital Statistics Registration Act Cap. 192A, a Notice of Death must be given within five (5) days of death, and the Funeral D
+- **Source:** see [register-a-death](/docs/fact-check/register-a-death.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Page conflates death registration with death certificate applications — the actual registration proc…`
 
 ---
+### F-341 · Tier B · "White Park Road" (two words) is inconsistent with the authoritative one-word spelling "Whitepark Ro…
 
-### F-056 · Tier B · Add two missing photo requirements to National registration page
+- **Where:** [register-a-death](/docs/fact-check/register-a-death.md) — see headline issue #2 in that report
+- **What's wrong:** The authoritative address used by `barbadoslawcourts.gov.bb` (both the Certificates page and the Registration of Deaths page) and `gov.bb/Departments/registration` is "Whitepark Road" (one word). The companion `get-death-certificate` alpha.gov.bb page also uses "Whitepark Road". The page (and its so
+- **Source:** see [register-a-death](/docs/fact-check/register-a-death.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"White Park Road" (two words) is inconsistent with the authoritative one-word spelling "Whitepark Ro…`
+
+---
+### F-342 · Tier B · Mail-application money order amount hardcoded at BDS$5.00 — incorrect for Cause of Death certificate…
 
-- **Where:** `src/content/national-registration.md` lines 18–21
-- **Confidence it's wrong:** 98%
-- **Citizen impact:** MEDIUM — a citizen arriving for their ID photo wearing a white sleeveless top will have their photo rejected. The EBC's published dress code clearly adds two requirements not on the page.
-- **What's wrong:** The page lists only two prohibited items (head coverings; tinted glasses). The EBC's current registration guidance (ebc.gov.bb/registration-information/ and trident.gov.bb/registering/) adds two further restrictions: (a) no sleeveless clothing — shoulders must be covered; (b) no white clothing — photographs are taken against a white background. The head-coverings bullet is also missing the official religious-reasons exception.
-- **Fix:** Add two new bullets: "Sleeveless clothing (shoulders must be covered)" and "White clothing (photographs are taken against a white background)". Add "(except for religious reasons)" to the head coverings bullet.
-- **Source:** [EBC — Registration Information](https://www.ebc.gov.bb/registration-information/); [Barbados Digital ID — Registering](https://trident.gov.bb/registering/)
-- **Suggested issue title:** `Add missing photo requirements to National registration page (no white, no sleeveless clothing)`
+- **Where:** [register-a-death](/docs/fact-check/register-a-death.md) — see headline issue #3 in that report
+- **What's wrong:** The page instructs mail applicants to include "a Money Order in the amount of BDS$5.00". The Cause of Death certificate costs BDS$10.00. The `barbadoslawcourts.gov.bb` Certificates page correctly says "a Money Order for the relevant processing fee" (no fixed amount). A citizen mailing a Cause of Dea
+- **Source:** see [register-a-death](/docs/fact-check/register-a-death.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Mail-application money order amount hardcoded at BDS$5.00 — incorrect for Cause of Death certificate…`
 
 ---
+### F-343 · Tier B · Missing email, overseas phone, and office hours
 
-### F-057 · Tier B · Update National registration page — governing Act and programme name are stale
+- **Where:** [register-a-death](/docs/fact-check/register-a-death.md) — see headline issue #4 in that report
+- **What's wrong:** The companion `get-death-certificate` page lists `registrarsupremecourt@barbados.gov.bb`, overseas line `+1 (246) 535-9751`, and hours `Monday–Friday, 8:30 am–3:15 pm`. The `barbadoslawcourts.gov.bb` Registration of Deaths page also lists the email and fax `1-246-426-2405`. None of these appear on t
+- **Source:** see [register-a-death](/docs/fact-check/register-a-death.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Missing email, overseas phone, and office hours`
 
-- **Where:** `src/content/national-registration.md` lines 9–16 (broadly)
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** LOW/MEDIUM — citizens can still register; the stale terminology ("National Registration Number", no mention of Identity Management Act 2021) undermines accuracy and trust. A citizen told they need a "National Registration Number" may be confused when the EBC uses "Trident ID" and "Barbados Identity Management Act 2021" language.
-- **What's wrong:** The page uses the terminology of the superseded Statistics Act regime ("National Registration"). The Barbados Identity Management Act 2021 replaced the Statistics Act, Cap. 192 and the Statistics (Registration Census of Barbadian Residents) Regulations 1979. The current programme is the "Trident" digital ID. The page does not name the governing Act.
-- **Fix:** Update heading and body to reference the Barbados Identity Management Act 2021. Replace "National Registration Number" with "National Identification Number" or "Trident ID registration" (confirm preferred terminology with EBC). Add a brief sentence: "Registration is governed by the Barbados Identity Management Act 2021, which replaced the Statistics Act, Cap. 192."
-- **Source:** [EBC — FAQs About Registration](https://www.ebc.gov.bb/faqs-about-registration/); [EBC — Barbados Identity Management Act (PDF)](https://www.ebc.gov.bb/wp-content/uploads/2021/09/Barbados-Identity-Management-Act.pdf); [GIS — Ministerial Statement On Barbados National Identity Programme](https://gisbarbados.gov.bb/blog/ministerial-statement-on-barbados-national-identity-programme/)
-- **Suggested issue title:** `Update National registration page — governing Act is Identity Management Act 2021 (not Statistics Act); programme is now "Trident ID"`
+---
+### F-344 · Tier B · Address in opening paragraph is wrong — still not fixed
+
+- **Where:** [register-a-marriage](/docs/fact-check/register-a-marriage.md) — see headline issue #1 in that report
+- **What's wrong:** Line 11 of `src/content/register-a-marriage.md` directs citizens to "the Registration Department, Coleridge Street, Bridgetown." This is confirmed wrong by three independent authoritative sources. The Registration Department is at the Supreme Court Complex, Whitepark Road, St. Michael — not Coleridg
+- **Source:** see [register-a-marriage](/docs/fact-check/register-a-marriage.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Address in opening paragraph is wrong — still not fixed`
 
 ---
+### F-345 · Tier B · Registration deadline is absent from the page
 
-### F-058 · Tier C · Verify EBC fax number on National registration page
+- **Where:** [register-a-marriage](/docs/fact-check/register-a-marriage.md) — see headline issue #2 in that report
+- **What's wrong:** The Barbados Judicial System's authoritative page on marriage registration states that a marriage must be registered "within the first ten (10) days of every month." The alpha.gov.bb page gives no deadline. A couple whose marriage has not been registered has no guidance on how to follow up or what t
+- **Source:** see [register-a-marriage](/docs/fact-check/register-a-marriage.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Registration deadline is absent from the page`
+
+---
+### F-346 · Tier B · Apostille fee is undisclosed
 
-- **Where:** `src/content/national-registration.md` line 33
-- **Confidence it's wrong:** 65%
-- **Citizen impact:** LOW — fax is not a primary contact channel; but a dead fax line on an official page is a trust signal.
-- **What's wrong:** Page lists fax (246) 535-4863. The EBC's own contact page (ebc.gov.bb/contact/) does not list any fax number. The number is not found on any current EBC-controlled URL. It appears only in the gov.bb source page and older third-party directories.
-- **Fix:** Contact the EBC (ebcsupport@barbados.gov.bb or (246) 535-4800) to confirm whether (246) 535-4863 is a current fax line. If decommissioned, remove from the page.
-- **Source:** [EBC — Contact](https://www.ebc.gov.bb/contact/) — fax absent; checked: [ebc.gov.bb site search for "535-4863"](https://www.ebc.gov.bb/) — no match
-- **Suggested issue title:** `Verify EBC fax number on National registration page — (246) 535-4863 not confirmed on ebc.gov.bb`
+- **Where:** [register-a-marriage](/docs/fact-check/register-a-marriage.md) — see headline issue #3 in that report
+- **What's wrong:** The barbadoslawcourts.gov.bb Certificates page confirms a BDS $50 Apostille fee applies when a foreign authority requires one. This is relevant for couples who marry in Barbados and need the certificate recognised overseas. No mention of this fee appears on the page.
+- **Source:** see [register-a-marriage](/docs/fact-check/register-a-marriage.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Apostille fee is undisclosed`
 
 ---
+### F-347 · Tier B · Age eligibility "30 and under" contradicts the YDP's published mandate (still discrepant as of 2026-…
 
-### F-059 · Tier B · Fix agency name in frontmatter description on business mail redirection page
+- **Where:** [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) — see headline issue #1 in that report
+- **What's wrong:** The official YDP target group is "nine (9) to twenty-nine (29)" per youthaffairs.gov.bb/about-youth-development-programme/ and confirmed independently in the YDP Director's Message. The content page says "aged 30 and under," which is one year higher than the programme's stated upper bound. This was
+- **Source:** see [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Age eligibility "30 and under" contradicts the YDP's published mandate (still discrepant as of 2026-…`
 
-- **Where:** `src/content/post-office-redirection-business/index.md` line 3
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** LOW — the frontmatter `description` field propagates into search engine snippets and social previews; body copy on the same page is correct
-- **What's wrong:** The `description` field reads "Tell the Barbados Post Office to redirect your business mail…". The canonical name, confirmed by bps.gov.bb and gov.bb, is "Barbados Postal Service" (not "Barbados Post Office"). This same error was previously flagged on the EZPay page (F-019).
-- **Fix:** Change "Barbados Post Office" to "Barbados Postal Service" in the `description` frontmatter field.
-- **Source:** [bps.gov.bb — Home](https://bps.gov.bb/); [gov.bb — Post Office](https://www.gov.bb/Departments/post-office)
-- **Suggested issue title:** `Fix agency name in frontmatter: "Barbados Post Office" → "Barbados Postal Service" on business mail redirection page`
+---
+### F-348 · Tier B · YDP programme listing page still shows no sports content
+
+- **Where:** [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) — see headline issue #2 in that report
+- **What's wrong:** The content links citizens to `https://youthaffairs.gov.bb/programme-channels/youth-development-programme/` for a list of current programmes. As of 2026-05-29 that page lists only non-sports workshops (Bridge to the Future, Youth Achieving Results, Web Design, Fatherhood in Motion, Cyber Security, B
+- **Source:** see [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `YDP programme listing page still shows no sports content`
 
 ---
+### F-349 · Tier B · The "Youth Commissioner" and "Principal Youth Development Officer" titles are real but their direct …
 
-### F-060 · Tier A · Remove copy-paste "other persons" field from business mail redirection start.md
+- **Where:** [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) — see headline issue #3 in that report
+- **What's wrong:** Both roles exist in YDP structure. The page instructs citizens to call (246) 535-3835 and ask to be redirected — acceptable, but no direct extension or email is offered.
+- **Source:** see [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The "Youth Commissioner" and "Principal Youth Development Officer" titles are real but their direct …`
+
+---
+### F-350 · Tier B · "Registration opens in May 2026" is still unconfirmed and likely wrong
 
-- **Where:** `src/content/post-office-redirection-business/start.md` line 21
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** MEDIUM — a business applicant using the online form will encounter a field asking for "name(s) of every other person who also wants to redirect their mail", which makes no sense in a business context. This will cause confusion and may lead to form abandonment or incorrect data entry.
-- **What's wrong:** Line 21 reads "name(s) of every other person who also wants to redirect their mail". This field is copied verbatim from `src/content/post-office-redirection-individual/start.md` and is appropriate for household members, not for a business. The corresponding `index.md` "What you will need to share" section (lines 44–51) does not include this field.
-- **Fix:** Remove line 21 from `start.md`. Review the entire `start.md` file against the individual redirection `start.md` for any other carried-over fields that do not apply to a business context.
-- **Source:** [bps.gov.bb — Change Of Address](https://bps.gov.bb/change-of-address/) — business requirements: company name in capitals + company stamp; no "other persons" field; `src/content/post-office-redirection-business/index.md` lines 44–51 — does not list this field
-- **Suggested issue title:** `Remove copy-paste "other persons" field from business mail redirection start.md (line 21)`
+- **Where:** [register-summer-camp](/docs/fact-check/register-summer-camp.md) — see headline issue #1 in that report
+- **What's wrong:** As of 2026-05-29, no 2026 summer camp registration announcement exists on youthaffairs.gov.bb, GIS, or Ministry of Youth social media. The most recent cycle (2025) announced registration on 28 June 2025 with a 15 July deadline and camps running 21 July – 22 August. Today is 29 May 2026 and registrat
+- **Source:** see [register-summer-camp](/docs/fact-check/register-summer-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Registration opens in May 2026" is still unconfirmed and likely wrong`
 
 ---
+### F-351 · Tier B · "Volunteer recruitment begins around April" contradicted by 2025 cycle
 
-### F-061 · Tier C · Verify 6-month duration limit for business mail redirection
+- **Where:** [register-summer-camp](/docs/fact-check/register-summer-camp.md) — see headline issue #2 in that report
+- **What's wrong:** The Division of Youth's own 2025 volunteer recruitment post is dated 28 June 2025 — not April. The youthaffairs.gov.bb homepage currently shows "Calling All Volunteers: Join the National Summer Camp Programme 2025!" as its most recent camp-related news, confirming late June as the pattern. This clai
+- **Source:** see [register-summer-camp](/docs/fact-check/register-summer-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Volunteer recruitment begins around April" contradicted by 2025 cycle`
 
-- **Where:** `src/content/post-office-redirection-business/index.md` lines 15 and 67
-- **Confidence it's wrong:** unknown — cannot confirm or contradict from public web
-- **Citizen impact:** MEDIUM — a business acting on a 6-month duration will plan mail-address update communications accordingly; if the actual permitted period differs, mail delivery will fail at expiry
-- **What's wrong:** The page states "A redirection notice will last for 6 months" and "Your redirection notice will last for a maximum of 6 months." The BPS change-of-address page (bps.gov.bb/change-of-address/) does not state any duration for the service. The form PDF could not be parsed (binary). No GIS or gov.bb source corroborates or contradicts the 6-month figure.
-- **Fix:** Contact BPS customer services — (246) 535-3956 or customerservice@bps.bb — to confirm the maximum permitted duration of a business redirection. Update the page and add a BPS source citation.
-- **Source:** [bps.gov.bb — Change Of Address](https://bps.gov.bb/change-of-address/) — no duration stated; [gov.bb — REDIRECTION NOTICE PDF](https://www.gov.bb/media_files/PostOffice_RedirNotice.pdf) — binary, unreadable
-- **Suggested issue title:** `Verify 6-month duration claim for business mail redirection — no BPS source confirms this figure`
+---
+### F-352 · Tier B · "Sports" as a specialty camp type is not corroborated
+
+- **Where:** [register-summer-camp](/docs/fact-check/register-summer-camp.md) — see headline issue #3 in that report
+- **What's wrong:** The Ministry of Youth lists specialty camps as entrepreneurship (YES Experience Enterprise), digital media/film (Next Steps Training Initiative), cultural arts, and special needs. "Sports" is not enumerated as a distinct specialty camp type; sports activities are embedded in the general multi-activi
+- **Source:** see [register-summer-camp](/docs/fact-check/register-summer-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Sports" as a specialty camp type is not corroborated`
 
 ---
+### F-353 · Tier B · "Research Department" is an unverified organisational name
 
-### F-062 · Tier C · Verify Certificate of Incorporation and National ID requirements for business mail redirection
+- **Where:** [register-summer-camp](/docs/fact-check/register-summer-camp.md) — see headline issue #4 in that report
+- **What's wrong:** No public source (youthaffairs.gov.bb/about-2/, gov.bb, or mysce.gov.bb) lists a "Research Department" within the Division of Youth Affairs. No such department name appears in any confirmed organogram or staff listing.
+- **Source:** see [register-summer-camp](/docs/fact-check/register-summer-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Research Department" is an unverified organisational name`
+
+---
+### F-354 · Tier B · Contact details remain absent
 
-- **Where:** `src/content/post-office-redirection-business/index.md` lines 57–59
-- **Confidence it's wrong:** unknown — unverifiable from public web, not contradicted
-- **Citizen impact:** HIGH — a business representative arriving without their Certificate of Incorporation or National ID will be turned away if genuinely required; unnecessary friction if not required
-- **What's wrong:** The page states applicants must (1) verify identity with a National ID card and (2) present the Certificate of Incorporation with official stamp. The BPS change-of-address page mentions only the company stamp (with signature) as a business identifier — no National ID card or Certificate of Incorporation are mentioned in any BPS-published guidance.
-- **Fix:** Contact BPS (customerservice@bps.bb or (246) 535-3956) to confirm exactly what documents must be presented at the counter for a business redirection. Update the page to match confirmed requirements and cite the BPS source.
-- **Source:** [bps.gov.bb — Change Of Address](https://bps.gov.bb/change-of-address/) — company stamp only, no Certificate of Incorporation or NID; [gov.bb — REDIRECTION NOTICE PDF](https://www.gov.bb/media_files/PostOffice_RedirNotice.pdf) — binary, unreadable
-- **Suggested issue title:** `Verify Certificate of Incorporation and National ID requirements for business mail redirection — not in BPS published guidance`
+- **Where:** [register-summer-camp](/docs/fact-check/register-summer-camp.md) — see headline issue #5 in that report
+- **What's wrong:** The Division of Youth Affairs publishes phone `(246) 535-3835`, email `YDP@barbados.gov.bb`, and a physical address (Sky Mall, Haggatt Hall, St. Michael). None appear on the content page. Volunteers can also reach Youth Projects Coordinator David Denny at 535-3852 or mysce.youthprojects@barbados.gov
+- **Source:** see [register-summer-camp](/docs/fact-check/register-summer-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Contact details remain absent`
 
 ---
+### F-355 · Tier B · Link text "CAIPO WEBSITE" is stale — the body rebranded to Business Barbados on 1 February 2025
 
-### F-063 · Tier B · Replace "BTA" with current tourism body name on Ports of Entry page
+- **Where:** [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) — see headline issue #1 in that report
+- **What's wrong:** CAIPO completed its transition to "Business Barbados" under the Ministry of Energy, Business Development and Consumer Affairs. The `caipo.gov.bb` domain still resolves and now serves the Business Barbados portal, but the link text names the old organisation. Citizen confusion risk is low because the
+- **Source:** see [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Link text "CAIPO WEBSITE" is stale — the body rebranded to Business Barbados on 1 February 2025`
 
-- **Where:** `src/content/ports-of-entry.md` line 11
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** LOW — visitors still receive the entertainment; this is an accuracy and credibility issue for a government page.
-- **What's wrong:** Page says entertainment is "organized by the BTA." The Barbados Tourism Authority (BTA) was restructured in 2014 into two successor bodies: Barbados Tourism Marketing Inc. (BTMI) and the Barbados Tourism Product Authority (BTPA). The acronym "BTA" has no current official standing. The responsible successor is most likely BTMI (the marketing/tourism-experience body) but should be confirmed with Barbados Port Inc. or BTMI directly.
-- **Fix:** Replace "the BTA" with "the BTMI (Barbados Tourism Marketing Inc.)" — or the correct body if confirmed otherwise.
-- **Source:** [tourism.gov.bb — Agencies](https://www.tourism.gov.bb/About/Agencies/); [corporate.visitbarbados.org — Our Company](https://corporate.visitbarbados.org/our-company/)
-- **Suggested issue title:** `Update "BTA" to current tourism body name on Ports of Entry page (BTA restructured into BTMI/BTPA in 2014)`
+---
+### F-356 · Tier B · Ministry attribution discrepancy: onlineServices link under MIIST in ministries.ts, but CAIPO is ass…
+
+- **Where:** [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) — see headline issue #2 in that report
+- **What's wrong:** In `src/data/ministries.ts`, "Register a business name" is listed as an `onlineServices` entry under `ministry-of-industry-innovation-science-and-technology` (MIIST, lines 733–740). However, the same file's entry for `ministry-of-energy-and-business-development` (lines 341–343) lists "Corporate Affa
+- **Source:** see [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry attribution discrepancy: onlineServices link under MIIST in ministries.ts, but CAIPO is ass…`
 
 ---
+### F-357 · Tier B · The page contains almost no actionable content — the most significant citizen-impact gap
 
-### F-064 · Tier B · Fix Port Saint Charles coastal description: "western coast" → "northwest coast"
+- **Where:** [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) — see headline issue #3 in that report
+- **What's wrong:** Apart from a one-sentence description and a link to the Business Barbados website, citizens receive nothing: no fees, no required documents, no eligibility, no governing Act, no timeline, no contact details. The Registration of Business Names Act, Cap. 317 imposes a 14-day registration obligation th
+- **Source:** see [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The page contains almost no actionable content — the most significant citizen-impact gap`
+
+---
+### F-358 · Tier B · source_url resolves and mirrors the same thin content
 
-- **Where:** `src/content/ports-of-entry.md` line 21
-- **Confidence it's wrong:** 75%
-- **Citizen impact:** LOW — a visitor will not miss the port; geographic accuracy issue.
-- **What's wrong:** Page describes Port St. Charles as "situated on the western coast of Barbados." The official Port St. Charles website (portstcharles.com) consistently uses "northwest coast of Barbados." Saint Peter parish occupies the upper northwest of the island; "western coast" is imprecise.
-- **Fix:** Change "western coast" to "northwest coast".
-- **Source:** [portstcharles.com — Home](https://www.portstcharles.com/) — "Located on the beautiful northwest coast of Barbados"; [visitbarbados.org — Port St. Charles](https://www.visitbarbados.org/port-st-charles)
-- **Suggested issue title:** `Fix Port Saint Charles coastal description on Ports of Entry page: "western coast" → "northwest coast"`
+- **Where:** [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) — see headline issue #4 in that report
+- **What's wrong:** `https://www.gov.bb/Business/registering-business-name` is live. Its footer still attributes the page to MIIST — matching the same stale attribution in ministries.ts — but this is gov.bb's own stale data, not something alpha.gov.bb introduced. No findings from the previous pass (2026-05-28) have be
+- **Source:** see [registering-a-business-name](/docs/fact-check/registering-a-business-name.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `source_url resolves and mirrors the same thin content`
 
 ---
+### F-359 · Tier B · Body copy omits "National ID Card" and "Other" from document-type list (unfixed since 2026-05-28)
 
-### F-065 · Tier B · Fix Port Saint Charles bedroom count: "five bedroom" → "six bedroom"
+- **Where:** [renew-reminder](/docs/fact-check/renew-reminder.md) — see headline issue #1 in that report
+- **What's wrong:** The live form offers six options: National ID Card, Driver's Licence, Passport, Vehicle Registration, Permit, and "Other — Anything else with an expiry date." The start-page body text (line 17) names only "driver's licence, vehicle registration, passport, or other government permit." A citizen with
+- **Source:** see [renew-reminder](/docs/fact-check/renew-reminder.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Body copy omits "National ID Card" and "Other" from document-type list (unfixed since 2026-05-28)`
 
-- **Where:** `src/content/ports-of-entry.md` line 21
-- **Confidence it's wrong:** 75%
-- **Citizen impact:** LOW — informational description; factually incorrect per the official property website.
-- **What's wrong:** Page says "our luxury homes vary from one bedroom to five bedroom homes." The official Port St. Charles website lists 6-bedroom units in its villa-rental section. Multiple independent villa-rental aggregators confirm the maximum is 6 bedrooms.
-- **Fix:** Change "five bedroom homes" to "six bedroom homes".
-- **Source:** [portstcharles.com — Villa Rentals](https://www.portstcharles.com/villa-rentals) — lists 6-bedroom unit; [insandoutsbarbados.com — Port St. Charles](https://www.insandoutsbarbados.com/listing/port-st-charles) — "one-bedroom apartments to six-bedroom villas"
-- **Suggested issue title:** `Fix Port Saint Charles bedroom count on Ports of Entry page: "five bedroom" → "six bedroom"`
+---
+### F-360 · Tier B · "Other" document type not signalled anywhere on the start page (new finding)
+
+- **Where:** [renew-reminder](/docs/fact-check/renew-reminder.md) — see headline issue #2 in that report
+- **What's wrong:** The form's sixth option — "Other — Anything else with an expiry date — you'll be asked to give it a name below" — is entirely absent from the start page. Citizens with non-standard expiring documents (e.g. work permits, food-handler certificates, firearm licences) will not know the service covers th
+- **Source:** see [renew-reminder](/docs/fact-check/renew-reminder.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Other" document type not signalled anywhere on the start page (new finding)`
 
 ---
+### F-361 · Tier B · "Terms & Conditions" URL used as privacy notice link (editorial framing issue)
 
-### F-066 · Tier A · Fix "lasting power of attorney" on deceased mail redirection start page
+- **Where:** [renew-reminder](/docs/fact-check/renew-reminder.md) — see headline issue #3 in that report
+- **What's wrong:** The page links to `https://alpha.gov.bb/terms-conditions` with link text "privacy notice." The destination page is headed "Terms & Conditions", though it contains a substantive "Your Data" section referencing the Data Protection Act 2019. No factual claim is wrong, but the label mismatch is inconsis
+- **Source:** see [renew-reminder](/docs/fact-check/renew-reminder.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Terms & Conditions" URL used as privacy notice link (editorial framing issue)`
+
+---
+### F-362 · Tier B · No major structural errors
 
-- **Where:** `src/content/post-office-redirection-deceased/start.md` line 20
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** HIGH — a citizen reading only `start.md` before visiting the Post Office will arrive with a power of attorney document that (a) is legally void on the death of the grantor and (b) does not exist as a "lasting" form in Barbados statute. They will be turned away. The correct documents — Letters Testamentary or Letters of Administration — are correctly stated in `index.md`, making the two files internally contradictory.
-- **What's wrong:** `start.md` line 20 lists "proof you have lasting power of attorney" as a required document. This is wrong on two grounds: (1) a power of attorney terminates at the death of the grantor, so it cannot authorise anyone to act on behalf of a deceased person's estate; (2) Barbados has no statutory framework for "lasting" or "enduring" powers of attorney — ordinary PoA exists but is automatically revoked on death or incapacity (confirmed by STEP country assessment). The correct authority documents are Letters Testamentary (if there is a will) or Letters of Administration (if there is no will), both issued by the Supreme Court Probate Unit.
-- **Fix:** Replace "proof you have lasting power of attorney" with "proof you have authority to act on behalf of the deceased person — either Letters Testamentary (if there is a will) or Letters of Administration (if there is no will), obtained from the Supreme Court." Align `start.md` with the correct description already in `index.md` lines 20–24 and 60.
-- **Source:** [Barbados Judicial System — Probate Unit](https://www.barbadoslawcourts.gov.bb/court-administration/supreme-court-registry/probate-unit); [STEP — Power of Attorney in Barbados](https://www.step.org/mental-capacity/public/what-power-attorney-or-power-representation-can-i-get-one-where-i-live)
-- **Suggested issue title:** `Fix "lasting power of attorney" on deceased mail redirection start page — wrong document; correct documents are Letters Testamentary / Letters of Administration`
+- **Where:** [renew-reminder](/docs/fact-check/renew-reminder.md) — see headline issue #4 in that report
+- **What's wrong:** This is a native alpha.gov.bb utility with no external agency facts (no fees, addresses, phone numbers, or legal references requiring cross-verification). All verifiable claims about data collection and process steps are consistent with the live form and the terms-conditions page.
+- **Source:** see [renew-reminder](/docs/fact-check/renew-reminder.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No major structural errors`
 
 ---
+### F-363 · Tier B · "Child Care Board" is the wrong agency name
 
-### F-067 · Tier C · Verify 6-month duration and BDS$13 fee for deceased mail redirection
+- **Where:** [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) — see headline issue #1 in that report
+- **What's wrong:** The Social Empowerment Agency (SEA) was proclaimed on 2 January 2026 and now operates child protection services — SEA's "Director of Social Care and Delivery" (not a CCB officer) publicly represents the agency on child protection matters (Barbados Today, April 2026). The page uses "Child Care Board"
+- **Source:** see [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Child Care Board" is the wrong agency name`
 
-- **Where:** `src/content/post-office-redirection-deceased/index.md` lines 11, 42, 52, 66
-- **Confidence it's wrong:** unknown — the 6-month duration and BDS$13 fee cannot be confirmed or contradicted from public BPS sources
-- **Citizen impact:** MEDIUM — a citizen who plans estate administration around a 6-month mail window may find mail stopping sooner or later than expected. An incorrect fee could cause a visit to be wasted.
-- **What's wrong:** The page states twice that "A redirection notice will last for 6 months" and that the fee is "$13 BBD". The BPS change-of-address page (bps.gov.bb/change-of-address/) confirms BDS$13 for domestic customers but does not list a separate category or fee for deceased-estate redirections. No BPS source confirms the 6-month duration for any redirection category. The figures may be correct but cannot be verified from the public web.
-- **Fix:** Contact BPS customer services — (246) 535-3956 or customerservice@bps.bb — to confirm: (1) the maximum duration of a deceased-estate mail redirection; (2) whether the BDS$13 domestic rate applies to this category or a different fee applies. Add a source citation once confirmed.
-- **Source:** [BPS — Change Of Address](https://bps.gov.bb/change-of-address/) — confirms BDS$13 domestic rate; no duration; no deceased-estate category; [gov.bb — REDIRECTION NOTICE PDF](https://www.gov.bb/media_files/PostOffice_RedirNotice.pdf) — PDF not machine-readable
-- **Suggested issue title:** `Verify 6-month duration and BDS$13 fee for deceased mail redirection — not confirmed in any BPS public source`
+---
+### F-364 · Tier B · The Police address is wrong: "Roebuck Street" should be "Lower Roebuck Street"
+
+- **Where:** [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) — see headline issue #2 in that report
+- **What's wrong:** The page lists the Barbados Police Service address as "Roebuck Street, Bridgetown, St. Michael." Every authoritative source — gov.bb, OAG, govserv.org — consistently names the headquarters as the "former Barclays Bank Complex on Lower Roebuck Street." Omitting "Lower" is a navigational error; Roebuc
+- **Source:** see [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The Police address is wrong: "Roebuck Street" should be "Lower Roebuck Street"`
 
 ---
+### F-365 · Tier B · Mandatory reporting is now law — the page does not mention it
 
-### F-068 · Tier A · Fix agency name in frontmatter description on individual mail redirection page
+- **Where:** [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) — see headline issue #4 in that report
+- **What's wrong:** The Child Protection Act (proclaimed 2 January 2026) makes mandatory reporting a legal requirement for professionals and caregivers, with penalties up to $100,000 or 10 years imprisonment for failure to report. The page's framing — "can report" — does not reflect this legal duty. This is a significa
+- **Source:** see [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Mandatory reporting is now law — the page does not mention it`
+
+---
+### F-366 · Tier B · The abuse definition on the page does not align with standard Barbados child-specific framing
 
-- **Where:** `src/content/post-office-redirection-individual/index.md` line 3
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** LOW — the frontmatter `description` propagates into search engine snippets and social previews; body copy on the same page correctly uses "Barbados Postal Service"
-- **What's wrong:** The `description` field reads "Tell the Barbados Post Office to redirect your personal mail…". The canonical name, confirmed by bps.gov.bb and gov.bb, is "Barbados Postal Service". Same error as F-019 (EZPay) and F-059 (business mail).
-- **Fix:** Change "Barbados Post Office" to "Barbados Postal Service" in the `description` frontmatter field.
-- **Source:** [bps.gov.bb — Home](https://bps.gov.bb/); [gov.bb — Post Office](https://www.gov.bb/Departments/post-office)
-- **Suggested issue title:** `Fix agency name in frontmatter: "Barbados Post Office" → "Barbados Postal Service" on individual mail redirection page`
+- **Where:** [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) — see headline issue #5 in that report
+- **What's wrong:** The definition given closely matches the WHO's elder-abuse / family-violence definition. Including "financial and material abuse" and "serious loss of dignity and respect" are standard elder-abuse categories in Barbados (per the Older Persons framework) but not standard child-protection categories.
+- **Source:** see [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The abuse definition on the page does not align with standard Barbados child-specific framing`
 
 ---
+### F-367 · Tier B · The National Assistance Board was dissolved into the Social Empowerment Agency on 2 January 2026 — b…
 
-### F-069 · Tier A · Fix eligibility age threshold on individual mail redirection page: 18 → 16
+- **Where:** [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) — see headline issue #1 in that report
+- **What's wrong:** The NAB was merged into the Social Empowerment Agency (SEA) on 2 January 2026. A citizen who calls the NAB office or physically visits the old address expecting the "National Assistance Board" will encounter an organisation that no longer exists under that name. The phone number (246) 535-3131 still
+- **Source:** see [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The National Assistance Board was dissolved into the Social Empowerment Agency on 2 January 2026 — b…`
 
-- **Where:** `src/content/post-office-redirection-individual/index.md` lines 12–13 and 60
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** MEDIUM — a 16- or 17-year-old living independently cannot redirect their mail if they follow the page's instruction; a household with only 16–17-year-old adults would incorrectly believe they are ineligible
-- **What's wrong:** Page states "If you are an adult (18 years old or over), you can complete a redirection form" and "Everyone who is 18 years old and over … must visit any Post Office." The BPS change-of-address page explicitly states "all persons over the age of sixteen years old, residing in the same household must write their names and sign the redirection form." The threshold is 16, not 18.
-- **Fix:** Change "18 years old or over" to "16 years old or over" on lines 12–13. Change "Everyone who is 18 years old and over" to "Everyone who is 16 years old and over" on line 60. Also reconsider the "dependants are: children under 18" definition on line 15 — if signing threshold is 16, dependants may more precisely be "children under 16."
-- **Source:** [BPS — Change Of Address](https://bps.gov.bb/change-of-address/) — "all persons over the age of sixteen years old … must write their names and sign"; [BPS — General Client page 2](https://bps.gov.bb/category/general-client/page/2/)
-- **Suggested issue title:** `Fix eligibility age threshold on personal mail redirection page: "18 years old" → "16 years old" (BPS threshold is 16)`
+---
+### F-368 · Tier B · The page lists no building name for the address, omitting "Murrell House."
+
+- **Where:** [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) — see headline issue #2 in that report
+- **What's wrong:** Every authoritative source — gov.bb, connectb1m.com, centenariansofbarbados.com — gives the address as "Murrell House, Country Road, St. Michael." The page omits "Murrell House," making it harder for a citizen to locate the correct office on a map or by asking directions.
+- **Source:** see [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The page lists no building name for the address, omitting "Murrell House."`
 
 ---
+### F-369 · Tier B · The email address `nab.department@barbados.gov.bb` cannot be corroborated from any authoritative sou…
 
-### F-070 · Tier A · Add missing BDS $13 fee to individual mail redirection page
+- **Where:** [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) — see headline issue #3 in that report
+- **What's wrong:** Neither gov.bb's NAB page, the NAB Facebook page, GIS releases, nor any third-party directory publishes this email address. The gov.bb State-Bodies page for the NAB lists no email. This is a life-safety claim; if the email bounces, a citizen in distress is cut off.
+- **Source:** see [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The email address `nab.department@barbados.gov.bb` cannot be corroborated from any authoritative sou…`
+
+---
+### F-370 · Tier B · Newer legislation (Older Persons (Care and Protection) Act, 2026) may require content updates
 
-- **Where:** `src/content/post-office-redirection-individual/index.md` — absent from the entire file; `src/content/post-office-redirection-individual/start.md` — also absent
-- **Confidence it's wrong:** 90% (fee published by BPS, missing from page)
-- **Citizen impact:** HIGH — citizens who arrive at the Post Office without BDS $13 will be turned away. The sibling business page correctly discloses "$30 BBD" in two places; the individual page omits its fee entirely.
-- **What's wrong:** The BPS charges BDS $13.00 for domestic/individual change-of-address applications (confirmed at bps.gov.bb/change-of-address/). No fee is disclosed anywhere on `index.md` or `start.md`. The paper-form section and the in-person visit section both omit payment information.
-- **Fix:** Add fee disclosure in at least two places: (1) the paper form option — "You can pay the BDS $13.00 by credit or debit card, or in cash, at the Post Office."; (2) the in-person visit section — "You will need to pay BDS $13.00 when you visit." Mirror the phrasing from `post-office-redirection-business/index.md` line 40.
-- **Source:** [BPS — Change Of Address](https://bps.gov.bb/change-of-address/) — "Domestic customers: BDS$13.00"; [BPS — General Client page 2](https://bps.gov.bb/category/general-client/page/2/)
-- **Suggested issue title:** `Add missing BDS $13 fee to individual mail redirection page — fee published by BPS but not disclosed anywhere`
+- **Where:** [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) — see headline issue #4 in that report
+- **What's wrong:** The Older Persons (Care and Protection) Bill, 2026 was debated in the House of Assembly in April 2026 and won Senate backing in May 2026. Under that Bill the Social Empowerment Agency (SEA) becomes the statutory body for managing elder abuse reports, maintaining a register, and removing older person
+- **Source:** see [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Newer legislation (Older Persons (Care and Protection) Act, 2026) may require content updates`
 
 ---
+### F-371 · Tier B · President's formal title is wrong
 
-### F-071 · Tier A · Add "National ID Card" to body copy on Get a reminder before a document expires page
+- **Where:** [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) — see headline issue #3 in that report
+- **What's wrong:** The page identifies the President as "Lieutenant Colonel Jeffrey Bostic". The correct presidential title — used consistently by CBC, GIS, and all official sources since 30 November 2025 — is "Lieutenant Colonel the Most Honourable Jeffrey Bostic." Dropping the honorific is non-standard for a head of
+- **Source:** see [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `President's formal title is wrong`
 
-- **Where:** `src/content/renew-reminder/index.md` line 17
-- **Confidence it's wrong:** 97%
-- **Citizen impact:** MEDIUM — a citizen whose National ID Card is expiring may read the start page, see no mention of National ID Cards, and conclude the service does not apply to them — then not set a reminder.
-- **What's wrong:** The body text reads "driver's licence, vehicle registration, passport, or other government permit." The live form at `/travel-id-citizenship/renew-reminder/form` lists "National ID Card — Barbados National Identification Card" as its first selectable document type. The `content-directory.ts` description for this page (lines 448–449) correctly includes "National ID Card". The frontmatter `keywords` field (line 11) also includes "national ID". The omission is in the start-page body copy only.
-- **Fix:** Change line 17 to read: "Use this service to set a free reminder before your driver's licence, vehicle registration, passport, National ID Card, or other government permit runs out."
-- **Source:** [live form — /travel-id-citizenship/renew-reminder/form](https://alpha.gov.bb/travel-id-citizenship/renew-reminder/form); [Report: renew-reminder.md](/docs/fact-check/renew-reminder.md) Claim 1
-- **Suggested issue title:** `Add "National ID Card" to body copy on Get a reminder before a document expires page (present in form but missing from start-page text)`
+---
+### F-372 · Tier B · NCC address contains "Bridgetown" — should be "Waterford"
+
+- **Where:** [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) — see headline issue #1 in that report
+- **What's wrong:** The page gives the paper-form return address as "Codrington Road, Bridgetown, Saint Michael". Multiple Tier 1 and Tier 2 sources (gov.bb, GIS directory, BARP directory, mapcarta/OSM) consistently give the address as "Codrington Road, **Waterford**, Saint Michael, BB11042". "Bridgetown" does not appe
+- **Source:** see [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `NCC address contains "Bridgetown" — should be "Waterford"`
 
 ---
+### F-373 · Tier B · Office hours for payment are more restrictive than the page implies
 
-### F-072 · Tier A · Fix age eligibility upper bound on YDP Community Sports Training programme page: "30 and under" → "9 to 29"
+- **Where:** [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) — see headline issue #4 in that report
+- **What's wrong:** The NCC renewal notice specifies Accounts Department hours as "8:30 A.M. – 3:00 P.M., Monday–Friday" for payment/collection. The page does not state any hours, leaving citizens to assume the general office opening hours of 8:30 a.m. – 4:30 p.m. A citizen arriving at 3:30 p.m. will be unable to pay f
+- **Source:** see [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Office hours for payment are more restrictive than the page implies`
+
+---
+### F-374 · Tier B · "Start now" CTA on start.md links to a form component — loads but shows "Loading form…"
 
-- **Where:** `src/content/register-for-community-sports-training-programme/index.md` lines 3 (frontmatter description) and 9 (body)
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — a 30-year-old who registers in good faith expecting to be accepted may be turned away by Youth Commissioners who follow the official 9–29 mandate.
-- **What's wrong:** The page states "Open to residents aged 30 and under" and "Anyone living in Barbados, aged 30 and under, can register." The YDP's published mandate is "nine (9) to twenty-nine (29)" — confirmed across youthaffairs.gov.bb/about-youth-development-programme/, the YDP Director's Message, and multiple gov.bb pages. "30 and under" is one year beyond the programme's stated upper bound.
-- **Fix:** Change "aged 30 and under" to "aged 9 to 29" (or "between the ages of 9 and 29") in both the frontmatter description and body copy. If the community sports programme intentionally extends to age 30, confirm this in writing with the Division of Youth Affairs before publishing.
-- **Source:** [youthaffairs.gov.bb — About The Youth Development Programme](https://youthaffairs.gov.bb/about-youth-development-programme/) — "nine (9) to twenty-nine (29)"; [youthaffairs.gov.bb — YDP Director's Message](https://youthaffairs.gov.bb/messages/ydp-directors-message/) — "nine (9) to twenty-nine (29) age group"
-- **Suggested issue title:** `Fix age eligibility on YDP Community Sports Training programme page: "30 and under" should be "9 to 29" per YDP mandate`
+- **Where:** [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) — see headline issue #5 in that report
+- **What's wrong:** The CTA at `/business-trade/sell-goods-services-beach-park/form` renders the page shell but the form body shows only "Loading form…" at fetch time (likely a dynamic/JS-rendered component). This may be working correctly for end users with JavaScript enabled, but cannot be confirmed as fully functiona
+- **Source:** see [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Start now" CTA on start.md links to a form component — loads but shows "Loading form…"`
 
 ---
+### F-375 · Tier B · "Analytical Services" category label is a stale gov.bb metadata artefact — it is wrong and visible t…
 
-### F-073 · Tier B · YDP programme link leads to page with no current sports listings
+- **Where:** [start-a-business](/docs/fact-check/start-a-business.md) — see headline issue #1 in that report
+- **What's wrong:** The source file (`src/content/start-a-business.md` lines 16–18) contains a `### Category` heading with a single bullet `Analytical Services`. The live alpha.gov.bb page renders this as a citizen-facing label (confirmed again 2026-05-29). The Analytical Services department (gov.bb/Departments/analyti
+- **Source:** see [start-a-business](/docs/fact-check/start-a-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Analytical Services" category label is a stale gov.bb metadata artefact — it is wrong and visible t…`
 
-- **Where:** `src/content/register-for-community-sports-training-programme/index.md` line 46
-- **Confidence it's wrong:** 70%
-- **Citizen impact:** MEDIUM — a citizen who follows the link to find current sports programmes will see only non-sports workshops; they may conclude no sports programmes are running and abandon the registration process.
-- **What's wrong:** The page directs citizens to `https://youthaffairs.gov.bb/programme-channels/youth-development-programme/` for "a list of current programmes." As of 2026-05-28 that page lists only non-sports content (web design, cyber security, entrepreneurship, arts, fatherhood workshop). No community sports training programme appears in the listing.
-- **Fix:** Add the Division of Youth Affairs contact page (`https://youthaffairs.gov.bb/contact-us/`) as a supplementary link so citizens can enquire directly when no sports listing is visible. Alternatively confirm with MYSCE whether a dedicated sports programme listing URL exists and replace the current link.
-- **Source:** [youthaffairs.gov.bb — Youth Development Programme channel](https://youthaffairs.gov.bb/programme-channels/youth-development-programme/) — page content confirmed via WebFetch 2026-05-28; no sports listing present
-- **Suggested issue title:** `YDP programme link on community sports page shows no sports listings — supplement with contact page link or replace with correct URL`
+---
+### F-376 · Tier B · Invest Barbados link destination continues to return HTTP 403 — cannot verify the content citizens a…
+
+- **Where:** [start-a-business](/docs/fact-check/start-a-business.md) — see headline issue #2 in that report
+- **What's wrong:** The sole functional link on the page (`https://www.investbarbados.org/starting-a-business-in-barbados/`) returned HTTP 403 Forbidden again on 2026-05-29, consistent with the previous check on 2026-05-28. investbarbados.org also returns 403 at the root. The site is applying anti-bot or geo-restrictio
+- **Source:** see [start-a-business](/docs/fact-check/start-a-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Invest Barbados link destination continues to return HTTP 403 — cannot verify the content citizens a…`
 
 ---
+### F-377 · Tier B · Ministry attribution in `ministries.ts` is uncertain and may be wrong
 
-### F-074 · Tier B · Update link text "CAIPO WEBSITE" — agency rebranded to Business Barbados (February 2025)
+- **Where:** [start-a-business](/docs/fact-check/start-a-business.md) — see headline issue #3 in that report
+- **What's wrong:** The `start-a-business` page is listed under `ministry-of-industry-innovation-science-and-technology` (MIIST) in `src/data/ministries.ts`. Invest Barbados is a statutory corporation (the Barbados International Business Promotion Corporation, BIBPC) whose responsible minister as of the current cabinet
+- **Source:** see [start-a-business](/docs/fact-check/start-a-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Ministry attribution in `ministries.ts` is uncertain and may be wrong`
+
+---
+### F-378 · Tier B · `source_url` is live but is the origin of the thin content
 
-- **Where:** `src/content/registering-a-business-name.md` line 13
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** LOW — the URL (`https://caipo.gov.bb/`) still resolves correctly; a citizen following the link reaches the correct site. The wrong name is an accuracy and trust issue, not a misdirection risk.
-- **What's wrong:** Link text reads "CAIPO WEBSITE". The Corporate Affairs and Intellectual Property Office completed its transition to the entity "Business Barbados" on 1 February 2025. The `caipo.gov.bb` homepage now identifies itself as "Business Barbados: Digital Platform for Corporate Affairs Services" under the Ministry of Energy and Business Development. The CAIPO acronym no longer appears on the homepage.
-- **Fix:** Change link text from "CAIPO WEBSITE" to "Business Barbados website". Optionally add a parenthetical "(formerly CAIPO — Corporate Affairs and Intellectual Property Office)" on first use. No URL change needed.
-- **Source:** [caipo.gov.bb — homepage](https://caipo.gov.bb/); [Nation News — CAIPO now part of Business Barbados (2 Feb 2025)](https://nationnews.com/2025/02/02/caipo-now-part-of-business-barbados/); [CBC — CAIPO officially completes transition (16 Sep 2025)](https://www.cbc.bb/news/local-news/caipo-officially-completes-transition-to-business-barbados/)
-- **Suggested issue title:** `Update "CAIPO WEBSITE" link text on Registering a business name page — agency rebranded to Business Barbados (February 2025)`
+- **Where:** [start-a-business](/docs/fact-check/start-a-business.md) — see headline issue #5 in that report
+- **What's wrong:** `https://www.gov.bb/Business/start-business` resolves and mirrors the same one-sentence description. Fixing this page in isolation from the gov.bb source will produce a divergence; the better fix is to supplement alpha.gov.bb with additional verified content from Invest Barbados and Business Barbado
+- **Source:** see [start-a-business](/docs/fact-check/start-a-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``source_url` is live but is the origin of the thin content`
 
 ---
+### F-379 · Tier B · Page heading and CTA button scope-limit TAMIS to income tax only (line 9 + line 22)
 
-### F-075 · Tier B · Fix ministry attribution for "Registering a business name" in ministries.ts (MIIST → Ministry of Energy and Business Development)
+- **Where:** [tax-online](/docs/fact-check/tax-online.md) — see headline issue #1 in that report
+- **What's wrong:** The heading reads "File My Income Tax Online" and the call-to-action button says "FILE INCOME TAX". TAMIS handles far more than income tax: the BRA's own launch press release and current bra.gov.bb guidance confirm it also processes Corporate Income Tax, PAYE, VAT, Withholding Tax, Excise Tax, Betti
+- **Source:** see [tax-online](/docs/fact-check/tax-online.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Page heading and CTA button scope-limit TAMIS to income tax only (line 9 + line 22)`
 
-- **Where:** `src/data/ministries.ts` lines 736–740 (onlineServices entry under `ministry-of-industry-innovation-science-and-technology`)
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** MEDIUM — if the page is surfaced via the MIIST ministry profile, citizens receive MIIST contact details (phone: (246) 535-1200) rather than Ministry of Energy and Business Development contact details (phone: (246) 535-2500). A citizen seeking help with business registration who calls MIIST will reach the wrong ministry.
-- **What's wrong:** `registering-a-business-name` is listed as an `onlineServices` entry under `ministry-of-industry-innovation-science-and-technology`. Business Barbados (formerly CAIPO) moved to the **Ministry of Energy and Business Development** in February 2025. The gov.bb `/ministries/energy-water-resources` page places CAIPO under that ministry; the caipo.gov.bb homepage footer identifies "Ministry of Energy, Business Development and Consumer Affairs" as the responsible ministry. The same fix likely applies to `start-a-business`.
-- **Fix:** Move the `registering-a-business-name` entry from MIIST's `onlineServices` array to the `ministry-of-energy-and-business-development` `onlineServices` array. Also update `src/data/departments.ts` (lines 336–378) and `src/data/state-bodies.ts` (lines 480–513) to reflect the Business Barbados rebrand — rename "Corporate Affairs and Intellectual Property Office (CAIPO)" to "Business Barbados (formerly CAIPO — Corporate Affairs and Intellectual Property Office)". Confirm `start-a-business` attribution with the same fix.
-- **Source:** [gov.bb — Ministry of Energy and Business Development](https://www.gov.bb/ministries/energy-water-resources); [caipo.gov.bb — homepage footer](https://caipo.gov.bb/); [Nation News — CAIPO now part of Business Barbados (2 Feb 2025)](https://nationnews.com/2025/02/02/caipo-now-part-of-business-barbados/)
-- **Suggested issue title:** `Fix ministries.ts: move "Registering a business name" from MIIST to Ministry of Energy and Business Development (CAIPO rebranded to Business Barbados, Feb 2025)`
+---
+### F-380 · Tier B · Frontmatter `section` field mismatch (frontmatter line 6)
+
+- **Where:** [tax-online](/docs/fact-check/tax-online.md) — see headline issue #2 in that report
+- **What's wrong:** The frontmatter declares `section: "Work and Employment"` but `content-directory.ts` places this page under the "Money and financial support" category (slug `money-financial-support`). If the `section` field drives navigation, breadcrumbs, or search facets it will produce incorrect output. This mirr
+- **Source:** see [tax-online](/docs/fact-check/tax-online.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Frontmatter `section` field mismatch (frontmatter line 6)`
 
 ---
+### F-381 · Tier B · No TAMIS support details anywhere on the page
 
-### F-076 · Tier B · Fix President's title on centenarian visit page — missing "The Most Honourable" honorific
+- **Where:** [tax-online](/docs/fact-check/tax-online.md) — see headline issue #3 in that report
+- **What's wrong:** The TAMIS portal publishes a dedicated help desk phone number (535-8239 / 429-3829), email (tamis@bra.gov.bb), and hours (8:30am–4:30pm Mon–Fri, excluding public holidays). None of these appear on the alpha.gov.bb page. A citizen who cannot file — an extremely common scenario — has no guidance on wh
+- **Source:** see [tax-online](/docs/fact-check/tax-online.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No TAMIS support details anywhere on the page`
+
+---
+### F-382 · Tier B · Wrong ministry name — still live (F-090)
 
-- **Where:** `src/content/request-a-presidential-visit-for-a-centenarian/index.md` line 8
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** LOW — the right person is named; this is a formal-title accuracy issue, not a misdirection risk. However, a government service page should use the correct presidential honorific.
-- **What's wrong:** Page refers to the President as "Lieutenant Colonel Jeffrey Bostic." Since taking office on 30 November 2025, his formal style is "The Most Honourable Jeffrey Bostic" or in full "Lieutenant Colonel the Most Honourable Jeffrey Bostic." GIS press releases, CBC, and all official sources use "The Most Honourable" as the presidential honorific. No current Government of Barbados page uses the bare military-rank-only form to refer to the sitting President.
-- **Fix:** Change "Lieutenant Colonel Jeffrey Bostic" to "The Most Honourable Jeffrey Bostic" (preferred for running text), or "Lieutenant Colonel the Most Honourable Jeffrey Bostic" if the full title is desired. Confirm preferred house style with the Office of the President or Cabinet Office.
-- **Source:** [CBC — Lt. Col. Jeffrey Bostic officially declared as next President](https://www.cbc.bb/news/local-news/lt-col-jeffrey-bostic-officially-declared-as-next-president-of-barbados/); [Advomag — The Most Honourable Lieutenant Colonel Jeffrey Bostic](https://advomag.com/the-most-honourable-lieutenant-colonel-jeffrey-bostic-to-be-barbados-second-president/)
-- **Suggested issue title:** `Fix President's title on centenarian visit page: add "The Most Honourable" honorific`
+- **Where:** [terms-conditions](/docs/fact-check/terms-conditions.md) — see headline issue #1 in that report
+- **What's wrong:** Line 29 says "Ministry of Innovation, Science and Smart Technology." The canonical name on `gov.bb/Ministries` and on the ministry's own page is **"Ministry of Industry, Innovation, Science and Technology (MIST)"**. The word "Industry" is missing and "Smart" is not part of the official name. The liv
+- **Source:** see [terms-conditions](/docs/fact-check/terms-conditions.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Wrong ministry name — still live (F-090)`
 
 ---
+### F-383 · Tier B · alpha.gov.bb is operated by GovTech Barbados Ltd., not directly by the ministry (F-091)
 
-### F-077 · Tier A · Replace "Child Care Board (CCB)" with "Social Empowerment Agency (SEA)" on child concern page
+- **Where:** [terms-conditions](/docs/fact-check/terms-conditions.md) — see headline issue #2 in that report
+- **What's wrong:** GovTech Barbados Ltd. — incorporated under the Companies Act on 18 September 2023 as a government-owned company — is the entity that built and operates alpha.gov.bb. Saying the site is "run by the Ministry" conflates policy ownership with technical operation and may mislead citizens seeking to exerc
+- **Source:** see [terms-conditions](/docs/fact-check/terms-conditions.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `alpha.gov.bb is operated by GovTech Barbados Ltd., not directly by the ministry (F-091)`
 
-- **Where:** `src/content/report-a-concern-about-a-child.md` lines 9, 25, 27, 63, 65, 71
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** HIGH — the CCB was dissolved into the SEA on 2 January 2026. Every mention of "Child Care Board" and "CCB" on this page is now stale. A citizen searching online for "Social Empowerment Agency" will not find this page. A citizen following the page instructions to contact "the Child Care Board" may reach a transitional or discontinued channel.
-- **What's wrong:** The page consistently refers to the "Child Care Board (CCB)" and "CCB officers". The Social Empowerment Agency (SEA), launched 2 January 2026, merged the Child Care Board, Welfare Department, National Assistance Board, National Disabilities Unit, and Resilience and Reintegration Unit. As of April 2026 the agency runs child abuse awareness and response work under the "Social Care Delivery and Support Directorate" at the SEA. The childcareboard.gov.bb site and childcareboard@barbados.gov.bb email appear to still be live but should be confirmed as the SEA's active child protection contact points before they are updated or retained on the page.
-- **Fix:** Replace all instances of "Child Care Board (CCB)" with "Social Empowerment Agency (SEA)"; replace "CCB officers" with "SEA child care officers"; confirm with the SEA whether phone (246) 535-2800 and email childcareboard@barbados.gov.bb remain the active child protection reporting contacts, and update accordingly.
-- **Source:** [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/); [Bajan Reporter — SEA launches Child Abuse Awareness Month (Apr 2026)](https://www.bajanreporter.com/2026/04/social-empowerment-agency-launches-child-abuse-awareness-prevention-month-activities/)
-- **Suggested issue title:** `Update "Child Care Board (CCB)" → "Social Empowerment Agency (SEA)" throughout Report a concern about a child page`
+---
+### F-384 · Tier B · Data Protection Commission contact details are absent
+
+- **Where:** [terms-conditions](/docs/fact-check/terms-conditions.md) — see headline issue #4 in that report
+- **What's wrong:** The page tells citizens they can "complain to the Data Protection Commissioner" but gives only the alpha.gov.bb privacy email. The Commission's published contact — Tel: 1 (246) 536-1200 / (246) 536-1212, 5th Floor, SSA Building, Vaucluse, St. Thomas — is not shown, leaving citizens with no fallback
+- **Source:** see [terms-conditions](/docs/fact-check/terms-conditions.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Data Protection Commission contact details are absent`
 
 ---
+### F-385 · Tier B · Address is for a building the Immigration Department vacated c. 2018–2020
 
-### F-078 · Tier B · Fix police address on child concern page: "Roebuck Street" → "Lower Roebuck Street"
+- **Where:** [visa-information](/docs/fact-check/visa-information.md) — see headline issue #1 in that report
+- **What's wrong:** The page lists "Careenage House, Wharf Road, Bridgetown" as the main Immigration Department office. The department moved to BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael. All current Tier 1 sources (immigration.gov.bb, gov.bb/Departments/immigration) confirm the new a
+- **Source:** see [visa-information](/docs/fact-check/visa-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Address is for a building the Immigration Department vacated c. 2018–2020`
+
+---
+### F-386 · Tier B · Email address is obsolete (both offices)
 
-- **Where:** `src/content/report-a-concern-about-a-child.md` line 39
-- **Confidence it's wrong:** 80%
-- **Citizen impact:** LOW — omission of "Lower" is a minor directional imprecision. However, gov.bb, the OAG, and govserv.org all consistently use "Lower Roebuck Street."
-- **What's wrong:** The page lists "Roebuck Street" as the Barbados Police Service headquarters address. Every authoritative source uses "Lower Roebuck Street, Bridgetown, St. Michael."
-- **Fix:** Change "Roebuck Street" to "Lower Roebuck Street".
-- **Source:** [gov.bb — The Police Department](https://www.gov.bb/Departments/police-department); [OAG — The Barbados Police Service](https://oag.gov.bb/Departments/Police/)
-- **Suggested issue title:** `Fix police address on Report a concern about a child page: "Roebuck Street" → "Lower Roebuck Street"`
+- **Where:** [visa-information](/docs/fact-check/visa-information.md) — see headline issue #3 in that report
+- **What's wrong:** The page uses `imm-dept@caribsurf.com` for both offices. Caribbean Surf no longer provides email services to Government departments. The current head office email is `Immigration.department@barbados.gov.bb`; GAIA airport is `Immigration.gaia@barbados.gov.bb`. Emails to the caribsurf.com address will
+- **Source:** see [visa-information](/docs/fact-check/visa-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Email address is obsolete (both offices)`
 
 ---
+### F-387 · Tier B · Visa application is now online — the paper-form instruction is obsolete
 
-### F-079 · Tier C · Verify or remove "under 5 / 24-hour investigation" and "serious danger / immediate" response-time standards
+- **Where:** [visa-information](/docs/fact-check/visa-information.md) — see headline issue #4 in that report
+- **What's wrong:** The page tells applicants to complete a paper form "in duplicate." The immigration.gov.bb homepage carries a banner: "The Barbados Entry visa process is now a fully online process. Please click HERE to apply and pay for your entry visa to Barbados." The portal is live at `apps.immigration.gov.bb`. T
+- **Source:** see [visa-information](/docs/fact-check/visa-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Visa application is now online — the paper-form instruction is obsolete`
 
-- **Where:** `src/content/report-a-concern-about-a-child.md` lines 64–67
-- **Confidence it's wrong:** unknown — no authoritative source found confirming or denying these specific standards
-- **Citizen impact:** HIGH — these are specific operational commitments on a child safety page. If the response times are not a published standard, a citizen whose child is not attended to within the stated timeframe may not escalate.
-- **What's wrong:** The page states "in serious danger, CCB officers attend immediately with the police" and "under 5, CCB officers begin their investigation in less than 24 hours." Neither standard appears in any published government source — not on childcareboard.gov.bb, gov.bb, GIS, or reporting on the new Protection of Children Act (2026). The 24-hour reference in CCB sources refers to the mandatory *reporting* obligation on professionals (reporters must report within 24 hours), not an agency response-time standard.
-- **Fix:** Confirm these response standards with the Social Empowerment Agency (SEA). If published, cite the source. If unpublished operational policy, revise to more conservative language. If unconfirmed, remove the specific time commitments.
-- **Source checked:** [childcareboard.gov.bb — Reporting Child Abuse](https://childcareboard.gov.bb/reporting-child-abuse/); [Nation News — Neglect tops child abuse cases (Apr 2026)](https://nationnews.com/2026/04/10/neglect-tops-child-abuse-cases/)
-- **Suggested issue title:** `Verify or remove response-time standards ("serious danger/immediate" and "under 5/24 hours") on Report a concern about a child page`
+---
+### F-388 · Tier B · The entire page describes a service that no longer exists
+
+- **Where:** [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) — see headline issue #1 in that report
+- **What's wrong:** The Barbados Revenue Authority abolished Visitor Driving Permits effective 15 October 2025, replacing the system with a Car Rental Levy (BBD $5/day, max $35 per contract) collected automatically by rental companies. Every procedural claim, every fee, every URL on the page applies to a permit that vi
+- **Source:** see [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The entire page describes a service that no longer exists`
 
 ---
+### F-389 · Tier B · The online portal URL has a TLS certificate error
 
-### F-080 · Tier A · Replace "National Assistance Board" with "Social Empowerment Agency (SEA)" on Report elderly abuse page
+- **Where:** [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) — see headline issue #3 in that report
+- **What's wrong:** `https://portal.bra.gov.bb/VisitorPermit` (linked twice on the page) returns a TLS certificate error when fetched — the portal is unreachable. Even if the permit system were still active, citizens clicking this link would see a browser security warning and be unable to proceed.
+- **Source:** see [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The online portal URL has a TLS certificate error`
+
+---
+### F-390 · Tier B · The declared `source_url` (gov.bb/Visit-Barbados/visitorpermitapplication) still carries the same ab…
 
-- **Where:** `src/content/report-elderly-abuse.md` lines 27, 54
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** HIGH — the National Assistance Board was dissolved 2 January 2026 and merged into the Social Empowerment Agency (SEA). A citizen directed to the "National Assistance Board" will encounter a dissolved body. While the 535-3131 number still rings at Murrell House (now an SEA location), the wrong agency name undermines trust and may prevent a citizen from obtaining help.
-- **What's wrong:** Line 27 says "Go to, call or email the National Assistance Board" and line 54 says "The police or the National Assistance Board will do an assessment." The NAB is no longer a separate entity — it is part of the SEA as of 2 January 2026.
-- **Fix:** Replace "National Assistance Board" with "Social Empowerment Agency (SEA)" in both places. Consider adding "(formerly the National Assistance Board)" on first use. Also update the address heading (line 29) from "National Assistance Board" to "Social Empowerment Agency (SEA)".
-- **Source:** [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/); [Barbados Today — Abusing elderly (21 Apr 2026)](https://barbadostoday.bb/2026/04/21/abusing-elderly-could-bring-100k-fine-jail-under-new-bill/)
-- **Suggested issue title:** `Update "National Assistance Board" → "Social Empowerment Agency (SEA)" on Report elderly abuse page (NAB dissolved Jan 2026)`
+- **Where:** [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) — see headline issue #5 in that report
+- **What's wrong:** The gov.bb source page has not been updated to reflect the October 2025 abolition. Both the alpha page and its source are simultaneously wrong on the same facts — the source_url cannot be used to justify retaining the obsolete content.
+- **Source:** see [visitor-permit-application](/docs/fact-check/visitor-permit-application.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The declared `source_url` (gov.bb/Visit-Barbados/visitorpermitapplication) still carries the same ab…`
 
 ---
+### F-391 · Tier B · The entire page describes a dissolved agency
 
-### F-081 · Tier B · Add missing building name "Murrell House" to address on Report elderly abuse page
+- **Where:** [welfare-department](/docs/fact-check/welfare-department.md) — see headline issue #1 in that report
+- **What's wrong:** The Welfare Department ceased to exist as a standalone entity on 2 January 2026, when it was merged — along with the Child Care Board, National Assistance Board, National Disabilities Unit, and the Resilience and Reintegration Unit — into the Social Empowerment Agency (SEA). The page title, body hea
+- **Source:** see [welfare-department](/docs/fact-check/welfare-department.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The entire page describes a dissolved agency`
 
-- **Where:** `src/content/report-elderly-abuse.md` lines 29–32
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — omitting the building name "Murrell House" makes the address harder to locate on a map or by asking directions. Three independent authoritative sources (gov.bb, connectb1m.com, centenariansofbarbados.com) all lead with "Murrell House" as the building name. The current address also abbreviates "Road" as "Rd" and includes "Bridgetown" which does not appear in any authoritative source for this address.
-- **What's wrong:** Page shows "Country Rd / National Assistance Board / Bridgetown / Saint Michael". All three Tier 1/2 sources give "Murrell House, Country Road, St. Michael."
-- **Fix:** Replace the address block with "Murrell House / Country Road / St. Michael". Make this fix in conjunction with F-080 (updating "National Assistance Board" to "Social Empowerment Agency (SEA)").
-- **Source:** [gov.bb — The National Assistance Board](https://www.gov.bb/State-Bodies/national-assistance); [connectb1m.com — National Assistance Board](https://connectb1m.com/national-assistance-board/); [centenariansofbarbados.com — Services Directory](https://centenariansofbarbados.com/services-directory/)
-- **Suggested issue title:** `Add building name "Murrell House" to address on Report elderly abuse page (Country Road, St. Michael)`
+---
+### F-392 · Tier B · Previous report had the wrong live URL
+
+- **Where:** [welfare-department](/docs/fact-check/welfare-department.md) — see headline issue #2 in that report
+- **What's wrong:** The prior fact-check (2026-05-28) recorded the live URL as `https://alpha.gov.bb/government/organisations/welfare`. This is incorrect. The page is served at `https://alpha.gov.bb/welfare-department` (no category prefix, consistent with the `href: "/welfare-department"` in `src/data/ministries.ts`).
+- **Source:** see [welfare-department](/docs/fact-check/welfare-department.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Previous report had the wrong live URL`
 
 ---
+### F-393 · Tier B · SEA website remains unreachable
 
-### F-082 · Tier C · Verify email `nab.department@barbados.gov.bb` on Report elderly abuse page — not in any authoritative source
+- **Where:** [welfare-department](/docs/fact-check/welfare-department.md) — see headline issue #4 in that report
+- **What's wrong:** `socialempowermentbb.org` returned ECONNREFUSED on both 2026-05-28 and 2026-05-29, making it impossible to verify SEA contact details, confirm whether the email and phone numbers still route correctly, or obtain an SEA contact person. The GovBB team should confirm the correct SEA public contact deta
+- **Source:** see [welfare-department](/docs/fact-check/welfare-department.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `SEA website remains unreachable`
+
+---
+### F-394 · Tier B · All core content verified — no discrepancies found in this pass
 
-- **Where:** `src/content/report-elderly-abuse.md` line 34
-- **Confidence it's wrong:** unknown — could not confirm or contradict
-- **Citizen impact:** HIGH — this is a contact email on a crisis-service page. If the inbox is unmonitored or has been retired following the SEA merger (2 January 2026), a carer or victim who emails receives no response. No gov.bb, GIS, NAB Facebook, or third-party directory source publishes this address.
-- **What's wrong:** `nab.department@barbados.gov.bb` appears on the page but cannot be found in any authoritative source: not on gov.bb/State-Bodies/national-assistance (which lists no email), not in any GIS release, not on the NAB Facebook page, not in any third-party directory.
-- **Fix:** Contact the Social Empowerment Agency (SEA) to confirm whether `nab.department@barbados.gov.bb` is a live, monitored inbox or has been replaced. If unconfirmed, remove the email and list phone-only contact until the correct SEA email is established.
-- **Source checked:** [gov.bb — The National Assistance Board](https://www.gov.bb/State-Bodies/national-assistance) — no email listed; [gisbarbados.gov.bb — NAB tag](https://gisbarbados.gov.bb/blog/tag/national-assistance-board/) — no email; [connectb1m.com — NAB](https://connectb1m.com/national-assistance-board/) — no email; [centenariansofbarbados.com](https://centenariansofbarbados.com/services-directory/) — no email
-- **Suggested issue title:** `Verify nab.department@barbados.gov.bb on Report elderly abuse page — email not confirmed by any authoritative source; may be inactive post-SEA merger`
+- **Where:** [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) — see headline issue #1 in that report
+- **What's wrong:** The three paragraphs of body copy, both inline links (`alpha.gov.bb` and `alpha.gov.bb/feedback`), and the page's live URL all check out. No correction is needed to any citizen-facing claim.
+- **Source:** see [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `All core content verified — no discrepancies found in this pass`
 
 ---
+### F-395 · Tier B · Dynamic service list on the live page now shows 33 services
 
-### F-083 · Tier B · Fix NCC address on beach-park vendor licence page: "Bridgetown" → "Waterford"
+- **Where:** [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) — see headline issue #2 in that report
+- **What's wrong:** The rendered page generates a list of 33 alpha services from `content-directory.ts` at build time. This list has grown since the site launched (October 2025). The markdown source itself makes no count claim, so no discrepancy exists — but the dynamic section is outside the scope of this page's markd
+- **Source:** see [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Dynamic service list on the live page now shows 33 services`
 
-- **Where:** `src/content/sell-goods-services-beach-park/index.md` lines 30–32
-- **Confidence it's wrong:** 90%
-- **Citizen impact:** MEDIUM — a citizen posting a paper application addressed to "Codrington Road, Bridgetown" rather than "Codrington Road, Waterford" may experience mail delivery delays; using the address in a mapping app will not reliably locate the NCC under "Bridgetown".
-- **What's wrong:** The page gives the NCC address as "Codrington Road, Bridgetown, Saint Michael". Multiple independent Tier 1 and Tier 2 sources give the locality as "Waterford", not "Bridgetown": gov.bb/State-Bodies/national-conservation-commission (no "Bridgetown" — building is "Codrington House"); BARP Business Directory ("Codrington Road, Waterford, Saint Michael, BB11042"); mapcarta/OpenStreetMap data ("Codrington Road, Waterford, Saint Michael, BB11042"); GIS NCC location page title ("National Conservation Commission — Codrington House") confirms no "Bridgetown" qualifier.
-- **Fix:** Change line 31 from "Bridgetown," to "Waterford,". Full corrected address: "Codrington Road, / Waterford, / Saint Michael".
-- **Source:** [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission); [BARP Business Directory — NCC](https://barpmember.com/directory/directory/national-conservation-commission/); [mapcarta — NCC Headquarters](https://mapcarta.com/N5219008439)
-- **Suggested issue title:** `Fix NCC address on beach/park vendor licence page: "Bridgetown" → "Waterford" (Codrington Road, Waterford, Saint Michael)`
+---
+### F-396 · Tier B · Footer Careers link is live but shows no openings
+
+- **Where:** [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) — see headline issue #3 in that report
+- **What's wrong:** The footer link `https://job-boards.greenhouse.io/govtechbarbados?gh_src=ef2pb1uy9us` resolves correctly; the Greenhouse page states "There are no current openings." This is not a content error — it is expected for an organisation that may not be recruiting — but it is noteworthy for completeness.
+- **Source:** see [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Footer Careers link is live but shows no openings`
 
 ---
+### F-397 · Tier B · `publish_date: 2025-09-25` IS rendered citizen-facing (Claim 10 — status revised)
 
-### F-084 · Tier C · Verify all four NCC vendor licence fee amounts on beach-park page
+- **Where:** [whats-changing](/docs/fact-check/whats-changing.md) — see headline issue #1 in that report
+- **What's wrong:** The previous pass incorrectly recorded this as "internal metadata not displayed to citizens." Live-checking the page on 2026-05-29 shows it renders as "Last Updated: September 25th, 2025" in the page body. The date pre-dates the public launch of alpha.gov.bb (widely reported 18 October 2025), so the
+- **Source:** see [whats-changing](/docs/fact-check/whats-changing.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``publish_date: 2025-09-25` IS rendered citizen-facing (Claim 10 — status revised)`
+
+---
+### F-398 · Tier B · Homepage copy differs from this page
 
-- **Where:** `src/content/sell-goods-services-beach-park/index.md` lines 70–77
-- **Confidence it's wrong:** unknown — fee figures are internally VAT-consistent but no NCC public source publishes them
-- **Citizen impact:** HIGH — a vendor arriving at the NCC Accounts Department with the wrong amount will be unable to collect their licence documentation that day.
-- **What's wrong:** The page lists four fees including VAT: Licence $117.50, Watersports licence $176.25, Licence book $11.75, ID badge $12.87. The NCC's "Fees & Licenses" page (nccbarbados.com/process-for-using-nccs-facilities/) does not publish specific dollar amounts. The renewal notice for July 2024–June 2025 directs vendors to the Accounts Department for pricing. The figures cannot be confirmed or contradicted from any public NCC source.
-- **Fix:** Contact NCC Accounts Department — (246) 536-0617 or ncc@ncc.gov.bb — to confirm the current fee schedule for regular licence, watersports licence, licence book, and ID badge. Update the page with confirmed figures and add "Fees last verified: [date]".
-- **Source checked:** [nccbarbados.com — Fees & Licenses](https://www.nccbarbados.com/process-for-using-nccs-facilities/) — no dollar amounts; [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/) — "contact Accounts Department for pricing"; [BRA — VAT Rates](https://bra.gov.bb/Popular-Topics/Value-Added-Tax/VAT-Rates) — 17.5% standard rate confirmed
-- **Suggested issue title:** `Verify NCC vendor licence fees on beach/park licence page — not published in any NCC public source; confirm with Accounts Dept`
+- **Where:** [whats-changing](/docs/fact-check/whats-changing.md) — see headline issue #2 in that report
+- **What's wrong:** The alpha.gov.bb homepage hero reads "How you find and use **government** services is changing", while this page reads "How you find and use **public** services is changing." Neither is factually wrong, but the inconsistency undermines brand coherence.
+- **Source:** see [whats-changing](/docs/fact-check/whats-changing.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Homepage copy differs from this page`
 
 ---
+### F-399 · Tier C · Key procedural claims cannot be verified from authoritative public sources
 
-### F-085 · Tier C · Verify referee and testimonial requirements on beach-park vendor licence page
+- **Where:** [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) — see headline issue #2 in that report
+- **What's wrong:** The application process described — supervisor completes the form, applicant receives a copy, senior officer reviews eligibility — is plausible but none of these steps appear on childcareboard.gov.bb, gov.bb, or in any GIS press release. The process is unverifiable at 30% certainty and requires CCB/
+- **Source:** see [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Key procedural claims cannot be verified from authoritative public sources`
 
-- **Where:** `src/content/sell-goods-services-beach-park/index.md` lines 46–49; `start.md` lines 17–20
-- **Confidence it's wrong:** unknown — not contradicted, but not confirmed by any NCC public source
-- **Citizen impact:** MEDIUM — a vendor who omits the referee details or testimonials from their application will have their application rejected or delayed.
-- **What's wrong:** The page requires 2 referees (one professional, one personal) and 2 separate testimonials. No NCC public source — nccbarbados.com, gov.bb NCC page, GIS beach-vending article, or the NCC renewal notice — mentions referees or testimonials. The only documented requirements for new applications (per GIS) are a police certificate of character and information about the proposed beach/business.
-- **Fix:** Contact NCC at (246) 536-0617 or ncc@ncc.gov.bb to confirm whether the current application form requires referees and testimonials. If confirmed, add a source citation. If requirements have changed, update the page.
-- **Source checked:** [gov.bb — National Conservation Commission](https://www.gov.bb/State-Bodies/national-conservation-commission); [nccbarbados.com — Process for using NCC facilities](https://www.nccbarbados.com/process-for-using-nccs-facilities/); [GIS — Beach Vending](https://gisbarbados.gov.bb/blog/beach-vending/) (403); [NCC — Renewal notice July 2024](https://www.nccbarbados.com/renewal-of-vendors-licenses-july-01-2024-june-30-2025/)
-- **Suggested issue title:** `Verify referee and testimonial requirements on beach/park vendor licence page — not confirmed by any NCC public source`
+---
+### F-400 · Tier C · "Green Book" terminology is unverifiable as an official CCB document name
+
+- **Where:** [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) — see headline issue #3 in that report
+- **What's wrong:** No authoritative Barbados government source uses the term "Green Book" for a child health record. The child immunisation/health card issued at polyclinics is confirmed to exist, but its official name and whether it matches the "Green Book" described on the page cannot be established from public sour
+- **Source:** see [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Green Book" terminology is unverifiable as an official CCB document name`
 
 ---
+### F-401 · Tier C · Accessibility section claim (representative at application; guardian at orientation) is unverifiable
 
-### F-086 · Tier A · Remove "Analytical Services" category label from Start a business page
+- **Where:** [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) — see headline issue #4 in that report
+- **What's wrong:** The claim added in lines 69–72 — that a representative may complete the application form on behalf of a parent, but a parent/guardian must attend orientation in person — appears nowhere on childcareboard.gov.bb, gov.bb, or GIS. This is a new unverifiable claim not covered in the prior pass.
+- **Source:** see [apply-for-a-place-at-a-day-nursery](/docs/fact-check/apply-for-a-place-at-a-day-nursery.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Accessibility section claim (representative at application; guardian at orientation) is unverifiable`
+
+---
+### F-402 · Tier C · Phone number 246-536-0282 is unverifiable
 
-- **Where:** `src/content/start-a-business.md` lines 15–18
-- **Confidence it's wrong:** 98%
-- **Citizen impact:** LOW — the label is visible to citizens and refers to an unrelated government laboratory. Trust and accuracy issue.
-- **What's wrong:** Lines 15–18 contain `### Category` followed by `* Analytical Services`. This is an internal gov.bb content-taxonomy field for the Analytical Services Department — a laboratory/technical body under MIST at Culloden Road, St. Michael, headed by Dr. Beverley P. Wood. It has no connection to business facilitation or Invest Barbados. The label renders as citizen-facing content on the live alpha.gov.bb page (`https://alpha.gov.bb/business-trade/start-a-business`).
-- **Fix:** Delete lines 15–18 from `src/content/start-a-business.md` (the `### Category\n\n*   Analytical Services` block). This metadata artefact was mechanically imported from gov.bb and should not appear in alpha.gov.bb content.
-- **Source:** [gov.bb — Analytical Services Department](https://www.gov.bb/Departments/analytical-services) — confirms Analytical Services is a laboratory body with no connection to business registration; [alpha.gov.bb — Start a business](https://alpha.gov.bb/business-trade/start-a-business) — label confirmed visible to citizens
-- **Suggested issue title:** `Remove "Analytical Services" category label from Start a business page — stale gov.bb metadata artefact`
+- **Where:** [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) — see headline issue #2 in that report
+- **What's wrong:** Neither the Ministry of Transport, Works and Water Resources directory, the BLA FAQ page, nor any published government source lists this number. The MTW main PBX is 536-0000; BLA publishes 536-0265/0267/0278. The number 536-0282 does not appear in any government contact directory searched. Citizens
+- **Source:** see [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Phone number 246-536-0282 is unverifiable`
 
 ---
+### F-403 · Tier C · No conductor licence fee is stated
 
-### F-088 · Tier B · Broaden TAMIS heading and CTA: scope-limited to "income tax" when TAMIS covers all major taxes
+- **Where:** [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) — see headline issue #4 in that report
+- **What's wrong:** Neither the BLA service page for conductor licences nor any public source discloses the application fee. The page does not mention one either, which is a gap citizens need filled. This is flagged as an open question for the GovBB team to confirm with the BLA.
+- **Source:** see [apply-for-conductor-licence](/docs/fact-check/apply-for-conductor-licence.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No conductor licence fee is stated`
 
-- **Where:** `src/content/tax-online.md` lines 9, 20, 22
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — businesses and employers filing Corporate Income Tax, PAYE, VAT, or Withholding Tax must also use TAMIS. The heading "File My Income Tax Online" and button "FILE INCOME TAX" do not signal this. A citizen reading only the heading may not recognise that TAMIS is also their required portal for non-income-tax obligations.
-- **What's wrong:** The heading and CTA restrict TAMIS to income tax only. BRA's own pages confirm TAMIS handles Corporate Income Tax, PAYE, Personal Income Tax, Withholding Tax, Betting and Gaming Fees, VAT, Excise Tax, and Premium Tax. The body description ("manage your taxes online") is already broader and correct; the heading contradicts it.
-- **Fix:** Change `## File My Income Tax Online` to `## File and Pay Tax Online`. Change "Click the button below to file income tax." to "Click the button below to access TAMIS, where you can file and pay income tax, corporate tax, PAYE, VAT, withholding tax, and other taxes online." Change the button label from "FILE INCOME TAX" to "GO TO TAMIS".
-- **Source:** [BRA — Pay/Income-Tax](https://bra.gov.bb/Pay/Income-Tax) — "Corporate Income Tax (CIT), Pay As You Earn (PAYE), Personal Income Tax (PIT), Withholding Tax (WHT) and Betting and Gaming Fees are filed and paid in TAMIS"; [BRA — Press Release: BRA Launches Phase 1 of New Tax System](https://bra.gov.bb/News/Press-Releases/BRA-Launches-Phase-1-of-New-Tax-Sy) — VAT, Excise, NSRL also confirmed in Phase 1
-- **Suggested issue title:** `Broaden TAMIS heading and CTA on Tax online page — "income tax" should be "taxes" (TAMIS covers CIT, PAYE, VAT, WHT and more)`
+---
+### F-404 · Tier C · Four key claims about the post-interview process are unverifiable
+
+- **Where:** [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) — see headline issue #3 in that report
+- **What's wrong:** The safeguarding module, the orientation session, the ministry-led matching, and the networking event introduction are all described on the page but do not appear in any public authoritative source. These are plausible operational details but cannot be independently confirmed from the public web.
+- **Source:** see [apply-to-be-a-project-protege-mentor](/docs/fact-check/apply-to-be-a-project-protege-mentor.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Four key claims about the post-interview process are unverifiable`
 
 ---
+### F-405 · Tier C · Volunteer age eligibility (19+) cannot be corroborated from any public NSC source
 
-### F-089 · Tier C · Fix frontmatter `section` mismatch on Tax online page ("Work and Employment" → "Money and Financial Support")
+- **Where:** [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) — see headline issue #4 in that report
+- **What's wrong:** The NSC's own 2026 materials describe the role as "Coach Assistant" with no age floor specified on the public web. The sister programme (Division of Youth Affairs / National Summer Camp) uses 16+. This claim requires agency confirmation. The page may have applied the wrong minimum age.
+- **Source:** see [apply-to-volunteer-at-a-sports-camp](/docs/fact-check/apply-to-volunteer-at-a-sports-camp.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Volunteer age eligibility (19+) cannot be corroborated from any public NSC source`
+
+---
+### F-406 · Tier C · Stray code fence at end of source file (new)
 
-- **Where:** `src/content/tax-online.md` line 6
-- **Confidence it's wrong:** 95% (internal inconsistency — `content-directory.ts` is the structural authority)
-- **Citizen impact:** LOW — if `section` is unused by the build, no visible impact; if it drives navigation or search facets it will surface the page under the wrong category.
-- **What's wrong:** Frontmatter declares `section: "Work and Employment"`. The page is listed under the `money-financial-support` category in `src/data/content-directory.ts` (lines 262–268), producing the live URL `https://alpha.gov.bb/money-financial-support/tax-online`. The same mismatch was previously found on the EZPay page (see [ezpay.md](/home/gavin/frontend-alpha/docs/fact-check/ezpay.md) Additional findings).
-- **Fix:** Change `section: "Work and Employment"` to `section: "Money and Financial Support"` to match the content-directory.ts category. Audit whether any other `money-financial-support` pages have a similar stale `section` value.
-- **Source:** [`src/data/content-directory.ts`](/home/gavin/frontend-alpha/src/data/content-directory.ts) lines 228–291; [EZPay fact-check report](/home/gavin/frontend-alpha/docs/fact-check/ezpay.md) Additional findings — identical mismatch on that page
-- **Suggested issue title:** `Fix frontmatter section on Tax online page: "Work and Employment" → "Money and Financial Support" (matches content-directory.ts)`
+- **Where:** [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) — see headline issue #2 in that report
+- **What's wrong:** Line 16 of `src/content/business-policies-and-law.md` contains a lone ` ``` ` with no opening counterpart. This is not rendered on the live alpha.gov.bb page (the framework likely strips it), but it is a source-file defect that could cause rendering failures if the markdown parser is changed. Low ci
+- **Source:** see [business-policies-and-law](/docs/fact-check/business-policies-and-law.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Stray code fence at end of source file (new)`
 
 ---
+### F-407 · Tier C · NIS department name uses non-official styling (Claim 6)
 
-### F-090 · Tier A · Fix ministry name on Terms & Conditions page ("Ministry of Innovation, Science and Smart Technology" → "Ministry of Industry, Innovation, Science and Technology")
+- **Where:** [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) — see headline issue #2 in that report
+- **What's wrong:** The page names the contact as "NIS Severance Payment Department." The NIS Contact Us page lists the department simply as "Severance" with email `severancedepartment@bginis.gov.bb`. The word "Payment" in the name is not used in any NIS publication. Low citizen impact but worth correcting for consiste
+- **Source:** see [calculate-severance-pay](/docs/fact-check/calculate-severance-pay.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `NIS department name uses non-official styling (Claim 6)`
 
-- **Where:** `src/content/terms-conditions.md` line 29
-- **Confidence it's wrong:** 98%
-- **Citizen impact:** MEDIUM — the only named responsible authority on the Terms & Conditions page is wrong. A citizen seeking to exercise data rights or escalate a complaint may contact the wrong body. The word "Industry" is missing and "Smart" does not appear in the official name.
-- **What's wrong:** Page states "alpha.gov.bb is run by the Ministry of Innovation, Science and Smart Technology." The canonical name, confirmed on [gov.bb/Ministries](https://www.gov.bb/Ministries) and the ministry's own page [gov.bb — MIST](https://www.gov.bb/Ministries/innovation-science-smart-technology), is **"Ministry of Industry, Innovation, Science and Technology (MIST)"**.
-- **Fix:** Change "Ministry of Innovation, Science and Smart Technology" to "Ministry of Industry, Innovation, Science and Technology (MIST)". Also consider noting that alpha.gov.bb is operated by GovTech Barbados Ltd. (see F-091).
-- **Source:** [gov.bb — Ministries](https://www.gov.bb/Ministries); [gov.bb — Ministry of Industry, Innovation, Science and Technology](https://www.gov.bb/Ministries/innovation-science-smart-technology)
-- **Suggested issue title:** `Fix ministry name on Terms & Conditions page: "Ministry of Innovation, Science and Smart Technology" → "Ministry of Industry, Innovation, Science and Technology (MIST)"`
+---
+### F-408 · Tier C · Timing advice ("June or July") is unverifiable for recurring cycles
+
+- **Where:** [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) — see headline issue #3 in that report
+- **What's wrong:** All public sources relate to the 2023-2024 launch only (purchase window July 1–September 30, 2023; application deadline October 16, 2023). No 2024-2025 or 2025-2026 programme cycle has been publicly announced. The June/July advice may reflect 2023-launch messaging rather than a stable annual schedul
+- **Source:** see [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Timing advice ("June or July") is unverifiable for recurring cycles`
 
 ---
+### F-409 · Tier C · "Cannot save and return" claim is unverifiable
 
-### F-091 · Tier B · Clarify that alpha.gov.bb is operated by GovTech Barbados Ltd. (not directly by the ministry)
+- **Where:** [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) — see headline issue #4 in that report
+- **What's wrong:** The start page asserts the application cannot be saved mid-way. No official source confirms or denies this as a system property. This is testable only against the live form.
+- **Source:** see [get-a-primary-school-textbook-grant](/docs/fact-check/get-a-primary-school-textbook-grant.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Cannot save and return" claim is unverifiable`
+
+---
+### F-410 · Tier C · Turnaround time "5 to 7 business days" is unverifiable for birth certificate copies
 
-- **Where:** `src/content/terms-conditions.md` line 29
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — under the Data Protection Act 2019, citizens must be able to identify the data controller. If GovTech Barbados Ltd. is the data controller (as the operator of the site), the page should say so. Citizens who raise a data-subject request directed "to the Ministry" may find the request going to the wrong entity.
-- **What's wrong:** The page says alpha.gov.bb is "run by" the ministry. GovTech Barbados Ltd. — a government-owned company incorporated 18 September 2023 under the Companies Act — is the entity that built and operates alpha.gov.bb. The ministry is the responsible portfolio minister, not the legal data controller.
-- **Fix:** Clarify the sentence, e.g.: "alpha.gov.bb is operated by GovTech Barbados Ltd., a government-owned company working under the Ministry of Industry, Innovation, Science and Technology (MIST)." Confirm with GovTech's data protection officer which entity is registered as the data controller with the Data Protection Commission, then update the page accordingly.
-- **Source:** [GovTech Barbados — About](https://govtech.bb/2024/04/16/hello-world/); [Barbados Today — GovTech Barbados launches alpha.gov.bb, Oct 2025](https://barbadostoday.bb/2025/10/18/govtech-barbados-launches-test-site-to-unify-simplify-public-services/); [gov.bb — Data Protection Commission](https://www.gov.bb/General/data-protection-commissioner)
-- **Suggested issue title:** `Clarify data controller identity on Terms & Conditions page — alpha.gov.bb is operated by GovTech Barbados Ltd., not directly by the ministry`
+- **Where:** [get-birth-certificate](/docs/fact-check/get-birth-certificate.md) — see headline issue #2 in that report
+- **What's wrong:** No authoritative source (barbadoslawcourts.gov.bb, gov.bb, GIS) states a 5-to-7-business-day turnaround for birth certificate copies. The identical phrasing and same-day emergency clause appear verbatim on the alpha.gov.bb death certificate page, suggesting the birth certificate page may have copied
+- **Source:** see [get-birth-certificate](/docs/fact-check/get-birth-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Turnaround time "5 to 7 business days" is unverifiable for birth certificate copies`
 
 ---
+### F-411 · Tier C · Turnaround "5 to 7 business days" and same-day emergency clause are unverifiable for marriage certif…
 
-### F-087 · Tier B · Verify Invest Barbados link destination (`investbarbados.org/starting-a-business-in-barbados/`)
+- **Where:** [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) — see headline issue #4 in that report
+- **What's wrong:** No authoritative Tier 1 or Tier 2 source (barbadoslawcourts.gov.bb, gov.bb, GIS) states a 5-to-7-business-day turnaround for marriage certificate copies. The identical phrasing appears verbatim on the alpha.gov.bb death certificate page, suggesting this block was templated from death-certificate con
+- **Source:** see [get-marriage-certificate](/docs/fact-check/get-marriage-certificate.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Turnaround "5 to 7 business days" and same-day emergency clause are unverifiable for marriage certif…`
 
-- **Where:** `src/content/start-a-business.md` line 13
-- **Confidence it's wrong:** 35% (link is likely live for human browsers; 403 is probably anti-bot only)
-- **Citizen impact:** HIGH — this is the sole actionable item on the page. If it is broken, citizens have nowhere to go.
-- **What's wrong:** `https://www.investbarbados.org/starting-a-business-in-barbados/` returns HTTP 403 Forbidden on programmatic fetch. The root domain also returns 403. The URL appears in the Google Search index and mirrors the gov.bb source page link, suggesting it is live for human browsers but blocked for bots. The content team should manually confirm the destination is current. Note also: Invest Barbados's statutory mandate under BIBPC Act CAP 340A is international investment promotion — domestic entrepreneurs may need Business Barbados / caipo.gov.bb instead. The page does not clarify which audience it serves.
-- **Fix:** Manually verify the URL resolves in a standard browser. If live, optionally add Invest Barbados contact details as a fallback (Phone: (246) 626-2000; Email: info@investbarbados.org; Address: Trident Financial Centre, Hastings, Christ Church). Clarify in the page copy whether the Invest Barbados service is for international investors, domestic investors, or both.
-- **Source:** [gov.bb — State Bodies: Invest Barbados](https://www.gov.bb/State-Bodies/invest-barbados) — confirms org, address, phone; [investbarbados.org — Starting a Business in Barbados](https://www.investbarbados.org/starting-a-business-in-barbados/) — URL in search index; [Report: start-a-business.md](/home/gavin/frontend-alpha/docs/fact-check/start-a-business.md) Claim 2
-- **Suggested issue title:** `Verify Invest Barbados link on Start a business page — returns 403 on programmatic fetch; confirm live for human browsers and clarify audience (international vs. domestic investors)`
+---
+### F-412 · Tier C · Reversed finding (Claim 3):
+
+- **Where:** [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) — see headline issue #5 in that report
+- **What's wrong:** The previous pass marked the 10% dividend participation exemption threshold as unverifiable. In this pass, the BRA Residency Status page (`bra.gov.bb/Popular-Topics/Companies/Residency-Status`) was confirmed to mention the provision — "Barbados companies generally avoid corporation tax on dividends
+- **Source:** see [information-about-business-tax](/docs/fact-check/information-about-business-tax.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Reversed finding (Claim 3):`
 
 ---
+### F-413 · Tier C · Registration Department fax number conflict persists
 
-### F-092 · Tier A · Update Immigration Department address on Visa information page (Careenage House → BTI Corporate Centre)
+- **Where:** [marriage-licences](/docs/fact-check/marriage-licences.md) — see headline issue #5 in that report
+- **What's wrong:** Line 126 lists fax `(246) 426-2405`. The `gov.bb/Departments/registration` page lists `1 (246) 427-8917`. The `barbadoslawcourts.gov.bb/Certificates` page lists `1-246-426-2405`. Two authoritative sources disagree; this requires agency confirmation.
+- **Source:** see [marriage-licences](/docs/fact-check/marriage-licences.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Registration Department fax number conflict persists`
+
+---
+### F-414 · Tier C · Permanent Secretary is disputed between two government sources (still unresolved)
 
-- **Where:** `src/content/visa-information.md` lines 11–13
-- **Confidence it's wrong:** 99%
-- **Citizen impact:** HIGH — a citizen travelling to Careenage House, Wharf Road will not find the Immigration Department. The department relocated to BTI Corporate Centre, Princess Alice Highway, Bridgetown BB11093, St. Michael c. 2018–2020. This is the same issue previously flagged on `open-pharmacy.md` (F-00A); visa-information.md is a second instance.
-- **What's wrong:** Page header reads "Careenage House / Wharf Road / Bridgetown / BARBADOS". All current Tier 1 sources confirm the address is BTI Corporate Centre, Princess Alice Highway.
-- **Fix:** Replace the Careenage House heading and address block with "BTI Corporate Centre / Princess Alice Highway / Bridgetown BB11093 / St. Michael / BARBADOS".
-- **Source:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx); [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration); [GIS — New HQ For Immigration Department](https://gisbarbados.gov.bb/blog/new-hq-for-immigration-department/)
-- **Suggested issue title:** `Update Immigration Department address on Visa information page (Careenage House → BTI Corporate Centre, Princess Alice Highway)`
+- **Where:** [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) — see headline issue #2 in that report
+- **What's wrong:** agriculture.gov.bb Senior Staff Directory (fetched 2026-05-29) names Janet Phillips as Permanent Secretary at 535-5115. gov.bb/government/ps-related-grades (fetched 2026-05-29) still names Terry Bascombe. These two Tier-1 sources remain in direct conflict. Agency confirmation required before the pag
+- **Source:** see [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Permanent Secretary is disputed between two government sources (still unresolved)`
 
 ---
+### F-415 · Tier C · NAHFCP Project Coordinator telephone uses non-standard prefix (still unverifiable)
 
-### F-093 · Tier A · Update stale phone numbers on Visa information page (434-4100 and 418-4180 are pre-2017)
+- **Where:** [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) — see headline issue #5 in that report
+- **What's wrong:** The number (246) 310-2861 listed for the Project Coordinator has not been independently confirmed on any government source. All other ministry extensions use the 535-xxxx prefix. This is an unverified number that citizens may act on.
+- **Source:** see [ministries/ministry-of-agriculture-and-food-and-nutritional-security](/docs/fact-check/ministries/ministry-of-agriculture-and-food-and-nutritional-security.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `NAHFCP Project Coordinator telephone uses non-standard prefix (still unverifiable)`
 
-- **Where:** `src/content/visa-information.md` lines 14, 24
-- **Confidence it's wrong:** 99%
-- **Citizen impact:** HIGH — a citizen dialling either listed number will not reach the Immigration Department. Both numbers were replaced in the February 2017 renumbering.
-- **What's wrong:** Main office is listed as `(246) 434-4100` (correct up to ~2017; current is `(246) 535-4100`). Airport GAIA office is listed as `(246) 418-4180` (correct up to ~2017; current is `(246) 535-4180`).
-- **Fix:** Change line 14 to `Phone: (246) 535-4100`. Change line 24 to `Phone: (246) 535-4180`. Optionally add the secondary GAIA lines `(246) 535-4119 / 535-4187`.
-- **Source:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx); [GIS — Immigration Department Telephone Numbers Change](https://gisbarbados.gov.bb/blog/immigration-department-telephone-numbers-change-2/)
-- **Suggested issue title:** `Fix stale phone numbers on Visa information page: 434-4100 → 535-4100 (main); 418-4180 → 535-4180 (GAIA)`
+---
+### F-416 · Tier C · Intro sentence uses "license" (American spelling) and truncates the ministry name
+
+- **Where:** [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) — see headline issue #1 in that report
+- **What's wrong:** Line 1 of the source markdown says "marriage license" and "Ministry of Home Affairs" (without "and Information"). All Barbados official sources use the British spelling "licence" and the full ministry name "Ministry of Home Affairs and Information". This is a Tier-B discrepancy with low citizen impa
+- **Source:** see [ministries/ministry-of-home-affairs-and-information](/docs/fact-check/ministries/ministry-of-home-affairs-and-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Intro sentence uses "license" (American spelling) and truncates the ministry name`
 
 ---
+### F-417 · Tier C · Solicitor General's Chambers fax number conflict between two Tier 1 sources
 
-### F-094 · Tier A · Replace obsolete caribsurf.com email on Visa information page
+- **Where:** [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) — see headline issue #5 in that report
+- **What's wrong:** gov.bb lists the SG Chambers fax as (246) 535-0561, while oag.gov.bb/Departments/Solicitor-General-s-Chambers/ lists (246) 435-9533. These differ in both area code pattern and number. Needs agency confirmation before either is published.
+- **Source:** see [ministries/office-of-the-attorney-general](/docs/fact-check/ministries/office-of-the-attorney-general.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Solicitor General's Chambers fax number conflict between two Tier 1 sources`
+
+---
+### F-418 · Tier C · Six-month duration limit is unverifiable from authoritative sources
 
-- **Where:** `src/content/visa-information.md` lines 16, 26
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** HIGH — emails to `imm-dept@caribsurf.com` will bounce or go unread. This address appears for both offices on the page.
-- **What's wrong:** Both the main office and GAIA airport contact blocks use `imm-dept@caribsurf.com`. Immigration's current authoritative emails are: main office `Immigration.department@barbados.gov.bb`; GAIA office `Immigration.gaia@barbados.gov.bb`.
-- **Fix:** Change line 16 to `Email: Immigration.department@barbados.gov.bb`. Change line 26 to `Email: Immigration.gaia@barbados.gov.bb`.
-- **Source:** [immigration.gov.bb — Contact Us](https://immigration.gov.bb/pages/contactus.aspx); [gov.bb — Immigration Department](https://www.gov.bb/Departments/immigration)
-- **Suggested issue title:** `Replace obsolete caribsurf.com email on Visa information page — correct emails are Immigration.department@barbados.gov.bb and Immigration.gaia@barbados.gov.bb`
+- **Where:** [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) — see headline issue #3 in that report
+- **What's wrong:** Both `index.md` (lines 15 and 67) assert "a redirection notice will last for 6 months". The Barbados Postal Service's own change-of-address page (`bps.gov.bb/change-of-address/`) states the fee and form requirements but does not specify any duration. No BPS or GIS source checked confirms or contradi
+- **Source:** see [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Six-month duration limit is unverifiable from authoritative sources`
 
 ---
+### F-419 · Tier C · Business registration number not confirmed by BPS
 
-### F-095 · Tier A · Update visa application instruction — process is now fully online (no paper form)
+- **Where:** [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) — see headline issue #5 in that report
+- **What's wrong:** The page lists "the business registration number" as a required form field (index.md line 47). The BPS change-of-address page mentions only the company name and company stamp — no registration number. This is unverifiable from the public web.
+- **Source:** see [post-office-redirection-business](/docs/fact-check/post-office-redirection-business.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Business registration number not confirmed by BPS`
 
-- **Where:** `src/content/visa-information.md` line 9
-- **Confidence it's wrong:** 85%
-- **Citizen impact:** MEDIUM — a visitor who prepares a paper form and duplicate cannot submit it; they will be redirected online. The caribsurf.com email address (F-094) means there is no working submission channel on the current page.
-- **What's wrong:** The page instructs applicants to "complete [the application form] in duplicate" accompanied by "two (2) passport-size photographs." The Barbados Entry Visa process went fully online in 2025 (announced 1 July 2025). The online application requires one photograph (not two), and there is no paper form or in-person submission at Careenage House.
-- **Fix:** Replace the introductory sentence with: "Barbados entry visa applications are now made fully online. Apply and pay at [apps.immigration.gov.bb](https://apps.immigration.gov.bb/portal/portal/login). Processing takes approximately three weeks. Fees: single entry US$107.00 (valid three months); multiple entry US$211.00 (valid six months)." Remove the duplicate-form and two-photograph requirements.
-- **Source:** [immigration.gov.bb — Home](https://immigration.gov.bb/) — "The Barbados Entry visa process is now a fully online process"; [Barbados Today — Govt rolls out new online visa and payment systems (1 Jul 2025)](https://barbadostoday.bb/2025/07/01/govt-rolls-out-new-online-visa-and-payment-systems/); [immigration.gov.bb — Visa Requirements](https://immigration.gov.bb/pages/visa_requirements.aspx) — one photograph, processing three weeks, US$107/$211 fees
-- **Suggested issue title:** `Update Visa information page — application is now fully online (no paper form); add fees and processing time`
+---
+### F-420 · Tier C · 6-month redirection duration: unverifiable from any public BPS source
+
+- **Where:** [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) — see headline issue #2 in that report
+- **What's wrong:** The index page asserts twice that "A redirection notice will last for 6 months." The BPS website (bps.gov.bb/change-of-address/) does not publish a duration for any redirection category. No GIS or gov.bb source independently confirms this figure. The claim may derive from UK Royal Mail policy; agenc
+- **Source:** see [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `6-month redirection duration: unverifiable from any public BPS source`
 
 ---
+### F-421 · Tier C · EZPay+ for payment: unverifiable
 
-### F-096 · Tier A · Update Welfare Department organisation page — agency dissolved into SEA (Jan 2026)
+- **Where:** [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) — see headline issue #4 in that report
+- **What's wrong:** `start.md` states the online form requires an EZPay+ account. The EZPay+ platform is live, but neither the BPS Change of Address page nor the EZPay+ listing page mentions postal redirection as a covered service. The online payment journey cannot be independently confirmed.
+- **Source:** see [post-office-redirection-deceased](/docs/fact-check/post-office-redirection-deceased.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `EZPay+ for payment: unverifiable`
+
+---
+### F-422 · Tier C · Six-month duration limit is unverifiable
 
-- **Where:** `src/content/welfare-department.md` lines 10–35; `src/data/departments.ts` slug "welfare"
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** HIGH — a citizen seeking welfare assistance finds a page describing a dissolved agency. The "Welfare Department" heading, contact person title, and legacy email give no indication that all welfare services are now delivered by the Social Empowerment Agency (SEA). Citizens acting on this page may waste time trying to contact a dissolved body.
-- **What's wrong:** The Welfare Department was dissolved 2 January 2026 and merged into the Social Empowerment Agency (SEA) along with the Child Care Board, National Assistance Board, National Disabilities Unit, and the Resilience and Reintegration Unit. The page heading, section title, and all contact details still say "Welfare Department". The title "Chief Welfare Officer Ag." (Ms. Joan Prescod) cannot be confirmed as current post-merger. The email `welfare.department@barbados.gov.bb` cannot be confirmed as monitored under the SEA. The phone numbers (535-1000, 535-1023) are confirmed as valid building numbers but should be attributed to the SEA, not the Welfare Department. A third number (535-1005, published by GIS May 2024) is also missing. The `departments.ts` "welfare" entry has the same staleness issues and omits two of the three published phone numbers.
-- **Fix:** Replace the page with an SEA profile or add a prominent notice: "The Welfare Department merged into the Social Empowerment Agency (SEA) on 2 January 2026. For welfare and social assistance, contact the SEA at [details]." Confirm with SEA: (a) current head contact and title; (b) whether `welfare.department@barbados.gov.bb` is still monitored; (c) SEA-specific email address; (d) whether 535-1005 still applies. Update `departments.ts` slug "welfare" to reflect the SEA (or retire the entry). Add SEA client centre addresses once confirmed (Six Roads, St. Philip; Southern Plaza, Oistins).
-- **Source:** [Barbados Today — SEA launched (7 Jan 2026)](https://barbadostoday.bb/2026/01/07/sea-launched-islandwide-overhaul-of-social-services-begins/); [Caribbean News Global — Barbados launches SEA (8 Jan 2026)](https://caribbeannewsglobal.com/barbados-launches-sea-a-people-centered-approach-to-social-services/); [Barbados Today — Second SEA centre (27 Mar 2026)](https://barbadostoday.bb/2026/03/27/govt-opens-second-sea-social-services-centre/); [welfare-department.md fact-check](/docs/fact-check/welfare-department.md) Claim 1
-- **Suggested issue title:** `Update Welfare Department org page — agency dissolved into Social Empowerment Agency (SEA) January 2026`
+- **Where:** [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) — see headline issue #4 in that report
+- **What's wrong:** Both `index.md` (lines 23 and 70) assert the redirection lasts a maximum of 6 months. The BPS change-of-address page does not state any duration period. This claim cannot be confirmed or contradicted from the public web and needs direct BPS confirmation.
+- **Source:** see [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Six-month duration limit is unverifiable`
 
 ---
+### F-423 · Tier C · "Any Post Office" claim is unverifiable
 
-### F-098 · Tier A · Unpublish or replace entire visitor permit application page — service abolished October 2025
+- **Where:** [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) — see headline issue #5 in that report
+- **What's wrong:** The BPS change-of-address page references the General Post Office (Cheapside, Bridgetown, Mon–Fri 8:00am–4:00pm) as the service location. Whether all branch offices across the island can accept and process individual redirection applications is not confirmed by BPS-published information.
+- **Source:** see [post-office-redirection-individual](/docs/fact-check/post-office-redirection-individual.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"Any Post Office" claim is unverifiable`
 
-- **Where:** `src/content/visitor-permit-application.md` (entire file); `src/data/content-directory.ts` line 373
-- **Confidence it's wrong:** 95%
-- **Citizen impact:** HIGH — the Barbados Revenue Authority abolished Visitor Driving Permits effective 15 October 2025. Every claim on this page — the permit requirement, both fee tiers ($10 / $100), the application email, the phone line, the portal URL, the SurePay payment step, the next-business-day turnaround, and the PDF form — applies to a permit that no longer exists. A visitor reading this page may attempt to apply for something that cannot be obtained, or may mistakenly believe they cannot legally drive in Barbados without a permit (they can, on a valid home-country licence). The page was published 24 October 2025 — nine days after the abolition — and was therefore wrong from the moment of publication.
-- **What's wrong:** The entire page content describes the pre-15 October 2025 Visitor Registration Certificate (Visitor Driving Permit) system. The BRA policy note (3 October 2025, effective 15 October 2025) abolished the permit and replaced it with the Car Rental Levy (BBD $5/day, max $35 per rental contract), collected by rental companies. No citizen-facing application step exists under the new regime. The BLA service page (`bla.gov.bb/servicedetails/VmlzaXRvciBQZXJtaXQ=`) has also not been updated, creating a second misleading source.
-- **Fix:** Either (a) unpublish the page entirely and redirect `/travel-id-citizenship/visitor-permit-application` to `/travel-id-citizenship/getting-around-barbados`; or (b) replace the entire content with: “Visitor Driving Permits were abolished effective 15 October 2025. Visitors may now drive in Barbados on a valid home-country licence for the class of vehicle they intend to drive. If renting a vehicle, a Car Rental Levy of BBD $5 per day (maximum BBD $35 per rental contract) is included in your rental rate by the car hire company — no separate application is required.” Update `source_url` in `content-directory.ts` once BRA publishes a replacement page.
-- **Source:** [BRA — Car Rental Levy and Discontinuation of Visitor Driving Permits](https://bra.gov.bb/News/Policy-Notes/Car-Rental-Levy-and-Discontinuatio); [BRA — Car Rental Levy Guide and Resources](https://bra.gov.bb/News/Announcements/Car-Rental-Levy-Guide-and-Resources); [barbadosdigital.com — Driving licences](https://barbadosdigital.com/articles/driving-licences); [Report: visitor-permit-application.md](/home/gavin/frontend-alpha/docs/fact-check/visitor-permit-application.md)
-- **Suggested issue title:** `Unpublish or replace visitor-permit-application page — service abolished 15 October 2025, page wrong from date of publication`
+---
+### F-424 · Tier C · Two different email addresses appear in gov.bb authoritative sources
+
+- **Where:** [register-a-death](/docs/fact-check/register-a-death.md) — see headline issue #5 in that report
+- **What's wrong:** `barbadoslawcourts.gov.bb` lists `registrarsupremecourt@barbados.gov.bb`; `gov.bb/Departments/registration` lists `registrar@lawcourts.gov.bb`. The alpha.gov.bb `get-death-certificate` page uses the `@barbados.gov.bb` address. This conflict is an open question requiring agency confirmation; the `@ba
+- **Source:** see [register-a-death](/docs/fact-check/register-a-death.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Two different email addresses appear in gov.bb authoritative sources`
 
 ---
+### F-425 · Tier C · "New programmes begin throughout the year" remains unverifiable
 
-### F-099 · Tier A · Fix portal.bra.gov.bb/VisitorPermit TLS certificate error (linked twice on visitor permit page)
+- **Where:** [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) — see headline issue #4 in that report
+- **What's wrong:** The YDP's sports rally evidence (10-week training July–September 2022 cycle) suggests a structured annual intake. No public source confirms rolling year-round intake windows.
+- **Source:** see [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"New programmes begin throughout the year" remains unverifiable`
+
+---
+### F-426 · Tier C · No reversed findings from the 2026-05-28 pass
 
-- **Where:** `src/content/visitor-permit-application.md` lines 11 and 18
-- **Confidence it's wrong:** 98%
-- **Citizen impact:** HIGH — both inline links and the “Please click here” CTA resolve to a portal with a TLS certificate error. Even if the permit system were still active, the portal would be unreachable. The TLS error on `portal.bra.gov.bb` mirrors the previously documented error on `publicentertainment.bra.gov.bb` (F-018).
-- **What's wrong:** `https://portal.bra.gov.bb/VisitorPermit` returns a TLS certificate verification error on fetch. Citizens clicking the link in a browser will see a browser security warning page. This is the same infrastructure pattern as F-018.
-- **Fix:** Flag to the BRA IT team that the TLS certificate for `portal.bra.gov.bb` is failing. In the short term, removing the link (since the underlying service is abolished per F-098) resolves the citizen-facing issue. The TLS fix is still needed for any BRA portal content that remains on that subdomain.
-- **Source:** `https://portal.bra.gov.bb/VisitorPermit` — TLS error confirmed on fetch 2026-05-28; [visitor-permit-application.md](/home/gavin/frontend-alpha/docs/fact-check/visitor-permit-application.md) Claim 4; see also F-018 (same pattern on `publicentertainment.bra.gov.bb`)
-- **Suggested issue title:** `Flag TLS cert error on portal.bra.gov.bb — linked twice from visitor-permit-application page; same infrastructure issue as publicentertainment.bra.gov.bb (F-018)`
+- **Where:** [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) — see headline issue #5 in that report
+- **What's wrong:** All prior discrepancies and unverifiable claims remain unchanged in status.
+- **Source:** see [register-for-community-sports-training-programme](/docs/fact-check/register-for-community-sports-training-programme.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No reversed findings from the 2026-05-28 pass`
 
 ---
+### F-427 · Tier C · Response-time claims ("immediately", "less than 24 hours") are unverifiable
 
-## What I checked and found correct
+- **Where:** [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) — see headline issue #3 in that report
+- **What's wrong:** The page states that for children in serious danger, officers attend "immediately", and for children under 5, they begin investigation "in less than 24 hours." Neither the CCB website, gov.bb, the Child Care Board Act Cap. 381, nor any GIS press release publishes these specific response-time standar
+- **Source:** see [report-a-concern-about-a-child](/docs/fact-check/report-a-concern-about-a-child.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Response-time claims ("immediately", "less than 24 hours") are unverifiable`
 
-So you know what I *didn't* flag as suspect:
+---
+### F-428 · Tier C · The WHO definition of elder abuse is quoted accurately but is an abridged version of the full WHO te…
 
-- **Passport fee table** (every line item) — matches `immigration.gov.bb` exactly.
-- **Land Registry address** — verified.
-- **Supreme Court Complex address** — verified (minor: drop "Bridgetown" line to match official phrasing).
-- **Barbados Judicial System phone (246) 535-9700** — verified.
-- **Notarial certificate $50** — verified, two sources agree.
-- **Notarial seal $50** — verified against GIS press release (the Judicial System site still lists $20 but appears stale).
-- **Form A / Form B** on passport — verified.
-- **`liquorlicence.gov.bb`, `bla.gov.bb`, `caipo.gov.bb`, `immigration.gov.bb`** — verified live.
+- **Where:** [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) — see headline issue #5 in that report
+- **What's wrong:** The page omits the preceding sentence from the WHO fact sheet and starts mid-definition. This is not strictly wrong — the quoted passage is verbatim — but citizens reading the page in isolation will not see that "A single or repeated act…" is the continuation of a longer definition. Low citizen impa
+- **Source:** see [report-elderly-abuse](/docs/fact-check/report-elderly-abuse.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `The WHO definition of elder abuse is quoted accurately but is an abridged version of the full WHO te…`
 
 ---
+### F-429 · Tier C · "3 months before the birthday" advance-notice requirement is unverifiable
 
-## Filing these as GitHub issues
+- **Where:** [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) — see headline issue #4 in that report
+- **What's wrong:** No Tier-1 or Tier-2 source documents this specific lead time. The Office of the President website returns no procedural content. If the real window differs, citizens could miss the opportunity entirely.
+- **Source:** see [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `"3 months before the birthday" advance-notice requirement is unverifiable`
 
-Each finding above has a **suggested issue title** and a self-contained body. When you want to file them:
+---
+### F-430 · Tier C · All document requirements are unverifiable
 
-```bash
-# Single issue — copy the title and body from the finding card
-gh issue create --title "Fix CAIPO address on Get a document notarised page (Baobab Tower → Baobab Towers, Warrens)" \
-  --label "fact-check,tier-a" \
-  --body "$(cat <<'EOF'
-**Where:** `src/content/get-a-document-notarised.md` lines 31–35
-**Live page:** https://alpha.gov.bb/travel-id-citizenship/get-a-document-notarised
-**Confidence it's wrong:** 90%
-**Citizen impact:** High — a citizen could turn up to the wrong place.
+- **Where:** [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) — see headline issue #5 in that report
+- **What's wrong:** The original birth certificate requirement, original marriage certificate requirement (female centenarians only), and the affidavit provision appear on no Government of Barbados public source.
+- **Source:** see [request-a-presidential-visit-for-a-centenarian](/docs/fact-check/request-a-presidential-visit-for-a-centenarian.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `All document requirements are unverifiable`
 
-**What's wrong:** Page says "Baobab Tower / Highway 2 / Saint Michael". Building name is singular; location is "Highway 2".
+---
+### F-431 · Tier C · Licence fees are unverifiable from the public web
 
-**Fix:** change to "Ground Floor / Baobab Towers / Warrens / St. Michael". Building is **Towers** plural; address is **Warrens**, not Highway 2.
+- **Where:** [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) — see headline issue #2 in that report
+- **What's wrong:** The page lists four specific fee amounts including VAT ($117.50 regular licence; $176.25 watersports licence; $11.75 licence book; $12.87 ID badge). The NCC's own "Fees & Licenses" page and the renewal notice at nccbarbados.com do not publish specific dollar amounts — the renewal notice directs vend
+- **Source:** see [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Licence fees are unverifiable from the public web`
 
-**Sources:**
-- CAIPO: https://caipo.gov.bb/
-- gov.bb State Bodies: https://www.gov.bb/State-Bodies/corporate-affairs-intellectual-property
+---
+### F-432 · Tier C · Referee and testimonial requirements unverifiable
 
-From fact-check: docs/fact-check/get-a-document-notarised.md
-EOF
-)"
-```
+- **Where:** [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) — see headline issue #3 in that report
+- **What's wrong:** No NCC public source (nccbarbados.com, gov.bb, GIS) mentions the two-referee / two-testimonial requirement. The NCC's published guidance for new applicants cites only a police certificate of character and information about the proposed beach and business type. The current page's framing — including
+- **Source:** see [sell-goods-services-beach-park](/docs/fact-check/sell-goods-services-beach-park.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Referee and testimonial requirements unverifiable`
 
-Suggested labels to set up first:
-- `fact-check` — all findings
-- `tier-a`, `tier-b`, `tier-c` — priority
-- `citizen-impact:high` / `citizen-impact:medium` / `citizen-impact:low`
-- `needs-agency-confirmation` — Tier C items
+---
+### F-433 · Tier C · Fax numbers unverifiable
 
-If you want, I can generate the full `gh issue create` commands for all 18 findings as a shell script in a follow-up.
+- **Where:** [visa-information](/docs/fact-check/visa-information.md) — see headline issue #5 in that report
+- **What's wrong:** Both fax numbers listed ((246) 426-0819 for head office, (246) 420-7180 for GAIA) are the Careenage House-era numbers and appear nowhere in current Tier 1 sources. immigration.gov.bb/pages/contactus.aspx lists no fax at all; gov.bb/Departments/immigration lists fax 535-4183 for the department. Wheth
+- **Source:** see [visa-information](/docs/fact-check/visa-information.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Fax numbers unverifiable`
 
 ---
+### F-434 · Tier C · Contact person title is unverifiable post-merger
+
+- **Where:** [welfare-department](/docs/fact-check/welfare-department.md) — see headline issue #3 in that report
+- **What's wrong:** Ms. Joan Prescod is confirmed as "Chief Welfare Officer Ag." on gov.bb and connectb1m.com, but those sources predate the 2 January 2026 SEA merger. After the merger, the "Chief Welfare Officer" role title may no longer exist or may have been restructured. No post-merger source confirms Ms. Prescod's
+- **Source:** see [welfare-department](/docs/fact-check/welfare-department.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `Contact person title is unverifiable post-merger`
 
-## What's NOT in Slice 1
+---
+### F-435 · Tier C · `publish_date: 2025-11-12` remains unverifiable
 
-To set expectations for the team reviewing this:
+- **Where:** [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) — see headline issue #4 in that report
+- **What's wrong:** The frontmatter date is internal metadata not displayed to citizens. No public record confirms the specific date. Low priority; no citizen-facing impact. (No major factual errors found in this pass. The page's low claim density — it is a short governance/meta page — means the primary risks are omis
+- **Source:** see [what-we-mean-by-alpha](/docs/fact-check/what-we-mean-by-alpha.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** ``publish_date: 2025-11-12` remains unverifiable`
 
-- Full external verification of the 8 skeleton reports — claims are extracted but most external sources have not yet been checked.
-- Per-page fact-check reports for the remaining ~190 content pages.
-- Full link sweep across all `src/content/` and `src/data/*.json` files (Slice 1 only spot-checked URLs referenced by the 10 worked examples).
-- A scripted pass over `src/data/opportunities.json`, `src/data/pharmacies.json`, `src/data/justices-of-the-peace.json` for internal consistency with their associated content pages.
+---
+### F-436 · Tier C · No link to Terms & Conditions or privacy notice from the data-security bullet
 
-The user reviews the **format and rubric** here. Once they're happy, we scale across the rest of the site in subsequent slices.
+- **Where:** [whats-changing](/docs/fact-check/whats-changing.md) — see headline issue #3 in that report
+- **What's wrong:** The bullet "feel confident that their data and personal information is secure and only being used when strictly necessary and with their permission" is an unverifiable platform commitment. The Terms & Conditions page at `/terms-conditions` discloses the actual data-handling policy (AWS hosting in th
+- **Source:** see [whats-changing](/docs/fact-check/whats-changing.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No link to Terms & Conditions or privacy notice from the data-security bullet`
 
 ---
+### F-437 · Tier C · No major factual errors
 
-## File status
+- **Where:** [whats-changing](/docs/fact-check/whats-changing.md) — see headline issue #4 in that report
+- **What's wrong:** The five bullet-point commitments are all substantiated by Tier 2–3 sources (GovTech Barbados blog, Barbados Today, CBC, Caribbean News Global). The data-security commitment remains unverifiable as an implemented platform policy. All footer and navigation links resolved on 2026-05-29.
+- **Source:** see [whats-changing](/docs/fact-check/whats-changing.md) for the full claims list and authoritative source citations
+- **Suggested issue title:** `No major factual errors`
 
-These files live under `docs/fact-check/`. **No PR opened** — files are local to this branch (`gavinwye/hong-kong-v1`), uncommitted, for user review. The user decides when (and whether) to open a PR.
+---
