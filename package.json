@@ -19,9 +19,6 @@
     "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:report": "playwright show-report",
     "perf:report": "node scripts/perf/generate-performance-report.mjs",
-    "fact-check:build": "node scripts/build-fact-check-site.mjs",
-    "fact-check:serve": "node scripts/serve-fact-check-site.mjs",
-    "fact-check:deploy": "npm run fact-check:build && netlify deploy --dir docs/fact-check/site --prod --site 786a57de-f1be-43fc-91dd-0e77e7e08e1e",
     "prepare": "husky"
   },
   "dependencies": {
@@ -74,7 +71,6 @@
     "jsdom": "^27.0.1",
     "lefthook": "^1.13.6",
     "lighthouse": "^13.1.0",
-    "marked": "^18.0.4",
     "tailwindcss": "^4",
     "tsx": "^4.22.0",
     "tw-animate-css": "^1.3.8",

@@ -23,10 +23,8 @@
 /.next/
 /out/
 
-# docs (mostly local-only output, but track fact-check markdown source)
+# docs (mostly local-only output)
 /docs/*
-!/docs/fact-check/
-/docs/fact-check/site/
 
 # netlify CLI local state
 /.netlify/
