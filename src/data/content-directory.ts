@@ -659,6 +659,63 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "StormReady Barbados",
+        slug: "stormready",
+        keywords: [
+          "hurricane",
+          "storm",
+          "hurricane season",
+          "emergency",
+          "DEM",
+          "Department of Emergency Management",
+          "disaster",
+          "preparedness",
+          "checklist",
+          "shelter",
+          "evacuation",
+        ],
+        description:
+          "Get ready for hurricane season with a household preparation checklist and key contacts, and stay up to date with Department of Emergency Management (DEM) alerts.",
+        subPages: [
+          {
+            slug: "checklist",
+            title: "Household preparation checklist",
+            type: "component",
+          },
+        ],
+      },
+      {
+        title: "Find an emergency shelter",
+        slug: "find-an-emergency-shelter",
+        keywords: [
+          "shelter",
+          "emergency shelter",
+          "hurricane",
+          "storm",
+          "evacuation",
+          "DEM",
+          "Department of Emergency Management",
+          "parish",
+          "Go Bag",
+          "warden",
+          "disaster",
+        ],
+        description:
+          "Search all 70 emergency shelters in Barbados to use during a hurricane or tropical storm. Filter by parish, category and accessibility, and read what to bring before you go.",
+        subPages: [
+          {
+            slug: "find",
+            title: "Search shelters",
+            type: "component",
+          },
+          {
+            slug: "guidance",
+            title: "Before you go to a shelter",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {

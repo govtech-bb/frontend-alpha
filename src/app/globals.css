@@ -175,3 +175,13 @@
 .leaflet-tooltip.jp-here-tooltip::before {
   border-top-color: var(--color-green-00);
 }
+
+/* Print margin for the whole site. Chrome (header/footer/alpha banner/
+   breadcrumbs/feedback box) is hidden with `print:hidden` on the elements
+   themselves, and the body grid is neutralised with `print:block` in the
+   root layout, so printed pages carry only their content. */
+@media print {
+  @page {
+    margin: 1.4cm;
+  }
+}
