@@ -14,12 +14,12 @@ export function EntryPointWrapper({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="container py-4 lg:py-6">
+      <div className="container py-4 lg:py-6 print:hidden">
         <Breadcrumbs />
       </div>
       <div className="container pt-4 pb-8 lg:py-8">
         {children}
-        {pathname !== "/feedback" && <HelpfulBox />}
+        {pathname !== "/feedback" && <HelpfulBox className="print:hidden" />}
       </div>
     </>
   );

@@ -8,7 +8,7 @@ export default function EntryPointLayout({
 }>) {
   return (
     <div className="w-full overflow-x-clip bg-white-00">
-      <div className="bg-blue-10">
+      <div className="bg-blue-10 print:hidden">
         <div className="container">
           <StageBanner stage="alpha" />
         </div>

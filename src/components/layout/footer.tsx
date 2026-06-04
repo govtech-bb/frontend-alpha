@@ -3,7 +3,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 
 export const Footer = () => (
-  <footer className="bg-blue-100">
+  <footer className="bg-blue-100 print:hidden">
     <div className="container">
       <div className="grid lg:grid-cols-2 lg:gap-8">
         <div className="flex flex-col items-start gap-2 py-8 lg:pb-0">
