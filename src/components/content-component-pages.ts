@@ -13,6 +13,18 @@
 import type { Metadata } from "next";
 import type { ComponentType } from "react";
 import {
+  FindEmergencyShelterPage,
+  findEmergencyShelterMetadata,
+} from "@/components/emergency-shelter/find-page";
+import {
+  EmergencyShelterGuidancePage,
+  emergencyShelterGuidanceMetadata,
+} from "@/components/emergency-shelter/guidance-page";
+import {
+  EmergencyShelterLandingPage,
+  emergencyShelterLandingMetadata,
+} from "@/components/emergency-shelter/landing-page";
+import {
   FindJusticeOfThePeacePage,
   findJusticeOfThePeaceMetadata,
 } from "@/components/justice-of-the-peace/find-page";
@@ -48,5 +60,17 @@ export const COMPONENT_PAGES: Record<string, ComponentPage> = {
   "health-and-emergency-services/stormready/checklist": {
     Component: StormReadyChecklistPage,
     metadata: stormReadyChecklistMetadata,
+  },
+  "health-and-emergency-services/find-an-emergency-shelter": {
+    Component: EmergencyShelterLandingPage,
+    metadata: emergencyShelterLandingMetadata,
+  },
+  "health-and-emergency-services/find-an-emergency-shelter/find": {
+    Component: FindEmergencyShelterPage,
+    metadata: findEmergencyShelterMetadata,
+  },
+  "health-and-emergency-services/find-an-emergency-shelter/guidance": {
+    Component: EmergencyShelterGuidancePage,
+    metadata: emergencyShelterGuidanceMetadata,
   },
 };
