@@ -659,6 +659,32 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "StormReady Barbados",
+        slug: "stormready",
+        keywords: [
+          "hurricane",
+          "storm",
+          "hurricane season",
+          "emergency",
+          "DEM",
+          "Department of Emergency Management",
+          "disaster",
+          "preparedness",
+          "checklist",
+          "shelter",
+          "evacuation",
+        ],
+        description:
+          "Get ready for hurricane season with a household preparation checklist and key contacts, and stay up to date with Department of Emergency Management (DEM) alerts.",
+        subPages: [
+          {
+            slug: "checklist",
+            title: "Household preparation checklist",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {

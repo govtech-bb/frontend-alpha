@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html className="bg-blue-100" lang="en">
       <body
-        className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased`}
+        className={`${figtree.variable} ${textVariants({ size: "body" })} grid min-h-screen grid-rows-[auto_1fr_auto] bg-white-00 font-sans antialiased print:block print:min-h-0`}
       >
         <Header />
         <main>{children}</main>

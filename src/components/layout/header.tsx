@@ -4,7 +4,7 @@ import { Banner } from "./banner";
 import { MobileNav } from "./mobile-nav";
 
 export const Header = () => (
-  <div>
+  <div className="print:hidden">
     <Banner />
     <header className="relative bg-yellow-100">
       <div className="container">

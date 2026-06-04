@@ -4,18 +4,11 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { ClearFormStorage } from "@/components/clear-form-storage";
 import { ContactCallout } from "@/components/contact-callout";
+import { COMPONENT_PAGES } from "@/components/content-component-pages";
 import { DynamicFormLoader } from "@/components/dynamic-form-loader";
 import { FormSkeleton } from "@/components/forms/form-skeleton";
-import {
-  FindJusticeOfThePeacePage,
-  findJusticeOfThePeaceMetadata,
-} from "@/components/justice-of-the-peace/find-page";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { MarkdownContent } from "@/components/markdown-content";
-import {
-  FindOpenPharmacyPage,
-  findOpenPharmacyMetadata,
-} from "@/components/open-pharmacy/find-page";
 import { OpportunityDetail } from "@/components/opportunity-detail";
 import { PageViewTracker } from "@/components/page-view-tracker";
 import { YouthOpportunityForm } from "@/components/youth-opportunity-form/youth-opportunity-form";
@@ -159,6 +152,12 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    const componentPage = COMPONENT_PAGES[slug.join("/")];
+    if (componentPage) {
+      const { Component } = componentPage;
+      return <Component />;
+    }
+
     const markdownContent = await getMarkdownContent([pageSlug]);
     if (!markdownContent) {
       notFound();
@@ -247,20 +246,10 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
-    if (
-      categorySlug === "travel-id-citizenship" &&
-      pageSlug === "justice-of-the-peace" &&
-      subPageSlug === "find"
-    ) {
-      return <FindJusticeOfThePeacePage />;
-    }
-
-    if (
-      categorySlug === "health-and-emergency-services" &&
-      pageSlug === "open-pharmacy" &&
-      subPageSlug === "find"
-    ) {
-      return <FindOpenPharmacyPage />;
+    const componentPage = COMPONENT_PAGES[slug.join("/")];
+    if (componentPage) {
+      const { Component } = componentPage;
+      return <Component />;
     }
 
     // Handle form pages (JSX components)
@@ -437,20 +426,9 @@ export async function generateMetadata({ params }: ContentPageProps) {
       }
     }
 
-    if (
-      slug[0] === "travel-id-citizenship" &&
-      slug[1] === "justice-of-the-peace" &&
-      slug[2] === "find"
-    ) {
-      return findJusticeOfThePeaceMetadata;
-    }
-
-    if (
-      slug[0] === "health-and-emergency-services" &&
-      slug[1] === "open-pharmacy" &&
-      slug[2] === "find"
-    ) {
-      return findOpenPharmacyMetadata;
+    const componentPage = COMPONENT_PAGES[slug.join("/")];
+    if (componentPage) {
+      return componentPage.metadata;
     }
 
     if (subPageSlug === "form") {
@@ -541,6 +519,11 @@ export async function generateMetadata({ params }: ContentPageProps) {
           images: [`${SITE_URL}/og-image.png`],
         },
       };
+    }
+
+    const componentPage = COMPONENT_PAGES[slug.join("/")];
+    if (componentPage) {
+      return componentPage.metadata;
     }
 
     const contentSlug = [slug[1]];
