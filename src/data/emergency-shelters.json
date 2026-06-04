@@ -1,0 +1,878 @@
+[
+  {
+    "name": "Blackman and Gollop Primary School",
+    "parish": "Christ Church",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 80,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.09797,
+      "lon": -59.5572201
+    },
+    "address": "Staple Grove, Christ Church, BB17003"
+  },
+  {
+    "name": "Gordon Walters Primary School",
+    "parish": "Christ Church",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0962666,
+      "lon": -59.4945239
+    },
+    "address": "Highway P, Bright Hill, St. Patrick's"
+  },
+  {
+    "name": "St. Christopher Primary School",
+    "parish": "Christ Church",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 75,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0532305,
+      "lon": -59.5177023
+    },
+    "address": "St Christopher's Road, St. Christopher, Hopewell"
+  },
+  {
+    "name": "Cuthbert Moore Primary School",
+    "parish": "St. George",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 36,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1525839,
+      "lon": -59.5649785
+    },
+    "address": "Highway 3, Astoria, Market Hill"
+  },
+  {
+    "name": "Gordon Greenidge Primary School",
+    "parish": "St. James",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.2292129,
+      "lon": -59.6233299
+    },
+    "address": "Ronald Mapp Highway, Westmoreland, Saint Peter"
+  },
+  {
+    "name": "Queens College",
+    "parish": "St. James",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 100,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "St. Silas Primary School",
+    "parish": "St. James",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "The Lodge School",
+    "parish": "St. John",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 195,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.1675413,
+      "lon": -59.4878405
+    },
+    "address": "Highway H, Green Point, Society"
+  },
+  {
+    "name": "Mount Tabor Primary School",
+    "parish": "St. John",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1821049,
+      "lon": -59.5237049
+    },
+    "address": "Mount Tabor Church Road, Mount Tabor, Sherbourne"
+  },
+  {
+    "name": "Tamarind Hall Branch Library (Eric Holder Municipal Complex)",
+    "parish": "St. Joseph",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 54,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.1931231,
+      "lon": -59.5437155
+    },
+    "address": "Eric J Holder Municipal Complex, Surinam, Bowling Alley Hill"
+  },
+  {
+    "name": "Ignatius Byer Primary School",
+    "parish": "St. Lucy",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 35,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.3091402,
+      "lon": -59.5946079
+    },
+    "address": "Lowlands Road, Lowland, Pie Corner"
+  },
+  {
+    "name": "Combermere School",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 100,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.1167423,
+      "lon": -59.6021111
+    },
+    "address": "Garlow Path, Bush Hall, Bridgetown"
+  },
+  {
+    "name": "George Lamming Primary School",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 79,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.1056377,
+      "lon": -59.6019488
+    },
+    "address": "Bridge Road, Carrington Village, Saint Michael"
+  },
+  {
+    "name": "Harrison College",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 81,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1001042,
+      "lon": -59.6100881
+    },
+    "address": "Crumpton's Street, Bridgetown, Saint Michael"
+  },
+  {
+    "name": "Lloyd Erskine Sandiford Centre",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 365,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.1039434,
+      "lon": -59.5830398
+    },
+    "address": "Two Mile Hill, Bridgetown, Saint Michael"
+  },
+  {
+    "name": "The University of the West Indies (Sagicor Building)",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 100,
+    "water": true,
+    "access": true
+  },
+  {
+    "name": "Westbury Primary School",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 61,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.1055624,
+      "lon": -59.6199231
+    },
+    "address": "Westbury Road, New Orleans, Bridgetown"
+  },
+  {
+    "name": "Coleridge and Parry School",
+    "parish": "St. Peter",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 140,
+    "water": true,
+    "access": true,
+    "coords": {
+      "lat": 13.2598169,
+      "lon": -59.6383268
+    },
+    "address": "Douglas Road, Speightstown, Saint Peter"
+  },
+  {
+    "name": "Lester Vaughan School",
+    "parish": "St. Thomas",
+    "category": 1,
+    "ownership": "Public",
+    "capacity": 115,
+    "water": true,
+    "access": true
+  },
+  {
+    "name": "Hillaby Seventh Day Adventist Church",
+    "parish": "St. Andrew",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 32,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.2128905,
+      "lon": -59.5878026
+    },
+    "address": "Highway D, Gregg Farm, Hillaby"
+  },
+  {
+    "name": "Ellerton Wesleyan Holiness Church",
+    "parish": "St. George",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 24,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1290645,
+      "lon": -59.5411593
+    },
+    "address": "Eustace Lashley Road, Ellerton, Saint George"
+  },
+  {
+    "name": "Church of God Orange Hill",
+    "parish": "St. James",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 106,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.2041326,
+      "lon": -59.6051784
+    },
+    "address": "Endeavour Cul-de-sac, Endeavour, Orange Hill"
+  },
+  {
+    "name": "Connell Town Pentecostal House of Prayer",
+    "parish": "St. Lucy",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 21,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "William Donald George Parish Centre (St. Lucy Parish Church)",
+    "parish": "St. Lucy",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 20,
+    "water": true,
+    "access": true
+  },
+  {
+    "name": "Black Rock Seventh Day Adventist Church",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 32,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1282351,
+      "lon": -59.6258395
+    },
+    "address": "Ellerslie School Road, Black Rock, Saint Michael"
+  },
+  {
+    "name": "Faith Wesleyan Holiness Church",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 30,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1369325,
+      "lon": -59.592313
+    },
+    "address": "Highway E, Lears Court, Jackmans"
+  },
+  {
+    "name": "St. Barnabas Senior Citizens Centre",
+    "parish": "St. Michael",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 46,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "Ruby Church of the Nazarene",
+    "parish": "St. Philip",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 45,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1274867,
+      "lon": -59.4479606
+    },
+    "address": "Highway 5, Ruby Tenantry, Robinsons"
+  },
+  {
+    "name": "Six Roads Church of Christ",
+    "parish": "St. Philip",
+    "category": 1,
+    "ownership": "Privately Owned",
+    "capacity": 40,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "Christ Church Foundation School",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 75,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0661926,
+      "lon": -59.540469
+    },
+    "address": "Church Hill Main Road, Oistins, Christ Church"
+  },
+  {
+    "name": "Deighton Griffith School",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.079015,
+      "lon": -59.5522755
+    },
+    "address": "Kingsland, Christ Church, BB15028"
+  },
+  {
+    "name": "St. Bartholomew Primary School",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 35,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0749627,
+      "lon": -59.5141774
+    },
+    "address": "Parish Land Road, Parish Land, Chancery Lane"
+  },
+  {
+    "name": "Ellerton Primary School",
+    "parish": "St. George",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 25,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1317408,
+      "lon": -59.5411571
+    },
+    "address": "Ellerton Road, Ellerton, Saint George"
+  },
+  {
+    "name": "St. George Secondary",
+    "parish": "St. George",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 80,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1272196,
+      "lon": -59.563281
+    },
+    "address": "Highway W, Constant, Saint George"
+  },
+  {
+    "name": "West Terrace Primary School",
+    "parish": "St. James",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1450271,
+      "lon": -59.6311782
+    },
+    "address": "Wanstead Drive, West Terrace, Bagatelle"
+  },
+  {
+    "name": "St. Margaret's Primary School",
+    "parish": "St. John",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "Grantley Adams Memorial",
+    "parish": "St. Joseph",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 120,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1882724,
+      "lon": -59.5429165
+    },
+    "address": "Highway 3, Casuarina Hill, Horse Hill"
+  },
+  {
+    "name": "St. Bernard Primary School",
+    "parish": "St. Joseph",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "St. Joseph Primary School",
+    "parish": "St. Joseph",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 35,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1937681,
+      "lon": -59.5447443
+    },
+    "address": "Highway 3, Casuarina Hill, Horse Hill"
+  },
+  {
+    "name": "Daryll Jordan Secondary",
+    "parish": "St. Lucy",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 150,
+    "water": true,
+    "access": true
+  },
+  {
+    "name": "Selah Primary School",
+    "parish": "St. Lucy",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.3142642,
+      "lon": -59.6351882
+    },
+    "address": "Highway 1B, Content, Greenidge"
+  },
+  {
+    "name": "Barbados Community College (Commerce Division)",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 244,
+    "water": false,
+    "access": true
+  },
+  {
+    "name": "Bay Primary School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 50,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0891058,
+      "lon": -59.6023449
+    },
+    "address": "Bay Gardens, Bayland, Saint Michael"
+  },
+  {
+    "name": "The Ellerslie School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 55,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "Grazettes Primary School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 50,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1310222,
+      "lon": -59.6177211
+    },
+    "address": "Denton Road, White Hall, Saint Michael"
+  },
+  {
+    "name": "Lawrence T. Gay Memorial",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1236502,
+      "lon": -59.6089401
+    },
+    "address": "Spooners Hill Main Road, Spooners Hill, Saint Michael"
+  },
+  {
+    "name": "Luther Thorne Memorial",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 100,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0904114,
+      "lon": -59.5849019
+    },
+    "address": "Wildey Road, Wildey Industrial Park, Wildey"
+  },
+  {
+    "name": "Parkinson Memorial School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 215,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0981946,
+      "lon": -59.5810359
+    },
+    "address": "Pine East West Boulevard, The Pine, Saint Michael"
+  },
+  {
+    "name": "Springer Memorial School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 66,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1016624,
+      "lon": -59.5960977
+    },
+    "address": "Government Hill, Saint Michael, BB14004"
+  },
+  {
+    "name": "St. Ambrose Primary School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "St. Leonard's Boys' School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 55,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.11187,
+      "lon": -59.617969
+    },
+    "address": "President Kennedy Drive, Eagle Hall, Saint Michael"
+  },
+  {
+    "name": "The St. Michael School",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 37,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0968678,
+      "lon": -59.6047107
+    },
+    "address": "Martindales Road, Bridgetown, Saint Michael"
+  },
+  {
+    "name": "Princess Margaret Secondary",
+    "parish": "St. Philip",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 60,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1190052,
+      "lon": -59.4752183
+    },
+    "address": "Highway 5, Six Roads, Saint Philip"
+  },
+  {
+    "name": "Reynold Weekes Primary School",
+    "parish": "St. Philip",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 45,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1089569,
+      "lon": -59.4699699
+    },
+    "address": "Four Roads, Saint Philip, BB18053"
+  },
+  {
+    "name": "Sharon Primary School",
+    "parish": "St. Thomas",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 40,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1519468,
+      "lon": -59.6021556
+    },
+    "address": "Jackson Arthur Seat Road, Arthur Seat, Saint Thomas"
+  },
+  {
+    "name": "Welches Primary School",
+    "parish": "St. Thomas",
+    "category": 2,
+    "ownership": "Public",
+    "capacity": 22,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.1569988,
+      "lon": -59.6127065
+    },
+    "address": "Highway 2A, Welches, Saint Thomas"
+  },
+  {
+    "name": "Hawthorn Methodist Church",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 27,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0739936,
+      "lon": -59.5821481
+    },
+    "address": "Worthing, Christ Church, BB15137"
+  },
+  {
+    "name": "Ivan Harewood Centre (Christ Church Parish Church)",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 75,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "Salvation Army Church (Wotton)",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 14,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "St. Christopher Anglican Church",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 35,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.050674,
+      "lon": -59.5195226
+    },
+    "address": "Enterprise Coast Road, Green Garden, Goodland"
+  },
+  {
+    "name": "St. Matthias Anglican Church",
+    "parish": "Christ Church",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 23,
+    "water": false,
+    "access": true,
+    "coords": {
+      "lat": 13.0759679,
+      "lon": -59.5994563
+    },
+    "address": "St. Matthias Road, St. Matthias, Hastings"
+  },
+  {
+    "name": "St. George Anglican Church",
+    "parish": "St. George",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 22,
+    "water": false,
+    "access": false
+  },
+  {
+    "name": "Salvation Army Checker Hall Church",
+    "parish": "St. Lucy",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 14,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "St. Clement's Centre (St. Clement's Anglican Church)",
+    "parish": "St. Lucy",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 30,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "Dalkeith Methodist Church",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 34,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.0875931,
+      "lon": -59.6001907
+    },
+    "address": "Dalkeith Hill, Brittons Hill, Saint Michael"
+  },
+  {
+    "name": "People's Cathedral Primary",
+    "parish": "St. Michael",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 60,
+    "water": true,
+    "access": false
+  },
+  {
+    "name": "The Salvation Army Lighthouse Centre",
+    "parish": "St. Peter",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 12,
+    "water": false,
+    "access": false,
+    "restriction": "Women and children only"
+  },
+  {
+    "name": "St. Philip-the-Less Anglican Church",
+    "parish": "St. Peter",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 45,
+    "water": false,
+    "access": false,
+    "coords": {
+      "lat": 13.2844894,
+      "lon": -59.5819329
+    },
+    "address": "Highway B1, Mount Stepney, Saint Peter"
+  },
+  {
+    "name": "Gemswick Nazarene Church",
+    "parish": "St. Philip",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 45,
+    "water": false,
+    "access": false,
+    "coords": {
+      "lat": 13.0844603,
+      "lon": -59.4686072
+    },
+    "address": "Gemswick, Saint Philip, BB18093"
+  },
+  {
+    "name": "St. Catherine's Anglican Church",
+    "parish": "St. Philip",
+    "category": 2,
+    "ownership": "Privately Owned",
+    "capacity": 45,
+    "water": true,
+    "access": false,
+    "coords": {
+      "lat": 13.156438,
+      "lon": -59.441359
+    },
+    "address": "St. Catherine Road, St. Catherine's, Saint Philip"
+  }
+]

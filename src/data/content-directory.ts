@@ -685,6 +685,37 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
           },
         ],
       },
+      {
+        title: "Find an emergency shelter",
+        slug: "find-an-emergency-shelter",
+        keywords: [
+          "shelter",
+          "emergency shelter",
+          "hurricane",
+          "storm",
+          "evacuation",
+          "DEM",
+          "Department of Emergency Management",
+          "parish",
+          "Go Bag",
+          "warden",
+          "disaster",
+        ],
+        description:
+          "Search all 70 emergency shelters in Barbados to use during a hurricane or tropical storm. Filter by parish, category and accessibility, and read what to bring before you go.",
+        subPages: [
+          {
+            slug: "find",
+            title: "Search shelters",
+            type: "component",
+          },
+          {
+            slug: "guidance",
+            title: "Before you go to a shelter",
+            type: "component",
+          },
+        ],
+      },
     ],
   },
   {
