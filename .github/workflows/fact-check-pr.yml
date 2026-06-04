@@ -1,0 +1,133 @@
+# Opens a PR with admin-reviewed fact-check fixes, authored by claude[bot].
+#
+# Dispatched by the govbb-fact-check dashboard (Netlify function open-pr.mjs)
+# via the workflow_dispatch API. The dispatcher only needs a fine-grained
+# token with Actions: write on this repo — all git/PR power stays with the
+# Claude GitHub App inside this workflow.
+#
+# Requires:
+#   - The Claude GitHub App installed on this repo (https://github.com/apps/claude)
+#   - ANTHROPIC_API_KEY repo secret
+
+name: Fact-check PR
+
+run-name: "Fact-check PR: ${{ inputs.slug }} [${{ inputs.request_id }}]"
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Page slug under src/content/ (e.g. apply-for-a-passport)"
+        required: true
+        type: string
+      content_b64:
+        description: "Base64-encoded reviewed markdown body (no frontmatter)"
+        required: true
+        type: string
+      page_title:
+        description: "Human-readable page title"
+        required: false
+        type: string
+      live_page:
+        description: "Live page URL on alpha.gov.bb"
+        required: false
+        type: string
+      audit_url:
+        description: "Fact-check audit report URL"
+        required: false
+        type: string
+      request_id:
+        description: "Correlation ID from the dispatcher (shown in run-name)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+  actions: read
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      # Inputs go through env vars (not inline interpolation in run:) so
+      # free-text fields can't inject into the shell.
+      - name: Materialise dispatch payload
+        env:
+          SLUG: ${{ inputs.slug }}
+          CONTENT_B64: ${{ inputs.content_b64 }}
+          PAGE_TITLE: ${{ inputs.page_title }}
+          LIVE_PAGE: ${{ inputs.live_page }}
+          AUDIT_URL: ${{ inputs.audit_url }}
+        run: |
+          set -euo pipefail
+          [[ "$SLUG" =~ ^[a-z0-9_/-]+$ ]] || { echo "malformed slug"; exit 1; }
+          mkdir -p /tmp/fact-check
+          printf '%s' "$CONTENT_B64" | base64 -d > /tmp/fact-check/content.md
+          jq -n --arg slug "$SLUG" --arg title "$PAGE_TITLE" \
+                --arg live "$LIVE_PAGE" --arg audit "$AUDIT_URL" \
+                '{slug:$slug, pageTitle:$title, livePage:$live, auditUrl:$audit}' \
+                > /tmp/fact-check/meta.json
+
+      - name: Apply fixes and open PR as Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: |
+            --allowedTools "Bash(git:*),Bash(gh pr create:*),Bash(gh pr edit:*),Bash(cat:*),Bash(ls:*),Read,Write,Edit,Glob,Grep"
+            --max-turns 30
+          prompt: |
+            You are filing an admin-reviewed fact-check fix from the GovBB
+            fact-check dashboard as a pull request. Work deterministically;
+            do not reword or "improve" the reviewed content.
+
+            Inputs:
+            - /tmp/fact-check/meta.json — slug, pageTitle, livePage, auditUrl
+            - /tmp/fact-check/content.md — the final reviewed markdown BODY
+              (frontmatter is not included and must be preserved from the
+              existing source file)
+
+            Steps:
+            1. Read both files.
+            2. Find the source file for the slug, trying in order:
+               src/content/<slug>.md, src/content/<slug>/start.md,
+               src/content/<slug>/index.md, src/content/ministries/<slug>.md,
+               src/content/departments/<slug>.md, src/content/state-bodies/<slug>.md.
+               If none exists, create src/content/<slug>.md (no frontmatter to
+               preserve in that case).
+            3. Replace the file's markdown body with content.md verbatim,
+               keeping the existing YAML frontmatter block exactly as-is.
+               Touch no other files.
+            4. Create branch fact-check/<slug with slashes replaced by dashes>-$GITHUB_RUN_ID,
+               commit with message:
+                 "fact-check: apply admin-reviewed fixes to <pageTitle or slug>"
+               and a body noting the audit URL and live page URL, then push
+               the branch to origin.
+            5. Open a pull request against main titled
+               "fact-check: <pageTitle or slug>" with this body structure:
+                 ## Fact-check fixes for <pageTitle or slug>
+                 The GovBB fact-check audit flagged issues on this page. An
+                 admin reviewed the proposed corrections in the dashboard,
+                 edited them as needed using local knowledge, and submitted
+                 this version.
+                 **Live page:** <livePage>
+                 **Audit report:** <auditUrl>
+                 **Source file:** `<path>`
+                 ### Review
+                 The diff in this PR is what the admin approved for
+                 publication. Compare against the live page and merge when
+                 satisfied.
+                 ---
+                 _Filed automatically from <https://govbb-fact-check.netlify.app>._
+            6. Try `gh pr edit <num> --add-label fact-check`; if the label
+               doesn't exist, ignore the failure.
+
+            Finish by stating the PR URL.
