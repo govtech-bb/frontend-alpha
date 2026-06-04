@@ -92,15 +92,14 @@ export function StormReadyLandingPage() {
     <div className="mb-l flex max-w-[42rem] flex-col gap-m">
       <div className="flex flex-col gap-xs">
         <Heading as="h1">{TITLE}</Heading>
+        <div className="border-blue-10 border-b-4 pb-4 text-mid-grey-00">
+          <Text as="p" size="caption">
+            Last updated on {format(parseISO(STORMREADY_LAST_UPDATED), "PPP")}
+          </Text>
+        </div>
         <Text as="p" className="text-mid-grey-00">
           Get ready for hurricane season and stay up to date with Department of
           Emergency Management (DEM) alerts.
-        </Text>
-      </div>
-
-      <div className="border-blue-10 border-b-4 pb-4 text-mid-grey-00">
-        <Text as="p" size="caption">
-          Last updated on {format(parseISO(STORMREADY_LAST_UPDATED), "PPP")}
         </Text>
       </div>
 
