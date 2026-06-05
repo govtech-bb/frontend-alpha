@@ -120,6 +120,9 @@ export default async function Page({ params }: ContentPageProps) {
     // Subcategory index for youth-and-community: derive opportunities from
     // opportunities.json, matching on `opportunity.subcategory === pageSlug`.
     if (categorySlug === "youth-and-community") {
+      if (page.protected && !(await hasResearchAccess())) {
+        notFound();
+      }
       const subcategoryOpportunities = opportunities.filter(
         (opp) => opp.subcategory === pageSlug
       );
@@ -219,6 +222,9 @@ export default async function Page({ params }: ContentPageProps) {
     // Opportunity detail under a youth-and-community subcategory: third slug
     // is the opportunity id, and the opportunity's subcategory must match.
     if (categorySlug === "youth-and-community") {
+      if (page.protected && !(await hasResearchAccess())) {
+        notFound();
+      }
       const opportunity = opportunities.find(
         (opp) => opp.id === subPageSlug && opp.subcategory === pageSlug
       );
