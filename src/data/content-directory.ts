@@ -320,30 +320,35 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
       {
         title: "Youth development and leadership",
         slug: "youth-development-leadership",
+        protected: true,
         description:
           "Long-term training, mentorship and leadership pathways for young people.",
       },
       {
         title: "Skills, trades and vocational training",
         slug: "skills-trades-vocational-training",
+        protected: true,
         description:
           "Practical courses and workshops in trades, technology and creative skills.",
       },
       {
         title: "Entrepreneurship and business",
         slug: "entrepreneurship-business",
+        protected: true,
         description:
           "Support for young people starting and growing their own ventures.",
       },
       {
         title: "Arts and culture",
         slug: "arts-culture",
+        protected: true,
         description:
           "Creative programmes, performances and content celebrating Barbadian culture.",
       },
       {
         title: "Children, families and the wider community",
         slug: "children-families-community",
+        protected: true,
         description:
           "Programmes, volunteering opportunities and services for children, families and neighbourhoods.",
       },
