@@ -35,6 +35,10 @@ export const primarySchools: SelectOption[] = [
   { label: "Mount Tabor Primary School", value: "mount-tabor-primary-school" },
   { label: "New Horizon Academy", value: "new-horizon-academy" },
   {
+    label: "People's Cathedral Primary School",
+    value: "peoples-cathedral-primary-school",
+  },
+  {
     label: "Reynold Weekes Primary School",
     value: "reynold-weekes-primary-school",
   },
