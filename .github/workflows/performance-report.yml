@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [prod]
   workflow_dispatch:
+  schedule:
+    # Weekly on Mondays at 12:15 UTC (08:15 AST). Off-the-hour to dodge the
+    # GitHub Actions cron contention window.
+    - cron: "15 12 * * 1"
 
 permissions:
   contents: read
@@ -56,6 +60,9 @@ jobs:
         env:
           BASE_URL: http://127.0.0.1:3000
           PERF_EXTERNAL_SERVER: "1"
+          UMAMI_API_KEY: ${{ secrets.UMAMI_API_KEY }}
+          NEXT_PUBLIC_UMAMI_SITE_ID: ${{ secrets.UMAMI_SITE_ID }}
+          UMAMI_REPORT_DAYS: "7"
         run: npm run perf:report
 
       - name: Stop Next.js server
@@ -73,7 +80,7 @@ jobs:
 
   deploy:
     name: Deploy to GitHub Pages
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/prod') || github.event_name == 'workflow_dispatch'
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/prod') || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
     needs: build
     runs-on: ubuntu-latest
     environment:

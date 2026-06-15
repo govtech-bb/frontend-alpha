@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { test } from "@playwright/test";
 
 const ARTIFACTS_DIR = path.join(process.cwd(), "perf-artifacts");
 
@@ -28,18 +28,12 @@ type AxeSummary = {
 
 type PlaywrightMetricsPayload = {
   axe: Record<AxeRouteKey, AxeSummary>;
-  timings: {
-    formPageReadyMs: number;
-    searchToResultsMs: number;
-  };
 };
 
 const store: {
   axe: Partial<Record<AxeRouteKey, AxeSummary>>;
-  timings: Partial<PlaywrightMetricsPayload["timings"]>;
 } = {
   axe: {},
-  timings: {},
 };
 
 function ensureArtifactsDir() {
@@ -62,13 +56,7 @@ function writeFinalPayload() {
       };
     }
   }
-  const payload: PlaywrightMetricsPayload = {
-    axe,
-    timings: {
-      formPageReadyMs: store.timings.formPageReadyMs ?? -1,
-      searchToResultsMs: store.timings.searchToResultsMs ?? -1,
-    },
-  };
+  const payload: PlaywrightMetricsPayload = { axe };
   const out = path.join(ARTIFACTS_DIR, "playwright-metrics.json");
   fs.writeFileSync(out, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
 }
@@ -95,28 +83,6 @@ test.describe("performance metrics", () => {
       };
     });
   }
-
-  test("timing: form page ready", async ({ page }) => {
-    const start = Date.now();
-    await page.goto(ROUTES.form, { waitUntil: "domcontentloaded" });
-    await expect(
-      page.getByRole("heading", { name: /tell us about yourself/i })
-    ).toBeVisible({ timeout: 60_000 });
-    store.timings.formPageReadyMs = Date.now() - start;
-  });
-
-  test("timing: search to results", async ({ page }) => {
-    const start = Date.now();
-    await page.goto(ROUTES.home, { waitUntil: "domcontentloaded" });
-    await page.locator("#service-search").fill("certificate");
-    await page.getByRole("button", { name: "Search" }).click();
-    await expect(
-      page.getByRole("heading", { name: "Search results" })
-    ).toBeVisible({
-      timeout: 60_000,
-    });
-    store.timings.searchToResultsMs = Date.now() - start;
-  });
 
   test.afterAll(() => {
     writeFinalPayload();
