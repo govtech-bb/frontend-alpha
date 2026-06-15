@@ -32,11 +32,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a birth certificate in Barbados, including required documents and contact details for the Registration Department.",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Birth Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -47,11 +48,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a copy of a death certificate in Barbados.",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Death Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },
@@ -62,11 +64,12 @@ export const INFORMATION_ARCHITECTURE: InformationContent[] = [
         description:
           "Information on how to obtain a copy of a marriage certificate in Barbados.",
         subPages: [
-          { slug: "start", type: "markdown" },
+          { slug: "start", type: "markdown", protected: true },
           {
             slug: "form",
             title: "Get a Marriage Certificate form",
             type: "component",
+            protected: true,
           },
         ],
       },

@@ -19,7 +19,7 @@ You can request a copy on someone else’s behalf but you must disclose:
 
 ## How to get a copy of a death certificate
 
-### Complete the form online
+### Complete the form
 
 1. #### Request a copy online
 
