@@ -155,6 +155,19 @@ export default async function Page({ params }: ContentPageProps) {
       notFound();
     }
 
+    // When a page's form/start subpages are protected, the overview stays
+    // public but the online "start" link must be hidden for non-research
+    // users. Passing the real research-access value lets rehypeHideStartLinks
+    // strip the online method (and renumber "ways to apply") for the public,
+    // while research-access users still see and can test the online form.
+    const hasGatedSubPage =
+      page.subPages?.some((subPage) => subPage.protected) ?? false;
+    // A protected page has already returned notFound above for non-research
+    // users, so reaching here means either the page is public or the user has
+    // research access. Hide the online "start" link only when a form/start
+    // subpage is gated and the user lacks research access.
+    const showOnlineStartLinks = researchAccess || !hasGatedSubPage;
+
     const componentPage = COMPONENT_PAGES[slug.join("/")];
     if (componentPage) {
       const { Component } = componentPage;
@@ -196,7 +209,7 @@ export default async function Page({ params }: ContentPageProps) {
               </ContactCallout>
             ) : undefined
           }
-          hasResearchAccess={!page.protected || researchAccess}
+          hasResearchAccess={showOnlineStartLinks}
           markdown={markdownContent}
         />
       </>
